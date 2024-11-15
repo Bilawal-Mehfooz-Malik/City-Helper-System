@@ -1,4 +1,4 @@
-import 'package:app/src/utils/theme_extension.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class ErrorMessageWidget extends StatelessWidget {

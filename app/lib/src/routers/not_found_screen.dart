@@ -1,4 +1,4 @@
-import 'package:app/src/common/empty_placeholder_widget.dart';
+import 'package:app/src/core/common_widgets/empty_placeholder_widget.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
