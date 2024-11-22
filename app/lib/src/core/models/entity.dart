@@ -8,8 +8,9 @@ abstract class Entity {
   final String description;
   final String coverImageUrl;
   final List<String> imagesUrls;
-  final List<String> videosUrls;
+  final String videosUrl;
   final Location location;
+  final GeoLocation geoLocation;
   final String address;
   final double avgRating;
   final int reviewsCount;
@@ -28,8 +29,9 @@ abstract class Entity {
     required this.description,
     required this.coverImageUrl,
     required this.imagesUrls,
-    required this.videosUrls,
+    required this.videosUrl,
     required this.location,
+    required this.geoLocation,
     required this.address,
     required this.avgRating,
     required this.reviewsCount,

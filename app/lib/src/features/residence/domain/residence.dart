@@ -1,20 +1,11 @@
-import '../../../core/models/entity.dart';
-import '../../../core/models/my_data_types.dart';
+import 'package:app/src/core/models/entity.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 
-enum ResidenceType { hostel, flat, room, house }
-
-enum HostelStatus {
-  roomAvailable,
-  seatAvailable,
-  unavailable
-} // only used in hostel
-
-enum ResidenceStatus {
-  available,
-  sold
-} // only used in flat, room and house type
+import 'residence_enums.dart';
 
 class Residence extends Entity {
+  final String pricing; // should be mentioned as Rs. 20,000 per seat
+  final bool furnished;
   final Gender genderPref;
   final ResidenceType residenceType;
   final HostelStatus? hostelStatus;
@@ -27,8 +18,9 @@ class Residence extends Entity {
     required super.description,
     required super.coverImageUrl,
     required super.imagesUrls,
-    required super.videosUrls,
+    required super.videosUrl,
     required super.location,
+    required super.geoLocation,
     required super.address,
     required super.avgRating,
     required super.reviewsCount,
@@ -41,6 +33,8 @@ class Residence extends Entity {
     super.webUrl,
     required this.genderPref,
     required this.residenceType,
+    required this.pricing,
+    required this.furnished,
     this.hostelStatus,
     this.residenceStatus,
   });
