@@ -27,7 +27,7 @@ class GetStartedScreen extends StatelessWidget {
     // For larger screens (e.g., tablet or wider)
     return Scaffold(
       body: SafeArea(
-        child: width > Breakpoint.tablet
+        child: width > Breakpoint.mobile
             ? const Center(
                 child: ResponsiveScrollable(
                   showCardWidget: true,

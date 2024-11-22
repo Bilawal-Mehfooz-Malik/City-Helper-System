@@ -1,6 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'color.dart';
 
@@ -24,7 +23,8 @@ final lightTheme = ThemeData(
     surface: surfaceColor,
     onSurface: onSurfaceColor,
   ),
-  textTheme: GoogleFonts.poppinsTextTheme(),
+  // TODO: Add google fonts
+  // textTheme: GoogleFonts.poppinsTextTheme(),
 
   /// [FilledButtonThemeData]
   filledButtonTheme: FilledButtonThemeData(
