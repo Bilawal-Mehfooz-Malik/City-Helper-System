@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/common_widgets/primary_button.dart';
+import '../../core/constants/app_logo.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/utils/theme_extension.dart';
-import '../../localization/string_hardcoded.dart';
+import '../../localization/localization_extension.dart';
 
 class GetStartedContent extends StatelessWidget {
   const GetStartedContent({super.key, this.useSpacer = false});
@@ -13,8 +13,6 @@ class GetStartedContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const logoPath = 'assets/logo/app_logo.svg';
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -22,40 +20,39 @@ class GetStartedContent extends StatelessWidget {
         // [Logo and Title]
         if (useSpacer) const Spacer() else gapH12,
 
-        SvgPicture.asset(logoPath),
+        const AppLogo(height: 80, width: 80),
         gapH20,
         Text(
-          'FindOut'.hardcoded,
+          context.loc.appTitle,
           style: context.textTheme.headlineLarge!
               .copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
-        if (useSpacer) const Spacer() else gapH32,
+        if (useSpacer) const Spacer(flex: 2) else gapH32,
 
         // Subtitle
         Text(
-          'Discover Amazing Places'.hardcoded,
+          context.loc.getStartedHeadline,
           style: context.textTheme.headlineMedium!
               .copyWith(fontWeight: FontWeight.w900),
           textAlign: TextAlign.center,
         ),
-        gapH12,
+        gapH24,
 
         // Description
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
           child: Text(
-            'Easily find any place in Mirpur, any time and anywhere, using your smartphone.'
-                .hardcoded,
-            style: context.textTheme.bodyLarge,
+            context.loc.getStartedDescription,
+            style: context.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
         ),
-        if (useSpacer) const Spacer(flex: 2) else gapH32,
+        if (useSpacer) const Spacer() else gapH32,
 
         // Primary Button
         PrimaryButton(
-          text: 'Get Started'.hardcoded,
+          text: context.loc.getStarted,
           onPressed: () {},
         ),
         if (useSpacer) const Spacer() else gapH12,

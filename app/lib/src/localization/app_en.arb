@@ -1,6 +1,12 @@
 {
-  "appTitle": "app",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+  "@@locale": "en",
+  "appTitle": "FindOut",
+  "@appTitle": {},
+  
+  "getStartedHeadline":"Discover Amazing Places",
+  "@getStartedHeadline": {},
+  "getStartedDescription":"Easily find any place in Mirpur, any time and anywhere, using your smartphone.",
+  "@getStartedDescription": {},
+  "getStarted":"Get Started",
+  "@getStarted": {}
 }
