@@ -27,6 +27,12 @@ ThemeData lightTheme(Ref ref) {
       onSurface: onSurfaceColor,
     ),
 
+    ///[AppBarThemeData]
+    appBarTheme: const AppBarTheme(
+      backgroundColor: primaryColor,
+      foregroundColor: onPrimaryColor,
+    ),
+
     /// [FilledButtonThemeData]
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
@@ -36,7 +42,20 @@ ThemeData lightTheme(Ref ref) {
           TextStyle(
             fontSize: 16,
             fontFamily: fontFamily,
-            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+
+    /// [OutlinedButtonThemeData]
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        shape: shape(),
+        minimumSize: buttonSize(),
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            fontSize: 16,
+            fontFamily: fontFamily,
           ),
         ),
       ),

@@ -1,15 +1,8 @@
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_progress_indicator.dart';
-
-/// Primary button based on [FilledButton].
-/// Useful for CTAs in the app.
-/// @param text - text to display on the button.
-/// @param isLoading - if true, a loading indicator will be displayed instead of
-/// the text.
-/// @param onPressed - callback to be called when the button is pressed.
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({
+class CustomOutlinedButton extends StatelessWidget {
+  const CustomOutlinedButton({
     super.key,
     required this.text,
     this.isLoading = false,
@@ -24,7 +17,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
+    return OutlinedButton(
       onPressed: isDisabled ? null : onPressed,
       child: isLoading
           ? const CustomProgressIndicator()
