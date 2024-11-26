@@ -1,4 +1,4 @@
-import 'package:app/src/core/models/location.dart';
+import 'package:app/src/features/startup/domain/geo_location.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
 import 'residence_enums.dart';

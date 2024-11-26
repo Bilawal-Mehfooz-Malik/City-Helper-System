@@ -27,6 +27,7 @@ dependencies:
   google_fonts: 6.2.1
   intl: 0.19.0
   rxdart: ^0.28.0
+  mocktail: ^1.0.4
 
 dev_dependencies:
   flutter_test:

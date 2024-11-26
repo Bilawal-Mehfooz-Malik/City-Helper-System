@@ -8,7 +8,7 @@ import '../../../../core/utils/async_value_ui.dart';
 import '../../../../core/utils/theme_extension.dart';
 import '../../../../localization/localization_extension.dart';
 import '../../data/fake_location_repository.dart';
-import '../location_controller.dart';
+import '../user_location_controller.dart';
 import 'location_preview_widget.dart';
 
 class StartupBottomSheetContent extends ConsumerWidget {
@@ -16,12 +16,12 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(locationControllerProvider);
-    final controller = ref.read(locationControllerProvider.notifier);
+    final state = ref.watch(userLocationControllerProvider);
+    final controller = ref.read(userLocationControllerProvider.notifier);
     final locationState = ref.watch(userLocationStateChangesProvider);
 
     ref.listen<AsyncValue>(
-      locationControllerProvider,
+      userLocationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
@@ -31,10 +31,11 @@ class StartupBottomSheetContent extends ConsumerWidget {
         // [Headline]
         Text(
           context.loc.getLocDescription,
-          style: context.textTheme.titleMedium,
+          style: context.textTheme.titleLarge,
         ),
         gapH12,
 
+        // [Location Preview Widget]
         LocationPreviewWidget(isLoading: state.isLoading),
         gapH12,
 
@@ -62,7 +63,6 @@ class StartupBottomSheetContent extends ConsumerWidget {
         gapH12,
 
         // [Save Location Button]
-
         if (locationState.value != null) ...[
           PrimaryButton(
             isDisabled: state.isLoading,

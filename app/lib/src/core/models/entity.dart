@@ -1,4 +1,4 @@
-import 'location.dart';
+import '../../features/startup/domain/geo_location.dart';
 import 'my_data_types.dart';
 
 abstract class Entity {

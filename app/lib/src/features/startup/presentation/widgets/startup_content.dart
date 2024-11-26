@@ -64,6 +64,7 @@ class StartupContent extends StatelessWidget {
       context: context,
       showDragHandle: true,
       isDismissible: false,
+      enableDrag: false,
       isScrollControlled: true,
       builder: (context) =>
           const ResponsiveScrollable(child: StartupBottomSheetContent()),

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/models/location.dart';
+import '../domain/geo_location.dart';
 import '../../../core/utils/delay.dart';
 import '../../../core/utils/in_memory_store.dart';
 
@@ -14,7 +14,6 @@ class FakeLocationRepository {
   final _userLocation = InMemoryStore<GeoLocation?>(null);
   final _testLocation = GeoLocation(latitude: 123, longitude: 123);
 
-  // [Getters]
   GeoLocation? get userLocation => _userLocation.value;
   Stream<GeoLocation?> userLocationState() => _userLocation.stream;
 
@@ -27,6 +26,8 @@ class FakeLocationRepository {
     await delay(addDelay);
     _userLocation.value = _testLocation;
   }
+
+  void dispose() => _userLocation.close();
 }
 
 @Riverpod(keepAlive: true)

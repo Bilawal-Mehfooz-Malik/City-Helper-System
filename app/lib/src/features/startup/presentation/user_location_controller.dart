@@ -2,10 +2,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/fake_location_repository.dart';
 
-part 'location_controller.g.dart';
+part 'user_location_controller.g.dart';
 
 @riverpod
-class LocationController extends _$LocationController {
+class UserLocationController extends _$UserLocationController {
   @override
   FutureOr<void> build() {
     // nothing to do
@@ -22,6 +22,6 @@ class LocationController extends _$LocationController {
     state = const AsyncLoading();
     final locationRepository = ref.read(fakeLocationRepositoryProvider);
     state =
-        await AsyncValue.guard(() => locationRepository.getCurrentLocation());
+        await AsyncValue.guard(() => locationRepository.getLocationFromMap());
   }
 }
