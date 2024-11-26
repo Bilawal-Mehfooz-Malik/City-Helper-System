@@ -10,7 +10,10 @@ void main() {
     await tester.runAsync(() async {
       final r = Robot(tester);
       await r.pumpMyApp();
-      r.startupRobot.expectGetStartedButton();
+      await r.startupRobot.tapGetStartedButton();
+      r.startupRobot.expectModalBottomSheet();
+      await r.startupRobot.tapGetCurrentButton();
+      r.startupRobot.expectSaveButton();
     });
   });
 }

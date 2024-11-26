@@ -11,6 +11,10 @@ import '../../data/fake_location_repository.dart';
 import '../user_location_controller.dart';
 import 'location_preview_widget.dart';
 
+const kGetCurrentKey = Key('get-current-key');
+const kFromMapKey = Key('from-map-key');
+const kSaveKey = Key('save-location-key');
+
 class StartupBottomSheetContent extends ConsumerWidget {
   const StartupBottomSheetContent({super.key});
 
@@ -45,6 +49,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
           children: [
             Expanded(
               child: CustomOutlinedButton(
+                key: kGetCurrentKey,
                 isDisabled: state.isLoading,
                 text: context.loc.getCurrent,
                 onPressed: controller.getCurrentLocation,
@@ -53,6 +58,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
             gapW4,
             Expanded(
               child: CustomOutlinedButton(
+                key: kFromMapKey,
                 isDisabled: state.isLoading,
                 text: context.loc.fromMap,
                 onPressed: controller.getLocationFromMap,
@@ -65,6 +71,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         // [Save Location Button]
         if (locationState.value != null) ...[
           PrimaryButton(
+            key: kSaveKey,
             isDisabled: state.isLoading,
             text: context.loc.saveLocation,
             onPressed: () {},
