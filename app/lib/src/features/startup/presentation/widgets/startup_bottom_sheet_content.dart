@@ -7,7 +7,7 @@ import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/utils/async_value_ui.dart';
 import '../../../../core/utils/theme_extension.dart';
 import '../../../../localization/localization_extension.dart';
-import '../../data/fake_location_repository.dart';
+import '../user_controller.dart';
 import '../user_location_controller.dart';
 import 'location_preview_widget.dart';
 
@@ -20,12 +20,23 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(userLocationControllerProvider);
+    // Fetch the state and controllers for user and location
+    final userState = ref.watch(userControllerProvider);
+    final userLocationState = ref.watch(userLocationControllerProvider);
+    final userController = ref.read(userControllerProvider.notifier);
     final controller = ref.read(userLocationControllerProvider.notifier);
-    final locationState = ref.watch(userLocationStateChangesProvider);
 
+    final isLoading = userState.isLoading || userLocationState.isLoading;
+
+    // Error handling for userLocation
     ref.listen<AsyncValue>(
       userLocationControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+
+    // Error handling for userCreation
+    ref.listen<AsyncValue>(
+      userControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
@@ -40,7 +51,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         gapH12,
 
         // [Location Preview Widget]
-        LocationPreviewWidget(isLoading: state.isLoading),
+        const LocationPreviewWidget(),
         gapH12,
 
         // [Get Current] and [From Map] Buttons
@@ -50,7 +61,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kGetCurrentKey,
-                isDisabled: state.isLoading,
+                isDisabled: isLoading, // Disable button if any state is loading
                 text: context.loc.getCurrent,
                 onPressed: controller.getCurrentLocation,
               ),
@@ -59,7 +70,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kFromMapKey,
-                isDisabled: state.isLoading,
+                isDisabled: isLoading, // Disable button if any state is loading
                 text: context.loc.fromMap,
                 onPressed: controller.getLocationFromMap,
               ),
@@ -69,12 +80,13 @@ class StartupBottomSheetContent extends ConsumerWidget {
         gapH12,
 
         // [Save Location Button]
-        if (locationState.value != null) ...[
+        if (userLocationState.value != null) ...[
           PrimaryButton(
             key: kSaveKey,
-            isDisabled: state.isLoading,
+            isLoading: userState.isLoading, // Show loading if saving user
+            isDisabled: isLoading, // Disable if any state is loading
             text: context.loc.saveLocation,
-            onPressed: () {},
+            onPressed: userController.createUser,
           ),
           gapH12,
         ],

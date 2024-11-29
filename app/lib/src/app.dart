@@ -14,6 +14,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lightTheme = ref.watch(lightThemeProvider);
+    final appRouter = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
       restorationScopeId: 'app',

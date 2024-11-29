@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class GeoLocation {
   final double latitude;
   final double longitude;
@@ -19,12 +21,23 @@ class GeoLocation {
 
   @override
   int get hashCode => latitude.hashCode ^ longitude.hashCode;
-}
 
-class Location {
-  final String country;
-  final String province;
-  final String city;
+  Map<String, dynamic> toMap() {
+    return {
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
 
-  Location({required this.country, required this.province, required this.city});
+  factory GeoLocation.fromMap(Map<String, dynamic> map) {
+    return GeoLocation(
+      latitude: map['latitude']?.toDouble() ?? 0.0,
+      longitude: map['longitude']?.toDouble() ?? 0.0,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory GeoLocation.fromJson(String source) =>
+      GeoLocation.fromMap(json.decode(source));
 }

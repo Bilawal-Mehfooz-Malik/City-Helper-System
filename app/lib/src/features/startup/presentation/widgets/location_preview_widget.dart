@@ -4,30 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/common_widgets/custom_progress_indicator.dart';
 import '../../../../core/constants/app_sizes.dart';
 import '../../../../localization/localization_extension.dart';
-import '../../data/fake_location_repository.dart';
+import '../user_location_controller.dart';
 
 class LocationPreviewWidget extends ConsumerWidget {
-  final bool isLoading;
-  const LocationPreviewWidget({super.key, required this.isLoading});
+  const LocationPreviewWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userLocation = ref.watch(fakeLocationRepositoryProvider).userLocation;
+    final userLocationValue = ref.watch(userLocationControllerProvider);
 
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: Container(
-        width: double.infinity,
+      child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(),
           borderRadius: BorderRadius.circular(Sizes.p8),
         ),
         child: Center(
-          child: isLoading
-              ? const CustomProgressIndicator()
-              : userLocation == null
-                  ? Text(context.loc.notChoosen)
-                  : Text('Lat ${userLocation.latitude}'),
+          child: userLocationValue.maybeWhen(
+            skipError: true,
+            loading: () => const Center(child: CustomProgressIndicator()),
+            data: (location) => location == null
+                ? Text(context.loc.notChoosen)
+                : Text('Lat: ${location.latitude}, Lon: ${location.longitude}'),
+            orElse: () => Text(context.loc.notChoosen),
+          ),
         ),
       ),
     );

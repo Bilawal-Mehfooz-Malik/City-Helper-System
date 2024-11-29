@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_location_controller.dart';
+part of 'user_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userLocationControllerHash() =>
-    r'e025c98f9608561a39c13d3c9f2b098cf6c3b2f5';
+String _$userRepositoryHash() => r'ec396a179f09c73aef20b4f6ca1f88f9bff3d5b4';
 
-/// See also [UserLocationController].
-@ProviderFor(UserLocationController)
-final userLocationControllerProvider = AutoDisposeAsyncNotifierProvider<
-    UserLocationController, GeoLocation?>.internal(
-  UserLocationController.new,
-  name: r'userLocationControllerProvider',
+/// See also [userRepository].
+@ProviderFor(userRepository)
+final userRepositoryProvider = Provider<UserRepository>.internal(
+  userRepository,
+  name: r'userRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$userLocationControllerHash,
+      : _$userRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UserLocationController = AutoDisposeAsyncNotifier<GeoLocation?>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef UserRepositoryRef = ProviderRef<UserRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
