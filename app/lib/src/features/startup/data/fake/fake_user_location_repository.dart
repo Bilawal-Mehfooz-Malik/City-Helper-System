@@ -21,4 +21,6 @@ class FakeUserLocationRepository implements UserLocationRepository {
     await delay(addDelay);
     return _userLocation.value;
   }
+
+  void dispose() => _userLocation.close();
 }

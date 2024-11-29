@@ -1,3 +1,4 @@
+import 'package:app/app_bootstrap_fakes.dart';
 import 'package:app/src/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,7 +17,12 @@ class Robot {
 
   Future<void> pumpMyApp() async {
     // * Entry pont of App
-    await tester.pumpWidget(const ProviderScope(child: MyApp()));
+    final container = await createFakesProviderContainer();
+    final root = UncontrolledProviderScope(
+      container: container,
+      child: const MyApp(),
+    );
+    await tester.pumpWidget(root);
     await tester.pumpAndSettle();
   }
 }

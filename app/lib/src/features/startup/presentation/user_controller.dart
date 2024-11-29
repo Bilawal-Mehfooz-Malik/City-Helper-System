@@ -1,3 +1,4 @@
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,13 +24,19 @@ class UserController extends _$UserController {
     );
 
     if (userLocation == null) {
-      state = AsyncError('User location not available', StackTrace.current);
+      state = AsyncError(
+        'User location not available'.hardcoded,
+        StackTrace.current,
+      );
       return;
     }
+
     final user =
         AppUser(userLocation: userLocation, lastUpdated: DateTime.now());
     final userRepository = ref.read(userRepositoryProvider);
     state = await AsyncValue.guard(() => userRepository.setUser(user));
+
+    /// Navigate to [HomeScreen]
     if (state is AsyncData) {
       ref.read(appRouterProvider).goNamed(AppRoute.home.name);
     }
