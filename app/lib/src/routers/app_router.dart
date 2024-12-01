@@ -1,3 +1,5 @@
+import 'package:app/src/features/startup/presentation/screens/pick_your_location_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,7 +11,7 @@ import 'not_found_screen.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, getStarted, permissionDenied }
+enum AppRoute { home, getStarted, permissionDenied, pickYourLocation }
 
 @riverpod
 GoRouter appRouter(Ref ref) {
@@ -21,11 +23,24 @@ GoRouter appRouter(Ref ref) {
         path: '/get-started',
         name: AppRoute.getStarted.name,
         builder: (context, state) => const StartupScreen(),
-      ),
-      GoRoute(
-        path: '/permission-denied',
-        name: AppRoute.permissionDenied.name,
-        builder: (context, state) => const PermissionDeniedScreen(),
+        routes: [
+          GoRoute(
+              path: '/pick-your-location',
+              name: AppRoute.pickYourLocation.name,
+              pageBuilder: (context, state) {
+                return const MaterialPage(
+                  fullscreenDialog: true,
+                  child: PickYourLocationScreen(),
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: '/permission-denied',
+                  name: AppRoute.permissionDenied.name,
+                  builder: (context, state) => const PermissionDeniedScreen(),
+                ),
+              ]),
+        ],
       ),
       GoRoute(
         path: '/',

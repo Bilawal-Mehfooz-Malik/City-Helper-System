@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/primary_button.dart';
 import '../../../../core/common_widgets/responsive_scrollable.dart';
@@ -27,7 +28,7 @@ class PermissionDeniedScreen extends StatelessWidget {
               // [Allow Permission Button]
               PrimaryButton(
                 text: context.loc.allowPermission,
-                onPressed: () {},
+                onPressed: () => context.pop(),
               ),
               gapH8,
 

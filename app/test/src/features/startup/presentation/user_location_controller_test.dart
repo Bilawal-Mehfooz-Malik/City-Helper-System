@@ -106,70 +106,70 @@ void main() {
       ]);
     });
 
-    test('getLocationFromMap sets state to loading and then to success',
-        () async {
-      // Mocking the repository to return a test location
-      when(() => userLocationRepository.getLocationFromMap())
-          .thenAnswer((_) async => testLocation);
+    // test('getLocationFromMap sets state to loading and then to success',
+    //     () async {
+    //   // Mocking the repository to return a test location
+    //   when(() => userLocationRepository.getLocationFromMap())
+    //       .thenAnswer((_) async => testLocation);
 
-      final listener =
-          Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
-      final locationControllerNotifier =
-          container.read(userLocationControllerProvider.notifier);
+    //   final listener =
+    //       Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
+    //   final locationControllerNotifier =
+    //       container.read(userLocationControllerProvider.notifier);
 
-      // Listening to changes in the state
-      container.listen(
-        userLocationControllerProvider,
-        listener.call,
-        fireImmediately: true,
-      );
+    //   // Listening to changes in the state
+    //   container.listen(
+    //     userLocationControllerProvider,
+    //     listener.call,
+    //     fireImmediately: true,
+    //   );
 
-      // Run the action
-      await locationControllerNotifier.getLocationFromMap();
+    //   // Run the action
+    //   await locationControllerNotifier.getLocationFromMap();
 
-      // Verify the state changes
-      verifyInOrder([
-        // Initial state should be AsyncData with null
-        () => listener(null, data),
-        // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
-        // Success state with testLocation
-        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
-            const AsyncData<LatLng?>(testLocation)),
-      ]);
-    });
+    //   // Verify the state changes
+    //   verifyInOrder([
+    //     // Initial state should be AsyncData with null
+    //     () => listener(null, data),
+    //     // Loading state
+    //     () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
+    //     // Success state with testLocation
+    //     () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+    //         const AsyncData<LatLng?>(testLocation)),
+    //   ]);
+    // });
 
-    test('getLocationFromMap sets state to loading and then to error',
-        () async {
-      // Mocking the repository to throw an exception
-      when(() => userLocationRepository.getLocationFromMap())
-          .thenThrow(Exception('Failed to get location'));
+    // test('getLocationFromMap sets state to loading and then to error',
+    //     () async {
+    //   // Mocking the repository to throw an exception
+    //   when(() => userLocationRepository.getLocationFromMap())
+    //       .thenThrow(Exception('Failed to get location'));
 
-      final listener =
-          Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
-      final locationControllerNotifier =
-          container.read(userLocationControllerProvider.notifier);
+    //   final listener =
+    //       Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
+    //   final locationControllerNotifier =
+    //       container.read(userLocationControllerProvider.notifier);
 
-      // Listening to changes in the state
-      container.listen(
-        userLocationControllerProvider,
-        listener.call,
-        fireImmediately: true,
-      );
+    //   // Listening to changes in the state
+    //   container.listen(
+    //     userLocationControllerProvider,
+    //     listener.call,
+    //     fireImmediately: true,
+    //   );
 
-      // Run the action
-      await locationControllerNotifier.getLocationFromMap();
+    //   // Run the action
+    //   await locationControllerNotifier.getLocationFromMap();
 
-      // Verify the state changes
-      verifyInOrder([
-        // Initial state should be AsyncData with null
-        () => listener(null, data),
-        // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
-        // Error state with exception
-        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
-            any(that: isA<AsyncError<LatLng?>>())),
-      ]);
-    });
+    //   // Verify the state changes
+    //   verifyInOrder([
+    //     // Initial state should be AsyncData with null
+    //     () => listener(null, data),
+    //     // Loading state
+    //     () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
+    //     // Error state with exception
+    //     () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+    //         any(that: isA<AsyncError<LatLng?>>())),
+    //   ]);
+    // });
   });
 }

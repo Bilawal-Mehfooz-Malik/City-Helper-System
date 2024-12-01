@@ -1,13 +1,15 @@
 // import 'package:app/src/features/startup/domain/geo_location.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:geolocator/geolocator.dart';
+// import 'package:latlong2/latlong.dart';
 // import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // part 'location_service.g.dart';
 
 // class LocationService {
+//   LatLng? _latLng;
 //   // [Get User Location Using GeoLocator]
-//   Future<GeoLocation?> getCurrentLocation() async {
+//   Future<LatLng?> getCurrentLocation() async {
 //     bool serviceEnabled;
 //     LocationPermission permission;
 
@@ -35,10 +37,12 @@
 
 //     // If permissions are granted, get the current location
 //     final res = await Geolocator.getCurrentPosition();
-//     return GeoLocation(latitude: res.latitude, longitude: res.longitude);
+//     _latLng = LatLng(res.latitude, res.longitude);
 //   }
 
-//   Future<GeoLocation?> getLocationFromMap() async {}
+//   LatLng? getLocationFromMap(LatLng latLng) {
+//     _latLng = latLng;
+//   }
 // }
 
 // @riverpod

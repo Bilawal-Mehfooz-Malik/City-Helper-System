@@ -1,5 +1,7 @@
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/custom_outlined_button.dart';
 import '../../../../core/common_widgets/primary_button.dart';
@@ -70,9 +72,10 @@ class StartupBottomSheetContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kFromMapKey,
-                isDisabled: isLoading, // Disable button if any state is loading
+                isDisabled: isLoading,
                 text: context.loc.fromMap,
-                onPressed: controller.getLocationFromMap,
+                onPressed: () =>
+                    context.goNamed(AppRoute.pickYourLocation.name),
               ),
             ),
           ],
