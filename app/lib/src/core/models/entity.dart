@@ -1,4 +1,4 @@
-import '../../features/startup/domain/geo_location.dart';
+import 'package:latlong2/latlong.dart';
 import 'location.dart';
 import 'my_data_types.dart';
 
@@ -11,7 +11,7 @@ abstract class Entity {
   final List<String> imagesUrls;
   final String videosUrl;
   final Location location;
-  final GeoLocation geoLocation;
+  final LatLng geoLocation;
   final String address;
   final double avgRating;
   final int reviewsCount;

@@ -1,13 +1,13 @@
-import 'package:app/src/features/startup/domain/geo_location.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_location_repository.g.dart';
 
 abstract class UserLocationRepository {
-  Future<GeoLocation?> getCurrentLocation();
+  Future<LatLng?> getCurrentLocation();
 
-  Future<GeoLocation?> getLocationFromMap();
+  Future<LatLng?> getLocationFromMap();
 }
 
 @riverpod

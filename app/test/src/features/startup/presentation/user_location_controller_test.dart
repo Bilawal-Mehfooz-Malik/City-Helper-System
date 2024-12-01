@@ -1,17 +1,17 @@
-import 'package:app/src/features/startup/domain/geo_location.dart';
 import 'package:app/src/features/startup/domain/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/user_location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks.dart';
 
 void main() {
   late ProviderContainer container;
-  const data = AsyncData<GeoLocation?>(null);
+  const data = AsyncData<LatLng?>(null);
   late MockUserLocationRepository userLocationRepository;
-  final testLocation = GeoLocation(latitude: 123, longitude: 123);
+  const testLocation = LatLng(123, 123);
 
   // Creates the ProviderContainer with overridden dependencies
   ProviderContainer makeProviderContainer(
@@ -33,13 +33,13 @@ void main() {
 
   // Register fallback values for mocking AsyncValues
   setUpAll(() {
-    registerFallbackValue(const AsyncLoading<GeoLocation?>());
+    registerFallbackValue(const AsyncLoading<LatLng?>());
   });
 
   group('LocationController', () {
     test('initial state is null', () {
       final locationController = container.read(userLocationControllerProvider);
-      expect(locationController, const AsyncData<GeoLocation?>(null));
+      expect(locationController, const AsyncData<LatLng?>(null));
     });
 
     test('getCurrentLocation sets state to loading and then to success',
@@ -48,8 +48,7 @@ void main() {
       when(() => userLocationRepository.getCurrentLocation())
           .thenAnswer((_) async => testLocation);
 
-      final listener = Listener<
-          AsyncValue<GeoLocation?>>(); // Listener to capture state changes
+      final listener = Listener<AsyncValue<LatLng?>>();
       final controller =
           container.read(userLocationControllerProvider.notifier);
 
@@ -68,10 +67,10 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, data),
         // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<GeoLocation?>>())),
+        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
         // Success state with testLocation
-        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()),
-            AsyncData<GeoLocation?>(testLocation)),
+        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+            AsyncData<LatLng?>(testLocation)),
       ]);
     });
 
@@ -81,8 +80,7 @@ void main() {
       when(() => userLocationRepository.getCurrentLocation())
           .thenThrow(Exception('Failed to get location'));
 
-      final listener = Listener<
-          AsyncValue<GeoLocation?>>(); // Listener to capture state changes
+      final listener = Listener<AsyncValue<LatLng?>>();
       final locationControllerNotifier =
           container.read(userLocationControllerProvider.notifier);
 
@@ -101,10 +99,10 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, data),
         // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<GeoLocation?>>())),
+        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
         // Error state with exception
-        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()),
-            any(that: isA<AsyncError<GeoLocation?>>())),
+        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+            any(that: isA<AsyncError<LatLng?>>())),
       ]);
     });
 
@@ -114,8 +112,8 @@ void main() {
       when(() => userLocationRepository.getLocationFromMap())
           .thenAnswer((_) async => testLocation);
 
-      final listener = Listener<
-          AsyncValue<GeoLocation?>>(); // Listener to capture state changes
+      final listener =
+          Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
       final locationControllerNotifier =
           container.read(userLocationControllerProvider.notifier);
 
@@ -134,10 +132,10 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, data),
         // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<GeoLocation?>>())),
+        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
         // Success state with testLocation
-        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()),
-            AsyncData<GeoLocation?>(testLocation)),
+        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+            const AsyncData<LatLng?>(testLocation)),
       ]);
     });
 
@@ -147,8 +145,8 @@ void main() {
       when(() => userLocationRepository.getLocationFromMap())
           .thenThrow(Exception('Failed to get location'));
 
-      final listener = Listener<
-          AsyncValue<GeoLocation?>>(); // Listener to capture state changes
+      final listener =
+          Listener<AsyncValue<LatLng?>>(); // Listener to capture state changes
       final locationControllerNotifier =
           container.read(userLocationControllerProvider.notifier);
 
@@ -167,10 +165,10 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, data),
         // Loading state
-        () => listener(data, any(that: isA<AsyncLoading<GeoLocation?>>())),
+        () => listener(data, any(that: isA<AsyncLoading<LatLng?>>())),
         // Error state with exception
-        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()),
-            any(that: isA<AsyncError<GeoLocation?>>())),
+        () => listener(any(that: isA<AsyncLoading<LatLng?>>()),
+            any(that: isA<AsyncError<LatLng?>>())),
       ]);
     });
   });

@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'geo_location.dart';
+import 'package:latlong2/latlong.dart';
 
 class AppUser {
-  final GeoLocation userLocation;
+  final LatLng userLocation;
   final DateTime lastUpdated;
 
   AppUser({required this.userLocation, required this.lastUpdated});
@@ -23,23 +21,4 @@ class AppUser {
 
   @override
   int get hashCode => userLocation.hashCode ^ lastUpdated.hashCode;
-
-  Map<String, dynamic> toMap() {
-    return {
-      'userLocation': userLocation.toMap(),
-      'lastUpdated': lastUpdated.millisecondsSinceEpoch,
-    };
-  }
-
-  factory AppUser.fromMap(Map<String, dynamic> map) {
-    return AppUser(
-      userLocation: GeoLocation.fromMap(map['userLocation']),
-      lastUpdated: DateTime.fromMillisecondsSinceEpoch(map['lastUpdated']),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory AppUser.fromJson(String source) =>
-      AppUser.fromMap(json.decode(source));
 }

@@ -5,6 +5,7 @@ import '../../../../core/common_widgets/custom_progress_indicator.dart';
 import '../../../../core/constants/app_sizes.dart';
 import '../../../../localization/localization_extension.dart';
 import '../user_location_controller.dart';
+import 'open_street_map_widget.dart';
 
 class LocationPreviewWidget extends ConsumerWidget {
   const LocationPreviewWidget({super.key});
@@ -17,16 +18,16 @@ class LocationPreviewWidget extends ConsumerWidget {
       aspectRatio: 16 / 9,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          border: Border.all(),
           borderRadius: BorderRadius.circular(Sizes.p8),
+          border: Border.all(),
         ),
         child: Center(
           child: userLocationValue.maybeWhen(
             skipError: true,
             loading: () => const Center(child: CustomProgressIndicator()),
-            data: (location) => location == null
+            data: (latLng) => latLng == null
                 ? Text(context.loc.notChoosen)
-                : Text('Lat: ${location.latitude}, Lon: ${location.longitude}'),
+                : OpenStreetMapWidget(latLng: latLng),
             orElse: () => Text(context.loc.notChoosen),
           ),
         ),

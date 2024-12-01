@@ -37,7 +37,10 @@ dependencies:
   path_provider: 2.1.5
 
   # For Location
-  geolocator: ^13.0.2
+  geolocator: 13.0.2
+  flutter_map: 7.0.2
+  latlong2: 0.9.1
+  flutter_dotenv: 5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -64,3 +67,4 @@ flutter:
   assets:
     - assets/images/
     - assets/logo/
+    - .env

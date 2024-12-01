@@ -1,7 +1,8 @@
-import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:app/src/routers/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/utils/current_date_provider.dart';
+import '../../../localization/string_hardcoded.dart';
+import '../../../routers/app_router.dart';
 import '../domain/app_user.dart';
 import '../domain/user_repository.dart';
 import 'user_location_controller.dart';
@@ -31,8 +32,10 @@ class UserController extends _$UserController {
       return;
     }
 
+    final currentDateTime = ref.read(currentDateProvider);
+
     final user =
-        AppUser(userLocation: userLocation, lastUpdated: DateTime.now());
+        AppUser(userLocation: userLocation, lastUpdated: currentDateTime);
     final userRepository = ref.read(userRepositoryProvider);
     state = await AsyncValue.guard(() => userRepository.setUser(user));
 

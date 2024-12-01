@@ -1,12 +1,13 @@
-import 'package:app/src/features/startup/domain/geo_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_repository.dart';
 import 'package:app/src/features/startup/domain/app_user.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   late FakeUserRepository userRepository;
-  final location = GeoLocation(latitude: 123, longitude: 123);
-  final testUser = AppUser(userLocation: location, lastUpdated: DateTime.now());
+  const testUserLocation = LatLng(123, 123);
+  final testUser =
+      AppUser(userLocation: testUserLocation, lastUpdated: DateTime.now());
 
   FakeUserRepository makeUserRepository() {
     return FakeUserRepository(addDelay: false);

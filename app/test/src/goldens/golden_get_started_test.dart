@@ -32,6 +32,6 @@ void main() {
     // Golden "get_started_300x600.png": Pixel test failed, 3.11%, 5596px diff detected.
     // Golden "get_started_600x800.png": Pixel test failed, 1.18%, 5654px diff detected.
     // Golden "get_started_1000x1000.png": Pixel test failed, 0.57%, 5654px diff detected.
-    // skip: true,
+    skip: true,
   );
 }

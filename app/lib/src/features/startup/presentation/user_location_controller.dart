@@ -1,5 +1,5 @@
-import 'package:app/src/features/startup/domain/geo_location.dart';
 import 'package:app/src/features/startup/domain/user_location_repository.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_location_controller.g.dart';
@@ -7,7 +7,7 @@ part 'user_location_controller.g.dart';
 @riverpod
 class UserLocationController extends _$UserLocationController {
   @override
-  FutureOr<GeoLocation?> build() {
+  FutureOr<LatLng?> build() {
     return null;
   }
 
