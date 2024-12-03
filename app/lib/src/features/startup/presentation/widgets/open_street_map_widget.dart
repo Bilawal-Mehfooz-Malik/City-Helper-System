@@ -7,33 +7,65 @@ import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/utils/osm_helper.dart';
 import '../../../../core/utils/theme_extension.dart';
 
-class OpenStreetMapWidget extends ConsumerWidget {
+class OpenStreetMapWidget extends ConsumerStatefulWidget {
   final LatLng latLng;
   const OpenStreetMapWidget({super.key, required this.latLng});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OpenStreetMapWidget> createState() =>
+      _OpenStreetMapWidgetState();
+}
+
+class _OpenStreetMapWidgetState extends ConsumerState<OpenStreetMapWidget> {
+  late MapController _mapController;
+
+  @override
+  void initState() {
+    super.initState();
+    _mapController = MapController();
+  }
+
+  @override
+  void didUpdateWidget(OpenStreetMapWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if the location has changed
+    if (oldWidget.latLng != widget.latLng) {
+      _mapController.move(widget.latLng, _mapController.camera.zoom);
+    }
+  }
+
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final urlTemplate = ref.read(osmTileUrlProvider);
     final userAgentPackageName = ref.read(userAgentPackageNameProvider);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(Sizes.p8),
       child: FlutterMap(
+        mapController: _mapController,
         options: MapOptions(
           initialZoom: 15,
-          initialCenter: LatLng(latLng.latitude, latLng.longitude),
+          initialCenter: LatLng(
+            widget.latLng.latitude,
+            widget.latLng.longitude,
+          ),
         ),
         children: [
           TileLayer(
             urlTemplate: urlTemplate,
             userAgentPackageName: userAgentPackageName,
           ),
-
-          // [MarkerIcon]
           MarkerLayer(
             markers: [
               Marker(
-                point: latLng,
+                point: widget.latLng,
                 child: Icon(
                   size: 35,
                   Icons.location_pin,

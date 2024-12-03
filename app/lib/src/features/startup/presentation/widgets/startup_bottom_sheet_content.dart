@@ -63,7 +63,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kGetCurrentKey,
-                isDisabled: isLoading, // Disable button if any state is loading
+                isDisabled: isLoading,
                 text: context.loc.getCurrent,
                 onPressed: controller.getCurrentLocation,
               ),
@@ -86,8 +86,8 @@ class StartupBottomSheetContent extends ConsumerWidget {
         if (userLocationState.value != null) ...[
           PrimaryButton(
             key: kSaveKey,
-            isLoading: userState.isLoading, // Show loading if saving user
-            isDisabled: isLoading, // Disable if any state is loading
+            isLoading: userState.isLoading,
+            isDisabled: isLoading,
             text: context.loc.saveLocation,
             onPressed: userController.createUser,
           ),

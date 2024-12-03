@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../routers/app_router.dart';
+import '../../../localization/string_hardcoded.dart';
 
 part 'user_location_controller.g.dart';
 
@@ -22,9 +23,12 @@ class UserLocationController extends _$UserLocationController {
     try {
       // Check if location services are enabled
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      // Location services are not enabled, show setting service dialog to the user
+      debugPrint(serviceEnabled.toString());
       if (!serviceEnabled) {
-        state = AsyncError('Location-Services-Not-Enabled', StackTrace.current);
+        state = AsyncError(
+          'Location-Services-Not-Enabled'.hardcoded,
+          StackTrace.current,
+        );
         return;
       }
 
@@ -32,53 +36,36 @@ class UserLocationController extends _$UserLocationController {
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
-        // Permissions are denied, go to Decision Screen
-        if (permission == LocationPermission.denied) {
-          ref.read(appRouterProvider).goNamed(AppRoute.permissionDenied.name);
-          return;
-        }
-
-        // Permissions are denied forever, show setting dialog to the user
-        if (permission == LocationPermission.deniedForever) {
-          state = AsyncError('Permission-Denied-Forever', StackTrace.current);
-
-          return;
-        }
-
-        // If permissions are granted, get the current location
-        final res = await Geolocator.getCurrentPosition();
-        state = AsyncData(LatLng(res.latitude, res.longitude));
       }
+
+      if (permission == LocationPermission.denied) {
+        state = AsyncError(
+          'Location Permission Denied. Please click on allow button to continue.'
+              .hardcoded,
+          StackTrace.current,
+        );
+        return;
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        state = AsyncError(
+          'Location-Permission-Denied-Forever'.hardcoded,
+          StackTrace.current,
+        );
+        return;
+      }
+
+      // Permissions are granted, get the current location
+      final res = await Geolocator.getCurrentPosition();
+      state = AsyncData(LatLng(res.latitude, res.longitude));
     } catch (e, st) {
       state = AsyncError(e, st);
     }
   }
 
   void getLocationFromMap(LatLng latLng) {
+    state = const AsyncData(null);
     state = const AsyncLoading();
     state = AsyncData(latLng);
   }
 }
-
-// // [Showing Dialog to go to Settings if permission are parmanently disabled]
-// Future<void> _showSettingsDialog(BuildContext context) async {
-//   final local = AppLocalizations.of(context)!;
-//   twoButtonDialog(
-//       context: context,
-//       title: local.permissionDeniedTitle,
-//       content: local.permissionDeniedContent,
-//       leftButtonText: local.cancel,
-//       rightButtonText: local.openSettings,
-
-//       // [cancel Button]
-//       leftButtonAction: () {
-//         context.pop();
-//         _navigateToDecisionScreen(context);
-//       },
-
-//       // [Settings Button]
-//       rightButtonAction: () {
-//         context.pop();
-//         Geolocator.openAppSettings();
-//       });
-// }
