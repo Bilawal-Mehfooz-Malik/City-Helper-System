@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ Future<bool?> showAlertDialog({
           ? <Widget>[
               if (cancelActionText != null)
                 TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: context.colorScheme.secondary,
+                  ),
                   child: Text(cancelActionText),
                   onPressed: () {
                     if (cancelAction != null) {

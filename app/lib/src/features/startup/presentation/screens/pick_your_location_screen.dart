@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../../core/utils/osm_helper.dart';
 import '../../../../core/utils/theme_extension.dart';
-import '../../../../localization/string_hardcoded.dart';
+import '../../../../localization/localization_extension.dart';
 import '../user_location_controller.dart';
 
 class PickYourLocationScreen extends ConsumerStatefulWidget {
@@ -46,7 +46,7 @@ class _PickYourLocationScreenState
     final userAgentPackageName = ref.read(userAgentPackageNameProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Pick your Location'.hardcoded)),
+      appBar: AppBar(title: Text(context.loc.pickYourLocaiton)),
       body: SafeArea(
         child: FlutterMap(
           mapController: _mapController,

@@ -22,7 +22,6 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Fetch the state and controllers for user and location
     final userState = ref.watch(userControllerProvider);
     final userLocationState = ref.watch(userLocationControllerProvider);
     final userController = ref.read(userControllerProvider.notifier);

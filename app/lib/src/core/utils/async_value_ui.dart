@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../exceptions/app_exceptions.dart';
+import '../../localization/string_hardcoded.dart';
+import '../common_widgets/alert_dialogs.dart';
 
 extension AsyncValueUI on AsyncValue {
   void showAlertDialogOnError(BuildContext context) {
     if (!isLoading && hasError) {
-      if (error == 'Location-Permission-Denied-Forever') {
+      if (error == LocationPermissionDeniedForeverException().code) {
         showAlertDialog(
           context: context,
           title: 'Location Permission Denied'.hardcoded,
-          content:
-              'This app requires access to location permissions to function properly. Please enable the permission in settings to continue.'
-                  .hardcoded,
+          content: LocationPermissionDeniedForeverException().message,
           cancelActionText: 'cancel'.hardcoded,
           defaultActionText: 'Go to Settings'.hardcoded,
           defaultAction: () async {
@@ -23,13 +22,11 @@ extension AsyncValueUI on AsyncValue {
             await Geolocator.openAppSettings();
           },
         );
-      } else if (error == 'Location-Services-Not-Enabled') {
+      } else if (error == LocationServicesNotEnabledException().code) {
         showAlertDialog(
           context: context,
           title: 'Location Permission Denied'.hardcoded,
-          content:
-              'This app requires access to location permissions to function properly. Please enable the permission in settings to continue.'
-                  .hardcoded,
+          content: LocationServicesNotEnabledException().message,
           cancelActionText: 'cancel'.hardcoded,
           defaultActionText: 'Go to Settings'.hardcoded,
           defaultAction: () async {

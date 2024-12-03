@@ -27,5 +27,8 @@
   "notChoosen": "Not Choosen",
   "@notChoosen": {},
   "saveLocation": "Save Location",
-  "@saveLocation": {}
+  "@saveLocation": {},
+
+  "pickYourLocaiton":"Pick Your Location",
+  "@pickYourLocaiton": {}
 }

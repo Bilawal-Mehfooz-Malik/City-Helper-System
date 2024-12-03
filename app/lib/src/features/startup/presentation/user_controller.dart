@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/utils/current_date_provider.dart';
-import '../../../localization/string_hardcoded.dart';
+import '../../../exceptions/app_exceptions.dart';
 import '../../../routers/app_router.dart';
 import '../domain/app_user.dart';
 import '../domain/user_repository.dart';
@@ -25,10 +25,7 @@ class UserController extends _$UserController {
     );
 
     if (userLocation == null) {
-      state = AsyncError(
-        'User location not available'.hardcoded,
-        StackTrace.current,
-      );
+      state = AsyncError(LocationNotPickedException(), StackTrace.current);
       return;
     }
 

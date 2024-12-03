@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../localization/string_hardcoded.dart';
+import '../../../exceptions/app_exceptions.dart';
 
 part 'user_location_controller.g.dart';
 
@@ -26,7 +26,7 @@ class UserLocationController extends _$UserLocationController {
       debugPrint(serviceEnabled.toString());
       if (!serviceEnabled) {
         state = AsyncError(
-          'Location-Services-Not-Enabled'.hardcoded,
+          LocationServicesNotEnabledException().code,
           StackTrace.current,
         );
         return;
@@ -40,8 +40,7 @@ class UserLocationController extends _$UserLocationController {
 
       if (permission == LocationPermission.denied) {
         state = AsyncError(
-          'Location Permission Denied. Please click on allow button to continue.'
-              .hardcoded,
+          LocationPermissionDeniedException(),
           StackTrace.current,
         );
         return;
@@ -49,7 +48,7 @@ class UserLocationController extends _$UserLocationController {
 
       if (permission == LocationPermission.deniedForever) {
         state = AsyncError(
-          'Location-Permission-Denied-Forever'.hardcoded,
+          LocationPermissionDeniedForeverException().code,
           StackTrace.current,
         );
         return;

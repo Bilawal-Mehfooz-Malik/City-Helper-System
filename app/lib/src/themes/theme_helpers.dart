@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../core/constants/app_sizes.dart';
 
-WidgetStatePropertyAll<RoundedRectangleBorder> shape() {
-  return WidgetStatePropertyAll(
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
+RoundedRectangleBorder borderRadius() {
+  return RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(Sizes.p8),
   );
+}
+
+WidgetStatePropertyAll<RoundedRectangleBorder> shape() {
+  return WidgetStatePropertyAll(borderRadius());
 }
 
 WidgetStatePropertyAll<Size?> buttonSize() {

@@ -14,7 +14,6 @@ ThemeData lightTheme(Ref ref) {
 
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: primaryColor,
@@ -61,7 +60,24 @@ ThemeData lightTheme(Ref ref) {
       ),
     ),
 
+    /// [OutlinedButtonThemeData]
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        shape: shape(),
+        // minimumSize: buttonSize(),
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            fontSize: 16,
+            fontFamily: fontFamily,
+          ),
+        ),
+      ),
+    ),
+
     /// [CardThemeData]
     cardTheme: const CardTheme(color: surfaceColor),
+
+    /// [DialogThemeData]
+    dialogTheme: DialogTheme(shape: borderRadius()),
   );
 }
