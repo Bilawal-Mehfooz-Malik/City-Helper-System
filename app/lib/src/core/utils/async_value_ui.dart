@@ -13,6 +13,7 @@ extension AsyncValueUI on AsyncValue {
       if (error == LocationPermissionDeniedForeverException().code) {
         showAlertDialog(
           context: context,
+          useFilledButton: true,
           title: 'Location Permission Denied'.hardcoded,
           content: LocationPermissionDeniedForeverException().message,
           cancelActionText: 'cancel'.hardcoded,
@@ -25,6 +26,7 @@ extension AsyncValueUI on AsyncValue {
       } else if (error == LocationServicesNotEnabledException().code) {
         showAlertDialog(
           context: context,
+          useFilledButton: true,
           title: 'Location Permission Denied'.hardcoded,
           content: LocationServicesNotEnabledException().message,
           cancelActionText: 'cancel'.hardcoded,

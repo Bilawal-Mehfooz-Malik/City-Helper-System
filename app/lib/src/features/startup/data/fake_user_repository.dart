@@ -1,28 +1,29 @@
+import 'package:latlong2/latlong.dart';
+
 import '../../../core/utils/delay.dart';
 import '../../../core/utils/in_memory_store.dart';
-import '../domain/app_user.dart';
-import '../domain/user_repository.dart';
+import '../domain/user_location_repository.dart';
 
-class FakeUserRepository implements UserRepository {
+class FakeUserLocationRepository implements UserLocationRepository {
   final bool addDelay;
-  FakeUserRepository({this.addDelay = true});
+  FakeUserLocationRepository({this.addDelay = true});
 
-  final _appUser = InMemoryStore<AppUser?>(null);
+  final _appUserLocation = InMemoryStore<LatLng?>(null);
 
   @override
-  Future<AppUser?> fetchUser() async {
+  Future<LatLng?> fetchUserLocation() async {
     await delay(addDelay);
-    return _appUser.value;
+    return _appUserLocation.value;
   }
 
   @override
-  Future<void> setUser(AppUser user) async {
+  Future<void> setUserLocation(LatLng latLng) async {
     await delay(addDelay);
-    _appUser.value = user;
+    _appUserLocation.value = latLng;
   }
 
   @override
-  Stream<AppUser?> watchUser() => _appUser.stream;
+  Stream<LatLng?> watchUserLocation() => _appUserLocation.stream;
 
-  void dispose() => _appUser.close();
+  void dispose() => _appUserLocation.close();
 }

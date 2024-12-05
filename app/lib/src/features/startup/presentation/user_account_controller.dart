@@ -1,16 +1,14 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/utils/current_date_provider.dart';
 import '../../../exceptions/app_exceptions.dart';
 import '../../../routers/app_router.dart';
-import '../domain/app_user.dart';
-import '../domain/user_repository.dart';
+import '../domain/user_location_repository.dart';
 import 'user_location_controller.dart';
 
-part 'user_controller.g.dart';
+part 'user_account_controller.g.dart';
 
 @riverpod
-class UserController extends _$UserController {
+class UserAccountController extends _$UserAccountController {
   @override
   FutureOr<void> build() {}
 
@@ -29,12 +27,9 @@ class UserController extends _$UserController {
       return;
     }
 
-    final currentDateTime = ref.read(currentDateProvider);
-
-    final user =
-        AppUser(userLocation: userLocation, lastUpdated: currentDateTime);
-    final userRepository = ref.read(userRepositoryProvider);
-    state = await AsyncValue.guard(() => userRepository.setUser(user));
+    final repository = ref.read(userLocationRepositoryProvider);
+    state =
+        await AsyncValue.guard(() => repository.setUserLocation(userLocation));
 
     /// Navigate to [HomeScreen]
     if (state is AsyncData) {
@@ -44,7 +39,7 @@ class UserController extends _$UserController {
 
   Future<void> fetchUser() async {
     state = const AsyncLoading();
-    final userRepository = ref.read(userRepositoryProvider);
-    state = await AsyncValue.guard(() => userRepository.fetchUser());
+    final userRepository = ref.read(userLocationRepositoryProvider);
+    state = await AsyncValue.guard(() => userRepository.fetchUserLocation());
   }
 }

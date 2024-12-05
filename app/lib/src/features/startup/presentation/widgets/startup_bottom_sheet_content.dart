@@ -9,7 +9,7 @@ import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/utils/async_value_ui.dart';
 import '../../../../core/utils/theme_extension.dart';
 import '../../../../localization/localization_extension.dart';
-import '../user_controller.dart';
+import '../user_account_controller.dart';
 import '../user_location_controller.dart';
 import 'location_preview_widget.dart';
 
@@ -22,9 +22,9 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userState = ref.watch(userControllerProvider);
+    final userState = ref.watch(userAccountControllerProvider);
     final userLocationState = ref.watch(userLocationControllerProvider);
-    final userController = ref.read(userControllerProvider.notifier);
+    final userController = ref.read(userAccountControllerProvider.notifier);
     final controller = ref.read(userLocationControllerProvider.notifier);
 
     final isLoading = userState.isLoading || userLocationState.isLoading;
@@ -37,7 +37,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
     // Error handling for userCreation
     ref.listen<AsyncValue>(
-      userControllerProvider,
+      userAccountControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
