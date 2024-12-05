@@ -7,7 +7,7 @@ import 'package:latlong2/latlong.dart';
 import '../../../../core/utils/osm_helper.dart';
 import '../../../../core/utils/theme_extension.dart';
 import '../../../../localization/localization_extension.dart';
-import '../user_location_controller.dart';
+import '../location_controller.dart';
 
 class PickYourLocationScreen extends ConsumerStatefulWidget {
   const PickYourLocationScreen({super.key});
@@ -78,7 +78,7 @@ class _PickYourLocationScreenState
         child: const Icon(Icons.check),
         onPressed: () {
           ref
-              .read(userLocationControllerProvider.notifier)
+              .read(locationControllerProvider.notifier)
               .getLocationFromMap(_pickedLocation);
           context.pop();
         },

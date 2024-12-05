@@ -7,12 +7,12 @@ part of 'user_location_controller.dart';
 // **************************************************************************
 
 String _$userLocationControllerHash() =>
-    r'581eddbe6c3bc0599062a8a98871410ab492d579';
+    r'1af8f6fbef3a5cc5e6bcd88c8777b94c990fadb2';
 
 /// See also [UserLocationController].
 @ProviderFor(UserLocationController)
 final userLocationControllerProvider =
-    AutoDisposeAsyncNotifierProvider<UserLocationController, LatLng?>.internal(
+    AutoDisposeAsyncNotifierProvider<UserLocationController, void>.internal(
   UserLocationController.new,
   name: r'userLocationControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final userLocationControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$UserLocationController = AutoDisposeAsyncNotifier<LatLng?>;
+typedef _$UserLocationController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

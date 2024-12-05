@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_account_controller.dart';
+part of 'location_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userAccountControllerHash() =>
-    r'99fda8af9c92b4caa49eb7e1a74d27c28c31a4e9';
+String _$locationControllerHash() =>
+    r'b16e95dc5e73b1aefbace6c7b8aeaf8f53faa9c1';
 
-/// See also [UserAccountController].
-@ProviderFor(UserAccountController)
-final userAccountControllerProvider =
-    AutoDisposeAsyncNotifierProvider<UserAccountController, void>.internal(
-  UserAccountController.new,
-  name: r'userAccountControllerProvider',
+/// See also [LocationController].
+@ProviderFor(LocationController)
+final locationControllerProvider =
+    AutoDisposeAsyncNotifierProvider<LocationController, LatLng?>.internal(
+  LocationController.new,
+  name: r'locationControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$userAccountControllerHash,
+      : _$locationControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UserAccountController = AutoDisposeAsyncNotifier<void>;
+typedef _$LocationController = AutoDisposeAsyncNotifier<LatLng?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -16,3 +16,11 @@ abstract class UserLocationRepository {
 UserLocationRepository userLocationRepository(Ref ref) {
   throw UnimplementedError();
 }
+
+// * Using keepAlive since other providers need it to be an
+// * [AlwaysAliveProviderListenable]
+@Riverpod(keepAlive: true)
+Stream<LatLng?> watchUserLocation(Ref ref) {
+  final authRepository = ref.watch(userLocationRepositoryProvider);
+  return authRepository.watchUserLocation();
+}

@@ -1,70 +1,39 @@
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../exceptions/app_exceptions.dart';
+import '../domain/user_location_repository.dart';
+import 'location_controller.dart';
 
 part 'user_location_controller.g.dart';
 
 @riverpod
 class UserLocationController extends _$UserLocationController {
   @override
-  FutureOr<LatLng?> build() {
-    return null;
-  }
+  FutureOr<void> build() {}
 
-  Future<void> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
+  Future<void> createUser() async {
     state = const AsyncLoading();
+    final userLocationController = ref.read(locationControllerProvider);
 
-    try {
-      // Check if location services are enabled
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      debugPrint(serviceEnabled.toString());
-      if (!serviceEnabled) {
-        state = AsyncError(
-          LocationServicesNotEnabledException().code,
-          StackTrace.current,
-        );
-        return;
-      }
+    // Checking if the location is available; handle null case gracefully
+    final userLocation = userLocationController.maybeWhen(
+      data: (location) => location,
+      orElse: () => null,
+    );
 
-      // Check and request location permissions
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-
-      if (permission == LocationPermission.denied) {
-        state = AsyncError(
-          LocationPermissionDeniedException(),
-          StackTrace.current,
-        );
-        return;
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        state = AsyncError(
-          LocationPermissionDeniedForeverException().code,
-          StackTrace.current,
-        );
-        return;
-      }
-
-      // Permissions are granted, get the current location
-      final res = await Geolocator.getCurrentPosition();
-      state = AsyncData(LatLng(res.latitude, res.longitude));
-    } catch (e, st) {
-      state = AsyncError(e, st);
+    if (userLocation == null) {
+      state = AsyncError(LocationNotPickedException(), StackTrace.current);
+      return;
     }
+
+    final repository = ref.read(userLocationRepositoryProvider);
+    state =
+        await AsyncValue.guard(() => repository.setUserLocation(userLocation));
   }
 
-  void getLocationFromMap(LatLng latLng) {
-    state = const AsyncData(null);
+  Future<void> fetchUser() async {
     state = const AsyncLoading();
-    state = AsyncData(latLng);
+    final userRepository = ref.read(userLocationRepositoryProvider);
+    state = await AsyncValue.guard(() => userRepository.fetchUserLocation());
   }
 }

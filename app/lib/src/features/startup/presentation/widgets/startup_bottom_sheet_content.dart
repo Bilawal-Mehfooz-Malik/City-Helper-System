@@ -9,8 +9,8 @@ import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/utils/async_value_ui.dart';
 import '../../../../core/utils/theme_extension.dart';
 import '../../../../localization/localization_extension.dart';
-import '../user_account_controller.dart';
 import '../user_location_controller.dart';
+import '../location_controller.dart';
 import 'location_preview_widget.dart';
 
 const kGetCurrentKey = Key('get-current-key');
@@ -22,22 +22,22 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userState = ref.watch(userAccountControllerProvider);
-    final userLocationState = ref.watch(userLocationControllerProvider);
-    final userController = ref.read(userAccountControllerProvider.notifier);
-    final controller = ref.read(userLocationControllerProvider.notifier);
+    final userState = ref.watch(userLocationControllerProvider);
+    final userLocationState = ref.watch(locationControllerProvider);
+    final userController = ref.read(userLocationControllerProvider.notifier);
+    final controller = ref.read(locationControllerProvider.notifier);
 
     final isLoading = userState.isLoading || userLocationState.isLoading;
 
     // Error handling for userLocation
     ref.listen<AsyncValue>(
-      userLocationControllerProvider,
+      locationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
     // Error handling for userCreation
     ref.listen<AsyncValue>(
-      userAccountControllerProvider,
+      userLocationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 

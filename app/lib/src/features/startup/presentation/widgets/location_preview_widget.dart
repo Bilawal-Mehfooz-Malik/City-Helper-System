@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/common_widgets/custom_progress_indicator.dart';
 import '../../../../core/constants/app_sizes.dart';
 import '../../../../localization/localization_extension.dart';
-import '../user_location_controller.dart';
+import '../location_controller.dart';
 import 'open_street_map_widget.dart';
 
 class LocationPreviewWidget extends ConsumerWidget {
@@ -12,7 +12,7 @@ class LocationPreviewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userLocationValue = ref.watch(userLocationControllerProvider);
+    final userLocationValue = ref.watch(locationControllerProvider);
 
     return AspectRatio(
       aspectRatio: 16 / 9,
