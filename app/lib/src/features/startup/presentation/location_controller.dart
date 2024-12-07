@@ -1,6 +1,7 @@
-import 'package:app/src/features/startup/data/location_repository.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../data/location_repository.dart';
 
 part 'location_controller.g.dart';
 

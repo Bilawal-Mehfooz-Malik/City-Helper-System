@@ -10,7 +10,7 @@ import '../common_widgets/alert_dialogs.dart';
 extension AsyncValueUI on AsyncValue {
   void showAlertDialogOnError(BuildContext context) {
     if (!isLoading && hasError) {
-      if (error == LocationPermissionDeniedForeverException().code) {
+      if (error == LocationPermissionDeniedForeverException()) {
         showAlertDialog(
           context: context,
           useFilledButton: true,
@@ -23,7 +23,7 @@ extension AsyncValueUI on AsyncValue {
             await Geolocator.openAppSettings();
           },
         );
-      } else if (error == LocationServicesNotEnabledException().code) {
+      } else if (error == LocationServicesNotEnabledException()) {
         showAlertDialog(
           context: context,
           useFilledButton: true,

@@ -8,20 +8,24 @@ import '../../../exceptions/app_exceptions.dart';
 part 'location_repository.g.dart';
 
 class LocationRepository {
+  LocationRepository(this.geolocator);
+
+  final GeolocatorPlatform geolocator;
+
   Future<LatLng> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    serviceEnabled = await geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw LocationServicesNotEnabledException().code;
+      throw LocationServicesNotEnabledException();
     }
 
     // Check and request location permissions
-    permission = await Geolocator.checkPermission();
+    permission = await geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      permission = await geolocator.requestPermission();
     }
 
     if (permission == LocationPermission.denied) {
@@ -29,11 +33,11 @@ class LocationRepository {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw LocationPermissionDeniedForeverException().code;
+      throw LocationPermissionDeniedForeverException();
     }
 
     // Permissions are granted, get the current location
-    final res = await Geolocator.getCurrentPosition();
+    final res = await geolocator.getCurrentPosition();
     return LatLng(res.latitude, res.longitude);
   }
 
@@ -44,5 +48,5 @@ class LocationRepository {
 
 @riverpod
 LocationRepository locationRepository(Ref ref) {
-  return LocationRepository();
+  return LocationRepository(GeolocatorPlatform.instance);
 }

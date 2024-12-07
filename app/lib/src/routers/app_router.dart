@@ -1,5 +1,3 @@
-import 'package:app/src/features/startup/domain/user_location_repository.dart';
-import 'package:app/src/routers/go_router_refresh_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../core/common_widgets/loading_screen.dart';
 import '../features/home_screen.dart';
+import '../features/startup/data/user_location_repository.dart';
 import '../features/startup/presentation/screens/pick_your_location_screen.dart';
 import '../features/startup/presentation/screens/startup_screen.dart';
 import 'not_found_screen.dart';
@@ -24,47 +23,37 @@ enum AppRoute {
 
 @riverpod
 GoRouter appRouter(Ref ref) {
-  final userLocRepo = ref.watch(userLocationRepositoryProvider);
+  late GoRouter router;
 
-  return GoRouter(
+  final sub =
+      ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
+
+  return router = GoRouter(
     initialLocation: '/',
     debugLogDiagnostics: true,
-    refreshListenable: GoRouterRefreshStream(userLocRepo.watchUserLocation()),
-    redirect: (context, state) {
+    redirect: (context, state) async {
       final location = state.uri.path;
-      final userLocationAsyncValue = ref.watch(watchUserLocationProvider);
-
-      return userLocationAsyncValue.when(
-        data: (userExists) {
-          if (userExists == null) {
-            // User does not exist, redirect to /get-started
-            if (location != '/get-started' &&
-                !location.startsWith('/get-started')) {
-              return '/get-started';
-            }
-          } else {
-            // User exists, prevent access to /get-started and redirect to home
-            if (location == '/get-started' ||
-                location.startsWith('/get-started') ||
-                location == '/loading') {
-              return '/';
-            }
+      try {
+        final userLocExists = sub.read().value;
+        if (userLocExists == null) {
+          // User does not exist, redirect to /get-started
+          if (location != '/get-started' &&
+              !location.startsWith('/get-started')) {
+            return '/get-started';
           }
-          return null; // No redirect
-        },
-        loading: () {
-          // If data is loading, redirect to the loading screen
-          if (location != '/loading') {
-            return '/loading';
+        } else {
+          // User exists, prevent access to /get-started and redirect to home
+          if (location == '/get-started' ||
+              location.startsWith('/get-started') ||
+              location == '/loading') {
+            return '/';
           }
-          return null; // Stay on the loading screen
-        },
-        error: (error, stack) {
-          // Handle errors by redirecting to the error page
-          if (location != '/page-not-found') return '/page-not-found';
-          return null;
-        },
-      );
+        }
+        return null;
+      } catch (e) {
+        if (location != '/page-not-found') return '/page-not-found';
+        return null;
+      }
     },
     routes: [
       GoRoute(
