@@ -10,4 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: subosito/flutter-action@v2
+    - name: Create .env file with secrets
+      run: |
+        echo "OSM_TILE_URL=${{ secrets.OSM_TILE_URL }}" >> app/.env
+        echo "USER_AGENT_PACKAGE_NAME=${{ secrets.USER_AGENT_PACKAGE_NAME }}" >> app/.env
     - run: flutter test
