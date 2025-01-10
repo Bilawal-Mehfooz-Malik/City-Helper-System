@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../exceptions/app_exceptions.dart';
+import '../../../core/exceptions/app_exceptions.dart';
 import '../data/user_location_repository.dart';
 import 'location_controller.dart';
 
@@ -30,10 +30,4 @@ class UserLocationController extends _$UserLocationController {
     state =
         await AsyncValue.guard(() => repository.setUserLocation(userLocation));
   }
-
-  // Future<void> fetchUser() async {
-  //   state = const AsyncLoading();
-  //   final userRepository = ref.read(userLocationRepositoryProvider);
-  //   state = await AsyncValue.guard(() => userRepository.fetchUserLocation());
-  // }
 }

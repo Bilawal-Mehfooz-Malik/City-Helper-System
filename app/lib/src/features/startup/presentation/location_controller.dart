@@ -1,26 +1,25 @@
-import 'package:latlong2/latlong.dart';
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/location_repository.dart';
+import '../data/geolocator_repository.dart';
 
 part 'location_controller.g.dart';
 
 @riverpod
 class LocationController extends _$LocationController {
   @override
-  FutureOr<LatLng?> build() {
+  FutureOr<UserLocation?> build() {
     return null;
   }
 
   Future<void> getCurrentLocation() async {
     state = const AsyncLoading();
-    final locationRepo = ref.read(locationRepositoryProvider);
+    final locationRepo = ref.read(geoLocatorRepositoryProvider);
     state = await AsyncValue.guard(() => locationRepo.getCurrentLocation());
   }
 
-  void getLocationFromMap(LatLng latLng) {
+  void getLocationFromMap(UserLocation location) async {
     state = const AsyncLoading();
-    final locationRepo = ref.read(locationRepositoryProvider);
-    state = AsyncData(locationRepo.getLocationFromMap(latLng));
+    state = AsyncData(location);
   }
 }

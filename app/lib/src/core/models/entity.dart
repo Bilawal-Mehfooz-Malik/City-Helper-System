@@ -1,18 +1,13 @@
-import 'package:latlong2/latlong.dart';
-import 'location.dart';
 import 'my_data_types.dart';
 
 abstract class Entity {
   final UserId userId;
-  final EntityId id; // Unique identifier for the entity
+  final EntityId id;
   final String name;
   final String description;
   final String coverImageUrl;
   final List<String> imagesUrls;
-  final String videosUrl;
-  final Location location;
-  final LatLng geoLocation;
-  final String address;
+  final String videoUrl;
   final double avgRating;
   final int reviewsCount;
   final bool isPopular; // for showing it in popular section
@@ -30,10 +25,7 @@ abstract class Entity {
     required this.description,
     required this.coverImageUrl,
     required this.imagesUrls,
-    required this.videosUrl,
-    required this.location,
-    required this.geoLocation,
-    required this.address,
+    required this.videoUrl,
     required this.avgRating,
     required this.reviewsCount,
     required this.isPopular,

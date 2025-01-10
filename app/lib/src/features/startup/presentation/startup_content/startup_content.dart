@@ -1,12 +1,11 @@
+import 'package:app/src/core/common_widgets/primary_button.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/constants/app_logo.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/startup/presentation/startup_content/startup_bottom_sheet_content.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/common_widgets/primary_button.dart';
-import '../../../../core/common_widgets/responsive_scrollable.dart';
-import '../../../../core/constants/app_logo.dart';
-import '../../../../core/constants/app_sizes.dart';
-import '../../../../core/utils/theme_extension.dart';
-import '../../../../localization/localization_extension.dart';
-import 'startup_bottom_sheet_content.dart';
 
 class StartupContent extends StatelessWidget {
   const StartupContent({super.key, this.useSpacer = false});

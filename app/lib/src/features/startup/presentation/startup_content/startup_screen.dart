@@ -1,9 +1,8 @@
+import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/features/startup/presentation/startup_content/startup_content.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/common_widgets/responsive_scrollable.dart';
-import '../../../../core/constants/app_sizes.dart';
-import '../../../../core/constants/breakpoints.dart';
-import '../widgets/startup_content.dart';
 
 class StartupScreen extends StatelessWidget {
   const StartupScreen({super.key});

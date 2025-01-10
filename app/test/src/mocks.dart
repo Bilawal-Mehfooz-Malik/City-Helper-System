@@ -1,4 +1,4 @@
-import 'package:app/src/features/startup/data/location_repository.dart';
+import 'package:app/src/features/startup/data/geolocator_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sembast/sembast.dart';
@@ -14,7 +14,7 @@ class MockRecordRef extends Mock implements RecordRef<Object?, Object?> {}
 class MockRecordSnapshot extends Mock
     implements RecordSnapshot<String, Object?> {}
 
-class MockLocationRepository extends Mock implements LocationRepository {}
+class MockLocationRepository extends Mock implements GeoLocatorRepository {}
 
 class Listener<T> extends Mock {
   void call(T? previous, T next);

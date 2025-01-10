@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../exceptions/app_exceptions.dart';
+import '../exceptions/app_exceptions.dart';
 import '../../localization/string_hardcoded.dart';
 import '../common_widgets/alert_dialogs.dart';
 

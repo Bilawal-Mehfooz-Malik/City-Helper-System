@@ -1,11 +1,10 @@
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/features/startup/presentation/location_controller.dart';
+import 'package:app/src/features/startup/presentation/startup_content/google_map_widget.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../core/common_widgets/custom_progress_indicator.dart';
-import '../../../../core/constants/app_sizes.dart';
-import '../../../../localization/localization_extension.dart';
-import '../location_controller.dart';
-import 'open_street_map_widget.dart';
 
 class LocationPreviewWidget extends ConsumerWidget {
   const LocationPreviewWidget({super.key});
@@ -25,9 +24,9 @@ class LocationPreviewWidget extends ConsumerWidget {
           child: userLocationValue.maybeWhen(
             skipError: true,
             loading: () => const Center(child: CustomProgressIndicator()),
-            data: (latLng) => latLng == null
+            data: (location) => location == null
                 ? Text(context.loc.notChoosen)
-                : OpenStreetMapWidget(latLng: latLng),
+                : GoogleMapWidget(location: location),
             orElse: () => Text(context.loc.notChoosen),
           ),
         ),

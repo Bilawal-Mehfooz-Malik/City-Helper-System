@@ -1,17 +1,16 @@
+import 'package:app/src/core/common_widgets/custom_outlined_button.dart';
+import 'package:app/src/core/common_widgets/primary_button.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/async_value_ui.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/startup/presentation/location_controller.dart';
+import 'package:app/src/features/startup/presentation/startup_content/location_preview_widget.dart';
+import 'package:app/src/features/startup/presentation/user_location_controller.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/common_widgets/custom_outlined_button.dart';
-import '../../../../core/common_widgets/primary_button.dart';
-import '../../../../core/constants/app_sizes.dart';
-import '../../../../core/utils/async_value_ui.dart';
-import '../../../../core/utils/theme_extension.dart';
-import '../../../../localization/localization_extension.dart';
-import '../user_location_controller.dart';
-import '../location_controller.dart';
-import 'location_preview_widget.dart';
 
 const kGetCurrentKey = Key('get-current-key');
 const kFromMapKey = Key('from-map-key');
@@ -55,7 +54,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         const LocationPreviewWidget(),
         gapH12,
 
-        // [Get Current] and [From Map] Buttons
+        /// [GetCurrent] and [FromMap] Buttons
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -81,7 +80,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         ),
         gapH12,
 
-        // [Save Location Button]
+        /// [SaveLocationButton]
         if (userLocationState.value != null) ...[
           PrimaryButton(
             key: kSaveKey,

@@ -1,22 +1,23 @@
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:app/src/exceptions/app_exceptions.dart';
-import 'package:app/src/features/startup/data/location_repository.dart';
+import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/features/startup/data/geolocator_repository.dart';
 
 import '../../../mocks.dart';
 
 void main() {
   late MockGeoLocator geoLocator;
-  late LocationRepository locationRepository;
+  late GeoLocatorRepository locationRepository;
 
   const latitude = 37.0;
   const longitude = -122.0;
+  const testLatLng = UserLocation(latitude: latitude, longitude: longitude);
   final position = Position(
     latitude: latitude,
     longitude: longitude,
-    timestamp: DateTime(2024),
+    timestamp: DateTime(2025),
     accuracy: 1.0,
     altitude: 1.0,
     heading: 1.0,
@@ -25,11 +26,10 @@ void main() {
     altitudeAccuracy: 12,
     headingAccuracy: 12,
   );
-  const testLatLng = LatLng(latitude, longitude);
 
   setUp(() {
     geoLocator = MockGeoLocator();
-    locationRepository = LocationRepository(geoLocator);
+    locationRepository = GeoLocatorRepository(geoLocator);
   });
 
   group('LocationRepository', () {
@@ -46,11 +46,6 @@ void main() {
       final result = await locationRepository.getCurrentLocation();
 
       // Verify
-      expect(result, testLatLng);
-    });
-
-    test('getLocationFromMap returns the same LatLng object', () {
-      final result = locationRepository.getLocationFromMap(testLatLng);
       expect(result, testLatLng);
     });
 

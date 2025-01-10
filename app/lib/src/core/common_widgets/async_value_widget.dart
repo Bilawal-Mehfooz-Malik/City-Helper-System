@@ -1,8 +1,8 @@
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'custom_progress_indicator.dart';
-import 'error_message_widget.dart';
 
 class AsyncValueWidget<T> extends StatelessWidget {
   const AsyncValueWidget({super.key, required this.value, required this.data});
@@ -13,7 +13,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return value.when(
       data: data,
-      error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
+      error: (e, st) => Center(child: EmptyMessageWidget(e.toString())),
       loading: () => const Center(child: CustomProgressIndicator()),
     );
   }
@@ -33,7 +33,7 @@ class AsyncValueSliverWidget<T> extends StatelessWidget {
       loading: () => const SliverToBoxAdapter(
           child: Center(child: CircularProgressIndicator())),
       error: (e, st) => SliverToBoxAdapter(
-        child: Center(child: ErrorMessageWidget(e.toString())),
+        child: Center(child: EmptyMessageWidget(e.toString())),
       ),
     );
   }

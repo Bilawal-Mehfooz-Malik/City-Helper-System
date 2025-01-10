@@ -18,6 +18,7 @@ ThemeData lightTheme(Ref ref) {
       brightness: Brightness.light,
       primary: primaryColor,
       onPrimary: onPrimaryColor,
+      inversePrimary: inversePrimaryColor,
       secondary: secondaryColor,
       onSecondary: onSecondaryColor,
       error: errorColor,
@@ -26,10 +27,25 @@ ThemeData lightTheme(Ref ref) {
       onSurface: onSurfaceColor,
     ),
 
-    ///[AppBarThemeData]
+    /// [AppBarThemeData]
     appBarTheme: const AppBarTheme(
       backgroundColor: primaryColor,
       foregroundColor: onPrimaryColor,
+    ),
+
+    /// [SearchBarThemeData]
+    searchBarTheme: SearchBarThemeData(
+      elevation: const WidgetStatePropertyAll(2),
+      hintStyle: WidgetStatePropertyAll(
+        TextStyle(
+          fontSize: 16,
+          fontFamily: fontFamily,
+          color: inversePrimaryColor,
+        ),
+      ),
+      textStyle: WidgetStatePropertyAll(
+        TextStyle(fontSize: 16, fontFamily: fontFamily),
+      ),
     ),
 
     /// [FilledButtonThemeData]
@@ -38,10 +54,7 @@ ThemeData lightTheme(Ref ref) {
         shape: shape(),
         minimumSize: buttonSize(),
         textStyle: WidgetStatePropertyAll(
-          TextStyle(
-            fontSize: 16,
-            fontFamily: fontFamily,
-          ),
+          TextStyle(fontSize: 16, fontFamily: fontFamily),
         ),
       ),
     ),
@@ -52,10 +65,7 @@ ThemeData lightTheme(Ref ref) {
         shape: shape(),
         minimumSize: buttonSize(),
         textStyle: WidgetStatePropertyAll(
-          TextStyle(
-            fontSize: 16,
-            fontFamily: fontFamily,
-          ),
+          TextStyle(fontSize: 16, fontFamily: fontFamily),
         ),
       ),
     ),
@@ -66,10 +76,7 @@ ThemeData lightTheme(Ref ref) {
         shape: shape(),
         // minimumSize: buttonSize(),
         textStyle: WidgetStatePropertyAll(
-          TextStyle(
-            fontSize: 16,
-            fontFamily: fontFamily,
-          ),
+          TextStyle(fontSize: 16, fontFamily: fontFamily),
         ),
       ),
     ),

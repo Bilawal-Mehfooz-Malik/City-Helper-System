@@ -1,7 +1,6 @@
-import 'dart:convert';
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sembast/sembast_io.dart';
@@ -29,33 +28,26 @@ class UserLocationRepository {
   }
 
   static const userLocationKey = 'userLocation';
-  static const latitudeKey = 'latitude';
-  static const longitudeKey = 'longitude';
 
-  Future<LatLng?> fetchUserLocation() async {
+  Future<UserLocation?> fetchUserLocation() async {
     final json = await store.record(userLocationKey).get(db) as String?;
     if (json != null) {
-      final Map<String, dynamic> data = jsonDecode(json);
-      return LatLng(data[latitudeKey], data[longitudeKey]);
+      return UserLocation.fromJson(json);
     } else {
       return null;
     }
   }
 
-  Future<void> setUserLocation(LatLng latLng) async {
-    final json = jsonEncode({
-      latitudeKey: latLng.latitude,
-      longitudeKey: latLng.longitude,
-    });
+  Future<void> setUserLocation(UserLocation location) async {
+    final json = location.toJson();
     await store.record(userLocationKey).put(db, json);
   }
 
-  Stream<LatLng?> watchUserLocation() {
+  Stream<UserLocation?> watchUserLocation() {
     final record = store.record(userLocationKey);
     return record.onSnapshot(db).map((snapshot) {
       if (snapshot != null && snapshot.value != null) {
-        final data = jsonDecode(snapshot.value as String);
-        return LatLng(data[latitudeKey], data[longitudeKey]);
+        return UserLocation.fromJson(snapshot.value as String);
       }
       return null;
     });
@@ -68,7 +60,7 @@ UserLocationRepository userLocationRepository(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-Stream<LatLng?> watchUserLocation(Ref ref) {
+Stream<UserLocation?> watchUserLocation(Ref ref) {
   final authRepository = ref.watch(userLocationRepositoryProvider);
   return authRepository.watchUserLocation();
 }

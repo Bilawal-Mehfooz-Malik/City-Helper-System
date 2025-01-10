@@ -20,6 +20,7 @@ sealed class AppException implements Exception {
   int get hashCode => Object.hash(code, message);
 }
 
+/// [LocationExceptions]
 class LocationNotPickedException extends AppException {
   LocationNotPickedException()
       : super(
@@ -49,5 +50,14 @@ class LocationServicesNotEnabledException extends AppException {
       : super(
           'location-services-not-enabled',
           'This app requires access to location services to function properly. Please enable the location services in settings to continue.',
+        );
+}
+
+/// [InternetConnectionExceptions]
+class NoInternetConnectionException extends AppException {
+  NoInternetConnectionException()
+      : super(
+          'no-internet-connection',
+          'Unable to connect to the internet. Please check your connection and try again.',
         );
 }
