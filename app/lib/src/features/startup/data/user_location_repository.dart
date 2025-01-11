@@ -1,3 +1,4 @@
+import 'package:app/src/core/exceptions/app_exceptions.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,10 +10,11 @@ import 'package:sembast_web/sembast_web.dart';
 part 'user_location_repository.g.dart';
 
 class UserLocationRepository {
-  UserLocationRepository(this.db);
+  UserLocationRepository(this.db, {this.timeOut = const Duration(seconds: 15)});
 
   final Database db;
   final store = StoreRef.main();
+  final Duration timeOut;
 
   static Future<Database> _createDatabase(String filename) async {
     if (!kIsWeb) {
@@ -30,7 +32,10 @@ class UserLocationRepository {
   static const userLocationKey = 'userLocation';
 
   Future<UserLocation?> fetchUserLocation() async {
-    final json = await store.record(userLocationKey).get(db) as String?;
+    final json = await store.record(userLocationKey).get(db).timeout(
+          timeOut,
+          onTimeout: () => throw TimedOutException(),
+        ) as String?;
     if (json != null) {
       return UserLocation.fromJson(json);
     } else {
@@ -40,7 +45,10 @@ class UserLocationRepository {
 
   Future<void> setUserLocation(UserLocation location) async {
     final json = location.toJson();
-    await store.record(userLocationKey).put(db, json);
+    await store.record(userLocationKey).put(db, json).timeout(
+          timeOut,
+          onTimeout: () => throw TimedOutException(),
+        );
   }
 
   Stream<UserLocation?> watchUserLocation() {

@@ -1,8 +1,7 @@
+import 'package:app/src/features/startup/data/user_location_repository.dart';
+import 'package:app/src/features/startup/domain/location_exceptions.dart';
+import 'package:app/src/features/startup/presentation/location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../core/exceptions/app_exceptions.dart';
-import '../data/user_location_repository.dart';
-import 'location_controller.dart';
 
 part 'user_location_controller.g.dart';
 
@@ -22,7 +21,7 @@ class UserLocationController extends _$UserLocationController {
     );
 
     if (userLocation == null) {
-      state = AsyncError(LocationNotPickedException(), StackTrace.current);
+      state = AsyncError(LocationUnavailableException(), StackTrace.current);
       return;
     }
 

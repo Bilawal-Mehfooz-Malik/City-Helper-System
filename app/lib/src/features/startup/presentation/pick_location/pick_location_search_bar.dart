@@ -31,7 +31,7 @@ class PickLocationSearchBarState extends State<PickLocationSearchBar> {
   @override
   Widget build(BuildContext context) {
     return SearchBar(
-      enabled: false,
+      // enabled: false,
       controller: _searchController,
       trailing: _showClearButton
           ? [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AppLogo extends StatelessWidget {
   const AppLogo({super.key, required this.height, required this.width});
@@ -11,7 +12,15 @@ class AppLogo extends StatelessWidget {
     return SizedBox(
       height: height,
       width: width,
-      child: SvgPicture.asset(logoPath),
+      child: SvgPicture.asset(
+        logoPath,
+        placeholderBuilder: (context) {
+          return Skeletonizer(
+            enabled: true,
+            child: SizedBox(height: height, width: width),
+          );
+        },
+      ),
     );
   }
 }

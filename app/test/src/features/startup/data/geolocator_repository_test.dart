@@ -1,8 +1,9 @@
+import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:app/src/core/exceptions/app_exceptions.dart';
 import 'package:app/src/features/startup/data/geolocator_repository.dart';
 
 import '../../../mocks.dart';
@@ -29,7 +30,7 @@ void main() {
 
   setUp(() {
     geoLocator = MockGeoLocator();
-    locationRepository = GeoLocatorRepository(geoLocator);
+    locationRepository = GeoLocatorRepository(geoLocator, timeOut: 0);
   });
 
   group('LocationRepository', () {
@@ -49,8 +50,7 @@ void main() {
       expect(result, testLatLng);
     });
 
-    test(
-        'throws LocationServicesNotEnabledException when services are disabled',
+    test('throws LocationServicesDisabledException when services are disabled',
         () async {
       // Setup
       when(() => geoLocator.isLocationServiceEnabled())
@@ -59,7 +59,7 @@ void main() {
       // Running & Verify
       expect(
         locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationServicesNotEnabledException>()),
+        throwsA(isA<LocationServicesDisabledException>()),
       );
     });
 
@@ -94,6 +94,34 @@ void main() {
         locationRepository.getCurrentLocation(),
         throwsA(isA<LocationPermissionDeniedForeverException>()),
       );
+    });
+
+    test(
+        'throws LocationFetchFailedException when it fails in fetching location',
+        () async {
+      // Setup
+      when(() => geoLocator.isLocationServiceEnabled())
+          .thenAnswer((_) async => true);
+      when(() => geoLocator.checkPermission())
+          .thenAnswer((_) async => LocationPermission.whileInUse);
+      when(geoLocator.getCurrentPosition)
+          .thenThrow(LocationFetchFailedException());
+      // Running & Verify
+      expect(
+        locationRepository.getCurrentLocation(),
+        throwsA(isA<LocationFetchFailedException>()),
+      );
+    });
+
+    test('throws TimedOutException when request takes longer time', () async {
+      // Setup
+      final geoLocatorPlatform = MockGeoLocator();
+      final repo = GeoLocatorRepository(geoLocatorPlatform, timeOut: 1);
+      when(() => geoLocatorPlatform.isLocationServiceEnabled()).thenAnswer(
+          (_) => Future.delayed(const Duration(seconds: 2), () => false));
+
+      // Running & Verify
+      expect(repo.getCurrentLocation(), throwsA(isA<TimedOutException>()));
     });
   });
 }

@@ -43,7 +43,7 @@ class StartupContent extends StatelessWidget {
         // [Description]
         Text(
           context.loc.startupDescription,
-          style: context.textTheme.titleMedium,
+          style: context.textTheme.labelLarge,
           textAlign: TextAlign.center,
         ),
         if (useSpacer) const Spacer() else gapH32,

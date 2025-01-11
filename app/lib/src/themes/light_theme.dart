@@ -28,10 +28,10 @@ ThemeData lightTheme(Ref ref) {
     ),
 
     /// [AppBarThemeData]
-    appBarTheme: const AppBarTheme(
-      backgroundColor: primaryColor,
-      foregroundColor: onPrimaryColor,
-    ),
+    // appBarTheme: const AppBarTheme(
+    //   backgroundColor: primaryColor,
+    //   foregroundColor: onPrimaryColor,
+    // ),
 
     /// [SearchBarThemeData]
     searchBarTheme: SearchBarThemeData(
@@ -46,6 +46,7 @@ ThemeData lightTheme(Ref ref) {
       textStyle: WidgetStatePropertyAll(
         TextStyle(fontSize: 16, fontFamily: fontFamily),
       ),
+      overlayColor: const WidgetStatePropertyAll(onPrimaryColor),
     ),
 
     /// [FilledButtonThemeData]
@@ -53,9 +54,7 @@ ThemeData lightTheme(Ref ref) {
       style: ButtonStyle(
         shape: shape(),
         minimumSize: buttonSize(),
-        textStyle: WidgetStatePropertyAll(
-          TextStyle(fontSize: 16, fontFamily: fontFamily),
-        ),
+        textStyle: buttonTextStyle(fontFamily),
       ),
     ),
 
@@ -64,9 +63,7 @@ ThemeData lightTheme(Ref ref) {
       style: ButtonStyle(
         shape: shape(),
         minimumSize: buttonSize(),
-        textStyle: WidgetStatePropertyAll(
-          TextStyle(fontSize: 16, fontFamily: fontFamily),
-        ),
+        textStyle: buttonTextStyle(fontFamily),
       ),
     ),
 
@@ -74,10 +71,7 @@ ThemeData lightTheme(Ref ref) {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         shape: shape(),
-        // minimumSize: buttonSize(),
-        textStyle: WidgetStatePropertyAll(
-          TextStyle(fontSize: 16, fontFamily: fontFamily),
-        ),
+        textStyle: buttonTextStyle(fontFamily),
       ),
     ),
 
@@ -86,5 +80,24 @@ ThemeData lightTheme(Ref ref) {
 
     /// [DialogThemeData]
     dialogTheme: DialogTheme(shape: borderRadius()),
+
+    /// [TextThemeData]
+    textTheme: TextTheme(
+      labelLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 18,
+        color: inversePrimaryColor,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 16,
+        color: inversePrimaryColor,
+      ),
+      labelSmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 14,
+        color: inversePrimaryColor,
+      ),
+    ),
   );
 }

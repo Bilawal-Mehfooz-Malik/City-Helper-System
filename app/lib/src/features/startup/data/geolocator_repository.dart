@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,37 +10,51 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'geolocator_repository.g.dart';
 
 class GeoLocatorRepository {
-  GeoLocatorRepository(this.geolocator);
+  GeoLocatorRepository(this.geolocator, {this.timeOut = 15});
 
   final GeolocatorPlatform geolocator;
+  final int timeOut;
 
   Future<UserLocation?> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+    return Future.value(() async {
+      bool serviceEnabled;
+      LocationPermission permission;
 
-    // Check if location services are enabled
-    serviceEnabled = await geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      throw LocationServicesNotEnabledException();
-    }
+      // Check if location services are enabled
+      serviceEnabled = await geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw LocationServicesDisabledException();
+      }
 
-    // Check and request location permissions
-    permission = await geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await geolocator.requestPermission();
-    }
+      // Check and request location permissions
+      permission = await geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await geolocator.requestPermission();
+      }
 
-    if (permission == LocationPermission.denied) {
-      throw LocationPermissionDeniedException();
-    }
+      if (permission == LocationPermission.denied) {
+        throw LocationPermissionDeniedException();
+      }
 
-    if (permission == LocationPermission.deniedForever) {
-      throw LocationPermissionDeniedForeverException();
-    }
+      if (permission == LocationPermission.deniedForever) {
+        throw LocationPermissionDeniedForeverException();
+      }
 
-    // Permissions are granted, get the current location
-    final res = await geolocator.getCurrentPosition();
-    return UserLocation(latitude: res.latitude, longitude: res.longitude);
+      // Get current position
+      try {
+        final position = await geolocator.getCurrentPosition();
+        return UserLocation(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        );
+      } catch (e) {
+        throw LocationFetchFailedException();
+      }
+    }())
+        .timeout(
+      Duration(seconds: timeOut),
+      onTimeout: () => throw TimedOutException(),
+    );
   }
 }
 

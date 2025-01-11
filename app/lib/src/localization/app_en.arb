@@ -9,7 +9,7 @@
   "@startupDescription": {},
   "getStarted": "Get Started",
   "@getStarted": {},
-  "getLocDescription": "Click on either to \"Get Current\" or \"From Map\" to get your location in order to continue.",
+  "getLocDescription": "Click on either \"Get Current\" or \"From Map\" to get your location in order to continue.",
   "@getLocDescription": {},
   "getCurrent": "Get Current",
   "@getCurrent": {},
@@ -27,8 +27,5 @@
   "notChoosen": "Not Choosen",
   "@notChoosen": {},
   "saveLocation": "Save Location",
-  "@saveLocation": {},
-
-  "pickYourLocaiton":"Pick Your Location",
-  "@pickYourLocaiton": {}
+  "@saveLocation": {}
 }

@@ -15,3 +15,9 @@ WidgetStatePropertyAll<RoundedRectangleBorder> shape() {
 WidgetStatePropertyAll<Size?> buttonSize() {
   return const WidgetStatePropertyAll(Size(double.infinity, Sizes.p48));
 }
+
+WidgetStatePropertyAll<TextStyle?> buttonTextStyle(String fontFamily) {
+  return WidgetStatePropertyAll(
+    TextStyle(fontSize: 16, fontFamily: fontFamily),
+  );
+}
