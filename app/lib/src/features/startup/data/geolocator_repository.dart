@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -42,12 +43,16 @@ class GeoLocatorRepository {
 
       // Get current position
       try {
-        final position = await geolocator.getCurrentPosition();
+        final position = await Geolocator.getCurrentPosition();
         return UserLocation(
           latitude: position.latitude,
           longitude: position.longitude,
         );
-      } catch (e) {
+      } catch (e, s) {
+        debugPrint('--- Location Fetch Exception ---\n'
+            'Error: $e\n'
+            'Stack Trace:\n$s\n'
+            '------------------------------');
         throw LocationFetchFailedException();
       }
     });

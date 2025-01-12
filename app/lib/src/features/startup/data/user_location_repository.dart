@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter/foundation.dart';
@@ -31,21 +33,22 @@ class UserLocationRepository {
 
   static const userLocationKey = 'userLocation';
 
-  Future<UserLocation?> fetchUserLocation() async {
-    return checkTimeOut(timeOut, () async {
-      final json = await store.record(userLocationKey).get(db) as String?;
-      if (json != null) {
-        return UserLocation.fromJson(json);
-      } else {
-        return null;
-      }
+  Future<void> setUserLocation(UserLocation location) async {
+    await checkTimeOut(timeOut, () async {
+      final json = jsonEncode(location.toJson());
+      await store.record(userLocationKey).put(db, json);
     });
   }
 
-  Future<void> setUserLocation(UserLocation location) async {
-    await checkTimeOut(timeOut, () async {
-      final json = location.toJson();
-      await store.record(userLocationKey).put(db, json);
+  Future<UserLocation?> fetchUserLocation() {
+    return checkTimeOut(timeOut, () async {
+      final json = await store.record(userLocationKey).get(db) as String?;
+      if (json != null) {
+        final map = jsonDecode(json) as Map<String, dynamic>;
+        return UserLocation.fromJson(map);
+      } else {
+        return null;
+      }
     });
   }
 
@@ -53,7 +56,9 @@ class UserLocationRepository {
     final record = store.record(userLocationKey);
     return record.onSnapshot(db).map((snapshot) {
       if (snapshot != null && snapshot.value != null) {
-        return UserLocation.fromJson(snapshot.value as String);
+        final map =
+            jsonDecode(snapshot.value as String) as Map<String, dynamic>;
+        return UserLocation.fromJson(map);
       }
       return null;
     });
