@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +16,7 @@ class GeoLocatorRepository {
   final int timeOut;
 
   Future<UserLocation?> getCurrentLocation() async {
-    return Future.value(() async {
+    return checkTimeOut(timeOut, () async {
       bool serviceEnabled;
       LocationPermission permission;
 
@@ -50,11 +50,7 @@ class GeoLocatorRepository {
       } catch (e) {
         throw LocationFetchFailedException();
       }
-    }())
-        .timeout(
-      Duration(seconds: timeOut),
-      onTimeout: () => throw TimedOutException(),
-    );
+    });
   }
 }
 

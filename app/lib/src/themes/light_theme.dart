@@ -27,12 +27,6 @@ ThemeData lightTheme(Ref ref) {
       onSurface: onSurfaceColor,
     ),
 
-    /// [AppBarThemeData]
-    // appBarTheme: const AppBarTheme(
-    //   backgroundColor: primaryColor,
-    //   foregroundColor: onPrimaryColor,
-    // ),
-
     /// [SearchBarThemeData]
     searchBarTheme: SearchBarThemeData(
       elevation: const WidgetStatePropertyAll(2),
