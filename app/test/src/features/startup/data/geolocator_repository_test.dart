@@ -1,6 +1,5 @@
 import 'package:app/src/core/exceptions/app_exceptions.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
-import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
@@ -9,12 +8,12 @@ import 'package:app/src/features/startup/data/geolocator_repository.dart';
 import '../../../mocks.dart';
 
 void main() {
-  late MockGeoLocator geoLocator;
+  TestWidgetsFlutterBinding.ensureInitialized();
+  late GeolocatorPlatform geoLocator;
   late GeoLocatorRepository locationRepository;
 
   const latitude = 37.0;
   const longitude = -122.0;
-  const testLatLng = UserLocation(latitude: latitude, longitude: longitude);
   final position = Position(
     latitude: latitude,
     longitude: longitude,
@@ -30,10 +29,10 @@ void main() {
 
   setUp(() {
     geoLocator = MockGeoLocator();
-    locationRepository = GeoLocatorRepository(geoLocator, timeOut: 0);
+    locationRepository = GeoLocatorRepository(geoLocator, timeOut: 15);
   });
 
-  group('LocationRepository', () {
+  group('GeoLocationRepository', () {
     test('getCurrentLocation returns user location', () async {
       // Setup
       when(() => geoLocator.isLocationServiceEnabled())
@@ -47,7 +46,25 @@ void main() {
       final result = await locationRepository.getCurrentLocation();
 
       // Verify
-      expect(result, testLatLng);
+      expect(result!.latitude, position.latitude);
+      expect(result.longitude, position.longitude);
+    });
+
+    test('getCurrentLocation returns throws LocationFetchFailedException',
+        () async {
+      // Setup
+      when(() => geoLocator.isLocationServiceEnabled())
+          .thenAnswer((_) async => true);
+      when(() => geoLocator.checkPermission())
+          .thenAnswer((_) async => LocationPermission.whileInUse);
+      when(() => geoLocator.getCurrentPosition())
+          .thenThrow(LocationFetchFailedException());
+
+      // Run
+      expect(
+        locationRepository.getCurrentLocation(),
+        throwsA(isA<LocationFetchFailedException>()),
+      );
     });
 
     test('throws LocationServicesDisabledException when services are disabled',
@@ -104,8 +121,9 @@ void main() {
           .thenAnswer((_) async => true);
       when(() => geoLocator.checkPermission())
           .thenAnswer((_) async => LocationPermission.whileInUse);
-      when(geoLocator.getCurrentPosition)
+      when(() => geoLocator.getCurrentPosition())
           .thenThrow(LocationFetchFailedException());
+
       // Running & Verify
       expect(
         locationRepository.getCurrentLocation(),
