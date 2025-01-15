@@ -21,9 +21,11 @@ class AppBootStrap {
     );
   }
 
-  Future<ProviderContainer> createProviderContainer({
-    bool addDelay = true,
-  }) async {
+ 
+}
+
+extension CreateProviderContainer on AppBootStrap{
+   Future<ProviderContainer> createProviderContainer() async {
     final userRepository = await UserLocationRepository.makeDefault();
 
     return ProviderContainer(
