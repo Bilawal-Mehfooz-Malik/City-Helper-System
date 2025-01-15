@@ -12,10 +12,10 @@ class UserLocationController extends _$UserLocationController {
 
   Future<void> createUser() async {
     state = const AsyncLoading();
-    final userLocationController = ref.read(locationControllerProvider);
+    final locationController = ref.read(locationControllerProvider);
 
     // Checking if the location is available; handle null case gracefully
-    final userLocation = userLocationController.maybeWhen(
+    final userLocation = locationController.maybeWhen(
       data: (location) => location,
       orElse: () => null,
     );
