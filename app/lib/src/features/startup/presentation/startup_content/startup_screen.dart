@@ -12,8 +12,8 @@ class StartupScreen extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
 
-    // For Smaller Screens (width < 200 or height < 400)
-    if (width < Breakpoint.lowerWidth || height < Breakpoint.lowerHeight) {
+    // For Smaller Screens (width < 250 or height < 500)
+    if (width <= Breakpoint.lowerWidth || height <= Breakpoint.lowerHeight) {
       return const Scaffold(
         body: SafeArea(
           child: ResponsiveScrollable(
@@ -33,6 +33,7 @@ class StartupScreen extends StatelessWidget {
                   child: StartupContent(),
                 ),
               )
+            // For Mobile Screen
             : const Padding(
                 padding: EdgeInsets.all(Sizes.p16),
                 child: StartupContent(useSpacer: true),

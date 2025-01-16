@@ -42,20 +42,20 @@ class StartupBottomSheetContent extends ConsumerWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      spacing: Sizes.p12,
       children: [
         // [Headline]
         Text(
           context.loc.getLocDescription,
           style: context.textTheme.titleLarge,
         ),
-        gapH12,
 
         // [Location Preview Widget]
         const LocationPreviewWidget(),
-        gapH12,
 
         /// [GetCurrent] and [FromMap] Buttons
         Row(
+          spacing: Sizes.p4,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
@@ -66,7 +66,6 @@ class StartupBottomSheetContent extends ConsumerWidget {
                 onPressed: controller.getCurrentLocation,
               ),
             ),
-            gapW4,
             Expanded(
               child: CustomOutlinedButton(
                 key: kFromMapKey,
@@ -78,7 +77,6 @@ class StartupBottomSheetContent extends ConsumerWidget {
             ),
           ],
         ),
-        gapH12,
 
         /// [SaveLocationButton]
         if (userLocationState.value != null) ...[
@@ -89,7 +87,6 @@ class StartupBottomSheetContent extends ConsumerWidget {
             text: context.loc.saveLocation,
             onPressed: userController.createUser,
           ),
-          gapH12,
         ],
       ],
     );

@@ -3,6 +3,6 @@ class Breakpoint {
   static const double desktop = 900;
   static const double tablet = 600;
   static const double mobile = 400;
-  static const double lowerHeight = 400;
-  static const double lowerWidth = 200;
+  static const double lowerHeight = 500;
+  static const double lowerWidth = 250;
 }
