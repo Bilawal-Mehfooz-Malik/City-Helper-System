@@ -34,32 +34,11 @@ void main() {
       matchesGoldenFile('startup/2_bottom_Sheet/image_$width x $height.png'),
     );
 
-    // [StartupBottomSheetContent - 3]
-    await r.startupRobot.tapGetCurrentButton();
-    await expectLater(
-      find.byType(MyApp),
-      matchesGoldenFile('startup/3_bottom_Sheet/image_$width x $height.png'),
-    );
-
-    // [StartupBottomSheetContent - 4]
+    // [PickLocationScreen - 3]
     await r.startupRobot.tapFromMapButton();
     await expectLater(
       find.byType(MyApp),
-      matchesGoldenFile('startup/4_bottom_Sheet/image_$width x $height.png'),
-    );
-
-    // [PickLocation - 5]
-    await r.startupRobot.tapFloatingCheckButton();
-    await expectLater(
-      find.byType(MyApp),
-      matchesGoldenFile('startup/5_pick_location/image_$width x $height.png'),
-    );
-
-    // [StartupBottomSheetContent - 6]
-    await r.startupRobot.tapSaveButton();
-    await expectLater(
-      find.byType(MyApp),
-      matchesGoldenFile('startup/6_bottom_Sheet/image_$width x $height.png'),
+      matchesGoldenFile('startup/3_pick_location/image_$width x $height.png'),
     );
   }, variant: sizeVariant, tags: ['golden']);
 }

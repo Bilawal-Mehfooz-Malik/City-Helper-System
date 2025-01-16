@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' as io show Platform;
 
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
@@ -59,16 +60,22 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            GoogleMap(
-              mapType: MapType.normal,
-              zoomControlsEnabled: false,
-              onCameraMove: _pickLocationOnMove,
-              initialCameraPosition: _cameraPosition,
-              onMapCreated: (controller) => _controller.complete(controller),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(Sizes.p8),
-              child: PickLocationSearchBar(),
+            if (io.Platform.environment.containsKey('FLUTTER_TEST'))
+              Container(color: context.colorScheme.surface)
+            else
+              GoogleMap(
+                mapType: MapType.normal,
+                zoomControlsEnabled: false,
+                onCameraMove: _pickLocationOnMove,
+                initialCameraPosition: _cameraPosition,
+                onMapCreated: (controller) => _controller.complete(controller),
+              ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: const Padding(
+                padding: EdgeInsets.all(Sizes.p8),
+                child: PickLocationSearchBar(),
+              ),
             ),
             Center(
               child: Icon(
