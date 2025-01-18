@@ -10,9 +10,9 @@ void main() {
   late ProviderContainer container;
   late MockGeoLocatorRepository geoLocatorRepository;
 
-  const nullData = AsyncData<UserLocation?>(null);
-  const testLocation = UserLocation(latitude: 123, longitude: 123);
-  const data = AsyncData<UserLocation?>(testLocation);
+  const nullData = AsyncData<GeoLocation?>(null);
+  const testLocation = GeoLocation(latitude: 123, longitude: 123);
+  const data = AsyncData<GeoLocation?>(testLocation);
 
   ProviderContainer makeProviderContainer(
     MockGeoLocatorRepository geoLocatorRepository,
@@ -33,12 +33,12 @@ void main() {
   });
   // Register fallback values for mocking AsyncValues
   setUpAll(() {
-    registerFallbackValue(const AsyncLoading<UserLocation?>());
+    registerFallbackValue(const AsyncLoading<GeoLocation?>());
   });
   group('LocationController', () {
     test('initial state is null', () {
       final controller = container.read(locationControllerProvider);
-      expect(controller, const AsyncData<UserLocation?>(null));
+      expect(controller, const AsyncData<GeoLocation?>(null));
     });
 
     test('getCurrentLocation sets state to loading and then to success',
@@ -46,7 +46,7 @@ void main() {
       // Mocking the repository to return a test location
       when(() => geoLocatorRepository.getCurrentLocation())
           .thenAnswer((_) async => testLocation);
-      final listener = Listener<AsyncValue<UserLocation?>>();
+      final listener = Listener<AsyncValue<GeoLocation?>>();
       final controller = container.read(locationControllerProvider.notifier);
 
       // Listening to changes in the state
@@ -64,9 +64,9 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, nullData),
         // Loading state
-        () => listener(nullData, any(that: isA<AsyncLoading<UserLocation?>>())),
+        () => listener(nullData, any(that: isA<AsyncLoading<GeoLocation?>>())),
         // Success state with testLocation
-        () => listener(any(that: isA<AsyncLoading<UserLocation?>>()), data),
+        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()), data),
       ]);
     });
 
@@ -75,7 +75,7 @@ void main() {
       // Mocking the repository to throw an exception
       when(() => geoLocatorRepository.getCurrentLocation())
           .thenThrow(Exception('Failed to get location'));
-      final listener = Listener<AsyncValue<UserLocation?>>();
+      final listener = Listener<AsyncValue<GeoLocation?>>();
       final controller = container.read(locationControllerProvider.notifier);
 
       // Listening to changes in the state
@@ -92,18 +92,18 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, nullData),
         // Loading state
-        () => listener(nullData, any(that: isA<AsyncLoading<UserLocation?>>())),
+        () => listener(nullData, any(that: isA<AsyncLoading<GeoLocation?>>())),
         // Error state with exception
         () => listener(
-              any(that: isA<AsyncLoading<UserLocation?>>()),
-              any(that: isA<AsyncError<UserLocation?>>()),
+              any(that: isA<AsyncLoading<GeoLocation?>>()),
+              any(that: isA<AsyncError<GeoLocation?>>()),
             ),
       ]);
     });
 
     test('getLocationFromMap sets state to loading and then to success',
         () async {
-      final listener = Listener<AsyncValue<UserLocation?>>();
+      final listener = Listener<AsyncValue<GeoLocation?>>();
       final controller = container.read(locationControllerProvider.notifier);
 
       // Listening to changes in the state
@@ -121,9 +121,9 @@ void main() {
         // Initial state should be AsyncData with null
         () => listener(null, nullData),
         // Loading state
-        () => listener(nullData, any(that: isA<AsyncLoading<UserLocation?>>())),
+        () => listener(nullData, any(that: isA<AsyncLoading<GeoLocation?>>())),
         // Success state with testLocation
-        () => listener(any(that: isA<AsyncLoading<UserLocation?>>()), data),
+        () => listener(any(that: isA<AsyncLoading<GeoLocation?>>()), data),
       ]);
     });
   });

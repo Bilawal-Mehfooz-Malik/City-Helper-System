@@ -3,12 +3,12 @@ part 'user_location.freezed.dart';
 part 'user_location.g.dart';
 
 @freezed
-class UserLocation with _$UserLocation {
-  const factory UserLocation({
+class GeoLocation with _$GeoLocation {
+  const factory GeoLocation({
     required double latitude,
     required double longitude,
   }) = _UserLocation;
 
-  factory UserLocation.fromJson(Map<String, dynamic> json) =>
-      _$UserLocationFromJson(json);
+  factory GeoLocation.fromJson(Map<String, dynamic> json) =>
+      _$GeoLocationFromJson(json);
 }

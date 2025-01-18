@@ -22,17 +22,17 @@ class FakeUserLocationRepository implements UserLocationRepository {
   StoreRef<Object?, Object?> get store => throw UnimplementedError();
 
   @override
-  Future<UserLocation?> fetchUserLocation() async {
+  Future<GeoLocation?> fetchUserLocation() async {
     final json = _db.value[userLocationKey];
     if (json != null) {
       final map = jsonDecode(json) as Map<String, dynamic>;
-      return UserLocation.fromJson(map);
+      return GeoLocation.fromJson(map);
     }
     return null;
   }
 
   @override
-  Future<void> setUserLocation(UserLocation location) async {
+  Future<void> setUserLocation(GeoLocation location) async {
     final json = jsonEncode(location.toJson());
     _db.value = {
       ..._db.value,
@@ -41,12 +41,12 @@ class FakeUserLocationRepository implements UserLocationRepository {
   }
 
   @override
-  Stream<UserLocation?> watchUserLocation() {
+  Stream<GeoLocation?> watchUserLocation() {
     return _db.stream.map((data) {
       final json = data[userLocationKey];
       if (json != null) {
         final map = jsonDecode(json) as Map<String, dynamic>;
-        return UserLocation.fromJson(map);
+        return GeoLocation.fromJson(map);
       }
       return null;
     });

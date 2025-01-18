@@ -8,7 +8,7 @@ part 'location_controller.g.dart';
 @riverpod
 class LocationController extends _$LocationController {
   @override
-  FutureOr<UserLocation?> build() {
+  FutureOr<GeoLocation?> build() {
     return null;
   }
 
@@ -18,7 +18,7 @@ class LocationController extends _$LocationController {
     state = await AsyncValue.guard(() => locationRepo.getCurrentLocation());
   }
 
-  void getLocationFromMap(UserLocation location) async {
+  void getLocationFromMap(GeoLocation location) async {
     state = const AsyncLoading();
     state = AsyncData(location);
   }

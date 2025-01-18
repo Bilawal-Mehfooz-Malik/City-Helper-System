@@ -25,11 +25,11 @@ final userLocationRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef UserLocationRepositoryRef = ProviderRef<UserLocationRepository>;
-String _$watchUserLocationHash() => r'28de278ac91fab30a085daa4cd72bc76cccb6640';
+String _$watchUserLocationHash() => r'2154b589f420208122b7715e993cb55aa03105a3';
 
 /// See also [watchUserLocation].
 @ProviderFor(watchUserLocation)
-final watchUserLocationProvider = StreamProvider<UserLocation?>.internal(
+final watchUserLocationProvider = StreamProvider<GeoLocation?>.internal(
   watchUserLocation,
   name: r'watchUserLocationProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -41,6 +41,6 @@ final watchUserLocationProvider = StreamProvider<UserLocation?>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef WatchUserLocationRef = StreamProviderRef<UserLocation?>;
+typedef WatchUserLocationRef = StreamProviderRef<GeoLocation?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

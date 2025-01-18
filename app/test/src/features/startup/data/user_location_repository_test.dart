@@ -8,7 +8,7 @@ void main() {
   late Database testDb;
   late UserLocationRepository userLocationRepository;
 
-  const testLocation = UserLocation(latitude: 11.0, longitude: 11.0);
+  const testLocation = GeoLocation(latitude: 11.0, longitude: 11.0);
 
   setUp(() async {
     testDb = await newDatabaseFactoryMemory().openDatabase('test.db');
@@ -43,7 +43,7 @@ void main() {
 
       test('handles concurrent write operations', () async {
         // setup
-        const location1 = UserLocation(latitude: 40.7128, longitude: -74.0060);
+        const location1 = GeoLocation(latitude: 40.7128, longitude: -74.0060);
 
         // run
         await Future.wait([
@@ -80,14 +80,14 @@ void main() {
 
     test('watchUserLocation emits updates correctly', () async {
       // setup
-      final emittedValues = <UserLocation?>[];
+      final emittedValues = <GeoLocation?>[];
       final subscription =
           userLocationRepository.watchUserLocation().listen(emittedValues.add);
 
       // run
-      const latLng1 = UserLocation(latitude: 2.0, longitude: 1.0);
+      const latLng1 = GeoLocation(latitude: 2.0, longitude: 1.0);
       await userLocationRepository.setUserLocation(latLng1);
-      const latLng2 = UserLocation(latitude: 12.0, longitude: 12.0);
+      const latLng2 = GeoLocation(latitude: 12.0, longitude: 12.0);
       await userLocationRepository.setUserLocation(latLng2);
 
       // Wait for the updates to propagate
@@ -100,7 +100,7 @@ void main() {
 
     test('watchUserLocation emits null for firstTime', () async {
       // setup
-      final emittedValues = <UserLocation?>[];
+      final emittedValues = <GeoLocation?>[];
       final subscription =
           userLocationRepository.watchUserLocation().listen(emittedValues.add);
 

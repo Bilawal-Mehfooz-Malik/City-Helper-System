@@ -33,32 +33,32 @@ class UserLocationRepository {
 
   static const userLocationKey = 'userLocation';
 
-  Future<void> setUserLocation(UserLocation location) async {
+  Future<void> setUserLocation(GeoLocation location) async {
     await checkTimeOut(timeOut, () async {
       final json = jsonEncode(location.toJson());
       await store.record(userLocationKey).put(db, json);
     });
   }
 
-  Future<UserLocation?> fetchUserLocation() {
+  Future<GeoLocation?> fetchUserLocation() {
     return checkTimeOut(timeOut, () async {
       final json = await store.record(userLocationKey).get(db) as String?;
       if (json != null) {
         final map = jsonDecode(json) as Map<String, dynamic>;
-        return UserLocation.fromJson(map);
+        return GeoLocation.fromJson(map);
       } else {
         return null;
       }
     });
   }
 
-  Stream<UserLocation?> watchUserLocation() {
+  Stream<GeoLocation?> watchUserLocation() {
     final record = store.record(userLocationKey);
     return record.onSnapshot(db).map((snapshot) {
       if (snapshot != null && snapshot.value != null) {
         final map =
             jsonDecode(snapshot.value as String) as Map<String, dynamic>;
-        return UserLocation.fromJson(map);
+        return GeoLocation.fromJson(map);
       }
       return null;
     });
@@ -71,7 +71,7 @@ UserLocationRepository userLocationRepository(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-Stream<UserLocation?> watchUserLocation(Ref ref) {
+Stream<GeoLocation?> watchUserLocation(Ref ref) {
   final authRepository = ref.watch(userLocationRepositoryProvider);
   return authRepository.watchUserLocation();
 }

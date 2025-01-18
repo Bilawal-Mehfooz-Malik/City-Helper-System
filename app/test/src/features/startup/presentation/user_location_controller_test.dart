@@ -74,7 +74,7 @@ void main() {
     test('createUser saves User Location Successfully', () async {
       // setup
       final listener = Listener<AsyncValue<void>>();
-      const testLocation = UserLocation(latitude: 1, longitude: 1);
+      const testLocation = GeoLocation(latitude: 1, longitude: 1);
       final controller =
           container.read(userLocationControllerProvider.notifier);
       container

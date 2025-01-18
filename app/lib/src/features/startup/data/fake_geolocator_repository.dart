@@ -8,7 +8,7 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
   final bool locationServiceEnabled;
   final LocationPermission permission;
   final bool throwError;
-  final UserLocation? mockLocation;
+  final GeoLocation? mockLocation;
   final int mockTimeOut;
   final GeolocatorPlatform mockGeolocator;
 
@@ -22,7 +22,7 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
   }) : mockGeolocator = mockGeolocator ?? GeolocatorPlatform.instance;
 
   @override
-  Future<UserLocation?> getCurrentLocation() async {
+  Future<GeoLocation?> getCurrentLocation() async {
     if (!locationServiceEnabled) {
       throw LocationServicesDisabledException();
     }
@@ -40,7 +40,7 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
     }
 
     return mockLocation ??
-        const UserLocation(
+        const GeoLocation(
             latitude: 33.150691628036256, longitude: 73.74845167724608);
   }
 

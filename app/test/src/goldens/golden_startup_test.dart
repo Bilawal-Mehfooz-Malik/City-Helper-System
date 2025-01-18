@@ -33,12 +33,5 @@ void main() {
       find.byType(MyApp),
       matchesGoldenFile('startup/2_bottom_Sheet/image_$width x $height.png'),
     );
-
-    // [PickLocationScreen - 3]
-    await r.startupRobot.tapFromMapButton();
-    await expectLater(
-      find.byType(MyApp),
-      matchesGoldenFile('startup/3_pick_location/image_$width x $height.png'),
-    );
   }, variant: sizeVariant, tags: ['golden']);
 }

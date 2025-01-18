@@ -17,7 +17,7 @@ class GeoLocatorRepository {
   final GeolocatorPlatform geolocator;
   final int timeOut;
 
-  Future<UserLocation?> getCurrentLocation() {
+  Future<GeoLocation?> getCurrentLocation() {
     return checkTimeOut(timeOut, () async {
       bool serviceEnabled;
       LocationPermission permission;
@@ -45,7 +45,7 @@ class GeoLocatorRepository {
       // Get current position
       try {
         final position = await geolocator.getCurrentPosition();
-        return UserLocation(
+        return GeoLocation(
           latitude: position.latitude,
           longitude: position.longitude,
         );
