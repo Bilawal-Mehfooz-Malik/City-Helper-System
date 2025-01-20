@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
-import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/features/startup/presentation/pick_location/pick_location_search_bar.dart';
+import 'package:app/src/features/startup/presentation/pick_location/search_focus_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -59,17 +60,29 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSearchFocused = ref.watch(searchFocusNotifierProvider);
+
     return Scaffold(
-      appBar: AppBar(title: Text(context.loc.pickYourLocation)),
       body: SafeArea(
         child: Stack(
           children: [
             GoogleMap(
               mapType: MapType.normal,
               zoomControlsEnabled: false,
-              onCameraMove: _pickLocationOnMove,
+              onCameraMove: isSearchFocused ? null : _pickLocationOnMove,
               initialCameraPosition: _cameraPosition,
               onMapCreated: (controller) => _controller.complete(controller),
+              scrollGesturesEnabled: !isSearchFocused,
+              zoomGesturesEnabled: !isSearchFocused,
+              rotateGesturesEnabled: !isSearchFocused,
+              tiltGesturesEnabled: !isSearchFocused,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(Sizes.p8),
+                child: PickLocationSearchBar(),
+              ),
             ),
             Center(
               child: Icon(

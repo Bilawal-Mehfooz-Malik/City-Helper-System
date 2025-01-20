@@ -3,6 +3,7 @@ import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
 import 'package:app/src/features/startup/presentation/startup_content/location_preview_widget.dart';
 import 'package:app/src/features/startup/presentation/user_location_controller.dart';
@@ -29,13 +30,13 @@ class StartupBottomSheetContent extends ConsumerWidget {
     final isLoading = userState.isLoading || userLocationState.isLoading;
 
     // Error handling for userLocation
-    ref.listen<AsyncValue>(
+    ref.listen<AsyncValue<GeoLocation?>>(
       locationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
     // Error handling for userCreation
-    ref.listen<AsyncValue>(
+    ref.listen<AsyncValue<void>>(
       userLocationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );

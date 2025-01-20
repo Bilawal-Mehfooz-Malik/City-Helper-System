@@ -1,4 +1,4 @@
-import 'package:app/src/features/startup/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 

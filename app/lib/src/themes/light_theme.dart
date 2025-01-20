@@ -78,6 +78,12 @@ ThemeData lightTheme(Ref ref) {
     /// [DialogThemeData]
     dialogTheme: DialogTheme(shape: borderRadius()),
 
+    /// [SearchBar]
+    searchViewTheme: SearchViewThemeData(
+      dividerColor: inversePrimaryColor,
+      backgroundColor: onPrimaryColor,
+    ),
+
     /// [TextThemeData]
     textTheme: TextTheme(
       labelLarge: TextStyle(

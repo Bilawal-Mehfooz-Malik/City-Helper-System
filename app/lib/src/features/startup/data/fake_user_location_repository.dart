@@ -1,29 +1,15 @@
 import 'dart:convert';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/startup/data/user_location_repository.dart';
-import 'package:app/src/features/startup/domain/user_location.dart';
-import 'package:sembast/sembast.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {
-  final int mockTimeOut;
-  final _db = InMemoryStore<Map<String, String?>>({});
-
-  FakeUserLocationRepository({this.mockTimeOut = 15});
-
   static const userLocationKey = 'userLocation';
-
-  @override
-  int get timeOut => mockTimeOut;
-
-  @override
-  Database get db => throw UnimplementedError();
-
-  @override
-  StoreRef<Object?, Object?> get store => throw UnimplementedError();
+  final _fakeDb = InMemoryStore<Map<String, String?>>({});
 
   @override
   Future<GeoLocation?> fetchUserLocation() async {
-    final json = _db.value[userLocationKey];
+    final json = _fakeDb.value[userLocationKey];
     if (json != null) {
       final map = jsonDecode(json) as Map<String, dynamic>;
       return GeoLocation.fromJson(map);
@@ -34,15 +20,15 @@ class FakeUserLocationRepository implements UserLocationRepository {
   @override
   Future<void> setUserLocation(GeoLocation location) async {
     final json = jsonEncode(location.toJson());
-    _db.value = {
-      ..._db.value,
+    _fakeDb.value = {
+      ..._fakeDb.value,
       userLocationKey: json,
     };
   }
 
   @override
   Stream<GeoLocation?> watchUserLocation() {
-    return _db.stream.map((data) {
+    return _fakeDb.stream.map((data) {
       final json = data[userLocationKey];
       if (json != null) {
         final map = jsonDecode(json) as Map<String, dynamic>;
@@ -52,5 +38,5 @@ class FakeUserLocationRepository implements UserLocationRepository {
     });
   }
 
-  void dispose() => _db.close();
+  void dispose() => _fakeDb.close();
 }

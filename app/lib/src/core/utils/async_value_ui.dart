@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
-extension AsyncValueUI on AsyncValue {
+extension AsyncValueUI on AsyncValue<dynamic> {
   void showAlertDialogOnError(BuildContext context) {
     if (!isLoading && hasError) {
       if (error == LocationPermissionDeniedForeverException()) {

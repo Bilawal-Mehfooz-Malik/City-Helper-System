@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_location.dart';
+part of 'geolocation.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserLocationImpl _$$UserLocationImplFromJson(Map<String, dynamic> json) =>
-    _$UserLocationImpl(
+_$GeoLocationImpl _$$GeoLocationImplFromJson(Map<String, dynamic> json) =>
+    _$GeoLocationImpl(
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$UserLocationImplToJson(_$UserLocationImpl instance) =>
+Map<String, dynamic> _$$GeoLocationImplToJson(_$GeoLocationImpl instance) =>
     <String, dynamic>{
       'latitude': instance.latitude,
       'longitude': instance.longitude,

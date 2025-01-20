@@ -1,5 +1,5 @@
 import 'package:app/src/features/startup/data/geolocator_repository.dart';
-import 'package:app/src/features/startup/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

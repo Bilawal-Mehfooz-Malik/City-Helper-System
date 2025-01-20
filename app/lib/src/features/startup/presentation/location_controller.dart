@@ -1,4 +1,4 @@
-import 'package:app/src/features/startup/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/geolocator_repository.dart';
