@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:app/src/core/models/place.dart';
 import 'package:app/src/features/startup/data/location_search_repository.dart';
+import 'package:app/src/features/startup/domain/place_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -46,7 +46,7 @@ class LocationSearchQueryNotifier extends _$LocationSearchQueryNotifier {
 
 /// A provider that returns the search results for the current search query
 @riverpod
-Future<List<Place>?> locationSearchResults(Ref ref) {
+Future<List<PlaceSuggestion>?> locationSearchResults(Ref ref) {
   final searchQuery = ref.watch(locationSearchQueryNotifierProvider);
   return ref.watch(LocationListSearchProvider(searchQuery).future);
 }

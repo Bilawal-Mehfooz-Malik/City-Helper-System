@@ -1,7 +1,9 @@
-import 'package:app/src/core/models/place.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/pick_location/location_search_query_notifier.dart';
-import 'package:app/src/features/startup/presentation/pick_location/search_focus_notifier.dart';
+import 'package:app/src/features/startup/domain/place_dto.dart';
+import 'package:app/src/features/startup/presentation/location_controller.dart';
+import 'package:app/src/features/startup/presentation/pick_location/controllers/location_search_query_notifier.dart';
+import 'package:app/src/features/startup/presentation/pick_location/controllers/search_focus_notifier.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,12 +84,12 @@ class SearchSuggestionListView extends StatelessWidget {
         final searchResults = ref.watch(locationSearchResultsProvider);
 
         if (searchResults.error != null) {
-          return Center(child: Text('Error: ${searchResults.error}'));
+          return _buildMessage('Error: ${searchResults.error}');
         }
 
         final places = searchResults.value;
         if (places == null || places.isEmpty) {
-          return const Center(child: Text('No results found'));
+          return _buildMessage('No results found');
         }
 
         return ListView.builder(
@@ -97,14 +99,29 @@ class SearchSuggestionListView extends StatelessWidget {
             final place = places[index];
             return SuggestionListTile(
               place: place,
-              onTap: () {
-                // TODO: Implement location pick
-                _updateFocus(false, ref);
+              onTap: () async {
+                final res = await ref
+                    .read(locationControllerProvider.notifier)
+                    .fetchPlaceDetails(place);
+                debugPrint(res.toString());
+                if (context.mounted) {
+                  context.pop();
+                  _updateFocus(false, ref);
+                }
               },
             );
           },
         );
       },
+    );
+  }
+
+  Center _buildMessage(String message) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: Sizes.p16),
+        child: Text(message),
+      ),
     );
   }
 }
@@ -116,7 +133,7 @@ class SuggestionListTile extends StatelessWidget {
     required this.onTap,
   });
 
-  final Place place;
+  final PlaceSuggestion place;
   final VoidCallback onTap;
 
   @override

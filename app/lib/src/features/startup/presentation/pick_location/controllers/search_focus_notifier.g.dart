@@ -6,22 +6,6 @@ part of 'search_focus_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchFocusHash() => r'1dd151b838e66c000be8c7f956a48e8a8c2d11cf';
-
-/// See also [searchFocus].
-@ProviderFor(searchFocus)
-final searchFocusProvider = AutoDisposeProvider<bool>.internal(
-  searchFocus,
-  name: r'searchFocusProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$searchFocusHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef SearchFocusRef = AutoDisposeProviderRef<bool>;
 String _$searchFocusNotifierHash() =>
     r'240353e1b241c7bde8bb202f98eea264f6507b1f';
 

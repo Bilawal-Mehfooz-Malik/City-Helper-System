@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location_controller.dart';
+part of 'pick_location_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$locationControllerHash() =>
-    r'cbf4d49b57eb8b465f49766dec42e30bdeba99b7';
+String _$pickLocationControllerHash() =>
+    r'4358724927f9a978cf48f54f8e3739b1a5c907aa';
 
-/// See also [LocationController].
-@ProviderFor(LocationController)
-final locationControllerProvider =
-    AutoDisposeAsyncNotifierProvider<LocationController, GeoLocation?>.internal(
-  LocationController.new,
-  name: r'locationControllerProvider',
+/// See also [PickLocationController].
+@ProviderFor(PickLocationController)
+final pickLocationControllerProvider = AutoDisposeNotifierProvider<
+    PickLocationController, GoogleMapController?>.internal(
+  PickLocationController.new,
+  name: r'pickLocationControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$locationControllerHash,
+      : _$pickLocationControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LocationController = AutoDisposeAsyncNotifier<GeoLocation?>;
+typedef _$PickLocationController = AutoDisposeNotifier<GoogleMapController?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

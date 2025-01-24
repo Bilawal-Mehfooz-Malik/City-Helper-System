@@ -5,7 +5,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
 import 'package:app/src/features/startup/presentation/pick_location/pick_location_search_bar.dart';
-import 'package:app/src/features/startup/presentation/pick_location/search_focus_notifier.dart';
+import 'package:app/src/features/startup/presentation/pick_location/controllers/search_focus_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

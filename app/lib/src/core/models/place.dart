@@ -15,5 +15,5 @@ class Place with _$Place {
     String? streetAddress,
   }) = _Place;
 
-  factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
+  factory Place.fromJson(Map<String, Object?> json) => _$PlaceFromJson(json);
 }

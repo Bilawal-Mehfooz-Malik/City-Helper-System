@@ -27,7 +27,7 @@ final locationSearchRepositoryProvider =
 typedef LocationSearchRepositoryRef
     = AutoDisposeProviderRef<LocationSearchRepository>;
 String _$locationListSearchHash() =>
-    r'2db9ce577b8be08a7f4176f10a57f9f32ff73832';
+    r'6ebe8ab9347df0d23c556a2be12b1bffa43ede16';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -55,7 +55,8 @@ class _SystemHash {
 const locationListSearchProvider = LocationListSearchFamily();
 
 /// See also [locationListSearch].
-class LocationListSearchFamily extends Family<AsyncValue<List<Place>?>> {
+class LocationListSearchFamily
+    extends Family<AsyncValue<List<PlaceSuggestion>?>> {
   /// See also [locationListSearch].
   const LocationListSearchFamily();
 
@@ -94,7 +95,7 @@ class LocationListSearchFamily extends Family<AsyncValue<List<Place>?>> {
 
 /// See also [locationListSearch].
 class LocationListSearchProvider
-    extends AutoDisposeFutureProvider<List<Place>?> {
+    extends AutoDisposeFutureProvider<List<PlaceSuggestion>?> {
   /// See also [locationListSearch].
   LocationListSearchProvider(
     String query,
@@ -129,7 +130,8 @@ class LocationListSearchProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<Place>?> Function(LocationListSearchRef provider) create,
+    FutureOr<List<PlaceSuggestion>?> Function(LocationListSearchRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -146,7 +148,7 @@ class LocationListSearchProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Place>?> createElement() {
+  AutoDisposeFutureProviderElement<List<PlaceSuggestion>?> createElement() {
     return _LocationListSearchProviderElement(this);
   }
 
@@ -166,13 +168,14 @@ class LocationListSearchProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin LocationListSearchRef on AutoDisposeFutureProviderRef<List<Place>?> {
+mixin LocationListSearchRef
+    on AutoDisposeFutureProviderRef<List<PlaceSuggestion>?> {
   /// The parameter `query` of this provider.
   String get query;
 }
 
 class _LocationListSearchProviderElement
-    extends AutoDisposeFutureProviderElement<List<Place>?>
+    extends AutoDisposeFutureProviderElement<List<PlaceSuggestion>?>
     with LocationListSearchRef {
   _LocationListSearchProviderElement(super.provider);
 

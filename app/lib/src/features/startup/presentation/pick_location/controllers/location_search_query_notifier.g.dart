@@ -7,14 +7,14 @@ part of 'location_search_query_notifier.dart';
 // **************************************************************************
 
 String _$locationSearchResultsHash() =>
-    r'd08a9d06b220b7d52b3b560772d714d00ba75fe5';
+    r'f3d4a8854c7076924da7ff4d66f1c10c495d4bd8';
 
 /// A provider that returns the search results for the current search query
 ///
 /// Copied from [locationSearchResults].
 @ProviderFor(locationSearchResults)
 final locationSearchResultsProvider =
-    AutoDisposeFutureProvider<List<Place>?>.internal(
+    AutoDisposeFutureProvider<List<PlaceSuggestion>?>.internal(
   locationSearchResults,
   name: r'locationSearchResultsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -26,7 +26,8 @@ final locationSearchResultsProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef LocationSearchResultsRef = AutoDisposeFutureProviderRef<List<Place>?>;
+typedef LocationSearchResultsRef
+    = AutoDisposeFutureProviderRef<List<PlaceSuggestion>?>;
 String _$locationSearchQueryNotifierHash() =>
     r'196ecbba8c7c2ceda5a4d76c6934b9be6cbec456';
 
