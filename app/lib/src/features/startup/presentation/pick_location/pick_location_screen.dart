@@ -4,7 +4,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
-import 'package:app/src/features/startup/presentation/pick_location/pick_location_search_bar.dart';
+import 'package:app/src/features/startup/presentation/pick_location/search_bar/pick_location_search_bar.dart';
 import 'package:app/src/features/startup/presentation/pick_location/controllers/search_focus_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +35,13 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     _lng = previousLocation?.longitude ?? 73.74845167724608;
     _pickedLocation = GeoLocation(latitude: _lat, longitude: _lng);
     _cameraPosition = CameraPosition(zoom: 13.0, target: LatLng(_lat, _lng));
+  }
+
+  /// Used in [SuggestionListTile]
+  Future<void> _moveCameraToNewLocation() async {
+    final controller = await _controller.future;
+    await controller
+        .moveCamera(CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), 16));
   }
 
   void _saveLocation(BuildContext context) {
@@ -81,7 +88,19 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.all(Sizes.p8),
-                child: PickLocationSearchBar(),
+                child: PickLocationSearchBar(
+                  onTapSuggestion: (data) async {
+                    setState(() {
+                      _lat = data.latitude;
+                      _lng = data.longitude;
+                      _cameraPosition = CameraPosition(
+                        zoom: _cameraPosition.zoom,
+                        target: LatLng(_lat, _lng),
+                      );
+                    });
+                    await _moveCameraToNewLocation();
+                  },
+                ),
               ),
             ),
             Center(
