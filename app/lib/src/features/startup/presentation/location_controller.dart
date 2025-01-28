@@ -1,11 +1,10 @@
 import 'package:app/src/core/models/place.dart';
-import 'package:app/src/features/startup/data/location_search_repository.dart';
+import 'package:app/src/features/startup/data/real/location_search_repository.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/domain/place_dto.dart';
-import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/geolocator_repository.dart';
+import '../data/real/geolocator_repository.dart';
 
 part 'location_controller.g.dart';
 
@@ -28,22 +27,26 @@ class LocationController extends _$LocationController {
   }
 
   Future<Place?> fetchPlaceDetails(PlaceSuggestion suggestion) async {
-    state = const AsyncLoading();
     try {
+      state = const AsyncLoading();
       final repo = ref.watch(locationSearchRepositoryProvider);
-      final res = await repo.fetchPlaceDetails(suggestion);
-      final location = res.geoLocation;
+
+      final place = await repo.fetchPlaceDetails(suggestion);
+      final location = place.geoLocation;
+
       if (location == null) {
+        state = const AsyncData(null);
         return null;
       }
+
       state = AsyncData(GeoLocation(
         latitude: location.latitude,
         longitude: location.longitude,
       ));
 
-      return res;
-    } catch (e, s) {
-      debugPrint('Error in fetching details: $e and stackTrace: $s');
+      return place;
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
       return null;
     }
   }

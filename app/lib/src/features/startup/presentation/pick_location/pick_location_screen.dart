@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/app_logger.dart';
+import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';
@@ -21,8 +23,7 @@ class PickLocationScreen extends ConsumerStatefulWidget {
 class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   late double _lat;
   late double _lng;
-  String address = '';
-  String autoCompletePlace = '';
+  static const zoomLevel = 13.0;
   late GeoLocation _pickedLocation;
   late CameraPosition _cameraPosition;
   final _controller = Completer<GoogleMapController>();
@@ -31,17 +32,34 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   void initState() {
     super.initState();
     final previousLocation = ref.read(locationControllerProvider).value;
-    _lat = previousLocation?.latitude ?? 33.150691628036256;
-    _lng = previousLocation?.longitude ?? 73.74845167724608;
+    final defaultLoc = ref.read(defaultLocationProvider);
+    _lat = previousLocation?.latitude ?? defaultLoc.latitude;
+    _lng = previousLocation?.longitude ?? defaultLoc.longitude;
     _pickedLocation = GeoLocation(latitude: _lat, longitude: _lng);
-    _cameraPosition = CameraPosition(zoom: 13.0, target: LatLng(_lat, _lng));
+    _cameraPosition =
+        CameraPosition(zoom: zoomLevel, target: LatLng(_lat, _lng));
   }
 
-  /// Used in [SuggestionListTile]
-  Future<void> _moveCameraToNewLocation() async {
-    final controller = await _controller.future;
-    await controller
-        .moveCamera(CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), 16));
+  Future<void> _tapSuggestion(GeoLocation data) async {
+    _lat = data.latitude;
+    _lng = data.longitude;
+
+    await Future<void>.delayed(Duration.zero);
+
+    try {
+      if (_controller.isCompleted) {
+        final controller = await _controller.future;
+        await controller.moveCamera(
+          CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), zoomLevel),
+        );
+      }
+    } catch (e, s) {
+      AppLogger.logError(
+        'Error in moving Camera when Suggestion Tapped',
+        error: e,
+        stackTrace: s,
+      );
+    }
   }
 
   void _saveLocation(BuildContext context) {
@@ -61,13 +79,15 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   @override
   void dispose() {
-    _controller.future.then((controller) => controller.dispose());
+    if (_controller.isCompleted) {
+      _controller.future.then((controller) => controller.dispose());
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isSearchFocused = ref.watch(searchFocusNotifierProvider);
+    final isFocused = ref.watch(searchFocusNotifierProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -76,30 +96,25 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
             GoogleMap(
               mapType: MapType.normal,
               zoomControlsEnabled: false,
-              onCameraMove: isSearchFocused ? null : _pickLocationOnMove,
+              buildingsEnabled: false,
+              onCameraMove: _pickLocationOnMove,
               initialCameraPosition: _cameraPosition,
-              onMapCreated: (controller) => _controller.complete(controller),
-              scrollGesturesEnabled: !isSearchFocused,
-              zoomGesturesEnabled: !isSearchFocused,
-              rotateGesturesEnabled: !isSearchFocused,
-              tiltGesturesEnabled: !isSearchFocused,
+              scrollGesturesEnabled: !isFocused,
+              zoomGesturesEnabled: !isFocused,
+              rotateGesturesEnabled: !isFocused,
+              tiltGesturesEnabled: !isFocused,
+              onMapCreated: (controller) {
+                if (!_controller.isCompleted) {
+                  _controller.complete(controller);
+                }
+              },
             ),
             Align(
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.all(Sizes.p8),
                 child: PickLocationSearchBar(
-                  onTapSuggestion: (data) async {
-                    setState(() {
-                      _lat = data.latitude;
-                      _lng = data.longitude;
-                      _cameraPosition = CameraPosition(
-                        zoom: _cameraPosition.zoom,
-                        target: LatLng(_lat, _lng),
-                      );
-                    });
-                    await _moveCameraToNewLocation();
-                  },
+                  onTapSuggestion: _tapSuggestion,
                 ),
               ),
             ),

@@ -29,6 +29,12 @@
   "saveLocation": "Save Location",
   "@saveLocation": {},
 
-  "pickYourLocation":"Pick your Location",
-  "@pickYourLocation": {}
+  "searchLocation": "Search Location",
+  "@searchLocation": {},
+  "enterCityName": "Enter City Name",
+  "@enterCityName": {},
+  "noResultFound": "No Result Found",
+  "@noResultFound": {},
+  "error": "Error",
+  "@error": {}
 }

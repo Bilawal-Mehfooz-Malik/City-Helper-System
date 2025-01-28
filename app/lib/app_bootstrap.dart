@@ -1,11 +1,12 @@
 import 'package:app/env.dart';
 import 'package:app/src/app.dart';
-import 'package:app/src/features/startup/data/user_location_repository.dart';
+import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // * a conditional import is required here since on mobile we can't use dart:html
-import 'package:universal_html/js.dart' as js if (dart.library.html) 'package:universal_html/js.dart';
+import 'package:universal_html/js.dart' as js
+    if (dart.library.html) 'package:universal_html/js.dart';
 
 class AppBootStrap {
   Widget createRootWidget({required ProviderContainer container}) {
@@ -20,12 +21,10 @@ class AppBootStrap {
       child: const MyApp(),
     );
   }
-
- 
 }
 
-extension CreateProviderContainer on AppBootStrap{
-   Future<ProviderContainer> createProviderContainer() async {
+extension CreateProviderContainer on AppBootStrap {
+  Future<ProviderContainer> createProviderContainer() async {
     final userRepository = await UserLocationRepository.makeDefault();
 
     return ProviderContainer(

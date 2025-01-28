@@ -2,7 +2,7 @@ import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:app/src/features/startup/data/user_location_repository.dart';
+import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 
 void main() {
   late Database testDb;

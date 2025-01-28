@@ -1,44 +1,17 @@
+import 'package:app/src/core/exceptions/app_exceptions.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
-import 'package:app/src/features/startup/domain/place_dto.dart';
-import 'package:app/src/features/startup/presentation/location_controller.dart';
 import 'package:app/src/features/startup/presentation/pick_location/controllers/location_search_query_notifier.dart';
-import 'package:app/src/features/startup/presentation/pick_location/controllers/search_focus_notifier.dart';
 import 'package:app/src/features/startup/presentation/pick_location/search_bar/suggestion_list_tile.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../../core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
 
 class SearchSuggestionListView extends StatelessWidget {
   final Future<void> Function(GeoLocation) onTapSuggestion;
 
   const SearchSuggestionListView({super.key, required this.onTapSuggestion});
-
-  void _updateFocus(bool isFocused, WidgetRef ref) {
-    final focusNotifier = ref.read(searchFocusNotifierProvider);
-    if (focusNotifier != isFocused) {
-      ref.read(searchFocusNotifierProvider.notifier).setFocus(isFocused);
-    }
-  }
-
-  void _onTap(
-      BuildContext context, WidgetRef ref, PlaceSuggestion place) async {
-    // Fetching [PlaceDetails]
-    final res = await ref
-        .read(locationControllerProvider.notifier)
-        .fetchPlaceDetails(place);
-
-    // calling [MoveCamera] method on [GoogleMapController]
-    if (res != null && res.geoLocation != null && context.mounted) {
-      context.pop();
-      await onTapSuggestion(res.geoLocation!);
-      _updateFocus(false, ref);
-    } else {
-      // TODO: update exception
-      throw Exception('Failed to fetch place details or invalid geolocation.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +19,23 @@ class SearchSuggestionListView extends StatelessWidget {
       builder: (context, ref, child) {
         final searchResults = ref.watch(locationSearchResultsProvider);
 
+        // Handle errors
         if (searchResults.error != null) {
-          // TODO: update exception
-          return SuggetionMessageWidget('Error: ${searchResults.error}');
+          final error = searchResults.error;
+          final errorMessage = error is AppException
+              ? error.message
+              : '${context.loc.error}: $error';
+          return SuggetionMessageWidget(errorMessage);
         }
 
+        // Handle empty or null results
         final places = searchResults.value;
         if (places == null || places.isEmpty) {
-          // TODO: update exception
-          return SuggetionMessageWidget('No results found');
+          // TODO: implement previous search results
+          return SuggetionMessageWidget(context.loc.noResultFound);
         }
 
+        // Render search suggestions
         return ListView.builder(
           shrinkWrap: true,
           itemCount: places.length,
@@ -64,7 +43,7 @@ class SearchSuggestionListView extends StatelessWidget {
             final place = places[index];
             return SuggestionListTile(
               place: place,
-              onTap: () => _onTap(context, ref, place),
+              onTapSuggestion: onTapSuggestion,
             );
           },
         );

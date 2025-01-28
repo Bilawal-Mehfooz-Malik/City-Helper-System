@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/core/utils/app_logger.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
-import 'package:flutter/foundation.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -51,12 +51,11 @@ class GeoLocatorRepository {
           longitude: position.longitude,
         );
       } catch (e, s) {
-        if (e is! AppException) {
-          debugPrint('--- Location Fetch Exception ---\n'
-              'Error: $e\n'
-              'Stack Trace:\n$s\n'
-              '------------------------------');
-        }
+        AppLogger.logError(
+          ('Error in Fetching Location --- GeoLocator'.hardcoded),
+          error: e,
+          stackTrace: s,
+        );
         throw LocationFetchFailedException();
       }
     });

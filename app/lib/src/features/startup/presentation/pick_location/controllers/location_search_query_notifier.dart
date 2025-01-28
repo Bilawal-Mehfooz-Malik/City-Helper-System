@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/src/features/startup/data/location_search_repository.dart';
+import 'package:app/src/features/startup/data/real/location_search_repository.dart';
 import 'package:app/src/features/startup/domain/place_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

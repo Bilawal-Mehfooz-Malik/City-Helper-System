@@ -11,10 +11,10 @@ class GoogleMapWidget extends ConsumerStatefulWidget {
   const GoogleMapWidget({super.key, required this.location});
 
   @override
-  ConsumerState<GoogleMapWidget> createState() => _OpenStreetMapWidgetState();
+  ConsumerState<GoogleMapWidget> createState() => _GoogleMapWidgetState();
 }
 
-class _OpenStreetMapWidgetState extends ConsumerState<GoogleMapWidget> {
+class _GoogleMapWidgetState extends ConsumerState<GoogleMapWidget> {
   late double _lat;
   late double _lng;
   late CameraPosition _cameraPosition;
@@ -34,7 +34,8 @@ class _OpenStreetMapWidgetState extends ConsumerState<GoogleMapWidget> {
 
   Future<void> _moveCameraToNewLocation() async {
     final controller = await _controller.future;
-    controller.moveCamera(CameraUpdate.newCameraPosition(_cameraPosition));
+    await controller
+        .moveCamera(CameraUpdate.newCameraPosition(_cameraPosition));
   }
 
   @override
@@ -56,7 +57,9 @@ class _OpenStreetMapWidgetState extends ConsumerState<GoogleMapWidget> {
 
   @override
   void dispose() {
-    _controller.future.then((controller) => controller.dispose());
+    if (_controller.isCompleted) {
+      _controller.future.then((controller) => controller.dispose());
+    }
     super.dispose();
   }
 

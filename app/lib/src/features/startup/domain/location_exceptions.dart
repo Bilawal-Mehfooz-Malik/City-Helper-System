@@ -35,7 +35,15 @@ class LocationPermissionDeniedForeverException extends AppException {
 class LocationFetchFailedException extends AppException {
   LocationFetchFailedException()
       : super(
-          'fetch-failed',
+          'location-fetch-failed',
           'Unable to retrieve location. Please try again later.',
+        );
+}
+
+class SuggestionFetchFailedException extends AppException {
+  SuggestionFetchFailedException()
+      : super(
+          'suggestion-fetch-failed',
+          'Unable to retrieve suggestions. Please try again later.',
         );
 }

@@ -7,7 +7,7 @@ part of 'user_location_controller.dart';
 // **************************************************************************
 
 String _$userLocationControllerHash() =>
-    r'baababfd76e82a9a8761fb0460ceddc2a0cb601e';
+    r'f6d58d667eac2e5cd40f65c0d98edd8f78c68e19';
 
 /// See also [UserLocationController].
 @ProviderFor(UserLocationController)

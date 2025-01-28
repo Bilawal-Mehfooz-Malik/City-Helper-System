@@ -3,7 +3,7 @@ import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:app/src/features/startup/data/geolocator_repository.dart';
+import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 
 import '../../../mocks.dart';
 

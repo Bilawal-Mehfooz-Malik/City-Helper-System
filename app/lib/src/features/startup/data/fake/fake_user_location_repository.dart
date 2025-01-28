@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:app/src/core/utils/in_memory_store.dart';
-import 'package:app/src/features/startup/data/user_location_repository.dart';
+import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {
