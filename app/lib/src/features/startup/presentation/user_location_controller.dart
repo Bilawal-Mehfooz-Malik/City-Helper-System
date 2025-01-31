@@ -1,4 +1,4 @@
-import 'package:app/src/core/utils/app_logger.dart';
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/presentation/location_controller.dart';

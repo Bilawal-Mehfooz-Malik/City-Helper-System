@@ -56,14 +56,6 @@ class _GoogleMapWidgetState extends ConsumerState<GoogleMapWidget> {
   }
 
   @override
-  void dispose() {
-    if (_controller.isCompleted) {
-      _controller.future.then((controller) => controller.dispose());
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Sizes.p8),

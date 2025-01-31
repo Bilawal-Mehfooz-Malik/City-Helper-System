@@ -18,6 +18,8 @@ class UserLocationRepository {
   final Database _db;
   final _store = StoreRef.main();
 
+  static String get userLocationKey => 'userLocation';
+
   static Future<Database> _createDatabase(String filename) async {
     if (!kIsWeb) {
       final appDocDir = await getApplicationDocumentsDirectory();
@@ -31,8 +33,6 @@ class UserLocationRepository {
     return UserLocationRepository(await _createDatabase('default.db'));
   }
 
-  static const userLocationKey = 'userLocation';
-
   Future<void> setUserLocation(GeoLocation location) async {
     await checkTimeOut(_timeOut, () async {
       final json = jsonEncode(location.toJson());
@@ -44,7 +44,7 @@ class UserLocationRepository {
     return checkTimeOut(_timeOut, () async {
       final json = await _store.record(userLocationKey).get(_db) as String?;
       if (json != null) {
-        final map = jsonDecode(json) as Map<String, dynamic>;
+        final map = jsonDecode(json) as Map<String, Object?>;
         return GeoLocation.fromJson(map);
       } else {
         return null;
@@ -57,7 +57,7 @@ class UserLocationRepository {
     return record.onSnapshot(_db).map((snapshot) {
       if (snapshot != null && snapshot.value != null) {
         final map =
-            jsonDecode(snapshot.value as String) as Map<String, dynamic>;
+            jsonDecode(snapshot.value as String) as Map<String, Object?>;
         return GeoLocation.fromJson(map);
       }
       return null;

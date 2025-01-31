@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/src/core/utils/app_logger.dart';
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
@@ -52,7 +52,7 @@ class GeoLocatorRepository {
         );
       } catch (e, s) {
         AppLogger.logError(
-          ('Error in Fetching Location --- GeoLocator'.hardcoded),
+          'Error in Fetching Location --- GeoLocator'.hardcoded,
           error: e,
           stackTrace: s,
         );

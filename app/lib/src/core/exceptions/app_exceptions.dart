@@ -29,6 +29,61 @@ class NoInternetConnectionException extends AppException {
         );
 }
 
+/// [RequestCancelException]
+class RequestCancelException extends AppException {
+  RequestCancelException()
+      : super(
+          'request-cancelled',
+          'The request was cancelled. Please try again.',
+        );
+}
+
+/// [ConnectionTimeoutException]
+class ConnectionTimeoutException extends AppException {
+  ConnectionTimeoutException()
+      : super(
+          'connection-timeout',
+          'The request timed out while trying to connect to the server. Please check your connection and try again.',
+        );
+}
+
+/// [SendTimeoutException]
+class SendTimeoutException extends AppException {
+  SendTimeoutException()
+      : super(
+          'send-timeout',
+          'The request took too long to send data to the server. Please try again.',
+        );
+}
+
+/// [ReceiveTimeoutException]
+class ReceiveTimeoutException extends AppException {
+  ReceiveTimeoutException()
+      : super(
+          'receive-timeout',
+          'The request took too long to receive data from the server. Please try again.',
+        );
+}
+
+/// [ResponseException]
+class ResponseException extends AppException {
+  ResponseException(int? statusCode, String message)
+      : super(
+          'response-error',
+          'Received an error response from the server. '
+              'Status Code: $statusCode. Message: $message',
+        );
+}
+
+/// [NetworkException]
+class NetworkException extends AppException {
+  NetworkException()
+      : super(
+          'network-error',
+          'A network error occurred. Please check your internet connection and try again.',
+        );
+}
+
 /// [TimedOutException]
 class TimedOutException extends AppException {
   TimedOutException()
@@ -36,4 +91,9 @@ class TimedOutException extends AppException {
           'time-out',
           'Request timed out. Please try again.',
         );
+}
+
+/// [UnknownException]
+class UnknownException extends AppException {
+  UnknownException() : super('unknown-error', 'An unknown error occurred.');
 }

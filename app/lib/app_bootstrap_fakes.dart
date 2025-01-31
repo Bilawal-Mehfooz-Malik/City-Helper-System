@@ -1,4 +1,5 @@
 import 'package:app/app_bootstrap.dart';
+import 'package:app/src/core/exceptions/async_error_logger.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
@@ -15,6 +16,10 @@ extension AppBootstrapFakes on AppBootStrap {
         userLocationRepositoryProvider
             .overrideWithValue(userLocationRepository),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
+      ],
+      observers: [
+        // * This observer logs all AsyncError states that are set by the controllers
+        AsyncErrorLogger(),
       ],
     );
   }

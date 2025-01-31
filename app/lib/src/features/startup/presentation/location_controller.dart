@@ -45,8 +45,8 @@ class LocationController extends _$LocationController {
       ));
 
       return place;
-    } catch (error, stackTrace) {
-      state = AsyncError(error, stackTrace);
+    } catch (e, s) {
+      state = AsyncError(e, s);
       return null;
     }
   }

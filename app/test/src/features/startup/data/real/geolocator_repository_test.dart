@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 
-import '../../../mocks.dart';
+import '../../../../mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

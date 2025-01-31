@@ -1,40 +1,24 @@
 import 'dart:async';
 
 import 'package:app/env.dart';
+import 'package:app/src/core/exceptions/dio_safe_api_call.dart';
 import 'package:app/src/core/models/place.dart';
-import 'package:app/src/core/utils/app_logger.dart';
-import 'package:app/src/core/utils/delay.dart';
+import 'package:app/src/core/exceptions/app_logger.dart';
+import 'package:app/src/core/exceptions/dio_intercepter.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/place_dto.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'location_search_repository.g.dart';
 
 class LocationSearchRepository {
-  LocationSearchRepository(this._dio, {int timeOut = 30}) : _timeOut = timeOut {
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        debugPrint('Request: ${options.method} ${options.uri}');
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        debugPrint('Response: ${response.statusCode} ${response.data}');
-        return handler.next(response);
-      },
-      onError: (error, handler) {
-        debugPrint('Error: ${error.response?.statusCode} ${error.message}');
-        return handler.next(error);
-      },
-    ));
-  }
+  LocationSearchRepository(this._dio);
 
   final Dio _dio;
-  final int _timeOut;
 
   Future<List<PlaceSuggestion>> fetchSuggestions(String query) {
     // setup
@@ -55,7 +39,7 @@ class LocationSearchRepository {
 
     try {
       // * Performing Post Request
-      return checkTimeOut(_timeOut, () async {
+      return dioSafeApiCall(() async {
         final response = await _dio.post<Map<String, Object?>>(url,
             options: options, data: data);
 
@@ -69,7 +53,7 @@ class LocationSearchRepository {
       });
     } catch (e, s) {
       AppLogger.logError(
-        ('Error fetching  suggetions for query: $query'.hardcoded),
+        'Error fetching suggestions for query: $query'.hardcoded,
         error: e,
         stackTrace: s,
       );
@@ -89,7 +73,7 @@ class LocationSearchRepository {
 
     try {
       // * Performing the GET request
-      return checkTimeOut(_timeOut, () async {
+      return dioSafeApiCall(() async {
         final response =
             await _dio.get<Map<String, Object?>>(url, options: options);
 
@@ -109,8 +93,8 @@ class LocationSearchRepository {
       });
     } catch (e, s) {
       AppLogger.logError(
-        ('Error fetching place details for suggestion: ${suggestion.id}'
-            .hardcoded),
+        'Error fetching place details for suggestion: ${suggestion.id}'
+            .hardcoded,
         error: e,
         stackTrace: s,
       );
@@ -121,7 +105,16 @@ class LocationSearchRepository {
 
 @riverpod
 LocationSearchRepository locationSearchRepository(Ref ref) {
-  return LocationSearchRepository(Dio());
+  final dio = Dio(
+    BaseOptions(
+      connectTimeout: Duration(seconds: 30),
+      receiveTimeout: Duration(seconds: 30),
+    ),
+  );
+
+  dio.interceptors.add(CustomInterceptors());
+
+  return LocationSearchRepository(dio);
 }
 
 @riverpod
@@ -155,7 +148,7 @@ Future<List<PlaceSuggestion>?> locationListSearch(Ref ref, String query) async {
     return results;
   } catch (e, s) {
     AppLogger.logError(
-      ('Error fetching suggestions for query: $query'.hardcoded),
+      'Error fetching suggestions for query: $query'.hardcoded,
       error: e,
       stackTrace: s,
     );

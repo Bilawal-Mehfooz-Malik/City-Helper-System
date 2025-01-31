@@ -1,41 +1,25 @@
-import 'dart:convert';
-import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
+import 'package:app/src/core/utils/in_memory_store.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {
   static const userLocationKey = 'userLocation';
-  final _fakeDb = InMemoryStore<Map<String, String?>>({});
+  final _fakeDb = InMemoryStore<Map<String, Object?>>({});
 
   @override
   Future<GeoLocation?> fetchUserLocation() async {
-    final json = _fakeDb.value[userLocationKey];
-    if (json != null) {
-      final map = jsonDecode(json) as Map<String, dynamic>;
-      return GeoLocation.fromJson(map);
-    }
-    return null;
+    final geoLocation = _fakeDb.value[userLocationKey];
+    return geoLocation != null ? geoLocation as GeoLocation : null;
   }
 
   @override
   Future<void> setUserLocation(GeoLocation location) async {
-    final json = jsonEncode(location.toJson());
-    _fakeDb.value = {
-      ..._fakeDb.value,
-      userLocationKey: json,
-    };
+    _fakeDb.value[userLocationKey] = location;
   }
 
   @override
   Stream<GeoLocation?> watchUserLocation() {
-    return _fakeDb.stream.map((data) {
-      final json = data[userLocationKey];
-      if (json != null) {
-        final map = jsonDecode(json) as Map<String, dynamic>;
-        return GeoLocation.fromJson(map);
-      }
-      return null;
-    });
+    return _fakeDb.stream.map((data) => data[userLocationKey] as GeoLocation?);
   }
 
   void dispose() => _fakeDb.close();

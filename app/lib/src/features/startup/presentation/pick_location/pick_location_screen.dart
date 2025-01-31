@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/app_logger.dart';
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
@@ -75,14 +75,6 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
           latitude: position.target.latitude,
           longitude: position.target.longitude);
     });
-  }
-
-  @override
-  void dispose() {
-    if (_controller.isCompleted) {
-      _controller.future.then((controller) => controller.dispose());
-    }
-    super.dispose();
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:app/env.dart';
 import 'package:app/src/app.dart';
+import 'package:app/src/core/exceptions/async_error_logger.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,10 @@ extension CreateProviderContainer on AppBootStrap {
     return ProviderContainer(
       overrides: [
         userLocationRepositoryProvider.overrideWithValue(userRepository),
+      ],
+      observers: [
+        // * This observer logs all AsyncError states that are set by the controllers
+        AsyncErrorLogger(),
       ],
     );
   }

@@ -91,7 +91,7 @@ void main() {
       await userLocationRepository.setUserLocation(latLng2);
 
       // Wait for the updates to propagate
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
 
       // Verify
       expect(emittedValues, [isNull, latLng1, latLng2]);
@@ -105,7 +105,7 @@ void main() {
           userLocationRepository.watchUserLocation().listen(emittedValues.add);
 
       // Wait for the updates to propagate
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
 
       // Verify
       expect(emittedValues, [isNull]);
