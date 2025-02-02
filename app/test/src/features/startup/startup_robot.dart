@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/features/home_screen.dart';
+import 'package:app/src/features/startup/presentation/pick_location/search_bar/pick_location_search_bar.dart';
 import 'package:app/src/features/startup/presentation/startup_content/startup_bottom_sheet_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,13 +28,6 @@ class StartupRobot {
     await tester.pumpAndSettle();
   }
 
-  Future<void> tapFromMapButton() async {
-    final finder = find.byKey(kFromMapKey);
-    expect(finder, findsOneWidget);
-    await tester.tap(finder);
-    await tester.pumpAndSettle();
-  }
-
   Future<void> tapFloatingCheckButton() async {
     final finder = find.byIcon(Icons.check);
     expect(finder, findsOneWidget);
@@ -52,5 +46,42 @@ class StartupRobot {
   void expectHomeScreen() {
     final finder = find.byKey(kHomeScreenKey);
     expect(finder, findsOneWidget);
+  }
+
+  // Only for [Flow 2]
+  Future<void> tapFromMapButton() async {
+    final finder = find.byKey(kFromMapKey);
+    expect(finder, findsOneWidget);
+    await tester.tap(finder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapSearchBar() async {
+    final finder = find.byType(PickLocationSearchBar);
+    expect(finder, findsOneWidget);
+    await tester.tap(finder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> putText() async {
+    final finder = find.widgetWithText(TextField, 'Enter City Name');
+    expect(finder, findsOneWidget);
+    await tester.enterText(finder, 'test');
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapSuggestion() async {
+    final finder = find.byType(ListTile);
+    expect(finder, findsWidgets);
+    await tester.pumpAndSettle();
+    await tester.tap(finder.first);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapMyLocationButton() async {
+    final finder = find.byIcon(Icons.my_location);
+    expect(finder, findsOneWidget);
+    await tester.tap(finder);
+    await tester.pumpAndSettle();
   }
 }

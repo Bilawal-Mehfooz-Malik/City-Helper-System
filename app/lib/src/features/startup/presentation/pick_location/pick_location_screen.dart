@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
@@ -23,7 +24,6 @@ class PickLocationScreen extends ConsumerStatefulWidget {
 class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   late double _lat;
   late double _lng;
-  static const zoomLevel = 13.0;
   late GeoLocation _pickedLocation;
   late CameraPosition _cameraPosition;
   final _controller = Completer<GoogleMapController>();
@@ -36,30 +36,49 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     _lat = previousLocation?.latitude ?? defaultLoc.latitude;
     _lng = previousLocation?.longitude ?? defaultLoc.longitude;
     _pickedLocation = GeoLocation(latitude: _lat, longitude: _lng);
-    _cameraPosition =
-        CameraPosition(zoom: zoomLevel, target: LatLng(_lat, _lng));
+    _cameraPosition = CameraPosition(zoom: 13.0, target: LatLng(_lat, _lng));
   }
 
-  Future<void> _tapSuggestion(GeoLocation data) async {
+  Future<void> _moveCamera(
+    GeoLocation data, {
+    double zoomLevel = 13.0,
+    bool animate = false,
+  }) async {
     _lat = data.latitude;
     _lng = data.longitude;
-
-    await Future<void>.delayed(Duration.zero);
 
     try {
       if (_controller.isCompleted) {
         final controller = await _controller.future;
-        await controller.moveCamera(
-          CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), zoomLevel),
-        );
+        if (animate) {
+          await controller.animateCamera(
+            CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), zoomLevel),
+          );
+        } else {
+          await controller.moveCamera(
+            CameraUpdate.newLatLngZoom(LatLng(_lat, _lng), zoomLevel),
+          );
+        }
       }
     } catch (e, s) {
       AppLogger.logError(
-        'Error in moving Camera when Suggestion Tapped',
+        animate
+            ? 'Error in moving Camera when getCurrent Called'
+            : 'Error in moving Camera when Suggestion Tapped',
         error: e,
         stackTrace: s,
       );
     }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    final location = await ref
+        .read(locationControllerProvider.notifier)
+        .getCurrentLocation();
+
+    if (location == null) return;
+
+    await _moveCamera(location, animate: true, zoomLevel: 18);
   }
 
   void _saveLocation(BuildContext context) {
@@ -80,6 +99,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   @override
   Widget build(BuildContext context) {
     final isFocused = ref.watch(searchFocusNotifierProvider);
+    final isLoading = ref.watch(locationControllerProvider).isLoading;
 
     return Scaffold(
       body: SafeArea(
@@ -106,7 +126,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               child: Padding(
                 padding: EdgeInsets.all(Sizes.p8),
                 child: PickLocationSearchBar(
-                  onTapSuggestion: _tapSuggestion,
+                  onTapSuggestion: _moveCamera,
                 ),
               ),
             ),
@@ -122,9 +142,28 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: Sizes.p12, right: Sizes.p12),
-        child: FloatingActionButton(
-          child: const Icon(Icons.check),
-          onPressed: () => _saveLocation(context),
+        child: Column(
+          spacing: Sizes.p16,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              backgroundColor: context.colorScheme.onPrimary,
+              foregroundColor: context.colorScheme.primary,
+              shape: const CircleBorder(),
+              onPressed: isLoading ? null : _getCurrentLocation,
+              child: isLoading
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CustomProgressIndicator(),
+                    )
+                  : const Icon(Icons.my_location),
+            ),
+            FloatingActionButton(
+              onPressed: isLoading ? null : () => _saveLocation(context),
+              child: const Icon(Icons.check),
+            ),
+          ],
         ),
       ),
     );

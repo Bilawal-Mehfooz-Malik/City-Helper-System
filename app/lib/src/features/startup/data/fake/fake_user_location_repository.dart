@@ -3,7 +3,7 @@ import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {
-  static const userLocationKey = 'userLocation';
+  static String get userLocationKey => 'userLocation';
   final _fakeDb = InMemoryStore<Map<String, Object?>>({});
 
   @override
@@ -14,7 +14,10 @@ class FakeUserLocationRepository implements UserLocationRepository {
 
   @override
   Future<void> setUserLocation(GeoLocation location) async {
-    _fakeDb.value[userLocationKey] = location;
+    _fakeDb.value = {
+      ..._fakeDb.value,
+      userLocationKey: location,
+    };
   }
 
   @override

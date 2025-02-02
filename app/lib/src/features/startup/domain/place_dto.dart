@@ -16,7 +16,7 @@ class PlaceSuggestion {
         placePrediction['structuredFormat'] as Map<String, Object?>? ?? {};
 
     return PlaceSuggestion(
-      id: placePrediction['placeId'] as String? ?? '',
+      id: placePrediction['placeId'] as String? ?? '', // camelCase 'placeId'
       name: (structuredFormat['mainText'] as Map<String, Object?>?)?['text']
               as String? ??
           '',
@@ -42,11 +42,19 @@ class PlaceDetails {
     final address = json['formattedAddress'] as String?;
 
     return PlaceDetails(
-      latitude: location['latitude'] as double? ??
-          (throw Exception('Missing latitude')),
+      latitude:
+          location['latitude'] as double? ?? (throw MissingLatitudeException()),
       longitude: location['longitude'] as double? ??
-          (throw Exception('Missing longitude')),
+          (throw MissingLongitudeException()),
       streetAddress: address,
     );
   }
+}
+
+class MissingLatitudeException implements Exception {
+  final String message = 'Missing latitude';
+}
+
+class MissingLongitudeException implements Exception {
+  final String message = 'Missing longitude';
 }

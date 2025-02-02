@@ -15,10 +15,11 @@ class LocationController extends _$LocationController {
     return null;
   }
 
-  Future<void> getCurrentLocation() async {
+  Future<GeoLocation?> getCurrentLocation() async {
     state = const AsyncLoading();
     final locationRepo = ref.read(geoLocatorRepositoryProvider);
     state = await AsyncValue.guard(() => locationRepo.getCurrentLocation());
+    return state.value;
   }
 
   void getLocationFromMap(GeoLocation location) async {

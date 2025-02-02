@@ -6,10 +6,10 @@ import 'package:app/src/core/models/place.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/exceptions/dio_intercepter.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
-import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/domain/place_dto.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -37,28 +37,19 @@ class LocationSearchRepository {
       },
     };
 
-    try {
-      // * Performing Post Request
-      return dioSafeApiCall(() async {
-        final response = await _dio.post<Map<String, Object?>>(url,
-            options: options, data: data);
+    // * Performing Post Request
+    return dioSafeApiCall(() async {
+      final response = await _dio.post<Map<String, Object?>>(url,
+          options: options, data: data);
 
-        // * Parsing Data into [PlaceSuggestion] and returning List<PlaceSuggestion>
-        final suggestions =
-            response.data?['suggestions'] as List<Object?>? ?? [];
-        return suggestions
-            .cast<Map<String, Object?>>()
-            .map((json) => PlaceSuggestion.fromJson(json))
-            .toList();
-      });
-    } catch (e, s) {
-      AppLogger.logError(
-        'Error fetching suggestions for query: $query'.hardcoded,
-        error: e,
-        stackTrace: s,
-      );
-      throw SuggestionFetchFailedException();
-    }
+      // * Parsing Data into [PlaceSuggestion] and returning List<PlaceSuggestion>
+      final suggestions = response.data?['suggestions'] as List<Object?>? ?? [];
+
+      return suggestions
+          .cast<Map<String, Object?>>()
+          .map((json) => PlaceSuggestion.fromJson(json))
+          .toList();
+    });
   }
 
   Future<Place> fetchPlaceDetails(PlaceSuggestion suggestion) {
@@ -71,35 +62,25 @@ class LocationSearchRepository {
       'X-Goog-FieldMask': 'location,formattedAddress',
     });
 
-    try {
-      // * Performing the GET request
-      return dioSafeApiCall(() async {
-        final response =
-            await _dio.get<Map<String, Object?>>(url, options: options);
+    // * Performing the GET request
+    return dioSafeApiCall(() async {
+      final response =
+          await _dio.get<Map<String, Object?>>(url, options: options);
 
-        // * Parsing the response into PlaceDetailsResponse
-        final details = PlaceDetails.fromJson(response.data ?? {});
+      // * Parsing the response into PlaceDetailsResponse
+      final details = PlaceDetails.fromJson(response.data ?? {});
 
-        // * Returning Place Object
-        return Place(
-          id: suggestion.id,
-          name: suggestion.name,
-          streetAddress: details.streetAddress,
-          geoLocation: GeoLocation(
-            latitude: details.latitude,
-            longitude: details.longitude,
-          ),
-        );
-      });
-    } catch (e, s) {
-      AppLogger.logError(
-        'Error fetching place details for suggestion: ${suggestion.id}'
-            .hardcoded,
-        error: e,
-        stackTrace: s,
+      // * Returning Place Object
+      return Place(
+        id: suggestion.id,
+        name: suggestion.name,
+        streetAddress: details.streetAddress,
+        geoLocation: GeoLocation(
+          latitude: details.latitude,
+          longitude: details.longitude,
+        ),
       );
-      throw LocationFetchFailedException();
-    }
+    });
   }
 }
 
@@ -123,28 +104,29 @@ Future<List<PlaceSuggestion>?> locationListSearch(Ref ref, String query) async {
     return [];
   }
 
-  // Create a keepAlive link for caching
   final link = ref.keepAlive();
   Timer? timer;
 
-  // Handle disposal of timer
   ref.onDispose(() => timer?.cancel());
 
-  // Start disposal timer when last listener is removed
+  final bool isTestMode = !kReleaseMode && !kProfileMode;
+  final timerDuration =
+      isTestMode ? Duration.zero : const Duration(seconds: 30);
+
   ref.onCancel(() {
-    timer = Timer(const Duration(seconds: 30), () {
+    // Immediately close in test mode rather than scheduling a timer.
+    if (isTestMode) {
       link.close();
-    });
+    } else {
+      timer = Timer(timerDuration, () => link.close());
+    }
   });
 
-  // Cancel disposal timer if provider is listened to again
   ref.onResume(() => timer?.cancel());
 
   try {
     final searchRepository = ref.watch(locationSearchRepositoryProvider);
     final results = await searchRepository.fetchSuggestions(query);
-
-    // Only cache successful results
     return results;
   } catch (e, s) {
     AppLogger.logError(
@@ -152,10 +134,7 @@ Future<List<PlaceSuggestion>?> locationListSearch(Ref ref, String query) async {
       error: e,
       stackTrace: s,
     );
-    // Invalidate the cache by closing the keepAlive link
     link.close();
-
-    // Rethrow the error without caching it
     rethrow;
   }
 }

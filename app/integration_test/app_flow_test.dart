@@ -27,6 +27,10 @@ void main() {
       await r.startupRobot.tapGetStartedButton();
       r.startupRobot.expectModalBottomSheet();
       await r.startupRobot.tapFromMapButton();
+      await r.startupRobot.tapSearchBar();
+      await r.startupRobot.putText();
+      await r.startupRobot.tapSuggestion();
+      await r.startupRobot.tapMyLocationButton();
       await r.startupRobot.tapFloatingCheckButton();
       await r.startupRobot.tapSaveButton();
       r.startupRobot.expectHomeScreen();

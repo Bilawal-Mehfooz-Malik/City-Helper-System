@@ -27,7 +27,7 @@ final locationSearchRepositoryProvider =
 typedef LocationSearchRepositoryRef
     = AutoDisposeProviderRef<LocationSearchRepository>;
 String _$locationListSearchHash() =>
-    r'6eebdfba19f8373d4bc131ff53c56acb97b6cfd5';
+    r'3185bcaf9c0abc0092e943210d6a9dda8e8a8338';
 
 /// Copied from Dart SDK
 class _SystemHash {

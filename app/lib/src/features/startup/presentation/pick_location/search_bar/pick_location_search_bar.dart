@@ -57,10 +57,10 @@ class _PickLocationSearchBarState extends ConsumerState<PickLocationSearchBar> {
       ],
       onTap: () {
         _updateFocus(true);
-        debugPrint('Called------------------${_controller.text}');
-        ref
-            .read(locationSearchQueryNotifierProvider.notifier)
-            .setQuery(_controller.text);
+        // debugPrint('Called------------------${_controller.text}');
+        // ref
+        //     .read(locationSearchQueryNotifierProvider.notifier)
+        //     .setQuery(_controller.text);
       },
       onSubmitted: (_) => _updateFocus(false),
       onChanged: (query) {
