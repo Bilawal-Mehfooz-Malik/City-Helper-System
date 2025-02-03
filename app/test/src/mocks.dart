@@ -1,4 +1,5 @@
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
+import 'package:app/src/features/startup/data/real/location_search_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +11,9 @@ class MockGeoLocatorRepository extends Mock implements GeoLocatorRepository {}
 
 class MockUserLocationRepository extends Mock
     implements UserLocationRepository {}
+
+class MockLocationSearchRepository extends Mock
+    implements LocationSearchRepository {}
 
 class MockDio extends Mock implements Dio {}
 
