@@ -29,7 +29,7 @@ final locationSearchResultsProvider =
 typedef LocationSearchResultsRef
     = AutoDisposeFutureProviderRef<List<PlaceSuggestion>?>;
 String _$locationSearchQueryNotifierHash() =>
-    r'196ecbba8c7c2ceda5a4d76c6934b9be6cbec456';
+    r'c481a6304b6bea92301029e8803a3c988059f76a';
 
 /// A simple notifier class to keep track of the search query
 ///

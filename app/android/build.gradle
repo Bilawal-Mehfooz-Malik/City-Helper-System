@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    // Google Maps Documentation Requirements
+    // https://developers.google.com/maps/flutter-package/config#step_4_add_your_api_key_to_the_project
+    dependencies {
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -6,9 +18,11 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }

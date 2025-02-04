@@ -19,7 +19,7 @@ class LocationSearchQueryNotifier extends _$LocationSearchQueryNotifier {
   String build() {
     // debounce the inputs
     _subscription = _searchQueryController.stream
-        .debounceTime(const Duration(milliseconds: 200))
+        .debounceTime(const Duration(milliseconds: 100))
         .listen(_updateState);
     // don't forget to close the StreamController on dispose
     ref.onDispose(() {
