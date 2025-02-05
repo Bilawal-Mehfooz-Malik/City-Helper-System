@@ -126,7 +126,12 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               child: Padding(
                 padding: EdgeInsets.all(Sizes.p8),
                 child: PickLocationSearchBar(
-                  onTapSuggestion: _moveCamera,
+                  onTapSuggestion: (location) async {
+                    await _moveCamera(location);
+                    if (context.mounted) {
+                      FocusScope.of(context).unfocus();
+                    }
+                  },
                 ),
               ),
             ),
