@@ -28,7 +28,7 @@ class EmptyPlaceholderWidget extends StatelessWidget {
             gapH32,
             PrimaryButton(
               text: 'Go Home'.hardcoded,
-              onPressed: () => context.goNamed(AppRoute.home.name),
+              onPressed: () => context.goNamed(AppRoute.category.name),
             )
           ],
         ),

@@ -23,7 +23,7 @@ class LocationPreviewWidget extends ConsumerWidget {
         child: Center(
           child: userLocationValue.maybeWhen(
             skipError: true,
-            loading: () => const Center(child: CustomProgressIndicator()),
+            loading: () => const Center(child: CenteredProgressIndicator()),
             data: (location) => location == null
                 ? Text(context.loc.notChoosen)
                 : GoogleMapWidget(location: location),

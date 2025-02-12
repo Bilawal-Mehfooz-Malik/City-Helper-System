@@ -27,7 +27,9 @@ class StartupBottomSheetContent extends ConsumerWidget {
     final userController = ref.read(userLocationControllerProvider.notifier);
     final controller = ref.read(locationControllerProvider.notifier);
 
-    final isLoading = userState.isLoading || userLocationState.isLoading;
+    final isLoading = userState.isLoading ||
+        userLocationState.isLoading ||
+        userState.hasError;
 
     // Error handling for userLocation
     ref.listen<AsyncValue<GeoLocation?>>(

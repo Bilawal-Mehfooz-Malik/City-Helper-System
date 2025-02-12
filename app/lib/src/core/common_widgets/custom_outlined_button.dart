@@ -20,7 +20,7 @@ class CustomOutlinedButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: isDisabled ? null : onPressed,
       child: isLoading
-          ? const CustomProgressIndicator()
+          ? const CenteredProgressIndicator()
           : Text(text, textAlign: TextAlign.center),
     );
   }

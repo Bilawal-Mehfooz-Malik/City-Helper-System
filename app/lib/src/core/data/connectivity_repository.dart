@@ -27,7 +27,7 @@ ConnectivityRepository connectivityRepository(Ref ref) {
   return ConnectivityRepository(InternetConnection());
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<bool> internetStatus(Ref ref) {
   final connectivityRepository = ref.watch(connectivityRepositoryProvider);
   return connectivityRepository.onInternetStatusChanged();

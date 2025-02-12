@@ -160,7 +160,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
                   ? SizedBox(
                       height: 25,
                       width: 25,
-                      child: CustomProgressIndicator(),
+                      child: CenteredProgressIndicator(),
                     )
                   : const Icon(Icons.my_location),
             ),

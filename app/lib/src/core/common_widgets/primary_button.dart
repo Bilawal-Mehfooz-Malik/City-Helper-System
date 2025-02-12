@@ -27,7 +27,7 @@ class PrimaryButton extends StatelessWidget {
     return FilledButton(
       onPressed: isDisabled ? null : onPressed,
       child: isLoading
-          ? const CustomProgressIndicator()
+          ? const CenteredProgressIndicator()
           : Text(text, textAlign: TextAlign.center),
     );
   }

@@ -10,10 +10,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
+
   // Inject Google Maps script on web
   configureGoogleMapsWeb();
 
   final appBootStrap = AppBootStrap();
+  // await appBootStrap.initializeSupabase();
+  await appBootStrap.initializeLocalSupabase();
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);
   runApp(root);
