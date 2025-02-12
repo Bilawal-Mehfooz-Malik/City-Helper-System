@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -23,7 +23,7 @@ class CategoriesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
-      return CenteredMessageWidget('No category found'.hardcoded);
+      return CenteredMessageWidget(NoCategoryFoundException().message);
     }
 
     return Padding(

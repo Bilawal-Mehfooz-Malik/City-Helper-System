@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:app/src/core/exceptions/app_exceptions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'connectivity_repository.dart';
 
@@ -23,7 +22,7 @@ class ConnectivityController extends _$ConnectivityController {
       state = isConnected;
     });
     // Return a default value.
-    throw NoInternetConnectionException();
+    return false;
   }
 
   void dispose() {

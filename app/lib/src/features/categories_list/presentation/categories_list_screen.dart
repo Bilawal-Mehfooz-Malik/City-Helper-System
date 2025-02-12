@@ -10,6 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CategoriesListScreen extends StatelessWidget {
   const CategoriesListScreen({super.key});
 
+  Future<void> _onRefresh(WidgetRef ref) async {
+    ref.invalidate(categoriesListFutureProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,20 +23,23 @@ class CategoriesListScreen extends StatelessWidget {
           // Listen for connectivity changes,  When the connection is restored, refresh the categories stream.
           ref.listen<bool>(connectivityControllerProvider, (_, isConnected) {
             if (isConnected) {
-              ref.invalidate(categoriesListStreamProvider);
+              ref.invalidate(categoriesListFutureProvider);
             }
           });
 
-          final categoriesListValue = ref.watch(categoriesListStreamProvider);
+          final categoriesListValue = ref.watch(categoriesListFutureProvider);
 
           return AsyncValueWidget(
             value: categoriesListValue,
-            data: (categories) => CategoriesGrid(
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                final category = categories[index];
-                return CategoryCard(category: category);
-              },
+            data: (categories) => RefreshIndicator(
+              onRefresh: () => _onRefresh(ref),
+              child: CategoriesGrid(
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  final category = categories[index];
+                  return CategoryCard(category: category);
+                },
+              ),
             ),
           );
         },
