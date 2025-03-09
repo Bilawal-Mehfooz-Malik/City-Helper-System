@@ -15,19 +15,20 @@ String _$locationSearchResultsHash() =>
 @ProviderFor(locationSearchResults)
 final locationSearchResultsProvider =
     AutoDisposeFutureProvider<List<PlaceSuggestion>?>.internal(
-  locationSearchResults,
-  name: r'locationSearchResultsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$locationSearchResultsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      locationSearchResults,
+      name: r'locationSearchResultsProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$locationSearchResultsHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef LocationSearchResultsRef
-    = AutoDisposeFutureProviderRef<List<PlaceSuggestion>?>;
+typedef LocationSearchResultsRef =
+    AutoDisposeFutureProviderRef<List<PlaceSuggestion>?>;
 String _$locationSearchQueryNotifierHash() =>
     r'c481a6304b6bea92301029e8803a3c988059f76a';
 
@@ -37,14 +38,15 @@ String _$locationSearchQueryNotifierHash() =>
 @ProviderFor(LocationSearchQueryNotifier)
 final locationSearchQueryNotifierProvider =
     AutoDisposeNotifierProvider<LocationSearchQueryNotifier, String>.internal(
-  LocationSearchQueryNotifier.new,
-  name: r'locationSearchQueryNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$locationSearchQueryNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      LocationSearchQueryNotifier.new,
+      name: r'locationSearchQueryNotifierProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$locationSearchQueryNotifierHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$LocationSearchQueryNotifier = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint

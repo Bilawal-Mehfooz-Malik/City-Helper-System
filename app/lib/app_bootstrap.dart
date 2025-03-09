@@ -10,7 +10,7 @@ class AppBootStrap {
   Future<void> initializeLocalSupabase() async {
     await Supabase.initialize(
       url: Env.supabaseLocalApiUrl,
-      anonKey: Env.supabaseLocalAnonKey,
+      anonKey: Env.supabaseAnonKey,
     );
   }
 

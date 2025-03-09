@@ -13,14 +13,15 @@ String _$userLocationControllerHash() =>
 @ProviderFor(UserLocationController)
 final userLocationControllerProvider =
     AutoDisposeAsyncNotifierProvider<UserLocationController, void>.internal(
-  UserLocationController.new,
-  name: r'userLocationControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userLocationControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      UserLocationController.new,
+      name: r'userLocationControllerProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$userLocationControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$UserLocationController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

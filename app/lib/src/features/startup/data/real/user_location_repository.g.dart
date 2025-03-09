@@ -13,14 +13,15 @@ String _$userLocationRepositoryHash() =>
 @ProviderFor(userLocationRepository)
 final userLocationRepositoryProvider =
     Provider<UserLocationRepository>.internal(
-  userLocationRepository,
-  name: r'userLocationRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userLocationRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      userLocationRepository,
+      name: r'userLocationRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$userLocationRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -32,9 +33,10 @@ String _$watchUserLocationHash() => r'2154b589f420208122b7715e993cb55aa03105a3';
 final watchUserLocationProvider = StreamProvider<GeoLocation?>.internal(
   watchUserLocation,
   name: r'watchUserLocationProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchUserLocationHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$watchUserLocationHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

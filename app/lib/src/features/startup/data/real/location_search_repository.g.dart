@@ -13,19 +13,20 @@ String _$locationSearchRepositoryHash() =>
 @ProviderFor(locationSearchRepository)
 final locationSearchRepositoryProvider =
     AutoDisposeProvider<LocationSearchRepository>.internal(
-  locationSearchRepository,
-  name: r'locationSearchRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$locationSearchRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      locationSearchRepository,
+      name: r'locationSearchRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$locationSearchRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef LocationSearchRepositoryRef
-    = AutoDisposeProviderRef<LocationSearchRepository>;
+typedef LocationSearchRepositoryRef =
+    AutoDisposeProviderRef<LocationSearchRepository>;
 String _$locationListSearchHash() =>
     r'3185bcaf9c0abc0092e943210d6a9dda8e8a8338';
 
@@ -61,21 +62,15 @@ class LocationListSearchFamily
   const LocationListSearchFamily();
 
   /// See also [locationListSearch].
-  LocationListSearchProvider call(
-    String query,
-  ) {
-    return LocationListSearchProvider(
-      query,
-    );
+  LocationListSearchProvider call(String query) {
+    return LocationListSearchProvider(query);
   }
 
   @override
   LocationListSearchProvider getProviderOverride(
     covariant LocationListSearchProvider provider,
   ) {
-    return call(
-      provider.query,
-    );
+    return call(provider.query);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -97,24 +92,20 @@ class LocationListSearchFamily
 class LocationListSearchProvider
     extends AutoDisposeFutureProvider<List<PlaceSuggestion>?> {
   /// See also [locationListSearch].
-  LocationListSearchProvider(
-    String query,
-  ) : this._internal(
-          (ref) => locationListSearch(
-            ref as LocationListSearchRef,
-            query,
-          ),
-          from: locationListSearchProvider,
-          name: r'locationListSearchProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$locationListSearchHash,
-          dependencies: LocationListSearchFamily._dependencies,
-          allTransitiveDependencies:
-              LocationListSearchFamily._allTransitiveDependencies,
-          query: query,
-        );
+  LocationListSearchProvider(String query)
+    : this._internal(
+        (ref) => locationListSearch(ref as LocationListSearchRef, query),
+        from: locationListSearchProvider,
+        name: r'locationListSearchProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$locationListSearchHash,
+        dependencies: LocationListSearchFamily._dependencies,
+        allTransitiveDependencies:
+            LocationListSearchFamily._allTransitiveDependencies,
+        query: query,
+      );
 
   LocationListSearchProvider._internal(
     super._createNotifier, {
@@ -131,7 +122,7 @@ class LocationListSearchProvider
   @override
   Override overrideWith(
     FutureOr<List<PlaceSuggestion>?> Function(LocationListSearchRef provider)
-        create,
+    create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -182,5 +173,6 @@ class _LocationListSearchProviderElement
   @override
   String get query => (origin as LocationListSearchProvider).query;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
