@@ -15,7 +15,7 @@ void main() async {
   configureGoogleMapsWeb();
 
   final appBootStrap = AppBootStrap();
-  await appBootStrap.initializeSupabase();
+  // await appBootStrap.initializeSupabase();
   // await appBootStrap.initializeLocalSupabase();
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);

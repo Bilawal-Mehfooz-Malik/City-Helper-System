@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "782974278028",
+    "project_id": "city-helper-system",
+    "storage_bucket": "city-helper-system.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782974278028:android:37ee42a61165b784441ea9",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfo2ZpKor4BZ6kxcUz1tsFRccq-gzH1sk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
