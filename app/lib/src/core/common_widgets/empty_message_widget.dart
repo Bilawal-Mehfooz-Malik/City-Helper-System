@@ -3,13 +3,13 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
-class EmptyMessageScreen extends StatelessWidget {
+class MessageScreen extends StatelessWidget {
   final String? title;
   final IconData? icon;
   final bool showTitle;
   final bool showIcon;
   final String message;
-  const EmptyMessageScreen({
+  const MessageScreen({
     super.key,
     this.title,
     this.icon,
@@ -57,11 +57,24 @@ class EmptyMessageScreen extends StatelessWidget {
   }
 }
 
-class EmptyMessageWidget extends StatelessWidget {
-  const EmptyMessageWidget(this.message, {super.key});
+class CenteredMessageWidget extends StatelessWidget {
+  const CenteredMessageWidget(this.message, {super.key});
   final String message;
   @override
   Widget build(BuildContext context) {
-    return Text(message, style: context.textTheme.bodyLarge);
+    return Center(child: MessageWidget(message));
+  }
+}
+
+class MessageWidget extends StatelessWidget {
+  const MessageWidget(this.message, {super.key});
+  final String message;
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      message,
+      style: context.textTheme.bodyLarge,
+      textAlign: TextAlign.center,
+    );
   }
 }

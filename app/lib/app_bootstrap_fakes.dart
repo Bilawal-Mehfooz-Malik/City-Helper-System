@@ -1,5 +1,7 @@
 import 'package:app/app_bootstrap.dart';
 import 'package:app/src/core/exceptions/async_error_logger.dart';
+import 'package:app/src/features/categories_list/data/categories_repository.dart';
+import 'package:app/src/features/categories_list/data/fake_categories_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_location_search_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
@@ -13,15 +15,19 @@ extension AppBootstrapFakes on AppBootStrap {
     final userLocationRepository = FakeUserLocationRepository();
     final geoLocatorRepository = FakeGeoLocatorRepository();
     final locationsearchRepository = FakeLocationSearchRepository();
+    final categoryRepository = FakeCategoriesRepository();
 
     return ProviderContainer(
       overrides: [
         // * [StartupFeatureRepository] is overridden with [FakeStartupFeatureRepository]
-        userLocationRepositoryProvider
-            .overrideWithValue(userLocationRepository),
+        userLocationRepositoryProvider.overrideWithValue(
+          userLocationRepository,
+        ),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
-        locationSearchRepositoryProvider
-            .overrideWithValue(locationsearchRepository),
+        locationSearchRepositoryProvider.overrideWithValue(
+          locationsearchRepository,
+        ),
+        categoriesRepositoryProvider.overrideWithValue(categoryRepository),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

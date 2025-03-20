@@ -72,9 +72,10 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    final location = await ref
-        .read(locationControllerProvider.notifier)
-        .getCurrentLocation();
+    final location =
+        await ref
+            .read(locationControllerProvider.notifier)
+            .getCurrentLocation();
 
     if (location == null) return;
 
@@ -91,8 +92,9 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   void _pickLocationOnMove(CameraPosition position) {
     setState(() {
       _pickedLocation = GeoLocation(
-          latitude: position.target.latitude,
-          longitude: position.target.longitude);
+        latitude: position.target.latitude,
+        longitude: position.target.longitude,
+      );
     });
   }
 
@@ -156,15 +158,16 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               foregroundColor: context.colorScheme.primary,
               shape: const CircleBorder(),
               onPressed: isLoading ? null : _getCurrentLocation,
-              child: isLoading
-                  ? SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: CustomProgressIndicator(),
-                    )
-                  : const Icon(Icons.my_location),
+              child:
+                  isLoading
+                      ? SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CenteredProgressIndicator(),
+                      )
+                      : const Icon(Icons.my_location),
             ),
-            FloatingActionButton(
+            FloatingActionButton.large(
               onPressed: isLoading ? null : () => _saveLocation(context),
               child: const Icon(Icons.check),
             ),

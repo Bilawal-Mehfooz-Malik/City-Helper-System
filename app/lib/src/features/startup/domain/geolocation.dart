@@ -3,7 +3,7 @@ part 'geolocation.freezed.dart';
 part 'geolocation.g.dart';
 
 @freezed
-class GeoLocation with _$GeoLocation {
+abstract class GeoLocation with _$GeoLocation {
   const factory GeoLocation({
     required double latitude,
     required double longitude,

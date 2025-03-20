@@ -14,7 +14,7 @@ void main() {
       r.startupRobot.expectModalBottomSheet();
       await r.startupRobot.tapGetCurrentButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHomeScreen();
+      r.startupRobot.expectCategoriesListScreen();
     });
   });
 
@@ -33,7 +33,7 @@ void main() {
       await r.startupRobot.tapMyLocationButton();
       await r.startupRobot.tapFloatingCheckButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHomeScreen();
+      r.startupRobot.expectCategoriesListScreen();
     });
   });
 }

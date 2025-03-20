@@ -1,10 +1,11 @@
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
+import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../core/common_widgets/loading_screen.dart';
-import '../features/home_screen.dart';
 import '../features/startup/data/real/user_location_repository.dart';
 import '../features/startup/presentation/pick_location/pick_location_screen.dart';
 import '../features/startup/presentation/startup_content/startup_screen.dart';
@@ -13,7 +14,7 @@ import 'not_found_screen.dart';
 part 'app_router.g.dart';
 
 enum AppRoute {
-  home,
+  category,
   getStarted,
   permissionDenied,
   pickYourLocation,
@@ -24,37 +25,17 @@ enum AppRoute {
 @riverpod
 GoRouter appRouter(Ref ref) {
   late GoRouter router;
+  // Determine the initial route based on the user location state.
+  final userLocation = ref.read(watchUserLocationProvider).value;
+  final initialLocation = userLocation != null ? '/' : '/get-started';
 
-  final sub =
-      ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
+  // listen for changes in userLocationProvider to refresh the router for redirection
+  ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
 
   return router = GoRouter(
-    initialLocation: '/',
+    initialLocation: initialLocation,
     debugLogDiagnostics: true,
-    redirect: (context, state) {
-      final location = state.uri.path;
-      try {
-        final userLocExists = sub.read().value;
-        if (userLocExists == null) {
-          // User does not exist, redirect to /get-started
-          if (location != '/get-started' &&
-              !location.startsWith('/get-started')) {
-            return '/get-started';
-          }
-        } else {
-          // User exists, prevent access to /get-started and redirect to home
-          if (location == '/get-started' ||
-              location.startsWith('/get-started') ||
-              location == '/loading') {
-            return '/';
-          }
-        }
-        return null;
-      } catch (e) {
-        if (location != '/page-not-found') return '/page-not-found';
-        return null;
-      }
-    },
+    redirect: (context, state) => redirection(ref, state),
     routes: [
       GoRoute(
         path: '/get-started',
@@ -75,8 +56,8 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/',
-        name: AppRoute.home.name,
-        builder: (context, state) => const HomeScreen(),
+        name: AppRoute.category.name,
+        builder: (context, state) => const CategoriesListScreen(),
       ),
       GoRoute(
         path: '/loading',

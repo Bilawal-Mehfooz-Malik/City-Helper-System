@@ -7,7 +7,7 @@ part 'place.freezed.dart';
 part 'place.g.dart';
 
 @freezed
-class Place with _$Place {
+abstract class Place with _$Place {
   const factory Place({
     required EntityId id,
     required String name,

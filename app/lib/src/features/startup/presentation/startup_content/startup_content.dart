@@ -19,23 +19,25 @@ class StartupContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // [Logo and Title]
-        if (useSpacer) const Spacer() else gapH12,
+        if (useSpacer) const Spacer(flex: 2) else gapH12,
 
         const AppLogo(height: 80, width: 80),
         gapH20,
         Text(
           context.loc.appTitle,
-          style: context.textTheme.headlineLarge!
-              .copyWith(fontWeight: FontWeight.bold),
+          style: context.textTheme.headlineLarge!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
           textAlign: TextAlign.center,
         ),
-        if (useSpacer) const Spacer() else gapH32,
+        if (useSpacer) const Spacer(flex: 3) else gapH32,
 
         // Subtitle
         Text(
           context.loc.startupHeadline,
-          style: context.textTheme.headlineMedium!
-              .copyWith(fontWeight: FontWeight.w900),
+          style: context.textTheme.headlineMedium!.copyWith(
+            fontWeight: FontWeight.w900,
+          ),
           textAlign: TextAlign.center,
         ),
         gapH24,
@@ -43,13 +45,14 @@ class StartupContent extends StatelessWidget {
         // [Description]
         Text(
           context.loc.startupDescription,
-          style: context.textTheme.labelLarge,
+          style: context.textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
-        if (useSpacer) const Spacer() else gapH32,
+        if (useSpacer) const Spacer(flex: 2) else gapH32,
 
         // [Get Started Button]
         PrimaryButton(
+          useMinimumSize: true,
           text: context.loc.getStarted,
           onPressed: () => _showLocationDialog(context),
         ),
@@ -58,17 +61,22 @@ class StartupContent extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _showLocationDialog(BuildContext context) {
+  Future<void> _showLocationDialog(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       enableDrag: false,
       useSafeArea: true,
-      showDragHandle: true,
       isDismissible: false,
       isScrollControlled: true,
-      builder: (context) => SafeArea(
-          child:
-              const ResponsiveScrollable(child: StartupBottomSheetContent())),
+      builder:
+          (context) => SafeArea(
+            child: const ResponsiveScrollable(
+              child: Padding(
+                padding: EdgeInsets.only(top: Sizes.p16),
+                child: StartupBottomSheetContent(),
+              ),
+            ),
+          ),
     );
   }
 }

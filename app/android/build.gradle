@@ -3,9 +3,11 @@ buildscript {
         google()
         mavenCentral()
     }
-    // Google Maps Documentation Requirements
-    // https://developers.google.com/maps/flutter-package/config#step_4_add_your_api_key_to_the_project
     dependencies {
+        // Add AGP dependency
+        classpath "com.android.tools.build:gradle:8.2.1"
+
+        // Google Maps API secrets plugin
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
     }
 }

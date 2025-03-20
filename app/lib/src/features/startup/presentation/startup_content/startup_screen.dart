@@ -15,29 +15,26 @@ class StartupScreen extends StatelessWidget {
     // For Smaller Screens (width < 250 or height < 500)
     if (width <= Breakpoint.lowerWidth || height <= Breakpoint.lowerHeight) {
       return const Scaffold(
-        body: SafeArea(
-          child: ResponsiveScrollable(
-            child: StartupContent(),
-          ),
-        ),
+        body: SafeArea(child: ResponsiveScrollable(child: StartupContent())),
       );
     }
 
     // For larger screens (e.g., tablet or wider)
     return Scaffold(
       body: SafeArea(
-        child: width > Breakpoint.mobile
-            ? const Center(
-                child: ResponsiveScrollable(
-                  showCardWidget: true,
-                  child: StartupContent(),
+        child:
+            width > Breakpoint.mobile
+                ? const Center(
+                  child: ResponsiveScrollable(
+                    showCardWidget: true,
+                    child: StartupContent(),
+                  ),
+                )
+                // For Mobile Screen
+                : const Padding(
+                  padding: EdgeInsets.all(Sizes.p16),
+                  child: StartupContent(useSpacer: true),
                 ),
-              )
-            // For Mobile Screen
-            : const Padding(
-                padding: EdgeInsets.all(Sizes.p16),
-                child: StartupContent(useSpacer: true),
-              ),
       ),
     );
   }

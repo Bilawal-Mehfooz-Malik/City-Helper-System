@@ -10,7 +10,7 @@ void main() {
     r.startupRobot.expectModalBottomSheet();
     await r.startupRobot.tapGetCurrentButton();
     await r.startupRobot.tapSaveButton();
-    r.startupRobot.expectHomeScreen();
+    r.startupRobot.expectCategoriesListScreen();
   });
 
   testWidgets('startup started screen - Flow 2', (tester) async {
@@ -25,6 +25,6 @@ void main() {
     await r.startupRobot.tapMyLocationButton();
     await r.startupRobot.tapFloatingCheckButton();
     await r.startupRobot.tapSaveButton();
-    r.startupRobot.expectHomeScreen();
+    r.startupRobot.expectCategoriesListScreen();
   });
 }
