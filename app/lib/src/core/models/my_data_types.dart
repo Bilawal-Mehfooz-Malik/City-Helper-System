@@ -2,5 +2,7 @@
 typedef UserId = String;
 typedef EntityId = String;
 typedef CategoryId = int;
+typedef SubCategoryId = int;
+typedef CarouselId = String;
 
 enum Gender { male, female, family }

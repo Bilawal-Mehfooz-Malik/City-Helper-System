@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/env.dart';
 import 'package:app/src/core/exceptions/dio_safe_api_call.dart';
-import 'package:app/src/core/models/place.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/exceptions/dio_intercepter.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
@@ -23,10 +22,12 @@ class LocationSearchRepository {
   Future<List<PlaceSuggestion>> fetchSuggestions(String query) {
     // setup
     const url = 'https://places.googleapis.com/v1/places:autocomplete';
-    final options = Options(headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': Env.googleMapsKey,
-    });
+    final options = Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': Env.googleMapsKey,
+      },
+    );
     var data = {
       "input": query,
       "locationBias": {
@@ -39,8 +40,11 @@ class LocationSearchRepository {
 
     // * Performing Post Request
     return dioSafeApiCall(() async {
-      final response = await _dio.post<Map<String, Object?>>(url,
-          options: options, data: data);
+      final response = await _dio.post<Map<String, Object?>>(
+        url,
+        options: options,
+        data: data,
+      );
 
       // * Parsing Data into [PlaceSuggestion] and returning List<PlaceSuggestion>
       final suggestions = response.data?['suggestions'] as List<Object?>? ?? [];
@@ -56,16 +60,20 @@ class LocationSearchRepository {
     // setup
     const urlTemplate = 'https://places.googleapis.com/v1/places/';
     final url = '$urlTemplate${suggestion.id}';
-    final options = Options(headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': Env.googleMapsKey,
-      'X-Goog-FieldMask': 'location,formattedAddress',
-    });
+    final options = Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': Env.googleMapsKey,
+        'X-Goog-FieldMask': 'location,formattedAddress',
+      },
+    );
 
     // * Performing the GET request
     return dioSafeApiCall(() async {
-      final response =
-          await _dio.get<Map<String, Object?>>(url, options: options);
+      final response = await _dio.get<Map<String, Object?>>(
+        url,
+        options: options,
+      );
 
       // * Parsing the response into PlaceDetailsResponse
       final details = PlaceDetails.fromJson(response.data ?? {});

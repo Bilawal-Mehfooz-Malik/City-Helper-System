@@ -1,4 +1,3 @@
-import 'package:app/src/core/models/place.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/location_search_repository.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
