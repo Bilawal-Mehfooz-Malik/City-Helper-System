@@ -1,0 +1,2 @@
+G:/City-Helper-System/app/android/app/.cxx/Debug/1id3k111/armeabi-v7a/CMakeFiles/edit_cache.dir
+G:/City-Helper-System/app/android/app/.cxx/Debug/1id3k111/armeabi-v7a/CMakeFiles/rebuild_cache.dir

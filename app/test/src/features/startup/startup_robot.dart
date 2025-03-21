@@ -1,5 +1,5 @@
 import 'package:app/src/core/common_widgets/primary_button.dart';
-import 'package:app/src/features/home_screen.dart';
+import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/startup/presentation/pick_location/search_bar/pick_location_search_bar.dart';
 import 'package:app/src/features/startup/presentation/startup_content/startup_bottom_sheet_content.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +43,8 @@ class StartupRobot {
     await tester.pumpAndSettle();
   }
 
-  void expectHomeScreen() {
-    final finder = find.byKey(kHomeScreenKey);
+  void expectCategoriesListScreen() {
+    final finder = find.byKey(kCategoriesListScreen);
     expect(finder, findsOneWidget);
   }
 

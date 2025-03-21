@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class SuggestionListTile extends ConsumerWidget {
-  final Future<void> Function(GeoLocation) onTapSuggestion;
+  final Future<void> Function(GeoLocation)? onTapSuggestion;
   const SuggestionListTile({
     super.key,
     required this.place,
@@ -25,16 +25,22 @@ class SuggestionListTile extends ConsumerWidget {
   }
 
   void _onTap(
-      BuildContext context, WidgetRef ref, PlaceSuggestion place) async {
+    BuildContext context,
+    WidgetRef ref,
+    PlaceSuggestion place,
+  ) async {
     /// Fetching [PlaceDetails]
     final res = await ref
         .read(locationControllerProvider.notifier)
         .fetchPlaceDetails(place);
 
     /// calling [MoveCamera] method on [GoogleMapController]
-    if (res != null && res.geoLocation != null && context.mounted) {
+    if (res != null &&
+        res.geoLocation != null &&
+        context.mounted &&
+        onTapSuggestion != null) {
       context.pop();
-      await onTapSuggestion(res.geoLocation!);
+      await onTapSuggestion!(res.geoLocation!);
       _updateFocus(false, ref);
     }
   }
@@ -48,14 +54,17 @@ class SuggestionListTile extends ConsumerWidget {
         width: 40,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: context.colorScheme.surface,
+            color: context.colorScheme.surfaceContainerLow,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(Icons.location_on_outlined),
         ),
       ),
-      title: Text(place.name),
-      subtitle: place.streetAddress != null ? Text(place.streetAddress!) : null,
+      title: Text(place.name, style: context.textTheme.bodyMedium),
+      subtitle:
+          place.streetAddress != null
+              ? Text(place.streetAddress!, style: context.textTheme.labelMedium)
+              : null,
       onTap: isLoading ? null : () => _onTap(context, ref, place),
     );
   }

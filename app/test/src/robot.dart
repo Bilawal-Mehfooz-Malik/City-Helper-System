@@ -9,8 +9,8 @@ import 'goldens/golden_robot.dart';
 
 class Robot {
   Robot(this.tester)
-      : startupRobot = StartupRobot(tester),
-        golden = GoldenRobot(tester);
+    : startupRobot = StartupRobot(tester),
+      golden = GoldenRobot(tester);
 
   final WidgetTester tester;
   final GoldenRobot golden;

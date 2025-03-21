@@ -1,4 +1,3 @@
-import 'package:app/src/core/models/place.dart';
 import 'package:app/src/features/startup/data/real/location_search_repository.dart';
 import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/features/startup/domain/place_dto.dart';
@@ -40,10 +39,9 @@ class LocationController extends _$LocationController {
         return null;
       }
 
-      state = AsyncData(GeoLocation(
-        latitude: location.latitude,
-        longitude: location.longitude,
-      ));
+      state = AsyncData(
+        GeoLocation(latitude: location.latitude, longitude: location.longitude),
+      );
 
       return place;
     } catch (e, s) {

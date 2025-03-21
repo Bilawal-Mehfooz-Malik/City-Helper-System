@@ -7,32 +7,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
-extension AsyncValueUI on AsyncValue<dynamic> {
+extension AsyncValueUI on AsyncValue<Object?> {
   void showAlertDialogOnError(BuildContext context) {
     final isWeb = kIsWeb;
 
     if (!isLoading && hasError) {
-      if (error == LocationPermissionDeniedForeverException()) {
+      if (error is LocationPermissionDeniedForeverException) {
+        final err = error as LocationPermissionDeniedForeverException;
         showAlertDialog(
           context: context,
           useFilledButton: true,
           title: 'Location Permission Denied'.hardcoded,
-          content: LocationPermissionDeniedForeverException().message,
+          content: err.message,
           cancelActionText: isWeb ? null : 'cancel'.hardcoded,
           defaultActionText: isWeb ? 'OK' : 'Go to Settings'.hardcoded,
           defaultAction: () async {
             context.pop();
-            if (isWeb) {
+            if (!isWeb) {
               await Geolocator.openAppSettings();
             }
           },
         );
-      } else if (error == LocationServicesDisabledException()) {
+      } else if (error is LocationServicesDisabledException) {
+        final err = error as LocationServicesDisabledException;
         showAlertDialog(
           context: context,
           useFilledButton: true,
-          title: 'Location Permission Denied'.hardcoded,
-          content: LocationServicesDisabledException().message,
+          title: 'Location Services Disabled'.hardcoded,
+          content: err.message,
           cancelActionText: isWeb ? null : 'cancel'.hardcoded,
           defaultActionText: isWeb ? 'OK' : 'Go to Settings'.hardcoded,
           defaultAction: () async {
@@ -46,7 +48,7 @@ extension AsyncValueUI on AsyncValue<dynamic> {
         showExceptionAlertDialog(
           context: context,
           title: 'Error'.hardcoded,
-          exception: error,
+          exception: error.toString(),
         );
       }
     }

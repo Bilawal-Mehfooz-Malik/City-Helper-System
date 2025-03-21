@@ -27,7 +27,10 @@ class StartupBottomSheetContent extends ConsumerWidget {
     final userController = ref.read(userLocationControllerProvider.notifier);
     final controller = ref.read(locationControllerProvider.notifier);
 
-    final isLoading = userState.isLoading || userLocationState.isLoading;
+    final isLoading =
+        userState.isLoading ||
+        userLocationState.isLoading ||
+        userState.hasError;
 
     // Error handling for userLocation
     ref.listen<AsyncValue<GeoLocation?>>(
@@ -48,7 +51,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         // [Headline]
         Text(
           context.loc.getLocDescription,
-          style: context.textTheme.titleLarge,
+          style: context.textTheme.titleMedium,
         ),
 
         // [Location Preview Widget]
@@ -72,8 +75,8 @@ class StartupBottomSheetContent extends ConsumerWidget {
                 key: kFromMapKey,
                 isDisabled: isLoading,
                 text: context.loc.fromMap,
-                onPressed: () =>
-                    context.goNamed(AppRoute.pickYourLocation.name),
+                onPressed:
+                    () => context.goNamed(AppRoute.pickYourLocation.name),
               ),
             ),
           ],
@@ -83,6 +86,7 @@ class StartupBottomSheetContent extends ConsumerWidget {
         if (userLocationState.value != null) ...[
           PrimaryButton(
             key: kSaveKey,
+            useMinimumSize: true,
             isLoading: userState.isLoading,
             isDisabled: isLoading,
             text: context.loc.saveLocation,
