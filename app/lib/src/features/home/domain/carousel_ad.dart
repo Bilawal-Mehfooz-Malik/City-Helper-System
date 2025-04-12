@@ -1,20 +1,21 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'carousel_ad.freezed.dart';
-part 'carousel_ad.g.dart';
+class CarouselAd {
+  final CategoryId categoryId;
+  final SubCategoryId subCategoryId;
+  final CarouselAdId id;
+  final String imageUrl;
+  final String targetUrl;
+  final DateTime validFrom;
+  final DateTime validUntil;
 
-@freezed
-abstract class CarouselAd with _$CarouselAd {
-  const factory CarouselAd({
-    required CategoryId categoryId,
-    required CarouselId id,
-    required String title,
-    required String imageUrl,
-    required String targetUrl,
-    required DateTime createdAt,
-  }) = _CarouselAd;
-
-  factory CarouselAd.fromJson(Map<String, Object?> json) =>
-      _$CarouselAdFromJson(json);
+  CarouselAd({
+    required this.categoryId,
+    required this.subCategoryId,
+    required this.id,
+    required this.imageUrl,
+    required this.targetUrl,
+    required this.validFrom,
+    required this.validUntil,
+  });
 }

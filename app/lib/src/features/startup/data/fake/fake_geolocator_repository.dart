@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
-import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FakeGeoLocatorRepository implements GeoLocatorRepository {
   final bool locationServiceEnabled;
   final LocationPermission permission;
   final bool throwError;
-  final GeoLocation? mockLocation;
+  final LatLng? latLng;
 
   FakeGeoLocatorRepository({
     this.locationServiceEnabled = true,
     this.permission = LocationPermission.always,
     this.throwError = false,
-    this.mockLocation,
+    this.latLng,
   });
 
   @override
-  Future<GeoLocation?> getCurrentLocation() async {
+  Future<LatLng?> getCurrentLocation() async {
     if (!locationServiceEnabled) {
       throw LocationServicesDisabledException();
     }
@@ -35,8 +35,6 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
       throw LocationFetchFailedException();
     }
 
-    return mockLocation ??
-        const GeoLocation(
-            latitude: 33.150691628036256, longitude: 73.74845167724608);
+    return latLng ?? LatLng(33.150691628036256, 73.74845167724608);
   }
 }

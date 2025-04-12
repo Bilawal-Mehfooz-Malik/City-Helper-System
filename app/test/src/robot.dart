@@ -1,6 +1,7 @@
-import 'package:app/app_bootstrap.dart';
-import 'package:app/app_bootstrap_fakes.dart';
+import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
+import 'package:app/src/core/app_bootstrap/app_bootstrap_fakes.dart';
 import 'package:app/src/app.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,5 +27,30 @@ class Robot {
     );
     await tester.pumpWidget(root);
     await tester.pumpAndSettle();
+  }
+
+  Future<void> pumpAppWithScreenSize(Size screenSize) async {
+    tester.view.physicalSize = screenSize;
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(
+      () => {
+        tester.view.resetPhysicalSize(),
+        tester.view.resetDevicePixelRatio(),
+      },
+    );
+    await pumpMyApp();
+  }
+
+  // Helper methods
+  Future<void> pumpAppWithMobileScreen() async {
+    await pumpAppWithScreenSize(Size(350, 600));
+  }
+
+  Future<void> pumpAppWithTabletScreen() async {
+    await pumpAppWithScreenSize(Size(640, 800));
+  }
+
+  Future<void> pumpAppWithDesktopScreen() async {
+    await pumpAppWithScreenSize(Size(1000, 1000));
   }
 }

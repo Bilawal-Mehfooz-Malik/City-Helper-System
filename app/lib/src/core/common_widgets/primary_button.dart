@@ -8,6 +8,7 @@ import 'custom_progress_indicator.dart';
 /// @param text - text to display on the button.
 /// @param isLoading - if true, a loading indicator will be displayed instead of
 /// the text.
+/// @param isDisabled - if true, the onPressed callBack is disabled
 /// @param onPressed - callback to be called when the button is pressed.
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -15,21 +16,21 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     this.isLoading = false,
     this.isDisabled = false,
+    this.useMaxSize = false,
     this.onPressed,
-    this.useMinimumSize = false,
   });
 
   final String text;
   final bool isLoading;
   final bool isDisabled;
+  final bool useMaxSize;
   final VoidCallback? onPressed;
-  final bool useMinimumSize;
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       style: FilledButton.styleFrom(
-        minimumSize: useMinimumSize ? ThemeHelpers.buttonSize() : null,
+        minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
       ),
       onPressed: isDisabled ? null : onPressed,
       child:

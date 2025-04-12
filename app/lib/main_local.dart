@@ -1,11 +1,11 @@
-import 'package:app/app_bootstrap.dart';
-import 'package:app/app_bootstrap_local.dart';
+import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
+import 'package:app/src/core/app_bootstrap/app_bootstrap_local.dart';
 import 'package:flutter/material.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 // Conditional import: Web loads `configure_web.dart`, others load `configure_nonweb.dart`
-import 'package:app/configure_nonweb.dart'
-    if (dart.library.html) 'package:app/configure_web.dart';
+import 'package:app/src/core/app_config/configure_nonweb.dart'
+    if (dart.library.html) 'package:app/src/core/app_config//configure_web.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

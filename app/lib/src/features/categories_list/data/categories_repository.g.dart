@@ -14,9 +14,10 @@ String _$categoriesRepositoryHash() =>
 final categoriesRepositoryProvider = Provider<CategoriesRepository>.internal(
   categoriesRepository,
   name: r'categoriesRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$categoriesRepositoryHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$categoriesRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -31,14 +32,15 @@ String _$categoriesListStreamHash() =>
 @ProviderFor(categoriesListStream)
 final categoriesListStreamProvider =
     AutoDisposeStreamProvider<List<Category>>.internal(
-  categoriesListStream,
-  name: r'categoriesListStreamProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$categoriesListStreamHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      categoriesListStream,
+      name: r'categoriesListStreamProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$categoriesListStreamHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -50,14 +52,15 @@ String _$categoriesListFutureHash() =>
 @ProviderFor(categoriesListFuture)
 final categoriesListFutureProvider =
     AutoDisposeFutureProvider<List<Category>>.internal(
-  categoriesListFuture,
-  name: r'categoriesListFutureProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$categoriesListFutureHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      categoriesListFuture,
+      name: r'categoriesListFutureProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$categoriesListFutureHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -95,21 +98,15 @@ class CategoryStreamFamily extends Family<AsyncValue<Category?>> {
   const CategoryStreamFamily();
 
   /// See also [categoryStream].
-  CategoryStreamProvider call(
-    int id,
-  ) {
-    return CategoryStreamProvider(
-      id,
-    );
+  CategoryStreamProvider call(int id) {
+    return CategoryStreamProvider(id);
   }
 
   @override
   CategoryStreamProvider getProviderOverride(
     covariant CategoryStreamProvider provider,
   ) {
-    return call(
-      provider.id,
-    );
+    return call(provider.id);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -130,24 +127,20 @@ class CategoryStreamFamily extends Family<AsyncValue<Category?>> {
 /// See also [categoryStream].
 class CategoryStreamProvider extends AutoDisposeStreamProvider<Category?> {
   /// See also [categoryStream].
-  CategoryStreamProvider(
-    int id,
-  ) : this._internal(
-          (ref) => categoryStream(
-            ref as CategoryStreamRef,
-            id,
-          ),
-          from: categoryStreamProvider,
-          name: r'categoryStreamProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$categoryStreamHash,
-          dependencies: CategoryStreamFamily._dependencies,
-          allTransitiveDependencies:
-              CategoryStreamFamily._allTransitiveDependencies,
-          id: id,
-        );
+  CategoryStreamProvider(int id)
+    : this._internal(
+        (ref) => categoryStream(ref as CategoryStreamRef, id),
+        from: categoryStreamProvider,
+        name: r'categoryStreamProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$categoryStreamHash,
+        dependencies: CategoryStreamFamily._dependencies,
+        allTransitiveDependencies:
+            CategoryStreamFamily._allTransitiveDependencies,
+        id: id,
+      );
 
   CategoryStreamProvider._internal(
     super._createNotifier, {
@@ -206,7 +199,8 @@ mixin CategoryStreamRef on AutoDisposeStreamProviderRef<Category?> {
 }
 
 class _CategoryStreamProviderElement
-    extends AutoDisposeStreamProviderElement<Category?> with CategoryStreamRef {
+    extends AutoDisposeStreamProviderElement<Category?>
+    with CategoryStreamRef {
   _CategoryStreamProviderElement(super.provider);
 
   @override
@@ -225,21 +219,15 @@ class CategoryFutureFamily extends Family<AsyncValue<Category?>> {
   const CategoryFutureFamily();
 
   /// See also [categoryFuture].
-  CategoryFutureProvider call(
-    int id,
-  ) {
-    return CategoryFutureProvider(
-      id,
-    );
+  CategoryFutureProvider call(int id) {
+    return CategoryFutureProvider(id);
   }
 
   @override
   CategoryFutureProvider getProviderOverride(
     covariant CategoryFutureProvider provider,
   ) {
-    return call(
-      provider.id,
-    );
+    return call(provider.id);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -260,24 +248,20 @@ class CategoryFutureFamily extends Family<AsyncValue<Category?>> {
 /// See also [categoryFuture].
 class CategoryFutureProvider extends AutoDisposeFutureProvider<Category?> {
   /// See also [categoryFuture].
-  CategoryFutureProvider(
-    int id,
-  ) : this._internal(
-          (ref) => categoryFuture(
-            ref as CategoryFutureRef,
-            id,
-          ),
-          from: categoryFutureProvider,
-          name: r'categoryFutureProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$categoryFutureHash,
-          dependencies: CategoryFutureFamily._dependencies,
-          allTransitiveDependencies:
-              CategoryFutureFamily._allTransitiveDependencies,
-          id: id,
-        );
+  CategoryFutureProvider(int id)
+    : this._internal(
+        (ref) => categoryFuture(ref as CategoryFutureRef, id),
+        from: categoryFutureProvider,
+        name: r'categoryFutureProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$categoryFutureHash,
+        dependencies: CategoryFutureFamily._dependencies,
+        allTransitiveDependencies:
+            CategoryFutureFamily._allTransitiveDependencies,
+        id: id,
+      );
 
   CategoryFutureProvider._internal(
     super._createNotifier, {
@@ -336,11 +320,13 @@ mixin CategoryFutureRef on AutoDisposeFutureProviderRef<Category?> {
 }
 
 class _CategoryFutureProviderElement
-    extends AutoDisposeFutureProviderElement<Category?> with CategoryFutureRef {
+    extends AutoDisposeFutureProviderElement<Category?>
+    with CategoryFutureRef {
   _CategoryFutureProviderElement(super.provider);
 
   @override
   int get id => (origin as CategoryFutureProvider).id;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

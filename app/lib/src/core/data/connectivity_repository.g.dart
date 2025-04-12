@@ -13,19 +13,20 @@ String _$connectivityRepositoryHash() =>
 @ProviderFor(connectivityRepository)
 final connectivityRepositoryProvider =
     AutoDisposeProvider<ConnectivityRepository>.internal(
-  connectivityRepository,
-  name: r'connectivityRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$connectivityRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      connectivityRepository,
+      name: r'connectivityRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$connectivityRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef ConnectivityRepositoryRef
-    = AutoDisposeProviderRef<ConnectivityRepository>;
+typedef ConnectivityRepositoryRef =
+    AutoDisposeProviderRef<ConnectivityRepository>;
 String _$internetStatusHash() => r'218db2e7cd2b47225feef3d33744a28340a78d42';
 
 /// See also [internetStatus].
@@ -33,9 +34,10 @@ String _$internetStatusHash() => r'218db2e7cd2b47225feef3d33744a28340a78d42';
 final internetStatusProvider = StreamProvider<bool>.internal(
   internetStatus,
   name: r'internetStatusProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$internetStatusHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$internetStatusHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

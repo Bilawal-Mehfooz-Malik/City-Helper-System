@@ -6,17 +6,18 @@ part of 'entity_detail.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EntityDetailImpl _$$EntityDetailImplFromJson(Map<String, dynamic> json) =>
-    _$EntityDetailImpl(
+_EntityDetail _$EntityDetailFromJson(Map<String, dynamic> json) =>
+    _EntityDetail(
       entityId: json['entityId'] as String,
       userId: json['userId'] as String,
       categoryId: (json['categoryId'] as num).toInt(),
       subCategoryId: (json['subCategoryId'] as num).toInt(),
       name: json['name'] as String,
       description: json['description'] as String,
-      imagesUrls: (json['imagesUrls'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      imagesUrls:
+          (json['imagesUrls'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
       videoUrl: json['videoUrl'] as String,
       avgRating: (json['avgRating'] as num).toDouble(),
       reviewsCount: (json['reviewsCount'] as num).toInt(),
@@ -30,7 +31,7 @@ _$EntityDetailImpl _$$EntityDetailImplFromJson(Map<String, dynamic> json) =>
       emailAddress: json['emailAddress'] as String?,
     );
 
-Map<String, dynamic> _$$EntityDetailImplToJson(_$EntityDetailImpl instance) =>
+Map<String, dynamic> _$EntityDetailToJson(_EntityDetail instance) =>
     <String, dynamic>{
       'entityId': instance.entityId,
       'userId': instance.userId,

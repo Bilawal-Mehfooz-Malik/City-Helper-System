@@ -15,13 +15,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startupHeadline => 'Discover Amazing Places';
 
   @override
-  String get startupDescription => 'Easily find any place in Mirpur, any time and anywhere, using your smartphone.';
+  String get startupDescription => 'Explore your city with ease, everything you need, right from your phone.';
 
   @override
   String get getStarted => 'Get Started';
 
   @override
-  String get getLocDescription => 'Click on either \"Get Current\" button to get your current location or \"From Map\" button and pick your location using map in order to continue.';
+  String get getLocDescription => 'Click \"Get Current\" to get your location or \"From Map\" to select it manually.';
 
   @override
   String get getCurrent => 'Get Current';
@@ -31,9 +31,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permissionDenied => 'Permission Denied';
-
-  @override
-  String get permissionDeniedHeadline => 'To use this app, you need to allow \"Location permission\". If you choose not to, you can exit the app. Click Allow Permission to \"continue\" or \"Exit\" to close the app.';
 
   @override
   String get allowPermission => 'Allow Permission';
@@ -48,14 +45,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveLocation => 'Save Location';
 
   @override
-  String get searchLocation => 'Search Location';
-
-  @override
-  String get enterCityName => 'Enter City Name';
-
-  @override
-  String get noResultFound => 'No Result Found';
-
-  @override
   String get error => 'Error';
+
+  @override
+  String get pickYourLocation => 'Pick your location';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get explore => 'Explore';
 }

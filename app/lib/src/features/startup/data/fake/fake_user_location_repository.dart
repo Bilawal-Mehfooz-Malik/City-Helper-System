@@ -1,29 +1,24 @@
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
-import 'package:app/src/features/startup/domain/geolocation.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {
   static String get userLocationKey => 'userLocation';
   final _fakeDb = InMemoryStore<Map<String, Object?>>({});
 
   @override
-  Future<GeoLocation?> fetchUserLocation() async {
-    final geoLocation = _fakeDb.value[userLocationKey];
-    return geoLocation != null ? geoLocation as GeoLocation : null;
+  Future<LatLng?> fetchUserLocation() async {
+    final latLng = _fakeDb.value[userLocationKey];
+    return latLng != null ? latLng as LatLng : null;
   }
 
   @override
-  Future<void> setUserLocation(GeoLocation location) async {
-    _fakeDb.value = {
-      ..._fakeDb.value,
-      userLocationKey: location,
-    };
+  Future<void> setUserLocation(LatLng location) async {
+    _fakeDb.value = {..._fakeDb.value, userLocationKey: location};
   }
 
   @override
-  Stream<GeoLocation?> watchUserLocation() {
-    return _fakeDb.stream.map((data) => data[userLocationKey] as GeoLocation?);
+  Stream<LatLng?> watchUserLocation() {
+    return _fakeDb.stream.map((data) => data[userLocationKey] as LatLng?);
   }
-
-  void dispose() => _fakeDb.close();
 }

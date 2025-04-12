@@ -12,11 +12,11 @@ class CategoriesRepository {
     throw UnimplementedError();
   }
 
-  Future<Category?> fetchCategory(int id) async {
+  Stream<List<Category>> watchCategoriesList() {
     throw UnimplementedError();
   }
 
-  Stream<List<Category>> watchCategoriesList() {
+  Future<Category?> fetchCategory(int id) async {
     throw UnimplementedError();
   }
 
