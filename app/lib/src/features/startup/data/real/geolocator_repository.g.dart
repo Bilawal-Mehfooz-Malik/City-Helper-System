@@ -13,14 +13,15 @@ String _$geoLocatorRepositoryHash() =>
 @ProviderFor(geoLocatorRepository)
 final geoLocatorRepositoryProvider =
     AutoDisposeProvider<GeoLocatorRepository>.internal(
-  geoLocatorRepository,
-  name: r'geoLocatorRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$geoLocatorRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      geoLocatorRepository,
+      name: r'geoLocatorRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$geoLocatorRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

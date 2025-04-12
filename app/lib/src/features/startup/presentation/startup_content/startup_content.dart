@@ -1,16 +1,23 @@
 import 'package:app/src/core/common_widgets/primary_button.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_logo.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/startup_content/startup_bottom_sheet_content.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 
+const kGetStartedKey = ValueKey('Get-Started');
+
 class StartupContent extends StatelessWidget {
-  const StartupContent({super.key, this.useSpacer = false});
+  const StartupContent({
+    super.key,
+    this.useSpacer = false,
+    required this.onGetStarted,
+    required this.isLargeScreen,
+  });
 
   final bool useSpacer;
+  final bool isLargeScreen;
+  final VoidCallback onGetStarted;
 
   @override
   Widget build(BuildContext context) {
@@ -18,65 +25,48 @@ class StartupContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // [Logo and Title]
         if (useSpacer) const Spacer(flex: 2) else gapH12,
 
         const AppLogo(height: 80, width: 80),
         gapH20,
+
         Text(
           context.loc.appTitle,
           style: context.textTheme.headlineLarge!.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
           textAlign: TextAlign.center,
         ),
+
         if (useSpacer) const Spacer(flex: 3) else gapH32,
 
-        // Subtitle
         Text(
           context.loc.startupHeadline,
-          style: context.textTheme.headlineMedium!.copyWith(
+          style: context.textTheme.headlineSmall!.copyWith(
             fontWeight: FontWeight.w900,
           ),
           textAlign: TextAlign.center,
         ),
         gapH24,
 
-        // [Description]
         Text(
           context.loc.startupDescription,
           style: context.textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
-        if (useSpacer) const Spacer(flex: 2) else gapH32,
 
-        // [Get Started Button]
-        PrimaryButton(
-          useMinimumSize: true,
-          text: context.loc.getStarted,
-          onPressed: () => _showLocationDialog(context),
-        ),
-        if (useSpacer) const Spacer() else gapH12,
-      ],
-    );
-  }
+        if (useSpacer) const Spacer(flex: 2) else if (!isLargeScreen) gapH32,
 
-  Future<void> _showLocationDialog(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      enableDrag: false,
-      useSafeArea: true,
-      isDismissible: false,
-      isScrollControlled: true,
-      builder:
-          (context) => SafeArea(
-            child: const ResponsiveScrollable(
-              child: Padding(
-                padding: EdgeInsets.only(top: Sizes.p16),
-                child: StartupBottomSheetContent(),
-              ),
-            ),
+        if (!isLargeScreen)
+          PrimaryButton(
+            key: kGetStartedKey,
+            useMaxSize: true,
+            text: context.loc.getStarted,
+            onPressed: onGetStarted,
           ),
+
+        if (useSpacer) const Spacer() else if (!isLargeScreen) gapH12,
+      ],
     );
   }
 }

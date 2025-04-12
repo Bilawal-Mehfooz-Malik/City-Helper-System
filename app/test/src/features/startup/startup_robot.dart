@@ -1,7 +1,6 @@
-import 'package:app/src/core/common_widgets/primary_button.dart';
-import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
-import 'package:app/src/features/startup/presentation/pick_location/search_bar/pick_location_search_bar.dart';
-import 'package:app/src/features/startup/presentation/startup_content/startup_bottom_sheet_content.dart';
+import 'package:app/src/features/home.dart';
+import 'package:app/src/features/startup/presentation/startup_content/get_location_content.dart';
+import 'package:app/src/features/startup/presentation/startup_content/startup_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10,14 +9,14 @@ class StartupRobot {
   final WidgetTester tester;
 
   Future<void> tapGetStartedButton() async {
-    final finder = find.byType(PrimaryButton);
+    final finder = find.byKey(kGetStartedKey);
     expect(finder, findsOneWidget);
     await tester.tap(finder);
     await tester.pumpAndSettle();
   }
 
   void expectModalBottomSheet() {
-    final finder = find.byType(StartupBottomSheetContent);
+    final finder = find.byType(GetLocationContent);
     expect(finder, findsOneWidget);
   }
 
@@ -28,23 +27,15 @@ class StartupRobot {
     await tester.pumpAndSettle();
   }
 
-  Future<void> tapFloatingCheckButton() async {
-    final finder = find.byIcon(Icons.check);
-    expect(finder, findsOneWidget);
-    await tester.tap(finder);
-    await tester.pumpAndSettle();
-  }
-
   Future<void> tapSaveButton() async {
     final finder = find.byKey(kSaveKey);
     expect(finder, findsOneWidget);
-    await tester.ensureVisible(finder);
     await tester.tap(finder);
     await tester.pumpAndSettle();
   }
 
-  void expectCategoriesListScreen() {
-    final finder = find.byKey(kCategoriesListScreen);
+  void expectHome() {
+    final finder = find.byKey(kHomeKey);
     expect(finder, findsOneWidget);
   }
 
@@ -52,34 +43,20 @@ class StartupRobot {
   Future<void> tapFromMapButton() async {
     final finder = find.byKey(kFromMapKey);
     expect(finder, findsOneWidget);
+    await tester.ensureVisible(finder);
     await tester.tap(finder);
-    await tester.pumpAndSettle();
-  }
-
-  Future<void> tapSearchBar() async {
-    final finder = find.byType(PickLocationSearchBar);
-    expect(finder, findsOneWidget);
-    await tester.tap(finder);
-    await tester.pumpAndSettle();
-  }
-
-  Future<void> putText() async {
-    final finder = find.widgetWithText(TextField, 'Enter City Name');
-    expect(finder, findsOneWidget);
-    await tester.enterText(finder, 'test');
-    await tester.pumpAndSettle();
-  }
-
-  Future<void> tapSuggestion() async {
-    final finder = find.byType(ListTile);
-    expect(finder, findsWidgets);
-    await tester.pumpAndSettle();
-    await tester.tap(finder.first);
     await tester.pumpAndSettle();
   }
 
   Future<void> tapMyLocationButton() async {
     final finder = find.byIcon(Icons.my_location);
+    expect(finder, findsOneWidget);
+    await tester.tap(finder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapFloatingCheckButton() async {
+    final finder = find.byIcon(Icons.check);
     expect(finder, findsOneWidget);
     await tester.tap(finder);
     await tester.pumpAndSettle();

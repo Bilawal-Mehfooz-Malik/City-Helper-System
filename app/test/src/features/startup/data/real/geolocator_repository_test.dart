@@ -12,11 +12,9 @@ void main() {
   late GeolocatorPlatform geoLocator;
   late GeoLocatorRepository locationRepository;
 
-  const latitude = 37.0;
-  const longitude = -122.0;
   final position = Position(
-    latitude: latitude,
-    longitude: longitude,
+    latitude: 37.0,
+    longitude: -122.0,
     timestamp: DateTime(2025),
     accuracy: 1.0,
     altitude: 1.0,
@@ -33,14 +31,17 @@ void main() {
   });
 
   group('GeoLocationRepository', () {
-    test('getCurrentLocation returns user location', () async {
+    test('getCurrentLocation returns userLocation', () async {
       // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => true);
-      when(() => geoLocator.checkPermission())
-          .thenAnswer((_) async => LocationPermission.whileInUse);
-      when(() => geoLocator.getCurrentPosition())
-          .thenAnswer((_) async => position);
+      when(
+        () => geoLocator.isLocationServiceEnabled(),
+      ).thenAnswer((_) async => true);
+      when(
+        () => geoLocator.checkPermission(),
+      ).thenAnswer((_) async => LocationPermission.whileInUse);
+      when(
+        () => geoLocator.getCurrentPosition(),
+      ).thenAnswer((_) async => position);
 
       // Run
       final result = await locationRepository.getCurrentLocation();
@@ -50,93 +51,114 @@ void main() {
       expect(result.longitude, position.longitude);
     });
 
-    test('getCurrentLocation returns throws LocationFetchFailedException',
-        () async {
-      // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => true);
-      when(() => geoLocator.checkPermission())
-          .thenAnswer((_) async => LocationPermission.whileInUse);
-      when(() => geoLocator.getCurrentPosition())
-          .thenThrow(LocationFetchFailedException());
+    test(
+      'getCurrentLocation returns throws LocationFetchFailedException',
+      () async {
+        // Setup
+        when(
+          () => geoLocator.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => geoLocator.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.whileInUse);
+        when(
+          () => geoLocator.getCurrentPosition(),
+        ).thenThrow(LocationFetchFailedException());
 
-      // Run
-      expect(
-        locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationFetchFailedException>()),
-      );
-    });
-
-    test('throws LocationServicesDisabledException when services are disabled',
-        () async {
-      // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => false);
-
-      // Running & Verify
-      expect(
-        locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationServicesDisabledException>()),
-      );
-    });
-
-    test('throws LocationPermissionDeniedException when permissions are denied',
-        () async {
-      // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => true);
-      when(() => geoLocator.checkPermission())
-          .thenAnswer((_) async => LocationPermission.denied);
-      when(() => geoLocator.requestPermission())
-          .thenAnswer((_) async => LocationPermission.denied);
-
-      // Running & Verify
-      expect(
-        locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationPermissionDeniedException>()),
-      );
-    });
+        // Run
+        expect(
+          locationRepository.getCurrentLocation(),
+          throwsA(isA<LocationFetchFailedException>()),
+        );
+      },
+    );
 
     test(
-        'throws LocationPermissionDeniedForeverException when permissions are denied forever',
-        () async {
-      // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => true);
-      when(() => geoLocator.checkPermission())
-          .thenAnswer((_) async => LocationPermission.deniedForever);
+      'throws LocationServicesDisabledException when services are disabled',
+      () async {
+        // Setup
+        when(
+          () => geoLocator.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => false);
 
-      // Running & Verify
-      expect(
-        locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationPermissionDeniedForeverException>()),
-      );
-    });
+        // Running & Verify
+        expect(
+          locationRepository.getCurrentLocation(),
+          throwsA(isA<LocationServicesDisabledException>()),
+        );
+      },
+    );
 
     test(
-        'throws LocationFetchFailedException when it fails in fetching location',
-        () async {
-      // Setup
-      when(() => geoLocator.isLocationServiceEnabled())
-          .thenAnswer((_) async => true);
-      when(() => geoLocator.checkPermission())
-          .thenAnswer((_) async => LocationPermission.whileInUse);
-      when(() => geoLocator.getCurrentPosition())
-          .thenThrow(LocationFetchFailedException());
+      'throws LocationPermissionDeniedException when permissions are denied',
+      () async {
+        // Setup
+        when(
+          () => geoLocator.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => geoLocator.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.denied);
+        when(
+          () => geoLocator.requestPermission(),
+        ).thenAnswer((_) async => LocationPermission.denied);
 
-      // Running & Verify
-      expect(
-        locationRepository.getCurrentLocation(),
-        throwsA(isA<LocationFetchFailedException>()),
-      );
-    });
+        // Running & Verify
+        expect(
+          locationRepository.getCurrentLocation(),
+          throwsA(isA<LocationPermissionDeniedException>()),
+        );
+      },
+    );
+
+    test(
+      'throws LocationPermissionDeniedForeverException when permissions are denied forever',
+      () async {
+        // Setup
+        when(
+          () => geoLocator.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => geoLocator.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.deniedForever);
+
+        // Running & Verify
+        expect(
+          locationRepository.getCurrentLocation(),
+          throwsA(isA<LocationPermissionDeniedForeverException>()),
+        );
+      },
+    );
+
+    test(
+      'throws LocationFetchFailedException when it fails in fetching location',
+      () async {
+        // Setup
+        when(
+          () => geoLocator.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => geoLocator.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.whileInUse);
+        when(
+          () => geoLocator.getCurrentPosition(),
+        ).thenThrow(LocationFetchFailedException());
+
+        // Running & Verify
+        expect(
+          locationRepository.getCurrentLocation(),
+          throwsA(isA<LocationFetchFailedException>()),
+        );
+      },
+    );
 
     test('throws TimedOutException when request takes longer time', () async {
       // Setup
       final geoLocatorPlatform = MockGeoLocator();
       final repo = GeoLocatorRepository(geoLocatorPlatform, timeOut: 1);
       when(() => geoLocatorPlatform.isLocationServiceEnabled()).thenAnswer(
-          (_) => Future.delayed(const Duration(seconds: 2), () => false));
+        (_) => Future.delayed(const Duration(seconds: 2), () => false),
+      );
 
       // Running & Verify
       expect(repo.getCurrentLocation(), throwsA(isA<TimedOutException>()));

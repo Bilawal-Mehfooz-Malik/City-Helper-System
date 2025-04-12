@@ -1,63 +1,82 @@
-import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/carousel_ad.dart';
+import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ads_carousel_repository.g.dart';
 
-class CategoriesRepository {
-  static String get categoriesKey => 'ads_carousel';
+class AdsCarouselRepository {
+  static String get adsCarouselKey => 'ads_carousel';
 
-  Future<List<CarouselAd>> fetchHighPriorityCarouselAds() async {
+  Future<List<CarouselAd>> fetchAds(CategoryId categoryId) async {
     throw UnimplementedError();
   }
 
-  Future<List<CarouselAd>> fetchMediumPriorityCarouselAds(int id) async {
+  Stream<List<CarouselAd>> watchAds(CategoryId categoryId) {
     throw UnimplementedError();
   }
 
-  Future<List<CarouselAd>> fetchLowPriorityCarouselAds() async {
+  Future<List<CarouselAd>> fetchAdsBySubCategory(
+    CategoryId categoryId,
+    SubCategoryId subCategoryId,
+  ) async {
     throw UnimplementedError();
   }
 
-  Stream<List<CarouselAd>> watchHighPriorityCarouselAds() {
+  Stream<List<CarouselAd>> watchAdsBySubCategory(
+    CategoryId categoryId,
+    SubCategoryId subCategoryId,
+  ) {
     throw UnimplementedError();
   }
 
-  Stream<List<CarouselAd>> watchMediumPriorityCarouselAds() {
+  Future<CarouselAd?> fetchAdById(CarouselAdId adId) async {
     throw UnimplementedError();
   }
 
-  Stream<List<CarouselAd>> watchLowPriorityCarouselAds() {
+  Stream<CarouselAd?> watchAdById(CarouselAdId adId) {
     throw UnimplementedError();
   }
 }
 
 @Riverpod(keepAlive: true)
-CategoriesRepository categoriesRepository(Ref ref) {
-  return CategoriesRepository();
+AdsCarouselRepository adsCarouselRepository(Ref ref) {
+  return AdsCarouselRepository();
 }
 
 @riverpod
-Stream<List<Category>> categoriesListStream(Ref ref) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.watchCategoriesList();
+Stream<List<CarouselAd>> adsListStream(Ref ref, CategoryId categoryId) {
+  final repo = ref.watch(adsCarouselRepositoryProvider);
+  final selectedSubcategory = ref.watch(subcategoryControllerProvider);
+
+  if (selectedSubcategory != null) {
+    return repo.watchAdsBySubCategory(categoryId, selectedSubcategory);
+  }
+
+  return repo.watchAds(categoryId);
 }
 
 @riverpod
-Future<List<Category>> categoriesListFuture(Ref ref) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.fetchCategoriesList();
+Future<List<CarouselAd>> adsListFuture(Ref ref, CategoryId categoryId) {
+  final repo = ref.watch(adsCarouselRepositoryProvider);
+  final selectedSubcategory = ref.watch(subcategoryControllerProvider);
+
+  if (selectedSubcategory != null) {
+    return repo.fetchAdsBySubCategory(categoryId, selectedSubcategory);
+  }
+
+  return repo.fetchAds(categoryId);
 }
 
 @riverpod
-Stream<Category?> categoryStream(Ref ref, int id) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.watchCategory(id);
+Stream<CarouselAd?> adStream(Ref ref, CarouselAdId adId) {
+  final repo = ref.watch(adsCarouselRepositoryProvider);
+  return repo.watchAdById(adId);
 }
 
 @riverpod
-Future<Category?> categoryFuture(Ref ref, int id) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.fetchCategory(id);
+Future<CarouselAd?> adFuture(Ref ref, CarouselAdId adId) {
+  final repo = ref.watch(adsCarouselRepositoryProvider);
+  return repo.fetchAdById(adId);
 }

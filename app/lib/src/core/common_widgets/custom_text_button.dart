@@ -1,31 +1,35 @@
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:app/src/core/constants/app_sizes.dart';
 
-/// Custom text button with a fixed height
+/// @param text - text to display on the button.
+/// @param isLoading - if true, a loading indicator will be displayed instead of
+/// the text.
+/// @param onPressed - callback to be called when the button is pressed.
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
     super.key,
     required this.text,
-    this.style,
+    this.isLoading = false,
+    this.useMaxSize = false,
     this.onPressed,
   });
   final String text;
-  final TextStyle? style;
+  final bool isLoading;
+  final bool useMaxSize;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Sizes.p48,
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: style,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.visible,
-        ),
+    return TextButton(
+      style: TextButton.styleFrom(
+        minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
       ),
+      onPressed: onPressed,
+      child:
+          isLoading
+              ? const CenteredProgressIndicator()
+              : Text(text, textAlign: TextAlign.center),
     );
   }
 }

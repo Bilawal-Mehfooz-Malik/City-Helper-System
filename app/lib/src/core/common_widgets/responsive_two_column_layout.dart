@@ -12,6 +12,7 @@ class ResponsiveTwoColumnLayout extends StatelessWidget {
     this.endFlex = 1,
     this.breakpoint = Breakpoint.tablet,
     required this.spacing,
+    this.rowLayoutOnly = false,
     this.rowMainAxisAlignment = MainAxisAlignment.start,
     this.rowCrossAxisAlignment = CrossAxisAlignment.start,
     this.columnMainAxisAlignment = MainAxisAlignment.start,
@@ -27,31 +28,30 @@ class ResponsiveTwoColumnLayout extends StatelessWidget {
   final CrossAxisAlignment rowCrossAxisAlignment;
   final MainAxisAlignment columnMainAxisAlignment;
   final CrossAxisAlignment columnCrossAxisAlignment;
+  final bool rowLayoutOnly;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth >= breakpoint) {
-        return Row(
-          mainAxisAlignment: rowMainAxisAlignment,
-          crossAxisAlignment: rowCrossAxisAlignment,
-          children: [
-            Flexible(flex: startFlex, child: startContent),
-            SizedBox(width: spacing),
-            Flexible(flex: endFlex, child: endContent),
-          ],
-        );
-      } else {
-        return Column(
-          mainAxisAlignment: columnMainAxisAlignment,
-          crossAxisAlignment: columnCrossAxisAlignment,
-          children: [
-            startContent,
-            SizedBox(height: spacing),
-            endContent,
-          ],
-        );
-      }
-    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= breakpoint || rowLayoutOnly) {
+          return Row(
+            mainAxisAlignment: rowMainAxisAlignment,
+            crossAxisAlignment: rowCrossAxisAlignment,
+            children: [
+              Flexible(flex: startFlex, child: startContent),
+              SizedBox(width: spacing),
+              Flexible(flex: endFlex, child: endContent),
+            ],
+          );
+        } else {
+          return Column(
+            mainAxisAlignment: columnMainAxisAlignment,
+            crossAxisAlignment: columnCrossAxisAlignment,
+            children: [startContent, SizedBox(height: spacing), endContent],
+          );
+        }
+      },
+    );
   }
 }

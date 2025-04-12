@@ -1,7 +1,7 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/location_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
 import 'package:app/src/features/startup/presentation/startup_content/google_map_widget.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +18,8 @@ class LocationPreviewWidget extends ConsumerWidget {
       aspectRatio: 16 / 9,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Sizes.p8),
-          border: Border.all(color: context.colorScheme.onSurfaceVariant),
+          borderRadius: BorderRadius.circular(Sizes.p16),
+          border: Border.all(),
         ),
         child: Center(
           child: userLocationValue.maybeWhen(
@@ -29,7 +29,7 @@ class LocationPreviewWidget extends ConsumerWidget {
                 (location) =>
                     location == null
                         ? _textWidget(context)
-                        : GoogleMapWidget(location: location),
+                        : GoogleMapWidget(latLng: location),
             orElse: () => _textWidget(context),
           ),
         ),
@@ -40,7 +40,7 @@ class LocationPreviewWidget extends ConsumerWidget {
   Text _textWidget(BuildContext context) {
     return Text(
       context.loc.noLocationSelected,
-      style: context.textTheme.labelSmall,
+      style: context.textTheme.labelMedium,
     );
   }
 }

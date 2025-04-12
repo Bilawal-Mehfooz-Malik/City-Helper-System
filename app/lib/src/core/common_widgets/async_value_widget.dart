@@ -18,7 +18,6 @@ class AsyncValueWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Implement error handling from AsyncValueErrorHandling
     return value.when(
       data: data,
       error:
@@ -37,21 +36,25 @@ class AsyncValueSliverWidget<T> extends StatelessWidget {
     super.key,
     required this.value,
     required this.data,
+    this.loading,
   });
   final AsyncValue<T> value;
   final Widget Function(T) data;
+  final Widget? loading;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
       data: data,
       loading:
-          () => const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          ),
+          () =>
+              SliverToBoxAdapter(child: loading ?? CenteredProgressIndicator()),
       error:
-          (e, st) => SliverToBoxAdapter(
-            child: Center(child: MessageWidget(e.toString())),
+          (e, st) => SliverPadding(
+            padding: const EdgeInsets.all(Sizes.p12),
+            sliver: SliverToBoxAdapter(
+              child: CenteredMessageWidget(e.toString()),
+            ),
           ),
     );
   }

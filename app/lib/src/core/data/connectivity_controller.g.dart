@@ -13,14 +13,15 @@ String _$connectivityControllerHash() =>
 @ProviderFor(ConnectivityController)
 final connectivityControllerProvider =
     AutoDisposeNotifierProvider<ConnectivityController, bool>.internal(
-  ConnectivityController.new,
-  name: r'connectivityControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$connectivityControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ConnectivityController.new,
+      name: r'connectivityControllerProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$connectivityControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ConnectivityController = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint

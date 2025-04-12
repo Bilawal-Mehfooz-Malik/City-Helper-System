@@ -3,28 +3,51 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../robot.dart';
 
 void main() {
-  testWidgets('startup started screen - Flow 1', (tester) async {
+  testWidgets('startup started screen (Mobile Screen) - Flow 1', (
+    tester,
+  ) async {
     final r = Robot(tester);
-    await r.pumpMyApp();
+    await r.pumpAppWithMobileScreen();
     await r.startupRobot.tapGetStartedButton();
     r.startupRobot.expectModalBottomSheet();
     await r.startupRobot.tapGetCurrentButton();
     await r.startupRobot.tapSaveButton();
-    r.startupRobot.expectCategoriesListScreen();
+    r.startupRobot.expectHome();
   });
 
-  testWidgets('startup started screen - Flow 2', (tester) async {
+  testWidgets('startup started screen (Desktop Screen) - Flow 1', (
+    tester,
+  ) async {
     final r = Robot(tester);
-    await r.pumpMyApp();
+    await r.pumpAppWithDesktopScreen();
+    await r.startupRobot.tapGetCurrentButton();
+    await r.startupRobot.tapSaveButton();
+    r.startupRobot.expectHome();
+  });
+
+  testWidgets('startup started screen (Mobile Screen) - Flow 2', (
+    tester,
+  ) async {
+    final r = Robot(tester);
+    await r.pumpAppWithMobileScreen();
     await r.startupRobot.tapGetStartedButton();
     r.startupRobot.expectModalBottomSheet();
     await r.startupRobot.tapFromMapButton();
-    await r.startupRobot.tapSearchBar();
-    await r.startupRobot.putText();
-    await r.startupRobot.tapSuggestion();
     await r.startupRobot.tapMyLocationButton();
     await r.startupRobot.tapFloatingCheckButton();
     await r.startupRobot.tapSaveButton();
-    r.startupRobot.expectCategoriesListScreen();
+    r.startupRobot.expectHome();
+  });
+
+  testWidgets('startup started screen (Desktop Screen) - Flow 2', (
+    tester,
+  ) async {
+    final r = Robot(tester);
+    await r.pumpAppWithDesktopScreen();
+    await r.startupRobot.tapFromMapButton();
+    await r.startupRobot.tapMyLocationButton();
+    await r.startupRobot.tapFloatingCheckButton();
+    await r.startupRobot.tapSaveButton();
+    r.startupRobot.expectHome();
   });
 }

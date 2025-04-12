@@ -13,9 +13,10 @@ String _$dateFormatterHash() => r'9a8081519799f20b71e851dbd516c4ab05cdde42';
 final dateFormatterProvider = AutoDisposeProvider<DateFormat>.internal(
   dateFormatter,
   name: r'dateFormatterProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dateFormatterHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$dateFormatterHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

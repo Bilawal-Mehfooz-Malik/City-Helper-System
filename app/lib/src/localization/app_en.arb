@@ -5,11 +5,11 @@
 
   "startupHeadline": "Discover Amazing Places",
   "@startupHeadline": {},
-  "startupDescription": "Easily find any place in Mirpur, any time and anywhere, using your smartphone.",
+  "startupDescription": "Explore your city with ease, everything you need, right from your phone.",
   "@startupDescription": {},
   "getStarted": "Get Started",
   "@getStarted": {},
-  "getLocDescription": "Click on either \"Get Current\" button to get your current location or \"From Map\" button and pick your location using map in order to continue.",
+  "getLocDescription": "Click \"Get Current\" to get your location or \"From Map\" to select it manually.",
   "@getLocDescription": {},
   "getCurrent": "Get Current",
   "@getCurrent": {},
@@ -18,8 +18,6 @@
 
   "permissionDenied": "Permission Denied",
   "@permissionDenied": {},
-  "permissionDeniedHeadline": "To use this app, you need to allow \"Location permission\". If you choose not to, you can exit the app. Click Allow Permission to \"continue\" or \"Exit\" to close the app.",
-  "@permissionDeniedHeadline": {},
   "allowPermission": "Allow Permission",
   "@allowPermission": {},
   "exit": "Exit",
@@ -28,13 +26,14 @@
   "@noLocationSelected": {},
   "saveLocation": "Save Location",
   "@saveLocation": {},
-
-  "searchLocation": "Search Location",
-  "@searchLocation": {},
-  "enterCityName": "Enter City Name",
-  "@enterCityName": {},
-  "noResultFound": "No Result Found",
-  "@noResultFound": {},
   "error": "Error",
-  "@error": {}
+  "@error": {},
+
+  "pickYourLocation":"Pick your location",
+  "@pickYourLocation": {},
+
+  "categories":"Categories",
+  "@categories": {},
+  "explore":"Explore",
+  "@explore": {}
 }

@@ -4,31 +4,27 @@ import 'package:go_router/go_router.dart';
 
 /// Determines the correct redirection based on the user's location status.
 String? redirection(Ref ref, GoRouterState state) {
-  // Retrieve the current user location state.
   final userLocationState = ref.read(watchUserLocationProvider);
   final currentPath = state.uri.path;
 
-  // If the user location is still loading, redirect to the loading page unless already there.
+  // If location is still loading, redirect to the loading page
   if (userLocationState.isLoading) {
     return currentPath != '/loading' ? '/loading' : null;
   }
 
-  // Check if the user location data is available.
-  final bool hasUserLocation = userLocationState.value != null;
-  final bool isOnGetStartedPage = currentPath.startsWith('/get-started');
+  // Check if location is available
+  final hasUserLocation = userLocationState.value != null;
 
-  // If location exists and the user is on the loading or get-started page,
-  // redirect them to the home page.
-  if (hasUserLocation && (isOnGetStartedPage || currentPath == '/loading')) {
+  // Redirect to home if the user has location but is on the get-started page
+  if (hasUserLocation && currentPath.startsWith('/get-started')) {
     return '/';
   }
 
-  // If location data is missing and the user is not on the get-started page,
-  // redirect them to the get-started page.
-  if (!hasUserLocation && !isOnGetStartedPage) {
+  // Redirect to get-started if no location is available
+  if (!hasUserLocation && !currentPath.startsWith('/get-started')) {
     return '/get-started';
   }
 
-  // No redirection is needed.
+  // No redirection needed
   return null;
 }

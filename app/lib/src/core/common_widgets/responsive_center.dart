@@ -11,11 +11,15 @@ class ResponsiveCenter extends StatelessWidget {
     super.key,
     this.maxContentWidth = Breakpoint.desktop,
     this.padding = EdgeInsets.zero,
+    this.paddingInsideCard = EdgeInsets.zero,
     required this.child,
+    this.showCard = false,
   });
   final double maxContentWidth;
   final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry paddingInsideCard;
   final Widget child;
+  final bool showCard;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +28,17 @@ class ResponsiveCenter extends StatelessWidget {
       // together with SizedBox to specify the max width (tight constraints)
       // See this thread for more info:
       // https://twitter.com/biz84/status/1445400059894542337
-      child: SizedBox(
-        width: maxContentWidth,
-        child: Padding(padding: padding, child: child),
+      child: Padding(
+        padding: padding,
+        child: SizedBox(
+          width: maxContentWidth,
+          child:
+              showCard == true
+                  ? Card(
+                    child: Padding(padding: paddingInsideCard, child: child),
+                  )
+                  : child,
+        ),
       ),
     );
   }

@@ -1,18 +1,40 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 
-/// A card widget to display a category with its name and icon.
+/// A responsive card widget to display a category in grid or list tile format.
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, this.onTap, required this.category});
+  const CategoryCard({
+    super.key,
+    required this.category,
+    this.onTap,
+    this.isListTile = false,
+  });
 
   final Category category;
   final VoidCallback? onTap;
+  final bool isListTile;
 
   @override
   Widget build(BuildContext context) {
     final greenColor = context.colorScheme.primary;
+
+    if (isListTile) {
+      return ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: Sizes.p16,
+          vertical: Sizes.p8,
+        ),
+        leading: CircleAvatar(radius: Sizes.p24, child: Icon(category.icon)),
+        title: CategoryName(title: category.name),
+        subtitle: CategoryDescription(description: category.description),
+      );
+    }
+
+    // grid-style layout
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -20,10 +42,9 @@ class CategoryCard extends StatelessWidget {
           padding: const EdgeInsets.all(Sizes.p16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start, // Align text left
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                // Centering the icon
                 child: Icon(
                   category.icon,
                   size: 100,
@@ -34,20 +55,16 @@ class CategoryCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(category.name, style: context.textTheme.titleMedium),
+                  CategoryName(title: category.name),
                   gapH4,
-                  Text(
-                    category.description,
-                    style: context.textTheme.labelLarge,
-                  ),
+                  CategoryDescription(description: category.description),
                   gapH24,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    spacing: Sizes.p4,
                     children: [
                       Text(
-                        'Explore',
-                        style: TextStyle(
+                        context.loc.explore,
+                        style: context.textTheme.bodyMedium!.copyWith(
                           color: greenColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -62,5 +79,27 @@ class CategoryCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CategoryName extends StatelessWidget {
+  const CategoryName({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(title, style: context.textTheme.titleMedium);
+  }
+}
+
+class CategoryDescription extends StatelessWidget {
+  const CategoryDescription({super.key, required this.description});
+
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(description, style: context.textTheme.labelMedium);
   }
 }

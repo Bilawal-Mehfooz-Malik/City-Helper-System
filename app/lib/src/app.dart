@@ -7,7 +7,7 @@ import 'localization/localization_extension.dart';
 import 'routers/app_router.dart';
 import 'themes/light_theme.dart';
 
-/// The Widget that configures your application.
+/// The Widget that configures application.
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 

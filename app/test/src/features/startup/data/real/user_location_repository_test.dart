@@ -1,4 +1,4 @@
-import 'package:app/src/features/startup/domain/geolocation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +8,8 @@ void main() {
   late Database testDb;
   late UserLocationRepository userLocationRepository;
 
-  const testLocation = GeoLocation(latitude: 11.0, longitude: 11.0);
+  const testLocation1 = LatLng(11.0, 11.0);
+  const testLocation2 = LatLng(40.7128, -74.0060);
 
   setUp(() async {
     testDb = await newDatabaseFactoryMemory().openDatabase('test.db');
@@ -22,11 +23,11 @@ void main() {
   group('setUserLocation', () {
     test('successfully saves valid location', () async {
       // run
-      await userLocationRepository.setUserLocation(testLocation);
+      await userLocationRepository.setUserLocation(testLocation1);
       final stored = await userLocationRepository.fetchUserLocation();
 
       // verify
-      expect(stored, equals(testLocation));
+      expect(stored, equals(testLocation1));
     });
 
     test('handles database write errors', () async {
@@ -35,24 +36,21 @@ void main() {
 
       // verify
       expect(
-        () => userLocationRepository.setUserLocation(testLocation),
+        () => userLocationRepository.setUserLocation(testLocation1),
         throwsA(isA<DatabaseException>()),
       );
     });
 
     test('handles concurrent write operations', () async {
-      // setup
-      const location1 = GeoLocation(latitude: 40.7128, longitude: -74.0060);
-
       // run
       await Future.wait([
-        userLocationRepository.setUserLocation(testLocation),
-        userLocationRepository.setUserLocation(location1)
+        userLocationRepository.setUserLocation(testLocation1),
+        userLocationRepository.setUserLocation(testLocation2),
       ]);
 
       // verify
       final stored = await userLocationRepository.fetchUserLocation();
-      expect(stored, equals(location1));
+      expect(stored, equals(testLocation2));
     });
   });
 
@@ -65,43 +63,45 @@ void main() {
   });
 
   test(
-      'setUserLocation sets testLatLng and then fetchUserLocation returns testLatLng',
-      () async {
-    // setup
-    await userLocationRepository.setUserLocation(testLocation);
+    'setUserLocation sets testLatLng and then fetchUserLocation returns testLatLng',
+    () async {
+      // setup
+      await userLocationRepository.setUserLocation(testLocation1);
 
-    // run
-    final latLng = await userLocationRepository.fetchUserLocation();
+      // run
+      final latLng = await userLocationRepository.fetchUserLocation();
 
-    // verify
-    expect(latLng, testLocation);
-  });
+      // verify
+      expect(latLng, testLocation1);
+    },
+  );
 
   test('watchUserLocation emits updates correctly', () async {
     // setup
-    final emittedValues = <GeoLocation?>[];
-    final subscription =
-        userLocationRepository.watchUserLocation().listen(emittedValues.add);
+    final emittedValues = <LatLng?>[];
+    final subscription = userLocationRepository.watchUserLocation().listen(
+      emittedValues.add,
+    );
 
     // run
-    const latLng1 = GeoLocation(latitude: 2.0, longitude: 1.0);
-    await userLocationRepository.setUserLocation(latLng1);
-    const latLng2 = GeoLocation(latitude: 12.0, longitude: 12.0);
-    await userLocationRepository.setUserLocation(latLng2);
+
+    await userLocationRepository.setUserLocation(testLocation1);
+    await userLocationRepository.setUserLocation(testLocation2);
 
     // Wait for the updates to propagate
     await Future<void>.delayed(Duration.zero);
 
     // Verify
-    expect(emittedValues, [isNull, latLng1, latLng2]);
+    expect(emittedValues, [isNull, testLocation1, testLocation2]);
     await subscription.cancel();
   });
 
   test('watchUserLocation emits null for firstTime', () async {
     // setup
-    final emittedValues = <GeoLocation?>[];
-    final subscription =
-        userLocationRepository.watchUserLocation().listen(emittedValues.add);
+    final emittedValues = <LatLng?>[];
+    final subscription = userLocationRepository.watchUserLocation().listen(
+      emittedValues.add,
+    );
 
     // Wait for the updates to propagate
     await Future<void>.delayed(Duration.zero);

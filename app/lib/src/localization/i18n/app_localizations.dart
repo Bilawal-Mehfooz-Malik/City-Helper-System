@@ -108,7 +108,7 @@ abstract class AppLocalizations {
   /// No description provided for @startupDescription.
   ///
   /// In en, this message translates to:
-  /// **'Easily find any place in Mirpur, any time and anywhere, using your smartphone.'**
+  /// **'Explore your city with ease, everything you need, right from your phone.'**
   String get startupDescription;
 
   /// No description provided for @getStarted.
@@ -120,7 +120,7 @@ abstract class AppLocalizations {
   /// No description provided for @getLocDescription.
   ///
   /// In en, this message translates to:
-  /// **'Click on either \"Get Current\" button to get your current location or \"From Map\" button and pick your location using map in order to continue.'**
+  /// **'Click \"Get Current\" to get your location or \"From Map\" to select it manually.'**
   String get getLocDescription;
 
   /// No description provided for @getCurrent.
@@ -140,12 +140,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Permission Denied'**
   String get permissionDenied;
-
-  /// No description provided for @permissionDeniedHeadline.
-  ///
-  /// In en, this message translates to:
-  /// **'To use this app, you need to allow \"Location permission\". If you choose not to, you can exit the app. Click Allow Permission to \"continue\" or \"Exit\" to close the app.'**
-  String get permissionDeniedHeadline;
 
   /// No description provided for @allowPermission.
   ///
@@ -171,29 +165,29 @@ abstract class AppLocalizations {
   /// **'Save Location'**
   String get saveLocation;
 
-  /// No description provided for @searchLocation.
-  ///
-  /// In en, this message translates to:
-  /// **'Search Location'**
-  String get searchLocation;
-
-  /// No description provided for @enterCityName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter City Name'**
-  String get enterCityName;
-
-  /// No description provided for @noResultFound.
-  ///
-  /// In en, this message translates to:
-  /// **'No Result Found'**
-  String get noResultFound;
-
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
+
+  /// No description provided for @pickYourLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your location'**
+  String get pickYourLocation;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @explore.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get explore;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
