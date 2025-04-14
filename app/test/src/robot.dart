@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'features/categories_list/categories_robot.dart';
 import 'features/startup/startup_robot.dart';
 import 'goldens/golden_robot.dart';
 
 class Robot {
   Robot(this.tester)
     : startupRobot = StartupRobot(tester),
+      categoriesRobot = CategoriesRobot(tester),
       golden = GoldenRobot(tester);
 
   final WidgetTester tester;
   final GoldenRobot golden;
   final StartupRobot startupRobot;
+  final CategoriesRobot categoriesRobot;
 
   Future<void> pumpMyApp() async {
     // * Entry pont of App

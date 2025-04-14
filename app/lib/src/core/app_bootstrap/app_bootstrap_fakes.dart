@@ -20,11 +20,11 @@ extension AppBootstrapFakes on AppBootStrap {
   ProviderContainer createFakeProviderContainer() {
     final userLocationRepository = FakeUserLocationRepository();
     final geoLocatorRepository = FakeGeoLocatorRepository();
-    final categoryRepository = FakeCategoriesRepository();
-    final subCategoryRepository = FakeSubCategoriesRepository();
-    final adsCarouselRepository = FakeAdsCarouselRepository();
-    final residenceRepository = FakeResidenceRepository();
-    final foodRepository = FakeFoodRepository();
+    final categoryRepository = FakeCategoriesRepository(addDelay: false);
+    final subCategoryRepository = FakeSubCategoriesRepository(addDelay: false);
+    final adsCarouselRepository = FakeAdsCarouselRepository(addDelay: false);
+    final residenceRepository = FakeResidenceRepository(addDelay: false);
+    final foodRepository = FakeFoodRepository(addDelay: false);
 
     return ProviderContainer(
       overrides: [

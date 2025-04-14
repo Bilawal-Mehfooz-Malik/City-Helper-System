@@ -14,7 +14,8 @@ void main() {
       r.startupRobot.expectModalBottomSheet();
       await r.startupRobot.tapGetCurrentButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHome();
+      r.categoriesRobot.expectCategoriesScreen();
+      await r.categoriesRobot.tapCategory();
     });
   });
 
@@ -24,7 +25,8 @@ void main() {
       await r.pumpAppWithDesktopScreen();
       await r.startupRobot.tapGetCurrentButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHome();
+      r.categoriesRobot.expectCategoriesScreen();
+      await r.categoriesRobot.tapCategory();
     });
   });
 
@@ -38,7 +40,8 @@ void main() {
       await r.startupRobot.tapMyLocationButton();
       await r.startupRobot.tapFloatingCheckButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHome();
+      r.categoriesRobot.expectCategoriesScreen();
+      await r.categoriesRobot.tapCategory();
     });
   });
 
@@ -50,7 +53,8 @@ void main() {
       await r.startupRobot.tapMyLocationButton();
       await r.startupRobot.tapFloatingCheckButton();
       await r.startupRobot.tapSaveButton();
-      r.startupRobot.expectHome();
+      r.categoriesRobot.expectCategoriesScreen();
+      await r.categoriesRobot.tapCategory();
     });
   });
 }

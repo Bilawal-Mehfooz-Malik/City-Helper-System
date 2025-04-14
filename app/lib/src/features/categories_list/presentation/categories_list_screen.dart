@@ -13,8 +13,6 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-const kCategoriesListScreen = Key('categories-list-screen');
-
 class CategoriesListScreen extends ConsumerWidget {
   const CategoriesListScreen({super.key});
 
@@ -31,7 +29,6 @@ class CategoriesListScreen extends ConsumerWidget {
     final categoriesValue = ref.watch(categoriesListStreamProvider);
 
     return Scaffold(
-      key: kCategoriesListScreen,
       appBar: isSmall ? AppBar(title: Text(context.loc.categories)) : null,
       body: SafeArea(
         child:

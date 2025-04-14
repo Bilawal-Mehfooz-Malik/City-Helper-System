@@ -1,4 +1,3 @@
-import 'package:app/src/features/home.dart';
 import 'package:app/src/features/startup/presentation/startup_content/get_location_content.dart';
 import 'package:app/src/features/startup/presentation/startup_content/startup_content.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +31,6 @@ class StartupRobot {
     expect(finder, findsOneWidget);
     await tester.tap(finder);
     await tester.pumpAndSettle();
-  }
-
-  void expectHome() {
-    final finder = find.byKey(kHomeKey);
-    expect(finder, findsOneWidget);
   }
 
   // Only for [Flow 2]
