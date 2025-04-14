@@ -35,5 +35,7 @@
   "categories":"Categories",
   "@categories": {},
   "explore":"Explore",
-  "@explore": {}
+  "@explore": {},
+  "selectCategoryBody":"Select a category",
+  "@selectCategoryBody": {}
 }

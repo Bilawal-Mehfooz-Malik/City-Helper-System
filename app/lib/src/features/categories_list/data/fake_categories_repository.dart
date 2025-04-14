@@ -28,6 +28,7 @@ class FakeCategoriesRepository implements CategoriesRepository {
   /// Retrieve the categories list as a [Stream] (for realtime updates)
   @override
   Stream<List<Category>> watchCategoriesList() {
+    delay(addDelay);
     return _categories.stream;
   }
 
@@ -41,8 +42,10 @@ class FakeCategoriesRepository implements CategoriesRepository {
   /// Retrieve a specific category by ID as a stream
   @override
   Stream<Category?> watchCategory(int id) {
-    return watchCategoriesList()
-        .map((categories) => _getCategory(categories, id));
+    delay(addDelay);
+    return watchCategoriesList().map(
+      (categories) => _getCategory(categories, id),
+    );
   }
 
   /// Private method to get a category by ID safely

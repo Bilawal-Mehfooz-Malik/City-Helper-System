@@ -55,4 +55,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get explore => 'Explore';
+
+  @override
+  String get selectCategoryBody => 'Select a category';
 }

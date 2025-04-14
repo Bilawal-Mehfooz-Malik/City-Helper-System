@@ -11,4 +11,8 @@ class SubcategoryController extends _$SubcategoryController {
   void selectSubcategory(SubCategoryId? subcategoryId) {
     state = subcategoryId;
   }
+
+  void resetSubcategoryState() {
+    state = null;
+  }
 }

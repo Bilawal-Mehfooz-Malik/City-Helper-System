@@ -19,8 +19,6 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final greenColor = context.colorScheme.primary;
-
     if (isListTile) {
       return ListTile(
         onTap: onTap,
@@ -34,7 +32,7 @@ class CategoryCard extends StatelessWidget {
       );
     }
 
-    // grid-style layout
+    // card-style layout
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -44,40 +42,49 @@ class CategoryCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Icon(
-                  category.icon,
-                  size: 100,
-                  color: context.colorScheme.onSurface,
-                ),
-              ),
+              Center(child: Icon(category.icon, size: 100)),
               gapH8,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CategoryName(title: category.name),
-                  gapH4,
-                  CategoryDescription(description: category.description),
-                  gapH24,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        context.loc.explore,
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          color: greenColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Icon(Icons.arrow_right_alt, color: greenColor),
-                    ],
-                  ),
-                ],
-              ),
+              CategoryDetails(category: category),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CategoryDetails extends StatelessWidget {
+  const CategoryDetails({super.key, required this.category});
+
+  final Category category;
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = context.colorScheme.primary;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CategoryName(title: category.name),
+        gapH4,
+        CategoryDescription(description: category.description),
+        gapH24,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Flexible(
+              child: Text(
+                context.loc.explore,
+                style: context.textTheme.bodyMedium!.copyWith(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Icon(Icons.arrow_right_alt, color: primaryColor),
+          ],
+        ),
+      ],
     );
   }
 }

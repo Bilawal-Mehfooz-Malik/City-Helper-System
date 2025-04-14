@@ -6,6 +6,7 @@ import 'package:app/src/features/categories_list/domain/categories_exception.dar
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/category_card.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,11 +24,17 @@ class CategoriesListView extends StatelessWidget {
   final bool usePadding;
   final List<Category> categories;
 
+  /// Handles the tap event on a category card.
+  /// It determines the screen type and navigates accordingly.
+  /// It also resets the subcategory state when a category is selected.
   void _onTap(BuildContext context, WidgetRef ref, CategoryId id) {
+    final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(
-      width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height,
+      width: screenSize.width,
+      height: screenSize.height,
     );
+    // Reset the subcategory state when a category is selected
+    ref.read(subcategoryControllerProvider.notifier).resetSubcategoryState();
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       ref.read(selectedCategoryIdControllerProvider.notifier).setCategoryId(id);

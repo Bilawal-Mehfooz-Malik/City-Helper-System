@@ -6,74 +6,64 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_view.dart';
+import 'package:app/src/features/categories_list/presentation/category_skeleton_list.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const kCategoriesListScreen = Key('categories-list-screen');
 
-class CategoriesListScreen extends StatelessWidget {
+class CategoriesListScreen extends ConsumerWidget {
   const CategoriesListScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final width = size.width;
-    final height = size.height;
-    final screenType = ScreenType.determine(width: width, height: height);
-    final isSmallScreen =
+  Widget build(BuildContext context, WidgetRef ref) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: screenSize.width,
+      height: screenSize.height,
+    );
+    final isSmall =
         screenType == ScreenType.smallHeight || screenType == ScreenType.mobile;
+
+    final categoriesValue = ref.watch(categoriesListStreamProvider);
 
     return Scaffold(
       key: kCategoriesListScreen,
-      appBar:
-          isSmallScreen ? AppBar(title: Text(context.loc.categories)) : null,
+      appBar: isSmall ? AppBar(title: Text(context.loc.categories)) : null,
       body: SafeArea(
-        child: Consumer(
-          builder: (context, ref, child) {
-            final categoriesListValue = ref.watch(categoriesListFutureProvider);
-
-            return AsyncValueWidget(
-              value: categoriesListValue,
-              data:
-                  (categories) => switch (screenType) {
-                    ScreenType.smallHeight => CategoriesListView(
-                      useListTile: false,
-                      usePadding: true,
-                      categories: categories,
-                    ),
-                    ScreenType.mobile => CategoriesListView(
-                      useListTile: false,
-                      usePadding: true,
-                      categories: categories,
-                    ),
-                    ScreenType.tablet => DraggableTwoColumnLayout(
-                      startContent: CategoriesStartContent(
+        child:
+            isSmall
+                ? AsyncValueWidget(
+                  value: categoriesValue,
+                  loading: CategorySkeletonList(usePadding: true),
+                  data:
+                      (categories) => CategoriesListView(
+                        useListTile: false,
+                        usePadding: true,
                         categories: categories,
                       ),
-                      endContent: CategoriesEndContent(),
-                    ),
-                    ScreenType.desktop => DraggableTwoColumnLayout(
-                      startContent: CategoriesStartContent(
-                        categories: categories,
-                      ),
-                      endContent: CategoriesEndContent(),
-                    ),
-                  },
-            );
-          },
-        ),
+                )
+                : DraggableTwoColumnLayout(
+                  startContent: CategoriesStartContent(
+                    categoriesValue: categoriesValue,
+                  ),
+                  endContent: CategoriesEndContent(
+                    categoriesValue: categoriesValue,
+                  ),
+                ),
       ),
     );
   }
 }
 
 class CategoriesStartContent extends StatelessWidget {
-  const CategoriesStartContent({super.key, required this.categories});
-  final List<Category> categories;
+  const CategoriesStartContent({super.key, required this.categoriesValue});
+
+  final AsyncValue<List<Category>> categoriesValue;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -91,7 +81,11 @@ class CategoriesStartContent extends StatelessWidget {
               ),
             ),
           ),
-          CategoriesListView(categories: categories),
+          AsyncValueWidget(
+            value: categoriesValue,
+            loading: CategorySkeletonList(useListTile: true),
+            data: (categories) => CategoriesListView(categories: categories),
+          ),
         ],
       ),
     );
@@ -99,18 +93,19 @@ class CategoriesStartContent extends StatelessWidget {
 }
 
 class CategoriesEndContent extends ConsumerWidget {
-  const CategoriesEndContent({super.key});
+  const CategoriesEndContent({super.key, required this.categoriesValue});
+
+  final AsyncValue<List<Category>> categoriesValue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategory = ref.watch(selectedCategoryIdControllerProvider);
-    if (selectedCategory == null) {
-      return Center(child: Text('Select a category'.hardcoded));
-    } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-        child: HomeScreen(categoryId: selectedCategory),
-      );
-    }
+
+    return selectedCategory == null
+        ? Center(child: Text(context.loc.selectCategoryBody))
+        : Padding(
+          padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+          child: HomeScreen(categoryId: selectedCategory),
+        );
   }
 }

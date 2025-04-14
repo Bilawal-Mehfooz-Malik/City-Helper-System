@@ -23,7 +23,6 @@ class StartupContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (useSpacer) const Spacer(flex: 2) else gapH12,
 
@@ -38,7 +37,7 @@ class StartupContent extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
 
-        if (useSpacer) const Spacer(flex: 3) else gapH32,
+        if (useSpacer) const Spacer(flex: 3) else gapH48,
 
         Text(
           context.loc.startupHeadline,
@@ -47,7 +46,7 @@ class StartupContent extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        gapH24,
+        gapH8,
 
         Text(
           context.loc.startupDescription,

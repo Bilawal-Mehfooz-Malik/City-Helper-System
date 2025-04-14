@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Explore'**
   String get explore;
+
+  /// No description provided for @selectCategoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a category'**
+  String get selectCategoryBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
