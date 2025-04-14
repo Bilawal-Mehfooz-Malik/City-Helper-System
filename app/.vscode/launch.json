@@ -15,6 +15,16 @@
       ]
     },
     {
+      "name": "Launch (Local)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_local.dart",
+      "args": [
+        "--target",
+        "lib/main_local.dart"
+      ]
+    },
+    {
       "name": "Launch (Fakes)",
       "request": "launch",
       "type": "dart",
