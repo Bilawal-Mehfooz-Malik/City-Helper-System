@@ -1,20 +1,21 @@
+import 'dart:math';
+
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
-import 'package:app/src/core/common_widgets/custom_image.dart';
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
+import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
-import 'package:app/src/core/common_widgets/grid_layout.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
-import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart';
-import 'package:app/src/features/home/presentation/widgets/item_address_section.dart';
-import 'package:app/src/features/home/presentation/widgets/item_price_section.dart';
-import 'package:app/src/features/home/presentation/widgets/item_title_section.dart';
+import 'package:app/src/features/home/presentation/home_skeletons.dart';
+import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class EntitiesListSection extends ConsumerWidget {
   final CategoryId categoryId;
@@ -30,68 +31,31 @@ class EntitiesListSection extends ConsumerWidget {
     return Column(
       spacing: Sizes.p4,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.p12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Nearby'.hardcoded,
-                style: context.textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Icon(Icons.filter_list_alt, size: 30),
-            ],
+        SectionHeader(
+          startWidget: Text(
+            'Nearby'.hardcoded,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          endWidget: Icon(Icons.filter_list_alt, size: 30),
         ),
 
         AsyncValueWidget(
           value: entitiesListValue,
-          data: (list) {
-            return GridLayout(
+          loading: EntitiesListSkeleton(),
+          data: (entities) {
+            return EntitiesGridLayout(
               shrinkWrap: true,
+              itemCount: entities.length,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                final entity = list[index];
+              itemBuilder: (_, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.p12,
                     vertical: Sizes.p4,
+                    horizontal: Sizes.p12,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// [ItemCoverImage]
-                      Stack(
-                        alignment: Alignment.bottomLeft,
-                        children: [
-                          CustomImage(imageUrl: entity.coverImageUrl),
-                          Padding(
-                            padding: const EdgeInsets.all(Sizes.p8),
-                            child: OpenIndicator(allBorders: true),
-                          ),
-                        ],
-                      ),
-
-                      /// [ItemDetails]
-                      Padding(
-                        padding: const EdgeInsets.all(Sizes.p8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ItemTitleSection(entity: entity),
-                            ItemAddressSection(entity: entity),
-
-                            // * Conditionally showing price for [ResidenceCategory]
-                            if (entity is Residence)
-                              ItemPriceSection(entity: entity),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: EntityCard(entity: entities[index]),
                 );
               },
               emptyMessage: NoEntityFoundException().message,
@@ -99,6 +63,50 @@ class EntitiesListSection extends ConsumerWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class EntitiesGridLayout extends StatelessWidget {
+  const EntitiesGridLayout({
+    super.key,
+    this.physics,
+    this.shrinkWrap = false,
+    required this.itemCount,
+    required this.itemBuilder,
+    required this.emptyMessage,
+  });
+
+  /// Total number of items to display.
+  final int itemCount;
+
+  /// Function used to build a widget for a given index in the grid.
+  final Widget Function(BuildContext, int) itemBuilder;
+
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
+  final String emptyMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    if (itemCount == 0) {
+      return CenteredMessageWidget(emptyMessage);
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final maxWidth = min(width, Breakpoint.desktop);
+        final crossAxisCount = max(1, maxWidth ~/ 250);
+
+        return AlignedGridView.count(
+          physics: physics,
+          shrinkWrap: shrinkWrap,
+          itemCount: itemCount,
+          itemBuilder: itemBuilder,
+          crossAxisCount: crossAxisCount,
+        );
+      },
     );
   }
 }

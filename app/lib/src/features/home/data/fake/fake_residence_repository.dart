@@ -15,6 +15,7 @@ class FakeResidenceRepository implements ResidenceRepository {
 
   @override
   Stream<List<Residence>> watchResidencesList(CategoryId categoryId) {
+    delay(addDelay);
     return _filterResidencesList(categoryId);
   }
 
@@ -26,6 +27,7 @@ class FakeResidenceRepository implements ResidenceRepository {
 
   @override
   Stream<List<Residence>> watchPopularResidencesList(CategoryId categoryId) {
+    delay(addDelay);
     return _filterPopularResidencesList(categoryId);
   }
 
@@ -54,6 +56,7 @@ class FakeResidenceRepository implements ResidenceRepository {
     CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) {
+    delay(addDelay);
     return _filterResidencesListBySubCategoryId(categoryId, subCategoryId);
   }
 
@@ -74,6 +77,7 @@ class FakeResidenceRepository implements ResidenceRepository {
     CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) {
+    delay(addDelay);
     return _filterPopularResidencesListBySubCategoryId(
       categoryId,
       subCategoryId,
@@ -90,6 +94,7 @@ class FakeResidenceRepository implements ResidenceRepository {
 
   @override
   Stream<Residence?> watchResidence(CategoryId categoryId, EntityId id) {
+    delay(addDelay);
     return _residences.stream.map(
       (residences) => _filterResidenceById(residences, categoryId, id),
     );

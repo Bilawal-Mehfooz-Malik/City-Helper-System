@@ -1,47 +1,51 @@
-import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:app/src/features/home/presentation/home_skeletons.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// * Fetches and displays a list of subcategories as chips**
-/// - Uses Riverpod to listen for category changes
-/// - Wraps the list inside an `AsyncValueWidget` for state handling
+/// Displays a horizontal list of subcategory chips for the selected category
+/// - Shows a skeleton while loading
+/// - Hides the list if there are no subcategories
+/// - Injects the categoryId to filter subcategories
 class SubCategoriesList extends ConsumerWidget {
   final CategoryId categoryId;
+
   const SubCategoriesList({super.key, required this.categoryId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watches the subcategories list for the given categoryId
+    // Watch the async subcategories provider for the given categoryId
     final subCategoryValue = ref.watch(
       subCategoriesListFutureProvider(categoryId),
     );
 
-    return SizedBox(
-      height: 50,
-      child: AsyncValueWidget(
-        value: subCategoryValue,
-        data: (subCategories) {
-          if (subCategories.isEmpty) {
-            return SizedBox.shrink();
-          }
+    // Show skeleton while loading
+    if (subCategoryValue.isLoading) {
+      return const SubCategorySkeletonList();
+    }
 
-          return SubCategoryChipListView(
-            categoryId: categoryId,
-            subCategories: subCategories,
-          );
-        },
-      ),
+    // Extract the data from the AsyncValue
+    final subCategories = subCategoryValue.value;
+
+    // Return an empty widget if there are no subcategories
+    if (subCategories == null || subCategories.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Show the list of subcategory chips
+    return SubCategoryChipListView(
+      categoryId: categoryId,
+      subCategories: subCategories,
     );
   }
 }
 
-/// * Displays a horizontal list of subcategory chips**
+/// * Displays a horizontal list of subcategory chips
 /// - Adds an "All" option at the start
 /// - Uses `.map()` for cleaner iteration
 class SubCategoryChipListView extends StatelessWidget {
@@ -58,25 +62,29 @@ class SubCategoryChipListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Add a default "All" option to reset filtering
     final allSubCategories = [
-      SubCategory(id: 0, name: 'All'.hardcoded, categoryId: categoryId),
+      SubCategory(id: 0, name: context.loc.all, categoryId: categoryId),
       ...subCategories,
     ];
 
-    return ListView(
+    return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.symmetric(horizontal: Sizes.p12),
-      children:
-          allSubCategories
-              .map(
-                (subCategory) =>
-                    SubCategoryChipWidget(subCategory: subCategory),
-              )
-              .toList(),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+      child: Row(
+        children:
+            allSubCategories
+                .map(
+                  (subCategory) => Padding(
+                    padding: const EdgeInsets.only(right: Sizes.p8),
+                    child: SubCategoryChipWidget(subCategory: subCategory),
+                  ),
+                )
+                .toList(),
+      ),
     );
   }
 }
 
-/// **Represents an individual subcategory chip**
+/// * Represents an individual subcategory chip
 /// - Highlights selected category
 /// - Calls `selectSubcategory()` on selection
 class SubCategoryChipWidget extends ConsumerWidget {
@@ -103,7 +111,7 @@ class SubCategoryChipWidget extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: Sizes.p4),
+      padding: const EdgeInsets.only(right: Sizes.p8),
       child: ChoiceChip(
         selected: isSelected,
         label: Text(subCategory.name),

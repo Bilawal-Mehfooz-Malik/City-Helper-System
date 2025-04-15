@@ -58,4 +58,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectCategoryBody => 'Select a category';
+
+  @override
+  String get popular => 'Popular';
+
+  @override
+  String get seeAll => 'See all';
+
+  @override
+  String get all => 'All';
 }

@@ -194,6 +194,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a category'**
   String get selectCategoryBody;
+
+  /// No description provided for @popular.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get popular;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAll;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

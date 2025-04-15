@@ -15,6 +15,7 @@ class FakeFoodRepository implements FoodRepository {
 
   @override
   Stream<List<Food>> watchFoodsList(CategoryId categoryId) {
+    delay(addDelay);
     return _filterFoodsList(categoryId);
   }
 
@@ -26,6 +27,7 @@ class FakeFoodRepository implements FoodRepository {
 
   @override
   Stream<List<Food>> watchPopularFoodsList(CategoryId categoryId) {
+    delay(addDelay);
     return _filterPopularFoodsList(categoryId);
   }
 
@@ -49,6 +51,7 @@ class FakeFoodRepository implements FoodRepository {
     CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) {
+    delay(addDelay);
     return _filterFoodsListBySubCategoryId(categoryId, subCategoryId);
   }
 
@@ -69,6 +72,7 @@ class FakeFoodRepository implements FoodRepository {
     CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) {
+    delay(addDelay);
     return _filterPopularFoodsListBySubCategoryId(categoryId, subCategoryId);
   }
 
@@ -80,6 +84,7 @@ class FakeFoodRepository implements FoodRepository {
 
   @override
   Stream<Food?> watchFood(CategoryId categoryId, EntityId id) {
+    delay(addDelay);
     return _foods.stream.map((foods) => _filterFoodById(foods, categoryId, id));
   }
 
