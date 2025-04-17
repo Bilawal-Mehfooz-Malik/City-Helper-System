@@ -44,5 +44,9 @@
   "seeAll":"See all",
   "@seeAll": {},
   "all":"All",
-  "@all": {}
+  "@all": {},
+  "startsFrom":"Starts from",
+  "@startsFrom": {},
+  "sector":"Sector",
+  "@sector": {}
 }

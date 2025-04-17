@@ -212,6 +212,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get all;
+
+  /// No description provided for @startsFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts from'**
+  String get startsFrom;
+
+  /// No description provided for @sector.
+  ///
+  /// In en, this message translates to:
+  /// **'Sector'**
+  String get sector;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

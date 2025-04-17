@@ -6,7 +6,7 @@ class SectionHeader extends StatelessWidget {
     super.key,
     required this.startWidget,
     required this.endWidget,
-    this.padding = const EdgeInsets.symmetric(horizontal: Sizes.p12),
+    this.padding = const EdgeInsets.symmetric(horizontal: Sizes.p16),
   });
 
   final Widget startWidget;
@@ -19,7 +19,7 @@ class SectionHeader extends StatelessWidget {
       padding: padding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [startWidget, endWidget],
+        children: [Flexible(child: startWidget), Flexible(child: endWidget)],
       ),
     );
   }

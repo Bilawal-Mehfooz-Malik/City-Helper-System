@@ -67,4 +67,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get all => 'All';
+
+  @override
+  String get startsFrom => 'Starts from';
+
+  @override
+  String get sector => 'Sector';
 }

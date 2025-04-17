@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
@@ -28,6 +27,20 @@ class EntitiesListSection extends ConsumerWidget {
       WatchEntitiesProvider(categoryId, subCategory),
     );
 
+    // Show skeleton while loading
+    if (entitiesListValue.isLoading) {
+      return const EntitiesListSkeleton();
+    }
+
+    // Extract the data from the AsyncValue
+    final entities = entitiesListValue.value;
+
+    // Return an empty widget if there are no entities
+    if (entities == null || entities.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Show the list of entities
     return Column(
       spacing: Sizes.p4,
       children: [
@@ -41,26 +54,20 @@ class EntitiesListSection extends ConsumerWidget {
           endWidget: Icon(Icons.filter_list_alt, size: 30),
         ),
 
-        AsyncValueWidget(
-          value: entitiesListValue,
-          loading: EntitiesListSkeleton(),
-          data: (entities) {
-            return EntitiesGridLayout(
-              shrinkWrap: true,
-              itemCount: entities.length,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (_, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Sizes.p4,
-                    horizontal: Sizes.p12,
-                  ),
-                  child: EntityCard(entity: entities[index]),
-                );
-              },
-              emptyMessage: NoEntityFoundException().message,
+        EntitiesGridLayout(
+          shrinkWrap: true,
+          itemCount: entities.length,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (_, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.p4,
+                horizontal: Sizes.p16,
+              ),
+              child: EntityCard(entity: entities[index], useElipsis: false),
             );
           },
+          emptyMessage: NoEntityFoundException().message,
         ),
       ],
     );

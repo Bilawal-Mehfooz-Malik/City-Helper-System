@@ -8,8 +8,13 @@ import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  final bool showBackButton;
   final CategoryId categoryId;
-  const HomeScreen({super.key, required this.categoryId});
+  const HomeScreen({
+    super.key,
+    required this.categoryId,
+    this.showBackButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,9 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(child: HomeSearchBar()),
+            SliverToBoxAdapter(
+              child: HomeSearchBar(showBackButton: showBackButton),
+            ),
             sliverGapH8,
             SliverToBoxAdapter(
               child: SubCategoriesList(categoryId: categoryId),
@@ -39,14 +46,22 @@ class HomeScreen extends StatelessWidget {
 }
 
 class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key});
+  const HomeSearchBar({super.key, required this.showBackButton});
+
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Sizes.p16, vertical: Sizes.p4),
       child: SearchBar(
-        leading: BackButton(),
+        leading:
+            showBackButton
+                ? BackButton()
+                : Padding(
+                  padding: const EdgeInsets.only(left: Sizes.p8),
+                  child: Icon(Icons.search),
+                ),
         elevation: WidgetStatePropertyAll(2),
         hintText: 'Search...'.hardcoded,
       ),

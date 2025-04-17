@@ -51,6 +51,20 @@ class PopularEnitiesSection extends ConsumerWidget {
             style: context.textTheme.bodyLarge,
           ),
         ),
+        // TODO: Remove it
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        //   child: IntrinsicHeight(
+        //     child: Row(
+        //       children: List.generate(entities.length, (index) {
+        //         return Padding(
+        //           padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
+        //           child: Card(child: EntityCard(entity: entities[index])),
+        //         );
+        //       }),
+        //     ),
+        //   ),
+        // ),
         SizedBox(
           height: entities is List<Residence> ? 300 : 275,
           child: ListView.builder(
@@ -58,7 +72,7 @@ class PopularEnitiesSection extends ConsumerWidget {
             shrinkWrap: true,
             itemCount: entities.length,
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: Sizes.p12),
+            padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
             itemBuilder: (_, index) {
               return Card(child: EntityCard(entity: entities[index]));
             },

@@ -46,7 +46,7 @@ class CarouselAdsList extends ConsumerWidget {
           itemBuilder: (_, index, __) {
             final ad = ads[index];
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: Sizes.p12),
+              padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
               child: CustomImage(aspectRatio: 16 / 9, imageUrl: ad.imageUrl),
             );
           },

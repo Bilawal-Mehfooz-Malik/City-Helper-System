@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
@@ -16,7 +17,7 @@ class SubCategorySkeletonList extends StatelessWidget {
       enabled: true,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.p12),
+        padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
         child: Row(
           children: List.generate(8, (index) {
             return Padding(
@@ -36,7 +37,7 @@ class CarouselAdListSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.p12),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
       child: Column(
         children: [
           Skeletonizer(
@@ -63,17 +64,68 @@ class PopularEntitesSkeletonList extends StatelessWidget {
     return Column(
       spacing: Sizes.p4,
       children: [
-        SectionHeaderSkeleton(),
+        Skeletonizer(
+          enabled: true,
+          child: SectionHeader(
+            startWidget: Bone.text(
+              words: 1,
+              style: context.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            endWidget: Bone.text(words: 1, style: context.textTheme.bodyLarge),
+          ),
+        ),
         SizedBox(
           height: 275,
           child: ListView.builder(
-            itemCount: 6,
+            itemCount: 5,
             itemExtent: 280,
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: Sizes.p12),
+            padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
             itemBuilder: (_, index) => EntityCardSkeleton(),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class EntitiesListSkeleton extends StatelessWidget {
+  const EntitiesListSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: Sizes.p4,
+      children: [
+        Skeletonizer(
+          enabled: true,
+          child: SectionHeader(
+            startWidget: Bone.text(
+              words: 1,
+              style: context.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            endWidget: Bone.icon(size: 30),
+          ),
+        ),
+        EntitiesGridLayout(
+          itemCount: 3,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (_, __) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.p4,
+                horizontal: Sizes.p16,
+              ),
+              child: EntityCardSkeleton(useCard: false),
+            );
+          },
+          emptyMessage: NoEntityFoundException().message,
         ),
       ],
     );
@@ -147,55 +199,6 @@ class EntityCardSkeletonContent extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class SectionHeaderSkeleton extends StatelessWidget {
-  const SectionHeaderSkeleton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Skeletonizer(
-      enabled: true,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Sizes.p12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Bone.text(
-              words: 1,
-              style: context.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Bone.text(words: 2, style: context.textTheme.bodyLarge),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EntitiesListSkeleton extends StatelessWidget {
-  const EntitiesListSkeleton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return EntitiesGridLayout(
-      shrinkWrap: true,
-      itemCount: 3,
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, __) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.p4,
-            horizontal: Sizes.p12,
-          ),
-          child: EntityCardSkeleton(useCard: false),
-        );
-      },
-      emptyMessage: NoEntityFoundException().message,
     );
   }
 }

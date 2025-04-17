@@ -10,7 +10,7 @@ class AverageRatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       spacing: Sizes.p4,
       children: [
         Icon(Icons.star, color: Colors.amber, size: 18),

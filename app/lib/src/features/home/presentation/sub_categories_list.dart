@@ -110,13 +110,10 @@ class SubCategoryChipWidget extends ConsumerWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(right: Sizes.p8),
-      child: ChoiceChip(
-        selected: isSelected,
-        label: Text(subCategory.name),
-        onSelected: (selected) => onSelected(selected),
-      ),
+    return ChoiceChip(
+      selected: isSelected,
+      label: Text(subCategory.name),
+      onSelected: (selected) => onSelected(selected),
     );
   }
 }

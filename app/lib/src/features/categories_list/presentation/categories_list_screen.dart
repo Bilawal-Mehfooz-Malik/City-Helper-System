@@ -49,6 +49,7 @@ class CategoriesListScreen extends ConsumerWidget {
                   ),
                   endContent: CategoriesEndContent(
                     categoriesValue: categoriesValue,
+                    showBackButton: false,
                   ),
                 ),
       ),
@@ -90,9 +91,14 @@ class CategoriesStartContent extends StatelessWidget {
 }
 
 class CategoriesEndContent extends ConsumerWidget {
-  const CategoriesEndContent({super.key, required this.categoriesValue});
+  const CategoriesEndContent({
+    super.key,
+    required this.categoriesValue,
+    this.showBackButton = true,
+  });
 
   final AsyncValue<List<Category>> categoriesValue;
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -102,7 +108,10 @@ class CategoriesEndContent extends ConsumerWidget {
         ? Center(child: Text(context.loc.selectCategoryBody))
         : Padding(
           padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-          child: HomeScreen(categoryId: selectedCategory),
+          child: HomeScreen(
+            categoryId: selectedCategory,
+            showBackButton: showBackButton,
+          ),
         );
   }
 }
