@@ -38,6 +38,7 @@ class PopularEnitiesSection extends ConsumerWidget {
     // Show the list of entities
     return Column(
       spacing: Sizes.p4,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
           startWidget: Text(

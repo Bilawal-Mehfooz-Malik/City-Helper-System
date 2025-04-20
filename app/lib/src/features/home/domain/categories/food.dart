@@ -1,6 +1,10 @@
 import 'package:app/src/features/home/domain/categories/entity.dart';
 
+import '../../../../core/models/my_data_types.dart';
+
 class Food extends Entity {
+  final GenderPreference genderPref;
+
   const Food({
     required super.id,
     required super.categoryId,
@@ -16,6 +20,7 @@ class Food extends Entity {
     required super.openingHours,
     required super.status,
     required super.createdAt,
+    required this.genderPref,
   });
 }
 

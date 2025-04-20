@@ -1,13 +1,15 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home/presentation/controllers/combined_error_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   final bool showBackButton;
   final CategoryId categoryId;
   const HomeScreen({
@@ -17,7 +19,19 @@ class HomeScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final error = ref.watch(
+      combinedErrorStatusProvider(categoryId: categoryId),
+    );
+
+    if (error != null) {
+      return Scaffold(
+        body: Center(
+          child: Text('Something went wrong. Please try again.'.hardcoded),
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(

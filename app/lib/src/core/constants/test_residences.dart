@@ -20,7 +20,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 10),
     price: 25000,
-    filters: GenderPreference.familyFriendly,
+    genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
   ),
   Residence(
@@ -39,7 +39,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 12),
     price: 40000,
-    filters: GenderPreference.maleOnly,
+    genderPref: GenderPreference.maleOnly,
     isFurnished: true,
   ),
   Residence(
@@ -58,7 +58,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 15),
     price: 8000,
-    filters: GenderPreference.maleOnly,
+    genderPref: GenderPreference.maleOnly,
     isFurnished: false,
   ),
   Residence(
@@ -77,7 +77,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 18),
     price: 15000,
-    filters: GenderPreference.femaleOnly,
+    genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
   ),
   Residence(
@@ -96,7 +96,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 20),
     price: 12000,
-    filters: GenderPreference.femaleOnly,
+    genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
   ),
   Residence(
@@ -115,7 +115,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 22),
     price: 60000,
-    filters: GenderPreference.familyFriendly,
+    genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
   ),
   Residence(
@@ -134,7 +134,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 24),
     price: 7000,
-    filters: GenderPreference.maleOnly,
+    genderPref: GenderPreference.maleOnly,
     isFurnished: false,
   ),
   Residence(
@@ -153,7 +153,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 26),
     price: 28000,
-    filters: GenderPreference.familyFriendly,
+    genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
   ),
   Residence(
@@ -172,7 +172,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 28),
     price: 11000,
-    filters: GenderPreference.femaleOnly,
+    genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
   ),
   Residence(
@@ -191,7 +191,7 @@ final List<Residence> testResidences = [
     status: true,
     createdAt: DateTime(2024, 3, 30),
     price: 35000,
-    filters: GenderPreference.familyFriendly,
+    genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
   ),
 ];

@@ -73,4 +73,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sector => 'Sector';
+
+  @override
+  String get sortOrderNone => 'None';
+
+  @override
+  String get sortOrderLowToHigh => 'Low to High';
+
+  @override
+  String get sortOrderHighToLow => 'High to Low';
+
+  @override
+  String get highestRatedFirst => 'High rated first';
+
+  @override
+  String get lowestRatedFirst => 'Low rated first';
+
+  @override
+  String get genderPreferenceAny => 'Any';
+
+  @override
+  String get genderPreferenceMaleOnly => 'Male Only';
+
+  @override
+  String get genderPreferenceFemaleOnly => 'Female Only';
+
+  @override
+  String get genderPreferenceFamilyFriendly => 'Family Friendly';
+
+  @override
+  String get filtersTitle => 'Filters';
+
+  @override
+  String get sortByPrice => 'Sort by Price';
+
+  @override
+  String get sortByRating => 'Sort by Rating';
+
+  @override
+  String get showOpenOnly => 'Show open only';
+
+  @override
+  String get showFurnishedOnly => 'Show furnished only';
+
+  @override
+  String get genderPreferenceLabel => 'Gender Preference';
+
+  @override
+  String get resetButton => 'Reset';
+
+  @override
+  String get applyFiltersButton => 'Apply Filters';
 }

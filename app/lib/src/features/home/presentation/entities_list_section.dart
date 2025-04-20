@@ -11,7 +11,8 @@ import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:app/src/features/home/presentation/widgets/filter_dialog.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -27,47 +28,49 @@ class EntitiesListSection extends ConsumerWidget {
       WatchEntitiesProvider(categoryId, subCategory),
     );
 
-    // Show skeleton while loading
-    if (entitiesListValue.isLoading) {
-      return const EntitiesListSkeleton();
-    }
-
-    // Extract the data from the AsyncValue
-    final entities = entitiesListValue.value;
-
-    // Return an empty widget if there are no entities
-    if (entities == null || entities.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    // Show the list of entities
     return Column(
       spacing: Sizes.p4,
       children: [
         SectionHeader(
           startWidget: Text(
-            'Nearby'.hardcoded,
+            context.loc.all,
             style: context.textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          endWidget: Icon(Icons.filter_list_alt, size: 30),
+          endWidget: IconButton(
+            icon: Icon(Icons.filter_list_alt),
+            onPressed:
+                () => showDialog<void>(
+                  context: context,
+                  builder: (_) => FilterDialog(categoryId: categoryId),
+                ),
+          ),
         ),
 
-        EntitiesGridLayout(
-          shrinkWrap: true,
-          itemCount: entities.length,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.p4,
-                horizontal: Sizes.p16,
+        entitiesListValue.when(
+          skipError: true,
+          error: (error, stackTrace) => ErrorWidget(error),
+          loading: () => EntitiesListSkeleton(),
+          data:
+              (entities) => EntitiesGridLayout(
+                shrinkWrap: true,
+                itemCount: entities.length,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (_, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Sizes.p4,
+                      horizontal: Sizes.p16,
+                    ),
+                    child: EntityCard(
+                      entity: entities[index],
+                      useElipsis: false,
+                    ),
+                  );
+                },
+                emptyMessage: NoEntityFoundException().message,
               ),
-              child: EntityCard(entity: entities[index], useElipsis: false),
-            );
-          },
-          emptyMessage: NoEntityFoundException().message,
         ),
       ],
     );
@@ -97,7 +100,10 @@ class EntitiesGridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
-      return CenteredMessageWidget(emptyMessage);
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: Sizes.p16),
+        child: CenteredMessageWidget(emptyMessage),
+      );
     }
 
     return LayoutBuilder(

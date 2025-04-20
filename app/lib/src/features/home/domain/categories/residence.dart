@@ -3,8 +3,8 @@ import 'package:app/src/features/home/domain/categories/entity.dart';
 
 class Residence extends Entity {
   final double price;
-  final GenderPreference filters;
   final bool isFurnished;
+  final GenderPreference genderPref;
 
   const Residence({
     required super.id,
@@ -22,7 +22,7 @@ class Residence extends Entity {
     required super.status,
     required super.createdAt,
     required this.price,
-    required this.filters,
+    required this.genderPref,
     required this.isFurnished,
   });
 }

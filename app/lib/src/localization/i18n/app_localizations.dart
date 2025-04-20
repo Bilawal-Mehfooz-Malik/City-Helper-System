@@ -224,6 +224,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sector'**
   String get sector;
+
+  /// No description provided for @sortOrderNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get sortOrderNone;
+
+  /// No description provided for @sortOrderLowToHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Low to High'**
+  String get sortOrderLowToHigh;
+
+  /// No description provided for @sortOrderHighToLow.
+  ///
+  /// In en, this message translates to:
+  /// **'High to Low'**
+  String get sortOrderHighToLow;
+
+  /// No description provided for @highestRatedFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'High rated first'**
+  String get highestRatedFirst;
+
+  /// No description provided for @lowestRatedFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Low rated first'**
+  String get lowestRatedFirst;
+
+  /// No description provided for @genderPreferenceAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get genderPreferenceAny;
+
+  /// No description provided for @genderPreferenceMaleOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Male Only'**
+  String get genderPreferenceMaleOnly;
+
+  /// No description provided for @genderPreferenceFemaleOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Female Only'**
+  String get genderPreferenceFemaleOnly;
+
+  /// No description provided for @genderPreferenceFamilyFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Friendly'**
+  String get genderPreferenceFamilyFriendly;
+
+  /// No description provided for @filtersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filtersTitle;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by Price'**
+  String get sortByPrice;
+
+  /// No description provided for @sortByRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by Rating'**
+  String get sortByRating;
+
+  /// No description provided for @showOpenOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Show open only'**
+  String get showOpenOnly;
+
+  /// No description provided for @showFurnishedOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Show furnished only'**
+  String get showFurnishedOnly;
+
+  /// No description provided for @genderPreferenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender Preference'**
+  String get genderPreferenceLabel;
+
+  /// No description provided for @resetButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get resetButton;
+
+  /// No description provided for @applyFiltersButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filters'**
+  String get applyFiltersButton;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -97,37 +97,20 @@ class EntitiesListSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: Sizes.p4,
-      children: [
-        Skeletonizer(
-          enabled: true,
-          child: SectionHeader(
-            startWidget: Bone.text(
-              words: 1,
-              style: context.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            endWidget: Bone.icon(size: 30),
+    return EntitiesGridLayout(
+      itemCount: 3,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (_, __) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.p4,
+            horizontal: Sizes.p16,
           ),
-        ),
-        EntitiesGridLayout(
-          itemCount: 3,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (_, __) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.p4,
-                horizontal: Sizes.p16,
-              ),
-              child: EntityCardSkeleton(useCard: false),
-            );
-          },
-          emptyMessage: NoEntityFoundException().message,
-        ),
-      ],
+          child: EntityCardSkeleton(useCard: false),
+        );
+      },
+      emptyMessage: NoEntityFoundException().message,
     );
   }
 }

@@ -21,7 +21,7 @@ class SubCategoriesList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the async subcategories provider for the given categoryId
     final subCategoryValue = ref.watch(
-      subCategoriesListFutureProvider(categoryId),
+      subCategoriesListStreamProvider(categoryId),
     );
 
     // Show skeleton while loading
