@@ -4,7 +4,7 @@ import 'package:app/src/core/models/opening_hours.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-class Entity {
+abstract class Entity {
   final EntityId id;
   final CategoryId categoryId;
   final SubCategoryId subCategoryId;

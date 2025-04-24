@@ -3,167 +3,276 @@ import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/home/domain/filters/entity_filter.dart';
+import 'package:app/src/features/home/domain/filters/food_filter.dart';
+import 'package:app/src/features/home/domain/filters/residence_filter.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilterDialog extends ConsumerWidget {
+class FilterDialog extends ConsumerStatefulWidget {
   const FilterDialog({super.key, required this.categoryId});
-
   final CategoryId categoryId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(
-      filterControllerProvider(category: categoryId).notifier,
-    );
-    final filter = ref.watch(filterControllerProvider(category: categoryId));
+  ConsumerState<FilterDialog> createState() => _FilterDialogState();
+}
 
-    final isResidence = controller.isResidence;
-    final residenceFilter = controller.asResidence;
+class _FilterDialogState extends ConsumerState<FilterDialog> {
+  late EntityFilter localFilter;
+
+  @override
+  void initState() {
+    super.initState();
+    localFilter = ref.read(
+      filterControllerProvider(category: widget.categoryId),
+    );
+  }
+
+  void setDraftFilter(EntityFilter newFilter) {
+    setState(() => localFilter = newFilter);
+  }
+
+  void resetDraftFilter() {
+    setState(() {
+      localFilter = switch (widget.categoryId) {
+        1 => ResidenceFilter(),
+        2 => FoodFilter(),
+        _ => EntityFilter(),
+      };
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = ref.watch(
+      filterControllerProvider(category: widget.categoryId).notifier,
+    );
 
     return AlertDialog(
       title: Text(context.loc.filtersTitle),
       content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Price Sort (Only for Residence)
-            if (isResidence && residenceFilter != null)
-              DropdownButtonFormField<SortOrder>(
-                value: residenceFilter.priceSort,
-                items: [
-                  DropdownMenuItem(
-                    value: SortOrder.none,
-                    child: Text(context.loc.sortOrderNone),
-                  ),
-                  DropdownMenuItem(
-                    value: SortOrder.lowToHigh,
-                    child: Text(context.loc.sortOrderLowToHigh),
-                  ),
-                  DropdownMenuItem(
-                    value: SortOrder.highToLow,
-                    child: Text(context.loc.sortOrderHighToLow),
-                  ),
-                ],
-                onChanged:
-                    (value) => controller.updateFilter(priceSort: value!),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: context.loc.sortByPrice,
-                ),
-              ),
-            gapH12,
-
-            // Rating Sort (Shared)
-            DropdownButtonFormField<SortOrder>(
-              value: filter.ratingSort,
-              items: [
-                DropdownMenuItem(
-                  value: SortOrder.none,
-                  child: Text(context.loc.sortOrderNone),
-                ),
-                DropdownMenuItem(
-                  value: SortOrder.highToLow,
-                  child: Text(context.loc.highestRatedFirst),
-                ),
-                DropdownMenuItem(
-                  value: SortOrder.lowToHigh,
-                  child: Text(context.loc.lowestRatedFirst),
-                ),
-              ],
-              onChanged: (value) => controller.updateFilter(ratingSort: value!),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: context.loc.sortByRating,
-              ),
-            ),
-            gapH8,
-
-            // isOpen Switch (Shared)
-            SwitchListTile(
-              value: filter.isOpen,
-              contentPadding: EdgeInsets.zero,
-              title: Text(context.loc.showOpenOnly),
-              onChanged: (value) => controller.updateFilter(isOpen: value),
-            ),
-
-            // isFurnished Switch (Only for Residence)
-            if (isResidence && residenceFilter != null)
-              SwitchListTile(
-                value: residenceFilter.isFurnished,
-                contentPadding: EdgeInsets.zero,
-                title: Text(context.loc.showFurnishedOnly),
-                onChanged:
-                    (value) => controller.updateFilter(isFurnished: value),
-              ),
-            gapH12,
-
-            // Gender Preference (Shared)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.loc.genderPreferenceLabel,
-                  style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                gapH8,
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children:
-                      GenderPreference.values.map((gender) {
-                        String localizedText;
-                        switch (gender) {
-                          case GenderPreference.any:
-                            localizedText = context.loc.genderPreferenceAny;
-                            break;
-                          case GenderPreference.maleOnly:
-                            localizedText =
-                                context.loc.genderPreferenceMaleOnly;
-                            break;
-                          case GenderPreference.femaleOnly:
-                            localizedText =
-                                context.loc.genderPreferenceFemaleOnly;
-                            break;
-                          case GenderPreference.familyFriendly:
-                            localizedText =
-                                context.loc.genderPreferenceFamilyFriendly;
-                            break;
-                        }
-                        return ChoiceChip(
-                          label: Text(localizedText),
-                          selected: filter.genderPref == gender,
-                          onSelected:
-                              (_) =>
-                                  controller.updateFilter(genderPref: gender),
-                        );
-                      }).toList(),
-                ),
-              ],
-            ),
-            gapH8,
-          ],
+        child: FilterDialogContent(
+          controller: controller,
+          localFilter: localFilter,
+          onFilterChanged: setDraftFilter,
         ),
       ),
       actions: [
         CustomTextButton(
-          onPressed: () {
-            controller.resetFilters();
-            Navigator.of(context).pop();
-          },
+          onPressed: resetDraftFilter,
           text: context.loc.resetButton,
         ),
         PrimaryButton(
           onPressed: () {
+            controller.applyFilter(localFilter);
             Navigator.of(context).pop();
           },
           text: context.loc.applyFiltersButton,
         ),
       ],
     );
+  }
+}
+
+class FilterDialogContent extends StatelessWidget {
+  const FilterDialogContent({
+    super.key,
+    required this.controller,
+    required this.localFilter,
+    required this.onFilterChanged,
+  });
+
+  final FilterController controller;
+  final EntityFilter localFilter;
+  final void Function(EntityFilter) onFilterChanged;
+
+  EntityFilter updateField({SortOrder? ratingSort, bool? isOpen}) {
+    return switch (localFilter) {
+      ResidenceFilter f => f.copyWith(
+        ratingSort: ratingSort ?? f.ratingSort,
+        isOpen: isOpen ?? f.isOpen,
+      ),
+      FoodFilter f => f.copyWith(
+        ratingSort: ratingSort ?? f.ratingSort,
+        isOpen: isOpen ?? f.isOpen,
+      ),
+      _ => localFilter.copyWith(
+        ratingSort: ratingSort ?? localFilter.ratingSort,
+        isOpen: isOpen ?? localFilter.isOpen,
+      ),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final residenceFilter =
+        localFilter is ResidenceFilter ? localFilter as ResidenceFilter : null;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        gapH4,
+        if (residenceFilter != null) ...[
+          SortDropdown(
+            label: context.loc.sortByPrice,
+            currentValue: residenceFilter.priceSort,
+            onChanged:
+                (value) =>
+                    onFilterChanged(residenceFilter.copyWith(priceSort: value)),
+          ),
+          gapH12,
+        ],
+        SortDropdown(
+          label: context.loc.sortByRating,
+          currentValue: localFilter.ratingSort,
+          onChanged: (value) => onFilterChanged(updateField(ratingSort: value)),
+        ),
+        gapH8,
+        FilterSwitch(
+          value: localFilter.isOpen,
+          label: context.loc.showOpenOnly,
+          onChanged: (value) => onFilterChanged(updateField(isOpen: value)),
+        ),
+        if (residenceFilter != null)
+          FilterSwitch(
+            value: residenceFilter.isFurnished,
+            label: context.loc.showFurnishedOnly,
+            onChanged:
+                (value) => onFilterChanged(
+                  residenceFilter.copyWith(isFurnished: value),
+                ),
+          ),
+        gapH12,
+        GenderPreferenceChips(
+          selected: switch (localFilter) {
+            ResidenceFilter f => f.genderPref,
+            FoodFilter f => f.genderPref,
+            _ => GenderPreference.any,
+          },
+          onSelected: (gender) {
+            final updated = switch (localFilter) {
+              ResidenceFilter f => f.copyWith(genderPref: gender),
+              FoodFilter f => f.copyWith(genderPref: gender),
+              _ => localFilter,
+            };
+            onFilterChanged(updated);
+          },
+        ),
+        gapH8,
+      ],
+    );
+  }
+}
+
+class SortDropdown extends StatelessWidget {
+  const SortDropdown({
+    super.key,
+    required this.label,
+    required this.currentValue,
+    required this.onChanged,
+  });
+
+  final String label;
+  final SortOrder currentValue;
+  final void Function(SortOrder) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<SortOrder>(
+      value: currentValue,
+      items: [
+        DropdownMenuItem(
+          value: SortOrder.none,
+          child: Text(context.loc.sortOrderNone),
+        ),
+        DropdownMenuItem(
+          value: SortOrder.lowToHigh,
+          child: Text(context.loc.sortOrderLowToHigh),
+        ),
+        DropdownMenuItem(
+          value: SortOrder.highToLow,
+          child: Text(context.loc.sortOrderHighToLow),
+        ),
+      ],
+      onChanged: (value) => value != null ? onChanged(value) : null,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: label,
+      ),
+    );
+  }
+}
+
+class FilterSwitch extends StatelessWidget {
+  const FilterSwitch({
+    super.key,
+    required this.value,
+    required this.label,
+    required this.onChanged,
+  });
+
+  final bool value;
+  final String label;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      value: value,
+      contentPadding: EdgeInsets.zero,
+      title: Text(label),
+      onChanged: onChanged,
+    );
+  }
+}
+
+class GenderPreferenceChips extends StatelessWidget {
+  const GenderPreferenceChips({
+    super.key,
+    required this.selected,
+    required this.onSelected,
+  });
+
+  final GenderPreference selected;
+  final ValueChanged<GenderPreference> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.loc.genderPreferenceLabel,
+          style: context.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        gapH8,
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children:
+              GenderPreference.values.map((gender) {
+                return ChoiceChip(
+                  label: Text(_localizedGenderText(context, gender)),
+                  selected: selected == gender,
+                  onSelected: (_) => onSelected(gender),
+                );
+              }).toList(),
+        ),
+      ],
+    );
+  }
+
+  String _localizedGenderText(BuildContext context, GenderPreference gender) {
+    return switch (gender) {
+      GenderPreference.any => context.loc.genderPreferenceAny,
+      GenderPreference.maleOnly => context.loc.genderPreferenceMaleOnly,
+      GenderPreference.femaleOnly => context.loc.genderPreferenceFemaleOnly,
+      GenderPreference.familyFriendly =>
+        context.loc.genderPreferenceFamilyFriendly,
+    };
   }
 }

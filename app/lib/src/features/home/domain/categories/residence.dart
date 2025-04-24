@@ -25,6 +25,15 @@ class Residence extends Entity {
     required this.genderPref,
     required this.isFurnished,
   });
+
+  bool matchGenderPref(GenderPreference preference) {
+    if (preference == GenderPreference.any) return true;
+    return genderPref == preference;
+  }
+
+  bool checkFurnished(bool furnished) {
+    return isFurnished == furnished;
+  }
 }
 
 // @freezed

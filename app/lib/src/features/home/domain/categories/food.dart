@@ -22,6 +22,11 @@ class Food extends Entity {
     required super.createdAt,
     required this.genderPref,
   });
+
+  bool matchGenderPref(GenderPreference preference) {
+    if (preference == GenderPreference.any) return true;
+    return genderPref == preference;
+  }
 }
 
 // @freezed

@@ -2,7 +2,7 @@ import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
-import 'package:app/src/features/home/presentation/entities_list_section.dart';
+import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
@@ -97,20 +97,37 @@ class EntitiesListSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EntitiesGridLayout(
-      itemCount: 3,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, __) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.p4,
-            horizontal: Sizes.p16,
+    return Column(
+      spacing: Sizes.p4,
+      children: [
+        Skeletonizer(
+          enabled: true,
+          child: SectionHeader(
+            startWidget: Bone.text(
+              words: 1,
+              style: context.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            endWidget: Bone.icon(),
           ),
-          child: EntityCardSkeleton(useCard: false),
-        );
-      },
-      emptyMessage: NoEntityFoundException().message,
+        ),
+        EntitiesGridLayout(
+          itemCount: 3,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (_, __) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.p4,
+                horizontal: Sizes.p16,
+              ),
+              child: EntityCardSkeleton(useCard: false),
+            );
+          },
+          emptyMessage: NoEntityFoundException().message,
+        ),
+      ],
     );
   }
 }

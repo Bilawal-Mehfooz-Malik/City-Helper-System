@@ -17,8 +17,10 @@ class FilterController extends _$FilterController {
     };
   }
 
+  bool get isFood => state is FoodFilter;
   bool get isResidence => state is ResidenceFilter;
 
+  FoodFilter? get asFood => state is FoodFilter ? state as FoodFilter : null;
   ResidenceFilter? get asResidence =>
       state is ResidenceFilter ? state as ResidenceFilter : null;
 
@@ -57,7 +59,6 @@ class FilterController extends _$FilterController {
       EntityFilter current => current.copyWith(
         isOpen: isOpen,
         ratingSort: ratingSort,
-        genderPref: genderPref,
       ),
     };
   }

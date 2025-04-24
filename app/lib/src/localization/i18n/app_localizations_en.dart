@@ -124,4 +124,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applyFiltersButton => 'Apply Filters';
+
+  @override
+  String get open => 'open';
+
+  @override
+  String get close => 'close';
 }

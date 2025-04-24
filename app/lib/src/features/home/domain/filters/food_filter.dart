@@ -2,17 +2,16 @@ import 'package:app/src/features/home/domain/filters/entity_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
 class FoodFilter extends EntityFilter {
+  final GenderPreference genderPref;
   const FoodFilter({
-    super.isOpen = false,
-    super.ratingSort = SortOrder.none,
-    super.genderPref = GenderPreference.any,
+    super.isOpen,
+    super.ratingSort,
+    this.genderPref = GenderPreference.any,
   });
 
   @override
-  FoodFilter copyWith({
+  EntityFilter copyWith({
     bool? isOpen,
-    bool? isFurnished,
-    SortOrder? priceSort,
     SortOrder? ratingSort,
     GenderPreference? genderPref,
   }) {

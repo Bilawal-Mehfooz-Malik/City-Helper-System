@@ -185,7 +185,7 @@ class _WatchPopularEntitiesProviderElement
       (origin as WatchPopularEntitiesProvider).subcategoryId;
 }
 
-String _$watchEntitiesHash() => r'5a428c58171a6e44cb229a48af56f68346fc2e34';
+String _$watchEntitiesHash() => r'fc0e66f9d94a29cc39386a112a2ae7d572dceef9';
 
 /// See also [watchEntities].
 @ProviderFor(watchEntities)

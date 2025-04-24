@@ -4,28 +4,29 @@ import 'package:app/src/features/home/domain/filters/entity_filter.dart';
 class ResidenceFilter extends EntityFilter {
   final bool isFurnished;
   final SortOrder priceSort;
+  final GenderPreference genderPref;
 
   const ResidenceFilter({
-    super.isOpen = false,
-    super.ratingSort = SortOrder.none,
-    super.genderPref = GenderPreference.any,
+    super.isOpen,
+    super.ratingSort,
     this.isFurnished = false,
     this.priceSort = SortOrder.none,
+    this.genderPref = GenderPreference.any,
   });
 
   @override
   ResidenceFilter copyWith({
     bool? isOpen,
+    SortOrder? ratingSort,
     bool? isFurnished,
     SortOrder? priceSort,
-    SortOrder? ratingSort,
     GenderPreference? genderPref,
   }) {
     return ResidenceFilter(
       isOpen: isOpen ?? this.isOpen,
+      ratingSort: ratingSort ?? this.ratingSort,
       isFurnished: isFurnished ?? this.isFurnished,
       priceSort: priceSort ?? this.priceSort,
-      ratingSort: ratingSort ?? this.ratingSort,
       genderPref: genderPref ?? this.genderPref,
     );
   }

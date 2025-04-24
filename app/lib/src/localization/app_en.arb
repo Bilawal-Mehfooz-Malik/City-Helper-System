@@ -82,5 +82,9 @@
   "resetButton": "Reset",
   "@resetButton": {},
   "applyFiltersButton": "Apply Filters",
-  "@applyFiltersButton": {}
+  "@applyFiltersButton": {},
+  "open":"open",
+  "@open": {},
+  "close":"close",
+  "@close": {}
 }

@@ -11,10 +11,10 @@ import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 
 class EntityCard extends StatelessWidget {
-  const EntityCard({super.key, required this.entity, this.useElipsis = true});
+  const EntityCard({super.key, required this.entity, this.smallScreen = true});
 
   final Entity entity;
-  final bool useElipsis;
+  final bool smallScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +32,20 @@ class EntityCard extends StatelessWidget {
           alignment: Alignment.bottomLeft,
           children: [
             CustomImage(
-              borderRadius: borderRadius,
+              borderRadius:
+                  smallScreen ? borderRadius : BorderRadius.all(radius),
               imageUrl: entity.coverImageUrl,
             ),
-            OpenIndicator(),
+            Padding(
+              padding:
+                  smallScreen
+                      ? EdgeInsets.zero
+                      : EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+              child:
+                  entity.isEntityOpen()
+                      ? OpenIndicator(allBorders: !smallScreen)
+                      : CloseIndicator(allBorders: !smallScreen),
+            ),
           ],
         ),
 
@@ -45,12 +55,12 @@ class EntityCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ItemTitleSection(entity: entity, useElipsis: useElipsis),
+              ItemTitleSection(entity: entity, useElipsis: smallScreen),
               Text(
                 '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} '
                     .hardcoded,
                 style: context.textTheme.labelLarge,
-                overflow: useElipsis ? TextOverflow.ellipsis : null,
+                overflow: smallScreen ? TextOverflow.ellipsis : null,
               ),
 
               if (isResidence && residence != null)
@@ -60,7 +70,7 @@ class EntityCard extends StatelessWidget {
                   style: context.textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
-                  overflow: useElipsis ? TextOverflow.ellipsis : null,
+                  overflow: smallScreen ? TextOverflow.ellipsis : null,
                 )
               else
                 const SizedBox.shrink(),

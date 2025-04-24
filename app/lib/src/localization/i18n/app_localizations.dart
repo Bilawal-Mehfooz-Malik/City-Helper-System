@@ -326,6 +326,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply Filters'**
   String get applyFiltersButton;
+
+  /// No description provided for @open.
+  ///
+  /// In en, this message translates to:
+  /// **'open'**
+  String get open;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'close'**
+  String get close;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
