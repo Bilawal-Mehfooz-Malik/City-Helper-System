@@ -18,8 +18,8 @@ lib/
 ```
 
 ## Prerequisites
-- Flutter SDK (3.24.4)
-- Dart SDK (3.5.4)
+- Flutter SDK (3.29.0)
+- Dart SDK (3.7.0)
 - Google Maps API key
 
 ## Setup
