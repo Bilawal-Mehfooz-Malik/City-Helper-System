@@ -12,6 +12,9 @@ final List<SubCategory> testSubCategories = [
   SubCategory(id: 6, name: "Restaurants", categoryId: 2),
   SubCategory(id: 7, name: "Cafes", categoryId: 2),
   SubCategory(id: 8, name: "Fast Food", categoryId: 2),
-  SubCategory(id: 9, name: "Takeaways", categoryId: 2),
-  SubCategory(id: 10, name: "Messes", categoryId: 2),
+  SubCategory(id: 9, name: "Dhabas", categoryId: 2),
+  SubCategory(id: 10, name: "Street Food", categoryId: 2),
+  SubCategory(id: 11, name: "Messes", categoryId: 2),
+  SubCategory(id: 12, name: "Ice Cream & Desserts", categoryId: 2),
+  SubCategory(id: 13, name: "Bakeries", categoryId: 2),
 ];
