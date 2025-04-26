@@ -30,8 +30,9 @@ class GoldenRobot {
       ),
     );
 
-    final bytes =
-        Future<ByteData>.value(iconFont.readAsBytesSync().buffer.asByteData());
+    final bytes = Future<ByteData>.value(
+      iconFont.readAsBytesSync().buffer.asByteData(),
+    );
 
     final fontLoader = FontLoader('MaterialIcons')..addFont(bytes);
     await fontLoader.load();

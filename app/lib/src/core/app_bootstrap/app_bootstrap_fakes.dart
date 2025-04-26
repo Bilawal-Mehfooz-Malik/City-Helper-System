@@ -14,6 +14,8 @@ import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.da
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+import 'package:app/src/features/startup/presentation/controllers/google_map_controller.dart';
+import 'package:app/src/features/startup/presentation/startup_content/google_map_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
@@ -33,7 +35,9 @@ extension AppBootstrapFakes on AppBootStrap {
           userLocationRepository,
         ),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
-
+        googleMapControllerProvider.overrideWithValue(
+          (latLng) => FakeGoogleMapWidget(latLng: latLng),
+        ),
         categoriesRepositoryProvider.overrideWithValue(categoryRepository),
         subCategoriesRepositoryProvider.overrideWithValue(
           subCategoryRepository,

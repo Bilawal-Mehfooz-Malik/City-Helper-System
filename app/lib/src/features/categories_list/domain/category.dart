@@ -7,7 +7,6 @@ class Category {
   final String description;
   final IconData icon;
   final int sortOrder;
-  final DateTime createdAt;
 
   Category({
     required this.id,
@@ -15,6 +14,5 @@ class Category {
     required this.description,
     required this.icon,
     required this.sortOrder,
-    required this.createdAt,
   });
 }

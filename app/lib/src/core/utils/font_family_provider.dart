@@ -7,5 +7,6 @@ part 'font_family_provider.g.dart';
 
 @riverpod
 String fontFamily(Ref ref) {
-  return 'inter'.hardcoded;
+  // inter
+  return 'Roboto'.hardcoded;
 }

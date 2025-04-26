@@ -31,7 +31,7 @@ class EntitiesGridLayout extends StatelessWidget {
     if (itemCount == 0) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: Sizes.p16),
-        child: CenteredMessageWidget(emptyMessage),
+        child: CenteredMessageWidget(message: emptyMessage),
       );
     }
 

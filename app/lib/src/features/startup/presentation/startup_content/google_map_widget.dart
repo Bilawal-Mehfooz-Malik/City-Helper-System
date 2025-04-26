@@ -1,19 +1,32 @@
 import 'dart:async';
 
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/features/startup/presentation/controllers/google_map_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class GoogleMapWidget extends ConsumerStatefulWidget {
+class GoogleMapWidget extends ConsumerWidget {
   final LatLng latLng;
   const GoogleMapWidget({super.key, required this.latLng});
 
   @override
-  ConsumerState<GoogleMapWidget> createState() => _GoogleMapWidgetState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final builder = ref.watch(googleMapControllerProvider);
+    return builder(latLng);
+  }
 }
 
-class _GoogleMapWidgetState extends ConsumerState<GoogleMapWidget> {
+class RealGoogleMapWidget extends ConsumerStatefulWidget {
+  final LatLng latLng;
+  const RealGoogleMapWidget({super.key, required this.latLng});
+
+  @override
+  ConsumerState<RealGoogleMapWidget> createState() =>
+      _RealGoogleMapWidgetState();
+}
+
+class _RealGoogleMapWidgetState extends ConsumerState<RealGoogleMapWidget> {
   final _zoom = 15.0;
   final _mapType = MapType.normal;
   late CameraPosition _cameraPosition;
@@ -33,13 +46,8 @@ class _GoogleMapWidgetState extends ConsumerState<GoogleMapWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant GoogleMapWidget oldWidget) {
+  void didUpdateWidget(covariant RealGoogleMapWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // * When the location changes, update the map.
-    // * For example, if the user picks a location using [GetCurrent]
-    // * and then clicks [FromMap] to select a new location,
-    // * the [widget.location] value will change.
-    // * Therefore, we need to update the [GoogleMapWidget] to show the new location.
     if (oldWidget.latLng != widget.latLng) {
       _cameraPosition = CameraPosition(zoom: _zoom, target: widget.latLng);
       _moveCameraToNewLocation();
@@ -61,6 +69,24 @@ class _GoogleMapWidgetState extends ConsumerState<GoogleMapWidget> {
             icon: BitmapDescriptor.defaultMarker,
           ),
         },
+      ),
+    );
+  }
+}
+
+class FakeGoogleMapWidget extends StatelessWidget {
+  final LatLng latLng;
+  const FakeGoogleMapWidget({super.key, required this.latLng});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(Sizes.p8),
+      child: Container(
+        color: const Color.fromARGB(255, 183, 223, 255),
+        child: Center(
+          child: Text('Fake Map, at (${latLng.latitude}, ${latLng.longitude})'),
+        ),
       ),
     );
   }

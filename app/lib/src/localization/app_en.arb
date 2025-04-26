@@ -38,6 +38,10 @@
   "@explore": {},
   "selectCategoryBody":"Select a category",
   "@selectCategoryBody": {},
+  "somethingWentWrong":"Something went wrong!",
+  "@somethingWentWrong": {},
+  "refresh":"Refresh",
+  "@refresh": {},
 
   "popular":"Popular",
   "@popular": {},

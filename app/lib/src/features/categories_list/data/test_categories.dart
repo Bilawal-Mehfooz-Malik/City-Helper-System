@@ -8,7 +8,6 @@ final List<Category> testCategories = [
     description: 'Includes hotels, rooms, flats, hostel and houses, etc.',
     icon: Icons.home,
     sortOrder: 1,
-    createdAt: DateTime(2024, 2, 5), // Fixed Date
   ),
   Category(
     id: 2,
@@ -17,7 +16,6 @@ final List<Category> testCategories = [
         'Includes resturants, cafes, messes, fast food and takeways, etc.',
     icon: Icons.restaurant,
     sortOrder: 2,
-    createdAt: DateTime(2024, 2, 5),
   ),
   // Category(
   //   id: 3,

@@ -1,7 +1,6 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/category_card.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -38,13 +37,10 @@ class CategorySkeletonList extends StatelessWidget {
               isListTile: useListTile,
               category: Category(
                 id: 1,
-                name: 'Lorem Ipsum'.hardcoded,
-                description:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-                        .hardcoded,
+                name: BoneMock.name,
+                description: BoneMock.words(8),
                 icon: Icons.category,
                 sortOrder: 1,
-                createdAt: DateTime.now(),
               ),
             ),
       ),

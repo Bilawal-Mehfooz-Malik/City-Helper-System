@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
@@ -50,12 +51,6 @@ class FakeCategoriesRepository implements CategoriesRepository {
 
   /// Private method to get a category by ID safely
   static Category? _getCategory(List<Category> categories, int id) {
-    // * This can also be implemented with [firstWhereOrNull] from this package:
-    // * https://api.flutter.dev/flutter/package-collection_collection/IterableExtension/firstWhereOrNull.html
-    try {
-      return categories.firstWhere((category) => category.id == id);
-    } catch (e) {
-      return null;
-    }
+    return categories.firstWhereOrNull((category) => category.id == id);
   }
 }

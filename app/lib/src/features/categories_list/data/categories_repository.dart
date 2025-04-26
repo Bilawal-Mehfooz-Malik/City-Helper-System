@@ -1,7 +1,6 @@
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'categories_repository.g.dart';
 
@@ -39,6 +38,7 @@ Stream<List<Category>> categoriesListStream(Ref ref) {
 @riverpod
 Future<List<Category>> categoriesListFuture(Ref ref) {
   final categoriesRepository = ref.watch(categoriesRepositoryProvider);
+  // throw Exception('Error fetching categories list');
   return categoriesRepository.fetchCategoriesList();
 }
 

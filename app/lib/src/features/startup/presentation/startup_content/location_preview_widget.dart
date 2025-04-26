@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
@@ -22,15 +22,14 @@ class LocationPreviewWidget extends ConsumerWidget {
           border: Border.all(),
         ),
         child: Center(
-          child: userLocationValue.maybeWhen(
-            skipError: true,
-            loading: () => const Center(child: CenteredProgressIndicator()),
+          child: AsyncValueWidget(
+            value: userLocationValue,
+            error: (_, __) => _textWidget(context),
             data:
                 (location) =>
                     location == null
                         ? _textWidget(context)
                         : GoogleMapWidget(latLng: location),
-            orElse: () => _textWidget(context),
           ),
         ),
       ),

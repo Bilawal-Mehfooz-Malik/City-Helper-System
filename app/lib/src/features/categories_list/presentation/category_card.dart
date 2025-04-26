@@ -1,11 +1,13 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// A responsive card widget to display a category in grid or list tile format.
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends ConsumerWidget {
   const CategoryCard({
     super.key,
     required this.category,
@@ -18,14 +20,20 @@ class CategoryCard extends StatelessWidget {
   final bool isListTile;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCategoryId = ref.watch(selectedCategoryIdControllerProvider);
+    final isTileSelected = selectedCategoryId == category.id;
+
     if (isListTile) {
       return ListTile(
         onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: Sizes.p16,
-          vertical: Sizes.p8,
+        selected: isTileSelected,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.p8),
         ),
+        contentPadding: const EdgeInsets.all(Sizes.p8),
+        selectedColor: context.colorScheme.onPrimaryContainer,
+        selectedTileColor: context.colorScheme.primaryContainer.withAlpha(77),
         leading: CircleAvatar(radius: Sizes.p24, child: Icon(category.icon)),
         title: CategoryName(title: category.name),
         subtitle: CategoryDescription(description: category.description),
@@ -96,7 +104,12 @@ class CategoryName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: context.textTheme.titleMedium);
+    return Text(
+      title,
+      style: context.textTheme.titleMedium!.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }
 
@@ -107,6 +120,6 @@ class CategoryDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(description, style: context.textTheme.labelMedium);
+    return Text(description, style: context.textTheme.labelLarge);
   }
 }

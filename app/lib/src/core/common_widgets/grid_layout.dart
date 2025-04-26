@@ -31,7 +31,7 @@ class GridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
-      return CenteredMessageWidget(emptyMessage);
+      return CenteredMessageWidget(message: emptyMessage);
     }
 
     return LayoutBuilder(

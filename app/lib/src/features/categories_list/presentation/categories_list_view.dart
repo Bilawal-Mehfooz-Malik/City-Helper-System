@@ -5,7 +5,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/category_card.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class CategoriesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (categories.isEmpty) {
-      return CenteredMessageWidget(NoCategoryFoundException().message);
+      return CenteredMessageWidget(message: NoCategoryFoundException().message);
     }
     return ListView.builder(
       shrinkWrap: true,
@@ -61,11 +61,11 @@ class CategoriesListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final category = categories[index];
         return Consumer(
-          builder: (context, ref, _) {
+          builder: (ctx, ref, _) {
             return CategoryCard(
               category: category,
               isListTile: useListTile,
-              onTap: () => _onTap(context, ref, category.id),
+              onTap: () => _onTap(ctx, ref, category.id),
             );
           },
         );

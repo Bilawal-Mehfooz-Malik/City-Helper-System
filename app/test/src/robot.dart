@@ -1,9 +1,13 @@
 import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
 import 'package:app/src/core/app_bootstrap/app_bootstrap_fakes.dart';
 import 'package:app/src/app.dart';
+import 'package:app/src/localization/i18n/app_localizations.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import 'features/categories_list/categories_robot.dart';
 import 'features/startup/startup_robot.dart';
@@ -20,40 +24,87 @@ class Robot {
   final StartupRobot startupRobot;
   final CategoriesRobot categoriesRobot;
 
+  // Screen Sizes
+  static const _mobileSize = Size(350, 600);
+  static const _tabletSize = Size(640, 800);
+  static const _desktopSize = Size(1000, 1000);
+
+  // Entry Point with Real App
   Future<void> pumpMyApp() async {
-    // * Entry pont of App
-    final appBootStrap = AppBootStrap();
-    final container = appBootStrap.createFakeProviderContainer();
-    final root = UncontrolledProviderScope(
-      container: container,
-      child: const MyApp(),
-    );
+    final container = AppBootStrap().createFakeProviderContainer();
+    await _pumpAppWithContainer(const MyApp(), container);
+  }
+
+  // Entry Point with Fake App (custom home + router)
+  Future<void> pumpMyAppFake(Widget home, GoRouter router) async {
+    final container = AppBootStrap().createFakeProviderContainer();
+    final fakeApp = MyAppFake(home: home, router: router);
+    await _pumpAppWithContainer(fakeApp, container);
+  }
+
+  // Internal shared pumping logic
+  Future<void> _pumpAppWithContainer(
+    Widget app,
+    ProviderContainer container,
+  ) async {
+    final root = UncontrolledProviderScope(container: container, child: app);
     await tester.pumpWidget(root);
     await tester.pumpAndSettle();
   }
 
-  Future<void> pumpAppWithScreenSize(Size screenSize) async {
+  // Set screen size before pumping app
+  Future<void> _pumpWithScreenSize(
+    Size screenSize,
+    Future<void> Function() pumpApp,
+  ) async {
     tester.view.physicalSize = screenSize;
     tester.view.devicePixelRatio = 1.0;
-    addTearDown(
-      () => {
-        tester.view.resetPhysicalSize(),
-        tester.view.resetDevicePixelRatio(),
-      },
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await pumpApp();
+  }
+
+  // Real app with screen sizes
+  Future<void> pumpAppWithMobileScreen() async =>
+      _pumpWithScreenSize(_mobileSize, pumpMyApp);
+  Future<void> pumpAppWithTabletScreen() async =>
+      _pumpWithScreenSize(_tabletSize, pumpMyApp);
+  Future<void> pumpAppWithDesktopScreen() async =>
+      _pumpWithScreenSize(_desktopSize, pumpMyApp);
+
+  // Fake app with screen sizes
+  Future<void> pumpMyAppFakeWithMobileScreen(Widget home, GoRouter router) =>
+      _pumpWithScreenSize(_mobileSize, () => pumpMyAppFake(home, router));
+
+  Future<void> pumpMyAppFakeWithTabletScreen(Widget home, GoRouter router) =>
+      _pumpWithScreenSize(_tabletSize, () => pumpMyAppFake(home, router));
+
+  Future<void> pumpMyAppFakeWithDesktopScreen(Widget home, GoRouter router) =>
+      _pumpWithScreenSize(_desktopSize, () => pumpMyAppFake(home, router));
+}
+
+class MyAppFake extends ConsumerWidget {
+  const MyAppFake({super.key, required this.home, required this.router});
+
+  final Widget home;
+  final GoRouter router;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
+      routerConfig: router,
+      restorationScopeId: 'app',
+      debugShowCheckedModeBanner: false,
+      supportedLocales: const [Locale('en', '')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      onGenerateTitle: (context) => context.loc.appTitle,
     );
-    await pumpMyApp();
-  }
-
-  // Helper methods
-  Future<void> pumpAppWithMobileScreen() async {
-    await pumpAppWithScreenSize(Size(350, 600));
-  }
-
-  Future<void> pumpAppWithTabletScreen() async {
-    await pumpAppWithScreenSize(Size(640, 800));
-  }
-
-  Future<void> pumpAppWithDesktopScreen() async {
-    await pumpAppWithScreenSize(Size(1000, 1000));
   }
 }

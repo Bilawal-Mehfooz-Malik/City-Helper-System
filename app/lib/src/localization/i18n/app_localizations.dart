@@ -195,6 +195,18 @@ abstract class AppLocalizations {
   /// **'Select a category'**
   String get selectCategoryBody;
 
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong!'**
+  String get somethingWentWrong;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
   /// No description provided for @popular.
   ///
   /// In en, this message translates to:

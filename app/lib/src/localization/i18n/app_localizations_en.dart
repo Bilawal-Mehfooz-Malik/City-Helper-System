@@ -60,6 +60,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectCategoryBody => 'Select a category';
 
   @override
+  String get somethingWentWrong => 'Something went wrong!';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
   String get popular => 'Popular';
 
   @override
