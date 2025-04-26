@@ -5,8 +5,8 @@ import 'package:app/src/core/common_widgets/error_filled_button.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
-import 'package:app/src/features/categories_list/presentation/categories_list_view.dart';
-import 'package:app/src/features/categories_list/presentation/category_skeleton_list.dart';
+import 'package:app/src/features/categories_list/presentation/widgets/categories_list_view.dart';
+import 'package:app/src/features/categories_list/presentation/widgets/category_skeleton_list.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/categories_end_content.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/categories_start_content.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -70,21 +70,21 @@ class SmallScreenContent extends StatelessWidget {
       loading: const CategorySkeletonList(usePadding: true),
       error:
           (error, _) => CenteredMessageWidget(
+            icon: Icons.error_outline,
             title: context.loc.somethingWentWrong,
             message: error.toString(),
-            icon: Icons.error_outline,
             useResponsiveDesign: true,
             actions: ErrorFilledButton(
+              useMaxSize: true,
               text: context.loc.refresh,
               onPressed: onRefresh,
-              useMaxSize: true,
             ),
           ),
       data:
           (categories) => CategoriesListView(
-            categories: categories,
-            useListTile: false,
             usePadding: true,
+            useListTile: false,
+            categories: categories,
           ),
     );
   }
@@ -107,10 +107,10 @@ class LargeScreenContent extends StatelessWidget {
           (error, _) => MessageScreen(
             showTitle: true,
             showAppBar: true,
+            appBarTitle: context.loc.categories,
+            icon: Icons.error_outline,
             title: context.loc.somethingWentWrong,
             message: error.toString(),
-            icon: Icons.error_outline,
-            appBarTitle: context.loc.categories,
             actions: ErrorFilledButton(
               text: context.loc.refresh,
               onPressed: onRefresh,
