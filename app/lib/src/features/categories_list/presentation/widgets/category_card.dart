@@ -1,7 +1,7 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
-import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

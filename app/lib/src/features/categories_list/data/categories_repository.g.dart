@@ -46,7 +46,7 @@ final categoriesListStreamProvider =
 // ignore: unused_element
 typedef CategoriesListStreamRef = AutoDisposeStreamProviderRef<List<Category>>;
 String _$categoriesListFutureHash() =>
-    r'8707417c705e3d731254bcbfd7760ee84bbd68f0';
+    r'4ad55643af4b21d77fc125a5562ac4aaa3c19955';
 
 /// See also [categoriesListFuture].
 @ProviderFor(categoriesListFuture)
