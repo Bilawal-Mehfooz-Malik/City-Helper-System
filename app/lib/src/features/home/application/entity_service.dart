@@ -96,7 +96,7 @@ Stream<List<Entity>> watchEntities(
       .watchEntitiesList(categoryId, subcategoryId);
 
   // 2. Watch the filter state
-  final filter = ref.watch(filterControllerProvider(category: categoryId));
+  final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
 
   // 3. Combine stream and filter, applying filtering and sorting
   return entitiesStream.map((entities) {

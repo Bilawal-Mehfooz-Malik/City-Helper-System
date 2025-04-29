@@ -20,23 +20,23 @@ class FilterDialog extends ConsumerStatefulWidget {
 }
 
 class _FilterDialogState extends ConsumerState<FilterDialog> {
-  late EntityFilter localFilter;
+  late EntityFilter _localFilter;
 
   @override
   void initState() {
     super.initState();
-    localFilter = ref.read(
-      filterControllerProvider(category: widget.categoryId),
+    _localFilter = ref.read(
+      filterControllerProvider(categoryId: widget.categoryId),
     );
   }
 
   void setDraftFilter(EntityFilter newFilter) {
-    setState(() => localFilter = newFilter);
+    setState(() => _localFilter = newFilter);
   }
 
   void resetDraftFilter() {
     setState(() {
-      localFilter = switch (widget.categoryId) {
+      _localFilter = switch (widget.categoryId) {
         1 => ResidenceFilter(),
         2 => FoodFilter(),
         _ => EntityFilter(),
@@ -47,7 +47,7 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(
-      filterControllerProvider(category: widget.categoryId).notifier,
+      filterControllerProvider(categoryId: widget.categoryId).notifier,
     );
 
     return AlertDialog(
@@ -55,7 +55,7 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
       content: SingleChildScrollView(
         child: FilterDialogContent(
           controller: controller,
-          localFilter: localFilter,
+          localFilter: _localFilter,
           onFilterChanged: setDraftFilter,
         ),
       ),
@@ -66,7 +66,7 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
         ),
         PrimaryButton(
           onPressed: () {
-            controller.applyFilter(localFilter);
+            controller.applyFilter(_localFilter);
             Navigator.of(context).pop();
           },
           text: context.loc.applyFiltersButton,

@@ -26,12 +26,11 @@ class AsyncValueWidget<T> extends StatelessWidget {
     if (value.isLoading) {
       return loading ?? const CenteredProgressIndicator();
     } else if (value.hasError) {
-      return Padding(
-        padding: errorPadding,
-        child:
-            error?.call(value.error!, value.stackTrace!) ??
-            CenteredMessageWidget(message: value.error.toString()),
-      );
+      return error?.call(value.error!, value.stackTrace!) ??
+          Padding(
+            padding: errorPadding,
+            child: CenteredMessageWidget(message: value.error.toString()),
+          );
     } else if (value.hasValue) {
       return data(value.value as T);
     } else {

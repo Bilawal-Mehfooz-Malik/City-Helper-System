@@ -119,7 +119,7 @@ class MessageContent extends StatelessWidget {
       children: [
         if (icon != null) ...[
           Icon(icon, size: 80, color: context.colorScheme.error),
-          gapH24,
+          gapH32,
         ],
         if (title != null) ...[
           Text(
@@ -129,14 +129,14 @@ class MessageContent extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          gapH24,
+          gapH12,
         ],
         Text(
           message,
           style: context.textTheme.bodyLarge,
           textAlign: TextAlign.center,
         ),
-        if (actions != null) ...[gapH24, actions!],
+        if (actions != null) ...[gapH32, actions!],
       ],
     );
   }

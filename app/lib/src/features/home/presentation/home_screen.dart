@@ -1,6 +1,7 @@
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/presentation/controllers/combined_error_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
@@ -34,8 +35,17 @@ class HomeScreen extends ConsumerWidget {
                 )
                 : CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
-                      child: HomeSearchBar(showBackButton: showBackButton),
+                    SliverAppBar(
+                      snap: true,
+                      elevation: 0,
+                      floating: true,
+                      titleSpacing: 0,
+                      forceElevated: false,
+                      automaticallyImplyLeading: false,
+                      toolbarHeight: kToolbarHeight + Sizes.p12,
+                      surfaceTintColor: context.theme.scaffoldBackgroundColor,
+                      backgroundColor: context.theme.scaffoldBackgroundColor,
+                      title: HomeSearchBar(showBackButton: showBackButton),
                     ),
                     sliverGapH8,
                     SliverToBoxAdapter(
@@ -67,17 +77,20 @@ class HomeSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Sizes.p16, vertical: Sizes.p4),
-      child: SearchBar(
-        leading:
-            showBackButton
-                ? BackButton()
-                : Padding(
-                  padding: const EdgeInsets.only(left: Sizes.p8),
-                  child: Icon(Icons.search),
-                ),
-        elevation: WidgetStatePropertyAll(2),
-        hintText: 'Search...'.hardcoded,
+      padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
+      child: SizedBox(
+        width: double.infinity,
+        child: SearchBar(
+          leading:
+              showBackButton
+                  ? BackButton()
+                  : Padding(
+                    padding: const EdgeInsets.only(left: Sizes.p8),
+                    child: Icon(Icons.search),
+                  ),
+          elevation: WidgetStatePropertyAll(2),
+          hintText: 'Search...'.hardcoded,
+        ),
       ),
     );
   }

@@ -6,7 +6,7 @@ part of 'filter_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterControllerHash() => r'f2ebc737454d9a78e8e5db7102c2160136ccf90f';
+String _$filterControllerHash() => r'f2b87353d927cf492b3321d541e80577e424c2c6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,9 +30,9 @@ class _SystemHash {
 }
 
 abstract class _$FilterController extends BuildlessNotifier<EntityFilter> {
-  late final int category;
+  late final int categoryId;
 
-  EntityFilter build({required int category});
+  EntityFilter build({required int categoryId});
 }
 
 /// See also [FilterController].
@@ -45,15 +45,15 @@ class FilterControllerFamily extends Family<EntityFilter> {
   const FilterControllerFamily();
 
   /// See also [FilterController].
-  FilterControllerProvider call({required int category}) {
-    return FilterControllerProvider(category: category);
+  FilterControllerProvider call({required int categoryId}) {
+    return FilterControllerProvider(categoryId: categoryId);
   }
 
   @override
   FilterControllerProvider getProviderOverride(
     covariant FilterControllerProvider provider,
   ) {
-    return call(category: provider.category);
+    return call(categoryId: provider.categoryId);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -75,9 +75,9 @@ class FilterControllerFamily extends Family<EntityFilter> {
 class FilterControllerProvider
     extends NotifierProviderImpl<FilterController, EntityFilter> {
   /// See also [FilterController].
-  FilterControllerProvider({required int category})
+  FilterControllerProvider({required int categoryId})
     : this._internal(
-        () => FilterController()..category = category,
+        () => FilterController()..categoryId = categoryId,
         from: filterControllerProvider,
         name: r'filterControllerProvider',
         debugGetCreateSourceHash:
@@ -87,7 +87,7 @@ class FilterControllerProvider
         dependencies: FilterControllerFamily._dependencies,
         allTransitiveDependencies:
             FilterControllerFamily._allTransitiveDependencies,
-        category: category,
+        categoryId: categoryId,
       );
 
   FilterControllerProvider._internal(
@@ -97,14 +97,14 @@ class FilterControllerProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.category,
+    required this.categoryId,
   }) : super.internal();
 
-  final int category;
+  final int categoryId;
 
   @override
   EntityFilter runNotifierBuild(covariant FilterController notifier) {
-    return notifier.build(category: category);
+    return notifier.build(categoryId: categoryId);
   }
 
   @override
@@ -112,13 +112,13 @@ class FilterControllerProvider
     return ProviderOverride(
       origin: this,
       override: FilterControllerProvider._internal(
-        () => create()..category = category,
+        () => create()..categoryId = categoryId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        category: category,
+        categoryId: categoryId,
       ),
     );
   }
@@ -130,13 +130,13 @@ class FilterControllerProvider
 
   @override
   bool operator ==(Object other) {
-    return other is FilterControllerProvider && other.category == category;
+    return other is FilterControllerProvider && other.categoryId == categoryId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, category.hashCode);
+    hash = _SystemHash.combine(hash, categoryId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -145,8 +145,8 @@ class FilterControllerProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin FilterControllerRef on NotifierProviderRef<EntityFilter> {
-  /// The parameter `category` of this provider.
-  int get category;
+  /// The parameter `categoryId` of this provider.
+  int get categoryId;
 }
 
 class _FilterControllerProviderElement
@@ -155,7 +155,7 @@ class _FilterControllerProviderElement
   _FilterControllerProviderElement(super.provider);
 
   @override
-  int get category => (origin as FilterControllerProvider).category;
+  int get categoryId => (origin as FilterControllerProvider).categoryId;
 }
 
 // ignore_for_file: type=lint

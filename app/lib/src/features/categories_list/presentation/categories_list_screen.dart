@@ -125,7 +125,7 @@ class LargeScreenContent extends StatelessWidget {
       data:
           (categories) => DraggableTwoColumnLayout(
             startContent: CategoriesStartContent(categories: categories),
-            endContent: CategoriesEndContent(),
+            endContent: CategoriesEndContent(showBackButton: false),
           ),
     );
   }

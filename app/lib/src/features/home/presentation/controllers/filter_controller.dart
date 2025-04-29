@@ -9,8 +9,8 @@ part 'filter_controller.g.dart';
 @Riverpod(keepAlive: true)
 class FilterController extends _$FilterController {
   @override
-  EntityFilter build({required CategoryId category}) {
-    return switch (category) {
+  EntityFilter build({required CategoryId categoryId}) {
+    return switch (categoryId) {
       1 => ResidenceFilter(),
       2 => FoodFilter(),
       _ => EntityFilter(),
