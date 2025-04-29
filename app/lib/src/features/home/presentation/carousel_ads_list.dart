@@ -51,7 +51,7 @@ class CarouselAdsList extends ConsumerWidget {
             );
           },
         ),
-        gapH8,
+        gapH16,
       ],
     );
   }

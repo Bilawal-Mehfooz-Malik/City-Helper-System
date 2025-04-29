@@ -13,12 +13,12 @@ void main() {
     r.categoriesRobot.expectHomeScreen();
   });
 
-  // testWidgets('Categories List Screen (Desktop Screen)', (tester) async {
-  //   final r = Robot(tester);
-  //   final router = r.categoriesRobot.router;
-  //   await r.pumpMyAppFakeWithDesktopScreen(CategoriesListScreen(), router);
-  //   r.categoriesRobot.expectCategoriesScreen();
-  //   await r.categoriesRobot.tapCategory();
-  //   // r.categoriesRobot.expectHomeScreen();
-  // });
+  testWidgets('Categories List Screen (Desktop Screen)', (tester) async {
+    final r = Robot(tester);
+    final router = r.categoriesRobot.router;
+    await r.pumpMyAppFakeWithDesktopScreen(CategoriesListScreen(), router);
+    r.categoriesRobot.expectCategoriesScreen();
+    await r.categoriesRobot.tapCategory();
+    r.categoriesRobot.expectHomeScreen();
+  });
 }

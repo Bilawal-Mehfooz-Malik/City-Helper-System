@@ -1,9 +1,11 @@
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
@@ -17,56 +19,50 @@ class EntitiesListSection extends ConsumerWidget {
   final CategoryId categoryId;
   const EntitiesListSection({super.key, required this.categoryId});
 
+  void _showFilterDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (_) => FilterDialog(categoryId: categoryId),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final subCategory = ref.watch(subcategoryControllerProvider);
     final entitiesListValue = ref.watch(
       WatchEntitiesProvider(categoryId, subCategory),
     );
-    return entitiesListValue.maybeWhen(
-      loading: () => const EntitiesListSkeleton(),
+    return AsyncValueWidget<List<Entity>>(
+      value: entitiesListValue,
+      loading: const EntitiesListSkeleton(),
+      error: (_, __) => const SizedBox.shrink(),
       data:
-          (entities) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-            child: Column(
-              spacing: Sizes.p4,
-              children: [
-                SectionHeader(
-                  startWidget: Text(
-                    context.loc.all,
-                    style: context.textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  endWidget: IconButton(
-                    icon: const Icon(Icons.filter_list_alt),
-                    onPressed: () {
-                      showDialog<void>(
-                        context: context,
-                        builder: (_) => FilterDialog(categoryId: categoryId),
-                      );
-                    },
+          (entities) => Column(
+            spacing: Sizes.p4,
+            children: [
+              SectionHeader(
+                startWidget: Text(
+                  context.loc.all,
+                  style: context.textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                EntitiesGridLayout(
-                  shrinkWrap: true,
-                  itemCount: entities.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(Sizes.p8),
-                      child: EntityCard(
-                        entity: entities[index],
-                        smallScreen: false,
-                      ),
-                    );
-                  },
-                  emptyMessage: NoEntityFoundException().message,
+                endWidget: IconButton(
+                  icon: const Icon(Icons.filter_list_alt),
+                  onPressed: () => _showFilterDialog(context),
                 ),
-              ],
-            ),
+              ),
+              EntitiesGridLayout(
+                shrinkWrap: true,
+                itemCount: entities.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder:
+                    (_, index) =>
+                        EntityCard(entity: entities[index], useElipsis: false),
+                emptyMessage: NoEntityFoundException().message,
+              ),
+            ],
           ),
-      orElse: () => const SizedBox.shrink(),
     );
   }
 }

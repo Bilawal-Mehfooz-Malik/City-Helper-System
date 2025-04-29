@@ -13,7 +13,7 @@ class Food extends Entity {
     required super.name,
     required super.cityName,
     required super.sectorName,
-    required super.geoLocation,
+    required super.latLng,
     required super.avgRating,
     required super.totalReviews,
     required super.isPopular,

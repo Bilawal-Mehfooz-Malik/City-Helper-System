@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/common_widgets/draggable_two_column_layout.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
@@ -65,31 +66,28 @@ class SmallScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (categoriesValue.isLoading) {
-      return const CategorySkeletonList(usePadding: true);
-    } else if (categoriesValue.hasError) {
-      final error = categoriesValue.error!;
-      return CenteredMessageWidget(
-        icon: Icons.error_outline,
-        title: context.loc.somethingWentWrong,
-        message: error.toString(),
-        useResponsiveDesign: true,
-        actions: ErrorFilledButton(
-          useMaxSize: true,
-          text: context.loc.refresh,
-          onPressed: onRefresh,
-        ),
-      );
-    } else if (categoriesValue.hasValue) {
-      final categories = categoriesValue.value!;
-      return CategoriesListView(
-        usePadding: true,
-        useListTile: false,
-        categories: categories,
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
+    return AsyncValueWidget<List<Category>>(
+      value: categoriesValue,
+      loading: const CategorySkeletonList(usePadding: true),
+      error:
+          (error, _) => CenteredMessageWidget(
+            icon: Icons.error_outline,
+            title: context.loc.somethingWentWrong,
+            message: error.toString(),
+            useResponsiveDesign: true,
+            actions: ErrorFilledButton(
+              useMaxSize: true,
+              text: context.loc.refresh,
+              onPressed: onRefresh,
+            ),
+          ),
+      data:
+          (categories) => CategoriesListView(
+            usePadding: true,
+            useListTile: false,
+            categories: categories,
+          ),
+    );
   }
 }
 
@@ -105,33 +103,30 @@ class LargeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (categoriesValue.isLoading) {
-      return DraggableTwoColumnLayout(
+    return AsyncValueWidget<List<Category>>(
+      value: categoriesValue,
+      loading: DraggableTwoColumnLayout(
         startContent: CategoriesSkeletonStartContent(),
         endContent: CenteredProgressIndicator(),
-      );
-    } else if (categoriesValue.hasError) {
-      final error = categoriesValue.error!;
-      return MessageScreen(
-        showTitle: true,
-        showAppBar: true,
-        appBarTitle: context.loc.categories,
-        icon: Icons.error_outline,
-        title: context.loc.somethingWentWrong,
-        message: error.toString(),
-        actions: ErrorFilledButton(
-          text: context.loc.refresh,
-          onPressed: onRefresh,
-        ),
-      );
-    } else if (categoriesValue.hasValue) {
-      final categories = categoriesValue.value!;
-      return DraggableTwoColumnLayout(
-        startContent: CategoriesStartContent(categories: categories),
-        endContent: CategoriesEndContent(),
-      );
-    } else {
-      return SizedBox.shrink();
-    }
+      ),
+      error:
+          (error, _) => MessageScreen(
+            showTitle: true,
+            showAppBar: true,
+            appBarTitle: context.loc.categories,
+            icon: Icons.error_outline,
+            title: context.loc.somethingWentWrong,
+            message: error.toString(),
+            actions: ErrorFilledButton(
+              text: context.loc.refresh,
+              onPressed: onRefresh,
+            ),
+          ),
+      data:
+          (categories) => DraggableTwoColumnLayout(
+            startContent: CategoriesStartContent(categories: categories),
+            endContent: CategoriesEndContent(),
+          ),
+    );
   }
 }

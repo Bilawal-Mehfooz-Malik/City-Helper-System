@@ -11,6 +11,9 @@ class EntitiesGridLayout extends StatelessWidget {
     super.key,
     this.physics,
     this.shrinkWrap = false,
+    this.mainAxisSpacing = Sizes.p8,
+    this.crossAxisSpacing = Sizes.p8,
+    this.paddingOutside = const EdgeInsets.symmetric(horizontal: Sizes.p16),
     required this.itemCount,
     required this.itemBuilder,
     required this.emptyMessage,
@@ -25,12 +28,15 @@ class EntitiesGridLayout extends StatelessWidget {
   final bool shrinkWrap;
   final ScrollPhysics? physics;
   final String emptyMessage;
+  final EdgeInsets paddingOutside;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
 
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: Sizes.p16),
+        padding: const EdgeInsets.all(Sizes.p16),
         child: CenteredMessageWidget(message: emptyMessage),
       );
     }
@@ -42,6 +48,9 @@ class EntitiesGridLayout extends StatelessWidget {
         final crossAxisCount = max(1, maxWidth ~/ 250);
 
         return AlignedGridView.count(
+          mainAxisSpacing: mainAxisSpacing,
+          crossAxisSpacing: crossAxisSpacing,
+          padding: paddingOutside,
           physics: physics,
           shrinkWrap: shrinkWrap,
           itemCount: itemCount,

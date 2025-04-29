@@ -5,8 +5,7 @@ import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 
 class OpenIndicator extends StatelessWidget {
-  final bool allBorders;
-  const OpenIndicator({super.key, this.allBorders = false});
+  const OpenIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +13,22 @@ class OpenIndicator extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius:
-            allBorders
-                ? ThemeHelpers.borderRadiusAllRounded()
-                : BorderRadius.only(topRight: ThemeHelpers.borderRadius()),
+        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
       ),
       child: Row(
         spacing: Sizes.p4,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.circle, color: context.colorScheme.primary, size: 14),
-          Text(context.loc.open, style: context.textTheme.bodyMedium),
+          Flexible(
+            child: Icon(
+              Icons.circle,
+              color: context.colorScheme.primary,
+              size: 14,
+            ),
+          ),
+          Flexible(
+            child: Text(context.loc.open, style: context.textTheme.bodyMedium),
+          ),
         ],
       ),
     );
@@ -41,17 +45,22 @@ class CloseIndicator extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius:
-            allBorders
-                ? ThemeHelpers.borderRadiusAllRounded()
-                : BorderRadius.only(topRight: ThemeHelpers.borderRadius()),
+        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
       ),
       child: Row(
         spacing: Sizes.p4,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.circle, color: context.colorScheme.error, size: 14),
-          Text(context.loc.close, style: context.textTheme.bodyMedium),
+          Flexible(
+            child: Icon(
+              Icons.circle,
+              color: context.colorScheme.error,
+              size: 14,
+            ),
+          ),
+          Flexible(
+            child: Text(context.loc.close, style: context.textTheme.bodyMedium),
+          ),
         ],
       ),
     );

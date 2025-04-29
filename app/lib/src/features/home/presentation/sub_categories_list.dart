@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
@@ -24,30 +25,28 @@ class SubCategoriesList extends ConsumerWidget {
       subCategoriesListStreamProvider(categoryId),
     );
 
-    // Show skeleton while loading
-    if (subCategoryValue.isLoading) {
-      return const SubCategorySkeletonList();
-    }
+    return AsyncValueWidget<List<SubCategory>>(
+      value: subCategoryValue,
+      loading: const SubCategorySkeletonList(),
+      error: (error, stackTrace) => SizedBox.shrink(),
+      data: (subCategories) {
+        // Return an empty widget if there are no subcategories
+        if (subCategories.isEmpty) {
+          return const SizedBox.shrink();
+        }
 
-    // Extract the data from the AsyncValue
-    final subCategories = subCategoryValue.value;
-
-    // Return an empty widget if there are no subcategories
-    if (subCategories == null || subCategories.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    // Show the list of subcategory chips
-    return SubCategoryChipListView(
-      categoryId: categoryId,
-      subCategories: subCategories,
+        // Show the list of subcategory chips
+        return SubCategoryChipListView(
+          categoryId: categoryId,
+          subCategories: subCategories,
+        );
+      },
     );
   }
 }
 
 /// * Displays a horizontal list of subcategory chips
 /// - Adds an "All" option at the start
-/// - Uses `.map()` for cleaner iteration
 class SubCategoryChipListView extends StatelessWidget {
   final CategoryId categoryId;
   final List<SubCategory> subCategories;

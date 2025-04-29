@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/presentation/controllers/combined_error_controller.dart';
@@ -24,36 +25,35 @@ class HomeScreen extends ConsumerWidget {
       combinedErrorStatusProvider(categoryId: categoryId),
     );
 
-    if (error != null) {
-      return Scaffold(
-        body: Center(
-          child: Text('Something went wrong. Please try again.'.hardcoded),
-        ),
-      );
-    }
-
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: HomeSearchBar(showBackButton: showBackButton),
-            ),
-            sliverGapH8,
-            SliverToBoxAdapter(
-              child: SubCategoriesList(categoryId: categoryId),
-            ),
-            sliverGapH8,
-            SliverToBoxAdapter(child: CarouselAdsList(categoryId: categoryId)),
-            SliverToBoxAdapter(
-              child: PopularEnitiesSection(categoryId: categoryId),
-            ),
-            sliverGapH8,
-            SliverToBoxAdapter(
-              child: EntitiesListSection(categoryId: categoryId),
-            ),
-          ],
-        ),
+        child:
+            error != null
+                ? CenteredMessageWidget(
+                  message: 'Something went wrong. Please try again.'.hardcoded,
+                )
+                : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: HomeSearchBar(showBackButton: showBackButton),
+                    ),
+                    sliverGapH8,
+                    SliverToBoxAdapter(
+                      child: SubCategoriesList(categoryId: categoryId),
+                    ),
+                    sliverGapH8,
+                    SliverToBoxAdapter(
+                      child: CarouselAdsList(categoryId: categoryId),
+                    ),
+                    SliverToBoxAdapter(
+                      child: PopularEnitiesSection(categoryId: categoryId),
+                    ),
+                    sliverGapH8,
+                    SliverToBoxAdapter(
+                      child: EntitiesListSection(categoryId: categoryId),
+                    ),
+                  ],
+                ),
       ),
     );
   }

@@ -19,7 +19,7 @@ class SubCategorySkeletonList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
         child: Row(
-          children: List.generate(8, (index) {
+          children: List.generate(12, (index) {
             return Padding(
               padding: const EdgeInsets.only(right: Sizes.p8),
               child: Chip(label: Text('name'.hardcoded)),
@@ -49,7 +49,7 @@ class CarouselAdListSkeleton extends StatelessWidget {
               ),
             ),
           ),
-          gapH8,
+          gapH16,
         ],
       ),
     );
@@ -84,7 +84,7 @@ class PopularEntitesSkeletonList extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
-            itemBuilder: (_, index) => EntityCardSkeleton(),
+            itemBuilder: (_, index) => EntityCardSkeleton(allBorders: false),
           ),
         ),
       ],
@@ -116,15 +116,7 @@ class EntitiesListSkeleton extends StatelessWidget {
           itemCount: 3,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (_, __) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.p4,
-                horizontal: Sizes.p16,
-              ),
-              child: EntityCardSkeleton(useCard: false),
-            );
-          },
+          itemBuilder: (_, __) => EntityCardSkeleton(useCard: false),
           emptyMessage: NoEntityFoundException().message,
         ),
       ],
@@ -136,7 +128,7 @@ class EntityCardSkeleton extends StatelessWidget {
   const EntityCardSkeleton({
     super.key,
     this.useCard = true,
-    this.allBorders = false,
+    this.allBorders = true,
   });
 
   final bool useCard;
@@ -148,7 +140,14 @@ class EntityCardSkeleton extends StatelessWidget {
       enabled: true,
       child:
           useCard
-              ? Card(child: EntityCardSkeletonContent(allBorders: allBorders))
+              ? Card(
+                margin: EdgeInsets.only(
+                  right: Sizes.p8,
+                  top: Sizes.p4,
+                  bottom: Sizes.p4,
+                ),
+                child: EntityCardSkeletonContent(allBorders: allBorders),
+              )
               : EntityCardSkeletonContent(allBorders: allBorders),
     );
   }
@@ -167,34 +166,39 @@ class EntityCardSkeletonContent extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 4 / 3,
-          child: Bone.square(borderRadius: borderRadius),
+          child: Bone.square(
+            borderRadius: allBorders ? BorderRadius.all(radius) : borderRadius,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(Sizes.p8),
           child: Column(
+            spacing: Sizes.p4,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
+                spacing: Sizes.p4,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Bone.text(words: 2, style: context.textTheme.titleMedium),
+                  Expanded(
+                    child: Bone.text(
+                      words: 4,
+                      style: context.textTheme.titleMedium,
+                    ),
+                  ),
                   Row(
                     spacing: Sizes.p4,
                     children: [
                       Bone.circle(size: 18),
                       Text(
-                        'rating'.hardcoded,
+                        '4.6 (5)'.hardcoded,
                         style: context.textTheme.labelLarge,
                       ),
                     ],
                   ),
                 ],
               ),
-              Text(
-                'lorem ipusm halo wizard blueberry hello oppo'.hardcoded,
-                style: context.textTheme.labelLarge,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Bone.text(words: 5, style: context.textTheme.labelLarge),
             ],
           ),
         ),

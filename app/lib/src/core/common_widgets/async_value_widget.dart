@@ -15,27 +15,28 @@ class AsyncValueWidget<T> extends StatelessWidget {
     this.errorPadding = const EdgeInsets.all(Sizes.p16),
   });
 
-  final Widget? loading;
   final AsyncValue<T> value;
+  final Widget? loading;
+  final EdgeInsetsGeometry errorPadding;
   final Widget Function(T data) data;
   final Widget Function(Object error, StackTrace stackTrace)? error;
-  final EdgeInsetsGeometry errorPadding;
 
   @override
   Widget build(BuildContext context) {
-    return value.when(
-      data: data,
-      loading: () => loading ?? const CenteredProgressIndicator(),
-      error: (e, st) {
-        if (error != null) {
-          return error!(e, st);
-        }
-        return Padding(
-          padding: errorPadding,
-          child: CenteredMessageWidget(message: e.toString()),
-        );
-      },
-    );
+    if (value.isLoading) {
+      return loading ?? const CenteredProgressIndicator();
+    } else if (value.hasError) {
+      return Padding(
+        padding: errorPadding,
+        child:
+            error?.call(value.error!, value.stackTrace!) ??
+            CenteredMessageWidget(message: value.error.toString()),
+      );
+    } else if (value.hasValue) {
+      return data(value.value as T);
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }
 
@@ -45,21 +46,21 @@ class AsyncValueSliverWidget<T> extends StatelessWidget {
     super.key,
     required this.value,
     required this.data,
-    required this.loading,
-    required this.error,
-    required this.errorPadding,
+    this.loading,
+    this.error,
+    this.errorPadding = const EdgeInsets.all(Sizes.p16),
   });
 
-  final Widget loading;
   final AsyncValue<T> value;
-  final Widget Function(T data) data;
+  final Widget? loading;
   final EdgeInsetsGeometry errorPadding;
-  final Widget Function(Object error, StackTrace stackTrace) error;
+  final Widget Function(T data) data;
+  final Widget Function(Object error, StackTrace stackTrace)? error;
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: AsyncValueWidget(
+      child: AsyncValueWidget<T>(
         value: value,
         data: data,
         error: error,

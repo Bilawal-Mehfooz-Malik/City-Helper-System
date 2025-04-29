@@ -14,9 +14,9 @@ class FakeFoodRepository implements FoodRepository {
   final _foods = InMemoryStore<List<Food>>(List.from(testFoods));
 
   @override
-  Stream<List<Food>> watchFoodsList(CategoryId categoryId) {
-    delay(addDelay);
-    return _filterFoodsList(categoryId);
+  Stream<List<Food>> watchFoodsList(CategoryId categoryId) async* {
+    await delay(addDelay);
+    yield* _filterFoodsList(categoryId);
   }
 
   @override
@@ -26,9 +26,9 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Stream<List<Food>> watchPopularFoodsList(CategoryId categoryId) {
-    delay(addDelay);
-    return _filterPopularFoodsList(categoryId);
+  Stream<List<Food>> watchPopularFoodsList(CategoryId categoryId) async* {
+    await delay(addDelay);
+    yield* _filterPopularFoodsList(categoryId);
   }
 
   @override
@@ -50,9 +50,9 @@ class FakeFoodRepository implements FoodRepository {
   Stream<List<Food>> watchFoodsListBySubCategoryId(
     CategoryId categoryId,
     SubCategoryId subCategoryId,
-  ) {
-    delay(addDelay);
-    return _filterFoodsListBySubCategoryId(categoryId, subCategoryId);
+  ) async* {
+    await delay(addDelay);
+    yield* _filterFoodsListBySubCategoryId(categoryId, subCategoryId);
   }
 
   @override
@@ -71,9 +71,9 @@ class FakeFoodRepository implements FoodRepository {
   Stream<List<Food>> watchPopularFoodsListSubCategoryId(
     CategoryId categoryId,
     SubCategoryId subCategoryId,
-  ) {
-    delay(addDelay);
-    return _filterPopularFoodsListBySubCategoryId(categoryId, subCategoryId);
+  ) async* {
+    await delay(addDelay);
+    yield* _filterPopularFoodsListBySubCategoryId(categoryId, subCategoryId);
   }
 
   @override
@@ -83,9 +83,9 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Stream<Food?> watchFood(CategoryId categoryId, EntityId id) {
-    delay(addDelay);
-    return _foods.stream.map((foods) => _filterFoodById(foods, categoryId, id));
+  Stream<Food?> watchFood(CategoryId categoryId, EntityId id) async* {
+    await delay(addDelay);
+    yield* _foods.stream.map((foods) => _filterFoodById(foods, categoryId, id));
   }
 
   // * Helper methods

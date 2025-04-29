@@ -20,8 +20,9 @@ class FakeAdsCarouselRepository implements AdsCarouselRepository {
   }
 
   @override
-  Stream<List<CarouselAd>> watchAds(CategoryId categoryId) {
-    return _ads.stream.map((ads) => _filterAdsByCategory(ads, categoryId));
+  Stream<List<CarouselAd>> watchAds(CategoryId categoryId) async* {
+    await delay(addDelay);
+    yield* _ads.stream.map((ads) => _filterAdsByCategory(ads, categoryId));
   }
 
   @override
@@ -39,8 +40,9 @@ class FakeAdsCarouselRepository implements AdsCarouselRepository {
   Stream<List<CarouselAd>> watchAdsBySubCategory(
     CategoryId categoryId,
     SubCategoryId subCategoryId,
-  ) {
-    return _ads.stream.map(
+  ) async* {
+    await delay(addDelay);
+    yield* _ads.stream.map(
       (ads) => _filterAdsBySubCategory(ads, categoryId, subCategoryId),
     );
   }
@@ -52,8 +54,9 @@ class FakeAdsCarouselRepository implements AdsCarouselRepository {
   }
 
   @override
-  Stream<CarouselAd?> watchAdById(CarouselAdId adId) {
-    return _ads.stream.map((ads) => _getAdById(ads, adId));
+  Stream<CarouselAd?> watchAdById(CarouselAdId adId) async* {
+    await delay(addDelay);
+    yield* _ads.stream.map((ads) => _getAdById(ads, adId));
   }
 
   //  Helper method to filter ads by category

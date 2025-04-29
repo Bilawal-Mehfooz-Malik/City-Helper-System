@@ -12,7 +12,7 @@ abstract class Entity {
   final String name;
   final String cityName;
   final String sectorName;
-  final LatLng geoLocation;
+  final LatLng latLng;
   final double avgRating;
   final int totalReviews;
   final bool isPopular;
@@ -28,7 +28,7 @@ abstract class Entity {
     required this.name,
     required this.cityName,
     required this.sectorName,
-    required this.geoLocation,
+    required this.latLng,
     required this.avgRating,
     required this.totalReviews,
     required this.isPopular,
@@ -43,11 +43,11 @@ abstract class Entity {
       return false; // Entity is explicitly closed
     }
 
-    // Get the current time and day
+    // Getting the current time and day
     final now = DateTime.now();
     final currentDay = DateFormat('EEEE').format(now);
 
-    // Find the opening hours for the current day
+    // Finding the opening hours for the current day
     final todayOpeningHours = openingHours.firstWhereOrNull(
       (hours) => hours.day == currentDay,
     );

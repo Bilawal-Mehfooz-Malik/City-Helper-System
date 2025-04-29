@@ -14,9 +14,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   final _residences = InMemoryStore<List<Residence>>(List.from(testResidences));
 
   @override
-  Stream<List<Residence>> watchResidencesList(CategoryId categoryId) {
-    delay(addDelay);
-    return _filterResidencesList(categoryId);
+  Stream<List<Residence>> watchResidencesList(CategoryId categoryId) async* {
+    await delay(addDelay);
+    yield* _filterResidencesList(categoryId);
   }
 
   @override
@@ -26,9 +26,11 @@ class FakeResidenceRepository implements ResidenceRepository {
   }
 
   @override
-  Stream<List<Residence>> watchPopularResidencesList(CategoryId categoryId) {
-    delay(addDelay);
-    return _filterPopularResidencesList(categoryId);
+  Stream<List<Residence>> watchPopularResidencesList(
+    CategoryId categoryId,
+  ) async* {
+    await delay(addDelay);
+    yield* _filterPopularResidencesList(categoryId);
   }
 
   @override
@@ -55,9 +57,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   Stream<List<Residence>> watchResidencesListBySubCategoryId(
     CategoryId categoryId,
     SubCategoryId subCategoryId,
-  ) {
-    delay(addDelay);
-    return _filterResidencesListBySubCategoryId(categoryId, subCategoryId);
+  ) async* {
+    await delay(addDelay);
+    yield* _filterResidencesListBySubCategoryId(categoryId, subCategoryId);
   }
 
   @override
@@ -76,9 +78,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   Stream<List<Residence>> watchPopularResidencesListBySubCategoryId(
     CategoryId categoryId,
     SubCategoryId subCategoryId,
-  ) {
-    delay(addDelay);
-    return _filterPopularResidencesListBySubCategoryId(
+  ) async* {
+    await delay(addDelay);
+    yield* _filterPopularResidencesListBySubCategoryId(
       categoryId,
       subCategoryId,
     );
@@ -93,9 +95,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   }
 
   @override
-  Stream<Residence?> watchResidence(CategoryId categoryId, EntityId id) {
-    delay(addDelay);
-    return _residences.stream.map(
+  Stream<Residence?> watchResidence(CategoryId categoryId, EntityId id) async* {
+    await delay(addDelay);
+    yield* _residences.stream.map(
       (residences) => _filterResidenceById(residences, categoryId, id),
     );
   }

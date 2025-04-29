@@ -1,3 +1,4 @@
+import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/presentation/widgets/average_rating_widget.dart';
@@ -31,6 +32,7 @@ class ItemTitleSection extends StatelessWidget {
           );
         } else {
           return Row(
+            spacing: Sizes.p4,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(

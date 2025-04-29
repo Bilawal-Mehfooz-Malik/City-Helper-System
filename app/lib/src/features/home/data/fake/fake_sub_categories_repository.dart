@@ -22,8 +22,9 @@ class FakeSubCategoriesRepository implements SubCategoriesRepository {
   }
 
   @override
-  Stream<List<SubCategory>> watchSubCategoriesList(CategoryId id) {
-    return _subCategories.stream.map(
+  Stream<List<SubCategory>> watchSubCategoriesList(CategoryId id) async* {
+    await delay(addDelay);
+    yield* _subCategories.stream.map(
       (subCategories) => _filterSubCategoriesByCategoryId(id),
     );
   }
