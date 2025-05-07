@@ -3,6 +3,7 @@ import 'package:app/src/core/app_bootstrap/app_bootstrap_fakes.dart';
 import 'package:app/src/app.dart';
 import 'package:app/src/localization/i18n/app_localizations.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/themes/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,11 +94,14 @@ class MyAppFake extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lightTheme = ref.watch(lightThemeProvider);
+
     return MaterialApp.router(
       routerConfig: router,
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
       supportedLocales: const [Locale('en', '')],
+      theme: lightTheme,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

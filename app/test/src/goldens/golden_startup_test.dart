@@ -1,9 +1,11 @@
+import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
+import 'package:app/src/features/startup/presentation/startup_content/get_location_content.dart';
+import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart'; // Added for @isTest helper
 
-import 'package:app/src/app.dart';
 import '../robot.dart';
 
 @isTest
@@ -29,24 +31,24 @@ void main() {
       // Setup environment and initial state
       final r = await _setupGoldenTestEnvironment(tester, kMobileSize);
       await expectLater(
-        find.byType(MyApp),
+        find.byType(StartupScreen),
         matchesGoldenFile('startup/Mobile/1_startup_screen.png'),
       );
 
       await r.startupRobot.tapGetStartedButton();
       r.startupRobot.expectModalBottomSheet();
       await expectLater(
-        find.byType(MyApp),
+        find.byType(GetLocationContent),
         matchesGoldenFile('startup/Mobile/2_bottom_sheet_opened.png'),
       );
       await r.startupRobot.tapGetCurrentButton();
       await expectLater(
-        find.byType(MyApp),
+        find.byType(GetLocationContent),
         matchesGoldenFile('startup/Mobile/3_saved_current_location.png'),
       );
       await r.startupRobot.tapSaveButton();
       await expectLater(
-        find.byType(MyApp),
+        find.byType(CategoriesListScreen),
         matchesGoldenFile('startup/Mobile/4_categories_list_screen.png'),
       );
     }, tags: ['golden']);
@@ -56,18 +58,18 @@ void main() {
       final r = await _setupGoldenTestEnvironment(tester, kDesktopSize);
 
       await expectLater(
-        find.byType(MyApp),
+        find.byType(StartupScreen),
         matchesGoldenFile('startup/Desktop/1_startup_screen.png'),
       );
 
       await r.startupRobot.tapGetCurrentButton();
       await expectLater(
-        find.byType(MyApp),
+        find.byType(GetLocationContent),
         matchesGoldenFile('startup/Desktop/2_saved_current_location.png'),
       );
       await r.startupRobot.tapSaveButton();
       await expectLater(
-        find.byType(MyApp),
+        find.byType(CategoriesListScreen),
         matchesGoldenFile('startup/Desktop/3_categories_list_screen.png'),
       );
     }, tags: ['golden']);

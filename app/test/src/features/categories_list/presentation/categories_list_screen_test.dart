@@ -11,6 +11,7 @@ void main() {
     r.categoriesRobot.expectCategoriesScreen();
     await r.categoriesRobot.tapCategory();
     r.categoriesRobot.expectHomeScreen();
+    r.categoriesRobot.expectItemCard();
   });
 
   testWidgets('Categories List Screen (Desktop Screen)', (tester) async {
@@ -20,5 +21,6 @@ void main() {
     r.categoriesRobot.expectCategoriesScreen();
     await r.categoriesRobot.tapCategory();
     r.categoriesRobot.expectHomeScreen();
+    r.categoriesRobot.expectItemCard();
   });
 }

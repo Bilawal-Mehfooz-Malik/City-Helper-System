@@ -1,6 +1,7 @@
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/category_card.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
+import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -42,8 +43,13 @@ class CategoriesRobot {
     await tester.pumpAndSettle();
   }
 
-  void expectHomeScreen() async {
+  void expectHomeScreen() {
     final finder = find.byType(HomeScreen);
+    expect(finder, findsOneWidget);
+  }
+
+  void expectItemCard() {
+    final finder = find.byType(EntityCard).first;
     expect(finder, findsOneWidget);
   }
 }

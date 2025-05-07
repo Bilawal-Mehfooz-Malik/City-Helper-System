@@ -16,6 +16,8 @@ void main() {
       await r.startupRobot.tapSaveButton();
       r.categoriesRobot.expectCategoriesScreen();
       await r.categoriesRobot.tapCategory();
+      r.categoriesRobot.expectHomeScreen();
+      r.categoriesRobot.expectItemCard();
     });
   });
 
@@ -27,6 +29,8 @@ void main() {
       await r.startupRobot.tapSaveButton();
       r.categoriesRobot.expectCategoriesScreen();
       await r.categoriesRobot.tapCategory();
+      r.categoriesRobot.expectHomeScreen();
+      r.categoriesRobot.expectItemCard();
     });
   });
 
@@ -42,6 +46,8 @@ void main() {
       await r.startupRobot.tapSaveButton();
       r.categoriesRobot.expectCategoriesScreen();
       await r.categoriesRobot.tapCategory();
+      r.categoriesRobot.expectHomeScreen();
+      r.categoriesRobot.expectItemCard();
     });
   });
 
@@ -55,6 +61,8 @@ void main() {
       await r.startupRobot.tapSaveButton();
       r.categoriesRobot.expectCategoriesScreen();
       await r.categoriesRobot.tapCategory();
+      r.categoriesRobot.expectHomeScreen();
+      r.categoriesRobot.expectItemCard();
     });
   });
 }
