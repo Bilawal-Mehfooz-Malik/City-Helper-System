@@ -17,7 +17,7 @@ abstract class Entity {
   final int totalReviews;
   final bool isPopular;
   final List<OpeningHours> openingHours;
-  final bool status;
+  final EntityStatus entityStatus;
   final DateTime createdAt;
 
   const Entity({
@@ -33,14 +33,16 @@ abstract class Entity {
     required this.totalReviews,
     required this.isPopular,
     required this.openingHours,
-    required this.status,
+    required this.entityStatus,
     required this.createdAt,
   });
 
   bool isEntityOpen() {
     // First, check the entity's overall status
-    if (!status) {
-      return false; // Entity is explicitly closed
+    if (entityStatus == EntityStatus.closed) {
+      return false;
+    } else if (entityStatus == EntityStatus.open) {
+      return true;
     }
 
     // Getting the current time and day

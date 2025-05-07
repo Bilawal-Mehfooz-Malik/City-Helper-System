@@ -14,6 +14,8 @@ enum SortOrder { none, lowToHigh, highToLow }
 
 enum GenderPreference { any, maleOnly, femaleOnly, familyFriendly }
 
+enum EntityStatus { open, closed, defaultStatus }
+
 extension IterableExtension<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T) test) {
     for (var element in this) {

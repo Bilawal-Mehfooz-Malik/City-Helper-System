@@ -7,7 +7,11 @@ part 'currency_formatter.g.dart';
 @riverpod
 NumberFormat currencyFormatter(Ref ref) {
   /// Currency formatter to be used in the app.
-  /// * en_US is hardcoded to ensure all prices show with a dollar sign ($)
-  /// * This may or may not be what you want in your own apps.
-  return NumberFormat.simpleCurrency(locale: "en_US");
+  /// * The locale is set to 'ur_PK' to format prices in Pakistani Rupees.
+  /// * A space and dot are added to display the currency as 'Rs. '.
+  return NumberFormat.currency(
+    locale: 'ur_PK',
+    symbol: 'Rs. ',
+    decimalDigits: 2,
+  );
 }

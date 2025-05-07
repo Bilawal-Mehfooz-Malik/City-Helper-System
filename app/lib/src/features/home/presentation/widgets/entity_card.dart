@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/currency_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
@@ -9,6 +10,7 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EntityCard extends StatelessWidget {
   const EntityCard({
@@ -64,13 +66,19 @@ class EntityCard extends StatelessWidget {
               ),
 
               if (isResidence && residence != null)
-                Text(
-                  '${context.loc.startsFrom} Rs. ${residence.price.toString()}'
-                      .hardcoded,
-                  style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: useElipsis ? TextOverflow.ellipsis : null,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final priceFormatted = ref
+                        .watch(currencyFormatterProvider)
+                        .format(residence.price);
+                    return Text(
+                      '${context.loc.startsFrom} $priceFormatted',
+                      style: context.textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: useElipsis ? TextOverflow.ellipsis : null,
+                    );
+                  },
                 )
               else
                 const SizedBox.shrink(),

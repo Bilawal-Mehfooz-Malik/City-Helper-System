@@ -19,7 +19,7 @@ class Residence extends Entity {
     required super.totalReviews,
     required super.isPopular,
     required super.openingHours,
-    required super.status,
+    required super.entityStatus,
     required super.createdAt,
     required this.price,
     required this.genderPref,
