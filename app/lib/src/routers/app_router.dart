@@ -1,6 +1,7 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
+import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ enum AppRoute {
   pickYourLocation,
   category,
   home,
+  popular,
   loading,
   pageNotFound,
 }
@@ -54,11 +56,6 @@ GoRouter appRouter(Ref ref) {
           ),
         ],
       ),
-      // GoRoute(
-      //   path: '/',
-      //   name: AppRoute.category.name,
-      //   builder: (context, state) => const Home(),
-      // ),
       GoRoute(
         path: '/',
         name: AppRoute.category.name,
@@ -71,6 +68,16 @@ GoRouter appRouter(Ref ref) {
               final id = int.parse(state.pathParameters['categoryId']!);
               return HomeScreen(categoryId: id);
             },
+            routes: [
+              GoRoute(
+                path: 'popular',
+                name: AppRoute.popular.name,
+                builder: (context, state) {
+                  final id = int.parse(state.pathParameters['categoryId']!);
+                  return PopularEntitiesListScreen(categoryId: id);
+                },
+              ),
+            ],
           ),
         ],
       ),

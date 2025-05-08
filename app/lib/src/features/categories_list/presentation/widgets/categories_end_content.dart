@@ -1,6 +1,7 @@
-import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
+import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,18 +13,21 @@ class CategoriesEndContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final view = ref.watch(selectedCategoryViewControllerProvider);
     final selectedCategory = ref.watch(selectedCategoryIdControllerProvider);
 
     if (selectedCategory == null) {
       return Center(child: Text(context.loc.selectCategoryBody));
     }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-      child: HomeScreen(
+    return switch (view) {
+      SelectedCategoryView.home => HomeScreen(
         categoryId: selectedCategory,
-        showBackButton: showBackButton,
+        showBackButton: false,
       ),
-    );
+      SelectedCategoryView.popular => PopularEntitiesListScreen(
+        categoryId: selectedCategory,
+        isPushed: false,
+      ),
+    };
   }
 }

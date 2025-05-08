@@ -1,8 +1,11 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
@@ -10,12 +13,34 @@ import 'package:app/src/features/home/presentation/controllers/subcategory_contr
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class PopularEnitiesSection extends ConsumerWidget {
   final CategoryId categoryId;
   const PopularEnitiesSection({super.key, required this.categoryId});
+
+  void _onSeeAllPressed(BuildContext context, WidgetRef ref) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: screenSize.width,
+      height: screenSize.height,
+    );
+
+    if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
+      // Use a state provider to indicate the "popular" view should be shown
+      ref
+          .read(selectedCategoryViewControllerProvider.notifier)
+          .setSelectedCategoryView(SelectedCategoryView.popular);
+    } else {
+      context.goNamed(
+        AppRoute.popular.name,
+        pathParameters: {'categoryId': categoryId.toString()},
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,11 +69,13 @@ class PopularEnitiesSection extends ConsumerWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              endWidget: Text(
-                context.loc.seeAll,
-                style: context.textTheme.bodyLarge,
+              endWidget: CustomTextButton(
+                onPressed: () => _onSeeAllPressed(context, ref),
+
+                text: context.loc.seeAll,
               ),
             ),
+
             SizedBox(
               height: entities is List<Residence> ? 300 : 275,
               child: ListView.builder(

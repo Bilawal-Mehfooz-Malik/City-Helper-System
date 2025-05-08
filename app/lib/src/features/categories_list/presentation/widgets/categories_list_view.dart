@@ -4,6 +4,7 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/category_card.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
@@ -34,7 +35,11 @@ class CategoriesListView extends StatelessWidget {
       height: screenSize.height,
     );
     // Reset the subcategory state when a category is selected
+    // and set the selected category view to home.
     ref.read(subcategoryControllerProvider.notifier).resetSubcategoryState();
+    ref
+        .read(selectedCategoryViewControllerProvider.notifier)
+        .setSelectedCategoryView(SelectedCategoryView.home);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       ref.read(selectedCategoryIdControllerProvider.notifier).setCategoryId(id);

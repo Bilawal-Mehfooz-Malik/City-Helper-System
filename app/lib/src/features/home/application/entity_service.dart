@@ -1,4 +1,3 @@
-import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/filters/filtering_logic.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
@@ -105,7 +104,6 @@ Stream<List<Entity>> watchEntities(
 
     // Step 3b: Sort the filtered entities
     final sortedEntities = sortEntities(filteredEntities, filter);
-    AppLogger.logInfo(sortedEntities.length.toString());
 
     // Step 3c: Return the final list
     return sortedEntities;

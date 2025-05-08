@@ -6,7 +6,7 @@ part of 'currency_formatter.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currencyFormatterHash() => r'8913fc9454b8ee8fe1bdb16db24a740adffa297a';
+String _$currencyFormatterHash() => r'3f16a796805e51a09699a513ca47577202a860c0';
 
 /// See also [currencyFormatter].
 @ProviderFor(currencyFormatter)
