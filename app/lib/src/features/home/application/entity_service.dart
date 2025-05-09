@@ -79,8 +79,25 @@ Stream<List<Entity>> watchPopularEntities(
   CategoryId categoryId,
   SubCategoryId? subcategoryId,
 ) {
-  final service = ref.watch(entityServiceProvider);
-  return service.watchPopularEntitiesList(categoryId, subcategoryId);
+  // 1. Watch the unfiltered stream of popular entities
+  final popularEntitiesStream = ref
+      .watch(entityServiceProvider)
+      .watchPopularEntitiesList(categoryId, subcategoryId);
+
+  // 2. Watch the filter state
+  final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
+
+  // 3. Combine stream and filter, applying filtering and sorting
+  return popularEntitiesStream.map((entities) {
+    // Step 3a: Filter the entities
+    final filteredEntities = filterEntities(entities, filter);
+
+    // Step 3b: Sort the filtered entities
+    final sortedEntities = sortEntities(filteredEntities, filter);
+
+    // Step 3c: Return the final list
+    return sortedEntities;
+  });
 }
 
 @riverpod

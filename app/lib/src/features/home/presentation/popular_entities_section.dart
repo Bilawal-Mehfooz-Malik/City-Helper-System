@@ -9,6 +9,7 @@ import 'package:app/src/features/categories_list/presentation/selected_category_
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
@@ -23,6 +24,9 @@ class PopularEnitiesSection extends ConsumerWidget {
   const PopularEnitiesSection({super.key, required this.categoryId});
 
   void _onSeeAllPressed(BuildContext context, WidgetRef ref) {
+    ref
+        .read(filterControllerProvider(categoryId: categoryId).notifier)
+        .resetFilters();
     final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(
       width: screenSize.width,
@@ -77,7 +81,10 @@ class PopularEnitiesSection extends ConsumerWidget {
             ),
 
             SizedBox(
-              height: entities is List<Residence> ? 300 : 275,
+              height:
+                  entities.isNotEmpty && entities.first is Residence
+                      ? 300
+                      : 275,
               child: ListView.builder(
                 itemExtent: 280,
                 shrinkWrap: true,

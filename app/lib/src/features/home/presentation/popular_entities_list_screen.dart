@@ -1,4 +1,5 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
@@ -10,6 +11,7 @@ import 'package:app/src/features/home/presentation/controllers/subcategory_contr
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
+import 'package:app/src/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +25,13 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     this.isPushed = true,
     required this.categoryId,
   });
+
+  void _showFilterDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (_) => FilterDialog(categoryId: categoryId),
+    );
+  }
 
   void _onBack(BuildContext context, WidgetRef ref) {
     if (isPushed) {
@@ -58,17 +67,35 @@ class PopularEntitiesListScreen extends ConsumerWidget {
             itemBuilder: (_, __) => EntityCardSkeleton(useCard: false),
           ),
           data:
-              (entities) => EntitiesGridLayout(
-                shrinkWrap: true,
-                itemCount: entities.length,
-                paddingOutside: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: Sizes.p8,
-                ),
-                emptyMessage: NoEntityFoundException().message,
-                itemBuilder:
-                    (_, index) =>
-                        EntityCard(entity: entities[index], useElipsis: false),
+              (entities) => CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: SectionHeader(
+                      startWidget: Text(
+                        context.loc.filtersTitle,
+                        style: context.textTheme.titleLarge,
+                      ),
+                      endWidget: IconButton(
+                        icon: const Icon(Icons.filter_list_alt),
+                        onPressed: () => _showFilterDialog(context),
+                      ),
+                    ),
+                  ),
+                  sliverGapH8,
+                  SliverToBoxAdapter(
+                    child: EntitiesGridLayout(
+                      shrinkWrap: true,
+                      itemCount: entities.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder:
+                          (_, index) => EntityCard(
+                            entity: entities[index],
+                            useElipsis: false,
+                          ),
+                      emptyMessage: NoEntityFoundException().message,
+                    ),
+                  ),
+                ],
               ),
         ),
       ),
