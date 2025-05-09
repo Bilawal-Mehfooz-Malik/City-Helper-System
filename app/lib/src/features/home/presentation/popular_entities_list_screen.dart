@@ -6,6 +6,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
@@ -37,6 +38,9 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     ref
         .read(listTypeControllerProvider.notifier)
         .updateListType(HomeListType.all);
+    ref
+        .read(filterControllerProvider(categoryId: categoryId).notifier)
+        .resetFilters();
     if (isPushed) {
       context.pop();
     } else {
@@ -52,55 +56,62 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     final entitiesListValue = ref.watch(
       WatchPopularEntitiesProvider(categoryId, subCategory),
     );
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: context.theme.scaffoldBackgroundColor,
-        backgroundColor: context.theme.scaffoldBackgroundColor,
-        leading: BackButton(onPressed: () => _onBack(context, ref)),
-        title: Text(
-          context.loc.popular,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          _onBack(context, ref);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          surfaceTintColor: context.theme.scaffoldBackgroundColor,
+          backgroundColor: context.theme.scaffoldBackgroundColor,
+          leading: BackButton(onPressed: () => _onBack(context, ref)),
+          title: Text(
+            context.loc.popular,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: SectionHeader(
-                startWidget: Text(
-                  context.loc.filtersTitle,
-                  style: context.textTheme.titleLarge,
-                ),
-                endWidget: IconButton(
-                  icon: const Icon(Icons.filter_list_alt),
-                  onPressed:
-                      entitiesListValue.isLoading
-                          ? null
-                          : () => _showFilterDialog(context, ref),
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: SectionHeader(
+                  startWidget: Text(
+                    context.loc.filtersTitle,
+                    style: context.textTheme.titleLarge,
+                  ),
+                  endWidget: IconButton(
+                    icon: const Icon(Icons.filter_list_alt),
+                    onPressed:
+                        entitiesListValue.isLoading
+                            ? null
+                            : () => _showFilterDialog(context, ref),
+                  ),
                 ),
               ),
-            ),
-            sliverGapH8,
+              sliverGapH8,
 
-            AsyncValueSliverWidget(
-              value: entitiesListValue,
-              loading: const EntitiesListSkeleton(),
-              data:
-                  (entities) => EntitiesGridLayout(
-                    shrinkWrap: true,
-                    itemCount: entities.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder:
-                        (_, index) => EntityCard(
-                          entity: entities[index],
-                          useElipsis: false,
-                        ),
-                    emptyMessage: NoEntityFoundException().message,
-                  ),
-            ),
-          ],
+              AsyncValueSliverWidget(
+                value: entitiesListValue,
+                loading: const EntitiesListSkeleton(),
+                data:
+                    (entities) => EntitiesGridLayout(
+                      shrinkWrap: true,
+                      itemCount: entities.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder:
+                          (_, index) => EntityCard(
+                            entity: entities[index],
+                            useElipsis: false,
+                          ),
+                      emptyMessage: NoEntityFoundException().message,
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
     );
