@@ -32,27 +32,31 @@ class EntitiesListSection extends ConsumerWidget {
     final entitiesListValue = ref.watch(
       WatchEntitiesProvider(categoryId, subCategory),
     );
-    return AsyncValueWidget<List<Entity>>(
-      value: entitiesListValue,
-      loading: const EntitiesListSkeleton(),
-      error: (_, __) => const SizedBox.shrink(),
-      data:
-          (entities) => Column(
-            spacing: Sizes.p4,
-            children: [
-              SectionHeader(
-                startWidget: Text(
-                  context.loc.all,
-                  style: context.textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                endWidget: IconButton(
-                  icon: const Icon(Icons.filter_list_alt),
-                  onPressed: () => _showFilterDialog(context),
-                ),
-              ),
-              EntitiesGridLayout(
+
+    return Column(
+      spacing: Sizes.p4,
+      children: [
+        SectionHeader(
+          startWidget: Text(
+            context.loc.all,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          endWidget: IconButton(
+            icon: const Icon(Icons.filter_list_alt),
+            onPressed:
+                entitiesListValue.isLoading
+                    ? null
+                    : () => _showFilterDialog(context),
+          ),
+        ),
+        AsyncValueWidget<List<Entity>>(
+          value: entitiesListValue,
+          loading: const EntitiesListSkeleton(),
+          error: (_, __) => const SizedBox.shrink(),
+          data:
+              (entities) => EntitiesGridLayout(
                 shrinkWrap: true,
                 itemCount: entities.length,
                 physics: const NeverScrollableScrollPhysics(),
@@ -61,8 +65,8 @@ class EntitiesListSection extends ConsumerWidget {
                         EntityCard(entity: entities[index], useElipsis: false),
                 emptyMessage: NoEntityFoundException().message,
               ),
-            ],
-          ),
+        ),
+      ],
     );
   }
 }

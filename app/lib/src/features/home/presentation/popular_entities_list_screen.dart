@@ -6,7 +6,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
@@ -26,7 +26,7 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     required this.categoryId,
   });
 
-  void _showFilterDialog(BuildContext context) {
+  void _showFilterDialog(BuildContext context, WidgetRef ref) {
     showDialog<void>(
       context: context,
       builder: (_) => FilterDialog(categoryId: categoryId),
@@ -34,6 +34,9 @@ class PopularEntitiesListScreen extends ConsumerWidget {
   }
 
   void _onBack(BuildContext context, WidgetRef ref) {
+    ref
+        .read(listTypeControllerProvider.notifier)
+        .updateListType(HomeListType.all);
     if (isPushed) {
       context.pop();
     } else {
@@ -54,49 +57,50 @@ class PopularEntitiesListScreen extends ConsumerWidget {
         surfaceTintColor: context.theme.scaffoldBackgroundColor,
         backgroundColor: context.theme.scaffoldBackgroundColor,
         leading: BackButton(onPressed: () => _onBack(context, ref)),
-        title: Text(context.loc.popular),
+        title: Text(
+          context.loc.popular,
+          style: context.textTheme.titleLarge!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SafeArea(
-        child: AsyncValueWidget<List<Entity>>(
-          value: entitiesListValue,
-          loading: EntitiesGridLayout(
-            itemCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            emptyMessage: NoEntityFoundException().message,
-            itemBuilder: (_, __) => EntityCardSkeleton(useCard: false),
-          ),
-          data:
-              (entities) => CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: SectionHeader(
-                      startWidget: Text(
-                        context.loc.filtersTitle,
-                        style: context.textTheme.titleLarge,
-                      ),
-                      endWidget: IconButton(
-                        icon: const Icon(Icons.filter_list_alt),
-                        onPressed: () => _showFilterDialog(context),
-                      ),
-                    ),
-                  ),
-                  sliverGapH8,
-                  SliverToBoxAdapter(
-                    child: EntitiesGridLayout(
-                      shrinkWrap: true,
-                      itemCount: entities.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder:
-                          (_, index) => EntityCard(
-                            entity: entities[index],
-                            useElipsis: false,
-                          ),
-                      emptyMessage: NoEntityFoundException().message,
-                    ),
-                  ),
-                ],
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: SectionHeader(
+                startWidget: Text(
+                  context.loc.filtersTitle,
+                  style: context.textTheme.titleLarge,
+                ),
+                endWidget: IconButton(
+                  icon: const Icon(Icons.filter_list_alt),
+                  onPressed:
+                      entitiesListValue.isLoading
+                          ? null
+                          : () => _showFilterDialog(context, ref),
+                ),
               ),
+            ),
+            sliverGapH8,
+
+            AsyncValueSliverWidget(
+              value: entitiesListValue,
+              loading: const EntitiesListSkeleton(),
+              data:
+                  (entities) => EntitiesGridLayout(
+                    shrinkWrap: true,
+                    itemCount: entities.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder:
+                        (_, index) => EntityCard(
+                          entity: entities[index],
+                          useElipsis: false,
+                        ),
+                    emptyMessage: NoEntityFoundException().message,
+                  ),
+            ),
+          ],
         ),
       ),
     );

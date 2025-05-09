@@ -25,7 +25,7 @@ final entityServiceProvider = AutoDisposeProvider<EntityService>.internal(
 // ignore: unused_element
 typedef EntityServiceRef = AutoDisposeProviderRef<EntityService>;
 String _$watchPopularEntitiesHash() =>
-    r'9bb8d76ab08b314b84f9e9c183099795db2ce36d';
+    r'8491a5ce39c221b7487d118725a7ea604d6e1d3b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -185,7 +185,7 @@ class _WatchPopularEntitiesProviderElement
       (origin as WatchPopularEntitiesProvider).subcategoryId;
 }
 
-String _$watchEntitiesHash() => r'544ca580536a90eac4b0779ae24174f155279dcc';
+String _$watchEntitiesHash() => r'a6457594ff615fb119448a43d324005fe7c7edd5';
 
 /// See also [watchEntities].
 @ProviderFor(watchEntities)

@@ -5,6 +5,7 @@ import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -84,20 +85,26 @@ Stream<List<Entity>> watchPopularEntities(
       .watch(entityServiceProvider)
       .watchPopularEntitiesList(categoryId, subcategoryId);
 
-  // 2. Watch the filter state
-  final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
+  final listType = ref.watch(listTypeControllerProvider);
 
-  // 3. Combine stream and filter, applying filtering and sorting
-  return popularEntitiesStream.map((entities) {
-    // Step 3a: Filter the entities
-    final filteredEntities = filterEntities(entities, filter);
+  if (listType != HomeListType.popular) {
+    return popularEntitiesStream;
+  } else {
+    // 2. Watch the filter state
+    final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
 
-    // Step 3b: Sort the filtered entities
-    final sortedEntities = sortEntities(filteredEntities, filter);
+    // 3. Combine stream and filter, applying filtering and sorting
+    return popularEntitiesStream.map((entities) {
+      // Step 3a: Filter the entities
+      final filteredEntities = filterEntities(entities, filter);
 
-    // Step 3c: Return the final list
-    return sortedEntities;
-  });
+      // Step 3b: Sort the filtered entities
+      final sortedEntities = sortEntities(filteredEntities, filter);
+
+      // Step 3c: Return the final list
+      return sortedEntities;
+    });
+  }
 }
 
 @riverpod
@@ -110,19 +117,24 @@ Stream<List<Entity>> watchEntities(
   final entitiesStream = ref
       .watch(entityServiceProvider)
       .watchEntitiesList(categoryId, subcategoryId);
+  final listType = ref.watch(listTypeControllerProvider);
 
-  // 2. Watch the filter state
-  final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
+  if (listType != HomeListType.all) {
+    return entitiesStream;
+  } else {
+    // 2. Watch the filter state
+    final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
 
-  // 3. Combine stream and filter, applying filtering and sorting
-  return entitiesStream.map((entities) {
-    // Step 3a: Filter the entities
-    final filteredEntities = filterEntities(entities, filter);
+    // 3. Combine stream and filter, applying filtering and sorting
+    return entitiesStream.map((entities) {
+      // Step 3a: Filter the entities
+      final filteredEntities = filterEntities(entities, filter);
 
-    // Step 3b: Sort the filtered entities
-    final sortedEntities = sortEntities(filteredEntities, filter);
+      // Step 3b: Sort the filtered entities
+      final sortedEntities = sortEntities(filteredEntities, filter);
 
-    // Step 3c: Return the final list
-    return sortedEntities;
-  });
+      // Step 3c: Return the final list
+      return sortedEntities;
+    });
+  }
 }
