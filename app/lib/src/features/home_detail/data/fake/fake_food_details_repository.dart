@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
+import 'package:app/src/features/home_detail/data/fake/test_food_details.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/food_detail.dart';
 
@@ -10,7 +11,7 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   FakeFoodDetailsRepository({this.addDelay = true});
   final bool addDelay;
 
-  final _foods = InMemoryStore<List<FoodDetail>>(List.from([]));
+  final _foods = InMemoryStore<List<FoodDetail>>(List.from(testFoodDetails));
 
   @override
   Future<FoodDetail?> fetchFoodDetails(

@@ -25,6 +25,10 @@ class FoodDetail extends EntityDetail {
     required super.phoneNumber,
     required super.messagingNumber,
     required super.updatedAt,
+    super.email,
+    super.facebookUrl,
+    super.instagramUrl,
+    super.websiteUrl,
     required this.genderPref,
   });
 }
