@@ -2,6 +2,7 @@ import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
+import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,9 @@ enum AppRoute {
   pickYourLocation,
   category,
   home,
+  homeDetail,
   popular,
+  popularDetail,
   loading,
   pageNotFound,
 }
@@ -75,6 +78,42 @@ GoRouter appRouter(Ref ref) {
                 builder: (context, state) {
                   final id = int.parse(state.pathParameters['categoryId']!);
                   return PopularEntitiesListScreen(categoryId: id);
+                },
+                routes: [
+                  GoRoute(
+                    path: 'detail/:entityId',
+                    name: AppRoute.popularDetail.name,
+                    pageBuilder: (context, state) {
+                      final categoryId = int.parse(
+                        state.pathParameters['categoryId']!,
+                      );
+                      final entityId = state.pathParameters['entityId']!;
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: HomeDetailScreen(
+                          categoryId: categoryId,
+                          entityId: entityId,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'detail/:entityId',
+                name: AppRoute.homeDetail.name,
+                pageBuilder: (context, state) {
+                  final categoryId = int.parse(
+                    state.pathParameters['categoryId']!,
+                  );
+                  final entityId = state.pathParameters['entityId']!;
+                  return MaterialPage(
+                    fullscreenDialog: true,
+                    child: HomeDetailScreen(
+                      categoryId: categoryId,
+                      entityId: entityId,
+                    ),
+                  );
                 },
               ),
             ],

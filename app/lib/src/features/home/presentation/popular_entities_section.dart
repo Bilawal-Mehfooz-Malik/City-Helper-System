@@ -14,6 +14,7 @@ import 'package:app/src/features/home/presentation/controllers/list_type_control
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
+import 'package:app/src/features/home_detail/presentation/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,31 @@ import 'package:go_router/go_router.dart';
 class PopularEnitiesSection extends ConsumerWidget {
   final CategoryId categoryId;
   const PopularEnitiesSection({super.key, required this.categoryId});
+
+  void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
+    ref.read(entityIdControllerProvider.notifier).updateEntityId(entity.id);
+
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: screenSize.width,
+      height: screenSize.height,
+    );
+
+    if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
+      // Use a state provider to indicate the "popular" view should be shown
+      ref
+          .read(selectedCategoryViewControllerProvider.notifier)
+          .setSelectedCategoryView(SelectedCategoryView.detail);
+    } else {
+      context.goNamed(
+        AppRoute.homeDetail.name,
+        pathParameters: {
+          'categoryId': entity.categoryId.toString(),
+          'entityId': entity.id,
+        },
+      );
+    }
+  }
 
   void _onSeeAllPressed(BuildContext context, WidgetRef ref) {
     ref
@@ -78,19 +104,17 @@ class PopularEnitiesSection extends ConsumerWidget {
                 ),
               ),
               endWidget: CustomTextButton(
-                onPressed:
-                    popularEntitiesListValue.isLoading
-                        ? null
-                        : () => _onSeeAllPressed(context, ref),
+                onPressed: popularEntitiesListValue.isLoading
+                    ? null
+                    : () => _onSeeAllPressed(context, ref),
                 text: context.loc.seeAll,
               ),
             ),
 
             SizedBox(
-              height:
-                  entities.isNotEmpty && entities.first is Residence
-                      ? 300
-                      : 275,
+              height: entities.isNotEmpty && entities.first is Residence
+                  ? 300
+                  : 275,
               child: ListView.builder(
                 itemExtent: 280,
                 shrinkWrap: true,
@@ -98,6 +122,7 @@ class PopularEnitiesSection extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
                 itemBuilder: (_, index) {
+                  final entity = entities[index];
                   return Card(
                     margin: EdgeInsets.only(
                       right: Sizes.p8,
@@ -105,8 +130,9 @@ class PopularEnitiesSection extends ConsumerWidget {
                       bottom: Sizes.p4,
                     ),
                     child: EntityCard(
-                      entity: entities[index],
+                      entity: entity,
                       allBorders: false,
+                      onTap: () => _goToDetails(context, ref, entity),
                     ),
                   );
                 },

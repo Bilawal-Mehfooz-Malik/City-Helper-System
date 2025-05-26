@@ -1,8 +1,8 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,29 +12,36 @@ class EntityDetailsService {
   const EntityDetailsService(this.ref);
   final Ref ref;
 
-  Future<Entity?> fetchEntityDetails(
+  Future<EntityDetail?> fetchEntityDetails(
     CategoryId categoryId,
     EntityId entityId,
   ) async {
     return switch (categoryId) {
-      1 => ref
-          .read(residenceDetailsRepositoryProvider)
-          .fetchResidenceDetails(categoryId, entityId),
-      2 => ref
-          .read(foodDetailsRepositoryProvider)
-          .fetchFoodDetails(categoryId, entityId),
+      1 =>
+        ref
+            .read(residenceDetailsRepositoryProvider)
+            .fetchResidenceDetails(categoryId, entityId),
+      2 =>
+        ref
+            .read(foodDetailsRepositoryProvider)
+            .fetchFoodDetails(categoryId, entityId),
       _ => throw InvalidCategoryException(),
     };
   }
 
-  Stream<Entity?> watchEntityDetails(CategoryId categoryId, EntityId entityId) {
+  Stream<EntityDetail?> watchEntityDetails(
+    CategoryId categoryId,
+    EntityId entityId,
+  ) {
     return switch (categoryId) {
-      1 => ref
-          .read(residenceDetailsRepositoryProvider)
-          .watchResidenceDetails(categoryId, entityId),
-      2 => ref
-          .read(foodDetailsRepositoryProvider)
-          .watchFoodDetails(categoryId, entityId),
+      1 =>
+        ref
+            .read(residenceDetailsRepositoryProvider)
+            .watchResidenceDetails(categoryId, entityId),
+      2 =>
+        ref
+            .read(foodDetailsRepositoryProvider)
+            .watchFoodDetails(categoryId, entityId),
       _ => throw InvalidCategoryException(),
     };
   }
@@ -46,7 +53,7 @@ EntityDetailsService entityDetailsService(Ref ref) {
 }
 
 @riverpod
-Future<Entity?> fetchEntityDetails(
+Future<EntityDetail?> fetchEntityDetails(
   Ref ref,
   CategoryId categoryId,
   EntityId entityId,
@@ -56,7 +63,7 @@ Future<Entity?> fetchEntityDetails(
 }
 
 @riverpod
-Stream<Entity?> watchEntityDetails(
+Stream<EntityDetail?> watchEntityDetails(
   Ref ref,
   CategoryId categoryId,
   EntityId entityId,

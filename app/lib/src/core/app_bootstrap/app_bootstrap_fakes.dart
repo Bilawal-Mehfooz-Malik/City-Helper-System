@@ -10,6 +10,10 @@ import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
+import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
+import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
+import 'package:app/src/features/home_detail/data/food_details_repository.dart';
+import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
@@ -27,6 +31,10 @@ extension AppBootstrapFakes on AppBootStrap {
     final adsCarouselRepository = FakeAdsCarouselRepository(addDelay: false);
     final residenceRepository = FakeResidenceRepository(addDelay: false);
     final foodRepository = FakeFoodRepository(addDelay: false);
+    final foodDetailsRepository = FakeFoodDetailsRepository(addDelay: false);
+    final residenceDetailsRepository = FakeResidenceDetailsRepository(
+      addDelay: false,
+    );
 
     return ProviderContainer(
       overrides: [
@@ -45,6 +53,10 @@ extension AppBootstrapFakes on AppBootStrap {
         adsCarouselRepositoryProvider.overrideWithValue(adsCarouselRepository),
         residenceRepositoryProvider.overrideWithValue(residenceRepository),
         foodRepositoryProvider.overrideWithValue(foodRepository),
+        foodDetailsRepositoryProvider.overrideWithValue(foodDetailsRepository),
+        residenceDetailsRepositoryProvider.overrideWithValue(
+          residenceDetailsRepository,
+        ),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

@@ -18,11 +18,13 @@ class EntityCard extends StatelessWidget {
     required this.entity,
     this.allBorders = true,
     this.useElipsis = true,
+    this.onTap,
   });
 
   final Entity entity;
   final bool allBorders;
   final bool useElipsis;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,60 +34,66 @@ class EntityCard extends StatelessWidget {
     final isResidence = entity is Residence;
     final residence = isResidence ? entity as Residence : null;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        /// [ItemCoverImage]
-        Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            CustomImage(
-              borderRadius:
-                  allBorders ? BorderRadius.all(radius) : borderRadius,
-              imageUrl: entity.coverImageUrl,
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-              child: entity.isEntityOpen() ? OpenIndicator() : CloseIndicator(),
-            ),
-          ],
-        ),
-
-        /// [ItemDetails]
-        Padding(
-          padding: const EdgeInsets.all(Sizes.p8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// [ItemCoverImage]
+          Stack(
+            alignment: Alignment.bottomLeft,
             children: [
-              ItemTitleSection(entity: entity, useElipsis: useElipsis),
-              Text(
-                '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} '
-                    .hardcoded,
-                style: context.textTheme.labelLarge,
-                overflow: useElipsis ? TextOverflow.ellipsis : null,
+              CustomImage(
+                borderRadius: allBorders
+                    ? BorderRadius.all(radius)
+                    : borderRadius,
+                imageUrl: entity.coverImageUrl,
               ),
-
-              if (isResidence && residence != null)
-                Consumer(
-                  builder: (context, ref, child) {
-                    final priceFormatted = ref
-                        .watch(currencyFormatterProvider)
-                        .format(residence.price);
-                    return Text(
-                      '${context.loc.startsFrom} $priceFormatted',
-                      style: context.textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflow: useElipsis ? TextOverflow.ellipsis : null,
-                    );
-                  },
-                )
-              else
-                const SizedBox.shrink(),
+              Padding(
+                padding: EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+                child: entity.isEntityOpen()
+                    ? OpenIndicator()
+                    : CloseIndicator(),
+              ),
             ],
           ),
-        ),
-      ],
+
+          /// [ItemDetails]
+          Padding(
+            padding: const EdgeInsets.all(Sizes.p8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ItemTitleSection(entity: entity, useElipsis: useElipsis),
+                Text(
+                  '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} '
+                      .hardcoded,
+                  style: context.textTheme.labelLarge,
+                  overflow: useElipsis ? TextOverflow.ellipsis : null,
+                ),
+
+                if (isResidence && residence != null)
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final priceFormatted = ref
+                          .watch(currencyFormatterProvider)
+                          .format(residence.price);
+                      return Text(
+                        '${context.loc.startsFrom} $priceFormatted',
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: useElipsis ? TextOverflow.ellipsis : null,
+                      );
+                    },
+                  )
+                else
+                  const SizedBox.shrink(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

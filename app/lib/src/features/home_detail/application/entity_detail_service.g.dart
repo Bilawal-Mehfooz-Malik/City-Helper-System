@@ -27,7 +27,7 @@ final entityDetailsServiceProvider =
 // ignore: unused_element
 typedef EntityDetailsServiceRef = AutoDisposeProviderRef<EntityDetailsService>;
 String _$fetchEntityDetailsHash() =>
-    r'1ca48844ce2c884fdcd93978ba3bf2fb7261dc66';
+    r'1e2130e764c386478b7cb673352e3ce4a885ec38';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -55,7 +55,7 @@ class _SystemHash {
 const fetchEntityDetailsProvider = FetchEntityDetailsFamily();
 
 /// See also [fetchEntityDetails].
-class FetchEntityDetailsFamily extends Family<AsyncValue<Entity?>> {
+class FetchEntityDetailsFamily extends Family<AsyncValue<EntityDetail?>> {
   /// See also [fetchEntityDetails].
   const FetchEntityDetailsFamily();
 
@@ -87,7 +87,8 @@ class FetchEntityDetailsFamily extends Family<AsyncValue<Entity?>> {
 }
 
 /// See also [fetchEntityDetails].
-class FetchEntityDetailsProvider extends AutoDisposeFutureProvider<Entity?> {
+class FetchEntityDetailsProvider
+    extends AutoDisposeFutureProvider<EntityDetail?> {
   /// See also [fetchEntityDetails].
   FetchEntityDetailsProvider(int categoryId, String entityId)
     : this._internal(
@@ -125,7 +126,7 @@ class FetchEntityDetailsProvider extends AutoDisposeFutureProvider<Entity?> {
 
   @override
   Override overrideWith(
-    FutureOr<Entity?> Function(FetchEntityDetailsRef provider) create,
+    FutureOr<EntityDetail?> Function(FetchEntityDetailsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -143,7 +144,7 @@ class FetchEntityDetailsProvider extends AutoDisposeFutureProvider<Entity?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<Entity?> createElement() {
+  AutoDisposeFutureProviderElement<EntityDetail?> createElement() {
     return _FetchEntityDetailsProviderElement(this);
   }
 
@@ -166,7 +167,7 @@ class FetchEntityDetailsProvider extends AutoDisposeFutureProvider<Entity?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin FetchEntityDetailsRef on AutoDisposeFutureProviderRef<Entity?> {
+mixin FetchEntityDetailsRef on AutoDisposeFutureProviderRef<EntityDetail?> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
 
@@ -175,7 +176,7 @@ mixin FetchEntityDetailsRef on AutoDisposeFutureProviderRef<Entity?> {
 }
 
 class _FetchEntityDetailsProviderElement
-    extends AutoDisposeFutureProviderElement<Entity?>
+    extends AutoDisposeFutureProviderElement<EntityDetail?>
     with FetchEntityDetailsRef {
   _FetchEntityDetailsProviderElement(super.provider);
 
@@ -186,14 +187,14 @@ class _FetchEntityDetailsProviderElement
 }
 
 String _$watchEntityDetailsHash() =>
-    r'ebb2d05d0d2d5bdd09c7f414009925c6aa3f2ffa';
+    r'c0f915dffc0496a76433dc02c05fad5ff1d7cbf1';
 
 /// See also [watchEntityDetails].
 @ProviderFor(watchEntityDetails)
 const watchEntityDetailsProvider = WatchEntityDetailsFamily();
 
 /// See also [watchEntityDetails].
-class WatchEntityDetailsFamily extends Family<AsyncValue<Entity?>> {
+class WatchEntityDetailsFamily extends Family<AsyncValue<EntityDetail?>> {
   /// See also [watchEntityDetails].
   const WatchEntityDetailsFamily();
 
@@ -225,7 +226,8 @@ class WatchEntityDetailsFamily extends Family<AsyncValue<Entity?>> {
 }
 
 /// See also [watchEntityDetails].
-class WatchEntityDetailsProvider extends AutoDisposeStreamProvider<Entity?> {
+class WatchEntityDetailsProvider
+    extends AutoDisposeStreamProvider<EntityDetail?> {
   /// See also [watchEntityDetails].
   WatchEntityDetailsProvider(int categoryId, String entityId)
     : this._internal(
@@ -263,7 +265,7 @@ class WatchEntityDetailsProvider extends AutoDisposeStreamProvider<Entity?> {
 
   @override
   Override overrideWith(
-    Stream<Entity?> Function(WatchEntityDetailsRef provider) create,
+    Stream<EntityDetail?> Function(WatchEntityDetailsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -281,7 +283,7 @@ class WatchEntityDetailsProvider extends AutoDisposeStreamProvider<Entity?> {
   }
 
   @override
-  AutoDisposeStreamProviderElement<Entity?> createElement() {
+  AutoDisposeStreamProviderElement<EntityDetail?> createElement() {
     return _WatchEntityDetailsProviderElement(this);
   }
 
@@ -304,7 +306,7 @@ class WatchEntityDetailsProvider extends AutoDisposeStreamProvider<Entity?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin WatchEntityDetailsRef on AutoDisposeStreamProviderRef<Entity?> {
+mixin WatchEntityDetailsRef on AutoDisposeStreamProviderRef<EntityDetail?> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
 
@@ -313,7 +315,7 @@ mixin WatchEntityDetailsRef on AutoDisposeStreamProviderRef<Entity?> {
 }
 
 class _WatchEntityDetailsProviderElement
-    extends AutoDisposeStreamProviderElement<Entity?>
+    extends AutoDisposeStreamProviderElement<EntityDetail?>
     with WatchEntityDetailsRef {
   _WatchEntityDetailsProviderElement(super.provider);
 
