@@ -13,7 +13,7 @@ import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/features/home/presentation/widgets/filter_dialog.dart';
-import 'package:app/src/features/home_detail/presentation/entity_id_controller.dart';
+import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';

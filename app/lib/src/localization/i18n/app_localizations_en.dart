@@ -138,4 +138,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get close => 'close';
+
+  @override
+  String get contactOptions => 'Contact Options';
+
+  @override
+  String get locateONMap => 'Locate on Map';
+
+  @override
+  String get reviews => 'Reviews';
+
+  @override
+  String get furnished => 'Furnished';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get call => 'Call';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get website => 'Website';
+
+  @override
+  String get email => 'Email';
 }

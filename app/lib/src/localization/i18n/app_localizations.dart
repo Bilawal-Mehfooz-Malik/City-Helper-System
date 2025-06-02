@@ -351,6 +351,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'close'**
   String get close;
+
+  /// No description provided for @contactOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Options'**
+  String get contactOptions;
+
+  /// No description provided for @locateONMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate on Map'**
+  String get locateONMap;
+
+  /// No description provided for @reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviews;
+
+  /// No description provided for @furnished.
+  ///
+  /// In en, this message translates to:
+  /// **'Furnished'**
+  String get furnished;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @call.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get call;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get facebook;
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
+
+  /// No description provided for @website.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get website;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
 }
 
 class _AppLocalizationsDelegate

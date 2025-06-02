@@ -2,7 +2,7 @@ import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
-import 'package:app/src/features/home_detail/presentation/popular_detail_view_controller.dart';
+import 'package:app/src/features/home_detail/presentation/controllers/popular_detail_view_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +22,6 @@ class HomeDetailAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   void _onPressed(WidgetRef ref) {
     final isPopularDetail = ref.read(popularDetailViewControllerProvider);
-    debugPrint(isPopularDetail.toString());
-
     if (isPopularDetail == true) {
       ref
           .read(selectedCategoryViewControllerProvider.notifier)

@@ -34,7 +34,7 @@ class _HomeDetailCarouselSliderState extends State<HomeDetailCarouselSlider> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(Sizes.p16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

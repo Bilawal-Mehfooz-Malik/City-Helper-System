@@ -5,6 +5,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_app_bar.dart';
+import 'package:app/src/features/home_detail/presentation/entity_detail_content.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_skeleton.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_carousel_slider.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -46,8 +47,8 @@ class HomeDetailScreen extends ConsumerWidget {
           child: AsyncValueWidget(
             value: entityDetailsValue,
             loading: HomeDetailSkeleton(),
-            data: (data) {
-              if (data == null) {
+            data: (entity) {
+              if (entity == null) {
                 return EmptyPlaceholderWidget(
                   message: context.loc.somethingWentWrong,
                 );
@@ -55,10 +56,10 @@ class HomeDetailScreen extends ConsumerWidget {
 
               return SingleChildScrollView(
                 child: ResponsiveTwoColumnLayout(
-                  startContent: data.imageUrls.isEmpty
+                  startContent: entity.imageUrls.isEmpty
                       ? SizedBox.shrink()
-                      : HomeDetailCarouselSlider(images: data.imageUrls),
-                  endContent: Placeholder(),
+                      : HomeDetailCarouselSlider(images: entity.imageUrls),
+                  endContent: EntityDetailContent(entity: entity),
                   spacing: Sizes.p16,
                 ),
               );
