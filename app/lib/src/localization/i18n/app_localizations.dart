@@ -343,13 +343,13 @@ abstract class AppLocalizations {
   /// No description provided for @open.
   ///
   /// In en, this message translates to:
-  /// **'open'**
+  /// **'Open'**
   String get open;
 
   /// No description provided for @close.
   ///
   /// In en, this message translates to:
-  /// **'close'**
+  /// **'Close'**
   String get close;
 
   /// No description provided for @contactOptions.
@@ -423,6 +423,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email'**
   String get email;
+
+  /// No description provided for @opensAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens at'**
+  String get opensAt;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @closes.
+  ///
+  /// In en, this message translates to:
+  /// **'Closes'**
+  String get closes;
 }
 
 class _AppLocalizationsDelegate

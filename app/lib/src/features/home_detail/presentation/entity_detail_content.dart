@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/opening_hours_widget.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/currency_formatter.dart';
@@ -37,7 +38,6 @@ class EntityDetailContent extends ConsumerWidget {
               bottom: Sizes.p16,
             ),
             child: Column(
-              spacing: Sizes.p12,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (formattedPrice != null)
@@ -50,14 +50,24 @@ class EntityDetailContent extends ConsumerWidget {
 
                 LocationRow(entity: entity),
                 RatingWidget(entity: entity),
-                if (residence != null) FurnishedInfo(residence: residence),
-
+                if (residence != null) ...[
+                  gapH8,
+                  Divider(),
+                  gapH4,
+                  FurnishedInfo(residence: residence),
+                  gapH4,
+                  Divider(),
+                ],
+                OpeningHoursWidget(entity: entity),
+                Divider(),
+                gapH4,
                 Text(
                   context.loc.contactOptions,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                gapH4,
                 const ContactOptionsRow(),
               ],
             ),

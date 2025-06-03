@@ -87,9 +87,9 @@
   "@resetButton": {},
   "applyFiltersButton": "Apply Filters",
   "@applyFiltersButton": {},
-  "open":"open",
+  "open":"Open",
   "@open": {},
-  "close":"close",
+  "close":"Close",
   "@close": {},
 
   "contactOptions":"Contact Options",
@@ -115,5 +115,11 @@
   "website":"Website",
   "@website": {},
   "email":"Email",
-  "@email": {}
+  "@email": {},
+  "opensAt":"Opens at",
+  "@opensAt": {},
+  "closed":"Closed",
+  "@closed": {},
+  "closes":"Closes",
+  "@closes": {}
 }

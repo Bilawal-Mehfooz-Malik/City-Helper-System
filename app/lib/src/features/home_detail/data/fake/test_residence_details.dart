@@ -22,7 +22,13 @@ final List<ResidenceDetail> testResidenceDetails = [
     ownerId: 'owner_001',
     description:
         'A cozy, family-friendly apartment located in the heart of Sector F1.',
-    imageUrls: ['assets/images/residence/1.png'],
+    imageUrls: [
+      'assets/images/residence/1.png',
+      'assets/images/residence/1.png',
+      'assets/images/residence/1.png',
+      'assets/images/residence/1.png',
+      'assets/images/residence/1.png',
+    ],
     streetAddress: 'Street 10, Sector F1, Mirpur',
     phoneNumber: '03451234567',
     messagingNumber: '03451234567',

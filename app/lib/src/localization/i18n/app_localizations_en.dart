@@ -134,10 +134,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get applyFiltersButton => 'Apply Filters';
 
   @override
-  String get open => 'open';
+  String get open => 'Open';
 
   @override
-  String get close => 'close';
+  String get close => 'Close';
 
   @override
   String get contactOptions => 'Contact Options';
@@ -174,4 +174,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get email => 'Email';
+
+  @override
+  String get opensAt => 'Opens at';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get closes => 'Closes';
 }
