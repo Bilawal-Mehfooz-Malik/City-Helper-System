@@ -1,4 +1,5 @@
 import 'package:app/src/core/common_widgets/primary_button.dart';
+import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
@@ -33,15 +34,16 @@ class HomeDetailSkeleton extends StatelessWidget {
     return Skeletonizer(
       enabled: true,
       child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: Sizes.p8),
         child: Column(
           spacing: Sizes.p8,
           children: [
-            gapH4,
             ResponsiveTwoColumnLayout(
               startContent: HomeDetailTopLeftSkeleton(isSmall: isSmall),
               endContent: HomeDetailTopRightSkeleton(),
               spacing: isSmall ? Sizes.p4 : Sizes.p16,
             ),
+            HomeDetailBottomSectionSkeleton(),
           ],
         ),
       ),
@@ -194,6 +196,51 @@ class RightSectionContent extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomeDetailBottomSectionSkeleton extends StatelessWidget {
+  const HomeDetailBottomSectionSkeleton({super.key});
+
+  bool _isSmallScreen(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: size.width,
+      height: size.height,
+    );
+    return screenType == ScreenType.smallHeight ||
+        screenType == ScreenType.mobile;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isSmall = _isSmallScreen(context);
+
+    return ResponsiveCenter(
+      showCard: isSmall ? false : true,
+      paddingInsideCard: isSmall
+          ? EdgeInsets.zero
+          : EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16),
+      child: Skeletonizer(
+        enabled: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// Skeleton for the "Description" title
+            Bone.text(
+              words: 1,
+              style: context.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            gapH4,
+
+            /// Skeleton for the multiline description (simulated with several lines)
+            Bone.multiText(lines: 3),
+          ],
+        ),
       ),
     );
   }

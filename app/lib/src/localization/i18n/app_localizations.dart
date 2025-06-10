@@ -441,6 +441,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Closes'**
   String get closes;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @seeLess.
+  ///
+  /// In en, this message translates to:
+  /// **'See less'**
+  String get seeLess;
+
+  /// No description provided for @seeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get seeMore;
 }
 
 class _AppLocalizationsDelegate

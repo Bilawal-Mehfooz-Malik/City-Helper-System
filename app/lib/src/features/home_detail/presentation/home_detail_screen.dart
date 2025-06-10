@@ -69,10 +69,10 @@ class HomeDetailScreen extends ConsumerWidget {
               }
 
               return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: Sizes.p8),
                 child: Column(
                   spacing: Sizes.p8,
                   children: [
-                    gapH4,
                     ResponsiveTwoColumnLayout(
                       startContent: entity.imageUrls.isEmpty
                           ? SizedBox.shrink()
@@ -80,7 +80,7 @@ class HomeDetailScreen extends ConsumerWidget {
                       endContent: HomeDetailTopRightSection(entity: entity),
                       spacing: isSmall ? Sizes.p8 : Sizes.p16,
                     ),
-                    HomeDetailBottomSection(),
+                    HomeDetailBottomSection(entity: entity),
                   ],
                 ),
               );

@@ -121,5 +121,11 @@
   "closed":"Closed",
   "@closed": {},
   "closes":"Closes",
-  "@closes": {}
+  "@closes": {},
+  "description":"Description",
+  "@description": {},
+  "seeLess":"See less",
+  "@seeLess": {},
+  "seeMore":"See more",
+  "@seeMore": {}
 }

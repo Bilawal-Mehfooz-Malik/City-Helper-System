@@ -183,4 +183,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get closes => 'Closes';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get seeLess => 'See less';
+
+  @override
+  String get seeMore => 'See more';
 }
