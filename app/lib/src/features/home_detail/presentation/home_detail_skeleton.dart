@@ -1,4 +1,8 @@
+import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
@@ -29,23 +33,24 @@ class HomeDetailSkeleton extends StatelessWidget {
     return Skeletonizer(
       enabled: true,
       child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.p16),
-          child: ResponsiveTwoColumnLayout(
-            startContent: HomeDetailCarouselSliderSkeleton(isSmall: isSmall),
-            endContent: Bone.square(
-              borderRadius: BorderRadius.circular(Sizes.p12),
+        child: Column(
+          spacing: Sizes.p8,
+          children: [
+            gapH4,
+            ResponsiveTwoColumnLayout(
+              startContent: HomeDetailTopLeftSkeleton(isSmall: isSmall),
+              endContent: HomeDetailTopRightSkeleton(),
+              spacing: isSmall ? Sizes.p4 : Sizes.p16,
             ),
-            spacing: Sizes.p16,
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-class HomeDetailCarouselSliderSkeleton extends StatelessWidget {
-  const HomeDetailCarouselSliderSkeleton({super.key, required this.isSmall});
+class HomeDetailTopLeftSkeleton extends StatelessWidget {
+  const HomeDetailTopLeftSkeleton({super.key, required this.isSmall});
 
   final bool isSmall;
 
@@ -59,9 +64,9 @@ class HomeDetailCarouselSliderSkeleton extends StatelessWidget {
           aspectRatio: 16 / 9,
           child: Bone.square(borderRadius: BorderRadius.circular(Sizes.p12)),
         ),
-        gapH12, // Spacer
         // Thumbnail Navigation Skeleton (only if not small screen)
-        if (!isSmall)
+        if (!isSmall) ...[
+          gapH12, // Spacer
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -81,7 +86,115 @@ class HomeDetailCarouselSliderSkeleton extends StatelessWidget {
               },
             ),
           ),
+        ],
       ],
+    );
+  }
+}
+
+class HomeDetailTopRightSkeleton extends StatelessWidget {
+  const HomeDetailTopRightSkeleton({super.key});
+
+  bool _isSmallScreen(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: size.width,
+      height: size.height,
+    );
+    return screenType == ScreenType.smallHeight ||
+        screenType == ScreenType.mobile;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isSmall = _isSmallScreen(context);
+    return isSmall
+        ? RightSectionContent()
+        : Card(margin: EdgeInsets.zero, child: RightSectionContent());
+  }
+}
+
+class RightSectionContent extends StatelessWidget {
+  const RightSectionContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: Sizes.p40,
+        bottom: Sizes.p16,
+        left: Sizes.p8,
+        right: Sizes.p8,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Location Skeleton
+          Row(
+            spacing: Sizes.p4,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Bone.icon(size: 20),
+              Expanded(child: Bone.text(words: 5)),
+              PrimaryButton(text: BoneMock.name),
+            ],
+          ),
+          gapH8,
+          // Rating Skeleton
+          Wrap(
+            spacing: Sizes.p4,
+            runSpacing: Sizes.p4,
+            children: [Bone.icon(), Bone.text(words: 2)],
+          ),
+          gapH8,
+          Divider(),
+          gapH4,
+          // Furnished Skeleton
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [Bone.text(words: 1), Bone.text(words: 1)],
+          ),
+          gapH4,
+          Divider(),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: Sizes.p8,
+              horizontal: Sizes.p4,
+            ),
+            child: Row(
+              children: [
+                Bone.icon(size: 20),
+                gapW8,
+                Expanded(child: Bone.text(words: 3)),
+                Bone.icon(),
+              ],
+            ),
+          ),
+
+          Divider(),
+          gapH4,
+          Bone.text(words: 2),
+          gapH8,
+          Wrap(
+            spacing: Sizes.p8,
+            runSpacing: Sizes.p8,
+            children: [
+              DetailContactButton(
+                icon: Icons.phone,
+                color: context.colorScheme.primary,
+                label: context.loc.call,
+                onPressed: () {},
+              ),
+              DetailContactButton(
+                icon: Icons.chat,
+                color: context.colorScheme.primary,
+                label: context.loc.message,
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

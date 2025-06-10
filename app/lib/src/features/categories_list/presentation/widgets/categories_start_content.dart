@@ -13,7 +13,11 @@ class CategoriesStartContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: Sizes.p12, left: Sizes.p8),
+      padding: const EdgeInsets.only(
+        top: Sizes.p12,
+        left: Sizes.p8,
+        right: Sizes.p4,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

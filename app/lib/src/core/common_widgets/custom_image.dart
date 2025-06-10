@@ -39,16 +39,15 @@ class CustomImage extends StatelessWidget {
   ClipRRect _buildImageWidget() {
     final decoration = BorderRadius.only(
       topLeft: allBorders || borderTopLeft ? borderRadius.topLeft : Radius.zero,
-      topRight:
-          allBorders || borderTopRight ? borderRadius.topRight : Radius.zero,
-      bottomLeft:
-          allBorders || borderBottomLeft
-              ? borderRadius.bottomLeft
-              : Radius.zero,
-      bottomRight:
-          allBorders || borderBottomRight
-              ? borderRadius.bottomRight
-              : Radius.zero,
+      topRight: allBorders || borderTopRight
+          ? borderRadius.topRight
+          : Radius.zero,
+      bottomLeft: allBorders || borderBottomLeft
+          ? borderRadius.bottomLeft
+          : Radius.zero,
+      bottomRight: allBorders || borderBottomRight
+          ? borderRadius.bottomRight
+          : Radius.zero,
     );
     return ClipRRect(
       borderRadius: decoration,
