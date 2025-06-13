@@ -2,7 +2,9 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
+import 'package:app/src/features/home_detail/data/reviews_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/domain/review.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -70,4 +72,22 @@ Stream<EntityDetail?> watchEntityDetails(
 ) {
   final entityDetailsRepo = ref.watch(entityDetailsServiceProvider);
   return entityDetailsRepo.watchEntityDetails(categoryId, entityId);
+}
+
+/// Combines entity detail and reviews into one fetch
+@riverpod
+Future<(EntityDetail?, List<Review>)> fetchEntityWithReviews(
+  Ref ref,
+  (CategoryId, EntityId) args,
+) async {
+  final (categoryId, entityId) = args;
+
+  final entityFuture = ref.watch(
+    fetchEntityDetailsProvider(categoryId, entityId).future,
+  );
+  final reviewsFuture = ref.watch(fetchReviewsListProvider(entityId).future);
+
+  final results = await Future.wait([entityFuture, reviewsFuture]);
+
+  return (results[0] as EntityDetail?, results[1] as List<Review>);
 }

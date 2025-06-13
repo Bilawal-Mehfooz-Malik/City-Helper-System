@@ -42,8 +42,8 @@ class HomeDetailScreen extends ConsumerWidget {
       return EmptyPlaceholderWidget(message: context.loc.somethingWentWrong);
     }
 
-    final entityDetailsValue = ref.watch(
-      fetchEntityDetailsProvider(categoryId, entityId!),
+    final combinedValue = ref.watch(
+      fetchEntityWithReviewsProvider((categoryId, entityId!)),
     );
 
     final isSmall = _isSmallScreen(context);
@@ -59,9 +59,12 @@ class HomeDetailScreen extends ConsumerWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
           child: AsyncValueWidget(
-            value: entityDetailsValue,
+            value: combinedValue,
             loading: HomeDetailSkeleton(),
-            data: (entity) {
+            data: (tuple) {
+              final entity = tuple.$1;
+              final reviews = tuple.$2;
+
               if (entity == null) {
                 return EmptyPlaceholderWidget(
                   message: context.loc.somethingWentWrong,
@@ -80,7 +83,7 @@ class HomeDetailScreen extends ConsumerWidget {
                       endContent: HomeDetailTopRightSection(entity: entity),
                       spacing: isSmall ? Sizes.p8 : Sizes.p16,
                     ),
-                    HomeDetailBottomSection(entity: entity),
+                    HomeDetailBottomSection(entity: entity, reviews: reviews),
                   ],
                 ),
               );

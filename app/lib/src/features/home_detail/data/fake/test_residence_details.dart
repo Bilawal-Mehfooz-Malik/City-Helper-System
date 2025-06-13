@@ -1,4 +1,5 @@
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,6 +37,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 25000,
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_002',
@@ -62,6 +64,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 40000,
     isFurnished: true,
     genderPref: GenderPreference.maleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_003',
@@ -88,6 +91,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 8000,
     isFurnished: false,
     genderPref: GenderPreference.maleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_004',
@@ -114,6 +118,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 15000,
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_005',
@@ -141,6 +146,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 12000,
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_006',
@@ -167,6 +173,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 60000,
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_007',
@@ -193,6 +200,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 7000,
     isFurnished: false,
     genderPref: GenderPreference.maleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_008',
@@ -219,6 +227,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 28000,
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_009',
@@ -245,6 +254,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 11000,
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   ResidenceDetail(
     id: 'res_010',
@@ -271,6 +281,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     price: 35000,
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
 ];
 
@@ -282,4 +293,12 @@ final List<OpeningHours> _defaultOpeningHours = [
   OpeningHours(day: 'Friday', startTime: '9:00 AM', endTime: '9:00 PM'),
   OpeningHours(day: 'Saturday', startTime: '9:00 AM', endTime: '9:00 PM'),
   OpeningHours(day: 'Sunday', startTime: '9:00 AM', endTime: '9:00 PM'),
+];
+
+final List<RatingBreakdown> _defaultBreakdown = [
+  RatingBreakdown(starRating: 5, ratingCount: 30),
+  RatingBreakdown(starRating: 4, ratingCount: 15),
+  RatingBreakdown(starRating: 3, ratingCount: 5),
+  RatingBreakdown(starRating: 2, ratingCount: 3),
+  RatingBreakdown(starRating: 1, ratingCount: 2),
 ];

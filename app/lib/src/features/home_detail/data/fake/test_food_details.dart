@@ -1,6 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home_detail/domain/food_detail.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final List<FoodDetail> testFoodDetails = [
@@ -28,6 +29,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '123-456-7890',
     messagingNumber: '123-456-7890',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '2',
@@ -52,6 +54,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '234-567-8901',
     messagingNumber: '234-567-8901',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '3',
@@ -76,6 +79,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '345-678-9012',
     messagingNumber: '345-678-9012',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '4',
@@ -100,6 +104,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '456-789-0123',
     messagingNumber: '456-789-0123',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '5',
@@ -124,6 +129,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '567-890-1234',
     messagingNumber: '567-890-1234',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '6',
@@ -148,6 +154,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '678-901-2345',
     messagingNumber: '678-901-2345',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '7',
@@ -172,6 +179,7 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '789-012-3456',
     messagingNumber: '789-012-3456',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
   FoodDetail(
     id: '8',
@@ -196,7 +204,16 @@ final List<FoodDetail> testFoodDetails = [
     phoneNumber: '890-123-4567',
     messagingNumber: '890-123-4567',
     genderPref: GenderPreference.familyFriendly,
+    ratingBreakdown: _defaultBreakdown,
   ),
+];
+
+final List<RatingBreakdown> _defaultBreakdown = [
+  RatingBreakdown(starRating: 5, ratingCount: 30),
+  RatingBreakdown(starRating: 4, ratingCount: 15),
+  RatingBreakdown(starRating: 3, ratingCount: 5),
+  RatingBreakdown(starRating: 2, ratingCount: 3),
+  RatingBreakdown(starRating: 1, ratingCount: 2),
 ];
 
 final List<OpeningHours> _defaultOpeningHours = [

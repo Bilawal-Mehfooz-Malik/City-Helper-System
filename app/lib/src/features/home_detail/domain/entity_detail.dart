@@ -25,6 +25,7 @@ abstract class EntityDetail extends Entity {
     required super.latLng,
     required super.avgRating,
     required super.totalReviews,
+    required super.ratingBreakdown,
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,

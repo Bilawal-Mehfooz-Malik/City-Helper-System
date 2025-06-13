@@ -459,6 +459,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See more'**
   String get seeMore;
+
+  /// No description provided for @ratingAndReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating & Reviews'**
+  String get ratingAndReviews;
 }
 
 class _AppLocalizationsDelegate

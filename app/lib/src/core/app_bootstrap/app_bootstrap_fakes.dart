@@ -12,8 +12,10 @@ import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
+import 'package:app/src/features/home_detail/data/fake/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
+import 'package:app/src/features/home_detail/data/reviews_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
@@ -35,6 +37,7 @@ extension AppBootstrapFakes on AppBootStrap {
     final residenceDetailsRepository = FakeResidenceDetailsRepository(
       addDelay: false,
     );
+    final reviewsRepository = FakeReviewsRepository(addDelay: false);
 
     return ProviderContainer(
       overrides: [
@@ -57,6 +60,7 @@ extension AppBootstrapFakes on AppBootStrap {
         residenceDetailsRepositoryProvider.overrideWithValue(
           residenceDetailsRepository,
         ),
+        reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

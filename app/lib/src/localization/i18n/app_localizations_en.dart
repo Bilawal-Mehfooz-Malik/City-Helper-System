@@ -192,4 +192,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get seeMore => 'See more';
+
+  @override
+  String get ratingAndReviews => 'Rating & Reviews';
 }

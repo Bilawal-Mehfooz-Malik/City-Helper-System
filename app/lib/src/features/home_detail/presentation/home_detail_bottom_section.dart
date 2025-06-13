@@ -3,14 +3,20 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/domain/review.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/description_widget.dart';
+import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeDetailBottomSection extends ConsumerWidget {
+class HomeDetailBottomSection extends StatelessWidget {
   final EntityDetail entity;
-  const HomeDetailBottomSection({super.key, required this.entity});
+  final List<Review> reviews;
+  const HomeDetailBottomSection({
+    super.key,
+    required this.entity,
+    required this.reviews,
+  });
 
   bool _isSmallScreen(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -23,9 +29,32 @@ class HomeDetailBottomSection extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final isSmall = _isSmallScreen(context);
 
+    return Column(
+      spacing: Sizes.p8,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DescriptionSection(entity: entity, isSmall: isSmall),
+        ReviewSection(entity: entity, isSmall: isSmall, reviews: reviews),
+      ],
+    );
+  }
+}
+
+class DescriptionSection extends StatelessWidget {
+  const DescriptionSection({
+    super.key,
+    required this.entity,
+    required this.isSmall,
+  });
+
+  final EntityDetail entity;
+  final bool isSmall;
+
+  @override
+  Widget build(BuildContext context) {
     return ResponsiveCenter(
       showCard: isSmall ? false : true,
       paddingInsideCard: isSmall
@@ -34,7 +63,6 @@ class HomeDetailBottomSection extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Description Title
           Text(
             context.loc.description,
             style: context.textTheme.titleLarge!.copyWith(

@@ -1,6 +1,7 @@
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -15,6 +16,7 @@ abstract class Entity {
   final LatLng latLng;
   final double avgRating;
   final int totalReviews;
+  final List<RatingBreakdown> ratingBreakdown;
   final bool isPopular;
   final List<OpeningHours> openingHours;
   final EntityStatus entityStatus;
@@ -31,6 +33,7 @@ abstract class Entity {
     required this.latLng,
     required this.avgRating,
     required this.totalReviews,
+    required this.ratingBreakdown,
     required this.isPopular,
     required this.openingHours,
     required this.entityStatus,

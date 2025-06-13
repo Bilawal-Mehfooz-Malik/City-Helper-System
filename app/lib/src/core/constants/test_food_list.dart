@@ -1,6 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final List<Food> testFoods = [
@@ -20,6 +21,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 80),
+      RatingBreakdown(starRating: 4, ratingCount: 25),
+      RatingBreakdown(starRating: 3, ratingCount: 10),
+      RatingBreakdown(starRating: 2, ratingCount: 3),
+      RatingBreakdown(starRating: 1, ratingCount: 2),
+    ],
   ),
   Food(
     id: '2',
@@ -37,6 +45,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 60),
+      RatingBreakdown(starRating: 4, ratingCount: 20),
+      RatingBreakdown(starRating: 3, ratingCount: 10),
+      RatingBreakdown(starRating: 2, ratingCount: 5),
+      RatingBreakdown(starRating: 1, ratingCount: 3),
+    ],
   ),
   Food(
     id: '3',
@@ -54,6 +69,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 110),
+      RatingBreakdown(starRating: 4, ratingCount: 25),
+      RatingBreakdown(starRating: 3, ratingCount: 10),
+      RatingBreakdown(starRating: 2, ratingCount: 3),
+      RatingBreakdown(starRating: 1, ratingCount: 2),
+    ],
   ),
   Food(
     id: '4',
@@ -71,6 +93,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 50),
+      RatingBreakdown(starRating: 4, ratingCount: 20),
+      RatingBreakdown(starRating: 3, ratingCount: 5),
+      RatingBreakdown(starRating: 2, ratingCount: 3),
+      RatingBreakdown(starRating: 1, ratingCount: 2),
+    ],
   ),
   Food(
     id: '5',
@@ -88,6 +117,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 150),
+      RatingBreakdown(starRating: 4, ratingCount: 30),
+      RatingBreakdown(starRating: 3, ratingCount: 10),
+      RatingBreakdown(starRating: 2, ratingCount: 5),
+      RatingBreakdown(starRating: 1, ratingCount: 5),
+    ],
   ),
   Food(
     id: '6',
@@ -105,6 +141,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 35),
+      RatingBreakdown(starRating: 4, ratingCount: 20),
+      RatingBreakdown(starRating: 3, ratingCount: 10),
+      RatingBreakdown(starRating: 2, ratingCount: 7),
+      RatingBreakdown(starRating: 1, ratingCount: 3),
+    ],
   ),
   Food(
     id: '7',
@@ -122,6 +165,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 40),
+      RatingBreakdown(starRating: 4, ratingCount: 15),
+      RatingBreakdown(starRating: 3, ratingCount: 5),
+      RatingBreakdown(starRating: 2, ratingCount: 3),
+      RatingBreakdown(starRating: 1, ratingCount: 2),
+    ],
   ),
   Food(
     id: '8',
@@ -139,23 +189,13 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-  ),
-  Food(
-    id: '2',
-    categoryId: 2,
-    subCategoryId: 6,
-    coverImageUrl: 'assets/images/food/2.png',
-    name: 'Spice Hub',
-    cityName: 'City B',
-    sectorName: 'A2',
-    latLng: LatLng(40.7128, -74.0060),
-    avgRating: 4.2,
-    totalReviews: 98,
-    isPopular: true,
-    openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
-    genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
+    ratingBreakdown: [
+      RatingBreakdown(starRating: 5, ratingCount: 30),
+      RatingBreakdown(starRating: 4, ratingCount: 15),
+      RatingBreakdown(starRating: 3, ratingCount: 5),
+      RatingBreakdown(starRating: 2, ratingCount: 3),
+      RatingBreakdown(starRating: 1, ratingCount: 2),
+    ],
   ),
 ];
 

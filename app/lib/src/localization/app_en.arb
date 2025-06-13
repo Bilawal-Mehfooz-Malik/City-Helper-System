@@ -127,5 +127,7 @@
   "seeLess":"See less",
   "@seeLess": {},
   "seeMore":"See more",
-  "@seeMore": {}
+  "@seeMore": {},
+  "ratingAndReviews":"Rating & Reviews",
+  "@ratingAndReviews": {}
 }
