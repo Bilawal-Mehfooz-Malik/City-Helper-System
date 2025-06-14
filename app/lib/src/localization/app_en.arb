@@ -91,6 +91,8 @@
   "@open": {},
   "close":"Close",
   "@close": {},
+  "somethingWentWrongTryAgain":"Something went wrong. Please try again",
+  "@somethingWentWrongTryAgain": {},
 
   "contactOptions":"Contact Options",
   "@contactOptions": {},
@@ -129,5 +131,17 @@
   "seeMore":"See more",
   "@seeMore": {},
   "ratingAndReviews":"Rating & Reviews",
-  "@ratingAndReviews": {}
+  "@ratingAndReviews": {},
+  "latest": "Latest",
+  "@latest": {},
+  "oldest": "Oldest",
+  "@oldest": {},
+  "highest_rating": "Highest Rating",
+  "@highest_rating": {},
+  "lowest_rating": "Lowest Rating",
+  "@lowest_rating": {},
+  "no_reviews_found": "No reviews found for this rating",
+  "@no_reviews_found": {},
+  "none": "None",
+  "@none": {}
 }

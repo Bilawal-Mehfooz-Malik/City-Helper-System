@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/opening_hours_widget.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
@@ -38,7 +39,7 @@ class HomeDetailTopRightSection extends StatelessWidget {
         : Card(
             margin: EdgeInsets.zero,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
               child: HomeDetailTopRightContent(entity: entity),
             ),
           );
@@ -63,6 +64,7 @@ class HomeDetailTopRightContent extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(top: Sizes.p40, bottom: Sizes.p16),
           child: Column(
+            spacing: Sizes.p4,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (formattedPrice != null) ...[
@@ -72,18 +74,14 @@ class HomeDetailTopRightContent extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                gapH8,
               ],
 
               LocationRow(entity: entity),
-              gapH8,
-              RatingWidget(entity: entity),
+              Divider(),
+              _RatingRow(entity: entity),
               if (residence != null) ...[
-                gapH8,
                 Divider(),
-                gapH4,
                 FurnishedInfo(residence: residence),
-                gapH4,
                 Divider(),
               ],
               OpeningHoursWidget(entity: entity),
@@ -94,14 +92,13 @@ class HomeDetailTopRightContent extends ConsumerWidget {
                   entity.email != null ||
                   entity.websiteUrl != null) ...[
                 Divider(),
-                gapH4,
                 Text(
                   context.loc.contactOptions,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                gapH8,
+                gapH4,
                 ContactOptionsRow(entity: entity),
               ],
             ],
@@ -120,6 +117,41 @@ class HomeDetailTopRightContent extends ConsumerWidget {
               borderRadius: BorderRadius.circular(Sizes.p16),
             ),
             child: Text(context.loc.popular),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RatingRow extends StatelessWidget {
+  const _RatingRow({required this.entity});
+
+  final EntityDetail entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: Sizes.p8,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Wrap(
+            spacing: Sizes.p4,
+            runSpacing: Sizes.p4,
+            children: [
+              Icon(Icons.star, color: Colors.amber, size: 20),
+              Text('${entity.avgRating}'),
+              Text('(${entity.totalReviews} ${context.loc.reviews})'.hardcoded),
+            ],
+          ),
+        ),
+        Flexible(
+          child: CustomTextButton(
+            text: 'Write a review'.hardcoded,
+            onPressed: () {
+              // Navigate to review writing page
+            },
           ),
         ),
       ],
@@ -149,25 +181,6 @@ class LocationRow extends StatelessWidget {
           onPressed: () => launchGoogleMaps(entity.latLng, context),
           text: context.loc.locateONMap,
         ),
-      ],
-    );
-  }
-}
-
-class RatingWidget extends StatelessWidget {
-  final EntityDetail entity;
-
-  const RatingWidget({required this.entity, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: Sizes.p4,
-      runSpacing: Sizes.p4,
-      children: [
-        Icon(Icons.star, color: Colors.amber),
-        Text('${entity.avgRating}'),
-        Text('(${entity.totalReviews} ${context.loc.reviews})'.hardcoded),
       ],
     );
   }

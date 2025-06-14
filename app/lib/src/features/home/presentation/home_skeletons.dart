@@ -63,6 +63,7 @@ class PopularEntitesSkeletonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: Sizes.p4,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Skeletonizer(
           enabled: true,

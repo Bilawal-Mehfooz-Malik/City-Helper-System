@@ -1,8 +1,10 @@
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/review.dart';
+import 'package:app/src/features/home_detail/presentation/review_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,38 @@ class ReviewSection extends StatelessWidget {
   });
 
   final bool isSmall;
+  void _goToReviewList(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenType = ScreenType.determine(
+      width: screenSize.width,
+      height: screenSize.height,
+    );
+
+    if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
+      showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: 'Reviews',
+        pageBuilder: (_, __, ___) {
+          return Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: screenSize.width * 0.45,
+              height: double.infinity,
+              child: ReviewListScreen(entity: entity),
+            ),
+          );
+        },
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          fullscreenDialog: true,
+          builder: (context) => ReviewListScreen(entity: entity),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +73,15 @@ class ReviewSection extends StatelessWidget {
             ),
           ),
           gapH16,
-          RatingGraph(entity: entity),
+          InkWell(
+            onTap: () => _goToReviewList(context),
+            child: RatingGraph(entity: entity),
+          ),
           gapH16,
           ReviewsListView(reviews: reviews),
           Center(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () => _goToReviewList(context),
               child: Text(context.loc.seeMore),
             ),
           ),

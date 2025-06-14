@@ -352,6 +352,12 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get close;
 
+  /// No description provided for @somethingWentWrongTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again'**
+  String get somethingWentWrongTryAgain;
+
   /// No description provided for @contactOptions.
   ///
   /// In en, this message translates to:
@@ -465,6 +471,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rating & Reviews'**
   String get ratingAndReviews;
+
+  /// No description provided for @latest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get latest;
+
+  /// No description provided for @oldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest'**
+  String get oldest;
+
+  /// No description provided for @highest_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Rating'**
+  String get highest_rating;
+
+  /// No description provided for @lowest_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest Rating'**
+  String get lowest_rating;
+
+  /// No description provided for @no_reviews_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews found for this rating'**
+  String get no_reviews_found;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
 }
 
 class _AppLocalizationsDelegate

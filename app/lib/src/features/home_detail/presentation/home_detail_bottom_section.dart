@@ -36,19 +36,15 @@ class HomeDetailBottomSection extends StatelessWidget {
       spacing: Sizes.p8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DescriptionSection(entity: entity, isSmall: isSmall),
+        _DescriptionSection(entity: entity, isSmall: isSmall),
         ReviewSection(entity: entity, isSmall: isSmall, reviews: reviews),
       ],
     );
   }
 }
 
-class DescriptionSection extends StatelessWidget {
-  const DescriptionSection({
-    super.key,
-    required this.entity,
-    required this.isSmall,
-  });
+class _DescriptionSection extends StatelessWidget {
+  const _DescriptionSection({required this.entity, required this.isSmall});
 
   final EntityDetail entity;
   final bool isSmall;

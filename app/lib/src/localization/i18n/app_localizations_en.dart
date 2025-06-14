@@ -140,6 +140,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get close => 'Close';
 
   @override
+  String get somethingWentWrongTryAgain =>
+      'Something went wrong. Please try again';
+
+  @override
   String get contactOptions => 'Contact Options';
 
   @override
@@ -195,4 +199,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ratingAndReviews => 'Rating & Reviews';
+
+  @override
+  String get latest => 'Latest';
+
+  @override
+  String get oldest => 'Oldest';
+
+  @override
+  String get highest_rating => 'Highest Rating';
+
+  @override
+  String get lowest_rating => 'Lowest Rating';
+
+  @override
+  String get no_reviews_found => 'No reviews found for this rating';
+
+  @override
+  String get none => 'None';
 }

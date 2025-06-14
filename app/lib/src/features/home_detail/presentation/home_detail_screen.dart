@@ -8,7 +8,7 @@ import 'package:app/src/features/home_detail/application/entity_detail_service.d
 import 'package:app/src/features/home_detail/presentation/home_detail_app_bar.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_bottom_section.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_top_right_section.dart';
-import 'package:app/src/features/home_detail/presentation/home_detail_skeleton.dart';
+import 'package:app/src/features/home_detail/presentation/skeletons/home_detail_skeleton.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_top_left_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';

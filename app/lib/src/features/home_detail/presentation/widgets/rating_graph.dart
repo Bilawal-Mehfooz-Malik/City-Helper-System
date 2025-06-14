@@ -12,16 +12,32 @@ class RatingGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LeftRatingGraphSection(entity: entity),
-          gapW32,
-          RightRatingGraphSection(entity: entity),
-        ],
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < 300;
+
+        if (isNarrow) {
+          // Small screen → stack vertically
+          return Column(
+            spacing: Sizes.p16,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LeftRatingGraphSection(entity: entity),
+              RightRatingGraphSection(entity: entity),
+            ],
+          );
+        }
+
+        // Large screen → show side by side
+        return Row(
+          spacing: Sizes.p32,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LeftRatingGraphSection(entity: entity),
+            Expanded(child: RightRatingGraphSection(entity: entity)),
+          ],
+        );
+      },
     );
   }
 }
@@ -67,39 +83,36 @@ class RightRatingGraphSection extends StatelessWidget {
     final totalRatings = entity.totalReviews;
     final breakdownList = entity.ratingBreakdown;
 
-    return Expanded(
-      child: Column(
-        children: List.generate(5, (index) {
-          final star = 5 - index;
+    return Column(
+      children: List.generate(5, (index) {
+        final star = 5 - index;
 
-          // Find matching RatingBreakdown or default to 0
-          final rating = breakdownList.firstWhere(
-            (r) => r.starRating == star,
-            orElse: () => RatingBreakdown(starRating: star, ratingCount: 0),
-          );
+        final rating = breakdownList.firstWhere(
+          (r) => r.starRating == star,
+          orElse: () => RatingBreakdown(starRating: star, ratingCount: 0),
+        );
 
-          final percentage = rating.percentageOf(totalRatings);
+        final percentage = rating.percentageOf(totalRatings);
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Row(
-              children: [
-                Text('$star'),
-                gapW8,
-                Expanded(
-                  child: LinearProgressIndicator(
-                    minHeight: 8,
-                    value: percentage / 100,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Row(
+            children: [
+              Text('$star'),
+              gapW8,
+              Expanded(
+                child: LinearProgressIndicator(
+                  minHeight: 8,
+                  value: percentage / 100,
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                gapW8,
-                Text('${percentage.toStringAsFixed(0)}%'),
-              ],
-            ),
-          );
-        }),
-      ),
+              ),
+              gapW8,
+              Text('${percentage.toStringAsFixed(0)}%'),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
