@@ -8,13 +8,16 @@ import 'package:app/src/core/utils/url_launcher_helpers.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
+import 'package:app/src/features/home_detail/presentation/leave_review_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/outlined_contact_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeDetailTopRightSection extends StatelessWidget {
   final EntityDetail entity;
@@ -35,21 +38,29 @@ class HomeDetailTopRightSection extends StatelessWidget {
     final isSmall = _isSmallScreen(context);
 
     return isSmall
-        ? HomeDetailTopRightContent(entity: entity)
+        ? HomeDetailTopRightContent(entity: entity, isSmall: isSmall)
         : Card(
             margin: EdgeInsets.zero,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-              child: HomeDetailTopRightContent(entity: entity),
+              child: HomeDetailTopRightContent(
+                entity: entity,
+                isSmall: isSmall,
+              ),
             ),
           );
   }
 }
 
 class HomeDetailTopRightContent extends ConsumerWidget {
-  final EntityDetail entity;
+  const HomeDetailTopRightContent({
+    super.key,
+    required this.entity,
+    required this.isSmall,
+  });
 
-  const HomeDetailTopRightContent({super.key, required this.entity});
+  final EntityDetail entity;
+  final bool isSmall;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,11 +85,12 @@ class HomeDetailTopRightContent extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                gapH4,
               ],
 
               LocationRow(entity: entity),
               Divider(),
-              _RatingRow(entity: entity),
+              _RatingRow(entity: entity, isSmall: isSmall),
               if (residence != null) ...[
                 Divider(),
                 FurnishedInfo(residence: residence),
@@ -125,9 +137,48 @@ class HomeDetailTopRightContent extends ConsumerWidget {
 }
 
 class _RatingRow extends StatelessWidget {
-  const _RatingRow({required this.entity});
+  const _RatingRow({required this.entity, required this.isSmall});
 
+  final bool isSmall;
   final EntityDetail entity;
+
+  void _showLoginDialog(BuildContext context) {
+    // TODO: ADD IF NOT LOGGED IN IT SHOULD SHOW DIALOG
+    // showAlertDialog(
+    //   context: context,
+    //   title: context.loc.loginRequired,
+    //   content: context.loc.loginRequiredContent,
+    //   cancelActionText: context.loc.cancel,
+    //   defaultActionText: context.loc.logIn,
+    //   useFilledButton: true,
+    // );
+
+    if (isSmall) {
+      context.goNamed(
+        AppRoute.leaveReview.name,
+        pathParameters: {
+          'categoryId': entity.categoryId.toString(),
+          'entityId': entity.id,
+        },
+      );
+    } else {
+      showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: 'Leave a Review',
+        pageBuilder: (_, __, ___) {
+          return Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width * 0.45,
+              height: double.infinity,
+              child: LeaveReviewScreen(entityId: entity.id),
+            ),
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,10 +199,8 @@ class _RatingRow extends StatelessWidget {
         ),
         Flexible(
           child: CustomTextButton(
-            text: 'Write a review'.hardcoded,
-            onPressed: () {
-              // Navigate to review writing page
-            },
+            text: context.loc.writeAReview,
+            onPressed: () => _showLoginDialog(context),
           ),
         ),
       ],

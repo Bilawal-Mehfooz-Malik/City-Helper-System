@@ -507,6 +507,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None'**
   String get none;
+
+  /// No description provided for @writeAReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a review'**
+  String get writeAReview;
+
+  /// No description provided for @loginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get loginRequired;
+
+  /// No description provided for @loginRequiredContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You need to be logged in to write a review.'**
+  String get loginRequiredContent;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @logIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get logIn;
+
+  /// No description provided for @reviewedBeforeContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You reviewed this before. Submit again to edit.'**
+  String get reviewedBeforeContent;
+
+  /// No description provided for @yourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review (optional)'**
+  String get yourReview;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @leaveAREview.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a Review'**
+  String get leaveAREview;
 }
 
 class _AppLocalizationsDelegate

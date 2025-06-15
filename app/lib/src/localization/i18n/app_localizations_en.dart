@@ -217,4 +217,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get none => 'None';
+
+  @override
+  String get writeAReview => 'Write a review';
+
+  @override
+  String get loginRequired => 'Login Required';
+
+  @override
+  String get loginRequiredContent =>
+      'You need to be logged in to write a review.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get logIn => 'Login';
+
+  @override
+  String get reviewedBeforeContent =>
+      'You reviewed this before. Submit again to edit.';
+
+  @override
+  String get yourReview => 'Your review (optional)';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get leaveAREview => 'Leave a Review';
 }
