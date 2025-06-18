@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/opening_hours_widget.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
@@ -6,6 +7,7 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/currency_formatter.dart';
 import 'package:app/src/core/utils/url_launcher_helpers.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/features/home_detail/presentation/leave_review_screen.dart';
@@ -142,17 +144,12 @@ class _RatingRow extends StatelessWidget {
   final bool isSmall;
   final EntityDetail entity;
 
-  void _showLoginDialog(BuildContext context) {
-    // TODO: ADD IF NOT LOGGED IN IT SHOULD SHOW DIALOG
-    // showAlertDialog(
-    //   context: context,
-    //   title: context.loc.loginRequired,
-    //   content: context.loc.loginRequiredContent,
-    //   cancelActionText: context.loc.cancel,
-    //   defaultActionText: context.loc.logIn,
-    //   useFilledButton: true,
-    // );
+  void _goToLoginScreen(BuildContext context) {
+    Navigator.of(context).pop();
+    context.pushNamed(AppRoute.auth.name);
+  }
 
+  void _goToWriteReviewScreen(BuildContext context) {
     if (isSmall) {
       context.goNamed(
         AppRoute.leaveReview.name,
@@ -165,7 +162,7 @@ class _RatingRow extends StatelessWidget {
       showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel: 'Leave a Review',
+        barrierLabel: context.loc.leaveAREview,
         pageBuilder: (_, __, ___) {
           return Align(
             alignment: Alignment.centerRight,
@@ -177,6 +174,23 @@ class _RatingRow extends StatelessWidget {
           );
         },
       );
+    }
+  }
+
+  void _checkIsUserLoggedIn(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authStateChangesProvider).value;
+    if (user == null) {
+      showAlertDialog(
+        context: context,
+        useFilledButton: true,
+        title: context.loc.loginRequired,
+        content: context.loc.loginRequiredContent,
+        cancelActionText: context.loc.cancel,
+        defaultActionText: context.loc.logIn,
+        defaultAction: () => _goToLoginScreen(context),
+      );
+    } else {
+      _goToWriteReviewScreen(context);
     }
   }
 
@@ -198,9 +212,11 @@ class _RatingRow extends StatelessWidget {
           ),
         ),
         Flexible(
-          child: CustomTextButton(
-            text: context.loc.writeAReview,
-            onPressed: () => _showLoginDialog(context),
+          child: Consumer(
+            builder: (context, ref, child) => CustomTextButton(
+              text: context.loc.writeAReview,
+              onPressed: () => _checkIsUserLoggedIn(context, ref),
+            ),
           ),
         ),
       ],

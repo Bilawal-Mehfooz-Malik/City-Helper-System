@@ -32,11 +32,14 @@ class PrimaryButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
       ),
-      onPressed: isDisabled ? null : onPressed,
-      child:
-          isLoading
-              ? const CenteredProgressIndicator()
-              : Text(text, textAlign: TextAlign.center),
+      onPressed: isDisabled || isLoading ? null : onPressed,
+      child: isLoading
+          ? SizedBox(
+              height: 30,
+              width: 30,
+              child: const CenteredProgressIndicator(),
+            )
+          : Text(text, textAlign: TextAlign.center),
     );
   }
 }

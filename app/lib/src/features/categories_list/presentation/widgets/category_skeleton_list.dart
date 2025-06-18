@@ -27,24 +27,19 @@ class CategorySkeletonList extends StatelessWidget {
       child: ListView.builder(
         itemCount: itemCount,
         shrinkWrap: shrinkWrap,
-        padding:
-            usePadding
-                ? EdgeInsets.symmetric(
-                  vertical: Sizes.p8,
-                  horizontal: Sizes.p16,
-                )
-                : null,
-        itemBuilder:
-            (_, __) => CategoryCard(
-              isListTile: useListTile,
-              category: Category(
-                id: 1,
-                name: BoneMock.name,
-                description: BoneMock.words(8),
-                icon: Icons.category,
-                sortOrder: 1,
-              ),
-            ),
+        padding: usePadding
+            ? EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16)
+            : null,
+        itemBuilder: (_, __) => CategoryCard(
+          isListTile: useListTile,
+          category: Category(
+            id: 1,
+            name: BoneMock.name,
+            description: BoneMock.words(8),
+            icon: Icons.category,
+            sortOrder: 1,
+          ),
+        ),
       ),
     );
   }
@@ -55,23 +50,32 @@ class CategoriesSkeletonStartContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: Sizes.p12, left: Sizes.p8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
-            child: Text(
-              context.loc.categories,
-              style: context.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
+    return Skeletonizer(
+      enabled: true,
+      child: Padding(
+        padding: const EdgeInsets.only(top: Sizes.p12, left: Sizes.p8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    context.loc.categories,
+                    style: context.textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Bone.icon(),
+                ],
               ),
             ),
-          ),
-          gapH8,
-          const CategorySkeletonList(useListTile: true),
-        ],
+            gapH8,
+            const CategorySkeletonList(useListTile: true),
+          ],
+        ),
       ),
     );
   }

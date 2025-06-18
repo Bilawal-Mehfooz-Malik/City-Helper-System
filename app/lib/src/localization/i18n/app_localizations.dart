@@ -561,6 +561,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave a Review'**
   String get leaveAREview;
+
+  /// No description provided for @enterPhoneNum.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get enterPhoneNum;
+
+  /// No description provided for @confirmationCodeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send you a confirmation code.'**
+  String get confirmationCodeMessage;
+
+  /// No description provided for @phoneNum.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNum;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// No description provided for @confirmCode_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter confirmation code'**
+  String get confirmCode_title;
+
+  /// No description provided for @confirmCode_changeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get confirmCode_changeNumber;
+
+  /// No description provided for @confirmCode_verifyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get confirmCode_verifyButton;
+
+  /// Message stating the confirmation code was sent
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a 6-digit code to {phone}.'**
+  String confirmCode_sentMessage(Object phone);
+
+  /// Countdown before user can resend code
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {seconds}s'**
+  String confirmCode_resendCountdown(Object seconds);
+
+  /// No description provided for @confirmCode_resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get confirmCode_resendCode;
+
+  /// No description provided for @confirmCode_resendSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code resent successfully.'**
+  String get confirmCode_resendSuccess;
+
+  /// Welcome title on the profile setup screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get profile_welcome;
+
+  /// Subtitle under welcome heading
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s get your profile set up.'**
+  String get profile_subtitle;
+
+  /// Button text for uploading profile photo
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Photo'**
+  String get profile_uploadPhoto;
+
+  /// Label for full name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get profile_fullNameLabel;
+
+  /// Hint inside the full name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get profile_fullNameHint;
+
+  /// Text on the finish signup button
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Signup'**
+  String get profile_finishSignup;
+
+  /// No description provided for @profile_createSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile created successfully'**
+  String get profile_createSuccessMessage;
 }
 
 class _AppLocalizationsDelegate

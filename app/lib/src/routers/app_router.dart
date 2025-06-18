@@ -1,4 +1,7 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/auth/presentation/auth_screen.dart';
+import 'package:app/src/features/auth/presentation/otp_screen.dart';
+import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
@@ -25,6 +28,9 @@ enum AppRoute {
   popular,
   popularDetail,
   leaveReview,
+  auth,
+  otp,
+  profile,
   loading,
   pageNotFound,
 }
@@ -128,6 +134,30 @@ GoRouter appRouter(Ref ref) {
                         child: LeaveReviewScreen(entityId: entityId),
                       );
                     },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'auth',
+            name: AppRoute.auth.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: AuthScreen()),
+            routes: [
+              GoRoute(
+                path: 'otp',
+                name: AppRoute.otp.name,
+                pageBuilder: (context, state) =>
+                    MaterialPage(fullscreenDialog: true, child: OTPScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'profile',
+                    name: AppRoute.profile.name,
+                    pageBuilder: (context, state) => MaterialPage(
+                      fullscreenDialog: true,
+                      child: ProfileScreen(),
+                    ),
                   ),
                 ],
               ),

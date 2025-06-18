@@ -246,4 +246,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaveAREview => 'Leave a Review';
+
+  @override
+  String get enterPhoneNum => 'Enter your phone number';
+
+  @override
+  String get confirmationCodeMessage => 'We\'ll send you a confirmation code.';
+
+  @override
+  String get phoneNum => 'Phone number';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get confirmCode_title => 'Enter confirmation code';
+
+  @override
+  String get confirmCode_changeNumber => 'Change';
+
+  @override
+  String get confirmCode_verifyButton => 'Verify';
+
+  @override
+  String confirmCode_sentMessage(Object phone) {
+    return 'We\'ve sent a 6-digit code to $phone.';
+  }
+
+  @override
+  String confirmCode_resendCountdown(Object seconds) {
+    return 'Resend code in ${seconds}s';
+  }
+
+  @override
+  String get confirmCode_resendCode => 'Resend code';
+
+  @override
+  String get confirmCode_resendSuccess =>
+      'Verification code resent successfully.';
+
+  @override
+  String get profile_welcome => 'Welcome!';
+
+  @override
+  String get profile_subtitle => 'Let\'s get your profile set up.';
+
+  @override
+  String get profile_uploadPhoto => 'Upload Photo';
+
+  @override
+  String get profile_fullNameLabel => 'Full Name';
+
+  @override
+  String get profile_fullNameHint => 'Enter your full name';
+
+  @override
+  String get profile_finishSignup => 'Finish Signup';
+
+  @override
+  String get profile_createSuccessMessage => 'Profile created successfully';
 }

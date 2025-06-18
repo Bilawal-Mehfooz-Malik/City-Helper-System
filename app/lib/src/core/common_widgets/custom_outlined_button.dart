@@ -29,11 +29,10 @@ class CustomOutlinedButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
       ),
-      onPressed: isDisabled ? null : onPressed,
-      child:
-          isLoading
-              ? const CenteredProgressIndicator()
-              : Text(text, textAlign: TextAlign.center),
+      onPressed: isDisabled || isLoading ? null : onPressed,
+      child: isLoading
+          ? const CenteredProgressIndicator()
+          : Text(text, textAlign: TextAlign.center),
     );
   }
 }
