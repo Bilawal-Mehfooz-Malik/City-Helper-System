@@ -21,22 +21,25 @@ class EntityService {
   ) {
     if (subcategoryId != null) {
       return switch (categoryId) {
-        1 => ref
-            .read(residenceRepositoryProvider)
-            .watchPopularResidencesListBySubCategoryId(
-              categoryId,
-              subcategoryId,
-            ),
-        2 => ref
-            .read(foodRepositoryProvider)
-            .watchPopularFoodsListSubCategoryId(categoryId, subcategoryId),
+        1 =>
+          ref
+              .read(residenceRepositoryProvider)
+              .watchPopularResidencesListBySubCategoryId(
+                categoryId,
+                subcategoryId,
+              ),
+        2 =>
+          ref
+              .read(foodRepositoryProvider)
+              .watchPopularFoodsListSubCategoryId(categoryId, subcategoryId),
         _ => throw InvalidCategoryException(),
       };
     } else {
       return switch (categoryId) {
-        1 => ref
-            .read(residenceRepositoryProvider)
-            .watchPopularResidencesList(categoryId),
+        1 =>
+          ref
+              .read(residenceRepositoryProvider)
+              .watchPopularResidencesList(categoryId),
         2 => ref.read(foodRepositoryProvider).watchPopularFoodsList(categoryId),
         _ => throw InvalidCategoryException(),
       };
@@ -49,19 +52,20 @@ class EntityService {
   ) {
     if (subcategoryId != null) {
       return switch (categoryId) {
-        1 => ref
-            .read(residenceRepositoryProvider)
-            .watchResidencesListBySubCategoryId(categoryId, subcategoryId),
-        2 => ref
-            .read(foodRepositoryProvider)
-            .watchFoodsListBySubCategoryId(categoryId, subcategoryId),
+        1 =>
+          ref
+              .read(residenceRepositoryProvider)
+              .watchResidencesListBySubCategoryId(categoryId, subcategoryId),
+        2 =>
+          ref
+              .read(foodRepositoryProvider)
+              .watchFoodsListBySubCategoryId(categoryId, subcategoryId),
         _ => throw InvalidCategoryException(),
       };
     } else {
       return switch (categoryId) {
-        1 => ref
-            .read(residenceRepositoryProvider)
-            .watchResidencesList(categoryId),
+        1 =>
+          ref.read(residenceRepositoryProvider).watchResidencesList(categoryId),
         2 => ref.read(foodRepositoryProvider).watchFoodsList(categoryId),
         _ => throw InvalidCategoryException(),
       };

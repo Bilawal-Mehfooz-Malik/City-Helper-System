@@ -15,6 +15,8 @@ class FakeAuthRepository implements AuthRepository {
   final _otpStorage = <String, String>{};
   final _uuid = const Uuid();
 
+  String? _verifiedPhoneNumber;
+
   // --- Public API ---
 
   @override
@@ -29,10 +31,8 @@ class FakeAuthRepository implements AuthRepository {
   @override
   Future<void> sendOtp(String phoneNumber) async {
     await delay(addDelay);
-
-    const fakeOtp = '123456'; // Using static OTP for testing
+    const fakeOtp = '123456';
     _otpStorage[phoneNumber] = fakeOtp;
-
     AppLogger.logInfo('Sending OTP "$fakeOtp" to $phoneNumber');
   }
 
@@ -51,32 +51,11 @@ class FakeAuthRepository implements AuthRepository {
       throw Exception('Invalid OTP');
     }
 
-    // Check if user already exists or create new
-    var user = _users.firstWhere(
-      (u) => u.phoneNumber == verificationId,
-      orElse: () => AppUser(
-        uid: _uuid.v4(),
-        phoneNumber: verificationId,
-        name: null,
-        profileImageUrl: null,
-        lastLocation: null,
-      ),
-    );
+    _otpStorage.remove(verificationId);
+    _verifiedPhoneNumber = verificationId;
 
-    if (!_users.contains(user)) {
-      _users.add(user);
-    }
-
-    _authState.value = user;
-  }
-
-  @override
-  Future<void> updateUserLocation(LatLng location) async {
-    await delay(addDelay);
-    final user = _requireSignedInUser();
-    final updatedUser = user.copyWith(lastLocation: location);
-
-    _updateUser(updatedUser);
+    // 🔥 Do NOT create any user here!
+    // _authState remains null
   }
 
   @override
@@ -86,10 +65,45 @@ class FakeAuthRepository implements AuthRepository {
   }) async {
     await delay(addDelay);
 
-    final user = _requireSignedInUser();
-    final updatedUser = user.copyWith(
+    final phone = _verifiedPhoneNumber;
+    if (phone == null) {
+      throw Exception('No verified phone number. Cannot complete signup.');
+    }
+
+    final user = AppUser(
+      uid: _uuid.v4(),
+      phoneNumber: phone,
       name: name,
       profileImageUrl: profilePicUrl,
+      lastLocation: null,
+    );
+
+    _users.add(user);
+    _authState.value = user;
+
+    _verifiedPhoneNumber = null; // Clear after registration
+  }
+
+  @override
+  Future<void> updateUserLocation(LatLng location) async {
+    await delay(addDelay);
+    final user = _requireSignedInUser();
+
+    final updatedUser = user.copyWith(lastLocation: location);
+    _updateUser(updatedUser);
+  }
+
+  @override
+  Future<void> editUserProfile({
+    required String name,
+    String? profilePicUrl,
+  }) async {
+    await delay(addDelay);
+    final user = _requireSignedInUser();
+
+    final updatedUser = user.copyWith(
+      name: name,
+      profileImageUrl: profilePicUrl ?? user.profileImageUrl,
     );
 
     _updateUser(updatedUser);

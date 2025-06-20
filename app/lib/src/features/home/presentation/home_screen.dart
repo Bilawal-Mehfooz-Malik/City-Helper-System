@@ -7,8 +7,8 @@ import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
+import 'package:app/src/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,7 +45,10 @@ class HomeScreen extends ConsumerWidget {
                     toolbarHeight: kToolbarHeight + Sizes.p12,
                     surfaceTintColor: context.theme.scaffoldBackgroundColor,
                     backgroundColor: context.theme.scaffoldBackgroundColor,
-                    title: HomeSearchBar(showBackButton: showBackButton),
+                    title: HomeSearchBar(
+                      showBackButton: showBackButton,
+                      categoryId: categoryId,
+                    ),
                   ),
                   sliverGapH8,
                   SliverToBoxAdapter(
@@ -64,33 +67,6 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-      ),
-    );
-  }
-}
-
-class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key, required this.showBackButton});
-
-  final bool showBackButton;
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: IMPLEMENT SEARCH BAR
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
-      child: SizedBox(
-        width: double.infinity,
-        child: SearchBar(
-          leading: showBackButton
-              ? BackButton()
-              : Padding(
-                  padding: const EdgeInsets.only(left: Sizes.p8),
-                  child: Icon(Icons.search),
-                ),
-          elevation: WidgetStatePropertyAll(2),
-          hintText: 'Search...'.hardcoded,
-        ),
       ),
     );
   }

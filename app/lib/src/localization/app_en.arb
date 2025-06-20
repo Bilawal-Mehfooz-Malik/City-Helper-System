@@ -204,6 +204,8 @@
   "profile_finishSignup": "Finish Signup",
   "profile_createSuccessMessage":"Profile created successfully",
   "@profile_createSuccessMessage": {},
+  "profile_removePhoto":"Remove Photo",
+  "@profile_removePhoto": {},
 
   "@profile_welcome": {
     "description": "Welcome title on the profile setup screen"
@@ -222,5 +224,28 @@
   },
   "@profile_finishSignup": {
     "description": "Text on the finish signup button"
-  }
+  },
+
+  "account_title":"Account",
+  "@account_title": {},
+  "account_yourLocation": "Your Location",
+  "@account_yourLocation": {},
+  "account_editProfile":"Edit Profile",
+  "@account_editProfile": {},
+  "signIn":"Sign in",
+  "@signIn": {},
+  "account":"Account",
+  "@account": {},
+  "switchToAdmin":"Switch to Admin",
+  "@switchToAdmin": {},
+  "common_save":"Save",
+  "@common_save": {},
+  "profile_updateSuccessMessage": "Your profile has been updated successfully.",
+  "@profile_updateSuccessMessage": {},
+  "noResultFound":"No results found",
+  "@noResultFound": {},
+  "typeToSeeSuggestion":"Start typing to see suggestions",
+  "@typeToSeeSuggestion": {},
+  "search":"Search",
+  "@search": {}
 }

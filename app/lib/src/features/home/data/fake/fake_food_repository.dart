@@ -100,23 +100,21 @@ class FakeFoodRepository implements FoodRepository {
     SubCategoryId subCategoryId,
   ) {
     return _foods.stream.map(
-      (foods) =>
-          foods
-              .where(
-                (food) =>
-                    food.categoryId == categoryId &&
-                    food.subCategoryId == subCategoryId,
-              )
-              .toList(),
+      (foods) => foods
+          .where(
+            (food) =>
+                food.categoryId == categoryId &&
+                food.subCategoryId == subCategoryId,
+          )
+          .toList(),
     );
   }
 
   Stream<List<Food>> _filterPopularFoodsList(CategoryId categoryId) {
     return _foods.stream.map(
-      (foods) =>
-          foods
-              .where((food) => food.categoryId == categoryId && food.isPopular)
-              .toList(),
+      (foods) => foods
+          .where((food) => food.categoryId == categoryId && food.isPopular)
+          .toList(),
     );
   }
 
@@ -125,15 +123,14 @@ class FakeFoodRepository implements FoodRepository {
     SubCategoryId subCategoryId,
   ) {
     return _foods.stream.map(
-      (foods) =>
-          foods
-              .where(
-                (food) =>
-                    food.categoryId == categoryId &&
-                    food.isPopular &&
-                    food.subCategoryId == subCategoryId,
-              )
-              .toList(),
+      (foods) => foods
+          .where(
+            (food) =>
+                food.categoryId == categoryId &&
+                food.isPopular &&
+                food.subCategoryId == subCategoryId,
+          )
+          .toList(),
     );
   }
 

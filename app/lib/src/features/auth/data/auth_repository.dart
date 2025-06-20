@@ -32,6 +32,13 @@ class AuthRepository {
     throw UnimplementedError();
   }
 
+  Future<void> editUserProfile({
+    required String name,
+    String? profilePicUrl,
+  }) async {
+    throw UnimplementedError();
+  }
+
   /// Updates the user's current location (LatLng).
   Future<void> updateUserLocation(LatLng location) {
     throw UnimplementedError();

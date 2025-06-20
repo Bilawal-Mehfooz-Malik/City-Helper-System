@@ -7,24 +7,25 @@ String? redirection(Ref ref, GoRouterState state) {
   final userLocationState = ref.read(watchUserLocationProvider);
   final currentPath = state.uri.path;
 
-  // If location is still loading, redirect to the loading page
+  // Still loading? Show loading screen
   if (userLocationState.isLoading) {
     return currentPath != '/loading' ? '/loading' : null;
   }
 
-  // Check if location is available
   final hasUserLocation = userLocationState.value != null;
 
-  // Redirect to home if the user has location but is on the get-started page
-  if (hasUserLocation && currentPath.startsWith('/get-started')) {
+  // Allow user to pick location anytime — don't block access
+  final isPickLocation = currentPath.contains('pick-your-location');
+
+  if (hasUserLocation &&
+      currentPath.startsWith('/get-started') &&
+      !isPickLocation) {
     return '/';
   }
 
-  // Redirect to get-started if no location is available
   if (!hasUserLocation && !currentPath.startsWith('/get-started')) {
     return '/get-started';
   }
 
-  // No redirection needed
   return null;
 }

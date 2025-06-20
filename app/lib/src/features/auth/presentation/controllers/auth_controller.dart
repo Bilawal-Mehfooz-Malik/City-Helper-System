@@ -59,4 +59,26 @@ class AuthController extends _$AuthController {
     state = result;
     return result;
   }
+
+  Future<AsyncValue<void>> updateProfile({
+    required String name,
+    String? profilePicUrl,
+  }) async {
+    final authRepository = ref.read(authRepositoryProvider);
+    state = const AsyncLoading();
+
+    final location = ref.read(locationControllerProvider).value;
+    final defaultLocation = ref.read(defaultLocationProvider);
+
+    final result = await AsyncValue.guard(() async {
+      await authRepository.editUserProfile(
+        name: name,
+        profilePicUrl: profilePicUrl,
+      );
+      await authRepository.updateUserLocation(location ?? defaultLocation);
+    });
+
+    state = result;
+    return result;
+  }
 }

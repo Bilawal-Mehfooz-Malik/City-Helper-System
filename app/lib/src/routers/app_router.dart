@@ -1,4 +1,5 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/auth/presentation/account_screen.dart';
 import 'package:app/src/features/auth/presentation/auth_screen.dart';
 import 'package:app/src/features/auth/presentation/otp_screen.dart';
 import 'package:app/src/features/auth/presentation/profile_screen.dart';
@@ -31,6 +32,7 @@ enum AppRoute {
   auth,
   otp,
   profile,
+  account,
   loading,
   pageNotFound,
 }
@@ -162,6 +164,12 @@ GoRouter appRouter(Ref ref) {
                 ],
               ),
             ],
+          ),
+          GoRoute(
+            path: 'account',
+            name: AppRoute.account.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: AccountScreen()),
           ),
         ],
       ),

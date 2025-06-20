@@ -669,6 +669,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile created successfully'**
   String get profile_createSuccessMessage;
+
+  /// No description provided for @profile_removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Photo'**
+  String get profile_removePhoto;
+
+  /// No description provided for @account_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account_title;
+
+  /// No description provided for @account_yourLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Location'**
+  String get account_yourLocation;
+
+  /// No description provided for @account_editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get account_editProfile;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @switchToAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Admin'**
+  String get switchToAdmin;
+
+  /// No description provided for @common_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get common_save;
+
+  /// No description provided for @profile_updateSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile has been updated successfully.'**
+  String get profile_updateSuccessMessage;
+
+  /// No description provided for @noResultFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResultFound;
+
+  /// No description provided for @typeToSeeSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Start typing to see suggestions'**
+  String get typeToSeeSuggestion;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
 }
 
 class _AppLocalizationsDelegate

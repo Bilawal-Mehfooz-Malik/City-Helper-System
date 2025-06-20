@@ -305,4 +305,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile_createSuccessMessage => 'Profile created successfully';
+
+  @override
+  String get profile_removePhoto => 'Remove Photo';
+
+  @override
+  String get account_title => 'Account';
+
+  @override
+  String get account_yourLocation => 'Your Location';
+
+  @override
+  String get account_editProfile => 'Edit Profile';
+
+  @override
+  String get signIn => 'Sign in';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get switchToAdmin => 'Switch to Admin';
+
+  @override
+  String get common_save => 'Save';
+
+  @override
+  String get profile_updateSuccessMessage =>
+      'Your profile has been updated successfully.';
+
+  @override
+  String get noResultFound => 'No results found';
+
+  @override
+  String get typeToSeeSuggestion => 'Start typing to see suggestions';
+
+  @override
+  String get search => 'Search';
 }
