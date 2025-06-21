@@ -247,5 +247,11 @@
   "typeToSeeSuggestion":"Start typing to see suggestions",
   "@typeToSeeSuggestion": {},
   "search":"Search",
-  "@search": {}
+  "@search": {},
+  "update": "Update",
+  "@update": {},
+  "provideARating": "Please provide a rating",
+  "@provideARating": {},
+  "updateAReview": "Update Review",
+  "@updateAReview": {}
 }

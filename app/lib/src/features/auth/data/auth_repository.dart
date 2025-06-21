@@ -1,3 +1,4 @@
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,6 +22,10 @@ class AuthRepository {
 
   /// Signs out the currently logged-in user.
   Future<void> signOut() {
+    throw UnimplementedError();
+  }
+
+  Future<AppUser?> getUserById(UserId userId) {
     throw UnimplementedError();
   }
 
@@ -76,4 +81,10 @@ Stream<AppUser?> authStateChanges(Ref ref) {
 Stream<AppUser?> idTokenChanges(Ref ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return authRepository.idTokenChanges();
+}
+
+@riverpod
+Future<AppUser?> getUserById(Ref ref, String userId) {
+  final userRepository = ref.watch(authRepositoryProvider);
+  return userRepository.getUserById(userId);
 }

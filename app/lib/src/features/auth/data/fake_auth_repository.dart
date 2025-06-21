@@ -1,4 +1,5 @@
 import 'package:app/src/core/exceptions/app_logger.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
@@ -53,9 +54,16 @@ class FakeAuthRepository implements AuthRepository {
 
     _otpStorage.remove(verificationId);
     _verifiedPhoneNumber = verificationId;
+  }
 
-    // 🔥 Do NOT create any user here!
-    // _authState remains null
+  @override
+  Future<AppUser?> getUserById(UserId userId) async {
+    await delay(addDelay);
+    try {
+      return _users.firstWhere((user) => user.uid == userId);
+    } catch (_) {
+      return null;
+    }
   }
 
   @override

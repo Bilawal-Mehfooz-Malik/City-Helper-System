@@ -288,5 +288,126 @@ class _WatchReviewsListProviderElement
   String get entityId => (origin as WatchReviewsListProvider).entityId;
 }
 
+String _$userReviewFutureHash() => r'ccc1b9a1f2c9964fc044ac7e747ea7b0551a328e';
+
+/// See also [userReviewFuture].
+@ProviderFor(userReviewFuture)
+const userReviewFutureProvider = UserReviewFutureFamily();
+
+/// See also [userReviewFuture].
+class UserReviewFutureFamily extends Family<AsyncValue<Review?>> {
+  /// See also [userReviewFuture].
+  const UserReviewFutureFamily();
+
+  /// See also [userReviewFuture].
+  UserReviewFutureProvider call(String entityId) {
+    return UserReviewFutureProvider(entityId);
+  }
+
+  @override
+  UserReviewFutureProvider getProviderOverride(
+    covariant UserReviewFutureProvider provider,
+  ) {
+    return call(provider.entityId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'userReviewFutureProvider';
+}
+
+/// See also [userReviewFuture].
+class UserReviewFutureProvider extends AutoDisposeFutureProvider<Review?> {
+  /// See also [userReviewFuture].
+  UserReviewFutureProvider(String entityId)
+    : this._internal(
+        (ref) => userReviewFuture(ref as UserReviewFutureRef, entityId),
+        from: userReviewFutureProvider,
+        name: r'userReviewFutureProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$userReviewFutureHash,
+        dependencies: UserReviewFutureFamily._dependencies,
+        allTransitiveDependencies:
+            UserReviewFutureFamily._allTransitiveDependencies,
+        entityId: entityId,
+      );
+
+  UserReviewFutureProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.entityId,
+  }) : super.internal();
+
+  final String entityId;
+
+  @override
+  Override overrideWith(
+    FutureOr<Review?> Function(UserReviewFutureRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UserReviewFutureProvider._internal(
+        (ref) => create(ref as UserReviewFutureRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        entityId: entityId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Review?> createElement() {
+    return _UserReviewFutureProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UserReviewFutureProvider && other.entityId == entityId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, entityId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UserReviewFutureRef on AutoDisposeFutureProviderRef<Review?> {
+  /// The parameter `entityId` of this provider.
+  String get entityId;
+}
+
+class _UserReviewFutureProviderElement
+    extends AutoDisposeFutureProviderElement<Review?>
+    with UserReviewFutureRef {
+  _UserReviewFutureProviderElement(super.provider);
+
+  @override
+  String get entityId => (origin as UserReviewFutureProvider).entityId;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

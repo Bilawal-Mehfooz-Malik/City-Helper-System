@@ -3,7 +3,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/review.dart';
+import 'package:app/src/features/review/review.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/description_widget.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart';
 import 'package:app/src/localization/localization_extension.dart';

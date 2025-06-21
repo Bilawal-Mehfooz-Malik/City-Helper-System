@@ -8,6 +8,10 @@ part 'residence_repository.g.dart';
 class ResidenceRepository {
   static String get residencesKey => 'residences';
 
+  Future<void> setResidence(Residence residence) async {
+    throw UnimplementedError();
+  }
+
   Stream<List<Residence>> watchResidencesList(CategoryId categoryId) {
     throw UnimplementedError();
   }

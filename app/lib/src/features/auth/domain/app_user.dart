@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class AppUser {
   final UserId uid;
   final String phoneNumber;
-  final String? name;
+  final String name;
   final String? profileImageUrl;
   final LatLng? lastLocation;
 

@@ -10,9 +10,10 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
-import 'package:app/src/features/home_detail/presentation/leave_review_screen.dart';
+import 'package:app/src/features/review/leave_review_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/outlined_contact_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
+import 'package:app/src/features/review/reviews_repository.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -138,7 +139,7 @@ class HomeDetailTopRightContent extends ConsumerWidget {
   }
 }
 
-class _RatingRow extends StatelessWidget {
+class _RatingRow extends ConsumerWidget {
   const _RatingRow({required this.entity, required this.isSmall});
 
   final bool isSmall;
@@ -169,7 +170,10 @@ class _RatingRow extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.45,
               height: double.infinity,
-              child: LeaveReviewScreen(entityId: entity.id),
+              child: LeaveReviewScreen(
+                entityId: entity.id,
+                categoryId: entity.categoryId,
+              ),
             ),
           );
         },
@@ -195,7 +199,15 @@ class _RatingRow extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userReviewAsync = ref.watch(userReviewFutureProvider(entity.id));
+
+    final buttonText = userReviewAsync.maybeWhen(
+      data: (review) =>
+          review != null ? context.loc.updateAReview : context.loc.writeAReview,
+      orElse: () => context.loc.writeAReview,
+    );
+
     return Row(
       spacing: Sizes.p8,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,11 +224,9 @@ class _RatingRow extends StatelessWidget {
           ),
         ),
         Flexible(
-          child: Consumer(
-            builder: (context, ref, child) => CustomTextButton(
-              text: context.loc.writeAReview,
-              onPressed: () => _checkIsUserLoggedIn(context, ref),
-            ),
+          child: CustomTextButton(
+            text: buttonText,
+            onPressed: () => _checkIsUserLoggedIn(context, ref),
           ),
         ),
       ],

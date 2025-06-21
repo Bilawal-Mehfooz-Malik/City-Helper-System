@@ -342,4 +342,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get search => 'Search';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get provideARating => 'Please provide a rating';
+
+  @override
+  String get updateAReview => 'Update Review';
 }

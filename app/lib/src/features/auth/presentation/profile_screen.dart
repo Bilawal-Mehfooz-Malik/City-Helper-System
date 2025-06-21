@@ -138,7 +138,7 @@ class _ProfileContentState extends ConsumerState<_ProfileContent> {
 
     // Only initialize once
     if (_nameController.text.isEmpty && user?.name != null) {
-      _nameController.text = user!.name!;
+      _nameController.text = user!.name;
     }
     if (_existingImageUrl == null && user?.profileImageUrl != null) {
       _existingImageUrl = user!.profileImageUrl;

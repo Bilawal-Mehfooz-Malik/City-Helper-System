@@ -8,6 +8,10 @@ part 'food_repository.g.dart';
 class FoodRepository {
   static String get foodsKey => 'food';
 
+  Future<void> setFood(Food food) async {
+    throw UnimplementedError();
+  }
+
   Stream<List<Food>> watchFoodsList(CategoryId categoryId) {
     throw UnimplementedError();
   }

@@ -14,10 +14,12 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/fake_auth_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
-import 'package:app/src/features/home_detail/data/fake/fake_reviews_repository.dart';
+import 'package:app/src/features/review/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/home_detail/data/reviews_repository.dart';
+import 'package:app/src/features/review/fake_reviews_service.dart';
+import 'package:app/src/features/review/reviews_repository.dart';
+import 'package:app/src/features/review/reviews_service.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,6 +34,12 @@ extension AppBootstrapFakes on AppBootStrap {
     final residenceDetailsRepository = FakeResidenceDetailsRepository();
     final reviewsRepository = FakeReviewsRepository();
     final authRepository = FakeAuthRepository();
+    final reviewsService = FakeReviewsService(
+      fakeResidenceRepository: residenceRepository,
+      fakeFoodRepository: foodRepository,
+      authRepository: authRepository,
+      reviewsRepository: reviewsRepository,
+    );
 
     final userLocationRepository = await UserLocationRepository.makeDefault();
 
@@ -53,6 +61,7 @@ extension AppBootstrapFakes on AppBootStrap {
         ),
         reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
         authRepositoryProvider.overrideWithValue(authRepository),
+        reviewsServiceProvider.overrideWithValue(reviewsService),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

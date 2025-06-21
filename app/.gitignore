@@ -47,3 +47,25 @@ app.*.map.json
 
 # coverage files
 /coverage/
+
+
+# Firebase local emulator exports
+firebase-exports
+
+# Environment variables
+.env
+
+# Ignore test coverage data
+coverage/lcov.info
+
+# Firebase config
+.firebaserc
+firebase.json
+
+# Firebase
+lib/firebase_options.dart
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+macos/Runner/GoogleService-Info.plist
+macos/firebase_app_id_file.json
+android/app/google-services.json

@@ -15,7 +15,8 @@ class AverageRatingWidget extends StatelessWidget {
       children: [
         Icon(Icons.star, color: Colors.amber, size: 18),
         Text(
-          '${entity.avgRating} (${entity.totalReviews})'.hardcoded,
+          '${entity.avgRating.toStringAsFixed(1)} (${entity.totalReviews})'
+              .hardcoded,
           style: context.textTheme.labelLarge,
         ),
       ],

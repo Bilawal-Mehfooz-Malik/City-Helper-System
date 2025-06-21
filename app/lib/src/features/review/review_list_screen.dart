@@ -2,9 +2,9 @@ import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home_detail/data/reviews_repository.dart';
+import 'package:app/src/features/review/reviews_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/review.dart';
+import 'package:app/src/features/review/review.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/rating_filter_controller.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/review_sort_controller.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
@@ -68,7 +68,7 @@ class ReviewListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final reviewsValue = ref.watch(fetchReviewsListProvider(entity.id));
+    final reviewsValue = ref.watch(watchReviewsListProvider(entity.id));
     final selectedFilter = ref.watch(ratingFilterControllerProvider);
     final sortOption = ref.watch(reviewSortControllerProvider);
 

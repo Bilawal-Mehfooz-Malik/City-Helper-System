@@ -25,6 +25,13 @@ dependencies:
   # used for obscuring api keys
   envied: 1.1.1
 
+  # Firebase
+  cloud_firestore: 5.6.9
+  firebase_storage: 12.4.7
+  firebase_auth: 5.6.0
+  firebase_core: 3.14.0
+
+
   # others
   intl: 0.20.2
   google_fonts: 6.2.1

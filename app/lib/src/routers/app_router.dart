@@ -6,8 +6,8 @@ import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
-import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
-import 'package:app/src/features/home_detail/presentation/leave_review_screen.dart';
+import 'package:app/src/features/review/home_detail_screen.dart';
+import 'package:app/src/features/review/leave_review_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -131,9 +131,15 @@ GoRouter appRouter(Ref ref) {
                     name: AppRoute.leaveReview.name,
                     pageBuilder: (context, state) {
                       final entityId = state.pathParameters['entityId']!;
+                      final categoryId = int.parse(
+                        state.pathParameters['categoryId']!,
+                      );
                       return MaterialPage(
                         fullscreenDialog: true,
-                        child: LeaveReviewScreen(entityId: entityId),
+                        child: LeaveReviewScreen(
+                          entityId: entityId,
+                          categoryId: categoryId,
+                        ),
                       );
                     },
                   ),

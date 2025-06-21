@@ -60,7 +60,7 @@ class AccountScreen extends ConsumerWidget {
 
                     // Name & Phone
                     Text(
-                      user.name!,
+                      user.name,
                       style: context.textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

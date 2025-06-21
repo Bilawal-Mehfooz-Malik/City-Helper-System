@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home_detail/domain/review.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/review/review.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -50,4 +51,14 @@ Future<List<Review>> fetchReviewsList(Ref ref, EntityId entityId) {
 Stream<List<Review>> watchReviewsList(Ref ref, EntityId entityId) {
   final repository = ref.watch(reviewsRepositoryProvider);
   return repository.watchReviewsList(entityId);
+}
+
+@riverpod
+Future<Review?> userReviewFuture(Ref ref, EntityId entityId) {
+  final user = ref.watch(authStateChangesProvider).value;
+  if (user != null) {
+    return ref.watch(reviewsRepositoryProvider).fetchReview(entityId, user.uid);
+  } else {
+    return Future.value(null);
+  }
 }

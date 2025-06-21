@@ -1,14 +1,18 @@
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/review.dart';
-import 'package:app/src/features/home_detail/presentation/review_list_screen.dart';
+import 'package:app/src/features/review/review.dart';
+import 'package:app/src/features/review/review_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
+import 'package:app/src/features/review/review_skeleton.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ReviewSection extends StatelessWidget {
@@ -104,75 +108,84 @@ class ReviewsListView extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final review = reviews[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-          child: Column(
-            spacing: Sizes.p8,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(child: Icon(Icons.person)),
-                  gapW12,
-                  ReviewRightDetails(review: review),
-                ],
-              ),
-              const Divider(),
-            ],
-          ),
-        );
+        return ReviewListTile(review: review);
       },
     );
   }
 }
 
-class ReviewRightDetails extends StatelessWidget {
-  const ReviewRightDetails({super.key, required this.review});
+class ReviewListTile extends ConsumerWidget {
+  const ReviewListTile({super.key, required this.review});
 
   final Review review;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final timeAgo = timeago.format(review.updatedAt);
+    final userAsync = ref.watch(getUserByIdProvider(review.userId));
 
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Wrap(
-            spacing: Sizes.p8,
-            runSpacing: Sizes.p4,
+    return AsyncValueWidget(
+      value: userAsync,
+      loading: ReviewListTileSkeleton(),
+      error: (e, st) => SizedBox.shrink(),
+      data: (user) {
+        if (user == null) {
+          return const SizedBox.shrink();
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Wrap(
+                spacing: Sizes.p8,
+                runSpacing: Sizes.p4,
                 children: [
-                  // TODO: Replace with user name when available
-                  // For now, using userId as a placeholder
-                  Text(
-                    review.userId,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: user.profileImageUrl != null
+                            ? NetworkImage(user.profileImageUrl!)
+                            : null,
+                        child: user.profileImageUrl == null
+                            ? const Icon(Icons.person)
+                            : null,
+                      ),
+                      gapW12,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            timeAgo,
+                            style: TextStyle(
+                              color: context.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    timeAgo,
-                    style: TextStyle(
-                      color: context.colorScheme.onSurfaceVariant,
-                    ),
+                  RatingBarIndicator(
+                    rating: review.rating,
+                    itemCount: 5,
+                    itemSize: 18.0,
+                    itemBuilder: (context, _) =>
+                        const Icon(Icons.star, color: Colors.amber),
                   ),
                 ],
               ),
-              RatingBarIndicator(
-                rating: review.rating,
-                itemCount: 5,
-                itemSize: 18.0,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.amber),
-              ),
+              gapH4,
+              Text(review.comment),
+              gapH8,
+              const Divider(),
             ],
           ),
-          gapH4,
-          Text(review.comment),
-        ],
-      ),
+        );
+      },
     );
   }
 }

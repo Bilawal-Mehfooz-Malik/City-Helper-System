@@ -1,4 +1,7 @@
+import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/models/my_data_types.dart';
 
@@ -27,6 +30,44 @@ class Food extends Entity {
   bool matchGenderPref(GenderPreference preference) {
     if (preference == GenderPreference.any) return true;
     return genderPref == preference;
+  }
+
+  Food copyWith({
+    EntityId? id,
+    CategoryId? categoryId,
+    SubCategoryId? subCategoryId,
+    String? coverImageUrl,
+    String? name,
+    String? cityName,
+    String? sectorName,
+    LatLng? latLng,
+    double? avgRating,
+    int? totalReviews,
+    List<RatingBreakdown>? ratingBreakdown,
+    bool? isPopular,
+    List<OpeningHours>? openingHours,
+    EntityStatus? entityStatus,
+    DateTime? createdAt,
+    GenderPreference? genderPref,
+  }) {
+    return Food(
+      id: id ?? this.id,
+      categoryId: categoryId ?? this.categoryId,
+      subCategoryId: subCategoryId ?? this.subCategoryId,
+      coverImageUrl: coverImageUrl ?? this.coverImageUrl,
+      name: name ?? this.name,
+      cityName: cityName ?? this.cityName,
+      sectorName: sectorName ?? this.sectorName,
+      latLng: latLng ?? this.latLng,
+      avgRating: avgRating ?? this.avgRating,
+      totalReviews: totalReviews ?? this.totalReviews,
+      ratingBreakdown: ratingBreakdown ?? this.ratingBreakdown,
+      isPopular: isPopular ?? this.isPopular,
+      openingHours: openingHours ?? this.openingHours,
+      entityStatus: entityStatus ?? this.entityStatus,
+      createdAt: createdAt ?? this.createdAt,
+      genderPref: genderPref ?? this.genderPref,
+    );
   }
 }
 

@@ -14,6 +14,16 @@ class FakeFoodRepository implements FoodRepository {
   final _foods = InMemoryStore<List<Food>>(List.from(testFoods));
 
   @override
+  Future<void> setFood(Food food) async {
+    final list = [..._foods.value];
+    final index = list.indexWhere((f) => f.id == food.id);
+    if (index != -1) {
+      list[index] = food;
+      _foods.value = list;
+    }
+  }
+
+  @override
   Stream<List<Food>> watchFoodsList(CategoryId categoryId) async* {
     await delay(addDelay);
     yield* _filterFoodsList(categoryId);

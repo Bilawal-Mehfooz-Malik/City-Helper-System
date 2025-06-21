@@ -741,6 +741,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @provideARating.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a rating'**
+  String get provideARating;
+
+  /// No description provided for @updateAReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Review'**
+  String get updateAReview;
 }
 
 class _AppLocalizationsDelegate

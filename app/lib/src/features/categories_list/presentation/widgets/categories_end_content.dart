@@ -3,7 +3,7 @@ import 'package:app/src/features/categories_list/presentation/selected_category_
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
-import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
+import 'package:app/src/features/review/home_detail_screen.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -14,6 +14,16 @@ class FakeResidenceRepository implements ResidenceRepository {
   final _residences = InMemoryStore<List<Residence>>(List.from(testResidences));
 
   @override
+  Future<void> setResidence(Residence residence) async {
+    final list = [..._residences.value];
+    final index = list.indexWhere((r) => r.id == residence.id);
+    if (index != -1) {
+      list[index] = residence;
+      _residences.value = list;
+    }
+  }
+
+  @override
   Stream<List<Residence>> watchResidencesList(CategoryId categoryId) async* {
     await delay(addDelay);
     yield* _filterResidencesList(categoryId);
@@ -116,25 +126,23 @@ class FakeResidenceRepository implements ResidenceRepository {
     SubCategoryId subCategoryId,
   ) {
     return _residences.stream.map(
-      (entities) =>
-          entities
-              .where(
-                (entity) =>
-                    entity.categoryId == categoryId &&
-                    entity.subCategoryId == subCategoryId,
-              )
-              .toList(),
+      (entities) => entities
+          .where(
+            (entity) =>
+                entity.categoryId == categoryId &&
+                entity.subCategoryId == subCategoryId,
+          )
+          .toList(),
     );
   }
 
   Stream<List<Residence>> _filterPopularResidencesList(CategoryId categoryId) {
     return _residences.stream.map(
-      (entities) =>
-          entities
-              .where(
-                (entity) => entity.categoryId == categoryId && entity.isPopular,
-              )
-              .toList(),
+      (entities) => entities
+          .where(
+            (entity) => entity.categoryId == categoryId && entity.isPopular,
+          )
+          .toList(),
     );
   }
 
@@ -143,15 +151,14 @@ class FakeResidenceRepository implements ResidenceRepository {
     SubCategoryId subCategoryId,
   ) {
     return _residences.stream.map(
-      (entities) =>
-          entities
-              .where(
-                (entity) =>
-                    entity.categoryId == categoryId &&
-                    entity.isPopular &&
-                    entity.subCategoryId == subCategoryId,
-              )
-              .toList(),
+      (entities) => entities
+          .where(
+            (entity) =>
+                entity.categoryId == categoryId &&
+                entity.isPopular &&
+                entity.subCategoryId == subCategoryId,
+          )
+          .toList(),
     );
   }
 
