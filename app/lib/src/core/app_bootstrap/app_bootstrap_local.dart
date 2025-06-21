@@ -14,12 +14,12 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/fake_auth_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
-import 'package:app/src/features/review/fake_reviews_repository.dart';
+import 'package:app/src/features/review/data/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/review/fake_reviews_service.dart';
-import 'package:app/src/features/review/reviews_repository.dart';
-import 'package:app/src/features/review/reviews_service.dart';
+import 'package:app/src/features/review/application/fake_reviews_service.dart';
+import 'package:app/src/features/review/data/reviews_repository.dart';
+import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,6 +39,8 @@ extension AppBootstrapFakes on AppBootStrap {
       fakeFoodRepository: foodRepository,
       authRepository: authRepository,
       reviewsRepository: reviewsRepository,
+      fakeFoodDetailsRepository: foodDetailsRepository,
+      fakeResidenceDetailsRepository: residenceDetailsRepository,
     );
 
     final userLocationRepository = await UserLocationRepository.makeDefault();

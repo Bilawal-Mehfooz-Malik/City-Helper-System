@@ -1,5 +1,8 @@
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ResidenceDetail extends EntityDetail {
   final double price;
@@ -36,4 +39,68 @@ class ResidenceDetail extends EntityDetail {
     required this.isFurnished,
     required this.genderPref,
   });
+
+  ResidenceDetail copyWith({
+    EntityId? id,
+    CategoryId? categoryId,
+    SubCategoryId? subCategoryId,
+    String? coverImageUrl,
+    String? name,
+    String? cityName,
+    String? sectorName,
+    LatLng? latLng,
+    double? avgRating,
+    int? totalReviews,
+    List<RatingBreakdown>? ratingBreakdown,
+    bool? isPopular,
+    List<OpeningHours>? openingHours,
+    EntityStatus? entityStatus,
+    DateTime? createdAt,
+    UserId? ownerId,
+    String? description,
+    List<String>? imageUrls,
+    String? streetAddress,
+    String? phoneNumber,
+    String? messagingNumber,
+    String? websiteUrl,
+    String? instagramUrl,
+    String? facebookUrl,
+    String? email,
+    DateTime? updatedAt,
+    double? price,
+    bool? isFurnished,
+    GenderPreference? genderPref,
+  }) {
+    return ResidenceDetail(
+      id: id ?? this.id,
+      categoryId: categoryId ?? this.categoryId,
+      subCategoryId: subCategoryId ?? this.subCategoryId,
+      coverImageUrl: coverImageUrl ?? this.coverImageUrl,
+      name: name ?? this.name,
+      cityName: cityName ?? this.cityName,
+      sectorName: sectorName ?? this.sectorName,
+      latLng: latLng ?? this.latLng,
+      avgRating: avgRating ?? this.avgRating,
+      totalReviews: totalReviews ?? this.totalReviews,
+      ratingBreakdown: ratingBreakdown ?? this.ratingBreakdown,
+      isPopular: isPopular ?? this.isPopular,
+      openingHours: openingHours ?? this.openingHours,
+      entityStatus: entityStatus ?? this.entityStatus,
+      createdAt: createdAt ?? this.createdAt,
+      ownerId: ownerId ?? this.ownerId,
+      description: description ?? this.description,
+      imageUrls: imageUrls ?? this.imageUrls,
+      streetAddress: streetAddress ?? this.streetAddress,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      messagingNumber: messagingNumber ?? this.messagingNumber,
+      websiteUrl: websiteUrl ?? this.websiteUrl,
+      instagramUrl: instagramUrl ?? this.instagramUrl,
+      facebookUrl: facebookUrl ?? this.facebookUrl,
+      email: email ?? this.email,
+      updatedAt: updatedAt ?? this.updatedAt,
+      price: price ?? this.price,
+      isFurnished: isFurnished ?? this.isFurnished,
+      genderPref: genderPref ?? this.genderPref,
+    );
+  }
 }

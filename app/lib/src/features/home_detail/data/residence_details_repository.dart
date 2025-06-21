@@ -8,6 +8,10 @@ part 'residence_details_repository.g.dart';
 class ResidenceDetailsRepository {
   static String get foodsDetailsKey => 'food_details';
 
+  Future<void> setResidenceDetail(ResidenceDetail updated) {
+    throw UnimplementedError();
+  }
+
   Stream<ResidenceDetail?> watchResidenceDetails(
     CategoryId categoryId,
     EntityId id,

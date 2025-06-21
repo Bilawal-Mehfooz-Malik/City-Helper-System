@@ -14,6 +14,16 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   final _foods = InMemoryStore<List<FoodDetail>>(List.from(testFoodDetails));
 
   @override
+  Future<void> setFoodDetail(FoodDetail updated) async {
+    final current = _foods.value;
+    final index = current.indexWhere((f) => f.id == updated.id);
+    if (index != -1) {
+      current[index] = updated;
+      _foods.value = [...current];
+    }
+  }
+
+  @override
   Future<FoodDetail?> fetchFoodDetails(
     CategoryId categoryId,
     EntityId id,

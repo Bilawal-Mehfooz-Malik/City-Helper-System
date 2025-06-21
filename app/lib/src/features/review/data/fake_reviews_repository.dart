@@ -4,8 +4,8 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_reviews.dart';
-import 'package:app/src/features/review/reviews_repository.dart';
-import 'package:app/src/features/review/review.dart';
+import 'package:app/src/features/review/data/reviews_repository.dart';
+import 'package:app/src/features/review/domain/review.dart';
 
 class FakeReviewsRepository implements ReviewsRepository {
   FakeReviewsRepository({this.addDelay = true});

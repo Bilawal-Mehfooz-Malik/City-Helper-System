@@ -16,6 +16,16 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   );
 
   @override
+  Future<void> setResidenceDetail(ResidenceDetail updated) async {
+    final current = _residences.value;
+    final index = current.indexWhere((r) => r.id == updated.id);
+    if (index != -1) {
+      current[index] = updated;
+      _residences.value = [...current];
+    }
+  }
+
+  @override
   Future<ResidenceDetail?> fetchResidenceDetails(
     CategoryId categoryId,
     EntityId id,

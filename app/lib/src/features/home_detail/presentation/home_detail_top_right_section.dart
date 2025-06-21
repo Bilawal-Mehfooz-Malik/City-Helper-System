@@ -10,10 +10,10 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
-import 'package:app/src/features/review/leave_review_screen.dart';
+import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/outlined_contact_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
-import 'package:app/src/features/review/reviews_repository.dart';
+import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -218,7 +218,7 @@ class _RatingRow extends ConsumerWidget {
             runSpacing: Sizes.p4,
             children: [
               Icon(Icons.star, color: Colors.amber, size: 20),
-              Text('${entity.avgRating}'),
+              Text(entity.avgRating.toStringAsFixed(1)),
               Text('(${entity.totalReviews} ${context.loc.reviews})'.hardcoded),
             ],
           ),

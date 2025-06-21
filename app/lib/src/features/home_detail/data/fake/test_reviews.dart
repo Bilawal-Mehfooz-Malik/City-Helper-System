@@ -1,4 +1,4 @@
-import 'package:app/src/features/review/review.dart';
+import 'package:app/src/features/review/domain/review.dart';
 
 final testReviews = <Review>[
   Review(

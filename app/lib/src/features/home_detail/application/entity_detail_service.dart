@@ -2,9 +2,9 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/review/reviews_repository.dart';
+import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/review/review.dart';
+import 'package:app/src/features/review/domain/review.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -2,10 +2,12 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home/data/fake/fake_food_repository.dart';
 import 'package:app/src/features/home/data/fake/fake_residence_repository.dart';
+import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
+import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
-import 'package:app/src/features/review/review.dart';
-import 'package:app/src/features/review/reviews_repository.dart';
-import 'package:app/src/features/review/reviews_service.dart';
+import 'package:app/src/features/review/domain/review.dart';
+import 'package:app/src/features/review/data/reviews_repository.dart';
+import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 
 class FakeReviewsService implements ReviewsService {
@@ -14,8 +16,12 @@ class FakeReviewsService implements ReviewsService {
     required this.fakeFoodRepository,
     required this.authRepository,
     required this.reviewsRepository,
+    required this.fakeFoodDetailsRepository,
+    required this.fakeResidenceDetailsRepository,
   });
 
+  final FakeResidenceDetailsRepository fakeResidenceDetailsRepository;
+  final FakeFoodDetailsRepository fakeFoodDetailsRepository;
   final FakeResidenceRepository fakeResidenceRepository;
   final FakeFoodRepository fakeFoodRepository;
   final AuthRepository authRepository;
@@ -53,22 +59,45 @@ class FakeReviewsService implements ReviewsService {
         categoryId,
         entityId,
       );
+      final entityDetail = await fakeResidenceDetailsRepository
+          .fetchResidenceDetails(categoryId, entityId);
       if (entity == null) throw StateError('Residence not found.'.hardcoded);
-      final updated = entity.copyWith(
+      if (entityDetail == null) {
+        throw StateError('Residence Detail not found.'.hardcoded);
+      }
+      final updatedEntity = entity.copyWith(
         avgRating: avgRating,
         totalReviews: reviews.length,
         ratingBreakdown: ratingBreakdown,
       );
-      await fakeResidenceRepository.setResidence(updated);
+      final updatedDetail = entityDetail.copyWith(
+        avgRating: avgRating,
+        totalReviews: reviews.length,
+        ratingBreakdown: ratingBreakdown,
+      );
+
+      await fakeResidenceRepository.setResidence(updatedEntity);
+      await fakeResidenceDetailsRepository.setResidenceDetail(updatedDetail);
     } else if (categoryId == 2) {
       final entity = await fakeFoodRepository.fetchFood(categoryId, entityId);
+      final detail = await fakeFoodDetailsRepository.fetchFoodDetails(
+        categoryId,
+        entityId,
+      );
       if (entity == null) throw StateError('Food not found.');
-      final updated = entity.copyWith(
+      if (detail == null) throw StateError('Food Details not found.');
+      final updatedEntity = entity.copyWith(
         avgRating: avgRating,
         totalReviews: reviews.length,
         ratingBreakdown: ratingBreakdown,
       );
-      await fakeFoodRepository.setFood(updated);
+      final updatedDetail = detail.copyWith(
+        avgRating: avgRating,
+        totalReviews: reviews.length,
+        ratingBreakdown: ratingBreakdown,
+      );
+      await fakeFoodRepository.setFood(updatedEntity);
+      await fakeFoodDetailsRepository.setFoodDetail(updatedDetail);
     } else {
       throw UnsupportedError('Unknown category: $categoryId');
     }

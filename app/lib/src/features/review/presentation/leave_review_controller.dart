@@ -2,8 +2,8 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/current_date_provider.dart';
 import 'package:app/src/core/utils/notifier_mounted.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/review/review.dart';
-import 'package:app/src/features/review/reviews_service.dart';
+import 'package:app/src/features/review/domain/review.dart';
+import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'leave_review_controller.g.dart';
