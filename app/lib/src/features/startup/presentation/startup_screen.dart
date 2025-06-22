@@ -3,8 +3,9 @@ import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
-import 'package:app/src/features/startup/presentation/startup_content/get_location_content.dart';
-import 'package:app/src/features/startup/presentation/startup_content/startup_content.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/features/startup/presentation/widgets/get_location_content.dart';
+import 'package:app/src/features/startup/presentation/widgets/startup_content.dart';
 import 'package:flutter/material.dart';
 
 class StartupScreen extends StatefulWidget {
@@ -57,14 +58,12 @@ class _StartupScreenState extends State<StartupScreen> {
     final size = MediaQuery.sizeOf(context);
     final width = size.width;
     final height = size.height;
-
     final screenType = ScreenType.determine(width: width, height: height);
+    final isSmall = isSmallScreen(context);
 
     // Auto-close bottom sheet on large screens
-    if (screenType == ScreenType.desktop || screenType == ScreenType.tablet) {
-      if (_isBottomSheetVisible) {
-        _controller?.close();
-      }
+    if (!isSmall && _isBottomSheetVisible) {
+      _controller?.close();
     }
 
     return Scaffold(

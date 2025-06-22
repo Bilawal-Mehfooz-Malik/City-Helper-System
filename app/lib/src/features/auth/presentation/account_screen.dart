@@ -6,7 +6,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/startup/presentation/startup_content/google_map_widget.dart';
+import 'package:app/src/features/startup/presentation/widgets/google_map_widget.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

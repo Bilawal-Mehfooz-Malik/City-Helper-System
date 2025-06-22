@@ -1,5 +1,5 @@
-import 'package:app/src/features/startup/presentation/startup_content/get_location_content.dart';
-import 'package:app/src/features/startup/presentation/startup_content/startup_content.dart';
+import 'package:app/src/features/startup/presentation/widgets/get_location_content.dart';
+import 'package:app/src/features/startup/presentation/widgets/startup_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

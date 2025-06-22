@@ -15,8 +15,8 @@ import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
-import 'package:app/src/features/startup/presentation/startup_content/google_map_widget.dart';
+import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
+import 'package:app/src/features/startup/presentation/widgets/google_map_widget.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 
@@ -132,7 +132,7 @@ class _ProfileContentState extends ConsumerState<_ProfileContent> {
     final authState = ref.watch(authControllerProvider);
     final user = ref.watch(authStateChangesProvider).value;
     final defaultLocation = ref.watch(defaultLocationProvider);
-    final userLocation = ref.watch(locationControllerProvider).value;
+    final userLocation = ref.watch(userLocationControllerProvider).value;
 
     final isEdit = user?.name != null;
 

@@ -1,8 +1,8 @@
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,7 +43,7 @@ void main() {
 
   group('createUser', () {
     test('initial state is null', () {
-      final controller = container.read(userLocationControllerProvider);
+      final controller = container.read(localUserLocationSaverProvider);
       expect(controller, const AsyncData<void>(null));
     });
 
@@ -53,11 +53,11 @@ void main() {
         // Setup
         final listener = Listener<AsyncValue<void>>();
         final controller = container.read(
-          userLocationControllerProvider.notifier,
+          localUserLocationSaverProvider.notifier,
         );
 
         container.listen(
-          userLocationControllerProvider,
+          localUserLocationSaverProvider,
           listener.call,
           fireImmediately: true,
         );
@@ -102,15 +102,15 @@ void main() {
 
       // Initializing locationController with [testLocation]
       await container
-          .read(locationControllerProvider.notifier)
+          .read(userLocationControllerProvider.notifier)
           .getCurrentLocation();
 
       final controller = container.read(
-        userLocationControllerProvider.notifier,
+        localUserLocationSaverProvider.notifier,
       );
 
       container.listen(
-        userLocationControllerProvider,
+        localUserLocationSaverProvider,
         listener.call,
         fireImmediately: true,
       );

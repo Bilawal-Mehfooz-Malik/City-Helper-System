@@ -6,6 +6,7 @@ import 'package:app/src/features/categories_list/presentation/selected_category_
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/entity_search_query_notifier.dart';
+import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -119,8 +120,9 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
               ];
             }
 
+            final subCategory = ref.watch(subcategoryControllerProvider);
             final asyncEntities = ref.watch(
-              watchEntitiesProvider(widget.categoryId, null),
+              watchEntitiesProvider(widget.categoryId, subCategory),
             );
 
             return asyncEntities.when(

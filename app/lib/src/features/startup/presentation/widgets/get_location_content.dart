@@ -3,9 +3,9 @@ import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
-import 'package:app/src/features/startup/presentation/startup_content/location_preview_widget.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
+import 'package:app/src/features/startup/presentation/widgets/location_preview_widget.dart';
+import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +23,11 @@ class GetLocationContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationValue = ref.watch(locationControllerProvider);
-    final locationNotifier = ref.read(locationControllerProvider.notifier);
-    final userLocationValue = ref.watch(userLocationControllerProvider);
+    final locationValue = ref.watch(userLocationControllerProvider);
+    final locationNotifier = ref.read(userLocationControllerProvider.notifier);
+    final userLocationValue = ref.watch(localUserLocationSaverProvider);
     final userLocationNotifier = ref.read(
-      userLocationControllerProvider.notifier,
+      localUserLocationSaverProvider.notifier,
     );
 
     final isLoading =
@@ -37,13 +37,13 @@ class GetLocationContent extends ConsumerWidget {
 
     // Error handling for userLocation
     ref.listen<AsyncValue<LatLng?>>(
-      locationControllerProvider,
+      userLocationControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
     // Error handling for userCreation
     ref.listen<AsyncValue<void>>(
-      userLocationControllerProvider,
+      localUserLocationSaverProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 
@@ -52,6 +52,9 @@ class GetLocationContent extends ConsumerWidget {
       spacing: Sizes.p12,
       children: [
         if (isLargeScreen) gapH16,
+        // [Location Preview Widget]
+        const LocationPreviewWidget(),
+
         // [Headline]
         Text(
           context.loc.getLocDescription,
@@ -59,9 +62,6 @@ class GetLocationContent extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-
-        // [Location Preview Widget]
-        const LocationPreviewWidget(),
 
         /// [GetCurrent] and [FromMap] Buttons
         Row(
@@ -81,8 +81,8 @@ class GetLocationContent extends ConsumerWidget {
                 key: kFromMapKey,
                 isDisabled: isLoading,
                 text: context.loc.fromMap,
-                onPressed:
-                    () => context.goNamed(AppRoute.pickYourLocation.name),
+                onPressed: () =>
+                    context.goNamed(AppRoute.pickYourLocation.name),
               ),
             ),
           ],

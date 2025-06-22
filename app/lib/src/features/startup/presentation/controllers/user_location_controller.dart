@@ -1,27 +1,26 @@
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
-import 'package:app/src/features/startup/domain/location_exceptions.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../data/real/geolocator_repository.dart';
 
 part 'user_location_controller.g.dart';
 
 @riverpod
 class UserLocationController extends _$UserLocationController {
   @override
-  FutureOr<void> build() {}
+  FutureOr<LatLng?> build() {
+    return null;
+  }
 
-  Future<void> createUser() async {
+  Future<LatLng?> getCurrentLocation() async {
     state = const AsyncLoading();
-    final userLocation = ref.read(locationControllerProvider).value;
+    final locationRepo = ref.read(geoLocatorRepositoryProvider);
+    state = await AsyncValue.guard(() => locationRepo.getCurrentLocation());
+    return state.value;
+  }
 
-    if (userLocation == null) {
-      state = AsyncError(LocationUnavailableException(), StackTrace.current);
-      return;
-    }
-
-    final repository = ref.read(userLocationRepositoryProvider);
-    state = await AsyncValue.guard(
-      () => repository.setUserLocation(userLocation),
-    );
+  void getLocationFromMap(LatLng location) async {
+    state = const AsyncLoading();
+    state = AsyncData(location);
   }
 }

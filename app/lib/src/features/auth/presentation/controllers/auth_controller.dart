@@ -1,6 +1,6 @@
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_controller.g.dart';
@@ -45,7 +45,7 @@ class AuthController extends _$AuthController {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
     // Get the current location from the location controller
-    final location = ref.read(locationControllerProvider).value;
+    final location = ref.read(userLocationControllerProvider).value;
     final defaultLocation = ref.read(defaultLocationProvider);
 
     final result = await AsyncValue.guard(() async {
@@ -67,7 +67,7 @@ class AuthController extends _$AuthController {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
 
-    final location = ref.read(locationControllerProvider).value;
+    final location = ref.read(userLocationControllerProvider).value;
     final defaultLocation = ref.read(defaultLocationProvider);
 
     final result = await AsyncValue.guard(() async {
