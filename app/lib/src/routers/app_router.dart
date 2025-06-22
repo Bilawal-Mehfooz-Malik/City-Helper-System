@@ -1,7 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/auth/presentation/account_screen.dart';
-import 'package:app/src/features/auth/presentation/auth_screen.dart';
-import 'package:app/src/features/auth/presentation/otp_screen.dart';
+import 'package:app/src/features/auth/presentation/auth_flow_screen.dart';
 import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
@@ -30,7 +29,6 @@ enum AppRoute {
   popularDetail,
   leaveReview,
   auth,
-  otp,
   profile,
   account,
   loading,
@@ -127,7 +125,7 @@ GoRouter appRouter(Ref ref) {
                 },
                 routes: [
                   GoRoute(
-                    path: 'leave_review',
+                    path: 'leave-review',
                     name: AppRoute.leaveReview.name,
                     pageBuilder: (context, state) {
                       final entityId = state.pathParameters['entityId']!;
@@ -151,31 +149,19 @@ GoRouter appRouter(Ref ref) {
             path: 'auth',
             name: AppRoute.auth.name,
             pageBuilder: (context, state) =>
-                MaterialPage(fullscreenDialog: true, child: AuthScreen()),
-            routes: [
-              GoRoute(
-                path: 'otp',
-                name: AppRoute.otp.name,
-                pageBuilder: (context, state) =>
-                    MaterialPage(fullscreenDialog: true, child: OTPScreen()),
-                routes: [
-                  GoRoute(
-                    path: 'profile',
-                    name: AppRoute.profile.name,
-                    pageBuilder: (context, state) => MaterialPage(
-                      fullscreenDialog: true,
-                      child: ProfileScreen(),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                MaterialPage(fullscreenDialog: true, child: AuthFlowScreen()),
           ),
           GoRoute(
             path: 'account',
             name: AppRoute.account.name,
             pageBuilder: (context, state) =>
                 MaterialPage(fullscreenDialog: true, child: AccountScreen()),
+          ),
+          GoRoute(
+            path: 'profile',
+            name: AppRoute.profile.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: ProfileScreen()),
           ),
         ],
       ),

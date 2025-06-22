@@ -24,7 +24,7 @@ class LeaveReviewController extends _$LeaveReviewController
     Review? previousReview,
     required void Function() onSuccess,
   }) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    final user = await ref.read(authRepositoryProvider).currentUser;
     if (user == null) return;
 
     if (previousReview == null ||

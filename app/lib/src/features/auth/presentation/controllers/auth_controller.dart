@@ -1,5 +1,7 @@
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/domain/auth_exceptions.dart';
+import 'package:app/src/features/auth/presentation/controllers/verification_id_controller.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,19 +15,31 @@ class AuthController extends _$AuthController {
   Future<AsyncValue<void>> sendOtp(String phoneNumber) async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
-    final result = await AsyncValue.guard(
-      () => authRepository.sendOtp(phoneNumber),
-    );
+
+    String? verificationId;
+    final result = await AsyncValue.guard(() async {
+      verificationId = await authRepository.sendOtp(phoneNumber);
+    });
+
+    if (!result.hasError && verificationId != null) {
+      ref.read(verificationIdControllerProvider.notifier).set(verificationId);
+    } else {
+      ref.read(verificationIdControllerProvider.notifier).clear();
+    }
+
     state = result;
     return result;
   }
 
-  Future<AsyncValue<void>> verifyOtp({
-    required String code,
-    required String verificationId,
-  }) async {
+  Future<AsyncValue<void>> verifyOtp({required String code}) async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
+
+    final verificationId = ref.read(verificationIdControllerProvider);
+    if (verificationId == null) {
+      state = AsyncError(VerificationIdMissingException(), StackTrace.current);
+      return AsyncError(VerificationIdMissingException(), StackTrace.current);
+    }
 
     final result = await AsyncValue.guard(
       () => authRepository.verifyOtp(
@@ -52,8 +66,8 @@ class AuthController extends _$AuthController {
       await authRepository.updateUserProfile(
         name: name,
         profilePicUrl: profilePicUrl,
+        location: (location ?? defaultLocation),
       );
-      await authRepository.updateUserLocation(location ?? defaultLocation);
     });
 
     state = result;
@@ -71,11 +85,11 @@ class AuthController extends _$AuthController {
     final defaultLocation = ref.read(defaultLocationProvider);
 
     final result = await AsyncValue.guard(() async {
-      await authRepository.editUserProfile(
+      await authRepository.updateUserProfile(
         name: name,
         profilePicUrl: profilePicUrl,
+        location: (location ?? defaultLocation),
       );
-      await authRepository.updateUserLocation(location ?? defaultLocation);
     });
 
     state = result;

@@ -676,6 +676,12 @@ abstract class AppLocalizations {
   /// **'Remove Photo'**
   String get profile_removePhoto;
 
+  /// Shows the registered phone number on profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Registered number: {phoneNumber}'**
+  String profile_registeredNumber(Object phoneNumber);
+
   /// No description provided for @account_title.
   ///
   /// In en, this message translates to:

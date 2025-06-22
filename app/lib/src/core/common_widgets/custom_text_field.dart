@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
     required this.keyboardType,
     this.enabled = true,
     this.onchanged,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -15,10 +16,12 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool enabled;
   final ValueChanged<String>? onchanged;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       controller: controller,
       keyboardType: keyboardType,
       enabled: enabled,

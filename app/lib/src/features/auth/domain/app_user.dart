@@ -31,4 +31,45 @@ class AppUser {
       lastLocation: lastLocation ?? this.lastLocation,
     );
   }
+
+  Map<String, Object?> toJson() {
+    return {
+      'uid': uid,
+      'phoneNumber': phoneNumber,
+      'name': name,
+      'profileImageUrl': profileImageUrl,
+      'lastLocation': lastLocation?.toJson(),
+    };
+  }
+
+  static AppUser fromJson(Map<String, Object?> json) {
+    return AppUser(
+      uid: json['uid'] as UserId,
+      phoneNumber: json['phoneNumber'] as String,
+      name: json['name'] as String,
+      profileImageUrl: json['profileImageUrl'] as String?,
+      lastLocation: json['lastLocation'] != null
+          ? LatLng.fromJson(json['lastLocation'])
+          : null,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'AppUser(uid: $uid, phoneNumber: $phoneNumber, name: $name, profileImageUrl: $profileImageUrl, lastLocation: $lastLocation)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AppUser &&
+        other.uid == uid &&
+        other.phoneNumber == phoneNumber &&
+        other.name == name &&
+        other.profileImageUrl == profileImageUrl &&
+        other.lastLocation == lastLocation;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(uid, phoneNumber, name, profileImageUrl, lastLocation);
 }

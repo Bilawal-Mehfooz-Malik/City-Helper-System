@@ -206,6 +206,13 @@
   "@profile_createSuccessMessage": {},
   "profile_removePhoto":"Remove Photo",
   "@profile_removePhoto": {},
+  "@profile_registeredNumber": {
+    "description": "Shows the registered phone number on profile screen",
+    "placeholders": {
+      "phoneNumber": {}
+    }
+  },
+  "profile_registeredNumber": "Registered number: {phoneNumber}",
 
   "@profile_welcome": {
     "description": "Welcome title on the profile setup screen"

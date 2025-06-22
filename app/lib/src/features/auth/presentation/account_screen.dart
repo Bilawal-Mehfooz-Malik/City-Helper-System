@@ -3,6 +3,7 @@ import 'dart:io' show File;
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
@@ -43,6 +44,7 @@ class AccountScreen extends ConsumerWidget {
           ? const SizedBox.shrink()
           : SafeArea(
               child: ResponsiveScrollable(
+                maxContentWidth: Breakpoint.tablet,
                 padding: const EdgeInsets.all(Sizes.p16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

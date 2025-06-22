@@ -18,8 +18,6 @@ class FakeAuthRepository implements AuthRepository {
 
   String? _verifiedPhoneNumber;
 
-  // --- Public API ---
-
   @override
   Stream<AppUser?> authStateChanges() => _authState.stream;
 
@@ -27,14 +25,15 @@ class FakeAuthRepository implements AuthRepository {
   Stream<AppUser?> idTokenChanges() => _authState.stream;
 
   @override
-  AppUser? get currentUser => _authState.value;
+  Future<AppUser?> get currentUser async => _authState.value;
 
   @override
-  Future<void> sendOtp(String phoneNumber) async {
+  Future<String> sendOtp(String phoneNumber) async {
     await delay(addDelay);
     const fakeOtp = '123456';
     _otpStorage[phoneNumber] = fakeOtp;
     AppLogger.logInfo('Sending OTP "$fakeOtp" to $phoneNumber');
+    return phoneNumber;
   }
 
   @override
@@ -70,51 +69,37 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> updateUserProfile({
     required String name,
     String? profilePicUrl,
+    LatLng? location,
   }) async {
     await delay(addDelay);
 
-    final phone = _verifiedPhoneNumber;
+    final phone = _verifiedPhoneNumber ?? _authState.value?.phoneNumber;
     if (phone == null) {
-      throw Exception('No verified phone number. Cannot complete signup.');
+      throw Exception('No verified phone number');
     }
 
-    final user = AppUser(
-      uid: _uuid.v4(),
-      phoneNumber: phone,
-      name: name,
-      profileImageUrl: profilePicUrl,
-      lastLocation: null,
-    );
+    final userData = _authState.value != null
+        ? _authState.value!.copyWith(
+            name: name,
+            profileImageUrl: profilePicUrl,
+            lastLocation: location,
+          )
+        : AppUser(
+            uid: _uuid.v4(),
+            phoneNumber: phone,
+            name: name,
+            profileImageUrl: profilePicUrl,
+            lastLocation: location,
+          );
 
-    _users.add(user);
-    _authState.value = user;
+    if (_authState.value == null) {
+      _users.add(userData);
+    } else {
+      _updateUser(userData);
+    }
 
-    _verifiedPhoneNumber = null; // Clear after registration
-  }
-
-  @override
-  Future<void> updateUserLocation(LatLng location) async {
-    await delay(addDelay);
-    final user = _requireSignedInUser();
-
-    final updatedUser = user.copyWith(lastLocation: location);
-    _updateUser(updatedUser);
-  }
-
-  @override
-  Future<void> editUserProfile({
-    required String name,
-    String? profilePicUrl,
-  }) async {
-    await delay(addDelay);
-    final user = _requireSignedInUser();
-
-    final updatedUser = user.copyWith(
-      name: name,
-      profileImageUrl: profilePicUrl ?? user.profileImageUrl,
-    );
-
-    _updateUser(updatedUser);
+    _authState.value = userData;
+    _verifiedPhoneNumber = null;
   }
 
   @override
@@ -125,19 +110,10 @@ class FakeAuthRepository implements AuthRepository {
 
   void dispose() => _authState.close();
 
-  // --- Internal Helpers ---
-
-  AppUser _requireSignedInUser() {
-    final user = _authState.value;
-    if (user == null) throw Exception('No user signed in');
-    return user;
-  }
-
   void _updateUser(AppUser updatedUser) {
     final index = _users.indexWhere((u) => u.uid == updatedUser.uid);
     if (index != -1) {
       _users[index] = updatedUser;
     }
-    _authState.value = updatedUser;
   }
 }

@@ -310,6 +310,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_removePhoto => 'Remove Photo';
 
   @override
+  String profile_registeredNumber(Object phoneNumber) {
+    return 'Registered number: $phoneNumber';
+  }
+
+  @override
   String get account_title => 'Account';
 
   @override
