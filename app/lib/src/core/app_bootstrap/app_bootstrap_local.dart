@@ -11,7 +11,7 @@ import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/auth/data/fake_auth_repository.dart';
+import 'package:app/src/features/auth/data/fake/fake_auth_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
 import 'package:app/src/features/review/data/fake_reviews_repository.dart';

@@ -260,5 +260,9 @@
   "provideARating": "Please provide a rating",
   "@provideARating": {},
   "updateAReview": "Update Review",
-  "@updateAReview": {}
+  "@updateAReview": {},
+  "areYouSure": "Are you sure?",
+  "@areYouSure": {},
+  "logout": "Log out",
+  "@logout": {}
 }

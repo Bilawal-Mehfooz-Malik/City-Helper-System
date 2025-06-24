@@ -97,7 +97,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
     }
   }
 
-  void _onPhoneNumberChanged(String _) => setState(() {});
+  void _onPhoneNumberChanged(_) => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,10 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         );
         break;
       case AuthFlowStep.profile:
-        child = ProfileContent(phoneNumber: _fullPhoneNumber);
+        child = ProfileContent(
+          phoneNumber: _fullPhoneNumber,
+          isSmallScreen: isSmall,
+        );
         break;
     }
 

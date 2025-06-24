@@ -1,20 +1,23 @@
-import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/auth/domain/app_user.dart';
+import 'package:app/src/features/auth/presentation/widgets/profile_image_widget.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:app/src/core/common_widgets/custom_outlined_button.dart';
 import 'package:app/src/core/common_widgets/custom_text_field.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
-import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -22,301 +25,200 @@ import 'package:app/src/routers/app_router.dart';
 
 class ProfileContent extends ConsumerStatefulWidget {
   final String phoneNumber;
-
-  const ProfileContent({super.key, required this.phoneNumber});
+  final bool isSmallScreen;
+  const ProfileContent({
+    super.key,
+    required this.phoneNumber,
+    required this.isSmallScreen,
+  });
 
   @override
   ConsumerState<ProfileContent> createState() => _ProfileContentState();
 }
 
 class _ProfileContentState extends ConsumerState<ProfileContent> {
+  XFile? _pickedImage;
+  Uint8List? _pickedImageBytes;
+  bool _isEditMode = false;
+  bool _removeImage = false;
   final _nameController = TextEditingController();
-  final _nameFocusNode = FocusNode();
-  final _imageNotifier = ValueNotifier<XFile?>(null);
-  final _imageRemovedNotifier = ValueNotifier<bool>(false);
-  String? _existingImageUrl;
 
   @override
   void dispose() {
     _nameController.dispose();
-    _nameFocusNode.dispose();
-    _imageNotifier.dispose();
-    _imageRemovedNotifier.dispose();
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final user = ref.read(authStateChangesProvider).value;
-
-    if (_nameController.text.isEmpty && user?.name != null) {
-      _nameController.text = user!.name;
-    }
-    if (_existingImageUrl == null && user?.profileImageUrl != null) {
-      _existingImageUrl = user!.profileImageUrl;
-    }
-  }
-
-  Future<void> _submitProfile({required bool isEdit}) async {
+  Future<void> _submit() async {
     final name = _nameController.text.trim();
     if (name.length < 4) return;
 
     final controller = ref.read(authControllerProvider.notifier);
-    final result = isEdit
-        ? await controller.updateProfile(
+    final user = ref.read(authStateChangesProvider).value;
+    if (user == null) return;
+
+    final existingProfile = ref.read(getUserByIdProvider(user.uid)).value;
+
+    // If in edit mode and nothing changed → pop silently
+    if (_isEditMode && existingProfile != null) {
+      final isNameUnchanged = name == existingProfile.name;
+      final isImageUnchanged = _pickedImageBytes == null && !_removeImage;
+
+      if (isNameUnchanged && isImageUnchanged) {
+        context.pop();
+        return;
+      }
+    }
+
+    final result = _isEditMode
+        ? await controller.updateUser(
             name: name,
-            profilePicUrl: _imageRemovedNotifier.value
-                ? ''
-                : _imageNotifier.value?.path,
+            profileImageBytes: _pickedImageBytes,
+            removeProfileImage: _removeImage,
           )
-        : await controller.completeSignup(
+        : await controller.createUser(
             name: name,
-            profilePicUrl: _imageRemovedNotifier.value
-                ? ''
-                : _imageNotifier.value?.path,
+            profileImageBytes: _pickedImageBytes,
           );
 
-    if (result.hasError && mounted) {
-      result.showAlertDialogOnError(context);
-      return;
-    }
+    if (!mounted) return;
 
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            isEdit
-                ? context.loc.profile_updateSuccessMessage
-                : context.loc.profile_createSuccessMessage,
-          ),
-        ),
-      );
+    if (result.hasError) {
+      result.showAlertDialogOnError(context);
+    } else {
       context.pop();
     }
+  }
+
+  void _onImageChanged(XFile? file) async {
+    if (file == null) {
+      setState(() {
+        _pickedImage = null;
+        _pickedImageBytes = null;
+      });
+      return;
+    }
+    final bytes = await file.readAsBytes();
+    setState(() {
+      _pickedImage = file;
+      _pickedImageBytes = bytes;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
-    final user = ref.read(authStateChangesProvider).value;
-    final defaultLocation = ref.watch(defaultLocationProvider);
+    final user = ref.watch(authStateChangesProvider).value;
     final userLocation = ref.watch(userLocationControllerProvider).value;
-
-    final isEdit = user?.name != null;
-    final isFormFilled = _nameController.text.trim().length >= 4;
-
-    return SingleChildScrollView(
-      child: Column(
-        spacing: Sizes.p16,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _ProfileHeaderWidget(isEditMode: isEdit),
-          _ProfileImageWidget(
-            imageNotifier: _imageNotifier,
-            imageRemovedNotifier: _imageRemovedNotifier,
-            existingImageUrl: _existingImageUrl,
-            isLoading: authState.isLoading,
-          ),
-          _ProfileFormWidget(
-            onchanged: (p0) => setState(() {}),
-            nameController: _nameController,
-            nameFocusNode: _nameFocusNode,
-            onLocationPressed: () =>
-                context.pushNamed(AppRoute.pickYourLocation.name),
-            isLoading: authState.isLoading,
-            userLocation: userLocation,
-            defaultLocation: defaultLocation,
-          ),
-          PrimaryButton(
-            useMaxSize: true,
-            isDisabled: !isFormFilled,
-            isLoading: authState.isLoading,
-            onPressed: () => _submitProfile(isEdit: isEdit),
-            text: isEdit
-                ? context.loc.common_save
-                : context.loc.profile_finishSignup,
-          ),
-          gapH8,
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfileHeaderWidget extends ConsumerWidget {
-  final bool isEditMode;
-
-  const _ProfileHeaderWidget({required this.isEditMode});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        Text(
-          isEditMode
-              ? context.loc.account_editProfile
-              : context.loc.profile_welcome,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        gapH4,
-        Text(
-          context.loc.profile_subtitle,
-          style: context.textTheme.bodyMedium,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-}
-
-class _ProfileImageWidget extends ConsumerStatefulWidget {
-  final ValueNotifier<XFile?> imageNotifier;
-  final ValueNotifier<bool> imageRemovedNotifier;
-  final String? existingImageUrl;
-  final bool isLoading;
-
-  const _ProfileImageWidget({
-    required this.imageNotifier,
-    required this.imageRemovedNotifier,
-    required this.existingImageUrl,
-    required this.isLoading,
-  });
-
-  @override
-  ConsumerState<_ProfileImageWidget> createState() =>
-      _ProfileImageWidgetState();
-}
-
-class _ProfileImageWidgetState extends ConsumerState<_ProfileImageWidget> {
-  final _picker = ImagePicker();
-
-  Future<void> _uploadPhoto() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null && mounted) {
-      widget.imageNotifier.value = pickedFile;
-      widget.imageRemovedNotifier.value = false;
-    }
-  }
-
-  void _removePhoto() {
-    if (mounted) {
-      widget.imageNotifier.value = null;
-      widget.imageRemovedNotifier.value = true;
-    }
-  }
-
-  ImageProvider? _getProfileImageProvider() {
-    if (widget.imageNotifier.value != null) {
-      return kIsWeb
-          ? NetworkImage(widget.imageNotifier.value!.path)
-          : FileImage(File(widget.imageNotifier.value!.path));
-    }
-    if (!widget.imageRemovedNotifier.value &&
-        widget.existingImageUrl != null &&
-        widget.existingImageUrl!.isNotEmpty) {
-      return NetworkImage(widget.existingImageUrl!);
-    }
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 48,
-          backgroundImage: _getProfileImageProvider(),
-          child: _getProfileImageProvider() == null
-              ? const Icon(Icons.person, size: 60)
-              : null,
-        ),
-        gapH16,
-        Wrap(
-          spacing: Sizes.p8,
-          runSpacing: Sizes.p4,
-          children: [
-            CustomOutlinedButton(
-              onPressed: _uploadPhoto,
-              isDisabled: widget.isLoading,
-              text: context.loc.profile_uploadPhoto,
-            ),
-            CustomOutlinedButton(
-              onPressed: _removePhoto,
-              isDisabled:
-                  widget.isLoading ||
-                  (widget.imageNotifier.value == null &&
-                      (widget.existingImageUrl == null ||
-                          widget.imageRemovedNotifier.value)),
-              text: context.loc.profile_removePhoto,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _ProfileFormWidget extends ConsumerWidget {
-  final TextEditingController nameController;
-  final FocusNode nameFocusNode;
-  final VoidCallback onLocationPressed;
-  final bool isLoading;
-  final LatLng? userLocation;
-  final LatLng defaultLocation;
-  final void Function(String)? onchanged;
-
-  const _ProfileFormWidget({
-    required this.nameController,
-    required this.nameFocusNode,
-    required this.onLocationPressed,
-    required this.isLoading,
-    required this.userLocation,
-    required this.defaultLocation,
-    required this.onchanged,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+    final defaultLocation = ref.watch(defaultLocationProvider);
     final mapBuilder = ref.watch(googleMapBuilderProvider);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.loc.profile_fullNameLabel,
-          style: context.textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.bold,
+
+    final profileValue = user != null
+        ? ref.watch(getUserByIdProvider(user.uid))
+        : const AsyncValue<AppUser?>.data(null);
+
+    return AsyncValueWidget(
+      value: profileValue,
+      loading: widget.isSmallScreen
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                final safeHeight = constraints.hasBoundedHeight
+                    ? constraints.maxHeight
+                    : MediaQuery.of(context).size.height * 0.5;
+                return ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: safeHeight),
+                  child: const CenteredProgressIndicator(),
+                );
+              },
+            )
+          : const CenteredProgressIndicator(),
+      data: (profile) {
+        if (!_isEditMode && profile != null) {
+          _isEditMode = true;
+          _nameController.text = profile.name;
+          _pickedImage = null; // start clean - no local picked file
+          _pickedImageBytes = null; // clear bytes, rely on existing URL
+        }
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(Sizes.p16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                _isEditMode
+                    ? context.loc.account_editProfile
+                    : context.loc.profile_welcome,
+                style: context.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              gapH4,
+              Text(context.loc.profile_subtitle, textAlign: TextAlign.center),
+              gapH24,
+
+              ProfileImageWidget(
+                initialImageUrl: profile?.profileImageUrl,
+                initialImageFile: _pickedImage,
+                isLoading: authState.isLoading,
+                onImageChanged: _onImageChanged,
+                onImageRemoved: () {
+                  setState(() {
+                    _pickedImage = null;
+                    _pickedImageBytes = null;
+                    _removeImage = true;
+                  });
+                },
+              ),
+
+              gapH24,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  context.loc.profile_fullNameLabel,
+                  style: context.textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              gapH4,
+              CustomTextField(
+                enabled: !authState.isLoading,
+                controller: _nameController,
+                hintText: context.loc.profile_fullNameHint,
+                keyboardType: TextInputType.name,
+                onchanged: (value) => setState(() {}),
+              ),
+              gapH16,
+
+              GestureDetector(
+                onTap: authState.isLoading
+                    ? null
+                    : () => context.pushNamed(AppRoute.pickYourLocation.name),
+                child: AbsorbPointer(
+                  absorbing: !authState.isLoading,
+                  child: SizedBox(
+                    height: 200,
+                    child: mapBuilder(userLocation ?? defaultLocation),
+                  ),
+                ),
+              ),
+
+              gapH16,
+
+              PrimaryButton(
+                useMaxSize: true,
+                isDisabled: _nameController.text.trim().length < 4,
+                isLoading: authState.isLoading,
+                onPressed: _submit,
+                text: _isEditMode
+                    ? context.loc.common_save
+                    : context.loc.profile_finishSignup,
+              ),
+            ],
           ),
-        ),
-        gapH4,
-        CustomTextField(
-          onchanged: onchanged,
-          focusNode: nameFocusNode,
-          controller: nameController,
-          hintText: context.loc.profile_fullNameHint,
-          keyboardType: TextInputType.name,
-        ),
-        gapH16,
-        Text(
-          context.loc.account_yourLocation,
-          style: context.textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        gapH8,
-        GestureDetector(
-          onTap: isLoading ? null : onLocationPressed,
-          child: AbsorbPointer(
-            child: SizedBox(
-              height: 250,
-              child: mapBuilder(userLocation ?? defaultLocation),
-            ),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

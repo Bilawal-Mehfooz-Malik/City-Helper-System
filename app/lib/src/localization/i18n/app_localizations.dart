@@ -765,6 +765,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Update Review'**
   String get updateAReview;
+
+  /// No description provided for @areYouSure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure?'**
+  String get areYouSure;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate

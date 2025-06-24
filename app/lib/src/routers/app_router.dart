@@ -1,4 +1,5 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/presentation/account_screen.dart';
 import 'package:app/src/features/auth/presentation/auth_flow_screen.dart';
 import 'package:app/src/features/auth/presentation/profile_screen.dart';
@@ -44,6 +45,9 @@ GoRouter appRouter(Ref ref) {
 
   // listen for changes in userLocationProvider to refresh the router for redirection
   ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
+
+  // Refresh router on auth state change
+  ref.listen(authStateChangesProvider, (_, __) => router.refresh());
 
   return router = GoRouter(
     initialLocation: initialLocation,

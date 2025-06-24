@@ -7,3 +7,35 @@ class VerificationIdMissingException extends AppException {
         'Verification ID is missing. Please try again.',
       );
 }
+
+class UserNotAuthenticatedException extends AppException {
+  UserNotAuthenticatedException()
+    : super(
+        'user-not-authenticated',
+        'User is not authenticated. Please log in again.',
+      );
+}
+
+class UserCreationException extends AppException {
+  UserCreationException()
+    : super(
+        'user-creation-failed',
+        'Failed to create user. Please try again later.',
+      );
+}
+
+class UserProfileImageUpdateException extends AppException {
+  UserProfileImageUpdateException()
+    : super(
+        'user-profile-image-update-failed',
+        'Failed to update user profile image. Please try again later.',
+      );
+}
+
+class UserProfileImageDeleteException extends AppException {
+  UserProfileImageDeleteException()
+    : super(
+        'user-profile-image-delete-failed',
+        'Failed to delete user profile image. Please try again later.',
+      );
+}

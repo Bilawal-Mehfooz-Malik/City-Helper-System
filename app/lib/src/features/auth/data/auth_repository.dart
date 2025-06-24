@@ -1,27 +1,28 @@
 import 'dart:async';
 
-import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:app/src/features/auth/domain/auth_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_repository.g.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;
-  final FirebaseFirestore _firestore;
-  AuthRepository(this._auth, this._firestore);
 
-  static const _usersCollection = 'users';
+  AuthRepository(this._auth);
 
+  ConfirmationResult? _confirmationResult; // Used only for web
+
+  /// Sends OTP to the given phone number.
+  /// Returns verificationId for mobile; empty string for web.
   Future<String> sendOtp(String phoneNumber) async {
     if (kIsWeb) {
-      final confirmation = await _auth.signInWithPhoneNumber(phoneNumber);
-      return confirmation.verificationId;
+      _confirmationResult = await _auth.signInWithPhoneNumber(phoneNumber);
+      return ''; // Web does not expose verificationId
     } else {
       final completer = Completer<String>();
 
@@ -56,84 +57,60 @@ class AuthRepository {
     }
   }
 
+  /// Verifies OTP and signs in the user.
   Future<void> verifyOtp({
     required String verificationId,
     required String smsCode,
   }) async {
-    final credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    await _auth.signInWithCredential(credential);
+    if (kIsWeb) {
+      if (_confirmationResult == null) {
+        AppLogger.logError(
+          'Confirmation result is null. Did you call sendOtp first?',
+          stackTrace: StackTrace.current,
+        );
+        throw UserCreationException();
+      }
+      await _confirmationResult!.confirm(smsCode);
+    } else {
+      final credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+      await _auth.signInWithCredential(credential);
+    }
   }
 
-  Future<AppUser?> getUserById(UserId userId) async {
-    final doc = await _firestore.collection(_usersCollection).doc(userId).get();
-    return doc.exists ? AppUser.fromJson(doc.data()!) : null;
-  }
+  /// Current signed-in user as domain model.
+  AppUser? get currentUser => _convertUser(_auth.currentUser);
 
-  Future<void> updateUserProfile({
-    required String name,
-    String? profilePicUrl,
-    LatLng? location,
-  }) async {
-    final user = _auth.currentUser;
-    if (user == null) return;
-
-    // Update Firebase Auth
-    await user.updateDisplayName(name);
-    if (profilePicUrl != null) await user.updatePhotoURL(profilePicUrl);
-
-    // Prepare Firestore update
-    final docRef = _firestore.collection(_usersCollection).doc(user.uid);
-    final doc = await docRef.get();
-
-    final userData = doc.exists
-        ? AppUser.fromJson(doc.data()!).copyWith(
-            name: name,
-            profileImageUrl: profilePicUrl,
-            lastLocation: location,
-          )
-        : AppUser(
-            uid: user.uid,
-            phoneNumber: user.phoneNumber ?? '',
-            name: name,
-            profileImageUrl: profilePicUrl,
-            lastLocation: location,
-          );
-
-    await (doc.exists
-        ? docRef.update(userData.toJson())
-        : docRef.set(userData.toJson()));
-  }
-
-  Future<void> signOut() => _auth.signOut();
-
+  /// Stream of authentication state changes mapped to AppUser.
   Stream<AppUser?> authStateChanges() {
-    return _auth.authStateChanges().asyncMap(_mapFirebaseUserToAppUser);
+    return _auth.authStateChanges().map(_convertUser);
   }
 
+  /// Stream of ID token changes mapped to AppUser.
   Stream<AppUser?> idTokenChanges() {
-    return _auth.idTokenChanges().asyncMap(_mapFirebaseUserToAppUser);
+    return _auth.idTokenChanges().map(_convertUser);
   }
 
-  Future<AppUser?> get currentUser {
-    return _mapFirebaseUserToAppUser(_auth.currentUser);
+  /// Signs out the current user.
+  Future<void> signOut() {
+    return _auth.signOut();
   }
 
-  Future<AppUser?> _mapFirebaseUserToAppUser(User? user) async {
-    if (user == null) return null;
-    final doc = await _firestore
-        .collection(_usersCollection)
-        .doc(user.uid)
-        .get();
-    return doc.exists ? AppUser.fromJson(doc.data()!) : null;
-  }
+  /// Converts Firebase [User] to your app domain [AppUser].
+  AppUser? _convertUser(User? user) => user != null
+      ? AppUser(
+          uid: user.uid,
+          phoneNumber: user.phoneNumber ?? '',
+          name: user.displayName ?? '',
+        )
+      : null;
 }
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) {
-  return AuthRepository(FirebaseAuth.instance, FirebaseFirestore.instance);
+  return AuthRepository(FirebaseAuth.instance);
 }
 
 @Riverpod(keepAlive: true)
@@ -144,9 +121,4 @@ Stream<AppUser?> authStateChanges(Ref ref) {
 @Riverpod(keepAlive: true)
 Stream<AppUser?> idTokenChanges(Ref ref) {
   return ref.read(authRepositoryProvider).idTokenChanges();
-}
-
-@riverpod
-Future<AppUser?> getUserById(Ref ref, String userId) {
-  return ref.read(authRepositoryProvider).getUserById(userId);
 }

@@ -356,4 +356,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateAReview => 'Update Review';
+
+  @override
+  String get areYouSure => 'Are you sure?';
+
+  @override
+  String get logout => 'Log out';
 }

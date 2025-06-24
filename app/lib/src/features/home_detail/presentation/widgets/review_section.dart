@@ -3,7 +3,7 @@ import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/review/domain/review.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
