@@ -7,7 +7,7 @@ part of 'ads_carousel_repository.dart';
 // **************************************************************************
 
 String _$adsCarouselRepositoryHash() =>
-    r'1a61b3680d771a8f86f72920a58e00d0c62edb5c';
+    r'debbf1bc1d4c7be497e11ddd37ec2851c51c4859';
 
 /// See also [adsCarouselRepository].
 @ProviderFor(adsCarouselRepository)

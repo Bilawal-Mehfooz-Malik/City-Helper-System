@@ -9,9 +9,9 @@ class OpeningHours {
     required this.close,
   });
 
-  Map<String, Object> toJson() => {'day': day, 'open': open, 'close': close};
+  Map<String, dynamic> toJson() => {'day': day, 'open': open, 'close': close};
 
-  factory OpeningHours.fromJson(Map<String, Object> json) => OpeningHours(
+  factory OpeningHours.fromJson(Map<String, dynamic> json) => OpeningHours(
     day: json['day'] as String,
     open: json['open'] as String,
     close: json['close'] as String,

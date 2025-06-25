@@ -70,12 +70,12 @@ class Food extends Entity {
     );
   }
 
-  Map<String, Object> toJson() => {
+  Map<String, dynamic> toJson() => {
     ...baseToJson(),
     'genderPref': genderPref.name,
   };
 
-  factory Food.fromJson(Map<String, Object> json) => Food(
+  factory Food.fromJson(Map<String, dynamic> json) => Food(
     id: json['id'] as String,
     categoryId: json['categoryId'] as int,
     subCategoryId: json['subCategoryId'] as int,
@@ -87,11 +87,11 @@ class Food extends Entity {
     avgRating: (json['avgRating'] as num).toDouble(),
     totalReviews: json['totalReviews'] as int,
     ratingBreakdown: (json['ratingBreakdown'] as List)
-        .map((e) => RatingBreakdown.fromJson(e as Map<String, Object>))
+        .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
         .toList(),
     isPopular: json['isPopular'] as bool,
     openingHours: (json['openingHours'] as List)
-        .map((e) => OpeningHours.fromJson(e as Map<String, Object>))
+        .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
         .toList(),
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
     createdAt: DateTime.parse(json['createdAt'] as String),

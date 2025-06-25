@@ -61,6 +61,16 @@ Future<void> main() async {
   // }
 
   // === SAMPLE FOOD LISTING ===
+  final weekdayNames = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+
   final food = {
     "id": "food-001",
     "categoryId": 2,
@@ -82,7 +92,7 @@ Future<void> main() async {
     "isPopular": true,
     "openingHours": List.generate(
       7,
-      (i) => {"day": i + 1, "open": "10:00", "close": "22:00"},
+      (i) => {"day": weekdayNames[i], "open": "10:00", "close": "22:00"},
     ),
     "entityStatus": "open",
     "createdAt": DateTime.now().toIso8601String(),
@@ -114,7 +124,7 @@ Future<void> main() async {
     "isPopular": true,
     "openingHours": List.generate(
       7,
-      (i) => {"day": i + 1, "open": "00:00", "close": "23:59"},
+      (i) => {"day": weekdayNames[i], "open": "00:00", "close": "23:59"},
     ),
     "entityStatus": "open",
     "createdAt": DateTime.now().toIso8601String(),
@@ -124,7 +134,7 @@ Future<void> main() async {
   };
 
   await firestore.collection('residence_listings').add(residence);
-  AppLogger.logInfo('✅ Sample ResidenceDetail uploaded');
+  AppLogger.logInfo('✅ Sample Residence uploaded');
 
   // === SAMPLE REVIEWS ===
   // final sampleReviews = [

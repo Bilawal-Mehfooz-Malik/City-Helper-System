@@ -81,7 +81,7 @@ class Residence extends Entity {
     );
   }
 
-  Map<String, Object> toJson() => {
+  Map<String, dynamic> toJson() => {
     ...baseToJson(),
     'price': price,
     'isFurnished': isFurnished,
@@ -89,10 +89,10 @@ class Residence extends Entity {
     'type': 'residence',
   };
 
-  factory Residence.fromJson(Map<String, Object> json) => Residence(
-    id: json['id'] as String,
-    categoryId: json['categoryId'] as int,
-    subCategoryId: json['subCategoryId'] as int,
+  factory Residence.fromJson(Map<String, dynamic> json) => Residence(
+    id: json['id'] as EntityId,
+    categoryId: json['categoryId'] as CategoryId,
+    subCategoryId: json['subCategoryId'] as SubCategoryId,
     coverImageUrl: json['coverImageUrl'] as String,
     name: json['name'] as String,
     cityName: json['cityName'] as String,
@@ -101,11 +101,11 @@ class Residence extends Entity {
     avgRating: (json['avgRating'] as num).toDouble(),
     totalReviews: json['totalReviews'] as int,
     ratingBreakdown: (json['ratingBreakdown'] as List)
-        .map((e) => RatingBreakdown.fromJson(e as Map<String, Object>))
+        .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
         .toList(),
     isPopular: json['isPopular'] as bool,
     openingHours: (json['openingHours'] as List)
-        .map((e) => OpeningHours.fromJson(e as Map<String, Object>))
+        .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
         .toList(),
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
     createdAt: DateTime.parse(json['createdAt'] as String),

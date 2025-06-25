@@ -7,7 +7,7 @@ part of 'sub_categories_repository.dart';
 // **************************************************************************
 
 String _$subCategoriesRepositoryHash() =>
-    r'36ace8fac2249698be58058982a6ccc812f0d795';
+    r'14f3f2a6ad8c720056b17de322bd147b3d92ce63';
 
 /// See also [subCategoriesRepository].
 @ProviderFor(subCategoriesRepository)

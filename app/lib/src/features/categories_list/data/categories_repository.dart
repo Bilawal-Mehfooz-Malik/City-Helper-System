@@ -16,7 +16,7 @@ class CategoriesRepository {
       .collection(categoriesKey)
       .withConverter<Category>(
         fromFirestore: (snapshot, _) =>
-            Category.fromJson(Map<String, Object>.from(snapshot.data()!)),
+            Category.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
         toFirestore: (category, _) => category.toJson(),
       );
 

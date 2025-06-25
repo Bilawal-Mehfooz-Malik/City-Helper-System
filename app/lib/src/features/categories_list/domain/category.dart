@@ -32,7 +32,7 @@ class Category {
     );
   }
 
-  Map<String, Object?> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
@@ -42,7 +42,7 @@ class Category {
     };
   }
 
-  static Category fromJson(Map<String, Object?> json) {
+  static Category fromJson(Map<String, dynamic> json) {
     return Category(
       id: json['id'] as CategoryId,
       name: json['name'] as String,

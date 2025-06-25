@@ -17,7 +17,7 @@ class ResidenceRepository {
       .collection(residencesKey)
       .withConverter<Residence>(
         fromFirestore: (snapshot, _) =>
-            Residence.fromJson(Map<String, Object>.from(snapshot.data()!)),
+            Residence.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
         toFirestore: (residence, _) => residence.toJson(),
       );
 

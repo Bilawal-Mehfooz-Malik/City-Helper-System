@@ -9,9 +9,9 @@ class RatingBreakdown {
     return (count / totalRatings) * 100;
   }
 
-  Map<String, Object> toJson() => {'stars': stars, 'count': count};
+  Map<String, dynamic> toJson() => {'stars': stars, 'count': count};
 
-  factory RatingBreakdown.fromJson(Map<String, Object> json) =>
+  factory RatingBreakdown.fromJson(Map<String, dynamic> json) =>
       RatingBreakdown(stars: json['stars'] as int, count: json['count'] as int);
 
   @override

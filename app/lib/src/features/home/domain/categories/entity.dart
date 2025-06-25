@@ -113,7 +113,7 @@ abstract class Entity {
     }
   }
 
-  Map<String, Object> baseToJson() => {
+  Map<String, dynamic> baseToJson() => {
     'id': id,
     'categoryId': categoryId,
     'subCategoryId': subCategoryId,

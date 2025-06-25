@@ -17,7 +17,7 @@ class FoodRepository {
       .collection(foodsKey)
       .withConverter<Food>(
         fromFirestore: (snap, _) =>
-            Food.fromJson(Map<String, Object>.from(snap.data()!)),
+            Food.fromJson(Map<String, dynamic>.from(snap.data()!)),
         toFirestore: (food, _) => food.toJson(),
       );
 
