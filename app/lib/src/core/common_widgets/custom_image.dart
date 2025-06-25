@@ -22,6 +22,7 @@ class CustomImage extends StatelessWidget {
     this.aspectRatio = 4 / 3,
     this.useAspectRatio = true,
     this.fit = BoxFit.cover,
+    this.iconPersonSize = 60,
   });
 
   final String? imageUrl;
@@ -33,6 +34,7 @@ class CustomImage extends StatelessWidget {
   final bool borderTopRight;
   final bool borderBottomLeft;
   final bool borderBottomRight;
+  final double iconPersonSize;
 
   final bool useAspectRatio;
   final double aspectRatio;
@@ -73,7 +75,7 @@ class CustomImage extends StatelessWidget {
     }
 
     if (imageUrl == null || imageUrl!.isEmpty) {
-      return CircleAvatar(child: const Icon(Icons.person, size: 60));
+      return CircleAvatar(child: Icon(Icons.person, size: iconPersonSize));
     }
 
     // Use CachedNetworkImage only for http(s)

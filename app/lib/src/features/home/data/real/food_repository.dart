@@ -1,71 +1,96 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'food_repository.g.dart';
 
 class FoodRepository {
-  static String get foodsKey => 'food';
+  FoodRepository(this._firestore);
+
+  final FirebaseFirestore _firestore;
+
+  static String get foodsKey => 'food_listings';
+
+  CollectionReference<Food> get _foodsRef => _firestore
+      .collection(foodsKey)
+      .withConverter<Food>(
+        fromFirestore: (snap, _) =>
+            Food.fromJson(Map<String, Object>.from(snap.data()!)),
+        toFirestore: (food, _) => food.toJson(),
+      );
 
   Future<void> setFood(Food food) async {
-    throw UnimplementedError();
+    await _foodsRef.doc(food.id).set(food);
   }
 
-  Stream<List<Food>> watchFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  Stream<List<Food>> watchFoodsList() {
+    return _foodsRef.snapshots().map(
+      (snap) => snap.docs.map((d) => d.data()).toList(),
+    );
   }
 
-  Stream<List<Food>> watchPopularFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  Future<List<Food>> fetchFoodsList() async {
+    final snap = await _foodsRef.get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Future<List<Food>> fetchFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  Stream<List<Food>> watchPopularFoodsList() {
+    return _foodsRef
+        .where('isPopular', isEqualTo: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
-  Future<List<Food>> fetchPopularFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  Future<List<Food>> fetchPopularFoodsList() async {
+    final snap = await _foodsRef.where('isPopular', isEqualTo: true).get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Stream<List<Food>> watchFoodsListBySubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  Stream<List<Food>> watchFoodsListBySubCategoryId(SubCategoryId subId) {
+    return _foodsRef
+        .where('subCategoryId', isEqualTo: subId)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  Future<List<Food>> fetchFoodsListSubCategoryId(SubCategoryId subId) async {
+    final snap = await _foodsRef.where('subCategoryId', isEqualTo: subId).get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Future<List<Food>> fetchFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  Stream<List<Food>> watchPopularFoodsListSubCategoryId(SubCategoryId subId) {
+    return _foodsRef
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
   Future<List<Food>> fetchPopularFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+    SubCategoryId subId,
+  ) async {
+    final snap = await _foodsRef
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: true)
+        .get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Future<Food?> fetchFood(CategoryId categoryId, EntityId id) async {
-    throw UnimplementedError();
+  Future<Food?> fetchFood(EntityId id) async {
+    final doc = await _foodsRef.doc(id).get();
+    return doc.exists ? doc.data() : null;
   }
 
-  Stream<Food?> watchFood(CategoryId categoryId, EntityId id) {
-    throw UnimplementedError();
+  Stream<Food?> watchFood(EntityId id) {
+    return _foodsRef.doc(id).snapshots().map((doc) {
+      return doc.exists ? doc.data() : null;
+    });
   }
 }
 
 @Riverpod(keepAlive: true)
 FoodRepository foodRepository(Ref ref) {
-  return FoodRepository();
+  return FoodRepository(FirebaseFirestore.instance);
 }

@@ -5,7 +5,7 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';

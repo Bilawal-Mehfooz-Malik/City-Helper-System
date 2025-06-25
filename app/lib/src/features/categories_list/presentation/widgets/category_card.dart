@@ -1,7 +1,7 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +23,7 @@ class CategoryCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategoryId = ref.watch(selectedCategoryIdControllerProvider);
     final isTileSelected = selectedCategoryId == category.id;
+    final icon = category.getCategoryIcon(category.icon);
 
     if (isListTile) {
       return ListTile(
@@ -34,7 +35,7 @@ class CategoryCard extends ConsumerWidget {
         contentPadding: const EdgeInsets.all(Sizes.p8),
         selectedColor: context.colorScheme.onPrimaryContainer,
         selectedTileColor: context.colorScheme.primaryContainer.withAlpha(77),
-        leading: CircleAvatar(radius: Sizes.p24, child: Icon(category.icon)),
+        leading: CircleAvatar(radius: Sizes.p24, child: Icon(icon)),
         title: CategoryName(title: category.name),
         subtitle: CategoryDescription(description: category.description),
       );
@@ -50,7 +51,7 @@ class CategoryCard extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Icon(category.icon, size: 100)),
+              Center(child: Icon(icon, size: 100)),
               gapH8,
               CategoryDetails(category: category),
             ],

@@ -69,6 +69,42 @@ class Food extends Entity {
       genderPref: genderPref ?? this.genderPref,
     );
   }
+
+  Map<String, Object> toJson() => {
+    ...baseToJson(),
+    'genderPref': genderPref.name,
+  };
+
+  factory Food.fromJson(Map<String, Object> json) => Food(
+    id: json['id'] as String,
+    categoryId: json['categoryId'] as int,
+    subCategoryId: json['subCategoryId'] as int,
+    coverImageUrl: json['coverImageUrl'] as String,
+    name: json['name'] as String,
+    cityName: json['cityName'] as String,
+    sectorName: json['sectorName'] as String,
+    latLng: LatLng.fromJson(json['latLng'])!,
+    avgRating: (json['avgRating'] as num).toDouble(),
+    totalReviews: json['totalReviews'] as int,
+    ratingBreakdown: (json['ratingBreakdown'] as List)
+        .map((e) => RatingBreakdown.fromJson(e as Map<String, Object>))
+        .toList(),
+    isPopular: json['isPopular'] as bool,
+    openingHours: (json['openingHours'] as List)
+        .map((e) => OpeningHours.fromJson(e as Map<String, Object>))
+        .toList(),
+    entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
+    createdAt: DateTime.parse(json['createdAt'] as String),
+    genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+  );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Food && super == other && genderPref == other.genderPref;
+
+  @override
+  int get hashCode => super.hashCode ^ genderPref.hashCode;
 }
 
 // @freezed

@@ -1,16 +1,18 @@
 import 'dart:async';
+
+import 'package:app/src/core/constants/test_residences.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
-import 'package:app/src/core/constants/test_residences.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
 
 class FakeResidenceRepository implements ResidenceRepository {
   FakeResidenceRepository({this.addDelay = true});
+
   final bool addDelay;
 
-  // Preload with a default list of residences
+  // Preloaded list of fake residences
   final _residences = InMemoryStore<List<Residence>>(List.from(testResidences));
 
   @override
@@ -19,160 +21,100 @@ class FakeResidenceRepository implements ResidenceRepository {
     final index = list.indexWhere((r) => r.id == residence.id);
     if (index != -1) {
       list[index] = residence;
-      _residences.value = list;
+    } else {
+      list.add(residence);
     }
+    _residences.value = list;
   }
 
   @override
-  Stream<List<Residence>> watchResidencesList(CategoryId categoryId) async* {
+  Stream<List<Residence>> watchResidencesList() async* {
     await delay(addDelay);
-    yield* _filterResidencesList(categoryId);
+    yield* _residences.stream;
   }
 
   @override
-  Future<List<Residence>> fetchResidencesList(CategoryId categoryId) async {
+  Future<List<Residence>> fetchResidencesList() async {
     await delay(addDelay);
-    return _filterResidencesList(categoryId).first;
+    return _residences.value;
   }
 
   @override
-  Stream<List<Residence>> watchPopularResidencesList(
-    CategoryId categoryId,
-  ) async* {
+  Stream<List<Residence>> watchPopularResidencesList() async* {
     await delay(addDelay);
-    yield* _filterPopularResidencesList(categoryId);
+    yield* _residences.stream.map(
+      (residences) => residences.where((r) => r.isPopular).toList(),
+    );
   }
 
   @override
-  Future<List<Residence>> fetchPopularResidencesList(
-    CategoryId categoryId,
-  ) async {
+  Future<List<Residence>> fetchPopularResidencesList() async {
     await delay(addDelay);
-    return _filterPopularResidencesList(categoryId).first;
-  }
-
-  @override
-  Future<List<Residence>> fetchResidencesListBySubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) async {
-    await delay(addDelay);
-    return _filterResidencesListBySubCategoryId(
-      categoryId,
-      subCategoryId,
-    ).first;
+    return _residences.value.where((r) => r.isPopular).toList();
   }
 
   @override
   Stream<List<Residence>> watchResidencesListBySubCategoryId(
-    CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) async* {
     await delay(addDelay);
-    yield* _filterResidencesListBySubCategoryId(categoryId, subCategoryId);
+    yield* _residences.stream.map(
+      (residences) =>
+          residences.where((r) => r.subCategoryId == subCategoryId).toList(),
+    );
   }
 
   @override
-  Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
-    CategoryId categoryId,
+  Future<List<Residence>> fetchResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async {
     await delay(addDelay);
-    return _filterPopularResidencesListBySubCategoryId(
-      categoryId,
-      subCategoryId,
-    ).first;
+    return _residences.value
+        .where((r) => r.subCategoryId == subCategoryId)
+        .toList();
   }
 
   @override
   Stream<List<Residence>> watchPopularResidencesListBySubCategoryId(
-    CategoryId categoryId,
     SubCategoryId subCategoryId,
   ) async* {
     await delay(addDelay);
-    yield* _filterPopularResidencesListBySubCategoryId(
-      categoryId,
-      subCategoryId,
-    );
-  }
-
-  @override
-  Future<Residence?> fetchResidence(CategoryId categoryId, EntityId id) async {
-    await delay(addDelay);
-    return Future.value(
-      _filterResidenceById(_residences.value, categoryId, id),
-    );
-  }
-
-  @override
-  Stream<Residence?> watchResidence(CategoryId categoryId, EntityId id) async* {
-    await delay(addDelay);
     yield* _residences.stream.map(
-      (residences) => _filterResidenceById(residences, categoryId, id),
+      (residences) => residences
+          .where((r) => r.subCategoryId == subCategoryId && r.isPopular)
+          .toList(),
     );
   }
 
-  // * Helper methods
-  Stream<List<Residence>> _filterResidencesList(CategoryId categoryId) {
-    return _residences.stream.map(
-      (entities) =>
-          entities.where((entity) => entity.categoryId == categoryId).toList(),
-    );
-  }
-
-  // * Helper methods
-  Stream<List<Residence>> _filterResidencesListBySubCategoryId(
-    CategoryId categoryId,
+  @override
+  Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
-  ) {
-    return _residences.stream.map(
-      (entities) => entities
-          .where(
-            (entity) =>
-                entity.categoryId == categoryId &&
-                entity.subCategoryId == subCategoryId,
-          )
-          .toList(),
-    );
+  ) async {
+    await delay(addDelay);
+    return _residences.value
+        .where((r) => r.subCategoryId == subCategoryId && r.isPopular)
+        .toList();
   }
 
-  Stream<List<Residence>> _filterPopularResidencesList(CategoryId categoryId) {
-    return _residences.stream.map(
-      (entities) => entities
-          .where(
-            (entity) => entity.categoryId == categoryId && entity.isPopular,
-          )
-          .toList(),
-    );
-  }
-
-  Stream<List<Residence>> _filterPopularResidencesListBySubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    return _residences.stream.map(
-      (entities) => entities
-          .where(
-            (entity) =>
-                entity.categoryId == categoryId &&
-                entity.isPopular &&
-                entity.subCategoryId == subCategoryId,
-          )
-          .toList(),
-    );
-  }
-
-  Residence? _filterResidenceById(
-    List<Residence> entities,
-    CategoryId categoryId,
-    EntityId id,
-  ) {
+  @override
+  Future<Residence?> fetchResidence(EntityId id) async {
+    await delay(addDelay);
     try {
-      return entities.firstWhere(
-        (entity) => entity.categoryId == categoryId && entity.id == id,
-      );
-    } catch (e) {
+      return _residences.value.firstWhere((r) => r.id == id);
+    } catch (_) {
       return null;
     }
+  }
+
+  @override
+  Stream<Residence?> watchResidence(EntityId id) async* {
+    await delay(addDelay);
+    yield* _residences.stream.map((residences) {
+      try {
+        return residences.firstWhere((r) => r.id == id);
+      } catch (_) {
+        return null;
+      }
+    });
   }
 }

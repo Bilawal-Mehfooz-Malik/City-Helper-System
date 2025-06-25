@@ -191,6 +191,16 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
               ),
               gapH16,
 
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  context.loc.account_yourLocation,
+                  style: context.textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              gapH4,
               GestureDetector(
                 onTap: authState.isLoading
                     ? null

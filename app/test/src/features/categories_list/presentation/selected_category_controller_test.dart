@@ -1,4 +1,4 @@
-import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -24,7 +24,7 @@ final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef UserRepositoryRef = AutoDisposeProviderRef<UserRepository>;
-String _$getUserByIdHash() => r'8ed39513ff3a04ce131572bedcad0eba8ee6a3de';
+String _$getUserByIdHash() => r'492204c000cd69c1747daba9b4bd51d70d80e6ba';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -84,7 +84,7 @@ class GetUserByIdFamily extends Family<AsyncValue<AppUser?>> {
 }
 
 /// See also [getUserById].
-class GetUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
+class GetUserByIdProvider extends AutoDisposeStreamProvider<AppUser?> {
   /// See also [getUserById].
   GetUserByIdProvider(String uid)
     : this._internal(
@@ -114,7 +114,7 @@ class GetUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
 
   @override
   Override overrideWith(
-    FutureOr<AppUser?> Function(GetUserByIdRef provider) create,
+    Stream<AppUser?> Function(GetUserByIdRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -131,7 +131,7 @@ class GetUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<AppUser?> createElement() {
+  AutoDisposeStreamProviderElement<AppUser?> createElement() {
     return _GetUserByIdProviderElement(this);
   }
 
@@ -151,13 +151,13 @@ class GetUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetUserByIdRef on AutoDisposeFutureProviderRef<AppUser?> {
+mixin GetUserByIdRef on AutoDisposeStreamProviderRef<AppUser?> {
   /// The parameter `uid` of this provider.
   String get uid;
 }
 
 class _GetUserByIdProviderElement
-    extends AutoDisposeFutureProviderElement<AppUser?>
+    extends AutoDisposeStreamProviderElement<AppUser?>
     with GetUserByIdRef {
   _GetUserByIdProviderElement(super.provider);
 

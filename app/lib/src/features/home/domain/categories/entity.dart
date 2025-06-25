@@ -64,7 +64,7 @@ abstract class Entity {
 
     // If start and end times are the same, it might mean closed all day,
     // or open 24 hours depending on convention. Assuming closed if times are equal.
-    if (todayOpeningHours.startTime == todayOpeningHours.endTime) {
+    if (todayOpeningHours.open == todayOpeningHours.close) {
       return true; // adjusted based on '24 hours' convention
     }
 
@@ -74,8 +74,8 @@ abstract class Entity {
       final format = DateFormat("h:mm a"); // Format like '9:00 AM'
 
       // Combine today's date with the start and end times for accurate comparison
-      final startTimeDateTime = format.parse(todayOpeningHours.startTime);
-      final endTimeDateTime = format.parse(todayOpeningHours.endTime);
+      final startTimeDateTime = format.parse(todayOpeningHours.open);
+      final endTimeDateTime = format.parse(todayOpeningHours.close);
 
       // Create DateTime objects for today with the parsed times
       final startToday = DateTime(
@@ -112,4 +112,46 @@ abstract class Entity {
       return false; // Assume closed if times can't be parsed
     }
   }
+
+  Map<String, Object> baseToJson() => {
+    'id': id,
+    'categoryId': categoryId,
+    'subCategoryId': subCategoryId,
+    'coverImageUrl': coverImageUrl,
+    'name': name,
+    'cityName': cityName,
+    'sectorName': sectorName,
+    'latLng': latLng.toJson(),
+    'avgRating': avgRating,
+    'totalReviews': totalReviews,
+    'ratingBreakdown': ratingBreakdown
+        .map((e) => e.toJson())
+        .toList(growable: false),
+    'isPopular': isPopular,
+    'openingHours': openingHours.map((e) => e.toJson()).toList(growable: false),
+    'entityStatus': entityStatus.name,
+    'createdAt': createdAt.toIso8601String(),
+  };
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    categoryId,
+    subCategoryId,
+    coverImageUrl,
+    name,
+    cityName,
+    sectorName,
+    latLng,
+    avgRating,
+    totalReviews,
+    ratingBreakdown,
+    isPopular,
+    openingHours,
+    entityStatus,
+    createdAt,
+  ]);
+
+  @override
+  bool operator ==(Object other);
 }

@@ -32,7 +32,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
     // Get today's hours or fallback
     final todayHours = todayIndex >= 0
         ? hours[todayIndex]
-        : OpeningHours(day: '', startTime: context.loc.closed, endTime: '');
+        : OpeningHours(day: '', open: context.loc.closed, close: '');
 
     // Reorder list so today is first
     final reorderedHours = todayIndex >= 0
@@ -85,7 +85,7 @@ class OpeningHoursLabel extends StatelessWidget {
     final closesAtText = loc.closes;
     final opensAtText = loc.opensAt;
 
-    final startLower = todayHours.startTime.toLowerCase();
+    final startLower = todayHours.open.toLowerCase();
     final isClosed = startLower == closedText.toLowerCase();
 
     final normalColor = colorScheme.onSurface;
@@ -103,7 +103,7 @@ class OpeningHoursLabel extends StatelessWidget {
           children: [
             _coloredSpan(openText, openColor),
             _normalSpan(' • '),
-            _normalSpan('$closesAtText ${todayHours.endTime}'),
+            _normalSpan('$closesAtText ${todayHours.close}'),
           ],
         ),
       );
@@ -114,7 +114,7 @@ class OpeningHoursLabel extends StatelessWidget {
           children: [
             _coloredSpan(closedText, closedColor),
             _normalSpan(' • '),
-            _normalSpan('$opensAtText ${todayHours.startTime}'),
+            _normalSpan('$opensAtText ${todayHours.open}'),
           ],
         ),
       );
@@ -195,7 +195,7 @@ class OpeningHourRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = context.loc;
     final colorScheme = context.colorScheme;
-    final isClosed = hour.startTime.toLowerCase() == loc.closed.toLowerCase();
+    final isClosed = hour.open.toLowerCase() == loc.closed.toLowerCase();
 
     final textStyle = isToday
         ? const TextStyle(fontWeight: FontWeight.bold)
@@ -212,7 +212,7 @@ class OpeningHourRow extends StatelessWidget {
               style: textStyle.copyWith(color: colorScheme.error),
             )
           else
-            Text('${hour.startTime} – ${hour.endTime}', style: textStyle),
+            Text('${hour.open} – ${hour.close}', style: textStyle),
         ],
       ),
     );

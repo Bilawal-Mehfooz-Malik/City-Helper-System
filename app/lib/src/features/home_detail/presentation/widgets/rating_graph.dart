@@ -88,8 +88,8 @@ class RightRatingGraphSection extends StatelessWidget {
         final star = 5 - index;
 
         final rating = breakdownList.firstWhere(
-          (r) => r.starRating == star,
-          orElse: () => RatingBreakdown(starRating: star, ratingCount: 0),
+          (r) => r.stars == star,
+          orElse: () => RatingBreakdown(stars: star, count: 0),
         );
 
         final percentage = rating.percentageOf(totalRatings);

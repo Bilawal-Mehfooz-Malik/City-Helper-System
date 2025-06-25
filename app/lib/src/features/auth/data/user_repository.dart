@@ -20,13 +20,16 @@ class UserRepository {
         .set(user.toJson());
   }
 
-  Future<AppUser?> getUserById(String uid) async {
-    final doc = await _firestore.collection(usersCollection).doc(uid).get();
-    if (doc.exists) {
-      return AppUser.fromJson(doc.data()!);
-    } else {
-      return null;
-    }
+  Stream<AppUser?> getUserById(String uid) {
+    return _firestore.collection(usersCollection).doc(uid).snapshots().map((
+      doc,
+    ) {
+      if (doc.exists && doc.data() != null) {
+        return AppUser.fromJson(doc.data()!);
+      } else {
+        return null;
+      }
+    });
   }
 
   Future<void> updateUserProfile({
@@ -61,6 +64,6 @@ UserRepository userRepository(Ref ref) {
 }
 
 @riverpod
-Future<AppUser?> getUserById(Ref ref, String uid) {
+Stream<AppUser?> getUserById(Ref ref, String uid) {
   return ref.read(userRepositoryProvider).getUserById(uid);
 }

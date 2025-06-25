@@ -26,8 +26,8 @@ class Residence extends Entity {
     required super.entityStatus,
     required super.createdAt,
     required this.price,
-    required this.genderPref,
     required this.isFurnished,
+    required this.genderPref,
   });
 
   bool matchGenderPref(GenderPreference preference) {
@@ -80,6 +80,55 @@ class Residence extends Entity {
       genderPref: genderPref ?? this.genderPref,
     );
   }
+
+  Map<String, Object> toJson() => {
+    ...baseToJson(),
+    'price': price,
+    'isFurnished': isFurnished,
+    'genderPref': genderPref.name,
+    'type': 'residence',
+  };
+
+  factory Residence.fromJson(Map<String, Object> json) => Residence(
+    id: json['id'] as String,
+    categoryId: json['categoryId'] as int,
+    subCategoryId: json['subCategoryId'] as int,
+    coverImageUrl: json['coverImageUrl'] as String,
+    name: json['name'] as String,
+    cityName: json['cityName'] as String,
+    sectorName: json['sectorName'] as String,
+    latLng: LatLng.fromJson(json['latLng'])!,
+    avgRating: (json['avgRating'] as num).toDouble(),
+    totalReviews: json['totalReviews'] as int,
+    ratingBreakdown: (json['ratingBreakdown'] as List)
+        .map((e) => RatingBreakdown.fromJson(e as Map<String, Object>))
+        .toList(),
+    isPopular: json['isPopular'] as bool,
+    openingHours: (json['openingHours'] as List)
+        .map((e) => OpeningHours.fromJson(e as Map<String, Object>))
+        .toList(),
+    entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
+    createdAt: DateTime.parse(json['createdAt'] as String),
+    price: (json['price'] as num).toDouble(),
+    isFurnished: json['isFurnished'] as bool,
+    genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+  );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Residence &&
+          super == other &&
+          price == other.price &&
+          isFurnished == other.isFurnished &&
+          genderPref == other.genderPref;
+
+  @override
+  int get hashCode =>
+      super.hashCode ^
+      price.hashCode ^
+      isFurnished.hashCode ^
+      genderPref.hashCode;
 }
 
 // @freezed

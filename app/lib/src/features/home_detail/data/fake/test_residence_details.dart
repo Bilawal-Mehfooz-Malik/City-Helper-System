@@ -286,19 +286,19 @@ final List<ResidenceDetail> testResidenceDetails = [
 ];
 
 final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Thursday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Friday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Saturday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Sunday', startTime: '9:00 AM', endTime: '9:00 PM'),
+  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];
 
 final List<RatingBreakdown> _defaultBreakdown = [
-  RatingBreakdown(starRating: 5, ratingCount: 30),
-  RatingBreakdown(starRating: 4, ratingCount: 15),
-  RatingBreakdown(starRating: 3, ratingCount: 5),
-  RatingBreakdown(starRating: 2, ratingCount: 3),
-  RatingBreakdown(starRating: 1, ratingCount: 2),
+  RatingBreakdown(stars: 5, count: 30),
+  RatingBreakdown(stars: 4, count: 15),
+  RatingBreakdown(stars: 3, count: 5),
+  RatingBreakdown(stars: 2, count: 3),
+  RatingBreakdown(stars: 1, count: 2),
 ];

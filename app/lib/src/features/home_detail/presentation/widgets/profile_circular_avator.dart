@@ -1,5 +1,5 @@
-import 'dart:io' show File;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:app/src/core/common_widgets/custom_image.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,20 +13,6 @@ class ProfileCircularAvator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateChangesProvider).value;
-
-    final profileUrl = user?.profileImageUrl;
-    final hasImage = profileUrl != null && profileUrl.isNotEmpty;
-
-    ImageProvider? imageProvider;
-    if (hasImage) {
-      if (kIsWeb) {
-        // On web, assume the profileImageUrl is a blob URL or base64 image
-        imageProvider = NetworkImage(profileUrl);
-      } else {
-        // On mobile, assume it's a file path
-        imageProvider = FileImage(File(profileUrl));
-      }
-    }
 
     return PopupMenuButton<String>(
       onSelected: (value) {
@@ -63,13 +49,30 @@ class ProfileCircularAvator extends ConsumerWidget {
           ];
         }
       },
-      child: CircleAvatar(
-        radius: 15,
-        backgroundImage: imageProvider,
-        child: imageProvider == null
-            ? const Icon(Icons.person, size: 18)
-            : null,
-      ),
+      child: user == null
+          ? SizedBox(
+              width: 30,
+              height: 30,
+              child: const CircleAvatar(child: Icon(Icons.person, size: 20)),
+            )
+          : Builder(
+              builder: (context) {
+                final profile = ref.watch(getUserByIdProvider(user.uid)).value;
+                final profileUrl = profile?.profileImageUrl;
+
+                return SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CustomImage(
+                    imageUrl: profileUrl,
+                    fit: BoxFit.cover,
+                    iconPersonSize: 20,
+                    useAspectRatio: false,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                );
+              },
+            ),
     );
   }
 }

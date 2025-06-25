@@ -24,23 +24,17 @@ class EntityService {
         1 =>
           ref
               .read(residenceRepositoryProvider)
-              .watchPopularResidencesListBySubCategoryId(
-                categoryId,
-                subcategoryId,
-              ),
+              .watchPopularResidencesListBySubCategoryId(subcategoryId),
         2 =>
           ref
               .read(foodRepositoryProvider)
-              .watchPopularFoodsListSubCategoryId(categoryId, subcategoryId),
+              .watchPopularFoodsListSubCategoryId(subcategoryId),
         _ => throw InvalidCategoryException(),
       };
     } else {
       return switch (categoryId) {
-        1 =>
-          ref
-              .read(residenceRepositoryProvider)
-              .watchPopularResidencesList(categoryId),
-        2 => ref.read(foodRepositoryProvider).watchPopularFoodsList(categoryId),
+        1 => ref.read(residenceRepositoryProvider).watchPopularResidencesList(),
+        2 => ref.read(foodRepositoryProvider).watchPopularFoodsList(),
         _ => throw InvalidCategoryException(),
       };
     }
@@ -55,18 +49,17 @@ class EntityService {
         1 =>
           ref
               .read(residenceRepositoryProvider)
-              .watchResidencesListBySubCategoryId(categoryId, subcategoryId),
+              .watchResidencesListBySubCategoryId(subcategoryId),
         2 =>
           ref
               .read(foodRepositoryProvider)
-              .watchFoodsListBySubCategoryId(categoryId, subcategoryId),
+              .watchFoodsListBySubCategoryId(subcategoryId),
         _ => throw InvalidCategoryException(),
       };
     } else {
       return switch (categoryId) {
-        1 =>
-          ref.read(residenceRepositoryProvider).watchResidencesList(categoryId),
-        2 => ref.read(foodRepositoryProvider).watchFoodsList(categoryId),
+        1 => ref.read(residenceRepositoryProvider).watchResidencesList(),
+        2 => ref.read(foodRepositoryProvider).watchFoodsList(),
         _ => throw InvalidCategoryException(),
       };
     }

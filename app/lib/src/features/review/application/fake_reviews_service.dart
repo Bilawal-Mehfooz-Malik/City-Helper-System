@@ -55,10 +55,7 @@ class FakeReviewsService implements ReviewsService {
     final ratingBreakdown = _calculateBreakdown(reviews);
 
     if (categoryId == 1) {
-      final entity = await fakeResidenceRepository.fetchResidence(
-        categoryId,
-        entityId,
-      );
+      final entity = await fakeResidenceRepository.fetchResidence(entityId);
       final entityDetail = await fakeResidenceDetailsRepository
           .fetchResidenceDetails(categoryId, entityId);
       if (entity == null) throw StateError('Residence not found.'.hardcoded);
@@ -79,7 +76,7 @@ class FakeReviewsService implements ReviewsService {
       await fakeResidenceRepository.setResidence(updatedEntity);
       await fakeResidenceDetailsRepository.setResidenceDetail(updatedDetail);
     } else if (categoryId == 2) {
-      final entity = await fakeFoodRepository.fetchFood(categoryId, entityId);
+      final entity = await fakeFoodRepository.fetchFood(entityId);
       final detail = await fakeFoodDetailsRepository.fetchFoodDetails(
         categoryId,
         entityId,
@@ -113,7 +110,7 @@ class FakeReviewsService implements ReviewsService {
     final List<RatingBreakdown> breakdown = [];
     for (int i = 5; i >= 1; i--) {
       final count = reviews.where((r) => r.rating.round() == i).length;
-      breakdown.add(RatingBreakdown(starRating: i, ratingCount: count));
+      breakdown.add(RatingBreakdown(stars: i, count: count));
     }
     return breakdown;
   }

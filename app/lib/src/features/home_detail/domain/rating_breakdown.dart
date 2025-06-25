@@ -1,12 +1,24 @@
 class RatingBreakdown {
-  final int starRating; // Star value from 1 to 5
-  final int ratingCount; // Number of times this star rating was given
+  final int stars;
+  final int count;
 
-  RatingBreakdown({required this.starRating, required this.ratingCount});
+  RatingBreakdown({required this.stars, required this.count});
 
-  /// Calculates the percentage this star rating represents out of a total
   double percentageOf(int totalRatings) {
     if (totalRatings == 0) return 0.0;
-    return (ratingCount / totalRatings) * 100;
+    return (count / totalRatings) * 100;
   }
+
+  Map<String, Object> toJson() => {'stars': stars, 'count': count};
+
+  factory RatingBreakdown.fromJson(Map<String, Object> json) =>
+      RatingBreakdown(stars: json['stars'] as int, count: json['count'] as int);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RatingBreakdown && stars == other.stars && count == other.count;
+
+  @override
+  int get hashCode => stars.hashCode ^ count.hashCode;
 }

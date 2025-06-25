@@ -1,5 +1,5 @@
-import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
