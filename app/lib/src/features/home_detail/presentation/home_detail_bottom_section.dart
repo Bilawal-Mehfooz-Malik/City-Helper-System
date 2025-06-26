@@ -1,6 +1,6 @@
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/review/domain/review.dart';
@@ -18,19 +18,9 @@ class HomeDetailBottomSection extends StatelessWidget {
     required this.reviews,
   });
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
 
     return Column(
       spacing: Sizes.p8,

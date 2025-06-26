@@ -1,5 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/carousel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -36,16 +36,6 @@ class _FullscreenPhotoViewerState extends State<FullscreenPhotoViewer> {
     super.dispose();
   }
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   void _goToPrevious() {
     if (_currentIndex > 0) {
       _pageController.previousPage(
@@ -66,7 +56,7 @@ class _FullscreenPhotoViewerState extends State<FullscreenPhotoViewer> {
 
   @override
   Widget build(BuildContext context) {
-    final isLarge = !_isSmallScreen(context);
+    final isLarge = !isSmallScreen(context);
 
     return SafeArea(
       child: Stack(

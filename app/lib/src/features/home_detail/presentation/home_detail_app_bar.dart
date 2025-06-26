@@ -68,19 +68,6 @@ class AppBarContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(flex: 3, child: Text(name ?? context.loc.somethingWentWrong)),
-        // TODO: implement favorite method
-        Flexible(
-          flex: 1,
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.favorite_border),
-          ),
-        ),
-      ],
-    );
+    return Text(name ?? context.loc.somethingWentWrong);
   }
 }

@@ -83,12 +83,13 @@ class ReviewSection extends StatelessWidget {
           ),
           gapH16,
           ReviewsListView(reviews: reviews),
-          Center(
-            child: TextButton(
-              onPressed: () => _goToReviewList(context),
-              child: Text(context.loc.seeMore),
+          if (reviews.isNotEmpty)
+            Center(
+              child: TextButton(
+                onPressed: () => _goToReviewList(context),
+                child: Text(context.loc.seeMore),
+              ),
             ),
-          ),
         ],
       ),
     );

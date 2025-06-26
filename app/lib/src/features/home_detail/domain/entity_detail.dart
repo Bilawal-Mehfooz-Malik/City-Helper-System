@@ -59,6 +59,7 @@ abstract class EntityDetail extends Entity {
     'facebookUrl': facebookUrl,
     'email': email,
     'updatedAt': updatedAt.toIso8601String(),
+    'ratingBreakdown': ratingBreakdown.map((e) => e.toJson()).toList(),
   };
 
   EntityDetail copyWith({

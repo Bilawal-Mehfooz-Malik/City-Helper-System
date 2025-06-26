@@ -466,5 +466,134 @@ class _FetchEntityWithReviewsProviderElement
   (int, String) get args => (origin as FetchEntityWithReviewsProvider).args;
 }
 
+String _$watchEntityWithReviewsHash() =>
+    r'3b57086776c85c6d1c68a6c8ee4c8d5c989cdca8';
+
+/// See also [watchEntityWithReviews].
+@ProviderFor(watchEntityWithReviews)
+const watchEntityWithReviewsProvider = WatchEntityWithReviewsFamily();
+
+/// See also [watchEntityWithReviews].
+class WatchEntityWithReviewsFamily
+    extends Family<AsyncValue<(EntityDetail?, List<Review>)>> {
+  /// See also [watchEntityWithReviews].
+  const WatchEntityWithReviewsFamily();
+
+  /// See also [watchEntityWithReviews].
+  WatchEntityWithReviewsProvider call((int, String) args) {
+    return WatchEntityWithReviewsProvider(args);
+  }
+
+  @override
+  WatchEntityWithReviewsProvider getProviderOverride(
+    covariant WatchEntityWithReviewsProvider provider,
+  ) {
+    return call(provider.args);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'watchEntityWithReviewsProvider';
+}
+
+/// See also [watchEntityWithReviews].
+class WatchEntityWithReviewsProvider
+    extends AutoDisposeStreamProvider<(EntityDetail?, List<Review>)> {
+  /// See also [watchEntityWithReviews].
+  WatchEntityWithReviewsProvider((int, String) args)
+    : this._internal(
+        (ref) => watchEntityWithReviews(ref as WatchEntityWithReviewsRef, args),
+        from: watchEntityWithReviewsProvider,
+        name: r'watchEntityWithReviewsProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$watchEntityWithReviewsHash,
+        dependencies: WatchEntityWithReviewsFamily._dependencies,
+        allTransitiveDependencies:
+            WatchEntityWithReviewsFamily._allTransitiveDependencies,
+        args: args,
+      );
+
+  WatchEntityWithReviewsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.args,
+  }) : super.internal();
+
+  final (int, String) args;
+
+  @override
+  Override overrideWith(
+    Stream<(EntityDetail?, List<Review>)> Function(
+      WatchEntityWithReviewsRef provider,
+    )
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: WatchEntityWithReviewsProvider._internal(
+        (ref) => create(ref as WatchEntityWithReviewsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        args: args,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<(EntityDetail?, List<Review>)>
+  createElement() {
+    return _WatchEntityWithReviewsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WatchEntityWithReviewsProvider && other.args == args;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, args.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin WatchEntityWithReviewsRef
+    on AutoDisposeStreamProviderRef<(EntityDetail?, List<Review>)> {
+  /// The parameter `args` of this provider.
+  (int, String) get args;
+}
+
+class _WatchEntityWithReviewsProviderElement
+    extends AutoDisposeStreamProviderElement<(EntityDetail?, List<Review>)>
+    with WatchEntityWithReviewsRef {
+  _WatchEntityWithReviewsProviderElement(super.provider);
+
+  @override
+  (int, String) get args => (origin as WatchEntityWithReviewsProvider).args;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,6 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/carousel_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart';
@@ -20,18 +20,8 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
   int _current = 0;
   final CarouselSliderController _controller = CarouselSliderController();
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   void _openImageViewer(BuildContext context, int initialIndex) {
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
 
     if (isSmall) {
       Navigator.of(context).push(
@@ -65,7 +55,7 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
 
     return SingleChildScrollView(
       child: Column(

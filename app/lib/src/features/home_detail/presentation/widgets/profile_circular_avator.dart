@@ -23,9 +23,9 @@ class ProfileCircularAvator extends ConsumerWidget {
           case 'account':
             context.goNamed(AppRoute.account.name);
             break;
-          case 'admin':
-            context.pushNamed(AppRoute.profile.name);
-            break;
+          // case 'admin':
+          //   context.pushNamed(AppRoute.profile.name);
+          //   break;
         }
       },
       itemBuilder: (context) {
@@ -42,18 +42,18 @@ class ProfileCircularAvator extends ConsumerWidget {
               value: 'account',
               child: Text(context.loc.account_title),
             ),
-            PopupMenuItem<String>(
-              value: 'admin',
-              child: Text(context.loc.switchToAdmin),
-            ),
+            // PopupMenuItem<String>(
+            //   value: 'admin',
+            //   child: Text(context.loc.switchToAdmin),
+            // ),
           ];
         }
       },
       child: user == null
           ? SizedBox(
-              width: 30,
-              height: 30,
-              child: const CircleAvatar(child: Icon(Icons.person, size: 20)),
+              width: 25,
+              height: 25,
+              child: const CircleAvatar(child: Icon(Icons.person, size: 15)),
             )
           : Builder(
               builder: (context) {
@@ -61,12 +61,12 @@ class ProfileCircularAvator extends ConsumerWidget {
                 final profileUrl = profile?.profileImageUrl;
 
                 return SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 25,
+                  height: 25,
                   child: CustomImage(
                     imageUrl: profileUrl,
                     fit: BoxFit.cover,
-                    iconPersonSize: 20,
+                    iconPersonSize: 15,
                     useAspectRatio: false,
                     borderRadius: BorderRadius.circular(50),
                   ),

@@ -3,8 +3,8 @@ import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/opening_hours_widget.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/currency_formatter.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/core/utils/url_launcher_helpers.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
@@ -26,19 +26,9 @@ class HomeDetailTopRightSection extends StatelessWidget {
   final EntityDetail entity;
   const HomeDetailTopRightSection({super.key, required this.entity});
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
 
     return isSmall
         ? HomeDetailTopRightContent(entity: entity, isSmall: isSmall)

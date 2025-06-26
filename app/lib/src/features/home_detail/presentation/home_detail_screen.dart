@@ -2,8 +2,8 @@ import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/empty_placeholder_widget.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_app_bar.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_bottom_section.dart';
@@ -26,16 +26,6 @@ class HomeDetailScreen extends ConsumerWidget {
     this.isPushed = true,
   });
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (entityId == null) {
@@ -43,10 +33,10 @@ class HomeDetailScreen extends ConsumerWidget {
     }
 
     final combinedValue = ref.watch(
-      fetchEntityWithReviewsProvider((categoryId, entityId!)),
+      watchEntityWithReviewsProvider((categoryId, entityId!)),
     );
 
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
 
     return Scaffold(
       appBar: HomeDetailAppBar(
