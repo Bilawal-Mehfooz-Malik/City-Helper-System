@@ -21,32 +21,25 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
     final index = current.indexWhere((r) => r.id == updated.id);
     if (index != -1) {
       current[index] = updated;
-      _residences.value = [...current];
+    } else {
+      current.add(updated);
     }
+    _residences.value = [...current];
   }
 
   @override
-  Future<ResidenceDetail?> fetchResidenceDetails(
-    CategoryId categoryId,
-    EntityId id,
-  ) async {
+  Future<ResidenceDetail?> fetchResidenceDetails(EntityId id) async {
     await delay(addDelay);
     final residences = _residences.value;
-    return residences.firstWhereOrNull(
-      (residence) => residence.id == id && residence.categoryId == categoryId,
-    );
+    return residences.firstWhereOrNull((residence) => residence.id == id);
   }
 
   @override
-  Stream<ResidenceDetail?> watchResidenceDetails(
-    CategoryId categoryId,
-    EntityId id,
-  ) async* {
+  Stream<ResidenceDetail?> watchResidenceDetails(EntityId id) async* {
     await delay(addDelay);
     yield* _residences.stream.map(
-      (residences) => residences.firstWhereOrNull(
-        (residence) => residence.id == id && residence.categoryId == categoryId,
-      ),
+      (residences) =>
+          residences.firstWhereOrNull((residence) => residence.id == id),
     );
   }
 }

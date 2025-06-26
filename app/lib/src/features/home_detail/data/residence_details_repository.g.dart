@@ -7,7 +7,7 @@ part of 'residence_details_repository.dart';
 // **************************************************************************
 
 String _$residenceDetailsRepositoryHash() =>
-    r'9fab5dbc9e6ad736b88b896c8a2c0a93f6c4cf03';
+    r'5de79b04ea58f128ae24704f28237d2fff39189d';
 
 /// See also [residenceDetailsRepository].
 @ProviderFor(residenceDetailsRepository)

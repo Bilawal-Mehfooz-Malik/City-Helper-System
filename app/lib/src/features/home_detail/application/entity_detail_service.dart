@@ -22,11 +22,8 @@ class EntityDetailsService {
       1 =>
         ref
             .read(residenceDetailsRepositoryProvider)
-            .fetchResidenceDetails(categoryId, entityId),
-      2 =>
-        ref
-            .read(foodDetailsRepositoryProvider)
-            .fetchFoodDetails(categoryId, entityId),
+            .fetchResidenceDetails(entityId),
+      2 => ref.read(foodDetailsRepositoryProvider).fetchFoodDetails(entityId),
       _ => throw InvalidCategoryException(),
     };
   }
@@ -39,11 +36,8 @@ class EntityDetailsService {
       1 =>
         ref
             .read(residenceDetailsRepositoryProvider)
-            .watchResidenceDetails(categoryId, entityId),
-      2 =>
-        ref
-            .read(foodDetailsRepositoryProvider)
-            .watchFoodDetails(categoryId, entityId),
+            .watchResidenceDetails(entityId),
+      2 => ref.read(foodDetailsRepositoryProvider).watchFoodDetails(entityId),
       _ => throw InvalidCategoryException(),
     };
   }

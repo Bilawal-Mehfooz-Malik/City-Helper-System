@@ -14,16 +14,13 @@ void main() {
       'fetchResidenceDetails returns correct residence by id and categoryId',
       () async {
         final residence = testResidenceDetails.first;
-        final result = await repository.fetchResidenceDetails(
-          residence.categoryId,
-          residence.id,
-        );
+        final result = await repository.fetchResidenceDetails(residence.id);
         expect(result, residence);
       },
     );
 
     test('fetchResidenceDetails returns null if residence not found', () async {
-      final result = await repository.fetchResidenceDetails(999, 'invalid-id');
+      final result = await repository.fetchResidenceDetails('invalid-id');
       expect(result, isNull);
     });
 
@@ -32,14 +29,14 @@ void main() {
       () {
         final residence = testResidenceDetails.first;
         expect(
-          repository.watchResidenceDetails(residence.categoryId, residence.id),
+          repository.watchResidenceDetails(residence.id),
           emits(residence),
         );
       },
     );
 
     test('watchResidenceDetails emits null if residence not found', () {
-      expect(repository.watchResidenceDetails(999, 'invalid-id'), emits(null));
+      expect(repository.watchResidenceDetails('invalid-id'), emits(null));
     });
   });
 }

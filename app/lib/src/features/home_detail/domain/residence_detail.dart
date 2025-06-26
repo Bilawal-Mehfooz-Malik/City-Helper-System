@@ -8,6 +8,7 @@ class ResidenceDetail extends EntityDetail {
   final double price;
   final bool isFurnished;
   final GenderPreference genderPref;
+
   ResidenceDetail({
     required super.id,
     required super.categoryId,
@@ -40,6 +41,7 @@ class ResidenceDetail extends EntityDetail {
     required this.genderPref,
   });
 
+  @override
   ResidenceDetail copyWith({
     EntityId? id,
     CategoryId? categoryId,
@@ -103,4 +105,64 @@ class ResidenceDetail extends EntityDetail {
       genderPref: genderPref ?? this.genderPref,
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    ...super.toJson(),
+    'price': price,
+    'isFurnished': isFurnished,
+    'genderPref': genderPref.name,
+  };
+
+  factory ResidenceDetail.fromJson(Map<String, dynamic> json) {
+    return ResidenceDetail(
+      id: json['id'] as EntityId,
+      categoryId: json['categoryId'] as CategoryId,
+      subCategoryId: json['subCategoryId'] as SubCategoryId,
+      coverImageUrl: json['coverImageUrl'] as String,
+      name: json['name'] as String,
+      cityName: json['cityName'] as String,
+      sectorName: json['sectorName'] as String,
+      latLng: LatLng.fromJson(json['latLng'])!,
+      avgRating: (json['avgRating'] as num).toDouble(),
+      totalReviews: json['totalReviews'] as int,
+      ratingBreakdown: (json['ratingBreakdown'] as List<dynamic>)
+          .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isPopular: json['isPopular'] as bool,
+      openingHours: (json['openingHours'] as List<dynamic>)
+          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      ownerId: json['ownerId'] as UserId,
+      description: json['description'] as String,
+      imageUrls: List<String>.from(json['imageUrls'] as List),
+      streetAddress: json['streetAddress'] as String,
+      phoneNumber: json['phoneNumber'] as String?,
+      messagingNumber: json['messagingNumber'] as String?,
+      websiteUrl: json['websiteUrl'] as String?,
+      instagramUrl: json['instagramUrl'] as String?,
+      facebookUrl: json['facebookUrl'] as String?,
+      email: json['email'] as String?,
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      price: (json['price'] as num).toDouble(),
+      isFurnished: json['isFurnished'] as bool,
+      genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is ResidenceDetail &&
+            super == other &&
+            price == other.price &&
+            isFurnished == other.isFurnished &&
+            genderPref == other.genderPref;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hashAll([super.hashCode, price, isFurnished, genderPref]);
 }

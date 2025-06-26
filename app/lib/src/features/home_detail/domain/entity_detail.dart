@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 
 abstract class EntityDetail extends Entity {
   final String description;
@@ -13,8 +14,9 @@ abstract class EntityDetail extends Entity {
   final String? email;
   final DateTime updatedAt;
   final UserId ownerId;
+  final List<RatingBreakdown> ratingBreakdown;
 
-  EntityDetail({
+  const EntityDetail({
     required super.id,
     required super.categoryId,
     required super.subCategoryId,
@@ -25,7 +27,6 @@ abstract class EntityDetail extends Entity {
     required super.latLng,
     required super.avgRating,
     required super.totalReviews,
-    required super.ratingBreakdown,
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
@@ -35,6 +36,7 @@ abstract class EntityDetail extends Entity {
     required this.description,
     required this.imageUrls,
     required this.streetAddress,
+    required this.ratingBreakdown,
     this.phoneNumber,
     this.messagingNumber,
     required this.updatedAt,
@@ -43,6 +45,70 @@ abstract class EntityDetail extends Entity {
     this.facebookUrl,
     this.email,
   });
+
+  Map<String, dynamic> toJson() => {
+    ...super.baseToJson(),
+    'ownerId': ownerId,
+    'description': description,
+    'imageUrls': imageUrls,
+    'streetAddress': streetAddress,
+    'phoneNumber': phoneNumber,
+    'messagingNumber': messagingNumber,
+    'websiteUrl': websiteUrl,
+    'instagramUrl': instagramUrl,
+    'facebookUrl': facebookUrl,
+    'email': email,
+    'updatedAt': updatedAt.toIso8601String(),
+  };
+
+  EntityDetail copyWith({
+    String? description,
+    List<String>? imageUrls,
+    String? streetAddress,
+    String? phoneNumber,
+    String? messagingNumber,
+    String? websiteUrl,
+    String? instagramUrl,
+    String? facebookUrl,
+    String? email,
+    DateTime? updatedAt,
+    UserId? ownerId,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is EntityDetail &&
+            super == other &&
+            runtimeType == other.runtimeType &&
+            description == other.description &&
+            imageUrls == other.imageUrls &&
+            streetAddress == other.streetAddress &&
+            phoneNumber == other.phoneNumber &&
+            messagingNumber == other.messagingNumber &&
+            websiteUrl == other.websiteUrl &&
+            instagramUrl == other.instagramUrl &&
+            facebookUrl == other.facebookUrl &&
+            email == other.email &&
+            updatedAt == other.updatedAt &&
+            ownerId == other.ownerId;
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    super.hashCode,
+    description,
+    imageUrls,
+    streetAddress,
+    phoneNumber,
+    messagingNumber,
+    websiteUrl,
+    instagramUrl,
+    facebookUrl,
+    email,
+    updatedAt,
+    ownerId,
+  ]);
 }
 
 // import 'package:app/src/core/models/my_data_types.dart';

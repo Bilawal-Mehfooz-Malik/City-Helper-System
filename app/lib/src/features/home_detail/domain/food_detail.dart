@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FoodDetail extends EntityDetail {
   final GenderPreference genderPref;
+
   FoodDetail({
     required super.id,
     required super.categoryId,
@@ -36,6 +37,7 @@ class FoodDetail extends EntityDetail {
     required this.genderPref,
   });
 
+  @override
   FoodDetail copyWith({
     EntityId? id,
     CategoryId? categoryId,
@@ -95,4 +97,55 @@ class FoodDetail extends EntityDetail {
       genderPref: genderPref ?? this.genderPref,
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    ...super.toJson(),
+    'genderPref': genderPref.name,
+  };
+
+  factory FoodDetail.fromJson(Map<String, dynamic> json) {
+    return FoodDetail(
+      id: json['id'] as EntityId,
+      categoryId: json['categoryId'] as CategoryId,
+      subCategoryId: json['subCategoryId'] as SubCategoryId,
+      coverImageUrl: json['coverImageUrl'] as String,
+      name: json['name'] as String,
+      cityName: json['cityName'] as String,
+      sectorName: json['sectorName'] as String,
+      latLng: LatLng.fromJson(json['latLng'])!,
+      avgRating: (json['avgRating'] as num).toDouble(),
+      totalReviews: json['totalReviews'] as int,
+      ratingBreakdown: (json['ratingBreakdown'] as List<dynamic>)
+          .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isPopular: json['isPopular'] as bool,
+      openingHours: (json['openingHours'] as List<dynamic>)
+          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      ownerId: json['ownerId'] as UserId,
+      description: json['description'] as String,
+      imageUrls: List<String>.from(json['imageUrls'] as List),
+      streetAddress: json['streetAddress'] as String,
+      phoneNumber: json['phoneNumber'] as String?,
+      messagingNumber: json['messagingNumber'] as String?,
+      websiteUrl: json['websiteUrl'] as String?,
+      instagramUrl: json['instagramUrl'] as String?,
+      facebookUrl: json['facebookUrl'] as String?,
+      email: json['email'] as String?,
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is FoodDetail && super == other && genderPref == other.genderPref;
+  }
+
+  @override
+  int get hashCode => Object.hashAll([super.hashCode, genderPref]);
 }

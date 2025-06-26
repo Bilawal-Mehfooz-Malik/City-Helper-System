@@ -11,79 +11,132 @@ Future<void> main() async {
 
   final firestore = FirebaseFirestore.instance;
 
-  // // === CATEGORIES ===
-  // final categories = [
-  //   {
-  //     'id': 1,
-  //     'name': 'Residences',
-  //     'description':
-  //         'Find rooms, flats, hostels, houses, and other residential options.',
-  //     'iconName': 'home',
-  //     'sortOrder': 1,
-  //   },
-  //   {
-  //     'id': 2,
-  //     'name': 'Food',
-  //     'description':
-  //         'Discover restaurants, cafes, takeaways, mess services, and other local food options.',
-  //     'iconName': 'restaurant',
-  //     'sortOrder': 2,
-  //   },
-  // ];
-
-  // for (final category in categories) {
-  //   final docId = category['id'].toString();
-  //   await firestore.collection('categories').doc(docId).set(category);
-  //   AppLogger.logInfo('Uploaded category: $docId');
-  // }
-
-  // // === SUBCATEGORIES ===
-  // final subcategories = [
-  //   {'id': 1, 'name': 'Rooms', 'categoryId': 1, 'sortOrder': 1},
-  //   {'id': 2, 'name': 'Hostels', 'categoryId': 1, 'sortOrder': 2},
-  //   {'id': 3, 'name': 'Flats', 'categoryId': 1, 'sortOrder': 3},
-  //   {'id': 4, 'name': 'Houses', 'categoryId': 1, 'sortOrder': 4},
-  //   {'id': 5, 'name': 'Hotels', 'categoryId': 1, 'sortOrder': 5},
-  //   {'id': 6, 'name': 'Restaurants', 'categoryId': 2, 'sortOrder': 1},
-  //   {'id': 7, 'name': 'Cafes', 'categoryId': 2, 'sortOrder': 2},
-  //   {'id': 8, 'name': 'Fast Food', 'categoryId': 2, 'sortOrder': 3},
-  //   {'id': 9, 'name': 'Dhabas', 'categoryId': 2, 'sortOrder': 4},
-  //   {'id': 10, 'name': 'Street Food', 'categoryId': 2, 'sortOrder': 5},
-  //   {'id': 11, 'name': 'Messes', 'categoryId': 2, 'sortOrder': 6},
-  //   {'id': 12, 'name': 'Ice Cream & Desserts', 'categoryId': 2, 'sortOrder': 7},
-  //   {'id': 13, 'name': 'Bakeries', 'categoryId': 2, 'sortOrder': 8},
-  // ];
-
-  // for (final sub in subcategories) {
-  //   final docId = sub['id'].toString();
-  //   await firestore.collection('subcategories').doc(docId).set(sub);
-  //   AppLogger.logInfo('Uploaded subcategory: ${sub['name']} with ID $docId');
-  // }
-
-  // === SAMPLE FOOD LISTING ===
-  final weekdayNames = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+  // === CATEGORIES ===
+  final categories = [
+    {
+      'id': 1,
+      'name': 'Residences',
+      'description':
+          'Find rooms, flats, hostels, houses, and other residential options.',
+      'iconName': 'home',
+      'sortOrder': 1,
+    },
+    {
+      'id': 2,
+      'name': 'Food',
+      'description':
+          'Discover restaurants, cafes, takeaways, mess services, and other local food options.',
+      'iconName': 'restaurant',
+      'sortOrder': 2,
+    },
   ];
 
+  for (final category in categories) {
+    final docId = category['id'].toString();
+    await firestore.collection('categories').doc(docId).set(category);
+    AppLogger.logInfo('✅ Uploaded category: $docId');
+  }
+
+  // === SUBCATEGORIES ===
+  final subcategories = [
+    {'id': 1, 'name': 'Rooms', 'categoryId': 1, 'sortOrder': 1},
+    {'id': 2, 'name': 'Hostels', 'categoryId': 1, 'sortOrder': 2},
+    {'id': 3, 'name': 'Flats', 'categoryId': 1, 'sortOrder': 3},
+    {'id': 4, 'name': 'Houses', 'categoryId': 1, 'sortOrder': 4},
+    {'id': 5, 'name': 'Hotels', 'categoryId': 1, 'sortOrder': 5},
+    {'id': 6, 'name': 'Restaurants', 'categoryId': 2, 'sortOrder': 1},
+    {'id': 7, 'name': 'Cafes', 'categoryId': 2, 'sortOrder': 2},
+    {'id': 8, 'name': 'Fast Food', 'categoryId': 2, 'sortOrder': 3},
+    {'id': 9, 'name': 'Dhabas', 'categoryId': 2, 'sortOrder': 4},
+    {'id': 10, 'name': 'Street Food', 'categoryId': 2, 'sortOrder': 5},
+    {'id': 11, 'name': 'Messes', 'categoryId': 2, 'sortOrder': 6},
+    {'id': 12, 'name': 'Ice Cream & Desserts', 'categoryId': 2, 'sortOrder': 7},
+    {'id': 13, 'name': 'Bakeries', 'categoryId': 2, 'sortOrder': 8},
+  ];
+
+  for (final sub in subcategories) {
+    final docId = sub['id'].toString();
+    await firestore.collection('subcategories').doc(docId).set(sub);
+    AppLogger.logInfo('✅ Uploaded subcategory: ${sub['name']}');
+  }
+
+  // === SAMPLE LISTINGS ===
+  // --- Food Listing ---
   final food = {
     "id": "food-001",
     "categoryId": 2,
     "subCategoryId": 6,
-    "coverImageUrl": "https://example.com/food1.jpg",
-    "name": "Lahori Grill",
+    "coverImageUrl": "https://example.com/images/food-cover.jpg",
+    "name": "Tandoori Flames",
     "cityName": "Lahore",
-    "sectorName": "Gulberg",
-    "latLng": [31.5204, 74.3587],
-    "avgRating": 4.6,
-    "totalReviews": 95,
+    "sectorName": "DHA Phase 3",
+    "latLng": {"latitude": 31.5204, "longitude": 74.3587},
+    "avgRating": 4.4,
+    "totalReviews": 120,
     "ratingBreakdown": [
-      {"stars": 5, "count": 60},
+      {"stars": 5, "count": 75},
+      {"stars": 4, "count": 30},
+      {"stars": 3, "count": 10},
+      {"stars": 2, "count": 3},
+      {"stars": 1, "count": 2},
+    ],
+    "isPopular": true,
+    "openingHours": List.generate(
+      7,
+      (i) => {
+        "day": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ][i],
+        "open": "12:00",
+        "close": "23:00",
+      },
+    ),
+    "entityStatus": "open",
+    "createdAt": DateTime.now().toIso8601String(),
+    "updatedAt": DateTime.now().toIso8601String(),
+    "ownerId": "user-xyz",
+    "description":
+        "Authentic desi cuisine served hot and fresh. Family-friendly.",
+    "imageUrls": [
+      "https://example.com/images/food1.jpg",
+      "https://example.com/images/food2.jpg",
+    ],
+    "streetAddress": "123 Main Blvd",
+    "phoneNumber": "03211234567",
+    "messagingNumber": "03211234567",
+    "websiteUrl": "https://tandooriflames.pk",
+    "instagramUrl": "https://instagram.com/tandooriflames",
+    "facebookUrl": "https://facebook.com/tandooriflames",
+    "email": "contact@tandooriflames.pk",
+    "genderPref": "any",
+  };
+
+  await firestore
+      .collection('food_listings')
+      .doc(food['id'] as String)
+      .set(food);
+  AppLogger.logInfo('✅ Sample FoodDetail uploaded');
+
+  // --- Residence Listing ---
+  final residence = {
+    "id": "res-001",
+    "categoryId": 1,
+    "subCategoryId": 2,
+    "coverImageUrl": "https://example.com/images/residence-cover.jpg",
+    "name": "Comfort Boys Hostel",
+    "cityName": "Islamabad",
+    "sectorName": "G-10",
+    "latLng": {"latitude": 33.6844, "longitude": 73.0479},
+    "avgRating": 4.2,
+    "totalReviews": 85,
+    "ratingBreakdown": [
+      {"stars": 5, "count": 50},
       {"stars": 4, "count": 20},
       {"stars": 3, "count": 10},
       {"stars": 2, "count": 3},
@@ -92,87 +145,77 @@ Future<void> main() async {
     "isPopular": true,
     "openingHours": List.generate(
       7,
-      (i) => {"day": weekdayNames[i], "open": "10:00", "close": "22:00"},
+      (i) => {
+        "day": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ][i],
+        "open": "00:00",
+        "close": "23:59",
+      },
     ),
     "entityStatus": "open",
     "createdAt": DateTime.now().toIso8601String(),
-    "genderPref": "any",
-  };
-
-  await firestore.collection('food_listings').add(food);
-  AppLogger.logInfo('✅ Sample FoodDetail uploaded');
-
-  // === SAMPLE RESIDENCE LISTING ===
-  final residence = {
-    "id": "res-001",
-    "categoryId": 1,
-    "subCategoryId": 2,
-    "coverImageUrl": "https://example.com/residence1.jpg",
-    "name": "Green Hostel",
-    "cityName": "Islamabad",
-    "sectorName": "G-10",
-    "latLng": [33.6844, 73.0479],
-    "avgRating": 4.3,
-    "totalReviews": 80,
-    "ratingBreakdown": [
-      {"stars": 5, "count": 50},
-      {"stars": 4, "count": 20},
-      {"stars": 3, "count": 5},
-      {"stars": 2, "count": 3},
-      {"stars": 1, "count": 2},
+    "updatedAt": DateTime.now().toIso8601String(),
+    "ownerId": "user-abc",
+    "description":
+        "Clean and affordable hostel for male students and professionals.",
+    "imageUrls": [
+      "https://example.com/images/res1.jpg",
+      "https://example.com/images/res2.jpg",
     ],
-    "isPopular": true,
-    "openingHours": List.generate(
-      7,
-      (i) => {"day": weekdayNames[i], "open": "00:00", "close": "23:59"},
-    ),
-    "entityStatus": "open",
-    "createdAt": DateTime.now().toIso8601String(),
-    "price": 18000.0,
+    "streetAddress": "456 Hostel Road",
+    "phoneNumber": "03339876543",
+    "messagingNumber": "03339876543",
+    "websiteUrl": "https://comforthostel.pk",
+    "instagramUrl": "https://instagram.com/comforthostel",
+    "facebookUrl": "https://facebook.com/comforthostel",
+    "email": "info@comforthostel.pk",
+    "price": 17000.0,
     "isFurnished": true,
     "genderPref": "maleOnly",
   };
 
-  await firestore.collection('residence_listings').add(residence);
+  await firestore
+      .collection('residence_listings')
+      .doc(residence['id']! as String)
+      .set(residence);
   AppLogger.logInfo('✅ Sample Residence uploaded');
 
-  // === SAMPLE REVIEWS ===
-  // final sampleReviews = [
-  //   Review(
-  //     userId: 'user-abc',
-  //     entityId: 'some-entity-id-1',
-  //     rating: 4.5,
-  //     comment: 'Great place with amazing food!',
-  //     updatedAt: DateTime.now(),
-  //   ),
-  //   Review(
-  //     userId: 'user-def',
-  //     entityId: 'some-entity-id-1',
-  //     rating: 3.0,
-  //     comment: 'Average experience, could be cleaner.',
-  //     updatedAt: DateTime.now(),
-  //   ),
-  //   Review(
-  //     userId: 'user-xyz',
-  //     entityId: 'some-entity-id-2',
-  //     rating: 5.0,
-  //     comment: 'Absolutely loved it! Highly recommended.',
-  //     updatedAt: DateTime.now(),
-  //   ),
-  // ];
+  // === REVIEWS ===
+  final sampleReviews = [
+    {
+      'userId': 'user-abc',
+      'entityId': 'food-001',
+      'rating': 4.5,
+      'comment': 'Great food and quick service!',
+      'updatedAt': DateTime.now().toIso8601String(),
+    },
+    {
+      'userId': 'user-def',
+      'entityId': 'food-001',
+      'rating': 3.5,
+      'comment': 'Good taste but expensive.',
+      'updatedAt': DateTime.now().toIso8601String(),
+    },
+    {
+      'userId': 'user-xyz',
+      'entityId': 'res-001',
+      'rating': 5.0,
+      'comment': 'Clean and peaceful environment.',
+      'updatedAt': DateTime.now().toIso8601String(),
+    },
+  ];
 
-  // for (final review in sampleReviews) {
-  //   await firestore.collection('reviews').add({
-  //     'userId': review.userId,
-  //     'entityId': review.entityId,
-  //     'rating': review.rating,
-  //     'comment': review.comment,
-  //     'updatedAt': review.updatedAt.toIso8601String(),
-  //   });
-  //   AppLogger.logInfo('Uploaded review by: ${review.userId}');
-  // }
-
-  // AppLogger.logInfo('✅ Sample reviews uploaded!');
+  for (final review in sampleReviews) {
+    await firestore.collection('reviews').add(review);
+    AppLogger.logInfo('✅ Uploaded review by ${review['userId']}');
+  }
 
   AppLogger.logInfo('🎉 All data uploaded successfully!');
 }

@@ -14,29 +14,23 @@ void main() {
       'fetchFoodDetails returns correct food by id and categoryId',
       () async {
         final food = testFoodDetails.first;
-        final result = await repository.fetchFoodDetails(
-          food.categoryId,
-          food.id,
-        );
+        final result = await repository.fetchFoodDetails(food.id);
         expect(result, food);
       },
     );
 
     test('fetchFoodDetails returns null if food not found', () async {
-      final result = await repository.fetchFoodDetails(1, 'invalid-id');
+      final result = await repository.fetchFoodDetails('invalid-id');
       expect(result, isNull);
     });
 
     test('watchFoodDetails emits correct food by id and categoryId', () {
       final food = testFoodDetails.first;
-      expect(
-        repository.watchFoodDetails(food.categoryId, food.id),
-        emits(food),
-      );
+      expect(repository.watchFoodDetails(food.id), emits(food));
     });
 
     test('watchFoodDetails emits null if food not found', () {
-      expect(repository.watchFoodDetails(1, 'invalid-id'), emits(null));
+      expect(repository.watchFoodDetails('invalid-id'), emits(null));
     });
   });
 }

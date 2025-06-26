@@ -19,32 +19,24 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
     final index = current.indexWhere((f) => f.id == updated.id);
     if (index != -1) {
       current[index] = updated;
-      _foods.value = [...current];
+    } else {
+      current.add(updated);
     }
+    _foods.value = [...current];
   }
 
   @override
-  Future<FoodDetail?> fetchFoodDetails(
-    CategoryId categoryId,
-    EntityId id,
-  ) async {
+  Future<FoodDetail?> fetchFoodDetails(EntityId id) async {
     await delay(addDelay);
     final foods = _foods.value;
-    return foods.firstWhereOrNull(
-      (food) => food.id == id && food.categoryId == categoryId,
-    );
+    return foods.firstWhereOrNull((food) => food.id == id);
   }
 
   @override
-  Stream<FoodDetail?> watchFoodDetails(
-    CategoryId categoryId,
-    EntityId id,
-  ) async* {
+  Stream<FoodDetail?> watchFoodDetails(EntityId id) async* {
     await delay(addDelay);
     yield* _foods.stream.map(
-      (foods) => foods.firstWhereOrNull(
-        (food) => food.id == id && food.categoryId == categoryId,
-      ),
+      (foods) => foods.firstWhereOrNull((food) => food.id == id),
     );
   }
 }

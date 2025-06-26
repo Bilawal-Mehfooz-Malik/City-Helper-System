@@ -1,7 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
-import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final List<Food> testFoods = [
@@ -21,13 +20,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 80),
-      RatingBreakdown(stars: 4, count: 25),
-      RatingBreakdown(stars: 3, count: 10),
-      RatingBreakdown(stars: 2, count: 3),
-      RatingBreakdown(stars: 1, count: 2),
-    ],
   ),
   Food(
     id: '2',
@@ -45,13 +37,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 60),
-      RatingBreakdown(stars: 4, count: 20),
-      RatingBreakdown(stars: 3, count: 10),
-      RatingBreakdown(stars: 2, count: 5),
-      RatingBreakdown(stars: 1, count: 3),
-    ],
   ),
   Food(
     id: '3',
@@ -69,13 +54,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 110),
-      RatingBreakdown(stars: 4, count: 25),
-      RatingBreakdown(stars: 3, count: 10),
-      RatingBreakdown(stars: 2, count: 3),
-      RatingBreakdown(stars: 1, count: 2),
-    ],
   ),
   Food(
     id: '4',
@@ -93,13 +71,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 50),
-      RatingBreakdown(stars: 4, count: 20),
-      RatingBreakdown(stars: 3, count: 5),
-      RatingBreakdown(stars: 2, count: 3),
-      RatingBreakdown(stars: 1, count: 2),
-    ],
   ),
   Food(
     id: '5',
@@ -117,13 +88,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 150),
-      RatingBreakdown(stars: 4, count: 30),
-      RatingBreakdown(stars: 3, count: 10),
-      RatingBreakdown(stars: 2, count: 5),
-      RatingBreakdown(stars: 1, count: 5),
-    ],
   ),
   Food(
     id: '6',
@@ -141,13 +105,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 35),
-      RatingBreakdown(stars: 4, count: 20),
-      RatingBreakdown(stars: 3, count: 10),
-      RatingBreakdown(stars: 2, count: 7),
-      RatingBreakdown(stars: 1, count: 3),
-    ],
   ),
   Food(
     id: '7',
@@ -165,13 +122,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 40),
-      RatingBreakdown(stars: 4, count: 15),
-      RatingBreakdown(stars: 3, count: 5),
-      RatingBreakdown(stars: 2, count: 3),
-      RatingBreakdown(stars: 1, count: 2),
-    ],
   ),
   Food(
     id: '8',
@@ -189,13 +139,6 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    ratingBreakdown: [
-      RatingBreakdown(stars: 5, count: 30),
-      RatingBreakdown(stars: 4, count: 15),
-      RatingBreakdown(stars: 3, count: 5),
-      RatingBreakdown(stars: 2, count: 3),
-      RatingBreakdown(stars: 1, count: 2),
-    ],
   ),
 ];
 

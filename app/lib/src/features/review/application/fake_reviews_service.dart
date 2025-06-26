@@ -57,7 +57,7 @@ class FakeReviewsService implements ReviewsService {
     if (categoryId == 1) {
       final entity = await fakeResidenceRepository.fetchResidence(entityId);
       final entityDetail = await fakeResidenceDetailsRepository
-          .fetchResidenceDetails(categoryId, entityId);
+          .fetchResidenceDetails(entityId);
       if (entity == null) throw StateError('Residence not found.'.hardcoded);
       if (entityDetail == null) {
         throw StateError('Residence Detail not found.'.hardcoded);
@@ -65,7 +65,6 @@ class FakeReviewsService implements ReviewsService {
       final updatedEntity = entity.copyWith(
         avgRating: avgRating,
         totalReviews: reviews.length,
-        ratingBreakdown: ratingBreakdown,
       );
       final updatedDetail = entityDetail.copyWith(
         avgRating: avgRating,
@@ -77,16 +76,12 @@ class FakeReviewsService implements ReviewsService {
       await fakeResidenceDetailsRepository.setResidenceDetail(updatedDetail);
     } else if (categoryId == 2) {
       final entity = await fakeFoodRepository.fetchFood(entityId);
-      final detail = await fakeFoodDetailsRepository.fetchFoodDetails(
-        categoryId,
-        entityId,
-      );
+      final detail = await fakeFoodDetailsRepository.fetchFoodDetails(entityId);
       if (entity == null) throw StateError('Food not found.');
       if (detail == null) throw StateError('Food Details not found.');
       final updatedEntity = entity.copyWith(
         avgRating: avgRating,
         totalReviews: reviews.length,
-        ratingBreakdown: ratingBreakdown,
       );
       final updatedDetail = detail.copyWith(
         avgRating: avgRating,

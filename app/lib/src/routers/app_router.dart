@@ -6,7 +6,7 @@ import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
-import 'package:app/src/features/review/presentation/home_detail_screen.dart';
+import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';

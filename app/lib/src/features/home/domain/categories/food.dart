@@ -1,6 +1,5 @@
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
-import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/models/my_data_types.dart';
@@ -19,7 +18,6 @@ class Food extends Entity {
     required super.latLng,
     required super.avgRating,
     required super.totalReviews,
-    required super.ratingBreakdown,
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
@@ -43,7 +41,6 @@ class Food extends Entity {
     LatLng? latLng,
     double? avgRating,
     int? totalReviews,
-    List<RatingBreakdown>? ratingBreakdown,
     bool? isPopular,
     List<OpeningHours>? openingHours,
     EntityStatus? entityStatus,
@@ -61,7 +58,6 @@ class Food extends Entity {
       latLng: latLng ?? this.latLng,
       avgRating: avgRating ?? this.avgRating,
       totalReviews: totalReviews ?? this.totalReviews,
-      ratingBreakdown: ratingBreakdown ?? this.ratingBreakdown,
       isPopular: isPopular ?? this.isPopular,
       openingHours: openingHours ?? this.openingHours,
       entityStatus: entityStatus ?? this.entityStatus,
@@ -86,9 +82,6 @@ class Food extends Entity {
     latLng: LatLng.fromJson(json['latLng'])!,
     avgRating: (json['avgRating'] as num).toDouble(),
     totalReviews: json['totalReviews'] as int,
-    ratingBreakdown: (json['ratingBreakdown'] as List)
-        .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
-        .toList(),
     isPopular: json['isPopular'] as bool,
     openingHours: (json['openingHours'] as List)
         .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
