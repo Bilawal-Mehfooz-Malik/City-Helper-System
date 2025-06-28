@@ -3,10 +3,8 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
-import 'package:app/src/features/home/application/entity_service.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home/domain/search_entitiy.dart';
 import 'package:app/src/features/home/presentation/controllers/entity_search_query_notifier.dart';
-import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -43,7 +41,7 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
     super.dispose();
   }
 
-  void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
+  void _goToDetails(BuildContext context, WidgetRef ref, SearchEntity entity) {
     FocusScope.of(context).unfocus();
     final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(
@@ -72,7 +70,7 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
         context.goNamed(
           AppRoute.homeDetail.name,
           pathParameters: {
-            'categoryId': entity.categoryId.toString(),
+            'categoryId': widget.categoryId.toString(),
             'entityId': entity.id,
           },
         );
@@ -89,7 +87,12 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
         child: SearchAnchor.bar(
           searchController: _controller,
           barHintText: context.loc.search,
-          onChanged: (value) => setState(() {}),
+          onChanged: (value) {
+            ref
+                .read(entitySearchQueryNotifierProvider.notifier)
+                .setQuery(value);
+            debugPrint('Query from onChanged: $value');
+          },
           barElevation: const WidgetStatePropertyAll(2),
           barLeading: widget.showBackButton
               ? const BackButton()
@@ -103,59 +106,26 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       _controller.clear();
+                      ref
+                          .read(entitySearchQueryNotifierProvider.notifier)
+                          .setQuery('');
                       setState(() {});
                     },
                   ),
                 ]
               : null,
           suggestionsBuilder: (context, controller) {
-            final query = controller.text.trim().toLowerCase();
+            final currentText = controller.text.trim();
+            final query = ref.watch(entitySearchQueryNotifierProvider);
 
-            if (query.isEmpty) {
-              return [
-                SuggestionBuilderMessage(
-                  icon: Icons.info_outline,
-                  message: context.loc.typeToSeeSuggestion,
-                ),
-              ];
-            }
-
-            final subCategory = ref.watch(subcategoryControllerProvider);
-            final asyncEntities = ref.watch(
-              watchEntitiesProvider(widget.categoryId, subCategory),
-            );
-
-            return asyncEntities.when(
-              data: (entities) {
-                final matches = entities
-                    .where((e) => e.name.toLowerCase().contains(query))
-                    .take(5)
-                    .toList();
-
-                if (matches.isEmpty) {
-                  return [
-                    SuggestionBuilderMessage(
-                      icon: Icons.search_off,
-                      message: context.loc.noResultFound,
-                    ),
-                  ];
-                }
-
-                return matches.map((entity) {
-                  return InkWell(
-                    onTap: () => _goToDetails(context, ref, entity),
-                    child: SearchSuggestionListTile(entity: entity),
-                  );
-                }).toList();
-              },
-              loading: () => [],
-              error: (e, _) => [
-                SuggestionBuilderMessage(
-                  icon: Icons.error,
-                  message: '${context.loc.error} $e',
-                ),
-              ],
-            );
+            return [
+              _SearchSuggestions(
+                categoryId: widget.categoryId,
+                currentText: currentText,
+                debouncedQuery: query,
+                onSelect: (entity) => _goToDetails(context, ref, entity),
+              ),
+            ];
           },
         ),
       ),
@@ -163,9 +133,91 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
   }
 }
 
-class SearchSuggestionListTile extends StatelessWidget {
-  final Entity entity;
-  const SearchSuggestionListTile({super.key, required this.entity});
+class _SearchSuggestions extends ConsumerWidget {
+  const _SearchSuggestions({
+    required this.categoryId,
+    required this.currentText,
+    required this.debouncedQuery,
+    required this.onSelect,
+  });
+
+  final CategoryId categoryId;
+  final String currentText;
+  final String debouncedQuery;
+  final void Function(SearchEntity) onSelect;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Use immediate input for UI feedback
+    if (currentText.isEmpty) {
+      return _SuggestionBuilderMessage(
+        icon: Icons.info_outline,
+        message: context.loc.typeToSeeSuggestion,
+      );
+    }
+
+    // Show loading if debounce hasn't completed
+    if (currentText != debouncedQuery) {
+      return _SuggestionBuilderMessage(
+        icon: Icons.hourglass_empty,
+        message: 'Loading...',
+      );
+    }
+
+    // Fetch results using DEBOUNCED query
+    final asyncResults = ref.watch(entitySearchResultsProvider(categoryId));
+
+    return asyncResults.when(
+      data: (results) =>
+          _SearchSuggestionListView(results: results, onSelect: onSelect),
+      loading: () => _SuggestionBuilderMessage(
+        icon: Icons.hourglass_empty,
+        message: 'Loading...',
+      ),
+      error: (e, _) => _SuggestionBuilderMessage(
+        icon: Icons.error,
+        message: '${context.loc.error} $e',
+      ),
+    );
+  }
+}
+
+class _SearchSuggestionListView extends StatelessWidget {
+  const _SearchSuggestionListView({
+    required this.results,
+    required this.onSelect,
+  });
+
+  final List<SearchEntity> results;
+  final void Function(SearchEntity) onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final matches = results.take(5).toList();
+
+    if (matches.isEmpty) {
+      return _SuggestionBuilderMessage(
+        icon: Icons.search_off,
+        message: context.loc.noResultFound,
+      );
+    }
+    return ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: matches.map((entity) {
+        return InkWell(
+          onTap: () => onSelect(entity),
+          child: _SearchSuggestionListTile(entity: entity),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class _SearchSuggestionListTile extends StatelessWidget {
+  const _SearchSuggestionListTile({required this.entity});
+
+  final SearchEntity entity;
 
   @override
   Widget build(BuildContext context) {
@@ -189,12 +241,8 @@ class SearchSuggestionListTile extends StatelessWidget {
   }
 }
 
-class SuggestionBuilderMessage extends StatelessWidget {
-  const SuggestionBuilderMessage({
-    super.key,
-    required this.message,
-    required this.icon,
-  });
+class _SuggestionBuilderMessage extends StatelessWidget {
+  const _SuggestionBuilderMessage({required this.message, required this.icon});
 
   final String message;
   final IconData icon;

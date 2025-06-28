@@ -4,7 +4,7 @@ import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 
 abstract class EntityDetail extends Entity {
   final String description;
-  final List<String> imageUrls;
+  final List<String> galleryImageUrls;
   final String streetAddress;
   final String? phoneNumber;
   final String? messagingNumber;
@@ -34,7 +34,7 @@ abstract class EntityDetail extends Entity {
 
     required this.ownerId,
     required this.description,
-    required this.imageUrls,
+    required this.galleryImageUrls,
     required this.streetAddress,
     required this.ratingBreakdown,
     this.phoneNumber,
@@ -50,7 +50,7 @@ abstract class EntityDetail extends Entity {
     ...super.baseToJson(),
     'ownerId': ownerId,
     'description': description,
-    'imageUrls': imageUrls,
+    'galleryImageUrls': galleryImageUrls,
     'streetAddress': streetAddress,
     'phoneNumber': phoneNumber,
     'messagingNumber': messagingNumber,
@@ -64,7 +64,7 @@ abstract class EntityDetail extends Entity {
 
   EntityDetail copyWith({
     String? description,
-    List<String>? imageUrls,
+    List<String>? galleryImageUrls,
     String? streetAddress,
     String? phoneNumber,
     String? messagingNumber,
@@ -83,7 +83,7 @@ abstract class EntityDetail extends Entity {
             super == other &&
             runtimeType == other.runtimeType &&
             description == other.description &&
-            imageUrls == other.imageUrls &&
+            galleryImageUrls == other.galleryImageUrls &&
             streetAddress == other.streetAddress &&
             phoneNumber == other.phoneNumber &&
             messagingNumber == other.messagingNumber &&
@@ -99,7 +99,7 @@ abstract class EntityDetail extends Entity {
   int get hashCode => Object.hashAll([
     super.hashCode,
     description,
-    imageUrls,
+    galleryImageUrls,
     streetAddress,
     phoneNumber,
     messagingNumber,

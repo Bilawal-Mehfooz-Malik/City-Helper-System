@@ -67,9 +67,11 @@ class HomeDetailScreen extends ConsumerWidget {
                   spacing: Sizes.p8,
                   children: [
                     ResponsiveTwoColumnLayout(
-                      startContent: entity.imageUrls.isEmpty
+                      startContent: entity.galleryImageUrls.isEmpty
                           ? SizedBox.shrink()
-                          : HomeDetailTopLeftSection(images: entity.imageUrls),
+                          : HomeDetailTopLeftSection(
+                              images: entity.galleryImageUrls,
+                            ),
                       endContent: HomeDetailTopRightSection(entity: entity),
                       spacing: isSmall ? Sizes.p8 : Sizes.p16,
                     ),

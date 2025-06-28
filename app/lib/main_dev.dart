@@ -103,7 +103,7 @@ Future<void> main() async {
   //   "ownerId": "user-xyz",
   //   "description":
   //       "Authentic desi cuisine served hot and fresh. Family-friendly.",
-  //   "imageUrls": [
+  //   "galleryImageUrls": [
   //     "https://example.com/images/food1.jpg",
   //     "https://example.com/images/food2.jpg",
   //   ],
@@ -165,7 +165,7 @@ Future<void> main() async {
     "ownerId": "user-abc",
     "description":
         "Clean and affordable hostel for male students and professionals.",
-    "imageUrls": [
+    "galleryImageUrls": [
       "https://example.com/images/res1.jpg",
       "https://example.com/images/res2.jpg",
     ],
