@@ -7,7 +7,6 @@ import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/data/real/entity_search_repository.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
-import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +53,6 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
       width: screenSize.width,
       height: screenSize.height,
     );
-
-    ref.read(entityIdControllerProvider.notifier).updateEntityId(entity.id);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       context.pushNamed(
