@@ -64,4 +64,16 @@ class FakeUserRepository implements UserRepository {
       controller.close();
     }
   }
+
+  @override
+  Future<AppUser?> fetchUserById(String uid) {
+    // TODO: implement fetchUserById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateUser(AppUser user) {
+    // TODO: implement updateUser
+    throw UnimplementedError();
+  }
 }

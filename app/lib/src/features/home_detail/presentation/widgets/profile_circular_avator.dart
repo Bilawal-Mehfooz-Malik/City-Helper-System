@@ -23,9 +23,9 @@ class ProfileCircularAvator extends ConsumerWidget {
           case 'account':
             context.goNamed(AppRoute.account.name);
             break;
-          // case 'admin':
-          //   context.pushNamed(AppRoute.profile.name);
-          //   break;
+          case 'admin':
+            context.pushNamed(AppRoute.myShop.name);
+            break;
         }
       },
       itemBuilder: (context) {
@@ -42,10 +42,10 @@ class ProfileCircularAvator extends ConsumerWidget {
               value: 'account',
               child: Text(context.loc.account_title),
             ),
-            // PopupMenuItem<String>(
-            //   value: 'admin',
-            //   child: Text(context.loc.switchToAdmin),
-            // ),
+            PopupMenuItem<String>(
+              value: 'admin',
+              child: Text(context.loc.switchToAdmin),
+            ),
           ];
         }
       },

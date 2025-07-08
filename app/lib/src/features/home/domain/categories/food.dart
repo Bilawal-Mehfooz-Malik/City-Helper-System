@@ -73,24 +73,28 @@ class Food extends Entity {
   };
 
   factory Food.fromJson(Map<String, dynamic> json) => Food(
-    id: json['id'] as String,
-    categoryId: json['categoryId'] as int,
-    subCategoryId: json['subCategoryId'] as int,
-    coverImageUrl: json['coverImageUrl'] as String,
-    name: json['name'] as String,
-    cityName: json['cityName'] as String,
-    sectorName: json['sectorName'] as String,
+    id: _readString(json['id']),
+    categoryId: _readInt(json['categoryId']),
+    subCategoryId: _readInt(json['subCategoryId']),
+    coverImageUrl: _readString(json['coverImageUrl']),
+    name: _readString(json['name']),
+    cityName: _readString(json['cityName']),
+    sectorName: _readString(json['sectorName']),
     latLng: LatLng.fromJson(json['latLng'])!,
-    avgRating: (json['avgRating'] as num).toDouble(),
-    totalReviews: json['totalReviews'] as int,
-    isPopular: json['isPopular'] as bool,
-    openingHours: (json['openingHours'] as List)
-        .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
-    createdAt: (json['createdAt'] as Timestamp).toDate(),
+    avgRating: _toDouble(json['avgRating']),
+    totalReviews: _readInt(json['totalReviews']),
+    isPopular: _readBool(json['isPopular']),
+    openingHours:
+        (json['openingHours'] as List?)
+            ?.map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [],
+    entityStatus: EntityStatus.values.byName(
+      _readString(json['entityStatus'], fallback: 'active'),
+    ),
+    createdAt: (json['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     genderPref: GenderPreference.values.byName(
-      json['GenderPreference'] as String,
+      _readString(json['GenderPreference'], fallback: 'any'),
     ),
   );
 
@@ -101,6 +105,29 @@ class Food extends Entity {
 
   @override
   int get hashCode => super.hashCode ^ genderPref.hashCode;
+}
+
+double _toDouble(dynamic value) {
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? 0.0;
+  return 0.0;
+}
+
+String _readString(dynamic value, {String fallback = ''}) {
+  if (value == null) return fallback;
+  if (value is String) return value;
+  return value.toString();
+}
+
+int _readInt(dynamic value, {int fallback = 0}) {
+  if (value == null) return fallback;
+  if (value is int) return value;
+  return int.tryParse(value.toString()) ?? fallback;
+}
+
+bool _readBool(dynamic value) {
+  return value == true;
 }
 
 // @freezed

@@ -56,6 +56,20 @@ class UserRepository {
       await _firestore.collection(usersCollection).doc(uid).update(data);
     }
   }
+
+  Future<AppUser?> fetchUserById(String uid) async {
+    final doc = await _firestore.collection('users').doc(uid).get();
+    if (!doc.exists) return null;
+    final data = doc.data()!;
+    return AppUser.fromJson(data);
+  }
+
+  Future<void> updateUser(AppUser user) {
+    return _firestore
+        .collection(usersCollection)
+        .doc(user.uid)
+        .set(user.toJson());
+  }
 }
 
 @riverpod

@@ -8,7 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // <-- Add this
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletonizer/skeletonizer.dart'; // <-- Add this
 
 class CustomImage extends ConsumerWidget {
   const CustomImage({
@@ -25,6 +26,7 @@ class CustomImage extends ConsumerWidget {
     this.useAspectRatio = true,
     this.fit = BoxFit.cover,
     this.iconPersonSize = 60,
+    this.useSquareLoading = false,
   });
 
   final String? imageUrl;
@@ -37,6 +39,7 @@ class CustomImage extends ConsumerWidget {
   final bool borderBottomLeft;
   final bool borderBottomRight;
   final double iconPersonSize;
+  final bool useSquareLoading;
 
   final bool useAspectRatio;
   final double aspectRatio;
@@ -107,8 +110,10 @@ class CustomImage extends ConsumerWidget {
           );
           return CircleAvatar(child: Icon(Icons.error, size: iconPersonSize));
         },
-        placeholder: (_, __) =>
-            const Center(child: CircularProgressIndicator()),
+        placeholder: (_, __) => Skeletonizer(
+          enabled: true,
+          child: useSquareLoading ? Bone.square() : Bone.square(),
+        ),
       );
     }
 
