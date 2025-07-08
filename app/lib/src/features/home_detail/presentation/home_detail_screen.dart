@@ -44,31 +44,31 @@ class HomeDetailScreen extends ConsumerWidget {
         categoryId: categoryId,
         isPushed: isPushed,
       ),
-
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
           child: AsyncValueWidget(
             value: combinedValue,
-            loading: HomeDetailSkeleton(),
+            loading: const HomeDetailSkeleton(),
+            error: (e, st) =>
+                EmptyPlaceholderWidget(message: context.loc.somethingWentWrong),
             data: (tuple) {
               final entity = tuple.$1;
               final reviews = tuple.$2;
 
+              // Avoid showing empty state if entity is null (treat it like still loading)
               if (entity == null) {
-                return EmptyPlaceholderWidget(
-                  message: context.loc.somethingWentWrong,
-                );
+                return const HomeDetailSkeleton();
               }
 
               return SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: Sizes.p8),
+                padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
                 child: Column(
                   spacing: Sizes.p8,
                   children: [
                     ResponsiveTwoColumnLayout(
                       startContent: entity.galleryImageUrls.isEmpty
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : HomeDetailTopLeftSection(
                               images: entity.galleryImageUrls,
                             ),

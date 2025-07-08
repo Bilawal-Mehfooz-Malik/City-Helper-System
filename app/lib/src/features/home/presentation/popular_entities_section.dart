@@ -35,10 +35,13 @@ class PopularEnitiesSection extends ConsumerWidget {
     );
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
-      // Use a state provider to indicate the "popular" view should be shown
-      ref
-          .read(selectedCategoryViewControllerProvider.notifier)
-          .setSelectedCategoryView(SelectedCategoryView.detail);
+      context.pushNamed(
+        AppRoute.homeDetail.name,
+        pathParameters: {
+          'categoryId': categoryId.toString(),
+          'entityId': entity.id,
+        },
+      );
     } else {
       context.goNamed(
         AppRoute.homeDetail.name,

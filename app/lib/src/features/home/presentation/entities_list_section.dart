@@ -5,7 +5,6 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
-import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
@@ -34,10 +33,13 @@ class EntitiesListSection extends ConsumerWidget {
     );
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
-      // Use a state provider to indicate the "popular" view should be shown
-      ref
-          .read(selectedCategoryViewControllerProvider.notifier)
-          .setSelectedCategoryView(SelectedCategoryView.detail);
+      context.pushNamed(
+        AppRoute.homeDetail.name,
+        pathParameters: {
+          'categoryId': categoryId.toString(),
+          'entityId': entity.id,
+        },
+      );
     } else {
       context.goNamed(
         AppRoute.homeDetail.name,

@@ -2,6 +2,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FoodDetail extends EntityDetail {
@@ -103,40 +104,50 @@ class FoodDetail extends EntityDetail {
     ...super.toJson(),
     'genderPref': genderPref.name,
   };
-
   factory FoodDetail.fromJson(Map<String, dynamic> json) {
     return FoodDetail(
       id: json['id'] as EntityId,
       categoryId: json['categoryId'] as CategoryId,
       subCategoryId: json['subCategoryId'] as SubCategoryId,
-      coverImageUrl: json['coverImageUrl'] as String,
-      name: json['name'] as String,
-      cityName: json['cityName'] as String,
-      sectorName: json['sectorName'] as String,
+      coverImageUrl: json['coverImageUrl'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      cityName: json['cityName'] as String? ?? '',
+      sectorName: json['sectorName'] as String? ?? '',
       latLng: LatLng.fromJson(json['latLng'])!,
-      avgRating: (json['avgRating'] as num).toDouble(),
-      totalReviews: json['totalReviews'] as int,
-      ratingBreakdown: (json['ratingBreakdown'] as List<dynamic>)
-          .map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      isPopular: json['isPopular'] as bool,
-      openingHours: (json['openingHours'] as List<dynamic>)
-          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      ownerId: json['ownerId'] as UserId,
-      description: json['description'] as String,
-      galleryImageUrls: List<String>.from(json['galleryImageUrls'] as List),
-      streetAddress: json['streetAddress'] as String,
+      avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
+      totalReviews: json['totalReviews'] as int? ?? 0,
+      ratingBreakdown:
+          (json['ratingBreakdown'] as List<dynamic>?)
+              ?.map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      isPopular: json['isPopular'] as bool? ?? false,
+      openingHours:
+          (json['openingHours'] as List<dynamic>?)
+              ?.map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      entityStatus: json['entityStatus'] != null
+          ? EntityStatus.values.byName(json['entityStatus'] as String)
+          : EntityStatus.defaultStatus,
+
+      ownerId: json['ownerId'] as UserId? ?? '',
+      description: json['description'] as String? ?? '',
+      galleryImageUrls:
+          (json['galleryImageUrls'] as List?)?.cast<String>() ?? [],
+      streetAddress: json['streetAddress'] as String? ?? '',
       phoneNumber: json['phoneNumber'] as String?,
       messagingNumber: json['messagingNumber'] as String?,
       websiteUrl: json['websiteUrl'] as String?,
       instagramUrl: json['instagramUrl'] as String?,
       facebookUrl: json['facebookUrl'] as String?,
       email: json['email'] as String?,
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+      createdAt: _parseDateTime(json['createdAt']),
+      updatedAt: _parseDateTime(json['updatedAt']),
+
+      genderPref: GenderPreference.values.byName(
+        json['GenderPreference'] as String? ?? 'any',
+      ),
     );
   }
 
@@ -148,4 +159,14 @@ class FoodDetail extends EntityDetail {
 
   @override
   int get hashCode => Object.hashAll([super.hashCode, genderPref]);
+}
+
+DateTime _parseDateTime(dynamic value) {
+  if (value is Timestamp) {
+    return value.toDate();
+  } else if (value is String) {
+    return DateTime.tryParse(value) ?? DateTime.now();
+  } else {
+    return DateTime.now();
+  }
 }

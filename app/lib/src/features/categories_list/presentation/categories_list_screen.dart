@@ -4,7 +4,7 @@ import 'package:app/src/core/common_widgets/draggable_two_column_layout.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/common_widgets/error_filled_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/categories_list_view.dart';
@@ -23,19 +23,9 @@ class CategoriesListScreen extends ConsumerWidget {
     ref.invalidate(categoriesListFutureProvider);
   }
 
-  bool _isSmallScreen(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: size.width,
-      height: size.height,
-    );
-    return screenType == ScreenType.smallHeight ||
-        screenType == ScreenType.mobile;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSmall = _isSmallScreen(context);
+    final isSmall = isSmallScreen(context);
     final categoriesValue = ref.watch(categoriesListFutureProvider);
 
     return Scaffold(

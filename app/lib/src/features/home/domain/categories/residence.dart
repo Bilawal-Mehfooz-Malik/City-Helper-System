@@ -1,6 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Residence extends Entity {
@@ -81,7 +82,7 @@ class Residence extends Entity {
     ...baseToJson(),
     'price': price,
     'isFurnished': isFurnished,
-    'genderPref': genderPref.name,
+    'GenderPreference': genderPref.name,
     'type': 'residence',
   };
 
@@ -94,17 +95,20 @@ class Residence extends Entity {
     cityName: json['cityName'] as String,
     sectorName: json['sectorName'] as String,
     latLng: LatLng.fromJson(json['latLng'])!,
-    avgRating: (json['avgRating'] as num).toDouble(),
-    totalReviews: json['totalReviews'] as int,
+    avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
+    totalReviews: (json['totalReviews'] as int?) ?? 0,
+    price: (json['price'] as num?)?.toDouble() ?? 0.0,
+
     isPopular: json['isPopular'] as bool,
     openingHours: (json['openingHours'] as List)
         .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
         .toList(),
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    price: (json['price'] as num).toDouble(),
+    createdAt: (json['createdAt'] as Timestamp).toDate(),
     isFurnished: json['isFurnished'] as bool,
-    genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+    genderPref: GenderPreference.values.byName(
+      json['GenderPreference'] as String,
+    ),
   );
 
   @override

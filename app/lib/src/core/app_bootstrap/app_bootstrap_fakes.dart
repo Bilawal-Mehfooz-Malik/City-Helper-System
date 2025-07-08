@@ -1,5 +1,10 @@
 import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
 import 'package:app/src/core/exceptions/async_error_logger.dart';
+import 'package:app/src/core/utils/in_memory_storage.dart';
+import 'package:app/src/features/auth/data/fake/fake_image_upload_repository.dart';
+import 'package:app/src/features/auth/data/fake/fake_user_repository.dart';
+import 'package:app/src/features/auth/data/image_upload_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/data/fake_categories_repository.dart';
 import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart';
@@ -51,6 +56,10 @@ extension AppBootstrapFakes on AppBootStrap {
       fakeFoodDetailsRepository: foodDetailsRepository,
       fakeResidenceDetailsRepository: residenceDetailsRepository,
     );
+    final imageUploadRepository = FakeImageUploadRepository(
+      InMemoryImageStorage(),
+    );
+    final userRepository = FakeUserRepository();
 
     return ProviderContainer(
       overrides: [
@@ -75,6 +84,8 @@ extension AppBootstrapFakes on AppBootStrap {
         ),
         reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
         authRepositoryProvider.overrideWithValue(authRepository),
+        imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
+        userRepositoryProvider.overrideWithValue(userRepository),
         reviewsServiceProvider.overrideWithValue(reviewsService),
       ],
       observers: [

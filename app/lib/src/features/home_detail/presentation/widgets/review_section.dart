@@ -1,4 +1,5 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
@@ -145,12 +146,13 @@ class ReviewListTile extends ConsumerWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: user.profileImageUrl != null
-                            ? NetworkImage(user.profileImageUrl!)
-                            : null,
-                        child: user.profileImageUrl == null
-                            ? const Icon(Icons.person)
-                            : null,
+                        child: CustomImage(
+                          fit: BoxFit.cover,
+                          useAspectRatio: false,
+                          iconPersonSize: 15,
+                          imageUrl: user.profileImageUrl,
+                          borderRadius: BorderRadius.circular(48),
+                        ),
                       ),
                       gapW12,
                       Column(

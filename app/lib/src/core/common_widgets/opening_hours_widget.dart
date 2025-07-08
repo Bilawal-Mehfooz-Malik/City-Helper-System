@@ -1,5 +1,6 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/utils/date_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -24,17 +25,14 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
     final hours = widget.entity.openingHours;
     final isOpen = widget.entity.isEntityOpen();
 
-    // Find today's index
     final todayIndex = hours.indexWhere(
       (h) => h.day.toLowerCase().startsWith(todayAbbr.toLowerCase()),
     );
 
-    // Get today's hours or fallback
     final todayHours = todayIndex >= 0
         ? hours[todayIndex]
         : OpeningHours(day: '', open: context.loc.closed, close: '');
 
-    // Reorder list so today is first
     final reorderedHours = todayIndex >= 0
         ? [...hours.sublist(todayIndex), ...hours.sublist(0, todayIndex)]
         : hours;
@@ -85,8 +83,7 @@ class OpeningHoursLabel extends StatelessWidget {
     final closesAtText = loc.closes;
     final opensAtText = loc.opensAt;
 
-    final startLower = todayHours.open.toLowerCase();
-    final isClosed = startLower == closedText.toLowerCase();
+    final isClosed = todayHours.open.toLowerCase() == closedText.toLowerCase();
 
     final normalColor = colorScheme.onSurface;
     final openColor = colorScheme.primary;
@@ -103,7 +100,9 @@ class OpeningHoursLabel extends StatelessWidget {
           children: [
             _coloredSpan(openText, openColor),
             _normalSpan(' • '),
-            _normalSpan('$closesAtText ${todayHours.close}'),
+            _normalSpan(
+              '$closesAtText ${formatTimeTo12Hour(todayHours.close)}',
+            ),
           ],
         ),
       );
@@ -114,7 +113,7 @@ class OpeningHoursLabel extends StatelessWidget {
           children: [
             _coloredSpan(closedText, closedColor),
             _normalSpan(' • '),
-            _normalSpan('$opensAtText ${todayHours.open}'),
+            _normalSpan('$opensAtText ${formatTimeTo12Hour(todayHours.open)}'),
           ],
         ),
       );
@@ -212,7 +211,10 @@ class OpeningHourRow extends StatelessWidget {
               style: textStyle.copyWith(color: colorScheme.error),
             )
           else
-            Text('${hour.open} – ${hour.close}', style: textStyle),
+            Text(
+              '${formatTimeTo12Hour(hour.open)} – ${formatTimeTo12Hour(hour.close)}',
+              style: textStyle,
+            ),
         ],
       ),
     );

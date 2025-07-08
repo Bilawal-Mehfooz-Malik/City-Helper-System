@@ -51,24 +51,37 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
   Future<void> _submit() async {
     final name = _nameController.text.trim();
-    if (name.length < 4) return;
+    print('🚀 Submit clicked. Name: "$name"');
+
+    if (name.length < 4) {
+      print('❌ Name is too short.');
+      return;
+    }
 
     final controller = ref.read(authControllerProvider.notifier);
     final user = ref.read(authStateChangesProvider).value;
-    if (user == null) return;
+
+    if (user == null) {
+      print('❌ No authenticated user found.');
+      return;
+    }
 
     final existingProfile = ref.read(getUserByIdProvider(user.uid)).value;
 
-    // If in edit mode and nothing changed → pop silently
     if (_isEditMode && existingProfile != null) {
       final isNameUnchanged = name == existingProfile.name;
       final isImageUnchanged = _pickedImageBytes == null && !_removeImage;
 
       if (isNameUnchanged && isImageUnchanged) {
+        print('✅ Nothing changed. Closing screen.');
         context.pop();
         return;
       }
     }
+
+    print(
+      '⏳ Calling ${_isEditMode ? 'updateUser' : 'createUser'} on AuthController',
+    );
 
     final result = _isEditMode
         ? await controller.updateUser(
@@ -81,24 +94,33 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             profileImageBytes: _pickedImageBytes,
           );
 
-    if (!mounted) return;
+    if (!mounted) {
+      print('⚠️ Widget unmounted before processing result.');
+      return;
+    }
 
     if (result.hasError) {
+      print('❌ Error occurred: ${result.error}');
       result.showAlertDialogOnError(context);
     } else {
+      print('✅ Signup/update successful. Navigating back.');
       context.pop();
     }
   }
 
   void _onImageChanged(XFile? file) async {
     if (file == null) {
+      print('📷 Image selection cleared.');
       setState(() {
         _pickedImage = null;
         _pickedImageBytes = null;
       });
       return;
     }
+
     final bytes = await file.readAsBytes();
+    print('📷 Image picked: ${file.path} (${bytes.lengthInBytes} bytes)');
+
     setState(() {
       _pickedImage = file;
       _pickedImageBytes = bytes;

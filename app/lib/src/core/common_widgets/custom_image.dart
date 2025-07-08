@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
+import 'package:app/src/core/utils/in_memory_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // <-- Add this
 
-class CustomImage extends StatelessWidget {
+class CustomImage extends ConsumerWidget {
   const CustomImage({
     super.key,
     this.imageUrl,
@@ -41,8 +43,8 @@ class CustomImage extends StatelessWidget {
   final BoxFit fit;
 
   @override
-  Widget build(BuildContext context) {
-    final imageWidget = _buildImage();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imageWidget = _buildImage(ref, iconPersonSize);
 
     final clippedImage = ClipRRect(
       borderRadius: BorderRadius.only(
@@ -67,7 +69,7 @@ class CustomImage extends StatelessWidget {
         : clippedImage;
   }
 
-  Widget _buildImage() {
+  Widget _buildImage(WidgetRef ref, double iconPersonSize) {
     if (imageXFile != null) {
       return kIsWeb
           ? Image.network(imageXFile!.path, fit: fit)
@@ -78,7 +80,22 @@ class CustomImage extends StatelessWidget {
       return CircleAvatar(child: Icon(Icons.person, size: iconPersonSize));
     }
 
-    // Use CachedNetworkImage only for http(s)
+    // ✅ in-memory image handling via provider
+    if (imageUrl!.startsWith('inmemory://')) {
+      final userId = imageUrl!.replaceFirst('inmemory://', '');
+      final inMemoryStorage = ref.watch(inMemoryImageStorageProvider);
+      final bytes = inMemoryStorage.getImageBytes(userId);
+
+      if (bytes != null) {
+        return Image.memory(bytes, fit: fit);
+      } else {
+        return CircleAvatar(
+          child: Icon(Icons.image_not_supported, size: iconPersonSize),
+        );
+      }
+    }
+
+    // ✅ network image
     if (imageUrl!.startsWith('http')) {
       return CachedNetworkImage(
         imageUrl: localhostFriendlyImageUrl(imageUrl!),
@@ -88,14 +105,14 @@ class CustomImage extends StatelessWidget {
             'Failed to load image from URL: $url',
             error: error,
           );
-          return CircleAvatar(child: const Icon(Icons.error, size: 60));
+          return CircleAvatar(child: Icon(Icons.error, size: iconPersonSize));
         },
         placeholder: (_, __) =>
             const Center(child: CircularProgressIndicator()),
       );
     }
 
-    // Fallback to asset if not a network image
+    // ✅ fallback asset
     return Image.asset(imageUrl!, fit: fit);
   }
 

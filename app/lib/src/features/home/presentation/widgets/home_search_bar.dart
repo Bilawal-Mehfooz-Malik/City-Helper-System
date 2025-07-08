@@ -1,16 +1,19 @@
+import 'dart:async';
+
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
+import 'package:app/src/features/home/data/real/entity_search_repository.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
-import 'package:app/src/features/home/presentation/controllers/entity_search_query_notifier.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/entity_id_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 
 class HomeSearchBar extends ConsumerStatefulWidget {
   const HomeSearchBar({
@@ -43,30 +46,28 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
 
   void _goToDetails(BuildContext context, WidgetRef ref, SearchEntity entity) {
     FocusScope.of(context).unfocus();
+    if (_controller.isAttached) {
+      _controller.closeView(entity.name);
+    }
     final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(
       width: screenSize.width,
       height: screenSize.height,
     );
 
+    ref.read(entityIdControllerProvider.notifier).updateEntityId(entity.id);
+
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
-      ref
-          .read(entitySearchQueryNotifierProvider.notifier)
-          .setQuery(entity.name);
-      ref.read(entityIdControllerProvider.notifier).updateEntityId(entity.id);
-      ref
-          .read(selectedCategoryViewControllerProvider.notifier)
-          .setSelectedCategoryView(SelectedCategoryView.detail);
+      context.pushNamed(
+        AppRoute.homeDetail.name,
+        pathParameters: {
+          'categoryId': widget.categoryId.toString(),
+          'entityId': entity.id,
+        },
+      );
     } else {
-      if (_controller.isAttached) {
-        _controller.closeView(entity.name);
-      }
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        ref
-            .read(entitySearchQueryNotifierProvider.notifier)
-            .setQuery(entity.name);
-        ref.read(entityIdControllerProvider.notifier).updateEntityId(entity.id);
         context.goNamed(
           AppRoute.homeDetail.name,
           pathParameters: {
@@ -87,12 +88,7 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
         child: SearchAnchor.bar(
           searchController: _controller,
           barHintText: context.loc.search,
-          onChanged: (value) {
-            ref
-                .read(entitySearchQueryNotifierProvider.notifier)
-                .setQuery(value);
-            debugPrint('Query from onChanged: $value');
-          },
+          onChanged: (value) {},
           barElevation: const WidgetStatePropertyAll(2),
           barLeading: widget.showBackButton
               ? const BackButton()
@@ -106,9 +102,6 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       _controller.clear();
-                      ref
-                          .read(entitySearchQueryNotifierProvider.notifier)
-                          .setQuery('');
                       setState(() {});
                     },
                   ),
@@ -116,13 +109,10 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
               : null,
           suggestionsBuilder: (context, controller) {
             final currentText = controller.text.trim();
-            final query = ref.watch(entitySearchQueryNotifierProvider);
-
             return [
               _SearchSuggestions(
                 categoryId: widget.categoryId,
                 currentText: currentText,
-                debouncedQuery: query,
                 onSelect: (entity) => _goToDetails(context, ref, entity),
               ),
             ];
@@ -133,46 +123,85 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
   }
 }
 
-class _SearchSuggestions extends ConsumerWidget {
+class _SearchSuggestions extends ConsumerStatefulWidget {
   const _SearchSuggestions({
     required this.categoryId,
     required this.currentText,
-    required this.debouncedQuery,
     required this.onSelect,
   });
 
   final CategoryId categoryId;
   final String currentText;
-  final String debouncedQuery;
   final void Function(SearchEntity) onSelect;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Use immediate input for UI feedback
-    if (currentText.isEmpty) {
+  ConsumerState<_SearchSuggestions> createState() => _SearchSuggestionsState();
+}
+
+class _SearchSuggestionsState extends ConsumerState<_SearchSuggestions> {
+  late final InMemoryStore<String> _queryStore;
+  late final StreamSubscription<String> _debounceSubscription;
+  String _debouncedQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _queryStore = InMemoryStore(widget.currentText);
+    _debounceSubscription = _queryStore.stream
+        .debounceTime(const Duration(milliseconds: 200))
+        .listen((query) {
+          setState(() {
+            _debouncedQuery = query.trim();
+          });
+        });
+  }
+
+  @override
+  void didUpdateWidget(covariant _SearchSuggestions oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentText != widget.currentText) {
+      _queryStore.value = widget.currentText;
+    }
+  }
+
+  @override
+  void dispose() {
+    _queryStore.close();
+    _debounceSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.currentText.isEmpty) {
       return _SuggestionBuilderMessage(
         icon: Icons.info_outline,
         message: context.loc.typeToSeeSuggestion,
       );
     }
 
-    // Show loading if debounce hasn't completed
-    if (currentText != debouncedQuery) {
+    if (widget.currentText != _debouncedQuery) {
       return _SuggestionBuilderMessage(
         icon: Icons.hourglass_empty,
-        message: 'Loading...',
+        message: 'Searching...',
       );
     }
 
-    // Fetch results using DEBOUNCED query
-    final asyncResults = ref.watch(entitySearchResultsProvider(categoryId));
+    final asyncResults = ref.watch(
+      searchByCategoryIdProvider((
+        categoryId: widget.categoryId,
+        query: _debouncedQuery,
+      )),
+    );
 
     return asyncResults.when(
-      data: (results) =>
-          _SearchSuggestionListView(results: results, onSelect: onSelect),
+      data: (results) => _SearchSuggestionListView(
+        results: results,
+        onSelect: widget.onSelect,
+      ),
       loading: () => _SuggestionBuilderMessage(
         icon: Icons.hourglass_empty,
-        message: 'Loading...',
+        message: 'Searching...',
       ),
       error: (e, _) => _SuggestionBuilderMessage(
         icon: Icons.error,
@@ -201,6 +230,7 @@ class _SearchSuggestionListView extends StatelessWidget {
         message: context.loc.noResultFound,
       );
     }
+
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'selected_category_view_controller.g.dart';
 
-enum SelectedCategoryView { home, popular, detail }
+enum SelectedCategoryView { home, popular }
 
 @riverpod
 class SelectedCategoryViewController extends _$SelectedCategoryViewController {

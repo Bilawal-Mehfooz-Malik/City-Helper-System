@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/models/my_data_types.dart';
@@ -68,7 +69,7 @@ class Food extends Entity {
 
   Map<String, dynamic> toJson() => {
     ...baseToJson(),
-    'genderPref': genderPref.name,
+    'GenderPreference': genderPref.name,
   };
 
   factory Food.fromJson(Map<String, dynamic> json) => Food(
@@ -87,8 +88,10 @@ class Food extends Entity {
         .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
         .toList(),
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    genderPref: GenderPreference.values.byName(json['genderPref'] as String),
+    createdAt: (json['createdAt'] as Timestamp).toDate(),
+    genderPref: GenderPreference.values.byName(
+      json['GenderPreference'] as String,
+    ),
   );
 
   @override

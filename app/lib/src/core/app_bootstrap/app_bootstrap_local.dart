@@ -1,5 +1,12 @@
 import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
 import 'package:app/src/core/exceptions/async_error_logger.dart';
+import 'package:app/src/core/utils/in_memory_storage.dart';
+import 'package:app/src/features/auth/application/auth_service.dart';
+import 'package:app/src/features/auth/application/fake_auth_service.dart';
+import 'package:app/src/features/auth/data/fake/fake_image_upload_repository.dart';
+import 'package:app/src/features/auth/data/fake/fake_user_repository.dart';
+import 'package:app/src/features/auth/data/image_upload_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/data/fake_categories_repository.dart';
 import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart';
@@ -22,6 +29,7 @@ import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
   Future<ProviderContainer> createLocalProviderContainer() async {
@@ -44,6 +52,17 @@ extension AppBootstrapFakes on AppBootStrap {
     );
 
     final userLocationRepository = await UserLocationRepository.makeDefault();
+    final imageUploadRepository = FakeImageUploadRepository(
+      InMemoryImageStorage(),
+    );
+    final userRepository = FakeUserRepository();
+    final authService = FakeAuthService(
+      authRepository: authRepository,
+      userRepository: userRepository,
+      imageUploadRepository: imageUploadRepository,
+      defaultLocation: LatLng(33.150691628036256, 73.74845167724608),
+      userLocation: await userLocationRepository.fetchUserLocation(),
+    );
 
     return ProviderContainer(
       overrides: [
@@ -63,7 +82,10 @@ extension AppBootstrapFakes on AppBootStrap {
         ),
         reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
         authRepositoryProvider.overrideWithValue(authRepository),
+        imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
+        userRepositoryProvider.overrideWithValue(userRepository),
         reviewsServiceProvider.overrideWithValue(reviewsService),
+        authServiceProvider.overrideWithValue(authService),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers
