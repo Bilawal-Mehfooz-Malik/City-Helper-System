@@ -11,8 +11,8 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
-import 'package:app/src/features/startup/presentation/widgets/google_map_widget.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +42,7 @@ class AccountScreen extends ConsumerWidget {
     final userProfile = ref.watch(getUserByIdProvider(user.uid));
     final userLocation = ref.watch(userLocationControllerProvider).value;
     final defaultLocation = ref.watch(defaultLocationProvider);
+    final mapBuilder = ref.watch(googleMapBuilderProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(context.loc.account_title)),
@@ -106,10 +107,7 @@ class AccountScreen extends ConsumerWidget {
                   gapH8,
 
                   // Google Map
-                  SizedBox(
-                    height: 250,
-                    child: GoogleMapWidget(latLng: location),
-                  ),
+                  SizedBox(height: 250, child: mapBuilder(location)),
 
                   gapH24,
 

@@ -22,6 +22,7 @@ class Food extends Entity {
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
+    // required super.status,
     required super.createdAt,
     required this.genderPref,
   });
@@ -45,6 +46,7 @@ class Food extends Entity {
     bool? isPopular,
     List<OpeningHours>? openingHours,
     EntityStatus? entityStatus,
+    Status? status,
     DateTime? createdAt,
     GenderPreference? genderPref,
   }) {
@@ -62,6 +64,7 @@ class Food extends Entity {
       isPopular: isPopular ?? this.isPopular,
       openingHours: openingHours ?? this.openingHours,
       entityStatus: entityStatus ?? this.entityStatus,
+      // status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       genderPref: genderPref ?? this.genderPref,
     );
@@ -90,8 +93,11 @@ class Food extends Entity {
             .toList() ??
         [],
     entityStatus: EntityStatus.values.byName(
-      _readString(json['entityStatus'], fallback: 'active'),
+      _readString(json['entityStatus'], fallback: 'open'),
     ),
+    // status: Status.values.byName(
+    //   _readString(json['status'], fallback: 'pending'),
+    // ),
     createdAt: (json['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     genderPref: GenderPreference.values.byName(
       _readString(json['GenderPreference'], fallback: 'any'),
@@ -107,6 +113,7 @@ class Food extends Entity {
   int get hashCode => super.hashCode ^ genderPref.hashCode;
 }
 
+// Helpers
 double _toDouble(dynamic value) {
   if (value is double) return value;
   if (value is int) return value.toDouble();

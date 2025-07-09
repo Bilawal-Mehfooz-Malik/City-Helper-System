@@ -16,6 +16,8 @@ enum GenderPreference { any, maleOnly, femaleOnly, familyFriendly }
 
 enum EntityStatus { open, close, defaultStatus }
 
+enum Status { blocked, pending, approved }
+
 extension IterableExtension<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T) test) {
     for (var element in this) {

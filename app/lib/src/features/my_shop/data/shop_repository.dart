@@ -15,7 +15,7 @@ class ShopRepository {
 
   Future<EntityDetail?> fetchUserShop(String userId) async {
     final residenceSnap = await _firestore
-        .collection('residences')
+        .collection('residence_listings')
         .where('ownerId', isEqualTo: userId)
         .limit(1)
         .get();
@@ -25,7 +25,7 @@ class ShopRepository {
     }
 
     final foodSnap = await _firestore
-        .collection('foods')
+        .collection('food_listings')
         .where('ownerId', isEqualTo: userId)
         .limit(1)
         .get();

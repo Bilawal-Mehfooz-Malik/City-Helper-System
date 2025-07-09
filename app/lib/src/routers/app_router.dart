@@ -8,6 +8,7 @@ import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
 import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.dart';
+import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ enum AppRoute {
   profile,
   account,
   myShop,
+  shopForm,
   loading,
   pageNotFound,
 }
@@ -175,6 +177,13 @@ GoRouter appRouter(Ref ref) {
         path: '/my-shop',
         name: AppRoute.myShop.name,
         builder: (context, state) => MyShopDashboardScreen(),
+        routes: [
+          GoRoute(
+            path: '/shop-form',
+            name: AppRoute.shopForm.name,
+            builder: (context, state) => ShopFormScreen(),
+          ),
+        ],
       ),
       GoRoute(
         path: '/loading',

@@ -26,7 +26,7 @@ class CustomImage extends ConsumerWidget {
     this.useAspectRatio = true,
     this.fit = BoxFit.cover,
     this.iconPersonSize = 60,
-    this.useSquareLoading = false,
+    this.useCircleLoading = false,
   });
 
   final String? imageUrl;
@@ -39,7 +39,7 @@ class CustomImage extends ConsumerWidget {
   final bool borderBottomLeft;
   final bool borderBottomRight;
   final double iconPersonSize;
-  final bool useSquareLoading;
+  final bool useCircleLoading;
 
   final bool useAspectRatio;
   final double aspectRatio;
@@ -112,7 +112,7 @@ class CustomImage extends ConsumerWidget {
         },
         placeholder: (_, __) => Skeletonizer(
           enabled: true,
-          child: useSquareLoading ? Bone.square() : Bone.square(),
+          child: useCircleLoading ? Bone.circle() : Bone.square(),
         ),
       );
     }

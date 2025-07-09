@@ -38,6 +38,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_002',
@@ -65,6 +66,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.maleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_003',
@@ -92,6 +94,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: false,
     genderPref: GenderPreference.maleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_004',
@@ -119,6 +122,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_005',
@@ -147,6 +151,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_006',
@@ -174,6 +179,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_007',
@@ -201,6 +207,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: false,
     genderPref: GenderPreference.maleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_008',
@@ -228,6 +235,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_009',
@@ -255,6 +263,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.femaleOnly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
   ResidenceDetail(
     id: 'res_010',
@@ -282,6 +291,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     isFurnished: true,
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
+    // status: Status.approved,
   ),
 ];
 

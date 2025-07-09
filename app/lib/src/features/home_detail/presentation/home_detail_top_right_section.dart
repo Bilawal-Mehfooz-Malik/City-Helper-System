@@ -66,7 +66,10 @@ class HomeDetailTopRightContent extends ConsumerWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: Sizes.p40, bottom: Sizes.p16),
+          padding: EdgeInsets.only(
+            top: entity.isPopular ? Sizes.p40 : Sizes.p16,
+            bottom: Sizes.p16,
+          ),
           child: Column(
             spacing: Sizes.p4,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,21 +112,22 @@ class HomeDetailTopRightContent extends ConsumerWidget {
             ],
           ),
         ),
-        Positioned(
-          right: Sizes.p4,
-          top: Sizes.p4,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.p16,
-              vertical: Sizes.p4,
+        if (entity.isPopular)
+          Positioned(
+            right: Sizes.p4,
+            top: Sizes.p4,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.p16,
+                vertical: Sizes.p4,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.amber.shade300,
+                borderRadius: BorderRadius.circular(Sizes.p16),
+              ),
+              child: Text(context.loc.popular),
             ),
-            decoration: BoxDecoration(
-              color: Colors.amber.shade300,
-              borderRadius: BorderRadius.circular(Sizes.p16),
-            ),
-            child: Text(context.loc.popular),
           ),
-        ),
       ],
     );
   }

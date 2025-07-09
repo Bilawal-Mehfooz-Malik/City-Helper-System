@@ -24,7 +24,7 @@ class ProfileCircularAvator extends ConsumerWidget {
             context.goNamed(AppRoute.account.name);
             break;
           case 'admin':
-            context.pushNamed(AppRoute.myShop.name);
+            context.replaceNamed(AppRoute.myShop.name);
             break;
         }
       },

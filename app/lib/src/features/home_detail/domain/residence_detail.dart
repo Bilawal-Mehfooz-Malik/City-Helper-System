@@ -25,6 +25,7 @@ class ResidenceDetail extends EntityDetail {
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
+    // required super.status,
     required super.createdAt,
     required super.ownerId,
     required super.description,
@@ -58,6 +59,7 @@ class ResidenceDetail extends EntityDetail {
     bool? isPopular,
     List<OpeningHours>? openingHours,
     EntityStatus? entityStatus,
+    Status? status,
     DateTime? createdAt,
     UserId? ownerId,
     String? description,
@@ -89,6 +91,7 @@ class ResidenceDetail extends EntityDetail {
       isPopular: isPopular ?? this.isPopular,
       openingHours: openingHours ?? this.openingHours,
       entityStatus: entityStatus ?? this.entityStatus,
+      // status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       ownerId: ownerId ?? this.ownerId,
       description: description ?? this.description,
@@ -140,6 +143,9 @@ class ResidenceDetail extends EntityDetail {
       entityStatus: json['entityStatus'] != null
           ? EntityStatus.values.byName(json['entityStatus'] as String)
           : EntityStatus.defaultStatus,
+      // status: json['status'] != null
+      //     ? Status.values.byName(json['status'] as String)
+      //     : Status.approved,
       ownerId: json['ownerId'] as UserId? ?? '',
       description: json['description'] as String? ?? '',
       galleryImageUrls:

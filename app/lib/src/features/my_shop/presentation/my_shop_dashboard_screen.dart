@@ -9,8 +9,10 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/my_shop/data/shop_repository.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MyShopDashboardScreen extends ConsumerWidget {
   const MyShopDashboardScreen({super.key});
@@ -20,7 +22,7 @@ class MyShopDashboardScreen extends ConsumerWidget {
     final userAsyncValue = ref.watch(authStateChangesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text('My Shop')),
+      appBar: AppBar(title: Text('My Shop'.hardcoded)),
       body: SafeArea(
         child: ResponsiveScrollable(
           showCard: true,
@@ -43,9 +45,13 @@ class MyShopDashboardScreen extends ConsumerWidget {
                     spacing: Sizes.p12,
                     children: [
                       if (user.profileImageUrl != null)
-                        CircleAvatar(
-                          radius: 40,
-                          child: CustomImage(imageUrl: user.profileImageUrl!),
+                        SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: CustomImage(
+                            imageUrl: user.profileImageUrl!,
+                            useCircleLoading: true,
+                          ),
                         ),
                       Column(
                         spacing: Sizes.p4,
@@ -84,22 +90,12 @@ class _ShopDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(16),
-      child: ListTile(
-        leading: Image.network(
-          shop.coverImageUrl,
-          width: 50,
-          height: 50,
-          fit: BoxFit.cover,
-        ),
-        title: Text(shop.name),
-        subtitle: Text('${shop.cityName}, ${shop.sectorName}'),
-        trailing: Icon(Icons.edit),
-        onTap: () {
-          // push to view/edit shop screen
-        },
-      ),
+    return ListTile(
+      leading: CustomImage(imageUrl: shop.coverImageUrl, aspectRatio: 1),
+      title: Text(shop.name),
+      subtitle: Text('${shop.cityName}, ${shop.sectorName}'),
+      trailing: Icon(Icons.edit),
+      onTap: () => context.goNamed(AppRoute.shopForm.name),
     );
   }
 }
@@ -118,7 +114,10 @@ class _NoShopCard extends StatelessWidget {
             style: context.textTheme.titleLarge,
           ),
           gapH8,
-          PrimaryButton(text: 'Register your shop'.hardcoded, onPressed: () {}),
+          PrimaryButton(
+            text: 'Register your shop'.hardcoded,
+            onPressed: () => context.goNamed(AppRoute.shopForm.name),
+          ),
         ],
       ),
     );

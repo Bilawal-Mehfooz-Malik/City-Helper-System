@@ -22,6 +22,7 @@ final List<Residence> testResidences = [
     price: 25000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_002',
@@ -41,6 +42,7 @@ final List<Residence> testResidences = [
     price: 40000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_003',
@@ -60,6 +62,7 @@ final List<Residence> testResidences = [
     price: 8000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_004',
@@ -79,6 +82,7 @@ final List<Residence> testResidences = [
     price: 15000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_005',
@@ -98,6 +102,7 @@ final List<Residence> testResidences = [
     price: 12000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_006',
@@ -117,6 +122,7 @@ final List<Residence> testResidences = [
     price: 60000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_007',
@@ -136,6 +142,7 @@ final List<Residence> testResidences = [
     price: 7000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_008',
@@ -155,6 +162,7 @@ final List<Residence> testResidences = [
     price: 28000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_009',
@@ -174,6 +182,7 @@ final List<Residence> testResidences = [
     price: 11000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    // status: Status.approved,
   ),
   Residence(
     id: 'res_010',
@@ -193,6 +202,7 @@ final List<Residence> testResidences = [
     price: 35000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    // status: Status.approved,
   ),
 ];
 
