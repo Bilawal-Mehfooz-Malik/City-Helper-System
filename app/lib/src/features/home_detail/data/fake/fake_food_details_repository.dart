@@ -6,6 +6,7 @@ import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_food_details.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/food_detail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FakeFoodDetailsRepository implements FoodDetailsRepository {
   FakeFoodDetailsRepository({this.addDelay = true});
@@ -38,5 +39,23 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
     yield* _foods.stream.map(
       (foods) => foods.firstWhereOrNull((food) => food.id == id),
     );
+  }
+
+  @override
+  Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) {
+    // TODO: implement fetchFoodDetailsByOwnerId
+    throw UnimplementedError();
+  }
+
+  @override
+  DocumentReference<Object?> getNewFoodsDocRef() {
+    // TODO: implement getNewFoodsDocRef
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
+    // TODO: implement watchFoodDetailsByOwnerId
+    throw UnimplementedError();
   }
 }

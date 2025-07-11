@@ -13,13 +13,33 @@ class ResidenceDetailsRepository {
 
   static String get residenceKey => 'residence_listings';
 
-  DocumentReference<Map<String, dynamic>> _docRef(EntityId id) {
-    return _firestore.collection(residenceKey).doc(id);
+  DocumentReference getNewResidenceDocRef() {
+    return _firestore.collection(residenceKey).doc();
   }
 
   /// ✅ Save or update a ResidenceDetail
   Future<void> setResidenceDetail(ResidenceDetail updated) async {
     await _docRef(updated.id).set(updated.toJson());
+  }
+
+  /// ✅ Real-time updates
+  Stream<ResidenceDetail?> watchResidenceDetailsByOwnerId(UserId id) {
+    return _docRefByOwnerId(id).snapshots().map((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        return ResidenceDetail.fromJson(snapshot.docs.first.data());
+      }
+      return null;
+    });
+  }
+
+  /// ✅ One-time fetch
+  Future<ResidenceDetail?> fetchResidenceDetailsByOwnerId(UserId id) async {
+    final residenceSnap = await _docRefByOwnerId(id).get();
+
+    if (residenceSnap.docs.isNotEmpty) {
+      return ResidenceDetail.fromJson(residenceSnap.docs.first.data());
+    }
+    return null;
   }
 
   /// ✅ Real-time updates
@@ -39,6 +59,18 @@ class ResidenceDetailsRepository {
       return ResidenceDetail.fromJson(doc.data()!);
     }
     return null;
+  }
+
+  // Helpers
+  DocumentReference<Map<String, dynamic>> _docRef(EntityId id) {
+    return _firestore.collection(residenceKey).doc(id);
+  }
+
+  Query<Map<String, dynamic>> _docRefByOwnerId(UserId id) {
+    return _firestore
+        .collection(residenceKey)
+        .where('ownerId', isEqualTo: id)
+        .limit(1);
   }
 }
 

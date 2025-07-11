@@ -39,3 +39,11 @@ class UserProfileImageDeleteException extends AppException {
         'Failed to delete user profile image. Please try again later.',
       );
 }
+
+class ShopImageUploadException extends AppException {
+  ShopImageUploadException()
+    : super(
+        'shop-image-upload-failed',
+        'Failed to upload shop image. Please try again later.',
+      );
+}

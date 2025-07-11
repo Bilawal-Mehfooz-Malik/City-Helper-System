@@ -30,7 +30,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '123-456-7890',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '2',
@@ -56,7 +56,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '234-567-8901',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '3',
@@ -82,7 +82,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '345-678-9012',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '4',
@@ -108,7 +108,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '456-789-0123',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '5',
@@ -134,7 +134,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '567-890-1234',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '6',
@@ -160,7 +160,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '678-901-2345',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '7',
@@ -186,7 +186,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '789-012-3456',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
   FoodDetail(
     id: '8',
@@ -212,7 +212,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '890-123-4567',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    // status: Status.approved,
+    status: Status.approved,
   ),
 ];
 

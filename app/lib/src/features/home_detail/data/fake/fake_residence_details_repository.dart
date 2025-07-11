@@ -6,6 +6,7 @@ import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_residence_details.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   FakeResidenceDetailsRepository({this.addDelay = true});
@@ -41,5 +42,23 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
       (residences) =>
           residences.firstWhereOrNull((residence) => residence.id == id),
     );
+  }
+
+  @override
+  Future<ResidenceDetail?> fetchResidenceDetailsByOwnerId(UserId id) {
+    // TODO: implement fetchResidenceDetailsByOwnerId
+    throw UnimplementedError();
+  }
+
+  @override
+  DocumentReference<Object?> getNewResidenceDocRef() {
+    // TODO: implement getNewResidenceDocRef
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<ResidenceDetail?> watchResidenceDetailsByOwnerId(UserId id) {
+    // TODO: implement watchResidenceDetailsByOwnerId
+    throw UnimplementedError();
   }
 }

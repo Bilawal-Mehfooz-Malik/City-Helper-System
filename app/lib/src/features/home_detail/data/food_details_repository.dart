@@ -13,13 +13,33 @@ class FoodDetailsRepository {
 
   static String get foodsKey => 'food_listings';
 
-  DocumentReference<Map<String, dynamic>> _docRef(EntityId id) {
-    return _firestore.collection(foodsKey).doc(id);
+  DocumentReference getNewFoodsDocRef() {
+    return _firestore.collection(foodsKey).doc();
   }
 
   /// ✅ Save or update a FoodDetail
   Future<void> setFoodDetail(FoodDetail updated) async {
     await _docRef(updated.id).set(updated.toJson());
+  }
+
+  /// ✅ Real-time updates
+  Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
+    return _docRefByOwnerId(id).snapshots().map((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        return FoodDetail.fromJson(snapshot.docs.first.data());
+      }
+      return null;
+    });
+  }
+
+  /// ✅ One-time fetch
+  Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) async {
+    final residenceSnap = await _docRefByOwnerId(id).get();
+
+    if (residenceSnap.docs.isNotEmpty) {
+      return FoodDetail.fromJson(residenceSnap.docs.first.data());
+    }
+    return null;
   }
 
   /// ✅ Real-time updates
@@ -39,6 +59,18 @@ class FoodDetailsRepository {
       return FoodDetail.fromJson(doc.data()!);
     }
     return null;
+  }
+
+  // Helpers
+  DocumentReference<Map<String, dynamic>> _docRef(EntityId id) {
+    return _firestore.collection(foodsKey).doc(id);
+  }
+
+  Query<Map<String, dynamic>> _docRefByOwnerId(UserId id) {
+    return _firestore
+        .collection(foodsKey)
+        .where('ownerId', isEqualTo: id)
+        .limit(1);
   }
 }
 

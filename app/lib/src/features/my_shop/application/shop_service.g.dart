@@ -1,30 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'shop_repository.dart';
+part of 'shop_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shopRepositoryHash() => r'da576127d11cc3889bed3e5a07c8fa11a833d0d6';
+String _$shopServiceHash() => r'e653b2ff8bf17b06b4447abde134ee458adaae21';
 
-/// See also [shopRepository].
-@ProviderFor(shopRepository)
-final shopRepositoryProvider = AutoDisposeProvider<ShopRepository>.internal(
-  shopRepository,
-  name: r'shopRepositoryProvider',
+/// See also [shopService].
+@ProviderFor(shopService)
+final shopServiceProvider = AutoDisposeProvider<ShopService>.internal(
+  shopService,
+  name: r'shopServiceProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$shopRepositoryHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$shopServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef ShopRepositoryRef = AutoDisposeProviderRef<ShopRepository>;
-String _$userShopHash() => r'942cbc271e799b2f57fff3095b62ca1274b865c3';
+typedef ShopServiceRef = AutoDisposeProviderRef<ShopService>;
+String _$userShopHash() => r'c5eed5d77e7f028e50672d7b88f1d5932c3dbbfa';
 
 /// Copied from Dart SDK
 class _SystemHash {

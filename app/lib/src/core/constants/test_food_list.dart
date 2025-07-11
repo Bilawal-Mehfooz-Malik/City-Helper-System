@@ -20,7 +20,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '2',
@@ -38,7 +38,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '3',
@@ -56,7 +56,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '4',
@@ -74,7 +74,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '5',
@@ -92,7 +92,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '6',
@@ -110,7 +110,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '7',
@@ -128,7 +128,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
   Food(
     id: '8',
@@ -146,7 +146,7 @@ final List<Food> testFoods = [
     entityStatus: EntityStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    // status: Status.approved,
+    status: Status.approved,
   ),
 ];
 

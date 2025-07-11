@@ -7,7 +7,8 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/my_shop/data/shop_repository.dart';
+import 'package:app/src/features/my_shop/application/shop_service.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyShopDashboardScreen extends ConsumerWidget {
       body: SafeArea(
         child: ResponsiveScrollable(
           showCard: true,
+          padding: EdgeInsets.symmetric(horizontal: Sizes.p16),
           paddingInsideCard: EdgeInsets.all(Sizes.p16),
           child: AsyncValueWidget(
             value: userAsyncValue,
@@ -93,7 +95,9 @@ class _ShopDetailCard extends StatelessWidget {
     return ListTile(
       leading: CustomImage(imageUrl: shop.coverImageUrl, aspectRatio: 1),
       title: Text(shop.name),
-      subtitle: Text('${shop.cityName}, ${shop.sectorName}'),
+      subtitle: Text(
+        '${shop.cityName},${context.loc.sector} ${shop.sectorName}',
+      ),
       trailing: Icon(Icons.edit),
       onTap: () => context.goNamed(AppRoute.shopForm.name),
     );

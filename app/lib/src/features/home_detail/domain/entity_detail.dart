@@ -30,7 +30,7 @@ abstract class EntityDetail extends Entity {
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
-    // required super.status,
+    required super.status,
     required super.createdAt,
 
     required this.ownerId,

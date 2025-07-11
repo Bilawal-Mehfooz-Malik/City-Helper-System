@@ -18,7 +18,7 @@ abstract class Entity {
   final bool isPopular;
   final List<OpeningHours> openingHours;
   final EntityStatus entityStatus;
-  // final Status status;
+  final Status status;
   final DateTime createdAt;
 
   const Entity({
@@ -35,7 +35,7 @@ abstract class Entity {
     required this.isPopular,
     required this.openingHours,
     required this.entityStatus,
-    // required this.status,
+    required this.status,
     required this.createdAt,
   });
   bool isEntityOpen() {
@@ -106,7 +106,7 @@ abstract class Entity {
     'isPopular': isPopular,
     'openingHours': openingHours.map((e) => e.toJson()).toList(growable: false),
     'entityStatus': entityStatus.name,
-    // 'status': status.name,
+    'status': status.name,
     'createdAt': createdAt,
   };
 
@@ -125,7 +125,7 @@ abstract class Entity {
     isPopular,
     openingHours,
     entityStatus,
-    // status,
+    status,
     createdAt,
   ]);
 

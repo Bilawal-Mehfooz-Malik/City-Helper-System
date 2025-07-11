@@ -23,7 +23,7 @@ class Residence extends Entity {
     required super.isPopular,
     required super.openingHours,
     required super.entityStatus,
-    // required super.status,
+    required super.status,
     required super.createdAt,
     required this.price,
     required this.isFurnished,
@@ -53,7 +53,7 @@ class Residence extends Entity {
     bool? isPopular,
     List<OpeningHours>? openingHours,
     EntityStatus? entityStatus,
-    // Status? status,
+    Status? status,
     DateTime? createdAt,
     double? price,
     bool? isFurnished,
@@ -73,7 +73,7 @@ class Residence extends Entity {
       isPopular: isPopular ?? this.isPopular,
       openingHours: openingHours ?? this.openingHours,
       entityStatus: entityStatus ?? this.entityStatus,
-      // status: status ?? this.status,
+      status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       price: price ?? this.price,
       isFurnished: isFurnished ?? this.isFurnished,
@@ -107,9 +107,9 @@ class Residence extends Entity {
         .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
         .toList(),
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
-    // status: Status.values.byName(
-    //   _readString(json['status'], fallback: 'pending'),
-    // ),
+    status: Status.values.byName(
+      _readString(json['status'], fallback: 'pending'),
+    ),
     createdAt: (json['createdAt'] as Timestamp).toDate(),
     isFurnished: json['isFurnished'] as bool,
     genderPref: GenderPreference.values.byName(
@@ -134,11 +134,11 @@ class Residence extends Entity {
       genderPref.hashCode;
 }
 
-// String _readString(dynamic value, {String fallback = ''}) {
-//   if (value == null) return fallback;
-//   if (value is String) return value;
-//   return value.toString();
-// }
+String _readString(dynamic value, {String fallback = ''}) {
+  if (value == null) return fallback;
+  if (value is String) return value;
+  return value.toString();
+}
 
 // @freezed
 // abstract class Residence extends Entity with _$Residence {

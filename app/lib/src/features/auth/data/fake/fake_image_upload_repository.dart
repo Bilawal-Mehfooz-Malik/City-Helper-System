@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_storage.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
@@ -27,4 +28,15 @@ class FakeImageUploadRepository implements ImageUploadRepository {
   }
 
   Uint8List? getImageBytes(String userId) => _storage.getImageBytes(userId);
+
+  @override
+  Future<String> uploadShopImageFromBytes({
+    required Uint8List imageBytes,
+    required String startPath,
+    required EntityId shopId,
+    required String endPath,
+  }) {
+    // TODO: implement uploadShopImageFromBytes
+    throw UnimplementedError();
+  }
 }

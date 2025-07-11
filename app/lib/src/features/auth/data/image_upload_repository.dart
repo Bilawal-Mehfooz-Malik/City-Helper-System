@@ -30,7 +30,7 @@ class ImageUploadRepository {
       return await result.ref.getDownloadURL();
     } catch (e, st) {
       AppLogger.logError(
-        'Failed to delete profile image for user $userId',
+        'Failed to upload profile image for user $userId',
         error: e,
         stackTrace: st,
       );
@@ -51,6 +51,30 @@ class ImageUploadRepository {
         stackTrace: st,
       );
       throw UserProfileImageDeleteException();
+    }
+  }
+
+  Future<String> uploadShopImageFromBytes({
+    required Uint8List imageBytes,
+    required String startPath,
+    required EntityId shopId,
+    required String endPath,
+  }) async {
+    final ref = _storage.ref('$startPath/${endPath}_$shopId.jpg');
+
+    try {
+      final result = await ref.putData(
+        imageBytes,
+        SettableMetadata(contentType: 'image/jpeg'),
+      );
+      return await result.ref.getDownloadURL();
+    } catch (e, st) {
+      AppLogger.logError(
+        'Failed to upload image for shop $shopId',
+        error: e,
+        stackTrace: st,
+      );
+      throw ShopImageUploadException();
     }
   }
 }
