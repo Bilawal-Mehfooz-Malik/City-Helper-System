@@ -6,7 +6,7 @@ part of 'shop_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shopControllerHash() => r'3c6c304bc1d0d1f94ec7cdf1aacf1eecfc5ce206';
+String _$shopControllerHash() => r'e591f53bde778d8870e1303a975d5931d91f1a75';
 
 /// See also [ShopController].
 @ProviderFor(ShopController)

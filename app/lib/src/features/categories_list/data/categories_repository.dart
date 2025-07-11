@@ -1,3 +1,4 @@
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +32,7 @@ class CategoriesRepository {
     );
   }
 
-  Future<Category?> fetchCategory(int id) async {
+  Future<Category?> fetchCategory(CategoryId id) async {
     final query = await _categoriesRef
         .where('id', isEqualTo: id)
         .limit(1)
@@ -42,7 +43,7 @@ class CategoriesRepository {
     return null;
   }
 
-  Stream<Category?> watchCategory(int id) {
+  Stream<Category?> watchCategory(CategoryId id) {
     return _categoriesRef
         .where('id', isEqualTo: id)
         .limit(1)
@@ -72,13 +73,13 @@ Future<List<Category>> categoriesListFuture(Ref ref) {
 }
 
 @riverpod
-Stream<Category?> categoryStream(Ref ref, int id) {
+Stream<Category?> categoryStream(Ref ref, CategoryId id) {
   final categoriesRepository = ref.watch(categoriesRepositoryProvider);
   return categoriesRepository.watchCategory(id);
 }
 
 @riverpod
-Future<Category?> categoryFuture(Ref ref, int id) {
+Future<Category?> categoryFuture(Ref ref, CategoryId id) {
   final categoriesRepository = ref.watch(categoriesRepositoryProvider);
   return categoriesRepository.fetchCategory(id);
 }

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
@@ -18,11 +17,14 @@ class ShopController extends _$ShopController {
   @override
   FutureOr<void> build() {}
 
-  Future<void> setShop({
-    required CategoryId categoryId,
+  /// Sets (creates or updates) a shop, handles all image uploads and deletions,
+  /// and returns `true` on success and `false` on failure.
+  Future<bool> setShop({
     required EntityDetail shop,
-    required Uint8List coverImageBytes,
-    required List<Uint8List> galleryImagesBytes,
+    Uint8List? newCoverImageBytes,
+    List<Uint8List>? newGalleryImagesBytes,
+    List<String>? galleryImageUrlsToDelete,
+    bool isCoverImageDeleted = false,
   }) async {
     state = const AsyncLoading();
 
@@ -34,53 +36,79 @@ class ShopController extends _$ShopController {
       final shopService = ref.read(shopServiceProvider);
       final imageRepo = ref.read(imageUploadRepositoryProvider);
 
-      // Generate doc ref to get the ID
-      final docRef = await shopService.getShopDocument(categoryId);
-      final shopId = docRef.id;
+      final isEditMode = shop.id.isNotEmpty;
+      String shopId = isEditMode
+          ? shop.id
+          : (await shopService.getShopDocument(shop.categoryId)).id;
 
-      // Upload cover image
-      final coverImageUrl = await imageRepo.uploadShopImageFromBytes(
-        startPath: 'shops/$userId',
-        shopId: shopId,
-        endPath: 'coverImage',
-        imageBytes: coverImageBytes,
-      );
-
-      // Upload gallery images
-      final galleryImageUrls = <String>[];
-      for (int i = 0; i < galleryImagesBytes.length; i++) {
-        final url = await imageRepo.uploadShopImageFromBytes(
-          startPath: 'shops/$userId',
-          shopId: shopId,
-          endPath: 'galleryImage$i',
-          imageBytes: galleryImagesBytes[i],
-        );
-        galleryImageUrls.add(url);
+      // --- 1. Handle Image Deletions (only in edit mode) ---
+      if (isEditMode) {
+        if (isCoverImageDeleted && shop.coverImageUrl.isNotEmpty) {
+          await imageRepo.deleteImage(shop.coverImageUrl);
+        }
+        if (galleryImageUrlsToDelete != null) {
+          for (final url in galleryImageUrlsToDelete) {
+            await imageRepo.deleteImage(url);
+          }
+        }
       }
 
-      // Final shop object with uploaded URLs
+      // --- 2. Handle Image Uploads ---
+      String? coverImageUrl = shop.coverImageUrl;
+      if (newCoverImageBytes != null) {
+        coverImageUrl = await imageRepo.uploadShopImageFromBytes(
+          startPath: 'shops/$userId',
+          shopId: shopId,
+          endPath: 'coverImage',
+          imageBytes: newCoverImageBytes,
+        );
+      }
+
+      final List<String> galleryImageUrls = List.from(shop.galleryImageUrls);
+      if (newGalleryImagesBytes != null) {
+        for (int i = 0; i < newGalleryImagesBytes.length; i++) {
+          final url = await imageRepo.uploadShopImageFromBytes(
+            startPath: 'shops/$userId',
+            shopId: shopId,
+            endPath: 'galleryImage_${DateTime.now().millisecondsSinceEpoch}_$i',
+            imageBytes: newGalleryImagesBytes[i],
+          );
+          galleryImageUrls.add(url);
+        }
+      }
+      // Remove deleted urls from the final list
+      if (galleryImageUrlsToDelete != null) {
+        galleryImageUrls.removeWhere(
+          (url) => galleryImageUrlsToDelete.contains(url),
+        );
+      }
+
+      // --- 3. Create Final Shop Object and Save ---
+      EntityDetail finalShop;
       if (shop is ResidenceDetail) {
-        final newShop = shop.copyWith(
+        finalShop = shop.copyWith(
           id: shopId,
           ownerId: userId,
           coverImageUrl: coverImageUrl,
           galleryImageUrls: galleryImageUrls,
         );
-        await shopService.setShop(categoryId, newShop);
       } else if (shop is FoodDetail) {
-        final newShop = shop.copyWith(
+        finalShop = shop.copyWith(
           id: shopId,
           ownerId: userId,
           coverImageUrl: coverImageUrl,
           galleryImageUrls: galleryImageUrls,
         );
-        await shopService.setShop(categoryId, newShop);
       } else {
         throw InvalidCategoryException();
       }
+
+      await shopService.setShop(finalShop.categoryId, finalShop);
       state = const AsyncData(null);
+      return true; // Success!
     } catch (e, st) {
       state = AsyncError(e, st);
+      return false; // Failure!
     }
   }
 }

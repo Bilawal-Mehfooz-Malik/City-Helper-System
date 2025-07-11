@@ -65,7 +65,7 @@ final categoriesListFutureProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CategoriesListFutureRef = AutoDisposeFutureProviderRef<List<Category>>;
-String _$categoryStreamHash() => r'5b202f033fadcc53ab3efb06ffd5f67183e5be54';
+String _$categoryStreamHash() => r'cf92d0825e0af50ff5799f497192f81c511ffe45';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -207,7 +207,7 @@ class _CategoryStreamProviderElement
   int get id => (origin as CategoryStreamProvider).id;
 }
 
-String _$categoryFutureHash() => r'fbbc9ea10479b80c78e55bb3835778fdf18c4637';
+String _$categoryFutureHash() => r'd3657f534661b0b7ee46821377d30edefcb4cfa1';
 
 /// See also [categoryFuture].
 @ProviderFor(categoryFuture)

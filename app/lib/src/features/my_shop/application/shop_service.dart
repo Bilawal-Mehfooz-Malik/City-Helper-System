@@ -8,6 +8,7 @@ import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'shop_service.g.dart';
 
@@ -15,7 +16,26 @@ class ShopService {
   const ShopService(this.ref);
   final Ref ref;
 
-  Future<EntityDetail?> fetchUserShop(UserId userId) async {
+  Stream<EntityDetail?> watchUserShopByOwnerId(UserId userId) {
+    final residenceStream = ref
+        .read(residenceDetailsRepositoryProvider)
+        .watchResidenceDetailsByOwnerId(userId);
+
+    return residenceStream.switchMap((residenceDetails) {
+      // Check the data emitted by the residenceStream
+      if (residenceDetails != null) {
+        // If residence details exist, emit them as a single-value stream.
+        return Stream.value(residenceDetails);
+      } else {
+        // If residence details are null, switch to watching the food stream.
+        return ref
+            .read(foodDetailsRepositoryProvider)
+            .watchFoodDetailsByOwnerId(userId);
+      }
+    });
+  }
+
+  Future<EntityDetail?> fetchUserShopByOwnerId(UserId userId) async {
     final residence = await ref
         .read(residenceDetailsRepositoryProvider)
         .fetchResidenceDetailsByOwnerId(userId);
@@ -29,21 +49,6 @@ class ShopService {
         .fetchFoodDetailsByOwnerId(userId);
 
     return food;
-  }
-
-  Stream<EntityDetail?> watchUserShop(CategoryId categoryId, UserId userId) {
-    return switch (categoryId) {
-      1 =>
-        ref
-            .read(residenceDetailsRepositoryProvider)
-            .watchResidenceDetailsByOwnerId(userId),
-      2 =>
-        ref
-            .read(foodDetailsRepositoryProvider)
-            .watchFoodDetailsByOwnerId(userId),
-
-      _ => throw InvalidCategoryException(),
-    };
   }
 
   Future<DocumentReference> getShopDocument(CategoryId categoryId) async {
@@ -80,7 +85,13 @@ ShopService shopService(Ref ref) {
 }
 
 @riverpod
-Future<EntityDetail?> userShop(Ref ref, UserId userId) {
+Future<EntityDetail?> fetchUserShop(Ref ref, UserId userId) {
   final shopService = ref.read(shopServiceProvider);
-  return shopService.fetchUserShop(userId);
+  return shopService.fetchUserShopByOwnerId(userId);
+}
+
+@riverpod
+Stream<EntityDetail?> watchUserShop(Ref ref, UserId userId) {
+  final shopService = ref.read(shopServiceProvider);
+  return shopService.watchUserShopByOwnerId(userId);
 }

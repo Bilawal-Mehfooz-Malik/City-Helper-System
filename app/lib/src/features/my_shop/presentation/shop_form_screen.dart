@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
+import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
@@ -13,6 +14,7 @@ import 'package:app/src/features/home_detail/domain/food_detail.dart';
 import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/shop_controller.dart';
+import 'package:app/src/features/my_shop/application/shop_form_provider.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/basic_info_section.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/category_section.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/location_and_media_section.dart';
@@ -25,16 +27,59 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-class ShopFormScreen extends ConsumerStatefulWidget {
+class ShopFormScreen extends ConsumerWidget {
   final EntityDetail? initialShop;
 
   const ShopFormScreen({super.key, this.initialShop});
 
   @override
-  ConsumerState<ShopFormScreen> createState() => _ShopFormScreenState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isEditing = initialShop != null;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          isEditing ? 'Edit Shop'.hardcoded : 'Register Shop'.hardcoded,
+        ),
+      ),
+      body: isEditing
+          ? _buildEditModeBody(context, ref)
+          : ShopFormContent(initialShop: null),
+    );
+  }
+
+  Widget _buildEditModeBody(BuildContext context, WidgetRef ref) {
+    final initialDataAsync = ref.watch(
+      initialShopCategoryDataProvider(
+        categoryId: initialShop!.categoryId,
+        subCategoryId: initialShop!.subCategoryId,
+      ),
+    );
+
+    return AsyncValueWidget<ShopFormInitialData>(
+      value: initialDataAsync,
+      data: (initialData) =>
+          ShopFormContent(initialShop: initialShop, initialData: initialData),
+    );
+  }
 }
 
-class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
+// The widget that contains the actual Form UI and its state management.
+class ShopFormContent extends ConsumerStatefulWidget {
+  final EntityDetail? initialShop;
+  final ShopFormInitialData? initialData;
+
+  const ShopFormContent({
+    super.key,
+    required this.initialShop,
+    this.initialData,
+  });
+
+  @override
+  ConsumerState<ShopFormContent> createState() => _ShopFormContentState();
+}
+
+class _ShopFormContentState extends ConsumerState<ShopFormContent> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
@@ -59,20 +104,21 @@ class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
   List<OpeningHours> _openingHours = [];
   bool _isFurnished = false;
   GenderPreference _genderPref = GenderPreference.any;
-
   @override
   void initState() {
     super.initState();
     _initializeFromShop();
   }
 
-  void _initializeFromShop() {
+  Future<void> _initializeFromShop() async {
     final shop = widget.initialShop;
     if (shop != null) {
       _nameController.text = shop.name;
       _descriptionController.text = shop.description;
       _phoneController.text = shop.phoneNumber ?? '';
       _messagingNumberController.text = shop.messagingNumber ?? '';
+      _cityNameController.text = shop.cityName;
+      _sectorNameController.text = shop.sectorName;
       _streetAddressController.text = shop.streetAddress;
       _emailController.text = shop.email ?? '';
       _facebookController.text = shop.facebookUrl ?? '';
@@ -81,12 +127,17 @@ class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
       _pickedLatLng = shop.latLng;
       _openingHours = shop.openingHours;
 
-      if (shop is ResidenceDetail) {
-        _priceController.text = shop.price.toString();
-        _isFurnished = shop.isFurnished;
-        _genderPref = shop.genderPref;
-      } else if (shop is FoodDetail) {
-        _genderPref = shop.genderPref;
+      if (mounted) {
+        _selectedCategory = widget.initialData!.selectedCategory;
+        _selectedSubCategory = widget.initialData!.selectedSubCategory;
+
+        if (shop is ResidenceDetail) {
+          _priceController.text = shop.price.toString();
+          _isFurnished = shop.isFurnished;
+          _genderPref = shop.genderPref;
+        } else if (shop is FoodDetail) {
+          _genderPref = shop.genderPref;
+        }
       }
     } else {
       _setDefaultOpeningHours();
@@ -184,97 +235,90 @@ class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
       );
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          isEditing ? 'Edit Shop'.hardcoded : 'Register Shop'.hardcoded,
+    return Form(
+      key: _formKey,
+      child: ResponsiveScrollable(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes.p16,
+          vertical: Sizes.p8,
         ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: ResponsiveScrollable(
-          padding: EdgeInsets.symmetric(
-            horizontal: Sizes.p16,
-            vertical: Sizes.p8,
-          ),
-          child: Column(
-            spacing: Sizes.p12,
-            children: [
-              CategorySection(
-                selectedCategory: _selectedCategory,
-                selectedSubCategory: _selectedSubCategory,
-                onCategoryChanged: (category) {
-                  setState(() {
-                    _selectedCategory = category;
-                    _selectedSubCategory = null;
-                  });
-                },
-                onSubCategoryChanged: (subCategory) =>
-                    setState(() => _selectedSubCategory = subCategory),
+        child: Column(
+          spacing: Sizes.p12,
+          children: [
+            CategorySection(
+              allCategories: widget.initialData?.allCategories ?? [],
+              subCategoryOptions: widget.initialData?.subCategoryOptions ?? [],
+              selectedCategory: _selectedCategory,
+              selectedSubCategory: _selectedSubCategory,
+              onCategoryChanged: (category) {
+                setState(() {
+                  _selectedCategory = category;
+                  _selectedSubCategory = null;
+                });
+              },
+              onSubCategoryChanged: (subCategory) =>
+                  setState(() => _selectedSubCategory = subCategory),
+            ),
+            BasicInfoSection(
+              nameController: _nameController,
+              descriptionController: _descriptionController,
+              phoneController: _phoneController,
+              messagingNumberController: _messagingNumberController,
+              cityNameController: _cityNameController,
+              sectorNameController: _sectorNameController,
+              streetAddressController: _streetAddressController,
+              emailController: _emailController,
+            ),
+            SocialMediaSection(
+              facebookController: _facebookController,
+              instagramController: _instagramController,
+              websiteController: _websiteController,
+            ),
+            LocationAndMediaSection(
+              pickedLatLng: _pickedLatLng,
+              coverImageBytes: _coverImageBytes,
+              galleryImagesBytes: _galleryImageBytes,
+              openingHours: _openingHours,
+              onLocationPicked: (latLng) =>
+                  setState(() => _pickedLatLng = latLng),
+              onCoverImagePicked: (bytes) =>
+                  setState(() => _coverImageBytes = bytes),
+              onGalleryImagesPicked: (bytesList) =>
+                  setState(() => _galleryImageBytes = bytesList),
+              onOpeningHoursChanged: (hours) =>
+                  setState(() => _openingHours = hours),
+            ),
+            if (_selectedCategory?.id == 1)
+              ResidenceSpecificSection(
+                priceController: _priceController,
+                isFurnished: _isFurnished,
+                genderPref: _genderPref,
+                onFurnishedChanged: (val) => setState(() => _isFurnished = val),
               ),
-              BasicInfoSection(
-                nameController: _nameController,
-                descriptionController: _descriptionController,
-                phoneController: _phoneController,
-                messagingNumberController: _messagingNumberController,
-                cityNameController: _cityNameController,
-                sectorNameController: _sectorNameController,
-                streetAddressController: _streetAddressController,
-                emailController: _emailController,
-              ),
-              SocialMediaSection(
-                facebookController: _facebookController,
-                instagramController: _instagramController,
-                websiteController: _websiteController,
-              ),
-              LocationAndMediaSection(
-                pickedLatLng: _pickedLatLng,
-                coverImageBytes: _coverImageBytes,
-                galleryImagesBytes: _galleryImageBytes,
-                openingHours: _openingHours,
-                onLocationPicked: (latLng) =>
-                    setState(() => _pickedLatLng = latLng),
-                onCoverImagePicked: (bytes) =>
-                    setState(() => _coverImageBytes = bytes),
-                onGalleryImagesPicked: (bytesList) =>
-                    setState(() => _galleryImageBytes = bytesList),
-                onOpeningHoursChanged: (hours) =>
-                    setState(() => _openingHours = hours),
-              ),
-              if (_selectedCategory?.id == 1)
-                ResidenceSpecificSection(
-                  priceController: _priceController,
-                  isFurnished: _isFurnished,
-                  genderPref: _genderPref,
-                  onFurnishedChanged: (val) =>
-                      setState(() => _isFurnished = val),
+            if (_selectedCategory?.id == 1 || _selectedCategory?.id == 2)
+              DropdownButtonFormField<GenderPreference>(
+                value: _genderPref,
+                decoration: InputDecoration(
+                  labelText: 'Gender Preference'.hardcoded,
                 ),
-              if (_selectedCategory?.id == 1 || _selectedCategory?.id == 2)
-                DropdownButtonFormField<GenderPreference>(
-                  value: _genderPref,
-                  decoration: InputDecoration(
-                    labelText: 'Gender Preference'.hardcoded,
-                  ),
-                  items: GenderPreference.values
-                      .map(
-                        (gp) =>
-                            DropdownMenuItem(value: gp, child: Text(gp.name)),
-                      )
-                      .toList(),
-                  onChanged: (val) => setState(() => _genderPref = val!),
-                ),
-              gapH8,
-              PrimaryButton(
-                isLoading: controllerState.isLoading,
-                isDisabled: controllerState.isLoading,
+                items: GenderPreference.values
+                    .map(
+                      (gp) => DropdownMenuItem(value: gp, child: Text(gp.name)),
+                    )
+                    .toList(),
+                onChanged: (val) => setState(() => _genderPref = val!),
+              ),
+            gapH8,
+            PrimaryButton(
+              isLoading: controllerState.isLoading,
+              isDisabled: controllerState.isLoading,
 
-                onPressed: _setShop,
-                text: isEditing
-                    ? 'Save Changes'.hardcoded
-                    : 'Register Shop'.hardcoded,
-              ),
-            ],
-          ),
+              onPressed: _setShop,
+              text: isEditing
+                  ? 'Save Changes'.hardcoded
+                  : 'Register Shop'.hardcoded,
+            ),
+          ],
         ),
       ),
     );

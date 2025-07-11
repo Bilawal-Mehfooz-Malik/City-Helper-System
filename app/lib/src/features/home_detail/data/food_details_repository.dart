@@ -17,12 +17,10 @@ class FoodDetailsRepository {
     return _firestore.collection(foodsKey).doc();
   }
 
-  /// ✅ Save or update a FoodDetail
   Future<void> setFoodDetail(FoodDetail updated) async {
     await _docRef(updated.id).set(updated.toJson());
   }
 
-  /// ✅ Real-time updates
   Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
     return _docRefByOwnerId(id).snapshots().map((snapshot) {
       if (snapshot.docs.isNotEmpty) {
@@ -32,7 +30,6 @@ class FoodDetailsRepository {
     });
   }
 
-  /// ✅ One-time fetch
   Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) async {
     final residenceSnap = await _docRefByOwnerId(id).get();
 
@@ -42,7 +39,6 @@ class FoodDetailsRepository {
     return null;
   }
 
-  /// ✅ Real-time updates
   Stream<FoodDetail?> watchFoodDetails(EntityId id) {
     return _docRef(id).snapshots().map((snapshot) {
       if (snapshot.exists && snapshot.data() != null) {
@@ -52,7 +48,6 @@ class FoodDetailsRepository {
     });
   }
 
-  /// ✅ One-time fetch
   Future<FoodDetail?> fetchFoodDetails(EntityId id) async {
     final doc = await _docRef(id).get();
     if (doc.exists && doc.data() != null) {

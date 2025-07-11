@@ -22,7 +22,7 @@ final shopServiceProvider = AutoDisposeProvider<ShopService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ShopServiceRef = AutoDisposeProviderRef<ShopService>;
-String _$userShopHash() => r'c5eed5d77e7f028e50672d7b88f1d5932c3dbbfa';
+String _$fetchUserShopHash() => r'da2f163b7daba7b064743cc98c61294235fc5bc6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -45,22 +45,24 @@ class _SystemHash {
   }
 }
 
-/// See also [userShop].
-@ProviderFor(userShop)
-const userShopProvider = UserShopFamily();
+/// See also [fetchUserShop].
+@ProviderFor(fetchUserShop)
+const fetchUserShopProvider = FetchUserShopFamily();
 
-/// See also [userShop].
-class UserShopFamily extends Family<AsyncValue<EntityDetail?>> {
-  /// See also [userShop].
-  const UserShopFamily();
+/// See also [fetchUserShop].
+class FetchUserShopFamily extends Family<AsyncValue<EntityDetail?>> {
+  /// See also [fetchUserShop].
+  const FetchUserShopFamily();
 
-  /// See also [userShop].
-  UserShopProvider call(String userId) {
-    return UserShopProvider(userId);
+  /// See also [fetchUserShop].
+  FetchUserShopProvider call(String userId) {
+    return FetchUserShopProvider(userId);
   }
 
   @override
-  UserShopProvider getProviderOverride(covariant UserShopProvider provider) {
+  FetchUserShopProvider getProviderOverride(
+    covariant FetchUserShopProvider provider,
+  ) {
     return call(provider.userId);
   }
 
@@ -76,27 +78,28 @@ class UserShopFamily extends Family<AsyncValue<EntityDetail?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'userShopProvider';
+  String? get name => r'fetchUserShopProvider';
 }
 
-/// See also [userShop].
-class UserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
-  /// See also [userShop].
-  UserShopProvider(String userId)
+/// See also [fetchUserShop].
+class FetchUserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
+  /// See also [fetchUserShop].
+  FetchUserShopProvider(String userId)
     : this._internal(
-        (ref) => userShop(ref as UserShopRef, userId),
-        from: userShopProvider,
-        name: r'userShopProvider',
+        (ref) => fetchUserShop(ref as FetchUserShopRef, userId),
+        from: fetchUserShopProvider,
+        name: r'fetchUserShopProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$userShopHash,
-        dependencies: UserShopFamily._dependencies,
-        allTransitiveDependencies: UserShopFamily._allTransitiveDependencies,
+                : _$fetchUserShopHash,
+        dependencies: FetchUserShopFamily._dependencies,
+        allTransitiveDependencies:
+            FetchUserShopFamily._allTransitiveDependencies,
         userId: userId,
       );
 
-  UserShopProvider._internal(
+  FetchUserShopProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -110,12 +113,12 @@ class UserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
 
   @override
   Override overrideWith(
-    FutureOr<EntityDetail?> Function(UserShopRef provider) create,
+    FutureOr<EntityDetail?> Function(FetchUserShopRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: UserShopProvider._internal(
-        (ref) => create(ref as UserShopRef),
+      override: FetchUserShopProvider._internal(
+        (ref) => create(ref as FetchUserShopRef),
         from: from,
         name: null,
         dependencies: null,
@@ -128,12 +131,12 @@ class UserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
 
   @override
   AutoDisposeFutureProviderElement<EntityDetail?> createElement() {
-    return _UserShopProviderElement(this);
+    return _FetchUserShopProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserShopProvider && other.userId == userId;
+    return other is FetchUserShopProvider && other.userId == userId;
   }
 
   @override
@@ -147,18 +150,139 @@ class UserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin UserShopRef on AutoDisposeFutureProviderRef<EntityDetail?> {
+mixin FetchUserShopRef on AutoDisposeFutureProviderRef<EntityDetail?> {
   /// The parameter `userId` of this provider.
   String get userId;
 }
 
-class _UserShopProviderElement
+class _FetchUserShopProviderElement
     extends AutoDisposeFutureProviderElement<EntityDetail?>
-    with UserShopRef {
-  _UserShopProviderElement(super.provider);
+    with FetchUserShopRef {
+  _FetchUserShopProviderElement(super.provider);
 
   @override
-  String get userId => (origin as UserShopProvider).userId;
+  String get userId => (origin as FetchUserShopProvider).userId;
+}
+
+String _$watchUserShopHash() => r'd66071cdcaf8f5676080c27fd95a296a6e52c15a';
+
+/// See also [watchUserShop].
+@ProviderFor(watchUserShop)
+const watchUserShopProvider = WatchUserShopFamily();
+
+/// See also [watchUserShop].
+class WatchUserShopFamily extends Family<AsyncValue<EntityDetail?>> {
+  /// See also [watchUserShop].
+  const WatchUserShopFamily();
+
+  /// See also [watchUserShop].
+  WatchUserShopProvider call(String userId) {
+    return WatchUserShopProvider(userId);
+  }
+
+  @override
+  WatchUserShopProvider getProviderOverride(
+    covariant WatchUserShopProvider provider,
+  ) {
+    return call(provider.userId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'watchUserShopProvider';
+}
+
+/// See also [watchUserShop].
+class WatchUserShopProvider extends AutoDisposeStreamProvider<EntityDetail?> {
+  /// See also [watchUserShop].
+  WatchUserShopProvider(String userId)
+    : this._internal(
+        (ref) => watchUserShop(ref as WatchUserShopRef, userId),
+        from: watchUserShopProvider,
+        name: r'watchUserShopProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$watchUserShopHash,
+        dependencies: WatchUserShopFamily._dependencies,
+        allTransitiveDependencies:
+            WatchUserShopFamily._allTransitiveDependencies,
+        userId: userId,
+      );
+
+  WatchUserShopProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.userId,
+  }) : super.internal();
+
+  final String userId;
+
+  @override
+  Override overrideWith(
+    Stream<EntityDetail?> Function(WatchUserShopRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: WatchUserShopProvider._internal(
+        (ref) => create(ref as WatchUserShopRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        userId: userId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<EntityDetail?> createElement() {
+    return _WatchUserShopProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WatchUserShopProvider && other.userId == userId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, userId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin WatchUserShopRef on AutoDisposeStreamProviderRef<EntityDetail?> {
+  /// The parameter `userId` of this provider.
+  String get userId;
+}
+
+class _WatchUserShopProviderElement
+    extends AutoDisposeStreamProviderElement<EntityDetail?>
+    with WatchUserShopRef {
+  _WatchUserShopProviderElement(super.provider);
+
+  @override
+  String get userId => (origin as WatchUserShopProvider).userId;
 }
 
 // ignore_for_file: type=lint

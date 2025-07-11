@@ -36,7 +36,7 @@ class MyShopDashboardScreen extends ConsumerWidget {
                 return const SizedBox.shrink();
               }
 
-              final userShopAsync = ref.watch(UserShopProvider(user.uid));
+              final userShopAsync = ref.watch(WatchUserShopProvider(user.uid));
               return Column(
                 spacing: Sizes.p12,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +99,7 @@ class _ShopDetailCard extends StatelessWidget {
         '${shop.cityName},${context.loc.sector} ${shop.sectorName}',
       ),
       trailing: Icon(Icons.edit),
-      onTap: () => context.goNamed(AppRoute.shopForm.name),
+      onTap: () => context.goNamed(AppRoute.shopForm.name, extra: shop),
     );
   }
 }

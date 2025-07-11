@@ -35,4 +35,16 @@ class FakeSubCategoriesRepository implements SubCategoriesRepository {
         .where((subCategory) => subCategory.categoryId == id)
         .toList();
   }
+
+  @override
+  Future<SubCategory?> fetchSubCategory(SubCategoryId id) {
+    // TODO: implement fetchSubCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<SubCategory?> watchSubCategory(SubCategoryId id) {
+    // TODO: implement watchSubCategory
+    throw UnimplementedError();
+  }
 }

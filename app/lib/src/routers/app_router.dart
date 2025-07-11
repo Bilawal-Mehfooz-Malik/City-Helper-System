@@ -6,6 +6,7 @@ import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
 import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.dart';
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
@@ -181,7 +182,10 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: '/shop-form',
             name: AppRoute.shopForm.name,
-            builder: (context, state) => ShopFormScreen(),
+            builder: (context, state) {
+              final shop = state.extra as EntityDetail?;
+              return ShopFormScreen(initialShop: shop);
+            },
           ),
         ],
       ),
