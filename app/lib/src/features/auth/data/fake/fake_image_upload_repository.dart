@@ -39,4 +39,48 @@ class FakeImageUploadRepository implements ImageUploadRepository {
     // TODO: implement uploadShopImageFromBytes
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteAllShopImages({
+    required UserId userId,
+    required EntityId shopId,
+  }) {
+    // TODO: implement deleteAllShopImages
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteShopGalleryImage({required String imageUrl}) {
+    // TODO: implement deleteShopGalleryImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadShopCoverImage({
+    required Uint8List imageBytes,
+    required UserId userId,
+    required EntityId shopId,
+  }) {
+    // TODO: implement uploadShopCoverImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadShopGalleryImage({
+    required Uint8List imageBytes,
+    required UserId userId,
+    required EntityId shopId,
+  }) {
+    // TODO: implement uploadShopGalleryImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadUserProfileImage({
+    required Uint8List imageBytes,
+    required UserId userId,
+  }) {
+    // TODO: implement uploadUserProfileImage
+    throw UnimplementedError();
+  }
 }

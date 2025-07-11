@@ -1,79 +1,95 @@
-// lib/features/my_shop/presentation/widgets/cover_and_gallery_image_tile.dart
-
 import 'dart:typed_data';
+
+import 'package:app/src/core/common_widgets/custom_image.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:app/src/core/common_widgets/custom_image.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
+// This helper widget is still needed by GalleryImagesTile
+Widget _buildRemoveButton(VoidCallback onPressed) {
+  return IconButton(
+    constraints: const BoxConstraints(),
+    padding: const EdgeInsets.all(4.0),
+    icon: const CircleAvatar(
+      radius: 12,
+      // TODO: REMOVE HARDCODED COLORS
+      backgroundColor: Colors.black54,
+      child: Icon(Icons.close, color: Colors.white, size: 14),
+    ),
+    onPressed: onPressed,
+  );
+}
 
-// --- Cover Image Widget ---
-class CoverImageTile extends StatelessWidget {
-  final String? existingImageUrl;
-  final Uint8List? newImageBytes;
-  final bool isDeleted;
-  final ValueChanged<Uint8List> onImagePicked;
-  final VoidCallback onImageRemoved;
+class CoverImageTile extends StatefulWidget {
+  final Uint8List? coverImageBytes;
+  final String? coverImageUrl;
+  final ValueChanged<Uint8List?> onCoverImagePicked;
 
   const CoverImageTile({
     super.key,
-    this.existingImageUrl,
-    this.newImageBytes,
-    required this.isDeleted,
-    required this.onImagePicked,
-    required this.onImageRemoved,
+    required this.coverImageBytes,
+    required this.onCoverImagePicked,
+    this.coverImageUrl,
   });
+
+  @override
+  State<CoverImageTile> createState() => _CoverImageTileState();
+}
+
+class _CoverImageTileState extends State<CoverImageTile> {
+  XFile? _pickedFile;
 
   Future<void> _pickCoverImage() async {
     final picker = ImagePicker();
-    final picked = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 70,
-    );
+    final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
-      onImagePicked(await picked.readAsBytes());
+      final bytes = await picked.readAsBytes();
+      setState(() {
+        _pickedFile = picked;
+      });
+      widget.onCoverImagePicked(bytes);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget imageDisplay;
-    bool hasImage = false;
-
-    // Determine what image to show
-    if (newImageBytes != null) {
-      hasImage = true;
-      imageDisplay = CustomImage(bytes: newImageBytes);
-    } else if (existingImageUrl != null && !isDeleted) {
-      hasImage = true;
-      imageDisplay = CustomImage(imageUrl: existingImageUrl);
-    } else {
-      imageDisplay = const SizedBox.shrink();
-    }
+    final hasNewImage = widget.coverImageBytes != null && _pickedFile != null;
+    final hasExistingImage =
+        widget.coverImageUrl != null && widget.coverImageUrl!.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          contentPadding: EdgeInsets.zero,
           title: Text(
-            hasImage ? 'Cover Image'.hardcoded : 'Pick Cover Image *'.hardcoded,
+            (hasNewImage || hasExistingImage)
+                ? 'Change Cover Image'.hardcoded
+                : 'Pick Cover Image *'
+                      .hardcoded, // Added * to indicate required
           ),
-          trailing: hasImage
-              ? IconButton(
-                  icon: const Icon(Icons.delete_outline, color: Colors.red),
-                  onPressed: onImageRemoved,
-                )
-              : const Icon(Icons.add_a_photo_outlined),
+          trailing: const Icon(Icons.image),
           onTap: _pickCoverImage,
         ),
-        if (hasImage)
-          SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: imageDisplay,
+        // Display logic: show the newly picked image, or fall back to the existing one.
+        // There is no Stack and no remove button.
+        if (hasNewImage)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+            child: SizedBox(
+              height: 300,
+              child: CustomImage(aspectRatio: 1, imageXFile: _pickedFile!),
+            ),
+          )
+        else if (hasExistingImage)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+            child: SizedBox(
+              height: 300,
+              child: CustomImage(
+                aspectRatio: 1,
+                imageUrl: widget.coverImageUrl,
+              ),
             ),
           ),
       ],
@@ -81,114 +97,124 @@ class CoverImageTile extends StatelessWidget {
   }
 }
 
-// --- Gallery Images Widget ---
-class GalleryImagesTile extends StatelessWidget {
-  final List<String> existingImageUrls;
-  final List<Uint8List> newImageBytes;
-  final List<String> urlsToDelete;
-  final ValueChanged<List<Uint8List>> onImagesPicked;
-  final ValueChanged<String> onRemoveExisting;
-  final ValueChanged<int> onRemoveNew;
+class GalleryImagesTile extends StatefulWidget {
+  final List<Uint8List> galleryImageBytes;
+  final List<String> galleryImagesUrl;
+  final ValueChanged<List<Uint8List>> onGalleryImagesPicked;
+  final ValueChanged<String> onExistingImageDeleted;
 
   const GalleryImagesTile({
     super.key,
-    required this.existingImageUrls,
-    required this.newImageBytes,
-    required this.urlsToDelete,
-    required this.onImagesPicked,
-    required this.onRemoveExisting,
-    required this.onRemoveNew,
+    required this.galleryImageBytes,
+    required this.galleryImagesUrl,
+    required this.onGalleryImagesPicked,
+    required this.onExistingImageDeleted,
   });
+
+  @override
+  State<GalleryImagesTile> createState() => _GalleryImagesTileState();
+}
+
+class _GalleryImagesTileState extends State<GalleryImagesTile> {
+  final List<XFile> _pickedFiles = [];
 
   Future<void> _pickGalleryImages() async {
     final picker = ImagePicker();
-    final picked = await picker.pickMultiImage(imageQuality: 70);
+    final picked = await picker.pickMultiImage();
     if (picked.isNotEmpty) {
-      final List<Uint8List> bytesList = await Future.wait(
-        picked.map((e) => e.readAsBytes()),
+      setState(() {
+        _pickedFiles.addAll(picked);
+      });
+      final allNewBytes = await Future.wait(
+        _pickedFiles.map((e) => e.readAsBytes()),
       );
-      onImagesPicked(bytesList);
+      widget.onGalleryImagesPicked(allNewBytes);
     }
+  }
+
+  void _removeNewImage(int index) async {
+    setState(() {
+      _pickedFiles.removeAt(index);
+    });
+    final newBytes = await Future.wait(
+      _pickedFiles.map((e) => e.readAsBytes()),
+    );
+    widget.onGalleryImagesPicked(newBytes);
+  }
+
+  Widget _buildImage(Widget image, VoidCallback onRemove) {
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        SizedBox(height: 300, child: image),
+        _buildRemoveButton(onRemove),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final visibleExistingUrls = existingImageUrls
-        .where((url) => !urlsToDelete.contains(url))
-        .toList();
-    final totalImageCount = visibleExistingUrls.length + newImageBytes.length;
+    final hasNewImages = _pickedFiles.isNotEmpty;
+    final hasExistingImages = widget.galleryImagesUrl.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Text(
-            totalImageCount == 0
-                ? 'Pick Gallery Images'.hardcoded
-                : '$totalImageCount Gallery Images'.hardcoded,
-          ),
-          trailing: const Icon(Icons.add_photo_alternate_outlined),
+          title: Text('Manage Gallery Images'.hardcoded),
+          trailing: const Icon(Icons.photo_library),
           onTap: _pickGalleryImages,
         ),
-        if (totalImageCount > 0)
-          SizedBox(
-            height: 120,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: totalImageCount,
-              separatorBuilder: (_, __) => const SizedBox(width: 8),
-              itemBuilder: (context, index) {
-                // Display existing images first
-                if (index < visibleExistingUrls.length) {
-                  final url = visibleExistingUrls[index];
-                  return _buildImageThumbnail(
-                    image: CustomImage(imageUrl: url),
-                    onRemove: () => onRemoveExisting(url),
-                  );
-                }
-                // Then display new images
-                final newImageIndex = index - visibleExistingUrls.length;
-                final bytes = newImageBytes[newImageIndex];
-                return _buildImageThumbnail(
-                  image: CustomImage(bytes: bytes),
-                  onRemove: () => onRemoveNew(newImageIndex),
-                );
-              },
-            ),
+        if (hasExistingImages)
+          _buildImageList(
+            title: 'Current Images:'.hardcoded,
+            itemCount: widget.galleryImagesUrl.length,
+            itemBuilder: (_, index) {
+              final imageUrl = widget.galleryImagesUrl[index];
+              return _buildImage(
+                CustomImage(aspectRatio: 1, imageUrl: imageUrl),
+                () => widget.onExistingImageDeleted(imageUrl),
+              );
+            },
+          ),
+        if (hasNewImages)
+          _buildImageList(
+            title: 'New Images to Add:'.hardcoded,
+            itemCount: _pickedFiles.length,
+            itemBuilder: (_, index) {
+              return _buildImage(
+                CustomImage(aspectRatio: 1, imageXFile: _pickedFiles[index]),
+                () => _removeNewImage(index),
+              );
+            },
           ),
       ],
     );
   }
 
-  Widget _buildImageThumbnail({
-    required Widget image,
-    required VoidCallback onRemove,
+  Widget _buildImageList({
+    required String title,
+    required int itemCount,
+    required Widget Function(BuildContext, int) itemBuilder,
   }) {
-    return SizedBox(
-      width: 120,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ClipRRect(borderRadius: BorderRadius.circular(8), child: image),
-          Positioned(
-            top: 2,
-            right: 2,
-            child: Material(
-              color: Colors.black.withOpacity(0.6),
-              shape: const CircleBorder(),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(12),
-                onTap: onRemove,
-                child: const Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Icon(Icons.close, color: Colors.white, size: 16),
-                ),
-              ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Text(title, style: Theme.of(context).textTheme.titleSmall),
+        ),
+        SizedBox(
+          height: 120,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: itemCount,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: itemBuilder,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

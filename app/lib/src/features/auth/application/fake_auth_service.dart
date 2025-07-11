@@ -32,9 +32,9 @@ class FakeAuthService extends AuthService {
     UserId userId,
   ) async {
     try {
-      return await imageUploadRepository.uploadProfileImageFromBytes(
-        imageBytes,
-        userId,
+      return await imageUploadRepository.uploadUserProfileImage(
+        imageBytes: imageBytes,
+        userId: userId,
       );
     } catch (e, st) {
       AppLogger.logError(

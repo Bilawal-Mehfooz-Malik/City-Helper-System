@@ -1,27 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'shop_controller.dart';
+part of 'shop_form_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shopControllerHash() => r'6e898399ec11d18446f6e8198b9d5f810988bdb4';
+String _$shopFormControllerHash() =>
+    r'f3150d3322670b43c1896a11bc994eb95b48c788';
 
-/// See also [ShopController].
-@ProviderFor(ShopController)
-final shopControllerProvider =
-    AutoDisposeAsyncNotifierProvider<ShopController, void>.internal(
-      ShopController.new,
-      name: r'shopControllerProvider',
+/// Controller for the Shop Form UI state and logic.
+///
+/// Copied from [ShopFormController].
+@ProviderFor(ShopFormController)
+final shopFormControllerProvider =
+    AutoDisposeNotifierProvider<ShopFormController, ShopFormState>.internal(
+      ShopFormController.new,
+      name: r'shopFormControllerProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$shopControllerHash,
+              : _$shopFormControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$ShopController = AutoDisposeAsyncNotifier<void>;
+typedef _$ShopFormController = AutoDisposeNotifier<ShopFormState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -47,3 +47,11 @@ class ShopImageUploadException extends AppException {
         'Failed to upload shop image. Please try again later.',
       );
 }
+
+class ShopImageDeleteException extends AppException {
+  ShopImageDeleteException()
+    : super(
+        'shop-image-delete-failed',
+        'Failed to delete shop image. Please try again later.',
+      );
+}

@@ -26,7 +26,7 @@ class AuthService {
     try {
       return await ref
           .read(imageUploadRepositoryProvider)
-          .uploadProfileImageFromBytes(imageBytes, userId);
+          .uploadUserProfileImage(imageBytes: imageBytes, userId: userId);
     } catch (e, st) {
       AppLogger.logError(
         'Failed to upload profile image for user $userId',

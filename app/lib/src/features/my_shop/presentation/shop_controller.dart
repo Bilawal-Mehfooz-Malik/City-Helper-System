@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
@@ -17,17 +18,14 @@ class ShopController extends _$ShopController {
   @override
   FutureOr<void> build() {}
 
-  /// Sets (creates or updates) a shop, handles all image uploads and deletions,
-  /// and returns `true` on success and `false` on failure.
-  Future<bool> setShop({
+  Future<void> setShop({
     required EntityDetail shop,
-    Uint8List? newCoverImageBytes,
-    List<Uint8List>? newGalleryImagesBytes,
-    List<String>? galleryImageUrlsToDelete,
-    bool isCoverImageDeleted = false,
+    required CategoryId categoryId,
+    required Uint8List? coverImageBytes,
+    required List<Uint8List> galleryImagesBytes,
+    required List<String> galleryUrlsToDelete,
   }) async {
     state = const AsyncLoading();
-
     try {
       final authUser = ref.read(authStateChangesProvider).value;
       if (authUser == null) throw Exception('User not logged in'.hardcoded);
@@ -36,79 +34,74 @@ class ShopController extends _$ShopController {
       final shopService = ref.read(shopServiceProvider);
       final imageRepo = ref.read(imageUploadRepositoryProvider);
 
-      final isEditMode = shop.id.isNotEmpty;
-      String shopId = isEditMode
+      final isEditing = shop.id.isNotEmpty;
+      final shopId = isEditing
           ? shop.id
-          : (await shopService.getShopDocument(shop.categoryId)).id;
+          : (await shopService.getShopDocument(categoryId)).id;
 
-      // --- 1. Handle Image Deletions (only in edit mode) ---
-      if (isEditMode) {
-        if (isCoverImageDeleted && shop.coverImageUrl.isNotEmpty) {
-          await imageRepo.deleteImage(shop.coverImageUrl);
-        }
-        if (galleryImageUrlsToDelete != null) {
-          for (final url in galleryImageUrlsToDelete) {
-            await imageRepo.deleteImage(url);
-          }
-        }
+      // 1. Delete gallery images that were marked for removal
+      if (galleryUrlsToDelete.isNotEmpty) {
+        final deletionFutures = galleryUrlsToDelete.map(
+          (url) => imageRepo.deleteShopGalleryImage(imageUrl: url),
+        );
+        await Future.wait(deletionFutures);
       }
 
-      // --- 2. Handle Image Uploads ---
-      String? coverImageUrl = shop.coverImageUrl;
-      if (newCoverImageBytes != null) {
-        coverImageUrl = await imageRepo.uploadShopImageFromBytes(
-          startPath: 'shops/$userId',
+      // 2. Upload new cover image ONLY if a new one was picked
+      String? newCoverImageUrl;
+      if (coverImageBytes != null) {
+        newCoverImageUrl = await imageRepo.uploadShopCoverImage(
+          imageBytes: coverImageBytes,
+          userId: userId,
           shopId: shopId,
-          endPath: 'coverImage',
-          imageBytes: newCoverImageBytes,
         );
       }
 
-      final List<String> galleryImageUrls = List.from(shop.galleryImageUrls);
-      if (newGalleryImagesBytes != null) {
-        for (int i = 0; i < newGalleryImagesBytes.length; i++) {
-          final url = await imageRepo.uploadShopImageFromBytes(
-            startPath: 'shops/$userId',
+      // 3. Upload new gallery images
+      final newGalleryImageUrls = await Future.wait(
+        galleryImagesBytes.map(
+          (bytes) => imageRepo.uploadShopGalleryImage(
+            imageBytes: bytes,
+            userId: userId,
             shopId: shopId,
-            endPath: 'galleryImage_${DateTime.now().millisecondsSinceEpoch}_$i',
-            imageBytes: newGalleryImagesBytes[i],
-          );
-          galleryImageUrls.add(url);
-        }
-      }
-      // Remove deleted urls from the final list
-      if (galleryImageUrlsToDelete != null) {
-        galleryImageUrls.removeWhere(
-          (url) => galleryImageUrlsToDelete.contains(url),
-        );
-      }
+          ),
+        ),
+      );
 
-      // --- 3. Create Final Shop Object and Save ---
+      // 4. Combine URLs for the final update
+      final existingUrls = isEditing
+          ? shop.galleryImageUrls
+                .where((url) => !galleryUrlsToDelete.contains(url))
+                .toList()
+          : <String>[];
+      final finalGalleryUrls = [...existingUrls, ...newGalleryImageUrls];
+
+      // Use the new cover URL if available, otherwise keep the old one
+      final finalCoverUrl = newCoverImageUrl ?? shop.coverImageUrl;
+
       EntityDetail finalShop;
       if (shop is ResidenceDetail) {
         finalShop = shop.copyWith(
           id: shopId,
           ownerId: userId,
-          coverImageUrl: coverImageUrl,
-          galleryImageUrls: galleryImageUrls,
+          coverImageUrl: finalCoverUrl,
+          galleryImageUrls: finalGalleryUrls,
         );
       } else if (shop is FoodDetail) {
         finalShop = shop.copyWith(
           id: shopId,
           ownerId: userId,
-          coverImageUrl: coverImageUrl,
-          galleryImageUrls: galleryImageUrls,
+          coverImageUrl: finalCoverUrl,
+          galleryImageUrls: finalGalleryUrls,
         );
       } else {
         throw InvalidCategoryException();
       }
 
-      await shopService.setShop(finalShop.categoryId, finalShop);
+      await shopService.setShop(categoryId, finalShop);
       state = const AsyncData(null);
-      return true; // Success!
     } catch (e, st) {
       state = AsyncError(e, st);
-      return false; // Failure!
     }
   }
 }
