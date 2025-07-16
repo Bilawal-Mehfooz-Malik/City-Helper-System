@@ -11,15 +11,15 @@ class FakeImageUploadRepository implements ImageUploadRepository {
 
   FakeImageUploadRepository(this._storage, {this.addDelay = true});
 
-  @override
-  Future<String> uploadProfileImageFromBytes(
-    Uint8List imageBytes,
-    String userId,
-  ) async {
-    await delay(addDelay);
-    _storage.storeImage(userId, imageBytes);
-    return 'inmemory://$userId';
-  }
+  // @override
+  // Future<String> uploadProfileImageFromBytes(
+  //   Uint8List imageBytes,
+  //   String userId,
+  // ) async {
+  //   await delay(addDelay);
+  //   _storage.storeImage(userId, imageBytes);
+  //   return 'inmemory://$userId';
+  // }
 
   @override
   Future<void> deleteProfileImage(String userId) async {
@@ -29,16 +29,16 @@ class FakeImageUploadRepository implements ImageUploadRepository {
 
   Uint8List? getImageBytes(String userId) => _storage.getImageBytes(userId);
 
-  @override
-  Future<String> uploadShopImageFromBytes({
-    required Uint8List imageBytes,
-    required String startPath,
-    required EntityId shopId,
-    required String endPath,
-  }) {
-    // TODO: implement uploadShopImageFromBytes
-    throw UnimplementedError();
-  }
+  // @override
+  // Future<String> uploadShopImageFromBytes({
+  //   required Uint8List imageBytes,
+  //   required String startPath,
+  //   required EntityId shopId,
+  //   required String endPath,
+  // }) {
+  //   // TODO: implement uploadShopImageFromBytes
+  //   throw UnimplementedError();
+  // }
 
   @override
   Future<void> deleteAllShopImages({

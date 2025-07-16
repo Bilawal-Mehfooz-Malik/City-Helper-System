@@ -34,6 +34,7 @@ class ResidenceDetail extends EntityDetail {
     required super.phoneNumber,
     required super.messagingNumber,
     required super.updatedAt,
+    required super.type,
     super.email,
     super.facebookUrl,
     super.instagramUrl,
@@ -75,6 +76,7 @@ class ResidenceDetail extends EntityDetail {
     double? price,
     bool? isFurnished,
     GenderPreference? genderPref,
+    EntityType? type,
   }) {
     return ResidenceDetail(
       id: id ?? this.id,
@@ -107,6 +109,7 @@ class ResidenceDetail extends EntityDetail {
       price: price ?? this.price,
       isFurnished: isFurnished ?? this.isFurnished,
       genderPref: genderPref ?? this.genderPref,
+      type: type ?? this.type,
     );
   }
 
@@ -129,6 +132,9 @@ class ResidenceDetail extends EntityDetail {
       latLng: LatLng.fromJson(json['latLng'])!,
       avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
       totalReviews: json['totalReviews'] as int? ?? 0,
+      type: json['type'] != null
+          ? EntityType.values.byName(json['type'] as String)
+          : EntityType.residence,
       ratingBreakdown:
           (json['ratingBreakdown'] as List<dynamic>?)
               ?.map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))

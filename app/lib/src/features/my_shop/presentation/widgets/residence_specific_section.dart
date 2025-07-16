@@ -1,34 +1,37 @@
-import 'package:app/src/core/common_widgets/custom_text_field.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
 class ResidenceSpecificSection extends StatelessWidget {
-  final TextEditingController priceController;
+  final double? price;
   final bool isFurnished;
-  final GenderPreference genderPref;
+  final ValueChanged<String> onPriceChanged;
   final ValueChanged<bool> onFurnishedChanged;
 
   const ResidenceSpecificSection({
     super.key,
-    required this.priceController,
+    required this.price,
     required this.isFurnished,
-    required this.genderPref,
+    required this.onPriceChanged,
     required this.onFurnishedChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: Sizes.p8,
       children: [
-        CustomTextField(
-          controller: priceController,
-          hintText: 'Price'.hardcoded,
+        TextFormField(
+          initialValue: price?.toString() ?? '',
+          onChanged: onPriceChanged,
+          decoration: InputDecoration(
+            labelText: 'Price'.hardcoded,
+            hintText: 'Enter the price'.hardcoded,
+          ),
           keyboardType: TextInputType.number,
         ),
+        gapH8,
         SwitchListTile(
+          contentPadding: EdgeInsets.zero,
           title: Text('Is Furnished?'.hardcoded),
           value: isFurnished,
           onChanged: onFurnishedChanged,

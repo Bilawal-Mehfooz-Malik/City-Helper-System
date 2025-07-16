@@ -18,7 +18,7 @@ class ShopController extends _$ShopController {
   @override
   FutureOr<void> build() {}
 
-  Future<void> setShop({
+  Future<bool> setShop({
     required EntityDetail shop,
     required CategoryId categoryId,
     required Uint8List? coverImageBytes,
@@ -39,7 +39,6 @@ class ShopController extends _$ShopController {
           ? shop.id
           : (await shopService.getShopDocument(categoryId)).id;
 
-      // 1. Delete gallery images that were marked for removal
       if (galleryUrlsToDelete.isNotEmpty) {
         final deletionFutures = galleryUrlsToDelete.map(
           (url) => imageRepo.deleteShopGalleryImage(imageUrl: url),
@@ -47,7 +46,6 @@ class ShopController extends _$ShopController {
         await Future.wait(deletionFutures);
       }
 
-      // 2. Upload new cover image ONLY if a new one was picked
       String? newCoverImageUrl;
       if (coverImageBytes != null) {
         newCoverImageUrl = await imageRepo.uploadShopCoverImage(
@@ -57,7 +55,6 @@ class ShopController extends _$ShopController {
         );
       }
 
-      // 3. Upload new gallery images
       final newGalleryImageUrls = await Future.wait(
         galleryImagesBytes.map(
           (bytes) => imageRepo.uploadShopGalleryImage(
@@ -68,7 +65,6 @@ class ShopController extends _$ShopController {
         ),
       );
 
-      // 4. Combine URLs for the final update
       final existingUrls = isEditing
           ? shop.galleryImageUrls
                 .where((url) => !galleryUrlsToDelete.contains(url))
@@ -76,7 +72,6 @@ class ShopController extends _$ShopController {
           : <String>[];
       final finalGalleryUrls = [...existingUrls, ...newGalleryImageUrls];
 
-      // Use the new cover URL if available, otherwise keep the old one
       final finalCoverUrl = newCoverImageUrl ?? shop.coverImageUrl;
 
       EntityDetail finalShop;
@@ -100,8 +95,10 @@ class ShopController extends _$ShopController {
 
       await shopService.setShop(categoryId, finalShop);
       state = const AsyncData(null);
+      return true;
     } catch (e, st) {
       state = AsyncError(e, st);
+      return false;
     }
   }
 }

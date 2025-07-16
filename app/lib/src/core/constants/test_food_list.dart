@@ -21,6 +21,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '2',
@@ -39,6 +40,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '3',
@@ -57,6 +59,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '4',
@@ -75,6 +78,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '5',
@@ -93,6 +97,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '6',
@@ -111,6 +116,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '7',
@@ -129,6 +135,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
   Food(
     id: '8',
@@ -147,6 +154,7 @@ final List<Food> testFoods = [
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: Status.approved,
+    type: EntityType.food,
   ),
 ];
 

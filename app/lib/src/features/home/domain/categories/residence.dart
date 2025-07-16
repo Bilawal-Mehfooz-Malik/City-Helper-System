@@ -25,6 +25,7 @@ class Residence extends Entity {
     required super.entityStatus,
     required super.status,
     required super.createdAt,
+    required super.type,
     required this.price,
     required this.isFurnished,
     required this.genderPref,
@@ -57,6 +58,7 @@ class Residence extends Entity {
     DateTime? createdAt,
     double? price,
     bool? isFurnished,
+    EntityType? type,
     GenderPreference? genderPref,
   }) {
     return Residence(
@@ -77,6 +79,7 @@ class Residence extends Entity {
       createdAt: createdAt ?? this.createdAt,
       price: price ?? this.price,
       isFurnished: isFurnished ?? this.isFurnished,
+      type: type ?? this.type,
       genderPref: genderPref ?? this.genderPref,
     );
   }
@@ -86,7 +89,6 @@ class Residence extends Entity {
     'price': price,
     'isFurnished': isFurnished,
     'GenderPreference': genderPref.name,
-    'type': 'residence',
   };
 
   factory Residence.fromJson(Map<String, dynamic> json) => Residence(
@@ -109,6 +111,9 @@ class Residence extends Entity {
     entityStatus: EntityStatus.values.byName(json['entityStatus'] as String),
     status: Status.values.byName(
       _readString(json['status'], fallback: 'pending'),
+    ),
+    type: EntityType.values.byName(
+      _readString(json['type'], fallback: 'residence'),
     ),
     createdAt: (json['createdAt'] as Timestamp).toDate(),
     isFurnished: json['isFurnished'] as bool,

@@ -11,6 +11,8 @@ class CategorySection extends StatelessWidget {
   final SubCategory? selectedSubCategory;
   final ValueChanged<Category?> onCategoryChanged;
   final ValueChanged<SubCategory?> onSubCategoryChanged;
+  // FIX: Added flag to handle edit mode state
+  final bool isEditing;
 
   const CategorySection({
     super.key,
@@ -20,6 +22,7 @@ class CategorySection extends StatelessWidget {
     required this.selectedSubCategory,
     required this.onCategoryChanged,
     required this.onSubCategoryChanged,
+    this.isEditing = false, // Default to false
   });
 
   @override
@@ -32,15 +35,20 @@ class CategorySection extends StatelessWidget {
           child: DropdownButtonFormField<Category>(
             value: selectedCategory,
             decoration: InputDecoration(
-              labelText: 'Choose Category'.hardcoded,
+              labelText: 'Category *'.hardcoded,
               border: const OutlineInputBorder(),
+              // FIX: Visually indicate that the field is disabled
+              fillColor: isEditing ? Colors.grey.shade200 : null,
+              filled: isEditing,
             ),
             items: allCategories
                 .map(
                   (cat) => DropdownMenuItem(value: cat, child: Text(cat.name)),
                 )
                 .toList(),
-            onChanged: onCategoryChanged,
+            // FIX: Disable the dropdown by setting onChanged to null if editing
+            onChanged: isEditing ? null : onCategoryChanged,
+            validator: (value) => value == null ? 'Required'.hardcoded : null,
           ),
         ),
         gapW8,

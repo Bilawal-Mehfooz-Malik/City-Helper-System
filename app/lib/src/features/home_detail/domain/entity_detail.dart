@@ -31,6 +31,7 @@ abstract class EntityDetail extends Entity {
     required super.openingHours,
     required super.entityStatus,
     required super.status,
+    required super.type,
     required super.createdAt,
 
     required this.ownerId,
@@ -75,6 +76,7 @@ abstract class EntityDetail extends Entity {
     String? email,
     DateTime? updatedAt,
     UserId? ownerId,
+    EntityType? type,
   });
 
   @override
@@ -93,7 +95,8 @@ abstract class EntityDetail extends Entity {
             facebookUrl == other.facebookUrl &&
             email == other.email &&
             updatedAt == other.updatedAt &&
-            ownerId == other.ownerId;
+            ownerId == other.ownerId &&
+            type == other.type;
   }
 
   @override
@@ -110,6 +113,7 @@ abstract class EntityDetail extends Entity {
     email,
     updatedAt,
     ownerId,
+    type,
   ]);
 }
 

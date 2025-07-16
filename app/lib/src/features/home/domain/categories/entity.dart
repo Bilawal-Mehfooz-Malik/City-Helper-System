@@ -15,6 +15,7 @@ abstract class Entity {
   final LatLng latLng;
   final double avgRating;
   final int totalReviews;
+  final EntityType type;
   final bool isPopular;
   final List<OpeningHours> openingHours;
   final EntityStatus entityStatus;
@@ -35,6 +36,7 @@ abstract class Entity {
     required this.isPopular,
     required this.openingHours,
     required this.entityStatus,
+    required this.type,
     required this.status,
     required this.createdAt,
   });
@@ -106,6 +108,7 @@ abstract class Entity {
     'isPopular': isPopular,
     'openingHours': openingHours.map((e) => e.toJson()).toList(growable: false),
     'entityStatus': entityStatus.name,
+    'type': type.name,
     'status': status.name,
     'createdAt': createdAt,
   };
@@ -126,6 +129,7 @@ abstract class Entity {
     openingHours,
     entityStatus,
     status,
+    type,
     createdAt,
   ]);
 

@@ -36,6 +36,7 @@ class FoodDetail extends EntityDetail {
     super.facebookUrl,
     super.instagramUrl,
     super.websiteUrl,
+    required super.type,
     required this.genderPref,
   });
 
@@ -69,6 +70,7 @@ class FoodDetail extends EntityDetail {
     String? email,
     DateTime? updatedAt,
     GenderPreference? genderPref,
+    EntityType? type,
   }) {
     return FoodDetail(
       id: id ?? this.id,
@@ -99,6 +101,7 @@ class FoodDetail extends EntityDetail {
       email: email ?? this.email,
       updatedAt: updatedAt ?? this.updatedAt,
       genderPref: genderPref ?? this.genderPref,
+      type: type ?? this.type,
     );
   }
 
@@ -136,6 +139,9 @@ class FoodDetail extends EntityDetail {
       status: json['status'] != null
           ? Status.values.byName(json['status'] as String)
           : Status.approved,
+      type: json['type'] != null
+          ? EntityType.values.byName(json['type'] as String)
+          : EntityType.residence,
       ownerId: json['ownerId'] as UserId? ?? '',
       description: json['description'] as String? ?? '',
       galleryImageUrls:

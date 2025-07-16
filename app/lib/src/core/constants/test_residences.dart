@@ -23,6 +23,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_002',
@@ -43,6 +44,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_003',
@@ -63,6 +65,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_004',
@@ -83,6 +86,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_005',
@@ -103,6 +107,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_006',
@@ -123,6 +128,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_007',
@@ -143,6 +149,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_008',
@@ -163,6 +170,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_009',
@@ -183,6 +191,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_010',
@@ -203,6 +212,7 @@ final List<Residence> testResidences = [
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: Status.approved,
+    type: EntityType.residence,
   ),
 ];
 

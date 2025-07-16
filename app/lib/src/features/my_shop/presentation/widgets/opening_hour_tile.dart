@@ -2,7 +2,6 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class OpeningHoursTile extends StatelessWidget {
   final List<OpeningHours> openingHours;
@@ -137,7 +136,7 @@ class OpeningHoursEditor extends StatelessWidget {
 
 class TimePickerField extends StatelessWidget {
   final String label;
-  final String time; // stored in "HH:mm" format
+  final String time; // expects "HH:mm" format
   final ValueChanged<String> onChanged;
 
   const TimePickerField({
@@ -149,30 +148,32 @@ class TimePickerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Display in 12-hour format
-    final displayTime = DateFormat.jm().format(DateFormat("HH:mm").parse(time));
+    // FIX: The time string is already in "HH:mm" format, so it can be displayed directly.
+    final String displayTime = time;
 
     return InkWell(
       onTap: () async {
-        final initialTime = TimeOfDay.fromDateTime(
-          DateFormat("HH:mm").parse(time),
+        final timeParts = time.split(':');
+        final initialTime = TimeOfDay(
+          hour: int.parse(timeParts[0]),
+          minute: int.parse(timeParts[1]),
         );
 
         final picked = await showTimePicker(
           context: context,
           initialTime: initialTime,
+          // FIX: The builder enforces a 24-hour clock UI.
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(
                 context,
-              ).copyWith(alwaysUse24HourFormat: false),
+              ).copyWith(alwaysUse24HourFormat: true),
               child: child!,
             );
           },
         );
 
         if (picked != null) {
-          // Convert picked TimeOfDay to 24-hour format string
           final formatted =
               '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
           onChanged(formatted);
@@ -180,7 +181,7 @@ class TimePickerField extends StatelessWidget {
       },
       child: InputDecorator(
         decoration: InputDecoration(labelText: label),
-        child: Text(displayTime), // Show in 12-hour format
+        child: Text(displayTime),
       ),
     );
   }

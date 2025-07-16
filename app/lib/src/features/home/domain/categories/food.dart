@@ -23,6 +23,7 @@ class Food extends Entity {
     required super.openingHours,
     required super.entityStatus,
     required super.status,
+    required super.type,
     required super.createdAt,
     required this.genderPref,
   });
@@ -49,6 +50,7 @@ class Food extends Entity {
     Status? status,
     DateTime? createdAt,
     GenderPreference? genderPref,
+    EntityType? type,
   }) {
     return Food(
       id: id ?? this.id,
@@ -67,6 +69,7 @@ class Food extends Entity {
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       genderPref: genderPref ?? this.genderPref,
+      type: type ?? this.type,
     );
   }
 
@@ -97,6 +100,9 @@ class Food extends Entity {
     ),
     status: Status.values.byName(
       _readString(json['status'], fallback: 'pending'),
+    ),
+    type: EntityType.values.byName(
+      _readString(json['type'], fallback: 'residence'),
     ),
     createdAt: (json['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     genderPref: GenderPreference.values.byName(

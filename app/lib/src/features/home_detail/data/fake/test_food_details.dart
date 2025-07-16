@@ -31,6 +31,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '2',
@@ -57,6 +58,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '3',
@@ -83,6 +85,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '4',
@@ -109,6 +112,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '5',
@@ -135,6 +139,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '6',
@@ -161,6 +166,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '7',
@@ -187,6 +193,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
   FoodDetail(
     id: '8',
@@ -213,6 +220,7 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: Status.approved,
+    type: EntityType.food,
   ),
 ];
 
