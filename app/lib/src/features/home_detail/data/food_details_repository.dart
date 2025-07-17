@@ -21,6 +21,10 @@ class FoodDetailsRepository {
     await _docRef(updated.id).set(updated.toJson());
   }
 
+  Future<void> updateFoodStatus(EntityId id, EntityStatus status) async {
+    await _docRef(id).update({'entityStatus': status.name});
+  }
+
   Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
     return _docRefByOwnerId(id).snapshots().map((snapshot) {
       if (snapshot.docs.isNotEmpty) {

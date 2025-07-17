@@ -8,10 +8,13 @@ import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/my_shop/application/shop_form_provider.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
-import 'package:app/src/features/my_shop/presentation/shop_controller.dart';
-import 'package:app/src/features/my_shop/presentation/step_1_screen.dart';
-import 'package:app/src/features/my_shop/presentation/step_2_screen.dart';
-import 'package:app/src/features/my_shop/presentation/step_3_screen.dart';
+import 'package:app/src/features/my_shop/presentation/controllers/shop_controller.dart';
+import 'package:app/src/features/my_shop/presentation/screens/step_1_screen.dart';
+import 'package:app/src/features/my_shop/presentation/screens/step_2_screen.dart';
+import 'package:app/src/features/my_shop/presentation/screens/step_3_screen.dart';
+import 'package:app/src/features/my_shop/presentation/screens/step_4_screen.dart';
+import 'package:app/src/features/my_shop/presentation/screens/step_5_screen.dart';
+import 'package:app/src/features/my_shop/presentation/shop_form_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -185,21 +188,29 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            Step1Screen(
+            Step1BasicDetailsPage(
               formKey: wizardState.formKeys[0],
               allCategories: widget.allCategories,
               initialSubCategories: widget.initialSubCategories,
               initialForm: widget.initialForm,
               isEditing: isEditing,
             ),
-            Step2Screen(
+            Step2LocationPage(
               formKey: wizardState.formKeys[1],
-              initialCoverUrl: widget.initialShop?.coverImageUrl,
-              initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
               initialForm: widget.initialForm,
             ),
-            Step3Screen(
+            Step3ContactPage(
               formKey: wizardState.formKeys[2],
+              initialForm: widget.initialForm,
+            ),
+            Step4SpecificsPage(
+              formKey: wizardState.formKeys[3],
+              initialForm: widget.initialForm,
+            ),
+            Step5MediaPage(
+              formKey: wizardState.formKeys[4],
+              initialCoverUrl: widget.initialShop?.coverImageUrl,
+              initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
               initialForm: widget.initialForm,
             ),
           ],

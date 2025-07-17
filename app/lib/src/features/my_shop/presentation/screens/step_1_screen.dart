@@ -10,14 +10,14 @@ import 'package:app/src/features/my_shop/presentation/widgets/category_section.d
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Step1Screen extends ConsumerWidget {
+class Step1BasicDetailsPage extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
   final List<Category> allCategories;
   final List<SubCategory> initialSubCategories;
   final ShopForm initialForm;
   final bool isEditing;
 
-  const Step1Screen({
+  const Step1BasicDetailsPage({
     super.key,
     required this.formKey,
     required this.allCategories,
@@ -45,7 +45,7 @@ class Step1Screen extends ConsumerWidget {
           spacing: Sizes.p12,
           children: [
             CategorySection(
-              isEditing: isEditing, // FIX: Pass the flag down
+              isEditing: isEditing,
               allCategories: allCategories,
               subCategoryOptions:
                   subCategoryOptionsAsync?.valueOrNull ?? initialSubCategories,
@@ -61,36 +61,15 @@ class Step1Screen extends ConsumerWidget {
               onSubCategoryChanged: (subCategory) => wizardController
                   .updateFormData(formData.copyWith(subCategory: subCategory)),
             ),
+            gapH12,
+            // FIX: This call is now valid and will not cause an error.
             BasicInfoSection(
               name: formData.name,
               description: formData.description,
-              phone: formData.phoneNumber,
-              messagingNumber: formData.messagingNumber,
-              city: formData.cityName,
-              sector: formData.sectorName,
-              street: formData.streetAddress,
-              email: formData.email,
               onNameChanged: (val) =>
                   wizardController.updateFormData(formData.copyWith(name: val)),
               onDescriptionChanged: (val) => wizardController.updateFormData(
                 formData.copyWith(description: val),
-              ),
-              onPhoneChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(phoneNumber: val),
-              ),
-              onMessagingNumberChanged: (val) => wizardController
-                  .updateFormData(formData.copyWith(messagingNumber: val)),
-              onCityChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(cityName: val),
-              ),
-              onSectorChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(sectorName: val),
-              ),
-              onStreetChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(streetAddress: val),
-              ),
-              onEmailChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(email: val),
               ),
             ),
           ],

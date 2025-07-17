@@ -18,6 +18,24 @@ class ShopController extends _$ShopController {
   @override
   FutureOr<void> build() {}
 
+  /// Handles the logic to update the shop's status.
+  Future<void> updateShopStatus({
+    required String shopId,
+    required CategoryId categoryId,
+    required EntityStatus newStatus,
+  }) async {
+    final shopService = ref.read(shopServiceProvider);
+    state = const AsyncLoading();
+    // Use a guard to handle potential errors and update the state.
+    state = await AsyncValue.guard(
+      () => shopService.updateShopStatus(
+        shopId: shopId,
+        categoryId: categoryId,
+        newStatus: newStatus,
+      ),
+    );
+  }
+
   Future<bool> setShop({
     required EntityDetail shop,
     required CategoryId categoryId,

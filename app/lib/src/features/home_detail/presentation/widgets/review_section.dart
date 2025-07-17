@@ -146,10 +146,9 @@ class ReviewListTile extends ConsumerWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        child: CustomImage(
+                        child: CustomImageWrapper(
                           fit: BoxFit.cover,
-                          useAspectRatio: false,
-                          iconPersonSize: 15,
+                          placeholderIconSize: 15,
                           imageUrl: user.profileImageUrl,
                           borderRadius: BorderRadius.circular(48),
                         ),

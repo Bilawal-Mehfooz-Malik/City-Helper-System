@@ -77,6 +77,28 @@ class ShopService {
         throw InvalidCategoryException();
     }
   }
+
+  /// Updates only the `entityStatus` field for a given shop document.
+  Future<void> updateShopStatus({
+    required String shopId,
+    required CategoryId categoryId,
+    required EntityStatus newStatus,
+  }) async {
+    switch (categoryId) {
+      case 1:
+        await ref
+            .read(residenceDetailsRepositoryProvider)
+            .updateResidenceStatus(shopId, newStatus);
+        break;
+      case 2:
+        await ref
+            .read(foodDetailsRepositoryProvider)
+            .updateFoodStatus(shopId, newStatus);
+        break;
+      default:
+        throw InvalidCategoryException();
+    }
+  }
 }
 
 @riverpod

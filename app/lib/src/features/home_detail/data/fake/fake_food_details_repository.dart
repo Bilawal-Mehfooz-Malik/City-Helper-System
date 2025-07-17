@@ -58,4 +58,10 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
     // TODO: implement watchFoodDetailsByOwnerId
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> updateFoodStatus(EntityId id, EntityStatus status) {
+    // TODO: implement updateFoodStatus
+    throw UnimplementedError();
+  }
 }

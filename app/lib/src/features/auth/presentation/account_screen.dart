@@ -66,11 +66,10 @@ class AccountScreen extends ConsumerWidget {
                     width: 96,
                     height: 96,
                     child: ClipOval(
-                      child: CustomImage(
-                        imageUrl: profile.profileImageUrl,
-                        useAspectRatio: false,
+                      child: CustomImageWrapper(
                         fit: BoxFit.cover,
-                        borderRadius: BorderRadius.circular(48),
+                        borderRadius: BorderRadius.circular(50),
+                        imageUrl: profile.profileImageUrl,
                       ),
                     ),
                   ),

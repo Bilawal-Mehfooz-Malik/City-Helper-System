@@ -73,12 +73,11 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
           width: 96,
           height: 96,
           child: ClipOval(
-            child: CustomImage(
-              imageXFile: _pickedFile,
-              imageUrl: _pickedFile == null ? _imageUrl : null,
-              useAspectRatio: false,
+            child: CustomImageWrapper(
               fit: BoxFit.cover,
               borderRadius: BorderRadius.circular(50),
+              imageXFile: _pickedFile,
+              imageUrl: _pickedFile == null ? _imageUrl : null,
             ),
           ),
         ),

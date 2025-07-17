@@ -78,7 +78,10 @@ class _CoverImageTileState extends State<CoverImageTile> {
             padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
             child: SizedBox(
               height: 300,
-              child: CustomImage(aspectRatio: 1, imageXFile: _pickedFile!),
+              child: CustomImageWrapper(
+                aspectRatio: 1,
+                imageXFile: _pickedFile!,
+              ),
             ),
           )
         else if (hasExistingImage)
@@ -86,7 +89,7 @@ class _CoverImageTileState extends State<CoverImageTile> {
             padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
             child: SizedBox(
               height: 300,
-              child: CustomImage(
+              child: CustomImageWrapper(
                 aspectRatio: 1,
                 imageUrl: widget.coverImageUrl,
               ),
@@ -172,7 +175,7 @@ class _GalleryImagesTileState extends State<GalleryImagesTile> {
             itemBuilder: (_, index) {
               final imageUrl = widget.galleryImagesUrl[index];
               return _buildImage(
-                CustomImage(aspectRatio: 1, imageUrl: imageUrl),
+                CustomImageWrapper(aspectRatio: 1, imageUrl: imageUrl),
                 () => widget.onExistingImageDeleted(imageUrl),
               );
             },
@@ -183,7 +186,10 @@ class _GalleryImagesTileState extends State<GalleryImagesTile> {
             itemCount: _pickedFiles.length,
             itemBuilder: (_, index) {
               return _buildImage(
-                CustomImage(aspectRatio: 1, imageXFile: _pickedFiles[index]),
+                CustomImageWrapper(
+                  aspectRatio: 1,
+                  imageXFile: _pickedFiles[index],
+                ),
                 () => _removeNewImage(index),
               );
             },

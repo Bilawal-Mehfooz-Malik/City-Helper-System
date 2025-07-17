@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'shop_form_wizard_controller.g.dart';
 
-const int kShopFormTotalPages = 3;
+const int kShopFormTotalPages = 5;
 
 @riverpod
 class ShopFormWizardController extends _$ShopFormWizardController {

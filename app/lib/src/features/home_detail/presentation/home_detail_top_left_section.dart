@@ -72,7 +72,7 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
                 itemBuilder: (context, index, _) {
                   return InkWell(
                     onTap: () => _openImageViewer(context, index),
-                    child: CustomImage(
+                    child: CustomImageWrapper(
                       aspectRatio: 16 / 9,
                       imageUrl: widget.images[index],
                     ),
@@ -161,9 +161,9 @@ class ThumnailImagesList extends StatelessWidget {
                       : Colors.transparent,
                 ),
               ),
-              child: CustomImage(
+              child: CustomImageWrapper(
+                aspectRatio: 16 / 9,
                 borderRadius: BorderRadius.circular(6),
-                useAspectRatio: false,
                 imageUrl: imageUrls[index],
               ),
             ),

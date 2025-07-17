@@ -1,142 +1,203 @@
 import 'dart:io';
 
-import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/utils/in_memory_storage.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:skeletonizer/skeletonizer.dart'; // <-- Add this
+import 'package:skeletonizer/skeletonizer.dart';
 
+/// A container that wraps a CustomImage to apply decorative transformations
+/// like a specific border radius and aspect ratio.
+class CustomImageWrapper extends StatelessWidget {
+  const CustomImageWrapper({
+    super.key,
+    // CustomImage properties
+    this.imageUrl,
+    this.imageXFile,
+    this.fit = BoxFit.cover,
+    this.placeholderIconSize = 48,
+    this.useCircleLoading = false,
+    this.placeholder,
+    // Container-specific properties
+    this.borderRadius,
+    this.aspectRatio,
+    this.width,
+    this.height,
+  });
+
+  // --- Properties for the inner CustomImage ---
+  final String? imageUrl;
+  final XFile? imageXFile;
+  final BoxFit fit;
+  final double placeholderIconSize;
+  final bool useCircleLoading;
+  final Widget? placeholder;
+
+  // --- Properties for the container itself ---
+  /// The geometry of the border radius. Use standard Flutter classes like
+  /// `BorderRadius.circular()`, `BorderRadius.only()`, or `BorderRadius.vertical()`.
+  /// If null, no clipping will be applied.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// The aspect ratio to enforce on the child. If null, the widget will
+  /// size itself based on the child or width/height constraints.
+  final double? aspectRatio;
+
+  /// An optional fixed width for the container.
+  final double? width;
+
+  /// An optional fixed height for the container.
+  final double? height;
+
+  @override
+  Widget build(BuildContext context) {
+    // The core image logic is delegated entirely to CustomImage.
+    Widget imageWidget = CustomImage(
+      fit: fit,
+      imageUrl: imageUrl,
+      imageXFile: imageXFile,
+      placeholderIconSize: placeholderIconSize,
+      useCircleLoading: useCircleLoading,
+      placeholder: placeholder,
+    );
+
+    // 1. Conditionally apply border radius if it's provided.
+    if (borderRadius != null) {
+      imageWidget = ClipRRect(borderRadius: borderRadius!, child: imageWidget);
+    }
+
+    // 2. Conditionally apply aspect ratio if it's provided.
+    if (aspectRatio != null) {
+      imageWidget = AspectRatio(aspectRatio: aspectRatio!, child: imageWidget);
+    }
+
+    // 3. Wrap in a SizedBox if width or height are provided.
+    if (width != null || height != null) {
+      imageWidget = SizedBox(width: width, height: height, child: imageWidget);
+    }
+
+    return imageWidget;
+  }
+}
+
+/// A versatile image widget that can display images from the network,
+/// local files (XFile), in-memory cache, or project assets.
+///
+/// It handles loading states, errors, and platform-specific quirks for localhost URLs.
 class CustomImage extends ConsumerWidget {
   const CustomImage({
     super.key,
     this.imageUrl,
     this.imageXFile,
-    this.borderRadius = const BorderRadius.all(Radius.circular(Sizes.p12)),
-    this.allBorders = true,
-    this.borderTopLeft = true,
-    this.borderTopRight = true,
-    this.borderBottomLeft = true,
-    this.borderBottomRight = true,
-    this.aspectRatio = 4 / 3,
-    this.useAspectRatio = true,
     this.fit = BoxFit.cover,
-    this.iconPersonSize = 60,
+    this.placeholderIconSize = 48,
     this.useCircleLoading = false,
+    this.placeholder,
   });
 
   final String? imageUrl;
   final XFile? imageXFile;
-
-  final BorderRadius borderRadius;
-  final bool allBorders;
-  final bool borderTopLeft;
-  final bool borderTopRight;
-  final bool borderBottomLeft;
-  final bool borderBottomRight;
-  final double iconPersonSize;
+  final BoxFit fit;
+  final double placeholderIconSize;
   final bool useCircleLoading;
 
-  final bool useAspectRatio;
-  final double aspectRatio;
-  final BoxFit fit;
+  /// An optional custom widget to display when imageUrl is null or empty.
+  /// If not provided, it defaults to a generic ImageErrorPlaceholder.
+  final Widget? placeholder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageWidget = _buildImage(ref, iconPersonSize);
-
-    final clippedImage = ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: allBorders || borderTopLeft
-            ? borderRadius.topLeft
-            : Radius.zero,
-        topRight: allBorders || borderTopRight
-            ? borderRadius.topRight
-            : Radius.zero,
-        bottomLeft: allBorders || borderBottomLeft
-            ? borderRadius.bottomLeft
-            : Radius.zero,
-        bottomRight: allBorders || borderBottomRight
-            ? borderRadius.bottomRight
-            : Radius.zero,
-      ),
-      child: imageWidget,
+    final errorPlaceholder = ImageErrorPlaceholder(
+      iconSize: placeholderIconSize,
     );
 
-    return useAspectRatio
-        ? AspectRatio(aspectRatio: aspectRatio, child: clippedImage)
-        : clippedImage;
-  }
-
-  Widget _buildImage(WidgetRef ref, double iconPersonSize) {
+    // Priority 1: Local file (from image picker).
     if (imageXFile != null) {
-      return kIsWeb
-          ? Image.network(imageXFile!.path, fit: fit)
-          : Image.file(File(imageXFile!.path), fit: fit);
-    }
+      final imageProvider = kIsWeb
+          ? NetworkImage(imageXFile!.path) as ImageProvider
+          : FileImage(File(imageXFile!.path));
 
-    if (imageUrl == null || imageUrl!.isEmpty) {
-      return CircleAvatar(child: Icon(Icons.person, size: iconPersonSize));
-    }
-
-    // ✅ in-memory image handling via provider
-    if (imageUrl!.startsWith('inmemory://')) {
-      final userId = imageUrl!.replaceFirst('inmemory://', '');
-      final inMemoryStorage = ref.watch(inMemoryImageStorageProvider);
-      final bytes = inMemoryStorage.getImageBytes(userId);
-
-      if (bytes != null) {
-        return Image.memory(bytes, fit: fit);
-      } else {
-        return CircleAvatar(
-          child: Icon(Icons.image_not_supported, size: iconPersonSize),
-        );
-      }
-    }
-
-    // ✅ network image
-    if (imageUrl!.startsWith('http')) {
-      return CachedNetworkImage(
-        imageUrl: localhostFriendlyImageUrl(imageUrl!),
+      return Image(
+        image: imageProvider,
         fit: fit,
-        errorWidget: (context, url, error) {
-          AppLogger.logError(
-            'Failed to load image from URL: $url',
-            error: error,
-          );
-          return CircleAvatar(child: Icon(Icons.error, size: iconPersonSize));
-        },
-        placeholder: (_, __) => Skeletonizer(
-          enabled: true,
-          child: useCircleLoading ? Bone.circle() : Bone.square(),
-        ),
+        errorBuilder: (context, error, stack) => errorPlaceholder,
       );
     }
 
-    // ✅ fallback asset
-    return Image.asset(imageUrl!, fit: fit);
+    // Priority 2: No valid source provided.
+    if (imageUrl == null || imageUrl!.isEmpty) {
+      // Use the injected placeholder, or default to the generic error one.
+      return placeholder ?? errorPlaceholder;
+    }
+
+    // Priority 3: In-memory image.
+    if (imageUrl!.startsWith('inmemory://')) {
+      return _buildInMemoryImage(ref, errorPlaceholder);
+    }
+
+    // Priority 4: Network image.
+    if (imageUrl!.startsWith('http')) {
+      return _buildNetworkImage(errorPlaceholder);
+    }
+
+    // Priority 5: Local asset image.
+    return Image.asset(
+      imageUrl!,
+      fit: fit,
+      errorBuilder: (context, error, stackTrace) {
+        AppLogger.logError(
+          'Failed to load asset: $imageUrl',
+          error: error,
+          stackTrace: stackTrace,
+        );
+        return errorPlaceholder;
+      },
+    );
   }
 
-  String localhostFriendlyImageUrl(String imageUrl) {
+  Widget _buildInMemoryImage(WidgetRef ref, Widget errorPlaceholder) {
+    final userId = imageUrl!.replaceFirst('inmemory://', '');
+    final bytes = ref.watch(inMemoryImageStorageProvider).getImageBytes(userId);
+    return bytes != null ? Image.memory(bytes, fit: fit) : errorPlaceholder;
+  }
+
+  Widget _buildNetworkImage(Widget errorPlaceholder) {
+    return CachedNetworkImage(
+      imageUrl: _localhostFriendlyImageUrl(imageUrl!),
+      fit: fit,
+      errorWidget: (context, url, error) {
+        AppLogger.logError('Failed to load image from URL: $url', error: error);
+        return errorPlaceholder;
+      },
+      placeholder: (_, __) => Skeletonizer(
+        enabled: true,
+        child: useCircleLoading ? const Bone.circle() : const Bone.square(),
+      ),
+    );
+  }
+
+  String _localhostFriendlyImageUrl(String url) {
     const localhostDefault1 = 'http://127.0.0.1';
     const localhostDefault2 = 'http://localhost';
     const localhostAndroid = 'http://10.0.2.2';
     final isAndroid = !kIsWeb && Platform.isAndroid;
+
     if (isAndroid) {
-      if (imageUrl.startsWith(localhostDefault1)) {
-        return imageUrl.replaceFirst(localhostDefault1, localhostAndroid);
-      } else if (imageUrl.startsWith(localhostDefault2)) {
-        return imageUrl.replaceFirst(localhostDefault2, localhostAndroid);
+      if (url.startsWith(localhostDefault1)) {
+        return url.replaceFirst(localhostDefault1, localhostAndroid);
+      } else if (url.startsWith(localhostDefault2)) {
+        return url.replaceFirst(localhostDefault2, localhostAndroid);
       }
     }
-    if (!isAndroid && imageUrl.startsWith(localhostAndroid)) {
-      return imageUrl.replaceFirst(localhostAndroid, localhostDefault1);
+    if (!isAndroid && url.startsWith(localhostAndroid)) {
+      return url.replaceFirst(localhostAndroid, localhostDefault1);
     }
-    return imageUrl;
+    return url;
   }
 }
 
@@ -148,5 +209,34 @@ class CustomSvgImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(imageUrl);
+  }
+}
+
+/// A standardized placeholder for displaying when an image fails to load.
+class ImageErrorPlaceholder extends StatelessWidget {
+  const ImageErrorPlaceholder({
+    super.key,
+    this.iconSize = 48,
+    this.icon = Icons.broken_image_outlined,
+  });
+
+  /// The size of the placeholder icon.
+  final double iconSize;
+
+  /// The icon to display within the placeholder.
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: context.colorScheme.surfaceContainerHighest,
+      child: Center(
+        child: Icon(
+          icon,
+          size: iconSize,
+          color: context.colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
   }
 }

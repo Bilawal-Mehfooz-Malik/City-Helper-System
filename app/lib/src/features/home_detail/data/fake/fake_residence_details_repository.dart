@@ -61,4 +61,10 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
     // TODO: implement watchResidenceDetailsByOwnerId
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> updateResidenceStatus(EntityId id, EntityStatus status) {
+    // TODO: implement updateResidenceStatus
+    throw UnimplementedError();
+  }
 }

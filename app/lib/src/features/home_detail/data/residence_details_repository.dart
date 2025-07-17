@@ -17,6 +17,10 @@ class ResidenceDetailsRepository {
     return _firestore.collection(residenceKey).doc();
   }
 
+  Future<void> updateResidenceStatus(EntityId id, EntityStatus status) async {
+    await _docRef(id).update({'entityStatus': status.name});
+  }
+
   /// ✅ Save or update a ResidenceDetail
   Future<void> setResidenceDetail(ResidenceDetail updated) async {
     await _docRef(updated.id).set(updated.toJson());

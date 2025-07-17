@@ -43,7 +43,8 @@ class EntityCard extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
-              CustomImage(
+              CustomImageWrapper(
+                aspectRatio: 4 / 3,
                 borderRadius: allBorders
                     ? BorderRadius.all(radius)
                     : borderRadius,

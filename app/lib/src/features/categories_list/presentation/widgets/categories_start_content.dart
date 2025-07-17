@@ -33,7 +33,7 @@ class CategoriesStartContent extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                ProfileCircularAvator(),
+                ProfileCircularAvatar(),
               ],
             ),
           ),

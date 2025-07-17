@@ -55,7 +55,7 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: Sizes.p12),
-          child: ProfileCircularAvator(),
+          child: ProfileCircularAvatar(),
         ),
       ],
     );
