@@ -39,6 +39,7 @@ class MyShopDashboardScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Shop'.hardcoded),
+        surfaceTintColor: Colors.transparent,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: Sizes.p16),
