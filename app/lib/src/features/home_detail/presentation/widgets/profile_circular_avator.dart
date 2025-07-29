@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/my_shop/presentation/controllers/user_mode_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -85,6 +86,7 @@ class _LoggedInAvatar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Fetch the user's profile information.
     final profileData = ref.watch(getUserByIdProvider(userId));
+    final isAdminMode = ref.watch(userModeControllerProvider);
 
     return PopupMenuButton<String>(
       onSelected: (value) {
@@ -92,8 +94,18 @@ class _LoggedInAvatar extends ConsumerWidget {
           case 'account':
             context.goNamed(AppRoute.account.name);
             break;
-          case 'admin':
-            context.replaceNamed(AppRoute.myShop.name);
+          // FIX: Renamed 'admin' to a more generic 'switch_mode'.
+          case 'switch_mode':
+            // Toggle the mode via the controller.
+            ref.read(userModeControllerProvider.notifier).toggleMode();
+            // Navigate to the appropriate screen after switching.
+            if (isAdminMode) {
+              // If we WERE in admin mode, go to the user home screen.
+              context.goNamed(AppRoute.category.name);
+            } else {
+              // If we WERE in user mode, go to the admin screen.
+              context.goNamed(AppRoute.myShop.name);
+            }
             break;
         }
       },
@@ -102,9 +114,12 @@ class _LoggedInAvatar extends ConsumerWidget {
           value: 'account',
           child: Text(context.loc.account_title),
         ),
+        // FIX: Dynamically build the menu item based on the current mode.
         PopupMenuItem<String>(
-          value: 'admin',
-          child: Text(context.loc.switchToAdmin),
+          value: 'switch_mode',
+          child: Text(
+            isAdminMode ? "Switch to User" : context.loc.switchToAdmin,
+          ),
         ),
       ],
       // Also handle loading/error states for the user profile data.
