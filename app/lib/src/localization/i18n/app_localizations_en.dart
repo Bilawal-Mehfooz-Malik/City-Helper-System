@@ -15,13 +15,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startupHeadline => 'Discover Amazing Places';
 
   @override
-  String get startupDescription => 'Explore your city with ease, everything you need, right from your phone.';
+  String get startupDescription =>
+      'Explore your city with ease, everything you need, right from your phone.';
 
   @override
   String get getStarted => 'Get Started';
 
   @override
-  String get getLocDescription => 'Click \"Get Current\" to get your location or \"From Map\" to select it manually.';
+  String get getLocDescription =>
+      'Click \"Get Current\" to get your location or \"From Map\" to select it manually.';
 
   @override
   String get getCurrent => 'Get Current';
