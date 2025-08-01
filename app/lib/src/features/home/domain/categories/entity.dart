@@ -15,9 +15,11 @@ abstract class Entity {
   final LatLng latLng;
   final double avgRating;
   final int totalReviews;
+  final EntityType type;
   final bool isPopular;
   final List<OpeningHours> openingHours;
   final EntityStatus entityStatus;
+  final Status status;
   final DateTime createdAt;
 
   const Entity({
@@ -34,79 +36,103 @@ abstract class Entity {
     required this.isPopular,
     required this.openingHours,
     required this.entityStatus,
+    required this.type,
+    required this.status,
     required this.createdAt,
   });
-
   bool isEntityOpen() {
-    // First, check the entity's overall status
-    if (entityStatus == EntityStatus.closed) {
-      return false;
-    } else if (entityStatus == EntityStatus.open) {
-      return true;
-    }
+    if (entityStatus == EntityStatus.close) return false;
+    if (entityStatus == EntityStatus.open) return true;
 
-    // Getting the current time and day
-    final now = DateTime.now();
+    final now = DateTime.now().toLocal();
     final currentDay = DateFormat('EEEE').format(now);
 
-    // Finding the opening hours for the current day
     final todayOpeningHours = openingHours.firstWhereOrNull(
-      (hours) => hours.day == currentDay,
+      (hours) => hours.day.toLowerCase() == currentDay.toLowerCase(),
     );
 
-    // If no hours are specified for today, it's considered closed
-    if (todayOpeningHours == null) {
-      return false;
-    }
+    if (todayOpeningHours == null) return false;
 
-    // If start and end times are the same, it might mean closed all day,
-    // or open 24 hours depending on convention. Assuming closed if times are equal.
-    if (todayOpeningHours.startTime == todayOpeningHours.endTime) {
-      return true; // adjusted based on '24 hours' convention
+    if (todayOpeningHours.open == todayOpeningHours.close) {
+      return true; // Open 24 hours
     }
 
     try {
-      // Parse start and end times
-      // We need to parse these times relative to TODAY's date to compare them
-      final format = DateFormat("h:mm a"); // Format like '9:00 AM'
+      final format = DateFormat("HH:mm");
 
-      // Combine today's date with the start and end times for accurate comparison
-      final startTimeDateTime = format.parse(todayOpeningHours.startTime);
-      final endTimeDateTime = format.parse(todayOpeningHours.endTime);
+      final openParsed = format.parse(todayOpeningHours.open);
+      final closeParsed = format.parse(todayOpeningHours.close);
 
-      // Create DateTime objects for today with the parsed times
-      final startToday = DateTime(
+      final openTime = DateTime(
         now.year,
         now.month,
         now.day,
-        startTimeDateTime.hour,
-        startTimeDateTime.minute,
+        openParsed.hour,
+        openParsed.minute,
       );
-      final endToday = DateTime(
+      var closeTime = DateTime(
         now.year,
         now.month,
         now.day,
-        endTimeDateTime.hour,
-        endTimeDateTime.minute,
+        closeParsed.hour,
+        closeParsed.minute,
       );
 
-      // Handle overnight hours (e.g., if endTime is before startTime, it means it closes the next day)
-      if (endToday.isBefore(startToday)) {
-        // Add one day to the end time if it's for the next day
-        return now.isAfter(startToday) ||
-            now.isBefore(endToday.add(Duration(days: 1)));
-      } else {
-        // Normal opening hours within the same day
-        return now.isAfter(startToday) && now.isBefore(endToday);
+      // Handle overnight timings (e.g., 22:00 to 04:00)
+      if (closeTime.isBefore(openTime)) {
+        closeTime = closeTime.add(const Duration(days: 1));
       }
+
+      return now.isAfter(openTime) && now.isBefore(closeTime);
     } catch (e, st) {
-      // Handle potential parsing errors if time format is unexpected
       AppLogger.logError(
-        'Error parsing opening hours for $name',
+        'Opening hour parse error for $name',
         error: e,
         stackTrace: st,
       );
-      return false; // Assume closed if times can't be parsed
+      return false;
     }
   }
+
+  Map<String, dynamic> baseToJson() => {
+    'id': id,
+    'categoryId': categoryId,
+    'subCategoryId': subCategoryId,
+    'coverImageUrl': coverImageUrl,
+    'name': name,
+    'cityName': cityName,
+    'sectorName': sectorName,
+    'latLng': latLng.toJson(),
+    'avgRating': avgRating,
+    'totalReviews': totalReviews,
+    'isPopular': isPopular,
+    'openingHours': openingHours.map((e) => e.toJson()).toList(growable: false),
+    'entityStatus': entityStatus.name,
+    'type': type.name,
+    'status': status.name,
+    'createdAt': createdAt,
+  };
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    categoryId,
+    subCategoryId,
+    coverImageUrl,
+    name,
+    cityName,
+    sectorName,
+    latLng,
+    avgRating,
+    totalReviews,
+    isPopular,
+    openingHours,
+    entityStatus,
+    status,
+    type,
+    createdAt,
+  ]);
+
+  @override
+  bool operator ==(Object other);
 }

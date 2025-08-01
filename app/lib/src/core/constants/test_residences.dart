@@ -22,6 +22,8 @@ final List<Residence> testResidences = [
     price: 25000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_002',
@@ -41,6 +43,8 @@ final List<Residence> testResidences = [
     price: 40000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_003',
@@ -60,6 +64,8 @@ final List<Residence> testResidences = [
     price: 8000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_004',
@@ -79,6 +85,8 @@ final List<Residence> testResidences = [
     price: 15000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_005',
@@ -98,6 +106,8 @@ final List<Residence> testResidences = [
     price: 12000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_006',
@@ -117,6 +127,8 @@ final List<Residence> testResidences = [
     price: 60000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_007',
@@ -136,6 +148,8 @@ final List<Residence> testResidences = [
     price: 7000,
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_008',
@@ -155,6 +169,8 @@ final List<Residence> testResidences = [
     price: 28000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_009',
@@ -174,6 +190,8 @@ final List<Residence> testResidences = [
     price: 11000,
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
   Residence(
     id: 'res_010',
@@ -193,15 +211,17 @@ final List<Residence> testResidences = [
     price: 35000,
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
+    status: Status.approved,
+    type: EntityType.residence,
   ),
 ];
 
 final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Thursday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Friday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Saturday', startTime: '9:00 AM', endTime: '9:00 PM'),
-  OpeningHours(day: 'Sunday', startTime: '9:00 AM', endTime: '9:00 PM'),
+  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];

@@ -343,14 +343,440 @@ abstract class AppLocalizations {
   /// No description provided for @open.
   ///
   /// In en, this message translates to:
-  /// **'open'**
+  /// **'Open'**
   String get open;
 
   /// No description provided for @close.
   ///
   /// In en, this message translates to:
-  /// **'close'**
+  /// **'Close'**
   String get close;
+
+  /// No description provided for @somethingWentWrongTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again'**
+  String get somethingWentWrongTryAgain;
+
+  /// No description provided for @contactOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Options'**
+  String get contactOptions;
+
+  /// No description provided for @locateONMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate on Map'**
+  String get locateONMap;
+
+  /// No description provided for @reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviews;
+
+  /// No description provided for @furnished.
+  ///
+  /// In en, this message translates to:
+  /// **'Furnished'**
+  String get furnished;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @call.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get call;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get facebook;
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
+
+  /// No description provided for @website.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get website;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @opensAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens at'**
+  String get opensAt;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @closes.
+  ///
+  /// In en, this message translates to:
+  /// **'Closes'**
+  String get closes;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @seeLess.
+  ///
+  /// In en, this message translates to:
+  /// **'See less'**
+  String get seeLess;
+
+  /// No description provided for @seeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get seeMore;
+
+  /// No description provided for @ratingAndReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating & Reviews'**
+  String get ratingAndReviews;
+
+  /// No description provided for @latest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get latest;
+
+  /// No description provided for @oldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest'**
+  String get oldest;
+
+  /// No description provided for @highest_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Rating'**
+  String get highest_rating;
+
+  /// No description provided for @lowest_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest Rating'**
+  String get lowest_rating;
+
+  /// No description provided for @no_reviews_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews found for this rating'**
+  String get no_reviews_found;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
+  /// No description provided for @writeAReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a review'**
+  String get writeAReview;
+
+  /// No description provided for @loginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get loginRequired;
+
+  /// No description provided for @loginRequiredContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You need to be logged in to write a review.'**
+  String get loginRequiredContent;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @logIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get logIn;
+
+  /// No description provided for @reviewedBeforeContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You reviewed this before. Submit again to edit.'**
+  String get reviewedBeforeContent;
+
+  /// No description provided for @yourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review (optional)'**
+  String get yourReview;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @leaveAREview.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a Review'**
+  String get leaveAREview;
+
+  /// No description provided for @enterPhoneNum.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get enterPhoneNum;
+
+  /// No description provided for @confirmationCodeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send you a confirmation code.'**
+  String get confirmationCodeMessage;
+
+  /// No description provided for @phoneNum.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNum;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// No description provided for @confirmCode_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter confirmation code'**
+  String get confirmCode_title;
+
+  /// No description provided for @confirmCode_changeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get confirmCode_changeNumber;
+
+  /// No description provided for @confirmCode_verifyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get confirmCode_verifyButton;
+
+  /// Message stating the confirmation code was sent
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a 6-digit code to {phone}.'**
+  String confirmCode_sentMessage(Object phone);
+
+  /// Countdown before user can resend code
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {seconds}s'**
+  String confirmCode_resendCountdown(Object seconds);
+
+  /// No description provided for @confirmCode_resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get confirmCode_resendCode;
+
+  /// No description provided for @confirmCode_resendSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code resent successfully.'**
+  String get confirmCode_resendSuccess;
+
+  /// Welcome title on the profile setup screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get profile_welcome;
+
+  /// Subtitle under welcome heading
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s get your profile set up.'**
+  String get profile_subtitle;
+
+  /// Button text for uploading profile photo
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Photo'**
+  String get profile_uploadPhoto;
+
+  /// Label for full name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get profile_fullNameLabel;
+
+  /// Hint inside the full name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get profile_fullNameHint;
+
+  /// Text on the finish signup button
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Signup'**
+  String get profile_finishSignup;
+
+  /// No description provided for @profile_createSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile created successfully'**
+  String get profile_createSuccessMessage;
+
+  /// No description provided for @profile_removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Photo'**
+  String get profile_removePhoto;
+
+  /// Shows the registered phone number on profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Registered number: {phoneNumber}'**
+  String profile_registeredNumber(Object phoneNumber);
+
+  /// No description provided for @account_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account_title;
+
+  /// No description provided for @account_yourLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Location'**
+  String get account_yourLocation;
+
+  /// No description provided for @account_editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get account_editProfile;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @switchToAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Admin'**
+  String get switchToAdmin;
+
+  /// No description provided for @common_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get common_save;
+
+  /// No description provided for @profile_updateSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile has been updated successfully.'**
+  String get profile_updateSuccessMessage;
+
+  /// No description provided for @noResultFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResultFound;
+
+  /// No description provided for @typeToSeeSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Start typing to see suggestions'**
+  String get typeToSeeSuggestion;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @provideARating.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a rating'**
+  String get provideARating;
+
+  /// No description provided for @updateAReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Review'**
+  String get updateAReview;
+
+  /// No description provided for @areYouSure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure?'**
+  String get areYouSure;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate

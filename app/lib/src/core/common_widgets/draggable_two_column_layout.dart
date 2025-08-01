@@ -1,4 +1,5 @@
 import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class DraggableTwoColumnLayout extends StatefulWidget {
@@ -50,7 +51,10 @@ class _DraggableTwoColumnLayoutState extends State<DraggableTwoColumnLayout> {
                 startWidth += details.delta.dx;
               });
             },
-            child: VerticalDivider(),
+            child: Container(
+              width: 1,
+              color: context.colorScheme.onSurface.withAlpha(100),
+            ),
           ),
         ),
         Expanded(child: widget.endContent),

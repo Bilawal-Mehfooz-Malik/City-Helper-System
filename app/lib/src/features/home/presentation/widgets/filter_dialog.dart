@@ -107,8 +107,9 @@ class FilterDialogContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final residenceFilter =
-        localFilter is ResidenceFilter ? localFilter as ResidenceFilter : null;
+    final residenceFilter = localFilter is ResidenceFilter
+        ? localFilter as ResidenceFilter
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,9 +119,8 @@ class FilterDialogContent extends StatelessWidget {
           SortDropdown(
             label: context.loc.sortByPrice,
             currentValue: residenceFilter.priceSort,
-            onChanged:
-                (value) =>
-                    onFilterChanged(residenceFilter.copyWith(priceSort: value)),
+            onChanged: (value) =>
+                onFilterChanged(residenceFilter.copyWith(priceSort: value)),
           ),
           gapH12,
         ],
@@ -139,10 +139,8 @@ class FilterDialogContent extends StatelessWidget {
           FilterSwitch(
             value: residenceFilter.isFurnished,
             label: context.loc.showFurnishedOnly,
-            onChanged:
-                (value) => onFilterChanged(
-                  residenceFilter.copyWith(isFurnished: value),
-                ),
+            onChanged: (value) =>
+                onFilterChanged(residenceFilter.copyWith(isFurnished: value)),
           ),
         gapH12,
         GenderPreferenceChips(
@@ -253,14 +251,13 @@ class GenderPreferenceChips extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children:
-              GenderPreference.values.map((gender) {
-                return ChoiceChip(
-                  label: Text(_localizedGenderText(context, gender)),
-                  selected: selected == gender,
-                  onSelected: (_) => onSelected(gender),
-                );
-              }).toList(),
+          children: GenderPreference.values.map((gender) {
+            return ChoiceChip(
+              label: Text(_localizedGenderText(context, gender)),
+              selected: selected == gender,
+              onSelected: (_) => onSelected(gender),
+            );
+          }).toList(),
         ),
       ],
     );

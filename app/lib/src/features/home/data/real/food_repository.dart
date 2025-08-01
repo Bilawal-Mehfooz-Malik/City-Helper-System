@@ -1,67 +1,119 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'food_repository.g.dart';
 
 class FoodRepository {
-  static String get foodsKey => 'food';
+  FoodRepository(this._firestore);
 
-  Stream<List<Food>> watchFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  final FirebaseFirestore _firestore;
+
+  static String get foodsKey => 'food_listings';
+
+  /// The base collection reference without any filters.
+  CollectionReference<Food> get _foodsRef => _firestore
+      .collection(foodsKey)
+      .withConverter<Food>(
+        fromFirestore: (snap, _) =>
+            Food.fromJson(Map<String, dynamic>.from(snap.data()!)),
+        toFirestore: (food, _) => food.toJson(),
+      );
+
+  // THIS IS THE KEY CHANGE:
+  /// A pre-filtered query that only includes documents with an "approved" status.
+  Query<Food> get _approvedFoodsQuery =>
+      _foodsRef.where('status', isEqualTo: Status.approved.name);
+
+  /// Writes a food document. Uses the unfiltered ref.
+  Future<void> setFood(Food food) async {
+    await _foodsRef.doc(food.id).set(food);
   }
 
-  Stream<List<Food>> watchPopularFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  /// Watches a list of all approved foods.
+  Stream<List<Food>> watchFoodsList() {
+    // Uses the new filtered query
+    return _approvedFoodsQuery.snapshots().map(
+      (snap) => snap.docs.map((d) => d.data()).toList(),
+    );
   }
 
-  Future<List<Food>> fetchFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  /// Fetches a list of all approved foods.
+  Future<List<Food>> fetchFoodsList() async {
+    // Uses the new filtered query
+    final snap = await _approvedFoodsQuery.get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Future<List<Food>> fetchPopularFoodsList(CategoryId categoryId) {
-    throw UnimplementedError();
+  /// Watches a list of popular, approved foods.
+  Stream<List<Food>> watchPopularFoodsList() {
+    return _approvedFoodsQuery
+        .where('isPopular', isEqualTo: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
-  Stream<List<Food>> watchFoodsListBySubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  /// Fetches a list of popular, approved foods.
+  Future<List<Food>> fetchPopularFoodsList() async {
+    final snap = await _approvedFoodsQuery
+        .where('isPopular', isEqualTo: true)
+        .get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  /// Watches a list of approved foods by sub-category.
+  Stream<List<Food>> watchFoodsListBySubCategoryId(SubCategoryId subId) {
+    return _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
-  Future<List<Food>> fetchFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+  // ... (Apply the same change to other list-fetching methods) ...
+  Future<List<Food>> fetchFoodsListSubCategoryId(SubCategoryId subId) async {
+    final snap = await _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .get();
+    return snap.docs.map((d) => d.data()).toList();
+  }
+
+  Stream<List<Food>> watchPopularFoodsListSubCategoryId(SubCategoryId subId) {
+    return _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
   Future<List<Food>> fetchPopularFoodsListSubCategoryId(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    throw UnimplementedError();
+    SubCategoryId subId,
+  ) async {
+    final snap = await _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: true)
+        .get();
+    return snap.docs.map((d) => d.data()).toList();
   }
 
-  Future<Food?> fetchFood(CategoryId categoryId, EntityId id) async {
-    throw UnimplementedError();
+  /// Fetches a single food document by its ID, regardless of its status.
+  Future<Food?> fetchFood(EntityId id) async {
+    // Uses the original, unfiltered ref
+    final doc = await _foodsRef.doc(id).get();
+    return doc.exists ? doc.data() : null;
   }
 
-  Stream<Food?> watchFood(CategoryId categoryId, EntityId id) {
-    throw UnimplementedError();
+  /// Watches a single food document by its ID, regardless of its status.
+  Stream<Food?> watchFood(EntityId id) {
+    // Uses the original, unfiltered ref
+    return _foodsRef.doc(id).snapshots().map((doc) {
+      return doc.exists ? doc.data() : null;
+    });
   }
 }
 
 @Riverpod(keepAlive: true)
 FoodRepository foodRepository(Ref ref) {
-  return FoodRepository();
+  return FoodRepository(FirebaseFirestore.instance);
 }

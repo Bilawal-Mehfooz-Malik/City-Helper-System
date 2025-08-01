@@ -13,26 +13,21 @@ void main() {
   group('General Residence List', () {
     test('fetchResidencesList returns residences by categoryId', () async {
       final residence = testResidences.first;
-      final expected =
-          testResidences
-              .where((r) => r.categoryId == residence.categoryId)
-              .toList();
+      final expected = testResidences
+          .where((r) => r.categoryId == residence.categoryId)
+          .toList();
 
-      final result = await repository.fetchResidencesList(residence.categoryId);
+      final result = await repository.fetchResidencesList();
       expect(result, expected);
     });
 
     test('watchResidencesList emits residences by categoryId', () {
       final residence = testResidences.first;
-      final expected =
-          testResidences
-              .where((r) => r.categoryId == residence.categoryId)
-              .toList();
+      final expected = testResidences
+          .where((r) => r.categoryId == residence.categoryId)
+          .toList();
 
-      expect(
-        repository.watchResidencesList(residence.categoryId),
-        emits(expected),
-      );
+      expect(repository.watchResidencesList(), emits(expected));
     });
   });
 
@@ -41,16 +36,11 @@ void main() {
       'fetchPopularResidencesList returns popular residences by categoryId',
       () async {
         final residence = testResidences.first;
-        final expected =
-            testResidences
-                .where(
-                  (r) => r.categoryId == residence.categoryId && r.isPopular,
-                )
-                .toList();
+        final expected = testResidences
+            .where((r) => r.categoryId == residence.categoryId && r.isPopular)
+            .toList();
 
-        final result = await repository.fetchPopularResidencesList(
-          residence.categoryId,
-        );
+        final result = await repository.fetchPopularResidencesList();
         expect(result, expected);
       },
     );
@@ -59,17 +49,11 @@ void main() {
       'watchPopularResidencesList emits popular residences by categoryId',
       () {
         final residence = testResidences.first;
-        final expected =
-            testResidences
-                .where(
-                  (r) => r.categoryId == residence.categoryId && r.isPopular,
-                )
-                .toList();
+        final expected = testResidences
+            .where((r) => r.categoryId == residence.categoryId && r.isPopular)
+            .toList();
 
-        expect(
-          repository.watchPopularResidencesList(residence.categoryId),
-          emits(expected),
-        );
+        expect(repository.watchPopularResidencesList(), emits(expected));
       },
     );
   });
@@ -79,17 +63,15 @@ void main() {
       'fetchResidencesListBySubCategoryId returns matching residences',
       () async {
         final residence = testResidences.first;
-        final expected =
-            testResidences
-                .where(
-                  (r) =>
-                      r.categoryId == residence.categoryId &&
-                      r.subCategoryId == residence.subCategoryId,
-                )
-                .toList();
+        final expected = testResidences
+            .where(
+              (r) =>
+                  r.categoryId == residence.categoryId &&
+                  r.subCategoryId == residence.subCategoryId,
+            )
+            .toList();
 
         final result = await repository.fetchResidencesListBySubCategoryId(
-          residence.categoryId,
           residence.subCategoryId,
         );
         expect(result, expected);
@@ -98,20 +80,16 @@ void main() {
 
     test('watchResidencesListBySubCategoryId emits matching residences', () {
       final residence = testResidences.first;
-      final expected =
-          testResidences
-              .where(
-                (r) =>
-                    r.categoryId == residence.categoryId &&
-                    r.subCategoryId == residence.subCategoryId,
-              )
-              .toList();
+      final expected = testResidences
+          .where(
+            (r) =>
+                r.categoryId == residence.categoryId &&
+                r.subCategoryId == residence.subCategoryId,
+          )
+          .toList();
 
       expect(
-        repository.watchResidencesListBySubCategoryId(
-          residence.categoryId,
-          residence.subCategoryId,
-        ),
+        repository.watchResidencesListBySubCategoryId(residence.subCategoryId),
         emits(expected),
       );
     });
@@ -122,21 +100,17 @@ void main() {
       'fetchPopularResidencesListBySubCategoryId returns matching popular residences',
       () async {
         final residence = testResidences.first;
-        final expected =
-            testResidences
-                .where(
-                  (r) =>
-                      r.categoryId == residence.categoryId &&
-                      r.subCategoryId == residence.subCategoryId &&
-                      r.isPopular,
-                )
-                .toList();
+        final expected = testResidences
+            .where(
+              (r) =>
+                  r.categoryId == residence.categoryId &&
+                  r.subCategoryId == residence.subCategoryId &&
+                  r.isPopular,
+            )
+            .toList();
 
         final result = await repository
-            .fetchPopularResidencesListBySubCategoryId(
-              residence.categoryId,
-              residence.subCategoryId,
-            );
+            .fetchPopularResidencesListBySubCategoryId(residence.subCategoryId);
         expect(result, expected);
       },
     );
@@ -145,19 +119,17 @@ void main() {
       'watchPopularResidencesListBySubCategoryId emits matching popular residences',
       () {
         final residence = testResidences.first;
-        final expected =
-            testResidences
-                .where(
-                  (r) =>
-                      r.categoryId == residence.categoryId &&
-                      r.subCategoryId == residence.subCategoryId &&
-                      r.isPopular,
-                )
-                .toList();
+        final expected = testResidences
+            .where(
+              (r) =>
+                  r.categoryId == residence.categoryId &&
+                  r.subCategoryId == residence.subCategoryId &&
+                  r.isPopular,
+            )
+            .toList();
 
         expect(
           repository.watchPopularResidencesListBySubCategoryId(
-            residence.categoryId,
             residence.subCategoryId,
           ),
           emits(expected),
@@ -169,19 +141,13 @@ void main() {
   group('Single Residence', () {
     test('fetchResidence returns residence by id and categoryId', () async {
       final residence = testResidences.first;
-      final result = await repository.fetchResidence(
-        residence.categoryId,
-        residence.id,
-      );
+      final result = await repository.fetchResidence(residence.id);
       expect(result, residence);
     });
 
     test('watchResidence emits residence by id and categoryId', () {
       final residence = testResidences.first;
-      expect(
-        repository.watchResidence(residence.categoryId, residence.id),
-        emits(residence),
-      );
+      expect(repository.watchResidence(residence.id), emits(residence));
     });
   });
 }

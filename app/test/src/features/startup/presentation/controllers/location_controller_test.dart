@@ -1,5 +1,5 @@
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -39,7 +39,7 @@ void main() {
 
   group('getCurrentLocation', () {
     test('initial state is null', () {
-      final controller = container.read(locationControllerProvider);
+      final controller = container.read(userLocationControllerProvider);
       expect(controller, const AsyncData<LatLng?>(null));
     });
 
@@ -51,11 +51,13 @@ void main() {
           () => geoLocatorRepository.getCurrentLocation(),
         ).thenAnswer((_) async => testLocation);
         final listener = Listener<AsyncValue<LatLng?>>();
-        final controller = container.read(locationControllerProvider.notifier);
+        final controller = container.read(
+          userLocationControllerProvider.notifier,
+        );
 
         // Listening to changes in the state
         container.listen(
-          locationControllerProvider,
+          userLocationControllerProvider,
           listener.call,
           fireImmediately: true,
         );
@@ -83,11 +85,13 @@ void main() {
           () => geoLocatorRepository.getCurrentLocation(),
         ).thenThrow(Exception('Failed to get location'));
         final listener = Listener<AsyncValue<LatLng?>>();
-        final controller = container.read(locationControllerProvider.notifier);
+        final controller = container.read(
+          userLocationControllerProvider.notifier,
+        );
 
         // Listening to changes in the state
         container.listen(
-          locationControllerProvider,
+          userLocationControllerProvider,
           listener.call,
           fireImmediately: true,
         );
@@ -115,11 +119,13 @@ void main() {
       'getLocationFromMap sets state to loading and then to success',
       () async {
         final listener = Listener<AsyncValue<LatLng?>>();
-        final controller = container.read(locationControllerProvider.notifier);
+        final controller = container.read(
+          userLocationControllerProvider.notifier,
+        );
 
         // Listening to changes in the state
         container.listen(
-          locationControllerProvider,
+          userLocationControllerProvider,
           listener.call,
           fireImmediately: true,
         );

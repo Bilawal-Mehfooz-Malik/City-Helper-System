@@ -7,7 +7,7 @@ part of 'sub_categories_repository.dart';
 // **************************************************************************
 
 String _$subCategoriesRepositoryHash() =>
-    r'36ace8fac2249698be58058982a6ccc812f0d795';
+    r'14f3f2a6ad8c720056b17de322bd147b3d92ce63';
 
 /// See also [subCategoriesRepository].
 @ProviderFor(subCategoriesRepository)
@@ -297,6 +297,250 @@ class _SubCategoriesListFutureProviderElement
 
   @override
   int get id => (origin as SubCategoriesListFutureProvider).id;
+}
+
+String _$subCategoryStreamHash() => r'8607e71a076f000a1e073903b736e175dd2fa981';
+
+/// See also [subCategoryStream].
+@ProviderFor(subCategoryStream)
+const subCategoryStreamProvider = SubCategoryStreamFamily();
+
+/// See also [subCategoryStream].
+class SubCategoryStreamFamily extends Family<AsyncValue<SubCategory?>> {
+  /// See also [subCategoryStream].
+  const SubCategoryStreamFamily();
+
+  /// See also [subCategoryStream].
+  SubCategoryStreamProvider call(int id) {
+    return SubCategoryStreamProvider(id);
+  }
+
+  @override
+  SubCategoryStreamProvider getProviderOverride(
+    covariant SubCategoryStreamProvider provider,
+  ) {
+    return call(provider.id);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'subCategoryStreamProvider';
+}
+
+/// See also [subCategoryStream].
+class SubCategoryStreamProvider
+    extends AutoDisposeStreamProvider<SubCategory?> {
+  /// See also [subCategoryStream].
+  SubCategoryStreamProvider(int id)
+    : this._internal(
+        (ref) => subCategoryStream(ref as SubCategoryStreamRef, id),
+        from: subCategoryStreamProvider,
+        name: r'subCategoryStreamProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$subCategoryStreamHash,
+        dependencies: SubCategoryStreamFamily._dependencies,
+        allTransitiveDependencies:
+            SubCategoryStreamFamily._allTransitiveDependencies,
+        id: id,
+      );
+
+  SubCategoryStreamProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final int id;
+
+  @override
+  Override overrideWith(
+    Stream<SubCategory?> Function(SubCategoryStreamRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SubCategoryStreamProvider._internal(
+        (ref) => create(ref as SubCategoryStreamRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<SubCategory?> createElement() {
+    return _SubCategoryStreamProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SubCategoryStreamProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin SubCategoryStreamRef on AutoDisposeStreamProviderRef<SubCategory?> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _SubCategoryStreamProviderElement
+    extends AutoDisposeStreamProviderElement<SubCategory?>
+    with SubCategoryStreamRef {
+  _SubCategoryStreamProviderElement(super.provider);
+
+  @override
+  int get id => (origin as SubCategoryStreamProvider).id;
+}
+
+String _$subCategoryFutureHash() => r'5235ceba539dfcdbf718971df3ca503b22b5c34b';
+
+/// See also [subCategoryFuture].
+@ProviderFor(subCategoryFuture)
+const subCategoryFutureProvider = SubCategoryFutureFamily();
+
+/// See also [subCategoryFuture].
+class SubCategoryFutureFamily extends Family<AsyncValue<SubCategory?>> {
+  /// See also [subCategoryFuture].
+  const SubCategoryFutureFamily();
+
+  /// See also [subCategoryFuture].
+  SubCategoryFutureProvider call(int id) {
+    return SubCategoryFutureProvider(id);
+  }
+
+  @override
+  SubCategoryFutureProvider getProviderOverride(
+    covariant SubCategoryFutureProvider provider,
+  ) {
+    return call(provider.id);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'subCategoryFutureProvider';
+}
+
+/// See also [subCategoryFuture].
+class SubCategoryFutureProvider
+    extends AutoDisposeFutureProvider<SubCategory?> {
+  /// See also [subCategoryFuture].
+  SubCategoryFutureProvider(int id)
+    : this._internal(
+        (ref) => subCategoryFuture(ref as SubCategoryFutureRef, id),
+        from: subCategoryFutureProvider,
+        name: r'subCategoryFutureProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$subCategoryFutureHash,
+        dependencies: SubCategoryFutureFamily._dependencies,
+        allTransitiveDependencies:
+            SubCategoryFutureFamily._allTransitiveDependencies,
+        id: id,
+      );
+
+  SubCategoryFutureProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final int id;
+
+  @override
+  Override overrideWith(
+    FutureOr<SubCategory?> Function(SubCategoryFutureRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SubCategoryFutureProvider._internal(
+        (ref) => create(ref as SubCategoryFutureRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<SubCategory?> createElement() {
+    return _SubCategoryFutureProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SubCategoryFutureProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin SubCategoryFutureRef on AutoDisposeFutureProviderRef<SubCategory?> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _SubCategoryFutureProviderElement
+    extends AutoDisposeFutureProviderElement<SubCategory?>
+    with SubCategoryFutureRef {
+  _SubCategoryFutureProviderElement(super.provider);
+
+  @override
+  int get id => (origin as SubCategoryFutureProvider).id;
 }
 
 // ignore_for_file: type=lint

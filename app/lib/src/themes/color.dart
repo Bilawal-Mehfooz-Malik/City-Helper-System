@@ -9,3 +9,6 @@ const kBlackColor = Colors.black;
 const kRedColor = Color.fromRGBO(207, 28, 12, 1);
 const surfaceColor = Color.fromRGBO(242, 242, 242, 1);
 const imageBackgroundColor = Color.fromRGBO(196, 196, 196, 1);
+
+const darkGreyColor = Color.fromRGBO(212, 218, 226, 1);
+const lightGreyColor = Color.fromRGBO(197, 201, 206, 1);

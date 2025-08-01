@@ -4,9 +4,9 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_view_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/category_card.dart';
-import 'package:app/src/features/categories_list/presentation/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -59,10 +59,9 @@ class CategoriesListView extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: categories.length,
-      padding:
-          usePadding
-              ? EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16)
-              : null,
+      padding: usePadding
+          ? EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16)
+          : null,
       itemBuilder: (context, index) {
         final category = categories[index];
         return Consumer(

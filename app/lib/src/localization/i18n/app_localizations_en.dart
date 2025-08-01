@@ -134,8 +134,232 @@ class AppLocalizationsEn extends AppLocalizations {
   String get applyFiltersButton => 'Apply Filters';
 
   @override
-  String get open => 'open';
+  String get open => 'Open';
 
   @override
-  String get close => 'close';
+  String get close => 'Close';
+
+  @override
+  String get somethingWentWrongTryAgain =>
+      'Something went wrong. Please try again';
+
+  @override
+  String get contactOptions => 'Contact Options';
+
+  @override
+  String get locateONMap => 'Locate on Map';
+
+  @override
+  String get reviews => 'Reviews';
+
+  @override
+  String get furnished => 'Furnished';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get call => 'Call';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get website => 'Website';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get opensAt => 'Opens at';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get closes => 'Closes';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get seeLess => 'See less';
+
+  @override
+  String get seeMore => 'See more';
+
+  @override
+  String get ratingAndReviews => 'Rating & Reviews';
+
+  @override
+  String get latest => 'Latest';
+
+  @override
+  String get oldest => 'Oldest';
+
+  @override
+  String get highest_rating => 'Highest Rating';
+
+  @override
+  String get lowest_rating => 'Lowest Rating';
+
+  @override
+  String get no_reviews_found => 'No reviews found for this rating';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get writeAReview => 'Write a review';
+
+  @override
+  String get loginRequired => 'Login Required';
+
+  @override
+  String get loginRequiredContent =>
+      'You need to be logged in to write a review.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get logIn => 'Login';
+
+  @override
+  String get reviewedBeforeContent =>
+      'You reviewed this before. Submit again to edit.';
+
+  @override
+  String get yourReview => 'Your review (optional)';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get leaveAREview => 'Leave a Review';
+
+  @override
+  String get enterPhoneNum => 'Enter your phone number';
+
+  @override
+  String get confirmationCodeMessage => 'We\'ll send you a confirmation code.';
+
+  @override
+  String get phoneNum => 'Phone number';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get confirmCode_title => 'Enter confirmation code';
+
+  @override
+  String get confirmCode_changeNumber => 'Change';
+
+  @override
+  String get confirmCode_verifyButton => 'Verify';
+
+  @override
+  String confirmCode_sentMessage(Object phone) {
+    return 'We\'ve sent a 6-digit code to $phone.';
+  }
+
+  @override
+  String confirmCode_resendCountdown(Object seconds) {
+    return 'Resend code in ${seconds}s';
+  }
+
+  @override
+  String get confirmCode_resendCode => 'Resend code';
+
+  @override
+  String get confirmCode_resendSuccess =>
+      'Verification code resent successfully.';
+
+  @override
+  String get profile_welcome => 'Welcome!';
+
+  @override
+  String get profile_subtitle => 'Let\'s get your profile set up.';
+
+  @override
+  String get profile_uploadPhoto => 'Upload Photo';
+
+  @override
+  String get profile_fullNameLabel => 'Full Name';
+
+  @override
+  String get profile_fullNameHint => 'Enter your full name';
+
+  @override
+  String get profile_finishSignup => 'Finish Signup';
+
+  @override
+  String get profile_createSuccessMessage => 'Profile created successfully';
+
+  @override
+  String get profile_removePhoto => 'Remove Photo';
+
+  @override
+  String profile_registeredNumber(Object phoneNumber) {
+    return 'Registered number: $phoneNumber';
+  }
+
+  @override
+  String get account_title => 'Account';
+
+  @override
+  String get account_yourLocation => 'Your Location';
+
+  @override
+  String get account_editProfile => 'Edit Profile';
+
+  @override
+  String get signIn => 'Sign in';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get switchToAdmin => 'Switch to Admin';
+
+  @override
+  String get common_save => 'Save';
+
+  @override
+  String get profile_updateSuccessMessage =>
+      'Your profile has been updated successfully.';
+
+  @override
+  String get noResultFound => 'No results found';
+
+  @override
+  String get typeToSeeSuggestion => 'Start typing to see suggestions';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get provideARating => 'Please provide a rating';
+
+  @override
+  String get updateAReview => 'Update Review';
+
+  @override
+  String get areYouSure => 'Are you sure?';
+
+  @override
+  String get logout => 'Log out';
 }

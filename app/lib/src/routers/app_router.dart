@@ -1,7 +1,16 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
+import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/presentation/account_screen.dart';
+import 'package:app/src/features/auth/presentation/auth_flow_screen.dart';
+import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
+import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.dart';
+import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
+import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +28,15 @@ enum AppRoute {
   pickYourLocation,
   category,
   home,
+  homeDetail,
   popular,
+  popularDetail,
+  leaveReview,
+  auth,
+  profile,
+  account,
+  myShop,
+  shopForm,
   loading,
   pageNotFound,
 }
@@ -33,6 +50,9 @@ GoRouter appRouter(Ref ref) {
 
   // listen for changes in userLocationProvider to refresh the router for redirection
   ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
+
+  // Refresh router on auth state change
+  ref.listen(authStateChangesProvider, (_, __) => router.refresh());
 
   return router = GoRouter(
     initialLocation: initialLocation,
@@ -76,8 +96,96 @@ GoRouter appRouter(Ref ref) {
                   final id = int.parse(state.pathParameters['categoryId']!);
                   return PopularEntitiesListScreen(categoryId: id);
                 },
+                routes: [
+                  GoRoute(
+                    path: 'detail/:entityId',
+                    name: AppRoute.popularDetail.name,
+                    pageBuilder: (context, state) {
+                      final categoryId = int.parse(
+                        state.pathParameters['categoryId']!,
+                      );
+                      final entityId = state.pathParameters['entityId']!;
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: HomeDetailScreen(
+                          categoryId: categoryId,
+                          entityId: entityId,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'detail/:entityId',
+                name: AppRoute.homeDetail.name,
+                pageBuilder: (context, state) {
+                  final categoryId = int.parse(
+                    state.pathParameters['categoryId']!,
+                  );
+                  final entityId = state.pathParameters['entityId']!;
+                  return MaterialPage(
+                    fullscreenDialog: true,
+                    child: HomeDetailScreen(
+                      categoryId: categoryId,
+                      entityId: entityId,
+                    ),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'leave-review',
+                    name: AppRoute.leaveReview.name,
+                    pageBuilder: (context, state) {
+                      final entityId = state.pathParameters['entityId']!;
+                      final categoryId = int.parse(
+                        state.pathParameters['categoryId']!,
+                      );
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: LeaveReviewScreen(
+                          entityId: entityId,
+                          categoryId: categoryId,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
+          ),
+          GoRoute(
+            path: 'auth',
+            name: AppRoute.auth.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: AuthFlowScreen()),
+          ),
+          GoRoute(
+            path: 'account',
+            name: AppRoute.account.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: AccountScreen()),
+          ),
+          GoRoute(
+            path: 'profile',
+            name: AppRoute.profile.name,
+            pageBuilder: (context, state) =>
+                MaterialPage(fullscreenDialog: true, child: ProfileScreen()),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/my-shop',
+        name: AppRoute.myShop.name,
+        builder: (context, state) => MyShopDashboardScreen(),
+        routes: [
+          GoRoute(
+            path: '/shop-form',
+            name: AppRoute.shopForm.name,
+            builder: (context, state) {
+              final shop = state.extra as EntityDetail?;
+              return ShopFormScreen(initialShop: shop);
+            },
           ),
         ],
       ),

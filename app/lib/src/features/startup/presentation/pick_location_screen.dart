@@ -4,7 +4,7 @@ import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/controllers/location_controller.dart';
+import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +25,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   @override
   void initState() {
     super.initState();
-    final previousLocation = ref.read(locationControllerProvider).value;
+    final previousLocation = ref.read(userLocationControllerProvider).value;
     final defaultLoc = ref.read(defaultLocationProvider);
     _pickedLocation = previousLocation ?? defaultLoc;
   }
@@ -42,10 +42,9 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    final location =
-        await ref
-            .read(locationControllerProvider.notifier)
-            .getCurrentLocation();
+    final location = await ref
+        .read(userLocationControllerProvider.notifier)
+        .getCurrentLocation();
     if (location != null) {
       await _moveCamera(location, zoomLevel: 18);
     }
@@ -53,7 +52,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   void _saveLocation(BuildContext context) {
     ref
-        .read(locationControllerProvider.notifier)
+        .read(userLocationControllerProvider.notifier)
         .getLocationFromMap(_pickedLocation);
     context.pop();
   }
@@ -64,7 +63,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(locationControllerProvider).isLoading;
+    final isLoading = ref.watch(userLocationControllerProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(title: Text(context.loc.pickYourLocation)),
@@ -108,14 +107,13 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               foregroundColor: context.colorScheme.primary,
               shape: const CircleBorder(),
               onPressed: isLoading ? null : _getCurrentLocation,
-              child:
-                  isLoading
-                      ? const SizedBox(
-                        height: 25,
-                        width: 25,
-                        child: CenteredProgressIndicator(),
-                      )
-                      : const Icon(Icons.my_location),
+              child: isLoading
+                  ? const SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CenteredProgressIndicator(),
+                    )
+                  : const Icon(Icons.my_location),
             ),
             FloatingActionButton.large(
               heroTag: 'saveLocationBtn',

@@ -63,6 +63,7 @@ class PopularEntitesSkeletonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: Sizes.p4,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Skeletonizer(
           enabled: true,
@@ -121,17 +122,16 @@ class EntityCardSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
       enabled: true,
-      child:
-          useCard
-              ? Card(
-                margin: EdgeInsets.only(
-                  right: Sizes.p8,
-                  top: Sizes.p4,
-                  bottom: Sizes.p4,
-                ),
-                child: EntityCardSkeletonContent(allBorders: allBorders),
-              )
-              : EntityCardSkeletonContent(allBorders: allBorders),
+      child: useCard
+          ? Card(
+              margin: EdgeInsets.only(
+                right: Sizes.p8,
+                top: Sizes.p4,
+                bottom: Sizes.p4,
+              ),
+              child: EntityCardSkeletonContent(allBorders: allBorders),
+            )
+          : EntityCardSkeletonContent(allBorders: allBorders),
     );
   }
 }

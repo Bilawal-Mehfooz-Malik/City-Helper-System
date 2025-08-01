@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 // Conditional import: Web loads `configure_web.dart`, others load `configure_nonweb.dart`
 import 'package:app/src/core/app_config/configure_nonweb.dart'
-    if (dart.library.html) 'package:app/src/core/app_config//configure_web.dart';
+    if (dart.library.html) 'package:app/src/core/app_config/configure_web.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

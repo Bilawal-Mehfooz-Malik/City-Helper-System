@@ -61,7 +61,12 @@ class SubCategoryChipListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Add a default "All" option to reset filtering
     final allSubCategories = [
-      SubCategory(id: 0, name: context.loc.all, categoryId: categoryId),
+      SubCategory(
+        id: 0,
+        name: context.loc.all,
+        categoryId: categoryId,
+        sortOrder: 0,
+      ),
       ...subCategories,
     ];
 
@@ -69,15 +74,14 @@ class SubCategoryChipListView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
       child: Row(
-        children:
-            allSubCategories
-                .map(
-                  (subCategory) => Padding(
-                    padding: const EdgeInsets.only(right: Sizes.p8),
-                    child: SubCategoryChipWidget(subCategory: subCategory),
-                  ),
-                )
-                .toList(),
+        children: allSubCategories
+            .map(
+              (subCategory) => Padding(
+                padding: const EdgeInsets.only(right: Sizes.p8),
+                child: SubCategoryChipWidget(subCategory: subCategory),
+              ),
+            )
+            .toList(),
       ),
     );
   }
