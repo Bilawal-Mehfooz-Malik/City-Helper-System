@@ -1,23 +1,22 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sembast/sembast_memory.dart';
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 
 void main() {
-  late Database testDb;
   late UserLocationRepository userLocationRepository;
+  late SharedPreferences sharedPreferences;
 
   const testLocation1 = LatLng(11.0, 11.0);
   const testLocation2 = LatLng(40.7128, -74.0060);
 
   setUp(() async {
-    testDb = await newDatabaseFactoryMemory().openDatabase('test.db');
-    userLocationRepository = UserLocationRepository(testDb, timeOut: 15);
-  });
-
-  tearDown(() async {
-    await testDb.close();
+    SharedPreferences.setMockInitialValues({});
+    sharedPreferences = await SharedPreferences.getInstance();
+    userLocationRepository = UserLocationRepository(sharedPreferences, timeOut: 15);
   });
 
   group('setUserLocation', () {
@@ -28,17 +27,6 @@ void main() {
 
       // verify
       expect(stored, equals(testLocation1));
-    });
-
-    test('handles database write errors', () async {
-      // setup
-      await testDb.close();
-
-      // verify
-      expect(
-        () => userLocationRepository.setUserLocation(testLocation1),
-        throwsA(isA<DatabaseException>()),
-      );
     });
 
     test('handles concurrent write operations', () async {
@@ -75,39 +63,4 @@ void main() {
       expect(latLng, testLocation1);
     },
   );
-
-  test('watchUserLocation emits updates correctly', () async {
-    // setup
-    final emittedValues = <LatLng?>[];
-    final subscription = userLocationRepository.watchUserLocation().listen(
-      emittedValues.add,
-    );
-
-    // run
-
-    await userLocationRepository.setUserLocation(testLocation1);
-    await userLocationRepository.setUserLocation(testLocation2);
-
-    // Wait for the updates to propagate
-    await Future<void>.delayed(Duration.zero);
-
-    // Verify
-    expect(emittedValues, [isNull, testLocation1, testLocation2]);
-    await subscription.cancel();
-  });
-
-  test('watchUserLocation emits null for firstTime', () async {
-    // setup
-    final emittedValues = <LatLng?>[];
-    final subscription = userLocationRepository.watchUserLocation().listen(
-      emittedValues.add,
-    );
-
-    // Wait for the updates to propagate
-    await Future<void>.delayed(Duration.zero);
-
-    // Verify
-    expect(emittedValues, [isNull]);
-    await subscription.cancel();
-  });
 }

@@ -34,7 +34,9 @@ import 'package:app/src/features/startup/presentation/widgets/fake_map_widget.da
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
-  ProviderContainer createFakeProviderContainer() {
+  ProviderContainer createFakeProviderContainer({
+    List<Override> overrides = const [],
+  }) {
     final userLocationRepository = FakeUserLocationRepository();
     final geoLocatorRepository = FakeGeoLocatorRepository();
     final categoryRepository = FakeCategoriesRepository(addDelay: false);
@@ -63,10 +65,9 @@ extension AppBootstrapFakes on AppBootStrap {
 
     return ProviderContainer(
       overrides: [
+        ...overrides,
         // * [StartupFeatureRepository] is overridden with [FakeStartupFeatureRepository]
-        userLocationRepositoryProvider.overrideWithValue(
-          userLocationRepository,
-        ),
+        userLocationRepositoryProvider.overrideWith((ref) => userLocationRepository),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
         googleMapBuilderProvider.overrideWithValue(
           (latLng) => FakeMapWidget(latLng: latLng),

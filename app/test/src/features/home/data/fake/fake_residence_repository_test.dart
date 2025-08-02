@@ -12,20 +12,14 @@ void main() {
 
   group('General Residence List', () {
     test('fetchResidencesList returns residences by categoryId', () async {
-      final residence = testResidences.first;
-      final expected = testResidences
-          .where((r) => r.categoryId == residence.categoryId)
-          .toList();
+      final expected = testResidences.toList();
 
       final result = await repository.fetchResidencesList();
       expect(result, expected);
     });
 
     test('watchResidencesList emits residences by categoryId', () {
-      final residence = testResidences.first;
-      final expected = testResidences
-          .where((r) => r.categoryId == residence.categoryId)
-          .toList();
+      final expected = testResidences.toList();
 
       expect(repository.watchResidencesList(), emits(expected));
     });
@@ -35,9 +29,8 @@ void main() {
     test(
       'fetchPopularResidencesList returns popular residences by categoryId',
       () async {
-        final residence = testResidences.first;
         final expected = testResidences
-            .where((r) => r.categoryId == residence.categoryId && r.isPopular)
+            .where((r) => r.isPopular)
             .toList();
 
         final result = await repository.fetchPopularResidencesList();
@@ -48,9 +41,8 @@ void main() {
     test(
       'watchPopularResidencesList emits popular residences by categoryId',
       () {
-        final residence = testResidences.first;
         final expected = testResidences
-            .where((r) => r.categoryId == residence.categoryId && r.isPopular)
+            .where((r) => r.isPopular)
             .toList();
 
         expect(repository.watchPopularResidencesList(), emits(expected));
@@ -66,7 +58,6 @@ void main() {
         final expected = testResidences
             .where(
               (r) =>
-                  r.categoryId == residence.categoryId &&
                   r.subCategoryId == residence.subCategoryId,
             )
             .toList();
@@ -83,7 +74,6 @@ void main() {
       final expected = testResidences
           .where(
             (r) =>
-                r.categoryId == residence.categoryId &&
                 r.subCategoryId == residence.subCategoryId,
           )
           .toList();
@@ -103,7 +93,6 @@ void main() {
         final expected = testResidences
             .where(
               (r) =>
-                  r.categoryId == residence.categoryId &&
                   r.subCategoryId == residence.subCategoryId &&
                   r.isPopular,
             )
@@ -122,7 +111,6 @@ void main() {
         final expected = testResidences
             .where(
               (r) =>
-                  r.categoryId == residence.categoryId &&
                   r.subCategoryId == residence.subCategoryId &&
                   r.isPopular,
             )

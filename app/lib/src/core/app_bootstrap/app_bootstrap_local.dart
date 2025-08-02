@@ -21,6 +21,7 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/fake/fake_auth_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
+import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
 import 'package:app/src/features/review/data/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
@@ -30,6 +31,7 @@ import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
   Future<ProviderContainer> createLocalProviderContainer() async {
@@ -51,7 +53,9 @@ extension AppBootstrapFakes on AppBootStrap {
       fakeResidenceDetailsRepository: residenceDetailsRepository,
     );
 
-    final userLocationRepository = await UserLocationRepository.makeDefault();
+    final prefs = await SharedPreferences.getInstance();
+    final userLocationRepository = UserLocationRepository(prefs);
+    final userModeReposiory = UserModeRepository(prefs);
     final imageUploadRepository = FakeImageUploadRepository(
       InMemoryImageStorage(),
     );
@@ -86,6 +90,7 @@ extension AppBootstrapFakes on AppBootStrap {
         userRepositoryProvider.overrideWithValue(userRepository),
         reviewsServiceProvider.overrideWithValue(reviewsService),
         authServiceProvider.overrideWithValue(authService),
+        userModeRepositoryProvider.overrideWithValue(userModeReposiory),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

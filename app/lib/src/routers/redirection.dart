@@ -10,7 +10,7 @@ String? redirection(Ref ref, GoRouterState state) {
   final user = authRepository.currentUser;
   final isLoggedIn = user != null;
 
-  final userLocationState = ref.read(watchUserLocationProvider);
+  final userLocationState = ref.watch(fetchUserLocationProvider);
   final currentPath = state.uri.path;
 
   // Step 1: Loading (unchanged)

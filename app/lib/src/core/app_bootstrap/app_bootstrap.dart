@@ -19,12 +19,15 @@ extension CreateProviderContainer on AppBootStrap {
   Future<ProviderContainer> createProviderContainer() async {
     // Initialize SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    final userRepository = await UserLocationRepository.makeDefault();
+    final userLocationRepository = UserLocationRepository(prefs);
+    final userModeReposiory = UserModeRepository(prefs);
 
     return ProviderContainer(
       overrides: [
-        userLocationRepositoryProvider.overrideWithValue(userRepository),
-        userModeRepositoryProvider.overrideWithValue(UserModeRepository(prefs)),
+        userLocationRepositoryProvider.overrideWithValue(
+          userLocationRepository,
+        ),
+        userModeRepositoryProvider.overrideWithValue(userModeReposiory),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

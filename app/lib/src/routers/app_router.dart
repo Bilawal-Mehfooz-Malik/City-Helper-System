@@ -45,11 +45,11 @@ enum AppRoute {
 GoRouter appRouter(Ref ref) {
   late GoRouter router;
   // Determine the initial route based on the user location state.
-  final userLocation = ref.watch(watchUserLocationProvider).value;
+  final userLocation = ref.watch(fetchUserLocationProvider).value;
   final initialLocation = userLocation != null ? '/' : '/get-started';
 
   // listen for changes in userLocationProvider to refresh the router for redirection
-  ref.listen(watchUserLocationProvider, (_, __) => router.refresh());
+  ref.listen(fetchUserLocationProvider, (_, __) => router.refresh());
 
   // Refresh router on auth state change
   ref.listen(authStateChangesProvider, (_, __) => router.refresh());
