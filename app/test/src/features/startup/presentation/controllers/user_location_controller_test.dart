@@ -1,8 +1,6 @@
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
-import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,125 +9,153 @@ import 'package:mocktail/mocktail.dart';
 import '../../../../mocks.dart';
 
 void main() {
-  late ProviderContainer container;
-  late MockUserLocationRepository userLocationRepository;
-  late MockGeoLocatorRepository geoLocatorRepository;
+  group('UserLocationController', () {
+    late MockGeoLocatorRepository mockGeoLocatorRepository;
+    late ProviderContainer container;
 
-  ProviderContainer makeProviderContainer(
-    MockUserLocationRepository userLocationRepository,
-  ) {
-    final container = ProviderContainer(
-      overrides: [
-        userLocationRepositoryProvider.overrideWithValue(
-          userLocationRepository,
-        ),
-        geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
-      ],
-    );
-    addTearDown(container.dispose);
-    return container;
-  }
-
-  setUp(() {
-    userLocationRepository = MockUserLocationRepository();
-    geoLocatorRepository = MockGeoLocatorRepository();
-    container = makeProviderContainer(userLocationRepository);
-  });
-
-  setUpAll(() {
-    registerFallbackValue(const AsyncLoading<void>());
-    registerFallbackValue(LatLng(0, 0));
-  });
-
-  group('createUser', () {
-    test('initial state is null', () {
-      final controller = container.read(localUserLocationSaverProvider);
-      expect(controller, const AsyncData<void>(null));
+    setUp(() {
+      mockGeoLocatorRepository = MockGeoLocatorRepository();
+      container = ProviderContainer(
+        overrides: [
+          geoLocatorRepositoryProvider.overrideWithValue(
+            mockGeoLocatorRepository,
+          ),
+        ],
+      );
     });
 
-    test(
-      'locationController returns nullValue that throws LocationUnavailableException',
-      () async {
-        // Setup
-        final listener = Listener<AsyncValue<void>>();
+    tearDown(() {
+      container.dispose();
+    });
+
+    test('build returns null initially', () {
+      expect(container.read(userLocationControllerProvider).value, null);
+    });
+
+    group('getCurrentLocation', () {
+      test('updates state to AsyncData with location on success', () async {
+        const testLatLng = LatLng(1.0, 2.0);
+        when(
+          () => mockGeoLocatorRepository.getCurrentLocation(),
+        ).thenAnswer((_) async => testLatLng);
+
         final controller = container.read(
-          localUserLocationSaverProvider.notifier,
+          userLocationControllerProvider.notifier,
         );
 
-        container.listen(
-          localUserLocationSaverProvider,
-          listener.call,
-          fireImmediately: true,
+        await controller.getCurrentLocation();
+
+        expect(
+          container.read(userLocationControllerProvider).value,
+          testLatLng,
+        );
+        verify(() => mockGeoLocatorRepository.getCurrentLocation()).called(1);
+      });
+
+      test(
+        'updates state to AsyncError on LocationServicesDisabledException',
+        () async {
+          when(
+            () => mockGeoLocatorRepository.getCurrentLocation(),
+          ).thenThrow(LocationServicesDisabledException());
+
+          final controller = container.read(
+            userLocationControllerProvider.notifier,
+          );
+
+          await controller.getCurrentLocation();
+
+          expect(container.read(userLocationControllerProvider).hasError, true);
+          expect(
+            container.read(userLocationControllerProvider).error,
+            isA<LocationServicesDisabledException>(),
+          );
+          verify(() => mockGeoLocatorRepository.getCurrentLocation()).called(1);
+        },
+      );
+
+      test(
+        'updates state to AsyncError on LocationPermissionDeniedException',
+        () async {
+          when(
+            () => mockGeoLocatorRepository.getCurrentLocation(),
+          ).thenThrow(LocationPermissionDeniedException());
+
+          final controller = container.read(
+            userLocationControllerProvider.notifier,
+          );
+
+          await controller.getCurrentLocation();
+
+          expect(container.read(userLocationControllerProvider).hasError, true);
+          expect(
+            container.read(userLocationControllerProvider).error,
+            isA<LocationPermissionDeniedException>(),
+          );
+          verify(() => mockGeoLocatorRepository.getCurrentLocation()).called(1);
+        },
+      );
+
+      test(
+        'updates state to AsyncError on LocationPermissionDeniedForeverException',
+        () async {
+          when(
+            () => mockGeoLocatorRepository.getCurrentLocation(),
+          ).thenThrow(LocationPermissionDeniedForeverException());
+
+          final controller = container.read(
+            userLocationControllerProvider.notifier,
+          );
+
+          await controller.getCurrentLocation();
+
+          expect(container.read(userLocationControllerProvider).hasError, true);
+          expect(
+            container.read(userLocationControllerProvider).error,
+            isA<LocationPermissionDeniedForeverException>(),
+          );
+          verify(() => mockGeoLocatorRepository.getCurrentLocation()).called(1);
+        },
+      );
+
+      test(
+        'updates state to AsyncError on LocationFetchFailedException',
+        () async {
+          when(
+            () => mockGeoLocatorRepository.getCurrentLocation(),
+          ).thenThrow(LocationFetchFailedException());
+
+          final controller = container.read(
+            userLocationControllerProvider.notifier,
+          );
+
+          await controller.getCurrentLocation();
+
+          expect(container.read(userLocationControllerProvider).hasError, true);
+          expect(
+            container.read(userLocationControllerProvider).error,
+            isA<LocationFetchFailedException>(),
+          );
+          verify(() => mockGeoLocatorRepository.getCurrentLocation()).called(1);
+        },
+      );
+    });
+
+    group('getLocationFromMap', () {
+      test('updates state to AsyncData with provided location', () async {
+        const testLatLng = LatLng(3.0, 4.0);
+
+        final controller = container.read(
+          userLocationControllerProvider.notifier,
         );
 
-        // Run
-        await controller.createUser();
+        controller.getLocationFromMap(testLatLng);
 
-        // Verify
-        verifyInOrder([
-          () => listener(null, const AsyncData<void>(null)),
-          () => listener(
-            const AsyncData<void>(null),
-            any(that: isA<AsyncLoading<void>>()),
-          ),
-          () => listener(
-            any(that: isA<AsyncLoading<void>>()),
-            any(
-              that: isA<AsyncError<void>>().having(
-                (e) => e.error,
-                'error',
-                isA<LocationUnavailableException>(),
-              ),
-            ),
-          ),
-        ]);
-      },
-    );
-
-    test('createUser saves User Location Successfully', () async {
-      // Setup
-      final listener = Listener<AsyncValue<void>>();
-      final testLocation = LatLng(1, 1);
-
-      // Stub the repository so that setUserLocation returns a Future<void>
-      when(
-        () => userLocationRepository.setUserLocation(any()),
-      ).thenAnswer((_) async {});
-
-      when(
-        geoLocatorRepository.getCurrentLocation,
-      ).thenAnswer((_) async => testLocation);
-
-      // Initializing locationController with [testLocation]
-      await container
-          .read(userLocationControllerProvider.notifier)
-          .getCurrentLocation();
-
-      final controller = container.read(
-        localUserLocationSaverProvider.notifier,
-      );
-
-      container.listen(
-        localUserLocationSaverProvider,
-        listener.call,
-        fireImmediately: true,
-      );
-
-      // Run
-      await controller.createUser();
-
-      // Verify state transitions
-      verifyInOrder([
-        () => listener(null, const AsyncData<void>(null)),
-        () => listener(
-          const AsyncData<void>(null),
-          any(that: isA<AsyncLoading<void>>()),
-        ),
-        () => listener(
-          any(that: isA<AsyncLoading<void>>()),
-          const AsyncData<void>(null),
-        ),
-      ]);
+        expect(
+          container.read(userLocationControllerProvider).value,
+          testLatLng,
+        );
+      });
     });
   });
 }

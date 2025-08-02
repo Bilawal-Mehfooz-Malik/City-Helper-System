@@ -16,9 +16,4 @@ class FakeUserLocationRepository implements UserLocationRepository {
   Future<void> setUserLocation(LatLng location) async {
     _fakeDb.value = {..._fakeDb.value, userLocationKey: location};
   }
-
-  @override
-  Stream<LatLng?> watchUserLocation() {
-    return _fakeDb.stream.map((data) => data[userLocationKey] as LatLng?);
-  }
 }

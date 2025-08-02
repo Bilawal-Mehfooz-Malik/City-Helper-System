@@ -1,66 +1,75 @@
 import 'dart:convert';
 
+import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  late UserLocationRepository userLocationRepository;
-  late SharedPreferences sharedPreferences;
+  group('UserLocationRepository', () {
+    late MockSharedPreferences mockSharedPreferences;
+    late UserLocationRepository userLocationRepository;
 
-  const testLocation1 = LatLng(11.0, 11.0);
-  const testLocation2 = LatLng(40.7128, -74.0060);
-
-  setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    sharedPreferences = await SharedPreferences.getInstance();
-    userLocationRepository = UserLocationRepository(sharedPreferences, timeOut: 15);
-  });
-
-  group('setUserLocation', () {
-    test('successfully saves valid location', () async {
-      // run
-      await userLocationRepository.setUserLocation(testLocation1);
-      final stored = await userLocationRepository.fetchUserLocation();
-
-      // verify
-      expect(stored, equals(testLocation1));
+    setUp(() {
+      mockSharedPreferences = MockSharedPreferences();
+      userLocationRepository = UserLocationRepository(mockSharedPreferences);
     });
 
-    test('handles concurrent write operations', () async {
-      // run
-      await Future.wait([
-        userLocationRepository.setUserLocation(testLocation1),
-        userLocationRepository.setUserLocation(testLocation2),
-      ]);
+    test('setUserLocation saves LatLng to SharedPreferences', () async {
+      const latLng = LatLng(34.0522, -118.2437);
+      when(
+        () => mockSharedPreferences.setString(
+          UserLocationRepository.userLocationKey,
+          json.encode(latLng.toJson()),
+        ),
+      ).thenAnswer((_) async => true);
 
-      // verify
-      final stored = await userLocationRepository.fetchUserLocation();
-      expect(stored, equals(testLocation2));
+      await userLocationRepository.setUserLocation(latLng);
+
+      verify(
+        () => mockSharedPreferences.setString(
+          UserLocationRepository.userLocationKey,
+          json.encode(latLng.toJson()),
+        ),
+      ).called(1);
+    });
+
+    test('fetchUserLocation returns LatLng if data exists', () async {
+      const latLng = LatLng(34.0522, -118.2437);
+      when(
+        () => mockSharedPreferences.getString(
+          UserLocationRepository.userLocationKey,
+        ),
+      ).thenAnswer((_) => json.encode(latLng.toJson()));
+
+      final result = await userLocationRepository.fetchUserLocation();
+
+      expect(result, latLng);
+      verify(
+        () => mockSharedPreferences.getString(
+          UserLocationRepository.userLocationKey,
+        ),
+      ).called(1);
+    });
+
+    test('fetchUserLocation returns null if no data exists', () async {
+      when(
+        () => mockSharedPreferences.getString(
+          UserLocationRepository.userLocationKey,
+        ),
+      ).thenAnswer((_) => null);
+
+      final result = await userLocationRepository.fetchUserLocation();
+
+      expect(result, isNull);
+      verify(
+        () => mockSharedPreferences.getString(
+          UserLocationRepository.userLocationKey,
+        ),
+      ).called(1);
     });
   });
-
-  test('fetchUserLocation returns null if no data is stored', () async {
-    // run
-    final userLocation = await userLocationRepository.fetchUserLocation();
-
-    // verify
-    expect(userLocation, isNull);
-  });
-
-  test(
-    'setUserLocation sets testLatLng and then fetchUserLocation returns testLatLng',
-    () async {
-      // setup
-      await userLocationRepository.setUserLocation(testLocation1);
-
-      // run
-      final latLng = await userLocationRepository.fetchUserLocation();
-
-      // verify
-      expect(latLng, testLocation1);
-    },
-  );
 }

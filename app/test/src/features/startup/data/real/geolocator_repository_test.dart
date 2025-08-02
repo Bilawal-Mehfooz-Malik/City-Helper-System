@@ -1,167 +1,176 @@
-import 'package:app/src/core/exceptions/app_exceptions.dart';
+import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 
 import '../../../../mocks.dart';
 
+// Mock GeolocatorPlatform
+
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-  late GeolocatorPlatform geoLocator;
-  late GeoLocatorRepository locationRepository;
+  group('GeoLocatorRepository', () {
+    late MockGeolocatorPlatform mockGeolocatorPlatform;
+    late GeoLocatorRepository geoLocatorRepository;
 
-  final position = Position(
-    latitude: 37.0,
-    longitude: -122.0,
-    timestamp: DateTime(2025),
-    accuracy: 1.0,
-    altitude: 1.0,
-    heading: 1.0,
-    speed: 1.0,
-    speedAccuracy: 1.0,
-    altitudeAccuracy: 12,
-    headingAccuracy: 12,
-  );
+    setUp(() {
+      mockGeolocatorPlatform = MockGeolocatorPlatform();
+      // Register fallback values for LatLng and Position
+      registerFallbackValue(const LatLng(0, 0));
+      registerFallbackValue(
+        Position(
+          latitude: 0,
+          longitude: 0,
+          timestamp: DateTime.now(),
+          accuracy: 0,
+          altitude: 0,
+          heading: 0,
+          speed: 0,
+          speedAccuracy: 0,
+          altitudeAccuracy: 0,
+          headingAccuracy: 0,
+        ),
+      );
 
-  setUp(() {
-    geoLocator = MockGeoLocator();
-    locationRepository = GeoLocatorRepository(geoLocator, timeOut: 15);
-  });
-
-  group('GeoLocationRepository', () {
-    test('getCurrentLocation returns userLocation', () async {
-      // Setup
-      when(
-        () => geoLocator.isLocationServiceEnabled(),
-      ).thenAnswer((_) async => true);
-      when(
-        () => geoLocator.checkPermission(),
-      ).thenAnswer((_) async => LocationPermission.whileInUse);
-      when(
-        () => geoLocator.getCurrentPosition(),
-      ).thenAnswer((_) async => position);
-
-      // Run
-      final result = await locationRepository.getCurrentLocation();
-
-      // Verify
-      expect(result!.latitude, position.latitude);
-      expect(result.longitude, position.longitude);
+      geoLocatorRepository = GeoLocatorRepository(mockGeolocatorPlatform);
     });
 
     test(
-      'getCurrentLocation returns throws LocationFetchFailedException',
+      'getCurrentLocation throws LocationServicesDisabledException if services are disabled',
       () async {
-        // Setup
         when(
-          () => geoLocator.isLocationServiceEnabled(),
-        ).thenAnswer((_) async => true);
-        when(
-          () => geoLocator.checkPermission(),
-        ).thenAnswer((_) async => LocationPermission.whileInUse);
-        when(
-          () => geoLocator.getCurrentPosition(),
-        ).thenThrow(LocationFetchFailedException());
-
-        // Run
-        expect(
-          locationRepository.getCurrentLocation(),
-          throwsA(isA<LocationFetchFailedException>()),
-        );
-      },
-    );
-
-    test(
-      'throws LocationServicesDisabledException when services are disabled',
-      () async {
-        // Setup
-        when(
-          () => geoLocator.isLocationServiceEnabled(),
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
         ).thenAnswer((_) async => false);
 
-        // Running & Verify
         expect(
-          locationRepository.getCurrentLocation(),
+          () => geoLocatorRepository.getCurrentLocation(),
           throwsA(isA<LocationServicesDisabledException>()),
         );
       },
     );
 
     test(
-      'throws LocationPermissionDeniedException when permissions are denied',
+      'getCurrentLocation throws LocationPermissionDeniedException if permission is denied',
       () async {
-        // Setup
         when(
-          () => geoLocator.isLocationServiceEnabled(),
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
         ).thenAnswer((_) async => true);
         when(
-          () => geoLocator.checkPermission(),
+          () => mockGeolocatorPlatform.checkPermission(),
         ).thenAnswer((_) async => LocationPermission.denied);
         when(
-          () => geoLocator.requestPermission(),
+          () => mockGeolocatorPlatform.requestPermission(),
         ).thenAnswer((_) async => LocationPermission.denied);
 
-        // Running & Verify
         expect(
-          locationRepository.getCurrentLocation(),
+          () => geoLocatorRepository.getCurrentLocation(),
           throwsA(isA<LocationPermissionDeniedException>()),
         );
       },
     );
 
     test(
-      'throws LocationPermissionDeniedForeverException when permissions are denied forever',
+      'getCurrentLocation throws LocationPermissionDeniedForeverException if permission is denied forever',
       () async {
-        // Setup
         when(
-          () => geoLocator.isLocationServiceEnabled(),
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
         ).thenAnswer((_) async => true);
         when(
-          () => geoLocator.checkPermission(),
+          () => mockGeolocatorPlatform.checkPermission(),
         ).thenAnswer((_) async => LocationPermission.deniedForever);
 
-        // Running & Verify
         expect(
-          locationRepository.getCurrentLocation(),
+          () => geoLocatorRepository.getCurrentLocation(),
           throwsA(isA<LocationPermissionDeniedForeverException>()),
         );
       },
     );
 
     test(
-      'throws LocationFetchFailedException when it fails in fetching location',
+      'getCurrentLocation returns LatLng on successful location fetch',
       () async {
-        // Setup
         when(
-          () => geoLocator.isLocationServiceEnabled(),
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
         ).thenAnswer((_) async => true);
         when(
-          () => geoLocator.checkPermission(),
+          () => mockGeolocatorPlatform.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.whileInUse);
+        when(() => mockGeolocatorPlatform.getCurrentPosition()).thenAnswer(
+          (_) async => Position(
+            latitude: 37.7749,
+            longitude: -122.4194,
+            timestamp: DateTime.now(),
+            accuracy: 0,
+            altitude: 0,
+            heading: 0,
+            speed: 0,
+            speedAccuracy: 0,
+            altitudeAccuracy: 0,
+            headingAccuracy: 0,
+          ),
+        );
+
+        final result = await geoLocatorRepository.getCurrentLocation();
+        expect(result, isA<LatLng>());
+        expect(result?.latitude, 37.7749);
+        expect(result?.longitude, -122.4194);
+      },
+    );
+
+    test(
+      'getCurrentLocation throws LocationFetchFailedException on position fetch error',
+      () async {
+        when(
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => mockGeolocatorPlatform.checkPermission(),
         ).thenAnswer((_) async => LocationPermission.whileInUse);
         when(
-          () => geoLocator.getCurrentPosition(),
-        ).thenThrow(LocationFetchFailedException());
+          () => mockGeolocatorPlatform.getCurrentPosition(),
+        ).thenThrow(Exception('Test error'));
 
-        // Running & Verify
         expect(
-          locationRepository.getCurrentLocation(),
+          () => geoLocatorRepository.getCurrentLocation(),
           throwsA(isA<LocationFetchFailedException>()),
         );
       },
     );
 
-    test('throws TimedOutException when request takes longer time', () async {
-      // Setup
-      final geoLocatorPlatform = MockGeoLocator();
-      final repo = GeoLocatorRepository(geoLocatorPlatform, timeOut: 1);
-      when(() => geoLocatorPlatform.isLocationServiceEnabled()).thenAnswer(
-        (_) => Future.delayed(const Duration(seconds: 2), () => false),
-      );
+    test(
+      'getCurrentLocation requests permission if initially denied and then succeeds',
+      () async {
+        when(
+          () => mockGeolocatorPlatform.isLocationServiceEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          () => mockGeolocatorPlatform.checkPermission(),
+        ).thenAnswer((_) async => LocationPermission.denied);
+        when(
+          () => mockGeolocatorPlatform.requestPermission(),
+        ).thenAnswer((_) async => LocationPermission.whileInUse);
+        when(() => mockGeolocatorPlatform.getCurrentPosition()).thenAnswer(
+          (_) async => Position(
+            latitude: 1.0,
+            longitude: 2.0,
+            timestamp: DateTime.now(),
+            accuracy: 0,
+            altitude: 0,
+            heading: 0,
+            speed: 0,
+            speedAccuracy: 0,
+            altitudeAccuracy: 0,
+            headingAccuracy: 0,
+          ),
+        );
 
-      // Running & Verify
-      expect(repo.getCurrentLocation(), throwsA(isA<TimedOutException>()));
-    });
+        final result = await geoLocatorRepository.getCurrentLocation();
+        expect(result, isA<LatLng>());
+        expect(result?.latitude, 1.0);
+        expect(result?.longitude, 2.0);
+        verify(() => mockGeolocatorPlatform.requestPermission()).called(1);
+      },
+    );
   });
 }

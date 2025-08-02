@@ -49,10 +49,10 @@ GoRouter appRouter(Ref ref) {
   final initialLocation = userLocation != null ? '/' : '/get-started';
 
   // listen for changes in userLocationProvider to refresh the router for redirection
-  ref.listen(fetchUserLocationProvider, (_, __) => router.refresh());
+  ref.listen(fetchUserLocationProvider, (_, _) => router.refresh());
 
   // Refresh router on auth state change
-  ref.listen(authStateChangesProvider, (_, __) => router.refresh());
+  ref.listen(authStateChangesProvider, (_, _) => router.refresh());
 
   return router = GoRouter(
     initialLocation: initialLocation,
