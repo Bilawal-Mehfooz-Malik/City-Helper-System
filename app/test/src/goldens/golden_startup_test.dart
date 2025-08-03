@@ -1,5 +1,4 @@
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
-import 'package:app/src/features/startup/presentation/widgets/get_location_content.dart';
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,12 +37,12 @@ void main() {
       await r.startupRobot.tapGetStartedButton();
       r.startupRobot.expectModalBottomSheet();
       await expectLater(
-        find.byType(GetLocationContent),
+        find.byType(StartupScreen),
         matchesGoldenFile('startup/Mobile/2_bottom_sheet_opened.png'),
       );
       await r.startupRobot.tapGetCurrentButton();
       await expectLater(
-        find.byType(GetLocationContent),
+        find.byType(StartupScreen),
         matchesGoldenFile('startup/Mobile/3_saved_current_location.png'),
       );
       await r.startupRobot.tapSaveButton();
@@ -64,7 +63,7 @@ void main() {
 
       await r.startupRobot.tapGetCurrentButton();
       await expectLater(
-        find.byType(GetLocationContent),
+        find.byType(StartupScreen),
         matchesGoldenFile('startup/Desktop/2_saved_current_location.png'),
       );
       await r.startupRobot.tapSaveButton();
