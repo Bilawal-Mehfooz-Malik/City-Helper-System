@@ -31,9 +31,10 @@ class Robot {
   static const _desktopSize = Size(1000, 1000);
 
   // Entry Point with Real App
-  Future<void> pumpMyApp({List<Override> overrides = const []}) async {
+  Future<ProviderContainer> pumpMyApp({List<Override> overrides = const []}) async {
     final container = AppBootStrap().createFakeProviderContainer(overrides: overrides);
     await _pumpAppWithContainer(const MyApp(), container);
+    return container;
   }
 
   // Entry Point with Fake App (custom home + router)

@@ -35,6 +35,7 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
       throw LocationFetchFailedException();
     }
 
+    // Only return LatLng if no exceptions were thrown
     return latLng ?? LatLng(33.150691628036256, 73.74845167724608);
   }
 }

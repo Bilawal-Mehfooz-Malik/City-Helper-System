@@ -65,7 +65,6 @@ extension AppBootstrapFakes on AppBootStrap {
 
     return ProviderContainer(
       overrides: [
-        ...overrides,
         // * [StartupFeatureRepository] is overridden with [FakeStartupFeatureRepository]
         userLocationRepositoryProvider.overrideWith((ref) => userLocationRepository),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
@@ -88,6 +87,7 @@ extension AppBootstrapFakes on AppBootStrap {
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
         reviewsServiceProvider.overrideWithValue(reviewsService),
+        ...overrides, // Place test-specific overrides last to ensure precedence
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers
