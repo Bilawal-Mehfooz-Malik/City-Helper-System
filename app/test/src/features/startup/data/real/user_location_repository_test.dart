@@ -4,9 +4,8 @@ import 'package:app/src/features/startup/data/real/user_location_repository.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class MockSharedPreferences extends Mock implements SharedPreferences {}
+import '../../../../mocks.dart';
 
 void main() {
   group('UserLocationRepository', () {

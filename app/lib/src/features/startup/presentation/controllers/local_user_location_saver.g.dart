@@ -7,7 +7,7 @@ part of 'local_user_location_saver.dart';
 // **************************************************************************
 
 String _$localUserLocationSaverHash() =>
-    r'7ffb50ab01795055f67136a21f87eb0d2cab1a62';
+    r'369036c2a18fe0cd27c8f542ae3c8b109a0d74ff';
 
 /// See also [LocalUserLocationSaver].
 @ProviderFor(LocalUserLocationSaver)

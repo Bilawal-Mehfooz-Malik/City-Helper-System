@@ -23,5 +23,12 @@ class LocalUserLocationSaver extends _$LocalUserLocationSaver {
     state = await AsyncValue.guard(
       () => repository.setUserLocation(userLocation),
     );
+
+    if (state.hasError) {
+      state = AsyncError(state.error!, StackTrace.current);
+    } else {
+      // Navigate to the next screen after saving the location
+      ref.invalidate(fetchUserLocationProvider);
+    }
   }
 }

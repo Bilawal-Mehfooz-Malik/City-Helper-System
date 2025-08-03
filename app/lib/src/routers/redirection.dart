@@ -55,12 +55,22 @@ String? redirection(Ref ref, GoRouterState state) {
     }
   }
 
-  // Step 4: Onboarding Block (unchanged)
+  // Step 4: Onboarding Block
   final isPickLocation = currentPath.contains('pick-your-location');
   if (hasUserLocation &&
       currentPath.startsWith('/get-started') &&
       !isPickLocation) {
-    return '/';
+    if (isLoggedIn) {
+      final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
+      if (isAdminMode) {
+        return '/my-shop';
+      } else {
+        return '/categories';
+      }
+    } else {
+      // If not logged in but has location, redirect to categories
+      return '/categories';
+    }
   }
 
   return null; // No redirection needed.
