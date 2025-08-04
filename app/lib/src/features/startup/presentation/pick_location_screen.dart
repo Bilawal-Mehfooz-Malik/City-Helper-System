@@ -54,7 +54,11 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     ref
         .read(userLocationControllerProvider.notifier)
         .getLocationFromMap(_pickedLocation);
-    context.pop();
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (mounted) {
+        context.pop();
+      }
+    });
   }
 
   void _onCameraMove(CameraPosition position) {
