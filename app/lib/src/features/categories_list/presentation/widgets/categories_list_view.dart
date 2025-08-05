@@ -42,7 +42,7 @@ class CategoriesListView extends StatelessWidget {
         .setSelectedCategoryView(SelectedCategoryView.home);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
-      ref.read(selectedCategoryIdControllerProvider.notifier).setCategoryId(id);
+      ref.read(selectedCategoryNotifierProvider.notifier).setCategoryId(id);
     } else {
       context.goNamed(
         AppRoute.home.name,

@@ -26,25 +26,24 @@ final categoriesRepositoryProvider = Provider<CategoriesRepository>.internal(
 // ignore: unused_element
 typedef CategoriesRepositoryRef = ProviderRef<CategoriesRepository>;
 String _$categoriesListStreamHash() =>
-    r'60cb3b0ecb4bae45194e7002e423f81c2f67383e';
+    r'c26715bb743388bd4cb030d4a31f287cbd9a761b';
 
 /// See also [categoriesListStream].
 @ProviderFor(categoriesListStream)
-final categoriesListStreamProvider =
-    AutoDisposeStreamProvider<List<Category>>.internal(
-      categoriesListStream,
-      name: r'categoriesListStreamProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$categoriesListStreamHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final categoriesListStreamProvider = StreamProvider<List<Category>>.internal(
+  categoriesListStream,
+  name: r'categoriesListStreamProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$categoriesListStreamHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CategoriesListStreamRef = AutoDisposeStreamProviderRef<List<Category>>;
+typedef CategoriesListStreamRef = StreamProviderRef<List<Category>>;
 String _$categoriesListFutureHash() =>
     r'4ad55643af4b21d77fc125a5562ac4aaa3c19955';
 

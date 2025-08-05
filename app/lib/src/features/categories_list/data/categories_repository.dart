@@ -60,7 +60,7 @@ CategoriesRepository categoriesRepository(Ref ref) {
   return CategoriesRepository(FirebaseFirestore.instance);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<List<Category>> categoriesListStream(Ref ref) {
   final categoriesRepository = ref.watch(categoriesRepositoryProvider);
   return categoriesRepository.watchCategoriesList();

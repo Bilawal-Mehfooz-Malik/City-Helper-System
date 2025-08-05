@@ -22,7 +22,7 @@ class CategoryCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategoryId = ref.watch(selectedCategoryIdControllerProvider);
+    final selectedCategoryId = ref.watch(selectedCategoryNotifierProvider);
     final isTileSelected = selectedCategoryId == category.id;
     final icon = getCategoryIcon(category.iconName);
 

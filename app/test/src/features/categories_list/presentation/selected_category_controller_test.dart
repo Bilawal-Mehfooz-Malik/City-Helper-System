@@ -11,19 +11,19 @@ void main() {
 
   group('SelectedCategoryIdController', () {
     test('initial state is null', () {
-      final initialState = container.read(selectedCategoryIdControllerProvider);
+      final initialState = container.read(selectedCategoryNotifierProvider);
       expect(initialState, null);
     });
 
     test('setCategoryId updates state from null', () {
       const testId = 1;
       final notifier = container.read(
-        selectedCategoryIdControllerProvider.notifier,
+        selectedCategoryNotifierProvider.notifier,
       );
 
       notifier.setCategoryId(testId);
 
-      final updatedState = container.read(selectedCategoryIdControllerProvider);
+      final updatedState = container.read(selectedCategoryNotifierProvider);
       expect(updatedState, testId);
     });
 
@@ -33,13 +33,13 @@ void main() {
         const firstId = 1;
         const secondId = 2;
         final notifier = container.read(
-          selectedCategoryIdControllerProvider.notifier,
+          selectedCategoryNotifierProvider.notifier,
         );
 
         notifier.setCategoryId(firstId);
         notifier.setCategoryId(secondId);
 
-        final finalState = container.read(selectedCategoryIdControllerProvider);
+        final finalState = container.read(selectedCategoryNotifierProvider);
         expect(finalState, secondId);
       },
     );
@@ -47,18 +47,18 @@ void main() {
     test('setCategoryId with the same value does not change the state', () {
       const testId = 1;
       final notifier = container.read(
-        selectedCategoryIdControllerProvider.notifier,
+        selectedCategoryNotifierProvider.notifier,
       );
 
       notifier.setCategoryId(testId);
       final stateAfterFirstSet = container.read(
-        selectedCategoryIdControllerProvider,
+        selectedCategoryNotifierProvider,
       );
       expect(stateAfterFirstSet, testId);
 
       notifier.setCategoryId(testId);
       final stateAfterSecondSet = container.read(
-        selectedCategoryIdControllerProvider,
+        selectedCategoryNotifierProvider,
       );
       expect(stateAfterSecondSet, testId);
     });

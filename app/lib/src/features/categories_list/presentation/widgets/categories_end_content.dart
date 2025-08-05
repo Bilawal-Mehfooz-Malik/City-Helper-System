@@ -14,7 +14,7 @@ class CategoriesEndContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final view = ref.watch(selectedCategoryViewControllerProvider);
-    final selectedCategory = ref.watch(selectedCategoryIdControllerProvider);
+    final selectedCategory = ref.watch(selectedCategoryNotifierProvider);
 
     if (selectedCategory == null) {
       return Center(child: Text(context.loc.selectCategoryBody));
