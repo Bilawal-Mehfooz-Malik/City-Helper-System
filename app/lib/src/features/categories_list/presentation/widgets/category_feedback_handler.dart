@@ -1,0 +1,60 @@
+import 'dart:io';
+
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
+import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:flutter/material.dart';
+
+/// A helper widget that returns a centered message for error and empty states,
+/// adapting its presentation for small vs. large screens.
+class CategoryFeedbackHandler extends StatelessWidget {
+  const CategoryFeedbackHandler.error({
+    super.key,
+    required this.error,
+    required this.isSmallScreen,
+  }) : isEmpty = false,
+       _message = null,
+       _title = null;
+
+  const CategoryFeedbackHandler.empty({super.key, required this.isSmallScreen})
+    : error = null,
+      isEmpty = true,
+      _title = "No Categories Found",
+      _message =
+          "There are currently no categories to display. Please check back later.";
+
+  final Object? error;
+  final bool isEmpty;
+  final bool isSmallScreen;
+  final String? _title;
+  final String? _message;
+
+  @override
+  Widget build(BuildContext context) {
+    final title = isEmpty ? _title! : context.loc.somethingWentWrong;
+    final message = isEmpty
+        ? _message!
+        : error is SocketException
+        ? "You appear to be offline. Please check your internet connection."
+              .hardcoded
+        : "An unexpected error occurred. Please try again later.".hardcoded;
+
+    if (isSmallScreen) {
+      return CenteredMessageWidget(
+        icon: isEmpty ? Icons.question_mark_rounded : Icons.error_outline,
+        title: title.hardcoded,
+        message: message.hardcoded,
+        useResponsiveDesign: true,
+      );
+    }
+
+    return MessageScreen(
+      showTitle: true,
+      showAppBar: true,
+      appBarTitle: context.loc.categories,
+      icon: isEmpty ? Icons.question_mark_rounded : Icons.error_outline,
+      title: title.hardcoded,
+      message: message.hardcoded,
+    );
+  }
+}

@@ -1,8 +1,8 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/large_screen_content.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/small_screen_content.dart';
+import 'package:app/src/features/categories_list/presentation/responsive/large_screen_content.dart';
+import 'package:app/src/features/categories_list/presentation/responsive/small_screen_content.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';

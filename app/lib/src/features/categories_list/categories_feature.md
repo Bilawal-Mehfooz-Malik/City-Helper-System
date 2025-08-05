@@ -41,7 +41,7 @@ This layer is responsible for the UI and handling user interactions.
 -   **`presentation/categories_list_screen.dart`**:
     -   The main widget for this feature.
     -   It uses `isSmallScreen()` to determine the device's form factor and renders either `SmallScreenContent` or `LargeScreenContent`.
-    -   It watches `categoriesListFutureProvider` and uses an `AsyncValueWidget` to handle loading, error, and data states gracefully, showing a `CategorySkeletonList` while loading.
+    -   It watches `categoriesListStreamProvider` and uses an `AsyncValueWidget` to handle loading, error, and data states gracefully, showing a `CategorySkeletonList` while loading.
 -   **`presentation/widgets/categories_list_view.dart`**:
     -   Renders the vertical list of categories.
     -   Contains the critical `_onTap` logic that differentiates behavior based on screen size.
