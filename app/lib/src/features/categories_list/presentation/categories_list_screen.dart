@@ -1,18 +1,10 @@
-import 'package:app/src/core/common_widgets/async_value_widget.dart';
-import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
-import 'package:app/src/core/common_widgets/draggable_two_column_layout.dart';
-import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
-import 'package:app/src/features/categories_list/domain/category.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/categories_list_view.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/category_skeleton_list.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/categories_end_content.dart';
-import 'package:app/src/features/categories_list/presentation/widgets/categories_start_content.dart';
+import 'package:app/src/features/categories_list/presentation/widgets/large_screen_content.dart';
+import 'package:app/src/features/categories_list/presentation/widgets/small_screen_content.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,86 +45,4 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class SmallScreenContent extends StatelessWidget {
-  const SmallScreenContent({super.key, required this.categoriesValue});
-
-  final AsyncValue<List<Category>> categoriesValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return AsyncValueWidget<List<Category>>(
-      value: categoriesValue,
-      loading: const CategorySkeletonList(usePadding: true),
-      error: (error, _) => CenteredMessageWidget(
-        icon: Icons.error_outline,
-        title: context.loc.somethingWentWrong,
-        message:
-            "We couldn't load categories. Please check your internet connection and try again."
-                .hardcoded,
-        useResponsiveDesign: true,
-      ),
-      data: (categories) {
-        if (categories.isEmpty) {
-          return CenteredMessageWidget(
-            icon: Icons.question_mark_rounded,
-            title: "No Categories Found".hardcoded,
-            message:
-                "There are currently no categories to display. Please check back later."
-                    .hardcoded,
-          );
-        }
-        return CategoriesListView(
-          usePadding: true,
-          useListTile: false,
-          categories: categories,
-        );
-      },
-    );
-  }
-}
-
-class LargeScreenContent extends StatelessWidget {
-  const LargeScreenContent({super.key, required this.categoriesValue});
-
-  final AsyncValue<List<Category>> categoriesValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return AsyncValueWidget<List<Category>>(
-      value: categoriesValue,
-      loading: const DraggableTwoColumnLayout(
-        startContent: CategoriesSkeletonStartContent(),
-        endContent: CenteredProgressIndicator(),
-      ),
-      error: (error, _) => MessageScreen(
-        showTitle: true,
-        showAppBar: true,
-        appBarTitle: context.loc.categories,
-        icon: Icons.error_outline,
-        title: context.loc.somethingWentWrong,
-        message:
-            "We couldn't load categories. Please try again later.".hardcoded,
-      ),
-      data: (categories) {
-        if (categories.isEmpty) {
-          return MessageScreen(
-            showTitle: true,
-            showAppBar: true,
-            appBarTitle: context.loc.categories,
-            icon: Icons.question_mark_rounded,
-            title: "No Categories Found".hardcoded,
-            message:
-                "There are currently no categories to display. Please check back later."
-                    .hardcoded,
-          );
-        }
-        return DraggableTwoColumnLayout(
-          startContent: CategoriesStartContent(categories: categories),
-          endContent: const CategoriesEndContent(showBackButton: false),
-        );
-      },
-    );
-  }
 }
