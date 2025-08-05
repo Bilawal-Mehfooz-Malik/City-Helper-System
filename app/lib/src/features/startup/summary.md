@@ -49,6 +49,23 @@ An attempt was made to implement a feature where, on the web platform, if locati
 
 -   Removed `app/integration_test/plan.md` and `app/integration_test/startup_integration_test_plan.md` to keep the project clean and organized.
 
+## 6. Web Platform Map Controller Crash
+
+A critical issue was identified on the web platform where the application would crash after selecting a location on the `PickLocationScreen`. 
+
+### Challenges Encountered & Solutions:
+
+-   **Initial Diagnosis**: The error `"Maps cannot be retrieved before calling buildView!"` pointed to an issue with the `GoogleMapController`'s lifecycle. The controller was being accessed after it was disposed when the screen was popped using `context.pop()`.
+-   **Attempted Workarounds**: Several common workarounds were attempted without success:
+    -   A `Future.delayed` call to give the map time to dispose.
+    -   Wrapping the `GoogleMap` widget in `Visibility` and `Offstage` widgets to control its lifecycle.
+    These attempts either proved unreliable or introduced new initialization errors like `"Must call buildWidget before init!"`.
+-   **Final Solution**: The root cause was determined to be the interaction between `context.pop()` and the Google Maps web view. The solution was to change the navigation method. Instead of popping the screen, we now use `context.go('/get-started')` to navigate away, which avoids the controller disposal issue entirely.
+
+### Deprecation Warning
+
+- We also investigated a `google.maps.Marker is deprecated` warning. Research confirmed this is a known issue that the Flutter team is tracking, and it requires no immediate action as the legacy marker is not yet discontinued.
+
 ## Conclusion
 
 The `startup` feature has undergone significant development and testing. We have established a solid foundation for golden and integration tests, addressing several complex asynchronous and rendering challenges. The feature's core functionality and error handling are now well-covered by automated tests, providing increased confidence in its reliability. The web re-prompting functionality is a pending item for future refinement.

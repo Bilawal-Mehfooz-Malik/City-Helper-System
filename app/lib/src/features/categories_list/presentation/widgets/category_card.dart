@@ -2,6 +2,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
+import 'package:app/src/core/utils/category_icon_mapper.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,7 @@ class CategoryCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategoryId = ref.watch(selectedCategoryIdControllerProvider);
     final isTileSelected = selectedCategoryId == category.id;
-    final icon = category.getCategoryIcon(category.icon);
+    final icon = getCategoryIcon(category.iconName);
 
     if (isListTile) {
       return ListTile(

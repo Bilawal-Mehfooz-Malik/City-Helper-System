@@ -54,7 +54,7 @@ $Res call({
 });
 
 
-
+$CategoryCopyWith<$Res>? get category;
 
 }
 /// @nodoc
@@ -93,7 +93,19 @@ as List<Uint8List>,galleryUrlsToDelete: null == galleryUrlsToDelete ? _self.gall
 as List<String>,
   ));
 }
+/// Create a copy of ShopForm
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryCopyWith<$Res>? get category {
+    if (_self.category == null) {
+    return null;
+  }
 
+  return $CategoryCopyWith<$Res>(_self.category!, (value) {
+    return _then(_self.copyWith(category: value));
+  });
+}
 }
 
 
@@ -314,7 +326,7 @@ $Res call({
 });
 
 
-
+@override $CategoryCopyWith<$Res>? get category;
 
 }
 /// @nodoc
@@ -354,7 +366,19 @@ as List<String>,
   ));
 }
 
+/// Create a copy of ShopForm
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryCopyWith<$Res>? get category {
+    if (_self.category == null) {
+    return null;
+  }
 
+  return $CategoryCopyWith<$Res>(_self.category!, (value) {
+    return _then(_self.copyWith(category: value));
+  });
+}
 }
 
 // dart format on

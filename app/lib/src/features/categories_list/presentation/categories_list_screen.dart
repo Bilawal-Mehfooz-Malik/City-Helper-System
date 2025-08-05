@@ -2,7 +2,6 @@ import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/common_widgets/draggable_two_column_layout.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
-import 'package:app/src/core/common_widgets/error_filled_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
@@ -19,26 +18,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CategoriesListScreen extends ConsumerWidget {
   const CategoriesListScreen({super.key});
 
-  void _refresh(WidgetRef ref) {
-    ref.invalidate(categoriesListFutureProvider);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSmall = isSmallScreen(context);
-    final categoriesValue = ref.watch(categoriesListFutureProvider);
+    final categoriesValue = ref.watch(categoriesListStreamProvider);
 
     return Scaffold(
-      appBar: isSmall ? _CategoriesAppBar() : null,
+      appBar: isSmall ? const _CategoriesAppBar() : null,
       body: SafeArea(
         child: isSmall
             ? SmallScreenContent(
                 categoriesValue: categoriesValue,
-                onRefresh: () => _refresh(ref),
               )
             : LargeScreenContent(
                 categoriesValue: categoriesValue,
-                onRefresh: () => _refresh(ref),
               ),
       ),
     );
@@ -52,9 +45,9 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(context.loc.categories),
-      actions: [
+      actions: const [
         Padding(
-          padding: const EdgeInsets.only(right: Sizes.p12),
+          padding: EdgeInsets.only(right: Sizes.p12),
           child: ProfileCircularAvatar(),
         ),
       ],
@@ -69,10 +62,8 @@ class SmallScreenContent extends StatelessWidget {
   const SmallScreenContent({
     super.key,
     required this.categoriesValue,
-    required this.onRefresh,
   });
 
-  final VoidCallback onRefresh;
   final AsyncValue<List<Category>> categoriesValue;
 
   @override
@@ -85,11 +76,6 @@ class SmallScreenContent extends StatelessWidget {
         title: context.loc.somethingWentWrong,
         message: error.toString(),
         useResponsiveDesign: true,
-        actions: ErrorFilledButton(
-          useMaxSize: true,
-          text: context.loc.refresh,
-          onPressed: onRefresh,
-        ),
       ),
       data: (categories) => CategoriesListView(
         usePadding: true,
@@ -104,17 +90,15 @@ class LargeScreenContent extends StatelessWidget {
   const LargeScreenContent({
     super.key,
     required this.categoriesValue,
-    required this.onRefresh,
   });
 
   final AsyncValue<List<Category>> categoriesValue;
-  final VoidCallback onRefresh;
 
   @override
   Widget build(BuildContext context) {
     return AsyncValueWidget<List<Category>>(
       value: categoriesValue,
-      loading: DraggableTwoColumnLayout(
+      loading: const DraggableTwoColumnLayout(
         startContent: CategoriesSkeletonStartContent(),
         endContent: CenteredProgressIndicator(),
       ),
@@ -125,14 +109,10 @@ class LargeScreenContent extends StatelessWidget {
         icon: Icons.error_outline,
         title: context.loc.somethingWentWrong,
         message: error.toString(),
-        actions: ErrorFilledButton(
-          text: context.loc.refresh,
-          onPressed: onRefresh,
-        ),
       ),
       data: (categories) => DraggableTwoColumnLayout(
         startContent: CategoriesStartContent(categories: categories),
-        endContent: CategoriesEndContent(showBackButton: false),
+        endContent: const CategoriesEndContent(showBackButton: false),
       ),
     );
   }

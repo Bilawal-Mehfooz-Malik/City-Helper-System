@@ -5,7 +5,7 @@ final List<Category> testCategories = [
     id: 1,
     name: "Residences",
     description: 'Includes hotels, rooms, flats, hostel and houses, etc.',
-    icon: 'home',
+    iconName: 'home',
     sortOrder: 1,
   ),
   Category(
@@ -13,7 +13,7 @@ final List<Category> testCategories = [
     name: "Food",
     description:
         'Includes resturants, cafes, messes, fast food and takeways, etc.',
-    icon: 'restaurant',
+    iconName: 'restaurant',
     sortOrder: 2,
   ),
   // Category(

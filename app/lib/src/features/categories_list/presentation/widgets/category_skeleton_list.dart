@@ -36,7 +36,7 @@ class CategorySkeletonList extends StatelessWidget {
             id: 1,
             name: BoneMock.name,
             description: BoneMock.words(8),
-            icon: 'residence',
+            iconName: 'residence',
             sortOrder: 1,
           ),
         ),

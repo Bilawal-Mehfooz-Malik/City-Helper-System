@@ -6,6 +6,7 @@ import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -54,7 +55,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     ref
         .read(userLocationControllerProvider.notifier)
         .getLocationFromMap(_pickedLocation);
-    context.go('/get-started');
+    context.goNamed(AppRoute.getStarted.name);
   }
 
   void _onCameraMove(CameraPosition position) {
