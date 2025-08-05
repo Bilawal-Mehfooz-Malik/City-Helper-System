@@ -12,6 +12,7 @@ import 'package:app/src/features/categories_list/presentation/widgets/categories
 import 'package:app/src/features/categories_list/presentation/widgets/categories_start_content.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,12 +28,8 @@ class CategoriesListScreen extends ConsumerWidget {
       appBar: isSmall ? const _CategoriesAppBar() : null,
       body: SafeArea(
         child: isSmall
-            ? SmallScreenContent(
-                categoriesValue: categoriesValue,
-              )
-            : LargeScreenContent(
-                categoriesValue: categoriesValue,
-              ),
+            ? SmallScreenContent(categoriesValue: categoriesValue)
+            : LargeScreenContent(categoriesValue: categoriesValue),
       ),
     );
   }
@@ -59,10 +56,7 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class SmallScreenContent extends StatelessWidget {
-  const SmallScreenContent({
-    super.key,
-    required this.categoriesValue,
-  });
+  const SmallScreenContent({super.key, required this.categoriesValue});
 
   final AsyncValue<List<Category>> categoriesValue;
 
@@ -74,23 +68,33 @@ class SmallScreenContent extends StatelessWidget {
       error: (error, _) => CenteredMessageWidget(
         icon: Icons.error_outline,
         title: context.loc.somethingWentWrong,
-        message: error.toString(),
+        message:
+            "We couldn't load categories. Please check your internet connection and try again."
+                .hardcoded,
         useResponsiveDesign: true,
       ),
-      data: (categories) => CategoriesListView(
-        usePadding: true,
-        useListTile: false,
-        categories: categories,
-      ),
+      data: (categories) {
+        if (categories.isEmpty) {
+          return CenteredMessageWidget(
+            icon: Icons.question_mark_rounded,
+            title: "No Categories Found".hardcoded,
+            message:
+                "There are currently no categories to display. Please check back later."
+                    .hardcoded,
+          );
+        }
+        return CategoriesListView(
+          usePadding: true,
+          useListTile: false,
+          categories: categories,
+        );
+      },
     );
   }
 }
 
 class LargeScreenContent extends StatelessWidget {
-  const LargeScreenContent({
-    super.key,
-    required this.categoriesValue,
-  });
+  const LargeScreenContent({super.key, required this.categoriesValue});
 
   final AsyncValue<List<Category>> categoriesValue;
 
@@ -108,12 +112,27 @@ class LargeScreenContent extends StatelessWidget {
         appBarTitle: context.loc.categories,
         icon: Icons.error_outline,
         title: context.loc.somethingWentWrong,
-        message: error.toString(),
+        message:
+            "We couldn't load categories. Please try again later.".hardcoded,
       ),
-      data: (categories) => DraggableTwoColumnLayout(
-        startContent: CategoriesStartContent(categories: categories),
-        endContent: const CategoriesEndContent(showBackButton: false),
-      ),
+      data: (categories) {
+        if (categories.isEmpty) {
+          return MessageScreen(
+            showTitle: true,
+            showAppBar: true,
+            appBarTitle: context.loc.categories,
+            icon: Icons.question_mark_rounded,
+            title: "No Categories Found".hardcoded,
+            message:
+                "There are currently no categories to display. Please check back later."
+                    .hardcoded,
+          );
+        }
+        return DraggableTwoColumnLayout(
+          startContent: CategoriesStartContent(categories: categories),
+          endContent: const CategoriesEndContent(showBackButton: false),
+        );
+      },
     );
   }
 }
