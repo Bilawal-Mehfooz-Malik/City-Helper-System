@@ -6,7 +6,7 @@ import 'package:app/src/features/categories_list/domain/categories_exception.dar
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/categories_list/presentation/widgets/category_card.dart';
-import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_notifier.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';

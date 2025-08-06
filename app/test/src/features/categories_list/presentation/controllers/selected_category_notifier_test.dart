@@ -1,4 +1,4 @@
-import 'package:app/src/features/categories_list/presentation/controllers/selected_category_controller.dart';
+import 'package:app/src/features/categories_list/presentation/controllers/selected_category_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +9,7 @@ void main() {
     container = ProviderContainer();
   });
 
-  group('SelectedCategoryIdController', () {
+  group('SelectedCategoryIdNotifier', () {
     test('initial state is null', () {
       final initialState = container.read(selectedCategoryNotifierProvider);
       expect(initialState, null);
