@@ -30,7 +30,7 @@ class CategorySkeletonList extends StatelessWidget {
         padding: usePadding
             ? EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16)
             : null,
-        itemBuilder: (_, __) => CategoryCard(
+        itemBuilder: (_, _) => CategoryCard(
           isListTile: useListTile,
           category: Category(
             id: 1,

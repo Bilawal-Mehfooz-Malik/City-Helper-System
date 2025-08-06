@@ -20,7 +20,7 @@ class SmallScreenContent extends StatelessWidget {
           CategoryFeedbackHandler.error(error: e, isSmallScreen: true),
       data: (categories) {
         if (categories.isEmpty) {
-          return const CategoryFeedbackHandler.empty(isSmallScreen: true);
+          return CategoryFeedbackHandler.empty(isSmallScreen: true);
         }
         return CategoriesListView(
           usePadding: true,

@@ -16,12 +16,13 @@ class CategoryFeedbackHandler extends StatelessWidget {
        _message = null,
        _title = null;
 
-  const CategoryFeedbackHandler.empty({super.key, required this.isSmallScreen})
+  CategoryFeedbackHandler.empty({super.key, required this.isSmallScreen})
     : error = null,
       isEmpty = true,
-      _title = "No Categories Found",
+      _title = "No Categories Found".hardcoded,
       _message =
-          "There are currently no categories to display. Please check back later.";
+          "There are currently no categories to display. Please check back later."
+              .hardcoded;
 
   final Object? error;
   final bool isEmpty;

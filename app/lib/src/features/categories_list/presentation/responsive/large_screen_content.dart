@@ -22,10 +22,11 @@ class LargeScreenContent extends StatelessWidget {
         startContent: CategoriesSkeletonStartContent(),
         endContent: CenteredProgressIndicator(),
       ),
-      error: (e, _) => CategoryFeedbackHandler.error(error: e, isSmallScreen: false),
+      error: (e, _) =>
+          CategoryFeedbackHandler.error(error: e, isSmallScreen: false),
       data: (categories) {
         if (categories.isEmpty) {
-          return const CategoryFeedbackHandler.empty(isSmallScreen: false);
+          return CategoryFeedbackHandler.empty(isSmallScreen: false);
         }
         return DraggableTwoColumnLayout(
           startContent: CategoriesStartContent(categories: categories),

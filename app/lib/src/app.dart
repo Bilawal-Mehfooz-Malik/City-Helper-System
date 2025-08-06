@@ -28,6 +28,7 @@ class MyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: lightTheme,
+      darkTheme: ThemeData.dark(),
       routerConfig: appRouter,
       supportedLocales: const [Locale('en', '')],
       onGenerateTitle: (BuildContext context) => context.loc.appTitle,

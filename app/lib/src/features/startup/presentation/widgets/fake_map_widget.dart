@@ -4,6 +4,8 @@ import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// Used for testing purposes only, to avoid using Google Maps API.
+// This widget displays a simple text indicating the coordinates of the map.
 class FakeMapWidget extends StatelessWidget {
   final LatLng latLng;
   const FakeMapWidget({super.key, required this.latLng});

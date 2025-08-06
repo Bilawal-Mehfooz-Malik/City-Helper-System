@@ -24,7 +24,7 @@ class LocationPreviewWidget extends ConsumerWidget {
         child: Center(
           child: AsyncValueWidget(
             value: userLocationValue,
-            error: (_, __) => _textWidget(context),
+            error: (_, _) => _textWidget(context),
             data: (location) => location == null
                 ? _textWidget(context)
                 : GoogleMapWidget(latLng: location),
