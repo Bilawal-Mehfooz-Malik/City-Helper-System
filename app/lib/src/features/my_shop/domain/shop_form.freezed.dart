@@ -54,7 +54,7 @@ $Res call({
 });
 
 
-$CategoryCopyWith<$Res>? get category;
+$CategoryCopyWith<$Res>? get category;$SubCategoryCopyWith<$Res>? get subCategory;
 
 }
 /// @nodoc
@@ -104,6 +104,18 @@ $CategoryCopyWith<$Res>? get category {
 
   return $CategoryCopyWith<$Res>(_self.category!, (value) {
     return _then(_self.copyWith(category: value));
+  });
+}/// Create a copy of ShopForm
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubCategoryCopyWith<$Res>? get subCategory {
+    if (_self.subCategory == null) {
+    return null;
+  }
+
+  return $SubCategoryCopyWith<$Res>(_self.subCategory!, (value) {
+    return _then(_self.copyWith(subCategory: value));
   });
 }
 }
@@ -326,7 +338,7 @@ $Res call({
 });
 
 
-@override $CategoryCopyWith<$Res>? get category;
+@override $CategoryCopyWith<$Res>? get category;@override $SubCategoryCopyWith<$Res>? get subCategory;
 
 }
 /// @nodoc
@@ -377,6 +389,18 @@ $CategoryCopyWith<$Res>? get category {
 
   return $CategoryCopyWith<$Res>(_self.category!, (value) {
     return _then(_self.copyWith(category: value));
+  });
+}/// Create a copy of ShopForm
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubCategoryCopyWith<$Res>? get subCategory {
+    if (_self.subCategory == null) {
+    return null;
+  }
+
+  return $SubCategoryCopyWith<$Res>(_self.subCategory!, (value) {
+    return _then(_self.copyWith(subCategory: value));
   });
 }
 }

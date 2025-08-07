@@ -1,49 +1,18 @@
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SubCategory {
-  final CategoryId categoryId;
-  final SubCategoryId id;
-  final String name;
-  final int sortOrder;
+part 'sub_category.freezed.dart';
+part 'sub_category.g.dart';
 
-  SubCategory({
-    required this.categoryId,
-    required this.id,
-    required this.name,
-    required this.sortOrder,
-  });
+@freezed
+abstract class SubCategory with _$SubCategory {
+  const factory SubCategory({
+    required CategoryId categoryId,
+    required CategoryId id,
+    required String name,
+    required int sortOrder,
+  }) = _SubCategory;
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'categoryId': categoryId,
-    'name': name,
-    'sortOrder': sortOrder,
-  };
-
-  factory SubCategory.fromJson(Map<String, dynamic> json) {
-    return SubCategory(
-      id: json['id'] as int,
-      categoryId: json['categoryId'] as int,
-      name: json['name'] as String,
-      sortOrder: json['sortOrder'] as int,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SubCategory &&
-          id == other.id &&
-          categoryId == other.categoryId &&
-          name == other.name &&
-          sortOrder == other.sortOrder;
-
-  @override
-  int get hashCode =>
-      id.hashCode ^ categoryId.hashCode ^ name.hashCode ^ sortOrder.hashCode;
-
-  @override
-  String toString() =>
-      'SubCategory(id: $id, categoryId: $categoryId, '
-      'name: $name, sortOrder: $sortOrder)';
+  factory SubCategory.fromJson(Map<String, Object?> json) =>
+      _$SubCategoryFromJson(json);
 }

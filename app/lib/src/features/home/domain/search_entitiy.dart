@@ -1,24 +1,19 @@
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SearchEntity {
-  final EntityId id;
-  final String name;
-  final String cityName;
-  final String sectorName;
+part 'search_entitiy.freezed.dart';
+part 'search_entitiy.g.dart';
 
-  SearchEntity({
-    required this.id,
-    required this.name,
-    required this.cityName,
-    required this.sectorName,
-  });
+@freezed
+abstract class SearchEntity with _$SearchEntity {
+  const factory SearchEntity({
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'objectID') required EntityId id,
+    required String name,
+    required String cityName,
+    required String sectorName,
+  }) = _SearchEntity;
 
-  factory SearchEntity.fromJson(Map<String, dynamic> json) {
-    return SearchEntity(
-      id: json['objectID'] as String,
-      name: json['name'] as String,
-      cityName: json['cityName'] as String,
-      sectorName: json['sectorName'] as String,
-    );
-  }
+  factory SearchEntity.fromJson(Map<String, Object?> json) =>
+      _$SearchEntityFromJson(json);
 }

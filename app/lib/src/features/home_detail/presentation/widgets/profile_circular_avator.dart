@@ -1,6 +1,7 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/user_mode_controller.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -118,7 +119,9 @@ class _LoggedInAvatar extends ConsumerWidget {
         PopupMenuItem<String>(
           value: 'switch_mode',
           child: Text(
-            isAdminMode ? "Switch to User" : context.loc.switchToAdmin,
+            isAdminMode
+                ? "Switch to User".hardcoded
+                : context.loc.switchToAdmin,
           ),
         ),
       ],
@@ -134,7 +137,7 @@ class _LoggedInAvatar extends ConsumerWidget {
           ),
         ),
         loading: () => _LoadingAvatar(avatarSize: avatarSize),
-        error: (_, __) => _ErrorAvatar(
+        error: (_, _) => _ErrorAvatar(
           avatarSize: avatarSize,
           avatarIconSize: avatarIconSize,
         ),
