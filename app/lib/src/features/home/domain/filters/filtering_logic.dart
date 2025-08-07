@@ -2,8 +2,6 @@ import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
 import 'package:app/src/features/home/domain/filters/entity_filter.dart';
-import 'package:app/src/features/home/domain/filters/food_filter.dart';
-import 'package:app/src/features/home/domain/filters/residence_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
 /// Filters a list of entities based on the provided filter criteria.
@@ -28,8 +26,8 @@ List<Entity> sortEntities(List<Entity> entities, EntityFilter filter) {
       comparison = _compareByPrice(a, b, filter.priceSort);
       if (comparison != 0) return comparison;
     }
-    if (filter.ratingSort != SortOrder.none) {
-      comparison = _compareByRating(a, b, filter.ratingSort);
+    if (filter.getRatingSort != SortOrder.none) {
+      comparison = _compareByRating(a, b, filter.getRatingSort);
       if (comparison != 0) return comparison;
     }
     return 0;
@@ -41,26 +39,41 @@ List<Entity> sortEntities(List<Entity> entities, EntityFilter filter) {
 // --- Private Filter Check Helpers ---
 
 bool _checkOpen(Entity entity, EntityFilter filter) {
-  if (filter.isOpen) {
+  if (filter.getIsOpen) {
     return entity.isEntityOpen();
   }
   return true;
 }
 
 bool _matchFurnished(Entity entity, EntityFilter filter) {
-  if (entity is Residence && filter is ResidenceFilter && filter.isFurnished) {
-    return entity.checkFurnished(true);
-  }
-  return true;
+  return filter.when(
+    residence: (_, _, isFurnished, _, _) {
+      if (entity is Residence && isFurnished) {
+        return entity.checkFurnished(true);
+      }
+      return true;
+    },
+    food: (_, _, _) => true, // No furnished filter for food
+    basic: (_, _) => true, // No furnished filter for basic
+  );
 }
 
 bool _matchGender(Entity entity, EntityFilter filter) {
-  if (entity is Residence && filter is ResidenceFilter) {
-    return entity.matchGenderPref(filter.genderPref);
-  } else if (entity is Food && filter is FoodFilter) {
-    return entity.matchGenderPref(filter.genderPref);
-  }
-  return true;
+  return filter.when(
+    residence: (_, _, _, _, genderPref) {
+      if (entity is Residence) {
+        return entity.matchGenderPref(genderPref);
+      }
+      return true;
+    },
+    food: (_, _, genderPref) {
+      if (entity is Food) {
+        return entity.matchGenderPref(genderPref);
+      }
+      return true;
+    },
+    basic: (_, _) => true, // No gender filter for basic
+  );
 }
 
 // --- Private Sorting Helpers ---

@@ -1,7 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/filters/entity_filter.dart';
-import 'package:app/src/features/home/domain/filters/food_filter.dart';
-import 'package:app/src/features/home/domain/filters/residence_filter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'filter_controller.g.dart';
@@ -11,9 +9,9 @@ class FilterController extends _$FilterController {
   @override
   EntityFilter build({required CategoryId categoryId}) {
     return switch (categoryId) {
-      1 => ResidenceFilter(),
-      2 => FoodFilter(),
-      _ => EntityFilter(),
+      1 => const EntityFilter.residence(),
+      2 => const EntityFilter.food(),
+      _ => const EntityFilter.basic(),
     };
   }
 
@@ -29,11 +27,11 @@ class FilterController extends _$FilterController {
   }
 
   void resetFilters() {
-    state = switch (state) {
-      ResidenceFilter _ => ResidenceFilter(),
-      FoodFilter _ => FoodFilter(),
-      _ => EntityFilter(),
-    };
+    state = state.when(
+      residence: (_, _, _, _, _) => const EntityFilter.residence(),
+      food: (_, _, _) => const EntityFilter.food(),
+      basic: (_, _) => const EntityFilter.basic(),
+    );
   }
 
   void updateFilter({
@@ -43,23 +41,31 @@ class FilterController extends _$FilterController {
     SortOrder? ratingSort,
     GenderPreference? genderPref,
   }) {
-    state = switch (state) {
-      ResidenceFilter current => current.copyWith(
-        isOpen: isOpen,
-        isFurnished: isFurnished,
-        priceSort: priceSort,
-        ratingSort: ratingSort,
-        genderPref: genderPref,
+    state = state.when(
+      residence:
+          (
+            currentIsOpen,
+            currentRatingSort,
+            currentIsFurnished,
+            currentPriceSort,
+            currentGenderPref,
+          ) => EntityFilter.residence(
+            isOpen: isOpen ?? currentIsOpen,
+            ratingSort: ratingSort ?? currentRatingSort,
+            isFurnished: isFurnished ?? currentIsFurnished,
+            priceSort: priceSort ?? currentPriceSort,
+            genderPref: genderPref ?? currentGenderPref,
+          ),
+      food: (currentIsOpen, currentRatingSort, currentGenderPref) =>
+          EntityFilter.food(
+            isOpen: isOpen ?? currentIsOpen,
+            ratingSort: ratingSort ?? currentRatingSort,
+            genderPref: genderPref ?? currentGenderPref,
+          ),
+      basic: (currentIsOpen, currentRatingSort) => EntityFilter.basic(
+        isOpen: isOpen ?? currentIsOpen,
+        ratingSort: ratingSort ?? currentRatingSort,
       ),
-      FoodFilter current => current.copyWith(
-        isOpen: isOpen,
-        ratingSort: ratingSort,
-        genderPref: genderPref,
-      ),
-      EntityFilter current => current.copyWith(
-        isOpen: isOpen,
-        ratingSort: ratingSort,
-      ),
-    };
+    );
   }
 }

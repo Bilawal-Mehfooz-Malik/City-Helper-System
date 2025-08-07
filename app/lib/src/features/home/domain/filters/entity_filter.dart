@@ -1,15 +1,42 @@
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EntityFilter {
-  final bool isOpen;
-  final SortOrder ratingSort;
+part 'entity_filter.freezed.dart';
 
-  const EntityFilter({this.isOpen = false, this.ratingSort = SortOrder.none});
+@freezed
+sealed class EntityFilter with _$EntityFilter {
+  const EntityFilter._();
 
-  EntityFilter copyWith({bool? isOpen, SortOrder? ratingSort}) {
-    return EntityFilter(
-      isOpen: isOpen ?? this.isOpen,
-      ratingSort: ratingSort ?? this.ratingSort,
-    );
-  }
+  const factory EntityFilter.food({
+    @Default(false) bool isOpen,
+    @Default(SortOrder.none) SortOrder ratingSort,
+    @Default(GenderPreference.any) GenderPreference genderPref,
+  }) = FoodFilter;
+
+  const factory EntityFilter.residence({
+    @Default(false) bool isOpen,
+    @Default(SortOrder.none) SortOrder ratingSort,
+    @Default(false) bool isFurnished,
+    @Default(SortOrder.none) SortOrder priceSort,
+    @Default(GenderPreference.any) GenderPreference genderPref,
+  }) = ResidenceFilter;
+
+  const factory EntityFilter.basic({
+    @Default(false) bool isOpen,
+    @Default(SortOrder.none) SortOrder ratingSort,
+  }) = BasicFilter;
+
+  /// A generic getter for isOpen that works across all filter types.
+  bool get getIsOpen => when(
+    food: (isOpen, _, _) => isOpen,
+    residence: (isOpen, _, _, _, _) => isOpen,
+    basic: (isOpen, _) => isOpen,
+  );
+
+  /// A generic getter for ratingSort that works across all filter types.
+  SortOrder get getRatingSort => when(
+    food: (_, ratingSort, _) => ratingSort,
+    residence: (_, ratingSort, _, _, _) => ratingSort,
+    basic: (_, ratingSort) => ratingSort,
+  );
 }

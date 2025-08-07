@@ -4,8 +4,6 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/filters/entity_filter.dart';
-import 'package:app/src/features/home/domain/filters/food_filter.dart';
-import 'package:app/src/features/home/domain/filters/residence_filter.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +35,9 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
   void resetDraftFilter() {
     setState(() {
       _localFilter = switch (widget.categoryId) {
-        1 => ResidenceFilter(),
-        2 => FoodFilter(),
-        _ => EntityFilter(),
+        1 => const EntityFilter.residence(),
+        2 => const EntityFilter.food(),
+        _ => const EntityFilter.basic(),
       };
     });
   }
@@ -54,7 +52,6 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
       title: Text(context.loc.filtersTitle),
       content: SingleChildScrollView(
         child: FilterDialogContent(
-          controller: controller,
           localFilter: _localFilter,
           onFilterChanged: setDraftFilter,
         ),
@@ -79,87 +76,112 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
 class FilterDialogContent extends StatelessWidget {
   const FilterDialogContent({
     super.key,
-    required this.controller,
     required this.localFilter,
     required this.onFilterChanged,
   });
 
-  final FilterController controller;
   final EntityFilter localFilter;
   final void Function(EntityFilter) onFilterChanged;
 
-  EntityFilter updateField({SortOrder? ratingSort, bool? isOpen}) {
-    return switch (localFilter) {
-      ResidenceFilter f => f.copyWith(
-        ratingSort: ratingSort ?? f.ratingSort,
-        isOpen: isOpen ?? f.isOpen,
-      ),
-      FoodFilter f => f.copyWith(
-        ratingSort: ratingSort ?? f.ratingSort,
-        isOpen: isOpen ?? f.isOpen,
-      ),
-      _ => localFilter.copyWith(
-        ratingSort: ratingSort ?? localFilter.ratingSort,
-        isOpen: isOpen ?? localFilter.isOpen,
-      ),
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
-    final residenceFilter = localFilter is ResidenceFilter
-        ? localFilter as ResidenceFilter
-        : null;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        gapH4,
-        if (residenceFilter != null) ...[
+    return localFilter.when(
+      residence: (isOpen, ratingSort, isFurnished, priceSort, genderPref) =>
+          Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          gapH4,
           SortDropdown(
             label: context.loc.sortByPrice,
-            currentValue: residenceFilter.priceSort,
-            onChanged: (value) =>
-                onFilterChanged(residenceFilter.copyWith(priceSort: value)),
+            currentValue: priceSort,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as ResidenceFilter).copyWith(priceSort: value),
+            ),
           ),
           gapH12,
-        ],
-        SortDropdown(
-          label: context.loc.sortByRating,
-          currentValue: localFilter.ratingSort,
-          onChanged: (value) => onFilterChanged(updateField(ratingSort: value)),
-        ),
-        gapH8,
-        FilterSwitch(
-          value: localFilter.isOpen,
-          label: context.loc.showOpenOnly,
-          onChanged: (value) => onFilterChanged(updateField(isOpen: value)),
-        ),
-        if (residenceFilter != null)
-          FilterSwitch(
-            value: residenceFilter.isFurnished,
-            label: context.loc.showFurnishedOnly,
-            onChanged: (value) =>
-                onFilterChanged(residenceFilter.copyWith(isFurnished: value)),
+          SortDropdown(
+            label: context.loc.sortByRating,
+            currentValue: ratingSort,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as ResidenceFilter).copyWith(ratingSort: value),
+            ),
           ),
-        gapH12,
-        GenderPreferenceChips(
-          selected: switch (localFilter) {
-            ResidenceFilter f => f.genderPref,
-            FoodFilter f => f.genderPref,
-            _ => GenderPreference.any,
-          },
-          onSelected: (gender) {
-            final updated = switch (localFilter) {
-              ResidenceFilter f => f.copyWith(genderPref: gender),
-              FoodFilter f => f.copyWith(genderPref: gender),
-              _ => localFilter,
-            };
-            onFilterChanged(updated);
-          },
-        ),
-        gapH8,
-      ],
+          gapH8,
+          FilterSwitch(
+            value: isOpen,
+            label: context.loc.showOpenOnly,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as ResidenceFilter).copyWith(isOpen: value),
+            ),
+          ),
+          FilterSwitch(
+            value: isFurnished,
+            label: context.loc.showFurnishedOnly,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as ResidenceFilter).copyWith(isFurnished: value),
+            ),
+          ),
+          gapH12,
+          GenderPreferenceChips(
+            selected: genderPref,
+            onSelected: (gender) => onFilterChanged(
+              (localFilter as ResidenceFilter).copyWith(genderPref: gender),
+            ),
+          ),
+          gapH8,
+        ],
+      ),
+      food: (isOpen, ratingSort, genderPref) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          gapH4,
+          SortDropdown(
+            label: context.loc.sortByRating,
+            currentValue: ratingSort,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as FoodFilter).copyWith(ratingSort: value),
+            ),
+          ),
+          gapH8,
+          FilterSwitch(
+            value: isOpen,
+            label: context.loc.showOpenOnly,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as FoodFilter).copyWith(isOpen: value),
+            ),
+          ),
+          gapH12,
+          GenderPreferenceChips(
+            selected: genderPref,
+            onSelected: (gender) => onFilterChanged(
+              (localFilter as FoodFilter).copyWith(genderPref: gender),
+            ),
+          ),
+          gapH8,
+        ],
+      ),
+      basic: (isOpen, ratingSort) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          gapH4,
+          SortDropdown(
+            label: context.loc.sortByRating,
+            currentValue: ratingSort,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as BasicFilter).copyWith(ratingSort: value),
+            ),
+          ),
+          gapH8,
+          FilterSwitch(
+            value: isOpen,
+            label: context.loc.showOpenOnly,
+            onChanged: (value) => onFilterChanged(
+              (localFilter as BasicFilter).copyWith(isOpen: value),
+            ),
+          ),
+          gapH8,
+        ],
+      ),
     );
   }
 }
