@@ -22,20 +22,17 @@ class CategoriesStartContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.loc.categories,
-                  style: context.textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.loc.categories,
+                style: context.textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-                ProfileCircularAvatar(),
-              ],
-            ),
+              ),
+              ProfileCircularAvatar(),
+            ],
           ),
           gapH8,
           CategoriesListView(categories: categories),
