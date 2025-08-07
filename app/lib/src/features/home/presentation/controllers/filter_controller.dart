@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/filters/entity_filter.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'filter_controller.g.dart';

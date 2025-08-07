@@ -1,7 +1,7 @@
 import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/domain/categories/food.dart';
 import 'package:app/src/features/home/domain/categories/residence.dart';
-import 'package:app/src/features/home/domain/filters/entity_filter.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
 /// Filters a list of entities based on the provided filter criteria.
@@ -20,16 +20,31 @@ List<Entity> filterEntities(List<Entity> entities, EntityFilter filter) {
 List<Entity> sortEntities(List<Entity> entities, EntityFilter filter) {
   final sortedList = List<Entity>.from(entities);
 
+  // Determine the primary sort order based on the filter type
+  final priceSortOrder = filter.when(
+    residence: (_, _, _, priceSort, _) => priceSort,
+    food: (_, _, _) => SortOrder.none, // No price sort for food
+    basic: (_, _) => SortOrder.none, // No price sort for basic
+  );
+
+  // The rating sort order can be accessed via the shared getter
+  final ratingSortOrder = filter.getRatingSort;
+
   sortedList.sort((a, b) {
     int comparison = 0;
-    if (filter is ResidenceFilter && filter.priceSort != SortOrder.none) {
-      comparison = _compareByPrice(a, b, filter.priceSort);
+
+    // First, sort by price if applicable
+    if (priceSortOrder != SortOrder.none) {
+      comparison = _compareByPrice(a, b, priceSortOrder);
       if (comparison != 0) return comparison;
     }
-    if (filter.getRatingSort != SortOrder.none) {
-      comparison = _compareByRating(a, b, filter.getRatingSort);
+
+    // Then, sort by rating if applicable
+    if (ratingSortOrder != SortOrder.none) {
+      comparison = _compareByRating(a, b, ratingSortOrder);
       if (comparison != 0) return comparison;
     }
+
     return 0;
   });
 

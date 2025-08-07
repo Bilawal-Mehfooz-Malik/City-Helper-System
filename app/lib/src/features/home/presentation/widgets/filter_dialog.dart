@@ -3,7 +3,7 @@ import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home/domain/filters/entity_filter.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -88,49 +88,49 @@ class FilterDialogContent extends StatelessWidget {
     return localFilter.when(
       residence: (isOpen, ratingSort, isFurnished, priceSort, genderPref) =>
           Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          gapH4,
-          SortDropdown(
-            label: context.loc.sortByPrice,
-            currentValue: priceSort,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as ResidenceFilter).copyWith(priceSort: value),
-            ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              gapH4,
+              SortDropdown(
+                label: context.loc.sortByPrice,
+                currentValue: priceSort,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(priceSort: value),
+                ),
+              ),
+              gapH12,
+              SortDropdown(
+                label: context.loc.sortByRating,
+                currentValue: ratingSort,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(ratingSort: value),
+                ),
+              ),
+              gapH8,
+              FilterSwitch(
+                value: isOpen,
+                label: context.loc.showOpenOnly,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(isOpen: value),
+                ),
+              ),
+              FilterSwitch(
+                value: isFurnished,
+                label: context.loc.showFurnishedOnly,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(isFurnished: value),
+                ),
+              ),
+              gapH12,
+              GenderPreferenceChips(
+                selected: genderPref,
+                onSelected: (gender) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(genderPref: gender),
+                ),
+              ),
+              gapH8,
+            ],
           ),
-          gapH12,
-          SortDropdown(
-            label: context.loc.sortByRating,
-            currentValue: ratingSort,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as ResidenceFilter).copyWith(ratingSort: value),
-            ),
-          ),
-          gapH8,
-          FilterSwitch(
-            value: isOpen,
-            label: context.loc.showOpenOnly,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as ResidenceFilter).copyWith(isOpen: value),
-            ),
-          ),
-          FilterSwitch(
-            value: isFurnished,
-            label: context.loc.showFurnishedOnly,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as ResidenceFilter).copyWith(isFurnished: value),
-            ),
-          ),
-          gapH12,
-          GenderPreferenceChips(
-            selected: genderPref,
-            onSelected: (gender) => onFilterChanged(
-              (localFilter as ResidenceFilter).copyWith(genderPref: gender),
-            ),
-          ),
-          gapH8,
-        ],
-      ),
       food: (isOpen, ratingSort, genderPref) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
