@@ -5,7 +5,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 
 class FakeResidenceRepository implements ResidenceRepository {
   FakeResidenceRepository({this.addDelay = true});
@@ -43,14 +43,18 @@ class FakeResidenceRepository implements ResidenceRepository {
   Stream<List<Entity>> watchPopularResidencesList() async* {
     await delay(addDelay);
     yield* _residences.stream.map(
-      (residences) => residences.where((r) => r.mapOrNull(residence: (res) => res.isPopular) ?? false).toList(),
+      (residences) => residences
+          .where((r) => r.mapOrNull(residence: (res) => res.isPopular) ?? false)
+          .toList(),
     );
   }
 
   @override
   Future<List<Entity>> fetchPopularResidencesList() async {
     await delay(addDelay);
-    return _residences.value.where((r) => r.mapOrNull(residence: (res) => res.isPopular) ?? false).toList();
+    return _residences.value
+        .where((r) => r.mapOrNull(residence: (res) => res.isPopular) ?? false)
+        .toList();
   }
 
   @override
@@ -59,8 +63,15 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) async* {
     await delay(addDelay);
     yield* _residences.stream.map(
-      (residences) =>
-          residences.where((r) => r.mapOrNull(residence: (res) => res.subCategoryId == subCategoryId) ?? false).toList(),
+      (residences) => residences
+          .where(
+            (r) =>
+                r.mapOrNull(
+                  residence: (res) => res.subCategoryId == subCategoryId,
+                ) ??
+                false,
+          )
+          .toList(),
     );
   }
 
@@ -70,7 +81,13 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) async {
     await delay(addDelay);
     return _residences.value
-        .where((r) => r.mapOrNull(residence: (res) => res.subCategoryId == subCategoryId) ?? false)
+        .where(
+          (r) =>
+              r.mapOrNull(
+                residence: (res) => res.subCategoryId == subCategoryId,
+              ) ??
+              false,
+        )
         .toList();
   }
 
@@ -81,9 +98,14 @@ class FakeResidenceRepository implements ResidenceRepository {
     await delay(addDelay);
     yield* _residences.stream.map(
       (residences) => residences
-          .where((r) =>
-              (r.mapOrNull(residence: (res) => res.subCategoryId == subCategoryId) ?? false) &&
-              (r.mapOrNull(residence: (res) => res.isPopular) ?? false))
+          .where(
+            (r) =>
+                (r.mapOrNull(
+                      residence: (res) => res.subCategoryId == subCategoryId,
+                    ) ??
+                    false) &&
+                (r.mapOrNull(residence: (res) => res.isPopular) ?? false),
+          )
           .toList(),
     );
   }
@@ -94,9 +116,14 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) async {
     await delay(addDelay);
     return _residences.value
-        .where((r) =>
-            (r.mapOrNull(residence: (res) => res.subCategoryId == subCategoryId) ?? false) &&
-            (r.mapOrNull(residence: (res) => res.isPopular) ?? false))
+        .where(
+          (r) =>
+              (r.mapOrNull(
+                    residence: (res) => res.subCategoryId == subCategoryId,
+                  ) ??
+                  false) &&
+              (r.mapOrNull(residence: (res) => res.isPopular) ?? false),
+        )
         .toList();
   }
 
@@ -104,7 +131,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   Future<Entity?> fetchResidence(EntityId id) async {
     await delay(addDelay);
     try {
-      return _residences.value.firstWhere((r) => r.mapOrNull(residence: (res) => res.id == id) ?? false);
+      return _residences.value.firstWhere(
+        (r) => r.mapOrNull(residence: (res) => res.id == id) ?? false,
+      );
     } catch (_) {
       return null;
     }
@@ -115,7 +144,9 @@ class FakeResidenceRepository implements ResidenceRepository {
     await delay(addDelay);
     yield* _residences.stream.map((residences) {
       try {
-        return residences.firstWhere((r) => r.mapOrNull(residence: (res) => res.id == id) ?? false);
+        return residences.firstWhere(
+          (r) => r.mapOrNull(residence: (res) => res.id == id) ?? false,
+        );
       } catch (_) {
         return null;
       }

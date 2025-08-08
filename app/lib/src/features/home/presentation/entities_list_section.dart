@@ -6,7 +6,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';

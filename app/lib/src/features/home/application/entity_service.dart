@@ -2,7 +2,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/filtering_logic.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';

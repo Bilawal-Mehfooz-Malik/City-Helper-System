@@ -43,3 +43,8 @@ The project is a Flutter application designed for city navigation and providing 
     - Commented out the `switch_mode` logic and the corresponding `PopupMenuItem`.
     - Commented out `profileData` and `isAdminMode` watches, and the `account` case in `onSelected` switch.
     - **Manual Changes**: Further commented out `_LoggedInAvatar` and `_LoggedOutAvatar` classes, and simplified `ProfileCircularAvatar` to always return a basic avatar.
+
+## New Files Created
+
+- **`plan.md`**:
+    - Created a one-month plan for refactoring, implementing essential services, and preparing the app for launch.
