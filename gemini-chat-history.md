@@ -13,38 +13,47 @@ The project is a Flutter application designed for city navigation and providing 
 - **UI:** The user interface is built with Flutter's Material Design widgets and is composed of several reusable components.
 - **Code Generation:** The project relies on code generation for tasks such as dependency injection (`riverpod_generator`), serialization (`json_serializable`), and environment variable management (`envied`).
 
-## Changes Made
+## Previous Changes
 
 - **`app/lib/src/routers/app_router.dart`**:
-    - Commented out imports related to `homeDetail`, `popular`, `popularDetail`, `leaveReview`, `auth`, `profile`, `account`, `myShop`, and `shopForm`.
-    - Commented out the corresponding `AppRoute` enum entries for these features.
-    - Commented out the `GoRoute` definitions for these features.
-    - Commented out the redirection logic and auth state listener.
-
-- **`app/lib/src/features/home_detail` directory**:
-    - Commented out the entire content of all non-generated `.dart` files (excluding `.g.dart` and `.freezed.dart` files) by wrapping them in `/* ... */` multi-line comments. This includes files in `application`, `data`, `domain`, `presentation`, `presentation/controllers`, `presentation/skeletons`, and `presentation/widgets` subdirectories.
-
-- **`app/lib/src/features/my_shop` directory**:
-    - Commented out the entire content of all non-generated `.dart` files (excluding `.g.dart` and `.freezed.dart` files) by wrapping them in `/* ... */` multi-line comments. This includes files in `application`, `data`, `domain`, `presentation`, `presentation/controllers`, `presentation/screens`, and `presentation/widgets` subdirectories.
-
-- **`app/lib/src/features/review` directory**:
-    - Commented out the entire content of all non-generated `.dart` files (excluding `.g.dart` and `.freezed.dart` files) by wrapping them in `/* ... */` multi-line comments. This includes files in `application`, `data`, `domain`, and `presentation` subdirectories.
-
+    - Commented out imports and routes for multiple features to isolate the `home` feature.
+- **`app/lib/src/features/home_detail`, `my_shop`, `review` directories**:
+    - Commented out the entire content of all non-generated `.dart` files.
 - **`app/test/src/features/home_detail` directory**:
-    - Commented out the entire content of `fake_food_details_repository_test.dart` and `fake_residence_details_repository_test.dart`.
-
-- **`app/test/src/features/my_shop` and `app/test/src/features/review` directories**:
-    - No test files were found for these features, so no changes were made.
-
+    - Commented out test files.
 - **`app/lib/src/routers/redirection.dart`**:
-    - Commented out the authentication and user mode-related logic in `Step 3: Handle Auth State` and `Step 4: Onboarding Block`.
-
+    - Commented out authentication and user mode-related logic.
 - **`app/lib/src/features/home_detail/presentation/widgets/profile_circular_avator.dart`**:
-    - Commented out the `switch_mode` logic and the corresponding `PopupMenuItem`.
-    - Commented out `profileData` and `isAdminMode` watches, and the `account` case in `onSelected` switch.
-    - **Manual Changes**: Further commented out `_LoggedInAvatar` and `_LoggedOutAvatar` classes, and simplified `ProfileCircularAvatar` to always return a basic avatar.
+    - Simplified the widget by removing auth-related logic.
+
+## Recent Changes (Deserialization and Refactoring)
+
+### Bug Fixes:
+- **`app/lib/src/features/home/data/real/food_repository.dart` & `residence_repository.dart`**:
+    - Modified the `fromFirestore` converter to inject a `runtimeType` field (`'food'` or `'residence'`) into the data map before calling `Entity.fromJson`. This fixed a `CheckedFromJsonException`.
+
+- **`app/lib/src/features/home/domain/helpers/json_converters.dart`**:
+    - Updated the `LatLngJsonConverter` to correctly deserialize the `latLng` field from Firestore's `List` or `GeoPoint` formats into a `LatLng` object, fixing a `TypeError`.
+
+- **`app/lib/src/features/home/domain/entity.dart`**:
+    - Added `@Default` values to `avgRating`, `totalReviews`, `price`, and `genderPref` fields to prevent crashes from `null` values in Firestore data.
+
+### Refactoring:
+- **`app/lib/src/features/home/domain/entity.dart`**:
+    - Deconstructed the large `entity.dart` file into smaller, more focused files within a new `helpers` directory.
+
+- **`app/lib/src/core/models/my_data_types.dart`**:
+    - Renamed the `Status` enum to `ApprovalStatus` for better clarity.
+    - Consolidated the `firstWhereOrNull` extension, making this file the single source of truth.
+
+- **`app/lib/src/features/home/domain/helpers/list_extensions.dart`**:
+    - **Removed** this file to eliminate duplicate code.
+
+## Git Commit
+- Staged all changes and committed them with the message: "feat: Refactor and stabilize Entity deserialization".
 
 ## New Files Created
 
-- **`plan.md`**:
-    - Created a one-month plan for refactoring, implementing essential services, and preparing the app for launch.
+- **`plan.md`**
+- **`app/lib/src/features/home/domain/helpers/json_converters.dart`**
+- **`app/lib/src/features/home/domain/helpers/entity_extensions.dart`**

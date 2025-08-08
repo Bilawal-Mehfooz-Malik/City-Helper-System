@@ -14,19 +14,9 @@ enum SortOrder { none, lowToHigh, highToLow }
 
 enum GenderPreference { any, maleOnly, femaleOnly, familyFriendly }
 
-enum EntityStatus { open, close, defaultStatus }
+// TODO: rename defaultStatus to dynamic or basedOnHours
+enum OperationalStatus { open, close, defaultStatus }
 
-enum Status { blocked, pending, approved }
+enum ApprovalStatus { blocked, pending, approved }
 
 enum EntityType { residence, food }
-
-extension IterableExtension<T> on Iterable<T> {
-  T? firstWhereOrNull(bool Function(T) test) {
-    for (var element in this) {
-      if (test(element)) {
-        return element;
-      }
-    }
-    return null;
-  }
-}

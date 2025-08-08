@@ -15,22 +15,23 @@ class ResidenceRepository {
 
   /// The base collection reference without any filters.
   /// Used for fetching single documents by ID or for writing data.
-  CollectionReference<Entity> get _residencesRef =>
-      _firestore.collection(residencesKey).withConverter<Entity>(
-            fromFirestore: (snapshot, _) {
-              final data = Map<String, dynamic>.from(snapshot.data()!);
-              data['runtimeType'] = 'residence';
-              return Entity.fromJson(data);
-            },
-            toFirestore: (residence, _) => residence.toJson(),
-          );
+  CollectionReference<Entity> get _residencesRef => _firestore
+      .collection(residencesKey)
+      .withConverter<Entity>(
+        fromFirestore: (snapshot, _) {
+          final data = Map<String, dynamic>.from(snapshot.data()!);
+          data['runtimeType'] = 'residence';
+          return Entity.fromJson(data);
+        },
+        toFirestore: (residence, _) => residence.toJson(),
+      );
 
   // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
   /// Used for all public-facing list views.
   Query<Entity> get _approvedResidencesQuery => _residencesRef.where(
     'status',
-    isEqualTo: Status.approved.name, // Using enum for type-safety
+    isEqualTo: ApprovalStatus.approved.name, // Using enum for type-safety
   );
 
   /// Writes a residence document. Uses the unfiltered ref to allow setting

@@ -14,20 +14,21 @@ class FoodRepository {
   static String get foodsKey => 'food_listings';
 
   /// The base collection reference without any filters.
-  CollectionReference<Entity> get _foodsRef =>
-      _firestore.collection(foodsKey).withConverter<Entity>(
-            fromFirestore: (snapshot, _) {
-              final data = Map<String, dynamic>.from(snapshot.data()!);
-              data['runtimeType'] = 'food';
-              return Entity.fromJson(data);
-            },
-            toFirestore: (food, _) => food.toJson(),
-          );
+  CollectionReference<Entity> get _foodsRef => _firestore
+      .collection(foodsKey)
+      .withConverter<Entity>(
+        fromFirestore: (snapshot, _) {
+          final data = Map<String, dynamic>.from(snapshot.data()!);
+          data['runtimeType'] = 'food';
+          return Entity.fromJson(data);
+        },
+        toFirestore: (food, _) => food.toJson(),
+      );
 
   // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
   Query<Entity> get _approvedFoodsQuery =>
-      _foodsRef.where('status', isEqualTo: Status.approved.name);
+      _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
 
   /// Writes a food document. Uses the unfiltered ref.
   Future<void> setFood(Entity food) async {

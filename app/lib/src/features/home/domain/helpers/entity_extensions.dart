@@ -7,8 +7,8 @@ import '../../../../core/utils/list_extensions.dart';
 
 extension EntityExtensions on Entity {
   bool isEntityOpen() {
-    if (entityStatus == EntityStatus.close) return false;
-    if (entityStatus == EntityStatus.open) return true;
+    if (entityStatus == OperationalStatus.close) return false;
+    if (entityStatus == OperationalStatus.open) return true;
 
     final now = DateTime.now().toLocal();
     final currentDay = DateFormat('EEEE').format(now);
