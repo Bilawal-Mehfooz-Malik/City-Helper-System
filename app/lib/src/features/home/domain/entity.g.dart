@@ -17,19 +17,23 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   latLng: _latLngJsonConverter.fromJson(json['latLng'] as Object),
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
-  isPopular: json['isPopular'] as bool,
+  isPopular: json['isPopular'] as bool? ?? false,
   openingHours:
       (json['openingHours'] as List<dynamic>)
           .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
           .toList(),
-  entityStatus: $enumDecode(_$OperationalStatusEnumMap, json['entityStatus']),
-  status: $enumDecode(_$ApprovalStatusEnumMap, json['status']),
+  entityStatus:
+      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+      OperationalStatus.defaultStatus,
+  status:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+      ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   type:
       $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ??
       EntityType.residence,
   price: (json['price'] as num?)?.toDouble() ?? 0.0,
-  isFurnished: json['isFurnished'] as bool,
+  isFurnished: json['isFurnished'] as bool? ?? false,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
@@ -94,13 +98,17 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   latLng: _latLngJsonConverter.fromJson(json['latLng'] as Object),
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
-  isPopular: json['isPopular'] as bool,
+  isPopular: json['isPopular'] as bool? ?? false,
   openingHours:
       (json['openingHours'] as List<dynamic>)
           .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
           .toList(),
-  entityStatus: $enumDecode(_$OperationalStatusEnumMap, json['entityStatus']),
-  status: $enumDecode(_$ApprovalStatusEnumMap, json['status']),
+  entityStatus:
+      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+      OperationalStatus.defaultStatus,
+  status:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+      ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   type:
       $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ?? EntityType.food,

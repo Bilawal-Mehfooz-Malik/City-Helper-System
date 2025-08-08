@@ -248,7 +248,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 
 @JsonSerializable(explicitToJson: true)
 class Residence extends Entity {
-  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, required this.isPopular, required final  List<OpeningHours> openingHours, required this.entityStatus, required this.status, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, this.price = 0.0, required this.isFurnished, this.genderPref = GenderPreference.any, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
+  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, required final  List<OpeningHours> openingHours, this.entityStatus = OperationalStatus.defaultStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, this.price = 0.0, this.isFurnished = false, this.genderPref = GenderPreference.any, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
   factory Residence.fromJson(Map<String, dynamic> json) => _$ResidenceFromJson(json);
 
 @override final  EntityId id;
@@ -261,7 +261,7 @@ class Residence extends Entity {
 @override@_latLngJsonConverter final  LatLng latLng;
 @override@JsonKey() final  double avgRating;
 @override@JsonKey() final  int totalReviews;
-@override final  bool isPopular;
+@override@JsonKey() final  bool isPopular;
  final  List<OpeningHours> _openingHours;
 @override List<OpeningHours> get openingHours {
   if (_openingHours is EqualUnmodifiableListView) return _openingHours;
@@ -269,12 +269,12 @@ class Residence extends Entity {
   return EqualUnmodifiableListView(_openingHours);
 }
 
-@override final  OperationalStatus entityStatus;
-@override final  ApprovalStatus status;
+@override@JsonKey() final  OperationalStatus entityStatus;
+@override@JsonKey() final  ApprovalStatus status;
 @override@_timestampJsonConverter final  DateTime createdAt;
 @override@JsonKey() final  EntityType type;
 @JsonKey() final  double price;
- final  bool isFurnished;
+@JsonKey() final  bool isFurnished;
 @override@JsonKey() final  GenderPreference genderPref;
 
 @JsonKey(name: 'runtimeType')
@@ -363,7 +363,7 @@ as GenderPreference,
 
 @JsonSerializable(explicitToJson: true)
 class Food extends Entity {
-  const Food({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, required this.isPopular, required final  List<OpeningHours> openingHours, required this.entityStatus, required this.status, @_timestampJsonConverter required this.createdAt, this.type = EntityType.food, this.genderPref = GenderPreference.any, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'food',super._();
+  const Food({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, required final  List<OpeningHours> openingHours, this.entityStatus = OperationalStatus.defaultStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.food, this.genderPref = GenderPreference.any, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'food',super._();
   factory Food.fromJson(Map<String, dynamic> json) => _$FoodFromJson(json);
 
 @override final  EntityId id;
@@ -376,7 +376,7 @@ class Food extends Entity {
 @override@_latLngJsonConverter final  LatLng latLng;
 @override@JsonKey() final  double avgRating;
 @override@JsonKey() final  int totalReviews;
-@override final  bool isPopular;
+@override@JsonKey() final  bool isPopular;
  final  List<OpeningHours> _openingHours;
 @override List<OpeningHours> get openingHours {
   if (_openingHours is EqualUnmodifiableListView) return _openingHours;
@@ -384,8 +384,8 @@ class Food extends Entity {
   return EqualUnmodifiableListView(_openingHours);
 }
 
-@override final  OperationalStatus entityStatus;
-@override final  ApprovalStatus status;
+@override@JsonKey() final  OperationalStatus entityStatus;
+@override@JsonKey() final  ApprovalStatus status;
 @override@_timestampJsonConverter final  DateTime createdAt;
 @override@JsonKey() final  EntityType type;
 @override@JsonKey() final  GenderPreference genderPref;

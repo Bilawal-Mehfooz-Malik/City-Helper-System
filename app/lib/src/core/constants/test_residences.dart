@@ -1,6 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/entity.dart';
-import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/features/home/domain/opening_hours.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final testResidences = <Entity>[
