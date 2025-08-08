@@ -1,15 +1,18 @@
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/list_extensions.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/utils/list_extensions.dart';
-
 extension EntityExtensions on Entity {
   bool isEntityOpen() {
-    if (entityStatus == OperationalStatus.close) return false;
-    if (entityStatus == OperationalStatus.open) return true;
+    // 1. Check for a global override status.
+    if (entityStatus == OperationalStatus.close) {
+      return false; // Permanent closed
+    }
+    if (entityStatus == OperationalStatus.open) return true; // Always open
 
+    // 2. Find the opening hours for the current day.
     final now = DateTime.now().toLocal();
     final currentDay = DateFormat('EEEE').format(now);
 
@@ -17,17 +20,28 @@ extension EntityExtensions on Entity {
       (hours) => hours.day.toLowerCase() == currentDay.toLowerCase(),
     );
 
-    if (todayOpeningHours == null) return false;
-
-    if (todayOpeningHours.open == todayOpeningHours.close) {
-      return true; // Open 24 hours
+    // 3. If no entry for today, or if it's explicitly marked as closed, then it's closed.
+    if (todayOpeningHours == null || !todayOpeningHours.isOpen) {
+      return false;
     }
 
+    // 4. If it's open today, but no specific times are provided, assume it's open all day.
+    final openTimeStr = todayOpeningHours.open;
+    final closeTimeStr = todayOpeningHours.close;
+    if (openTimeStr == null || closeTimeStr == null) {
+      return true;
+    }
+
+    // 5. If open and close times are the same, it's open 24 hours.
+    if (openTimeStr == closeTimeStr) {
+      return true;
+    }
+
+    // 6. Parse the times and check if the current time is within the range.
     try {
       final format = DateFormat("HH:mm");
-
-      final openParsed = format.parse(todayOpeningHours.open);
-      final closeParsed = format.parse(todayOpeningHours.close);
+      final openParsed = format.parse(openTimeStr);
+      final closeParsed = format.parse(closeTimeStr);
 
       final openTime = DateTime(
         now.year,
@@ -44,6 +58,7 @@ extension EntityExtensions on Entity {
         closeParsed.minute,
       );
 
+      // Handle cases where the closing time is on the next day (e.g., open 22:00, close 02:00).
       if (closeTime.isBefore(openTime)) {
         closeTime = closeTime.add(const Duration(days: 1));
       }
@@ -55,7 +70,7 @@ extension EntityExtensions on Entity {
         error: e,
         stackTrace: st,
       );
-      return false;
+      return false; // If parsing fails for any reason, assume it's closed.
     }
   }
 

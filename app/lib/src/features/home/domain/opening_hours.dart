@@ -7,8 +7,9 @@ part 'opening_hours.g.dart';
 abstract class OpeningHours with _$OpeningHours {
   const factory OpeningHours({
     required String day,
-    required String open,
-    required String close,
+    @Default(true) bool isOpen,
+    String? open,
+    String? close,
   }) = _OpeningHours;
 
   factory OpeningHours.fromJson(Map<String, Object?> json) =>

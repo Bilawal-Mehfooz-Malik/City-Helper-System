@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OpeningHours {
 
- String get day; String get open; String get close;
+ String get day; bool get isOpen; String? get open; String? get close;
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $OpeningHoursCopyWith<OpeningHours> get copyWith => _$OpeningHoursCopyWithImpl<O
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.isOpen, isOpen) || other.isOpen == isOpen)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,day,open,close);
+int get hashCode => Object.hash(runtimeType,day,isOpen,open,close);
 
 @override
 String toString() {
-  return 'OpeningHours(day: $day, open: $open, close: $close)';
+  return 'OpeningHours(day: $day, isOpen: $isOpen, open: $open, close: $close)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $OpeningHoursCopyWith<$Res>  {
   factory $OpeningHoursCopyWith(OpeningHours value, $Res Function(OpeningHours) _then) = _$OpeningHoursCopyWithImpl;
 @useResult
 $Res call({
- String day, String open, String close
+ String day, bool isOpen, String? open, String? close
 });
 
 
@@ -65,12 +65,13 @@ class _$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? day = null,Object? open = null,Object? close = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? day = null,Object? isOpen = null,Object? open = freezed,Object? close = freezed,}) {
   return _then(_self.copyWith(
 day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
-as String,open: null == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
-as String,close: null == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
+as bool,open: freezed == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
+as String?,close: freezed == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String day,  String open,  String close)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String day,  bool isOpen,  String? open,  String? close)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
-return $default(_that.day,_that.open,_that.close);case _:
+return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.day,_that.open,_that.close);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String day,  String open,  String close)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String day,  bool isOpen,  String? open,  String? close)  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours():
-return $default(_that.day,_that.open,_that.close);case _:
+return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.day,_that.open,_that.close);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String day,  String open,  String close)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String day,  bool isOpen,  String? open,  String? close)?  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
-return $default(_that.day,_that.open,_that.close);case _:
+return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
   return null;
 
 }
@@ -211,12 +212,13 @@ return $default(_that.day,_that.open,_that.close);case _:
 @JsonSerializable()
 
 class _OpeningHours implements OpeningHours {
-  const _OpeningHours({required this.day, required this.open, required this.close});
+  const _OpeningHours({required this.day, this.isOpen = true, this.open, this.close});
   factory _OpeningHours.fromJson(Map<String, dynamic> json) => _$OpeningHoursFromJson(json);
 
 @override final  String day;
-@override final  String open;
-@override final  String close;
+@override@JsonKey() final  bool isOpen;
+@override final  String? open;
+@override final  String? close;
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.isOpen, isOpen) || other.isOpen == isOpen)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,day,open,close);
+int get hashCode => Object.hash(runtimeType,day,isOpen,open,close);
 
 @override
 String toString() {
-  return 'OpeningHours(day: $day, open: $open, close: $close)';
+  return 'OpeningHours(day: $day, isOpen: $isOpen, open: $open, close: $close)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$OpeningHoursCopyWith<$Res> implements $OpeningHoursCopyWi
   factory _$OpeningHoursCopyWith(_OpeningHours value, $Res Function(_OpeningHours) _then) = __$OpeningHoursCopyWithImpl;
 @override @useResult
 $Res call({
- String day, String open, String close
+ String day, bool isOpen, String? open, String? close
 });
 
 
@@ -268,12 +270,13 @@ class __$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? day = null,Object? open = null,Object? close = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? day = null,Object? isOpen = null,Object? open = freezed,Object? close = freezed,}) {
   return _then(_OpeningHours(
 day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
-as String,open: null == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
-as String,close: null == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
+as bool,open: freezed == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
+as String?,close: freezed == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
