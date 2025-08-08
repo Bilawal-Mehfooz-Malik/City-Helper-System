@@ -3,6 +3,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/opening_hours.dart';
 import 'package:app/src/features/home/domain/helpers/json_converters.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,14 +32,15 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    required List<OpeningHours> openingHours,
-    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
+    List<OpeningHours>? openingHours,
+    OperationalStatus? entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.residence) EntityType type,
-    @Default(0.0) double price,
-    @Default(false) bool isFurnished,
-    @Default(GenderPreference.any) GenderPreference genderPref,
+    required Pricing pricing,
+    bool? isFurnished,
+    GenderPreference? genderPref,
+    @Default(ListingType.forRent) ListingType listingType,
   }) = Residence;
 
   @JsonSerializable(explicitToJson: true)

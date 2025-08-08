@@ -15,6 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SearchEntity {
 
+// ignore: invalid_annotation_target
 @JsonKey(name: 'objectID') EntityId get id; String get name; String get cityName; String get sectorName;
 /// Create a copy of SearchEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -215,6 +216,7 @@ class _SearchEntity implements SearchEntity {
   const _SearchEntity({@JsonKey(name: 'objectID') required this.id, required this.name, required this.cityName, required this.sectorName});
   factory _SearchEntity.fromJson(Map<String, dynamic> json) => _$SearchEntityFromJson(json);
 
+// ignore: invalid_annotation_target
 @override@JsonKey(name: 'objectID') final  EntityId id;
 @override final  String name;
 @override final  String cityName;

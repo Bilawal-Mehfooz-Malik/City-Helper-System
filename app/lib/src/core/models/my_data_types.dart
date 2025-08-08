@@ -20,3 +20,5 @@ enum OperationalStatus { open, close, defaultStatus }
 enum ApprovalStatus { blocked, pending, approved }
 
 enum EntityType { residence, food }
+
+enum ListingType { forRent, forSale }
