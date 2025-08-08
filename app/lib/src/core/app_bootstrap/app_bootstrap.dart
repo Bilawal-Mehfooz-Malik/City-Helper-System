@@ -20,14 +20,14 @@ extension CreateProviderContainer on AppBootStrap {
     // Initialize SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     final userLocationRepository = UserLocationRepository(prefs);
-    final userModeReposiory = UserModeRepository(prefs);
+    // final userModeReposiory = UserModeRepository(prefs);
 
     return ProviderContainer(
       overrides: [
         userLocationRepositoryProvider.overrideWithValue(
           userLocationRepository,
         ),
-        userModeRepositoryProvider.overrideWithValue(userModeReposiory),
+        // userModeRepositoryProvider.overrideWithValue(userModeReposiory),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

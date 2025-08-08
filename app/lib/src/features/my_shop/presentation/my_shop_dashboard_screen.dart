@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
@@ -218,3 +219,4 @@ class _ShopInfo extends StatelessWidget {
     );
   }
 }
+*/

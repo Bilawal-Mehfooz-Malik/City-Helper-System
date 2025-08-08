@@ -1,10 +1,10 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-final List<Food> testFoods = [
-  Food(
+final testFoods = <Entity>[
+  Entity.food(
     id: '1',
     categoryId: 2,
     subCategoryId: 6,
@@ -23,7 +23,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '2',
     categoryId: 2,
     subCategoryId: 6,
@@ -42,7 +42,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '3',
     categoryId: 2,
     subCategoryId: 7,
@@ -61,7 +61,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '4',
     categoryId: 2,
     subCategoryId: 7,
@@ -80,7 +80,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '5',
     categoryId: 2,
     subCategoryId: 8,
@@ -99,7 +99,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '6',
     categoryId: 2,
     subCategoryId: 8,
@@ -118,7 +118,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '7',
     categoryId: 2,
     subCategoryId: 9,
@@ -137,7 +137,7 @@ final List<Food> testFoods = [
     status: Status.approved,
     type: EntityType.food,
   ),
-  Food(
+  Entity.food(
     id: '8',
     categoryId: 2,
     subCategoryId: 9,

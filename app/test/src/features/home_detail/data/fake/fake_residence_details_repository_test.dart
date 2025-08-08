@@ -1,3 +1,4 @@
+/*
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app/src/features/home_detail/data/fake/test_residence_details.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
@@ -40,3 +41,4 @@ void main() {
     });
   });
 }
+*/

@@ -1,6 +1,4 @@
 import 'package:app/src/features/home/domain/categories/entity.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
@@ -63,10 +61,7 @@ bool _checkOpen(Entity entity, EntityFilter filter) {
 bool _matchFurnished(Entity entity, EntityFilter filter) {
   return filter.when(
     residence: (_, _, isFurnished, _, _) {
-      if (entity is Residence && isFurnished) {
-        return entity.checkFurnished(true);
-      }
-      return true;
+      return entity.checkFurnished(isFurnished);
     },
     food: (_, _, _) => true, // No furnished filter for food
     basic: (_, _) => true, // No furnished filter for basic
@@ -76,16 +71,10 @@ bool _matchFurnished(Entity entity, EntityFilter filter) {
 bool _matchGender(Entity entity, EntityFilter filter) {
   return filter.when(
     residence: (_, _, _, _, genderPref) {
-      if (entity is Residence) {
-        return entity.matchGenderPref(genderPref);
-      }
-      return true;
+      return entity.matchGenderPref(genderPref);
     },
     food: (_, _, genderPref) {
-      if (entity is Food) {
-        return entity.matchGenderPref(genderPref);
-      }
-      return true;
+      return entity.matchGenderPref(genderPref);
     },
     basic: (_, _) => true, // No gender filter for basic
   );
@@ -94,10 +83,13 @@ bool _matchGender(Entity entity, EntityFilter filter) {
 // --- Private Sorting Helpers ---
 
 int _compareByPrice(Entity a, Entity b, SortOrder order) {
-  if (a is Residence && b is Residence) {
+  final priceA = a.mapOrNull(residence: (res) => res.price);
+  final priceB = b.mapOrNull(residence: (res) => res.price);
+
+  if (priceA != null && priceB != null) {
     return order == SortOrder.lowToHigh
-        ? a.price.compareTo(b.price)
-        : b.price.compareTo(a.price);
+        ? priceA.compareTo(priceB)
+        : priceB.compareTo(priceA);
   }
   return 0;
 }

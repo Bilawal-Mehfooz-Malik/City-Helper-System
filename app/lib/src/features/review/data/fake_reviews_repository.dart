@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 
 import 'package:app/src/core/models/my_data_types.dart';
@@ -78,3 +79,4 @@ class FakeReviewsRepository implements ReviewsRepository {
     );
   }
 }
+*/

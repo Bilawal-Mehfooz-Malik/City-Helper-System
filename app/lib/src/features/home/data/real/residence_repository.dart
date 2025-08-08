@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,30 +15,30 @@ class ResidenceRepository {
 
   /// The base collection reference without any filters.
   /// Used for fetching single documents by ID or for writing data.
-  CollectionReference<Residence> get _residencesRef => _firestore
+  CollectionReference<Entity> get _residencesRef => _firestore
       .collection(residencesKey)
-      .withConverter<Residence>(
+      .withConverter<Entity>(
         fromFirestore: (snapshot, _) =>
-            Residence.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
+            Entity.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
         toFirestore: (residence, _) => residence.toJson(),
       );
 
   // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
   /// Used for all public-facing list views.
-  Query<Residence> get _approvedResidencesQuery => _residencesRef.where(
+  Query<Entity> get _approvedResidencesQuery => _residencesRef.where(
     'status',
     isEqualTo: Status.approved.name, // Using enum for type-safety
   );
 
   /// Writes a residence document. Uses the unfiltered ref to allow setting
   /// documents with any status (e.g., 'pending').
-  Future<void> setResidence(Residence residence) async {
+  Future<void> setResidence(Entity residence) async {
     await _residencesRef.doc(residence.id).set(residence);
   }
 
   /// Watches a list of all approved residences.
-  Stream<List<Residence>> watchResidencesList() {
+  Stream<List<Entity>> watchResidencesList() {
     // Uses the new filtered query
     return _approvedResidencesQuery.snapshots().map(
       (snapshot) => snapshot.docs.map((doc) => doc.data()).toList(),
@@ -46,14 +46,14 @@ class ResidenceRepository {
   }
 
   /// Fetches a list of all approved residences.
-  Future<List<Residence>> fetchResidencesList() async {
+  Future<List<Entity>> fetchResidencesList() async {
     // Uses the new filtered query
     final snapshot = await _approvedResidencesQuery.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
   /// Watches a list of popular, approved residences.
-  Stream<List<Residence>> watchPopularResidencesList() {
+  Stream<List<Entity>> watchPopularResidencesList() {
     // Chains another .where() onto the new filtered query
     return _approvedResidencesQuery
         .where('isPopular', isEqualTo: true)
@@ -62,7 +62,7 @@ class ResidenceRepository {
   }
 
   /// Fetches a list of popular, approved residences.
-  Future<List<Residence>> fetchPopularResidencesList() async {
+  Future<List<Entity>> fetchPopularResidencesList() async {
     // Chains another .where() onto the new filtered query
     final snapshot = await _approvedResidencesQuery
         .where('isPopular', isEqualTo: true)
@@ -71,7 +71,7 @@ class ResidenceRepository {
   }
 
   /// Watches a list of approved residences by sub-category.
-  Stream<List<Residence>> watchResidencesListBySubCategoryId(
+  Stream<List<Entity>> watchResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) {
     return _approvedResidencesQuery
@@ -81,7 +81,7 @@ class ResidenceRepository {
   }
 
   /// Fetches a list of approved residences by sub-category.
-  Future<List<Residence>> fetchResidencesListBySubCategoryId(
+  Future<List<Entity>> fetchResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async {
     final snapshot = await _approvedResidencesQuery
@@ -91,7 +91,7 @@ class ResidenceRepository {
   }
 
   // ... (Apply the same change to other list-fetching methods) ...
-  Stream<List<Residence>> watchPopularResidencesListBySubCategoryId(
+  Stream<List<Entity>> watchPopularResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) {
     return _approvedResidencesQuery
@@ -101,7 +101,7 @@ class ResidenceRepository {
         .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
   }
 
-  Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
+  Future<List<Entity>> fetchPopularResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async {
     final snapshot = await _approvedResidencesQuery
@@ -112,7 +112,7 @@ class ResidenceRepository {
   }
 
   /// Watches a single residence by its ID, regardless of its status.
-  Stream<Residence?> watchResidence(EntityId id) {
+  Stream<Entity?> watchResidence(EntityId id) {
     // Uses the original, unfiltered ref
     return _residencesRef
         .doc(id)
@@ -121,7 +121,7 @@ class ResidenceRepository {
   }
 
   /// Fetches a single residence by its ID, regardless of its status.
-  Future<Residence?> fetchResidence(EntityId id) async {
+  Future<Entity?> fetchResidence(EntityId id) async {
     // Uses the original, unfiltered ref
     final snapshot = await _residencesRef.doc(id).get();
     return snapshot.exists ? snapshot.data() : null;

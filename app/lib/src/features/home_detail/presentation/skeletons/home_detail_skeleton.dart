@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/features/home_detail/presentation/skeletons/home_detail_bottom_section_skeleton.dart';
 import 'package:app/src/features/home_detail/presentation/skeletons/home_detail_top_left_skeleton.dart';
@@ -43,3 +44,4 @@ class HomeDetailSkeleton extends StatelessWidget {
     );
   }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/carousel_button.dart';
@@ -116,3 +117,4 @@ class _FullscreenPhotoViewerState extends State<FullscreenPhotoViewer> {
     );
   }
 }
+*/

@@ -1,5 +1,6 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,7 +24,13 @@ class ResidenceDetailsRepository {
 
   /// ✅ Save or update a ResidenceDetail
   Future<void> setResidenceDetail(ResidenceDetail updated) async {
-    await _docRef(updated.id).set(updated.toJson());
+    await _docRef(
+      updated.when(
+        residence: (residence, _, _, _, _, _, _, _, _, _, _, _, _) =>
+            residence.id,
+        food: (food, _, _, _, _, _, _, _, _, _, _, _, _) => food.id,
+      ),
+    ).set(updated.toJson());
   }
 
   /// ✅ Real-time updates
@@ -82,3 +89,4 @@ class ResidenceDetailsRepository {
 ResidenceDetailsRepository residenceDetailsRepository(Ref ref) {
   return ResidenceDetailsRepository(FirebaseFirestore.instance);
 }
+*/

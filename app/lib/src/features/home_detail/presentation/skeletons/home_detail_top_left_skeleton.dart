@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -54,3 +55,4 @@ class _ThumbnailListSkeleton extends StatelessWidget {
     );
   }
 }
+*/

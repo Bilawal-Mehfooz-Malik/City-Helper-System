@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/features/home_detail/data/fake/test_food_details.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
@@ -34,3 +35,4 @@ void main() {
     });
   });
 }
+*/

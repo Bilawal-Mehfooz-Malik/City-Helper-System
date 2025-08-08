@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
 
 class Review {
@@ -72,3 +73,4 @@ class Review {
     return 'Review(userId: $userId, entityId: $entityId, rating: $rating, comment: $comment, updatedAt: $updatedAt)';
   }
 }
+*/

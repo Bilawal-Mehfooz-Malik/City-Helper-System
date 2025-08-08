@@ -40,22 +40,22 @@ extension AppBootstrapFakes on AppBootStrap {
     final adsCarouselRepository = FakeAdsCarouselRepository();
     final residenceRepository = FakeResidenceRepository();
     final foodRepository = FakeFoodRepository();
-    final foodDetailsRepository = FakeFoodDetailsRepository();
-    final residenceDetailsRepository = FakeResidenceDetailsRepository();
-    final reviewsRepository = FakeReviewsRepository();
+    // final foodDetailsRepository = FakeFoodDetailsRepository();
+    // final residenceDetailsRepository = FakeResidenceDetailsRepository();
+    // final reviewsRepository = FakeReviewsRepository();
     final authRepository = FakeAuthRepository();
-    final reviewsService = FakeReviewsService(
-      fakeResidenceRepository: residenceRepository,
-      fakeFoodRepository: foodRepository,
-      authRepository: authRepository,
-      reviewsRepository: reviewsRepository,
-      fakeFoodDetailsRepository: foodDetailsRepository,
-      fakeResidenceDetailsRepository: residenceDetailsRepository,
-    );
+    // final reviewsService = FakeReviewsService(
+    //   fakeResidenceRepository: residenceRepository,
+    //   fakeFoodRepository: foodRepository,
+    //   authRepository: authRepository,
+    //   reviewsRepository: reviewsRepository,
+    //   fakeFoodDetailsRepository: foodDetailsRepository,
+    //   fakeResidenceDetailsRepository: residenceDetailsRepository,
+    // );
 
     final prefs = await SharedPreferences.getInstance();
     final userLocationRepository = UserLocationRepository(prefs);
-    final userModeReposiory = UserModeRepository(prefs);
+    // final userModeReposiory = UserModeRepository(prefs);
     final imageUploadRepository = FakeImageUploadRepository(
       InMemoryImageStorage(),
     );
@@ -80,17 +80,17 @@ extension AppBootstrapFakes on AppBootStrap {
         adsCarouselRepositoryProvider.overrideWithValue(adsCarouselRepository),
         residenceRepositoryProvider.overrideWithValue(residenceRepository),
         foodRepositoryProvider.overrideWithValue(foodRepository),
-        foodDetailsRepositoryProvider.overrideWithValue(foodDetailsRepository),
-        residenceDetailsRepositoryProvider.overrideWithValue(
-          residenceDetailsRepository,
-        ),
-        reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
+        // foodDetailsRepositoryProvider.overrideWithValue(foodDetailsRepository),
+        // residenceDetailsRepositoryProvider.overrideWithValue(
+        //   residenceDetailsRepository,
+        // ),
+        // reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
         authRepositoryProvider.overrideWithValue(authRepository),
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
-        reviewsServiceProvider.overrideWithValue(reviewsService),
+        // reviewsServiceProvider.overrideWithValue(reviewsService),
         authServiceProvider.overrideWithValue(authService),
-        userModeRepositoryProvider.overrideWithValue(userModeReposiory),
+        // userModeRepositoryProvider.overrideWithValue(userModeReposiory),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

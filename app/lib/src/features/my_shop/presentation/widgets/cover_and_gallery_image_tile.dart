@@ -1,3 +1,4 @@
+/*
 import 'dart:typed_data';
 
 import 'package:app/src/core/common_widgets/custom_image.dart';
@@ -175,7 +176,9 @@ class _GalleryImagesTileState extends State<GalleryImagesTile> {
             itemBuilder: (_, index) {
               final imageUrl = widget.galleryImagesUrl[index];
               return _buildImage(
-                CustomImageWrapper(aspectRatio: 1, imageUrl: imageUrl),
+                CustomImageWrapper(
+                  aspectRatio: 1,
+                  imageUrl: imageUrl),
                 () => widget.onExistingImageDeleted(imageUrl),
               );
             },
@@ -224,3 +227,4 @@ class _GalleryImagesTileState extends State<GalleryImagesTile> {
     );
   }
 }
+*/

@@ -3,17 +3,17 @@ import 'package:app/src/core/constants/test_food_list.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 
 class FakeFoodRepository implements FoodRepository {
   FakeFoodRepository({this.addDelay = true});
   final bool addDelay;
 
-  final _foods = InMemoryStore<List<Food>>(List.from(testFoods));
+  final _foods = InMemoryStore<List<Entity>>(List.from(testFoods));
 
   @override
-  Future<void> setFood(Food food) async {
+  Future<void> setFood(Entity food) async {
     final list = [..._foods.value];
     final index = list.indexWhere((f) => f.id == food.id);
     if (index != -1) {
@@ -25,77 +25,81 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Stream<List<Food>> watchFoodsList() async* {
+  Stream<List<Entity>> watchFoodsList() async* {
     await delay(addDelay);
     yield* _foods.stream;
   }
 
   @override
-  Future<List<Food>> fetchFoodsList() async {
+  Future<List<Entity>> fetchFoodsList() async {
     await delay(addDelay);
     return _foods.value;
   }
 
   @override
-  Stream<List<Food>> watchPopularFoodsList() async* {
+  Stream<List<Entity>> watchPopularFoodsList() async* {
     await delay(addDelay);
     yield* _foods.stream.map(
-      (foods) => foods.where((f) => f.isPopular).toList(),
+      (foods) => foods.where((f) => f.mapOrNull(food: (food) => food.isPopular) ?? false).toList(),
     );
   }
 
   @override
-  Future<List<Food>> fetchPopularFoodsList() async {
+  Future<List<Entity>> fetchPopularFoodsList() async {
     await delay(addDelay);
-    return _foods.value.where((f) => f.isPopular).toList();
+    return _foods.value.where((f) => f.mapOrNull(food: (food) => food.isPopular) ?? false).toList();
   }
 
   @override
-  Stream<List<Food>> watchFoodsListBySubCategoryId(
+  Stream<List<Entity>> watchFoodsListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async* {
     await delay(addDelay);
     yield* _foods.stream.map(
-      (foods) => foods.where((f) => f.subCategoryId == subCategoryId).toList(),
+      (foods) => foods.where((f) => f.mapOrNull(food: (food) => food.subCategoryId == subCategoryId) ?? false).toList(),
     );
   }
 
   @override
-  Future<List<Food>> fetchFoodsListSubCategoryId(
+  Future<List<Entity>> fetchFoodsListSubCategoryId(
     SubCategoryId subCategoryId,
   ) async {
     await delay(addDelay);
-    return _foods.value.where((f) => f.subCategoryId == subCategoryId).toList();
+    return _foods.value.where((f) => f.mapOrNull(food: (food) => food.subCategoryId == subCategoryId) ?? false).toList();
   }
 
   @override
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(
+  Stream<List<Entity>> watchPopularFoodsListSubCategoryId(
     SubCategoryId subCategoryId,
   ) async* {
     await delay(addDelay);
     yield* _foods.stream.map(
       (foods) => foods
-          .where((f) => f.subCategoryId == subCategoryId && f.isPopular)
+          .where((f) =>
+              (f.mapOrNull(food: (food) => food.subCategoryId == subCategoryId) ?? false) &&
+              (f.mapOrNull(food: (food) => food.isPopular) ?? false))
           .toList(),
     );
   }
 
   @override
-  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
+  Future<List<Entity>> fetchPopularFoodsListSubCategoryId(
     SubCategoryId subCategoryId,
   ) async {
     await delay(addDelay);
     return _foods.value
-        .where((f) => f.subCategoryId == subCategoryId && f.isPopular)
+        .where((f) =>
+            (f.mapOrNull(food: (food) => food.subCategoryId == subCategoryId) ?? false) &&
+            (f.mapOrNull(food: (food) => food.isPopular) ?? false))
         .toList();
   }
 
   @override
-  Stream<Food?> watchFood(EntityId id) async* {
+  Stream<Entity?> watchFood(EntityId id) async* {
     await delay(addDelay);
     yield* _foods.stream.map((foods) {
       try {
-        return foods.firstWhere((f) => f.id == id);
+        return foods.firstWhere((f) => f.mapOrNull(food: (food) => food.id == id) ?? false);
       } catch (_) {
         return null;
       }
@@ -103,10 +107,10 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Future<Food?> fetchFood(EntityId id) async {
+  Future<Entity?> fetchFood(EntityId id) async {
     await delay(addDelay);
     try {
-      return _foods.value.firstWhere((f) => f.id == id);
+      return _foods.value.firstWhere((f) => f.mapOrNull(food: (food) => food.id == id) ?? false);
     } catch (_) {
       return null;
     }

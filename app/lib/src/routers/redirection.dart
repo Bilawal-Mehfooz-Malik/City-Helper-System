@@ -25,6 +25,7 @@ String? redirection(Ref ref, GoRouterState state) {
   }
 
   // Step 3: Handle Auth State (modified)
+  /*
   if (!isLoggedIn) {
     if (currentPath == '/account' ||
         currentPath == '/profile' ||
@@ -41,8 +42,9 @@ String? redirection(Ref ref, GoRouterState state) {
       // Read the mode directly from the repository (it's synchronous).
       final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
       if (isAdminMode) {
-        // If in admin mode, redirect from the user homepage to the admin dashboard.
         return '/my-shop';
+      } else {
+        return '/categories';
       }
     }
 
@@ -54,6 +56,7 @@ String? redirection(Ref ref, GoRouterState state) {
       return isProfileComplete ? '/' : '/profile';
     }
   }
+  */
 
   // Step 4: Onboarding Block
   final isPickLocation = currentPath.contains('pick-your-location');
@@ -61,12 +64,15 @@ String? redirection(Ref ref, GoRouterState state) {
       currentPath.startsWith('/get-started') &&
       !isPickLocation) {
     if (isLoggedIn) {
+      /*
       final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
       if (isAdminMode) {
         return '/my-shop';
       } else {
         return '/categories';
       }
+      */
+      return '/categories';
     } else {
       // If not logged in but has location, redirect to categories
       return '/categories';

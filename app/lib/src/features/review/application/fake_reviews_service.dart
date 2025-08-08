@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home/data/fake/fake_food_repository.dart';
@@ -106,7 +107,8 @@ class FakeReviewsService implements ReviewsService {
     for (int i = 5; i >= 1; i--) {
       final count = reviews.where((r) => r.rating.round() == i).length;
       breakdown.add(RatingBreakdown(stars: i, count: count));
-    }
+    };
     return breakdown;
   }
 }
+*/

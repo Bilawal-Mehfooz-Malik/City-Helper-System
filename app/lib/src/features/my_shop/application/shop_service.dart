@@ -1,10 +1,9 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -117,3 +116,4 @@ Stream<EntityDetail?> watchUserShop(Ref ref, UserId userId) {
   final shopService = ref.read(shopServiceProvider);
   return shopService.watchUserShopByOwnerId(userId);
 }
+*/

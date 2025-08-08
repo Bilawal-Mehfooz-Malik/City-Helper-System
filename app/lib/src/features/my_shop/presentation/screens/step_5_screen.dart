@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
@@ -65,3 +66,4 @@ class Step5MediaPage extends ConsumerWidget {
     );
   }
 }
+*/

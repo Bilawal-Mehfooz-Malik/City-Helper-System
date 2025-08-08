@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/opening_hours_widget.dart';
@@ -253,8 +254,7 @@ class LocationRow extends StatelessWidget {
       ],
     );
   }
-}
-
+}
 class FurnishedInfo extends StatelessWidget {
   final ResidenceDetail residence;
 
@@ -327,3 +327,4 @@ class ContactOptionsRow extends StatelessWidget {
     );
   }
 }
+*/

@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,26 +14,26 @@ class FoodRepository {
   static String get foodsKey => 'food_listings';
 
   /// The base collection reference without any filters.
-  CollectionReference<Food> get _foodsRef => _firestore
+  CollectionReference<Entity> get _foodsRef => _firestore
       .collection(foodsKey)
-      .withConverter<Food>(
+      .withConverter<Entity>(
         fromFirestore: (snap, _) =>
-            Food.fromJson(Map<String, dynamic>.from(snap.data()!)),
+            Entity.fromJson(Map<String, dynamic>.from(snap.data()!)),
         toFirestore: (food, _) => food.toJson(),
       );
 
   // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
-  Query<Food> get _approvedFoodsQuery =>
+  Query<Entity> get _approvedFoodsQuery =>
       _foodsRef.where('status', isEqualTo: Status.approved.name);
 
   /// Writes a food document. Uses the unfiltered ref.
-  Future<void> setFood(Food food) async {
+  Future<void> setFood(Entity food) async {
     await _foodsRef.doc(food.id).set(food);
   }
 
   /// Watches a list of all approved foods.
-  Stream<List<Food>> watchFoodsList() {
+  Stream<List<Entity>> watchFoodsList() {
     // Uses the new filtered query
     return _approvedFoodsQuery.snapshots().map(
       (snap) => snap.docs.map((d) => d.data()).toList(),
@@ -41,14 +41,14 @@ class FoodRepository {
   }
 
   /// Fetches a list of all approved foods.
-  Future<List<Food>> fetchFoodsList() async {
+  Future<List<Entity>> fetchFoodsList() async {
     // Uses the new filtered query
     final snap = await _approvedFoodsQuery.get();
     return snap.docs.map((d) => d.data()).toList();
   }
 
   /// Watches a list of popular, approved foods.
-  Stream<List<Food>> watchPopularFoodsList() {
+  Stream<List<Entity>> watchPopularFoodsList() {
     return _approvedFoodsQuery
         .where('isPopular', isEqualTo: true)
         .snapshots()
@@ -56,7 +56,7 @@ class FoodRepository {
   }
 
   /// Fetches a list of popular, approved foods.
-  Future<List<Food>> fetchPopularFoodsList() async {
+  Future<List<Entity>> fetchPopularFoodsList() async {
     final snap = await _approvedFoodsQuery
         .where('isPopular', isEqualTo: true)
         .get();
@@ -64,7 +64,7 @@ class FoodRepository {
   }
 
   /// Watches a list of approved foods by sub-category.
-  Stream<List<Food>> watchFoodsListBySubCategoryId(SubCategoryId subId) {
+  Stream<List<Entity>> watchFoodsListBySubCategoryId(SubCategoryId subId) {
     return _approvedFoodsQuery
         .where('subCategoryId', isEqualTo: subId)
         .snapshots()
@@ -72,14 +72,14 @@ class FoodRepository {
   }
 
   // ... (Apply the same change to other list-fetching methods) ...
-  Future<List<Food>> fetchFoodsListSubCategoryId(SubCategoryId subId) async {
+  Future<List<Entity>> fetchFoodsListSubCategoryId(SubCategoryId subId) async {
     final snap = await _approvedFoodsQuery
         .where('subCategoryId', isEqualTo: subId)
         .get();
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(SubCategoryId subId) {
+  Stream<List<Entity>> watchPopularFoodsListSubCategoryId(SubCategoryId subId) {
     return _approvedFoodsQuery
         .where('subCategoryId', isEqualTo: subId)
         .where('isPopular', isEqualTo: true)
@@ -87,7 +87,7 @@ class FoodRepository {
         .map((snap) => snap.docs.map((d) => d.data()).toList());
   }
 
-  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
+  Future<List<Entity>> fetchPopularFoodsListSubCategoryId(
     SubCategoryId subId,
   ) async {
     final snap = await _approvedFoodsQuery
@@ -98,14 +98,14 @@ class FoodRepository {
   }
 
   /// Fetches a single food document by its ID, regardless of its status.
-  Future<Food?> fetchFood(EntityId id) async {
+  Future<Entity?> fetchFood(EntityId id) async {
     // Uses the original, unfiltered ref
     final doc = await _foodsRef.doc(id).get();
     return doc.exists ? doc.data() : null;
   }
 
   /// Watches a single food document by its ID, regardless of its status.
-  Stream<Food?> watchFood(EntityId id) {
+  Stream<Entity?> watchFood(EntityId id) {
     // Uses the original, unfiltered ref
     return _foodsRef.doc(id).snapshots().map((doc) {
       return doc.exists ? doc.data() : null;

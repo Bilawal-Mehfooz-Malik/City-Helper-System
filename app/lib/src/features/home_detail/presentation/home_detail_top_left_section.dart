@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
@@ -204,3 +205,4 @@ class CarouselPaginationDots extends StatelessWidget {
     );
   }
 }
+*/

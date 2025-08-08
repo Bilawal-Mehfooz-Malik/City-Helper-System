@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -67,3 +68,4 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
     );
   }
 }
+*/

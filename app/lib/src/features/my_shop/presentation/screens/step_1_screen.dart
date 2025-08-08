@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
@@ -78,3 +79,4 @@ class Step1BasicDetailsPage extends ConsumerWidget {
     );
   }
 }
+*/

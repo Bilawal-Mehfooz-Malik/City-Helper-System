@@ -1,5 +1,7 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,33 +19,39 @@ class FoodDetailsRepository {
     return _firestore.collection(foodsKey).doc();
   }
 
-  Future<void> setFoodDetail(FoodDetail updated) async {
-    await _docRef(updated.id).set(updated.toJson());
+  Future<void> setFoodDetail(EntityDetail updated) async {
+    await _docRef(
+      updated.when(
+        food: (food, _, _, _, _, _, _, _, _, _, _, _, _) => food.id,
+        residence: (residence, _, _, _, _, _, _, _, _, _, _, _, _) =>
+            residence.id,
+      ),
+    ).set(updated.toJson());
   }
 
   Future<void> updateFoodStatus(EntityId id, EntityStatus status) async {
     await _docRef(id).update({'entityStatus': status.name});
   }
 
-  Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
+  Stream<EntityDetail?> watchFoodDetailsByOwnerId(UserId id) {
     return _docRefByOwnerId(id).snapshots().map((snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        return FoodDetail.fromJson(snapshot.docs.first.data());
+        return EntityDetail.fromJson(snapshot.docs.first.data());
       }
       return null;
     });
   }
 
-  Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) async {
+  Future<EntityDetail?> fetchFoodDetailsByOwnerId(UserId id) async {
     final residenceSnap = await _docRefByOwnerId(id).get();
 
     if (residenceSnap.docs.isNotEmpty) {
-      return FoodDetail.fromJson(residenceSnap.docs.first.data());
+      return EntityDetail.fromJson(residenceSnap.docs.first.data());
     }
     return null;
   }
 
-  Stream<FoodDetail?> watchFoodDetails(EntityId id) {
+  Stream<EntityDetail?> watchFoodDetails(EntityId id) {
     return _docRef(id).snapshots().map((snapshot) {
       if (snapshot.exists && snapshot.data() != null) {
         return FoodDetail.fromJson(snapshot.data()!);
@@ -77,3 +85,4 @@ class FoodDetailsRepository {
 FoodDetailsRepository foodDetailsRepository(Ref ref) {
   return FoodDetailsRepository(FirebaseFirestore.instance);
 }
+*/

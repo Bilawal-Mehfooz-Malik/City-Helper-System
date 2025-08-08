@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -186,3 +187,4 @@ class TimePickerField extends StatelessWidget {
     );
   }
 }
+*/

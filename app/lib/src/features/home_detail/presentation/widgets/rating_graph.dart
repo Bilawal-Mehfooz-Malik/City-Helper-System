@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
@@ -116,3 +117,4 @@ class RightRatingGraphSection extends StatelessWidget {
     );
   }
 }
+*/

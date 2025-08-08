@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,3 +13,4 @@ abstract class ShopFormWizardState with _$ShopFormWizardState {
     required List<GlobalKey<FormState>> formKeys,
   }) = _ShopFormWizardState;
 }
+*/

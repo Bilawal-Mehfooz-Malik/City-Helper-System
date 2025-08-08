@@ -1,3 +1,4 @@
+/*
 import 'dart:typed_data';
 
 import 'package:app/src/core/models/my_data_types.dart';
@@ -5,8 +6,6 @@ import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -110,3 +109,4 @@ List<OpeningHours> _setDefaultOpeningHours() {
     return OpeningHours(day: day, open: '09:00', close: '21:00');
   });
 }
+*/

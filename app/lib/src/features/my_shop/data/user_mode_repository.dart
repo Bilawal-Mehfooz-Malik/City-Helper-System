@@ -1,3 +1,4 @@
+/*
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,3 +24,4 @@ UserModeRepository userModeRepository(Ref ref) {
   // This will be overridden in main.dart once SharedPreferences is initialized.
   throw UnimplementedError();
 }
+*/

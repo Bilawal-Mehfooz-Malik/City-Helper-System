@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
@@ -62,3 +63,4 @@ class _DescriptionSection extends StatelessWidget {
     );
   }
 }
+*/

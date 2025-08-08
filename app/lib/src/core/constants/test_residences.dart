@@ -1,10 +1,10 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/categories/entity.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-final List<Residence> testResidences = [
-  Residence(
+final testResidences = <Entity>[
+  Entity.residence(
     id: 'res_001',
     categoryId: 1,
     subCategoryId: 1,
@@ -25,7 +25,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_002',
     categoryId: 1,
     subCategoryId: 2,
@@ -46,7 +46,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_003',
     categoryId: 2,
     subCategoryId: 1,
@@ -67,7 +67,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_004',
     categoryId: 1,
     subCategoryId: 3,
@@ -88,7 +88,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_005',
     categoryId: 2,
     subCategoryId: 2,
@@ -109,7 +109,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_006',
     categoryId: 1,
     subCategoryId: 1,
@@ -130,7 +130,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_007',
     categoryId: 2,
     subCategoryId: 3,
@@ -151,7 +151,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_008',
     categoryId: 1,
     subCategoryId: 2,
@@ -172,7 +172,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_009',
     categoryId: 2,
     subCategoryId: 1,
@@ -193,7 +193,7 @@ final List<Residence> testResidences = [
     status: Status.approved,
     type: EntityType.residence,
   ),
-  Residence(
+  Entity.residence(
     id: 'res_010',
     categoryId: 1,
     subCategoryId: 3,

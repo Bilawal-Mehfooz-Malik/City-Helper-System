@@ -13,10 +13,8 @@ import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class EntitiesListSection extends ConsumerWidget {
   final CategoryId categoryId;
@@ -30,21 +28,23 @@ class EntitiesListSection extends ConsumerWidget {
     );
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
-      context.pushNamed(
-        AppRoute.homeDetail.name,
-        pathParameters: {
-          'categoryId': categoryId.toString(),
-          'entityId': entity.id,
-        },
-      );
+      // TODO: UNCOMMENT
+      // context.pushNamed(
+      //   AppRoute.homeDetail.name,
+      //   pathParameters: {
+      //     'categoryId': categoryId.toString(),
+      //     'entityId': entity.id,
+      //   },
+      // );
     } else {
-      context.goNamed(
-        AppRoute.homeDetail.name,
-        pathParameters: {
-          'categoryId': entity.categoryId.toString(),
-          'entityId': entity.id,
-        },
-      );
+      // TODO: UNCOMMENT
+      // context.goNamed(
+      //   AppRoute.homeDetail.name,
+      //   pathParameters: {
+      //     'categoryId': entity.categoryId.toString(),
+      //     'entityId': entity.id,
+      //   },
+      // );
     }
   }
 

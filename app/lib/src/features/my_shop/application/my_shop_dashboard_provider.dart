@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/my_shop/application/shop_service.dart';
@@ -14,3 +15,4 @@ FutureOr<EntityDetail?> myShopDashboard(Ref ref) async {
   final shop = await ref.watch(watchUserShopProvider(user.uid).future);
   return shop;
 }
+*/

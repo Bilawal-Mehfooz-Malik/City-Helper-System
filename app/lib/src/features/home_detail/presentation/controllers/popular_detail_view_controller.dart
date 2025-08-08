@@ -1,3 +1,4 @@
+/*
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'popular_detail_view_controller.g.dart';
@@ -13,3 +14,4 @@ class PopularDetailViewController extends _$PopularDetailViewController {
     state = value;
   }
 }
+*/

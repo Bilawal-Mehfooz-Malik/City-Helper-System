@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
@@ -40,3 +41,4 @@ class ResidenceSpecificSection extends StatelessWidget {
     );
   }
 }
+*/

@@ -44,20 +44,20 @@ extension AppBootstrapFakes on AppBootStrap {
     final adsCarouselRepository = FakeAdsCarouselRepository(addDelay: false);
     final residenceRepository = FakeResidenceRepository(addDelay: false);
     final foodRepository = FakeFoodRepository(addDelay: false);
-    final foodDetailsRepository = FakeFoodDetailsRepository(addDelay: false);
-    final residenceDetailsRepository = FakeResidenceDetailsRepository(
-      addDelay: false,
-    );
-    final reviewsRepository = FakeReviewsRepository(addDelay: false);
+    // final foodDetailsRepository = FakeFoodDetailsRepository(addDelay: false);
+    // final residenceDetailsRepository = FakeResidenceDetailsRepository(
+    //   addDelay: false,
+    // );
+    // final reviewsRepository = FakeReviewsRepository(addDelay: false);
     final authRepository = FakeAuthRepository(addDelay: false);
-    final reviewsService = FakeReviewsService(
-      fakeResidenceRepository: residenceRepository,
-      fakeFoodRepository: foodRepository,
-      authRepository: authRepository,
-      reviewsRepository: reviewsRepository,
-      fakeFoodDetailsRepository: foodDetailsRepository,
-      fakeResidenceDetailsRepository: residenceDetailsRepository,
-    );
+    // final reviewsService = FakeReviewsService(
+    //   fakeResidenceRepository: residenceRepository,
+    //   fakeFoodRepository: foodRepository,
+    //   authRepository: authRepository,
+    //   reviewsRepository: reviewsRepository,
+    //   fakeFoodDetailsRepository: foodDetailsRepository,
+    //   fakeResidenceDetailsRepository: residenceDetailsRepository,
+    // );
     final imageUploadRepository = FakeImageUploadRepository(
       InMemoryImageStorage(),
     );
@@ -66,7 +66,9 @@ extension AppBootstrapFakes on AppBootStrap {
     return ProviderContainer(
       overrides: [
         // * [StartupFeatureRepository] is overridden with [FakeStartupFeatureRepository]
-        userLocationRepositoryProvider.overrideWith((ref) => userLocationRepository),
+        userLocationRepositoryProvider.overrideWith(
+          (ref) => userLocationRepository,
+        ),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
         googleMapBuilderProvider.overrideWithValue(
           (latLng) => FakeMapWidget(latLng: latLng),
@@ -78,15 +80,15 @@ extension AppBootstrapFakes on AppBootStrap {
         adsCarouselRepositoryProvider.overrideWithValue(adsCarouselRepository),
         residenceRepositoryProvider.overrideWithValue(residenceRepository),
         foodRepositoryProvider.overrideWithValue(foodRepository),
-        foodDetailsRepositoryProvider.overrideWithValue(foodDetailsRepository),
-        residenceDetailsRepositoryProvider.overrideWithValue(
-          residenceDetailsRepository,
-        ),
-        reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
+        // foodDetailsRepositoryProvider.overrideWithValue(foodDetailsRepository),
+        // residenceDetailsRepositoryProvider.overrideWithValue(
+        //   residenceDetailsRepository,
+        // ),
+        // reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
         authRepositoryProvider.overrideWithValue(authRepository),
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
-        reviewsServiceProvider.overrideWithValue(reviewsService),
+        // reviewsServiceProvider.overrideWithValue(reviewsService),
         ...overrides, // Place test-specific overrides last to ensure precedence
       ],
       observers: [

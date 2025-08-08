@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/responsive_center.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
@@ -239,3 +240,4 @@ class _SingleReviewRightSection extends StatelessWidget {
     );
   }
 }
+*/

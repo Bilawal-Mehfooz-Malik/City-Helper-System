@@ -1,7 +1,3 @@
-import 'package:app/src/core/common_widgets/custom_image.dart';
-import 'package:app/src/features/auth/data/user_repository.dart';
-import 'package:app/src/features/my_shop/presentation/controllers/user_mode_controller.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -86,8 +82,8 @@ class _LoggedInAvatar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Fetch the user's profile information.
-    final profileData = ref.watch(getUserByIdProvider(userId));
-    final isAdminMode = ref.watch(userModeControllerProvider);
+    // final profileData = ref.watch(getUserByIdProvider(userId));
+    // final isAdminMode = ref.watch(userModeControllerProvider);
 
     return PopupMenuButton<String>(
       onSelected: (value) {
@@ -96,7 +92,7 @@ class _LoggedInAvatar extends ConsumerWidget {
             context.goNamed(AppRoute.account.name);
             break;
           // FIX: Renamed 'admin' to a more generic 'switch_mode'.
-          case 'switch_mode':
+          /*case 'switch_mode':
             // Toggle the mode via the controller.
             ref.read(userModeControllerProvider.notifier).toggleMode();
             // Navigate to the appropriate screen after switching.
@@ -107,7 +103,7 @@ class _LoggedInAvatar extends ConsumerWidget {
               // If we WERE in user mode, go to the admin screen.
               context.goNamed(AppRoute.myShop.name);
             }
-            break;
+            break;*/
         }
       },
       itemBuilder: (context) => [
@@ -115,7 +111,7 @@ class _LoggedInAvatar extends ConsumerWidget {
           value: 'account',
           child: Text(context.loc.account_title),
         ),
-        // FIX: Dynamically build the menu item based on the current mode.
+        /*// FIX: Dynamically build the menu item based on the current mode.
         PopupMenuItem<String>(
           value: 'switch_mode',
           child: Text(
@@ -123,10 +119,10 @@ class _LoggedInAvatar extends ConsumerWidget {
                 ? "Switch to User".hardcoded
                 : context.loc.switchToAdmin,
           ),
-        ),
+        ),*/
       ],
       // Also handle loading/error states for the user profile data.
-      child: profileData.when(
+      /*child: profileData.when(
         data: (profile) => SizedBox.square(
           dimension: avatarSize,
           child: CustomImageWrapper(
@@ -141,6 +137,10 @@ class _LoggedInAvatar extends ConsumerWidget {
           avatarSize: avatarSize,
           avatarIconSize: avatarIconSize,
         ),
+      ),*/
+      child: SizedBox.square(
+        dimension: avatarSize,
+        child: CircleAvatar(child: Icon(Icons.person, size: avatarIconSize)),
       ),
     );
   }

@@ -15,7 +15,6 @@ import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/features/home/presentation/widgets/filter_dialog.dart';
-import 'package:app/src/features/home_detail/presentation/controllers/popular_detail_view_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,8 @@ class PopularEntitiesListScreen extends ConsumerWidget {
   });
 
   void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
-    ref.read(popularDetailViewControllerProvider.notifier).setPopularView(true);
+    // TODO: UNCOMMENT
+    // ref.read(popularDetailViewControllerProvider.notifier).setPopularView(true);
 
     final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(
@@ -70,9 +70,10 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     ref
         .read(listTypeControllerProvider.notifier)
         .updateListType(HomeListType.all);
-    ref
-        .read(popularDetailViewControllerProvider.notifier)
-        .setPopularView(false);
+    // TODO: UNCOMMENT
+    // ref
+    //     .read(popularDetailViewControllerProvider.notifier)
+    //     .setPopularView(false);
 
     ref
         .read(filterControllerProvider(categoryId: categoryId).notifier)

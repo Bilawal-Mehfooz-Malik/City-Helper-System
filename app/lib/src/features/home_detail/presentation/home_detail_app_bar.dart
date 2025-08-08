@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
@@ -71,3 +72,4 @@ class AppBarContent extends StatelessWidget {
     return Text(name ?? context.loc.somethingWentWrong);
   }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'rating_filter_controller.g.dart';
@@ -9,3 +10,4 @@ class RatingFilterController extends _$RatingFilterController {
 
   void setFilter(int? rating) => state = rating;
 }
+*/

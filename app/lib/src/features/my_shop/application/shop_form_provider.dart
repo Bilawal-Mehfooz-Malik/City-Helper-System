@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
@@ -54,3 +55,4 @@ Future<ShopFormInitialData> initialShopCategoryData(
     subCategoryOptions: results[3] as List<SubCategory>,
   );
 }
+*/

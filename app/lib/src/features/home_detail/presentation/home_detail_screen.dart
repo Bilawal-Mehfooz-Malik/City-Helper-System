@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/empty_placeholder_widget.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
@@ -86,3 +87,4 @@ class HomeDetailScreen extends ConsumerWidget {
     );
   }
 }
+*/

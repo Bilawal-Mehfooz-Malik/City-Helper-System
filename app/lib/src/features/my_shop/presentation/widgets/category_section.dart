@@ -1,3 +1,4 @@
+/*
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
@@ -93,3 +94,4 @@ class SubCategoryDropdown extends StatelessWidget {
     );
   }
 }
+*/

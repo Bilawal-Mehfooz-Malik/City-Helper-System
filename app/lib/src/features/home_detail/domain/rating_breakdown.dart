@@ -1,3 +1,4 @@
+/*
 class RatingBreakdown {
   final int stars;
   final int count;
@@ -22,3 +23,4 @@ class RatingBreakdown {
   @override
   int get hashCode => stars.hashCode ^ count.hashCode;
 }
+*/

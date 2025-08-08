@@ -1,45 +1,70 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-abstract class Entity {
-  final EntityId id;
-  final CategoryId categoryId;
-  final SubCategoryId subCategoryId;
-  final String coverImageUrl;
-  final String name;
-  final String cityName;
-  final String sectorName;
-  final LatLng latLng;
-  final double avgRating;
-  final int totalReviews;
-  final EntityType type;
-  final bool isPopular;
-  final List<OpeningHours> openingHours;
-  final EntityStatus entityStatus;
-  final Status status;
-  final DateTime createdAt;
+part 'entity.freezed.dart';
+part 'entity.g.dart';
 
-  const Entity({
-    required this.id,
-    required this.categoryId,
-    required this.subCategoryId,
-    required this.coverImageUrl,
-    required this.name,
-    required this.cityName,
-    required this.sectorName,
-    required this.latLng,
-    required this.avgRating,
-    required this.totalReviews,
-    required this.isPopular,
-    required this.openingHours,
-    required this.entityStatus,
-    required this.type,
-    required this.status,
-    required this.createdAt,
-  });
+// Helpers for JSON conversion
+const _latLngJsonConverter = LatLngJsonConverter();
+const _timestampJsonConverter = TimestampJsonConverter();
+
+@freezed
+sealed class Entity with _$Entity {
+  const Entity._(); // Private constructor for methods
+
+  @JsonSerializable(explicitToJson: true)
+  const factory Entity.residence({
+    required EntityId id,
+    required CategoryId categoryId,
+    required SubCategoryId subCategoryId,
+    required String coverImageUrl,
+    required String name,
+    required String cityName,
+    required String sectorName,
+    @_latLngJsonConverter required LatLng latLng,
+    required double avgRating,
+    required int totalReviews,
+    required bool isPopular,
+    required List<OpeningHours> openingHours,
+    required EntityStatus entityStatus,
+    required Status status,
+    @_timestampJsonConverter required DateTime createdAt,
+    required EntityType type,
+    required double price,
+    required bool isFurnished,
+    required GenderPreference genderPref,
+  }) = Residence;
+
+  @JsonSerializable(explicitToJson: true)
+  const factory Entity.food({
+    required EntityId id,
+    required CategoryId categoryId,
+    required SubCategoryId subCategoryId,
+    required String coverImageUrl,
+    required String name,
+    required String cityName,
+    required String sectorName,
+    @_latLngJsonConverter required LatLng latLng,
+    required double avgRating,
+    required int totalReviews,
+    required bool isPopular,
+    required List<OpeningHours> openingHours,
+    required EntityStatus entityStatus,
+    required Status status,
+    @_timestampJsonConverter required DateTime createdAt,
+    required EntityType type,
+    required GenderPreference genderPref,
+  }) = Food;
+
+  factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);
+
   bool isEntityOpen() {
     if (entityStatus == EntityStatus.close) return false;
     if (entityStatus == EntityStatus.open) return true;
@@ -78,7 +103,6 @@ abstract class Entity {
         closeParsed.minute,
       );
 
-      // Handle overnight timings (e.g., 22:00 to 04:00)
       if (closeTime.isBefore(openTime)) {
         closeTime = closeTime.add(const Duration(days: 1));
       }
@@ -94,45 +118,65 @@ abstract class Entity {
     }
   }
 
-  Map<String, dynamic> baseToJson() => {
-    'id': id,
-    'categoryId': categoryId,
-    'subCategoryId': subCategoryId,
-    'coverImageUrl': coverImageUrl,
-    'name': name,
-    'cityName': cityName,
-    'sectorName': sectorName,
-    'latLng': latLng.toJson(),
-    'avgRating': avgRating,
-    'totalReviews': totalReviews,
-    'isPopular': isPopular,
-    'openingHours': openingHours.map((e) => e.toJson()).toList(growable: false),
-    'entityStatus': entityStatus.name,
-    'type': type.name,
-    'status': status.name,
-    'createdAt': createdAt,
-  };
+  bool matchGenderPref(GenderPreference preference) {
+    if (preference == GenderPreference.any) return true;
+    return when(
+      residence:
+          (_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, genderPref) =>
+              genderPref == preference,
+      food: (_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, genderPref) =>
+          genderPref == preference,
+    );
+  }
+
+  bool checkFurnished(bool furnished) {
+    return when(
+      residence:
+          (_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, isFurnished, _) =>
+              isFurnished == furnished,
+      food: (_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _) =>
+          true, // Not applicable for food
+    );
+  }
+}
+
+// JSON Converters
+class LatLngJsonConverter
+    implements JsonConverter<LatLng, Map<String, Object?>> {
+  const LatLngJsonConverter();
 
   @override
-  int get hashCode => Object.hashAll([
-    id,
-    categoryId,
-    subCategoryId,
-    coverImageUrl,
-    name,
-    cityName,
-    sectorName,
-    latLng,
-    avgRating,
-    totalReviews,
-    isPopular,
-    openingHours,
-    entityStatus,
-    status,
-    type,
-    createdAt,
-  ]);
+  LatLng fromJson(Map<String, Object?> json) {
+    return LatLng.fromJson(json)!;
+  }
 
   @override
-  bool operator ==(Object other);
+  Map<String, Object?> toJson(LatLng latLng) {
+    return latLng.toJson() as Map<String, Object?>;
+  }
+}
+
+class TimestampJsonConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampJsonConverter();
+
+  @override
+  DateTime fromJson(Timestamp json) {
+    return json.toDate();
+  }
+
+  @override
+  Timestamp toJson(DateTime object) {
+    return Timestamp.fromDate(object);
+  }
+}
+
+extension FirstWhereOrNull<T> on List<T> {
+  T? firstWhereOrNull(bool Function(T) predicate) {
+    for (final element in this) {
+      if (predicate(element)) {
+        return element;
+      }
+    }
+    return null;
+  }
 }
