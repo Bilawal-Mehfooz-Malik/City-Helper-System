@@ -1,6 +1,7 @@
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home/domain/helpers/entity_extensions.dart';
 
 /// Filters a list of entities based on the provided filter criteria.
 ///

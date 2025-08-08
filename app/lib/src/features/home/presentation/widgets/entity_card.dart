@@ -3,6 +3,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/currency_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/helpers/entity_extensions.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart';
 import 'package:app/src/features/home/presentation/widgets/item_title_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
