@@ -1,11 +1,10 @@
-import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
-import 'package:app/src/features/home/presentation/controllers/combined_error_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
@@ -50,54 +49,71 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final error = ref.watch(
-      combinedErrorStatusProvider(categoryId: categoryId),
-    );
+    // Listener for the error notification banner
+    ref.listen<bool>(homeErrorNotificationControllerProvider, (previous, next) {
+      if (next) {
+        // Hide any existing snackbars
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        // Show the new error snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(context.loc.somethingWentWrongTryAgain),
+            duration: const Duration(seconds: 5), // Keep it visible
+            action: SnackBarAction(
+              label: context.loc.retry,
+              onPressed: () async {
+                // When retry is pressed, clear the error and refresh the data
+                ref
+                    .read(homeErrorNotificationControllerProvider.notifier)
+                    .clearError();
+                await _onRefresh(ref);
+              },
+            ),
+          ),
+        );
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
-        child: error != null
-            ? CenteredMessageWidget(
-                message: context.loc.somethingWentWrongTryAgain,
-              )
-            // THIS IS THE KEY CHANGE: Wrap the CustomScrollView with RefreshIndicator
-            : RefreshIndicator(
-                onRefresh: () => _onRefresh(ref),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      snap: true,
-                      elevation: 0,
-                      floating: true,
-                      titleSpacing: 0,
-                      forceElevated: false,
-                      automaticallyImplyLeading: false,
-                      toolbarHeight: kToolbarHeight + Sizes.p12,
-                      surfaceTintColor: context.theme.scaffoldBackgroundColor,
-                      backgroundColor: context.theme.scaffoldBackgroundColor,
-                      title: HomeSearchBar(
-                        showBackButton: showBackButton,
-                        categoryId: categoryId,
-                      ),
-                    ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: SubCategoriesList(categoryId: categoryId),
-                    ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: CarouselAdsList(categoryId: categoryId),
-                    ),
-                    SliverToBoxAdapter(
-                      child: PopularEnitiesSection(categoryId: categoryId),
-                    ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: EntitiesListSection(categoryId: categoryId),
-                    ),
-                  ],
+        // The RefreshIndicator is kept for the pull-to-refresh gesture
+        child: RefreshIndicator(
+          onRefresh: () => _onRefresh(ref),
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                snap: true,
+                elevation: 0,
+                floating: true,
+                titleSpacing: 0,
+                forceElevated: false,
+                automaticallyImplyLeading: false,
+                toolbarHeight: kToolbarHeight + Sizes.p12,
+                surfaceTintColor: context.theme.scaffoldBackgroundColor,
+                backgroundColor: context.theme.scaffoldBackgroundColor,
+                title: HomeSearchBar(
+                  showBackButton: showBackButton,
+                  categoryId: categoryId,
                 ),
               ),
+              sliverGapH8,
+              SliverToBoxAdapter(
+                child: SubCategoriesList(categoryId: categoryId),
+              ),
+              sliverGapH8,
+              SliverToBoxAdapter(
+                child: CarouselAdsList(categoryId: categoryId),
+              ),
+              SliverToBoxAdapter(
+                child: PopularEnitiesSection(categoryId: categoryId),
+              ),
+              sliverGapH8,
+              SliverToBoxAdapter(
+                child: EntitiesListSection(categoryId: categoryId),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

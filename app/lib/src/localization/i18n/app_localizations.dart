@@ -358,6 +358,12 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again'**
   String get somethingWentWrongTryAgain;
 
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
   /// No description provided for @contactOptions.
   ///
   /// In en, this message translates to:

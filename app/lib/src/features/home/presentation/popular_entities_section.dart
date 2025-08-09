@@ -12,6 +12,7 @@ import 'package:app/src/features/home/presentation/controllers/filter_controller
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
+import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -85,7 +86,14 @@ class PopularEnitiesSection extends ConsumerWidget {
     return AsyncValueWidget<List<Entity>>(
       value: popularEntitiesListValue,
       loading: const PopularEntitesSkeletonList(),
-      error: (_, _) => const SizedBox.shrink(),
+      error: (error, stack) {
+        // In the next frame, report the error to the central controller.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref.read(homeErrorNotificationControllerProvider.notifier).addError();
+        });
+        // Return an empty widget to hide this section.
+        return const SizedBox.shrink();
+      },
       data: (entities) {
         if (entities.isEmpty) {
           return const SizedBox.shrink();

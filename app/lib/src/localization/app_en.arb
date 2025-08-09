@@ -93,6 +93,8 @@
   "@close": {},
   "somethingWentWrongTryAgain":"Something went wrong. Please try again",
   "@somethingWentWrongTryAgain": {},
+  "retry":"Retry",
+  "@retry": {},
 
   "contactOptions":"Contact Options",
   "@contactOptions": {},

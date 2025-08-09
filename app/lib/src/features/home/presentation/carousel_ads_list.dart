@@ -5,6 +5,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/domain/carousel_ad.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
+import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,15 @@ class CarouselAdsList extends ConsumerWidget {
     return AsyncValueWidget<List<CarouselAd>>(
       value: adsValue,
       loading: const CarouselAdListSkeleton(),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (error, stack) {
+        // In the next frame, report the error to the central controller.
+        // This prevents a "setState() or markNeedsBuild() called during build" error.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref.read(homeErrorNotificationControllerProvider.notifier).addError();
+        });
+        // Return an empty widget to hide this section.
+        return const SizedBox.shrink();
+      },
       data: (ads) {
         // Return an empty widget if there are no ads
         if (ads.isEmpty) {

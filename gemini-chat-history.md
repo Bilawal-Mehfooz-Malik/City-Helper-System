@@ -81,6 +81,27 @@ The project is a Flutter application designed for city navigation and providing 
 ## Git Commit
 - Staged all changes and committed them with the message: "feat: Refactor and stabilize Entity deserialization".
 
+## Granular Error Handling Implementation
+
+- **Objective**: Refactor the error handling on the home screen to be more robust and user-friendly, moving away from a single, screen-wide error state.
+
+- **Design Evolution**:
+    1.  **Initial Idea**: A simple, custom error widget with a retry button for each UI section.
+    2.  **Refinement**: Decided to use existing app components like `AsyncValueWidget`, `CenteredMessageWidget`, and the skeleton loaders from `home_skeletons.dart` for consistency.
+    3.  **Final Pattern ("Unified Retry")**: Addressed the concern of UI clutter from multiple error messages. The final, real-world pattern involves:
+        - Each section showing a skeleton loader while loading.
+        - On error, the failed section hides itself (`SizedBox.shrink()`).
+        - A central `HomeErrorNotificationController` tracks if any error has occurred.
+        - The `HomeScreen` listens to this controller and displays a single, non-intrusive `SnackBar` with one "Retry" button.
+        - The "Retry" button leverages the existing pull-to-refresh logic to re-fetch all screen data.
+
+- **Implementation Details**:
+    - Created `app/lib/src/features/home/presentation/controllers/home_error_notification_controller.dart` to manage the error banner's visibility.
+    - Modified `home_screen.dart` to listen to the new controller and display the `SnackBar`.
+    - Updated all data-driven sections (`CarouselAdsList`, `SubCategoriesList`, `PopularEnitiesSection`, `EntitiesListSection`) to use the new pattern, reporting errors instead of displaying them directly.
+    - Deleted the old `combined_error_controller.dart` and its generated file.
+    - Added a `retry` string to `app_localizations_en.dart` for the `SnackBar` action.
+
 ## New Files Created
 
 - **`plan.md`**
@@ -88,3 +109,4 @@ The project is a Flutter application designed for city navigation and providing 
 - **`app/lib/src/features/home/domain/helpers/entity_extensions.dart`**
 - **`app/lib/src/core/models/pricing_types.dart`**
 - **`app/lib/src/features/home/domain/pricing.dart`**
+- **`app/lib/src/features/home/presentation/controllers/home_error_notification_controller.dart`**

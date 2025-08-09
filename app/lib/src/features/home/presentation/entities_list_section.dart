@@ -16,6 +16,8 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'controllers/home_error_notification_controller.dart';
+
 class EntitiesListSection extends ConsumerWidget {
   final CategoryId categoryId;
   const EntitiesListSection({super.key, required this.categoryId});
@@ -82,7 +84,16 @@ class EntitiesListSection extends ConsumerWidget {
         AsyncValueWidget<List<Entity>>(
           value: entitiesListValue,
           loading: const EntitiesListSkeleton(),
-          error: (_, __) => const SizedBox.shrink(),
+          error: (error, stack) {
+            // In the next frame, report the error to the central controller.
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ref
+                  .read(homeErrorNotificationControllerProvider.notifier)
+                  .addError();
+            });
+            // Return an empty widget to hide this section.
+            return const SizedBox.shrink();
+          },
           data: (entities) => EntitiesGridLayout(
             shrinkWrap: true,
             itemCount: entities.length,
