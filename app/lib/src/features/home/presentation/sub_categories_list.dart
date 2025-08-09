@@ -32,7 +32,9 @@ class SubCategoriesList extends ConsumerWidget {
       error: (error, stack) {
         // In the next frame, report the error to the central controller.
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref.read(homeErrorNotificationControllerProvider.notifier).addError();
+          ref
+              .read(homeErrorNotificationControllerProvider.notifier)
+              .addError(error);
         });
         // Return an empty widget to hide this section.
         return const SizedBox.shrink();

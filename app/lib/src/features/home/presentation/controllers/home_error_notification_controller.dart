@@ -3,20 +3,21 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'home_error_notification_controller.g.dart';
 
 @riverpod
-class HomeErrorNotificationController extends _$HomeErrorNotificationController {
+class HomeErrorNotificationController
+    extends _$HomeErrorNotificationController {
   @override
-  bool build() {
-    // The banner is not visible by default
-    return false;
+  Object? build() {
+    // No error by default
+    return null;
   }
 
-  /// Shows the error banner.
-  void addError() {
-    state = true;
+  /// Stores the error object.
+  void addError(Object error) {
+    state = error;
   }
 
-  /// Hides the error banner.
+  /// Hides the error banner by clearing the error.
   void clearError() {
-    state = false;
+    state = null;
   }
 }

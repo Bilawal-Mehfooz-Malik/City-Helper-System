@@ -89,7 +89,7 @@ class EntitiesListSection extends ConsumerWidget {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ref
                   .read(homeErrorNotificationControllerProvider.notifier)
-                  .addError();
+                  .addError(error);
             });
             // Return an empty widget to hide this section.
             return const SizedBox.shrink();

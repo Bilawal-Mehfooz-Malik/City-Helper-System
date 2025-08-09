@@ -10,6 +10,7 @@ import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
+import 'package:app/src/core/utils/error_message_formatter.dart';
 import 'package:app/src/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -50,14 +51,14 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Listener for the error notification banner
-    ref.listen<bool>(homeErrorNotificationControllerProvider, (previous, next) {
-      if (next) {
+    ref.listen<Object?>(homeErrorNotificationControllerProvider, (previous, error) {
+      if (error != null) {
         // Hide any existing snackbars
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         // Show the new error snackbar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(context.loc.somethingWentWrongTryAgain),
+            content: Text(formatErrorMessage(error)),
             duration: const Duration(seconds: 5), // Keep it visible
             action: SnackBarAction(
               label: context.loc.retry,

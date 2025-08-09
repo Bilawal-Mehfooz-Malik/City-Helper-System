@@ -27,7 +27,9 @@ class CarouselAdsList extends ConsumerWidget {
         // In the next frame, report the error to the central controller.
         // This prevents a "setState() or markNeedsBuild() called during build" error.
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref.read(homeErrorNotificationControllerProvider.notifier).addError();
+          ref
+              .read(homeErrorNotificationControllerProvider.notifier)
+              .addError(error);
         });
         // Return an empty widget to hide this section.
         return const SizedBox.shrink();
