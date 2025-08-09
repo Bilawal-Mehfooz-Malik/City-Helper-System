@@ -1,13 +1,15 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/opening_hours.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
+import 'package:app/src/core/models/pricing_types.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final testResidences = <Entity>[
   Entity.residence(
     id: 'res_001',
     categoryId: 1,
-    subCategoryId: 1,
+    subCategoryId: 6, // Apartments
     coverImageUrl: 'assets/images/residence/1.png',
     name: 'Cozy Apartment in Mirpur',
     cityName: 'Mirpur',
@@ -19,16 +21,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 10),
-    price: 25000,
+    pricing: Pricing(cost: 25000, unit: PricingUnit.room, period: PricingPeriod.monthly),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_002',
     categoryId: 1,
-    subCategoryId: 2,
+    subCategoryId: 6, // Apartments
     coverImageUrl: 'assets/images/residence/2.png',
     name: 'Luxury Flat with Scenic View',
     cityName: 'Mirpur',
@@ -40,16 +43,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 12),
-    price: 40000,
+    pricing: Pricing(cost: 40000, unit: PricingUnit.room, period: PricingPeriod.monthly),
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_003',
-    categoryId: 2,
-    subCategoryId: 1,
+    categoryId: 1,
+    subCategoryId: 3, // Hostels
     coverImageUrl: 'assets/images/residence/3.png',
     name: 'Affordable Hostel for Students',
     cityName: 'Mirpur',
@@ -61,16 +65,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 15),
-    price: 8000,
+    pricing: Pricing(cost: 8000, unit: PricingUnit.bed, period: PricingPeriod.monthly),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_004',
     categoryId: 1,
-    subCategoryId: 3,
+    subCategoryId: 9, // Roommates
     coverImageUrl: 'assets/images/residence/4.png',
     name: 'Shared Apartment with Roommates',
     cityName: 'Mirpur',
@@ -82,16 +87,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 18),
-    price: 15000,
+    pricing: Pricing(cost: 15000, unit: PricingUnit.room, period: PricingPeriod.monthly),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_005',
-    categoryId: 2,
-    subCategoryId: 2,
+    categoryId: 1,
+    subCategoryId: 3, // Hostels
     coverImageUrl: 'assets/images/residence/5.png',
     name: 'Girls Hostel with Facilities',
     cityName: 'Mirpur',
@@ -103,16 +109,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 20),
-    price: 12000,
+    pricing: Pricing(cost: 12000, unit: PricingUnit.bed, period: PricingPeriod.monthly),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_006',
     categoryId: 1,
-    subCategoryId: 1,
+    subCategoryId: 8, // Family Homes
     coverImageUrl: 'assets/images/residence/6.png',
     name: 'Penthouse Living',
     cityName: 'Mirpur',
@@ -124,16 +131,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 22),
-    price: 60000,
+    pricing: Pricing(cost: 60000, unit: PricingUnit.house, period: PricingPeriod.monthly),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_007',
-    categoryId: 2,
-    subCategoryId: 3,
+    categoryId: 1,
+    subCategoryId: 3, // Hostels
     coverImageUrl: 'assets/images/residence/7.png',
     name: 'Budget Hostel with Basic Needs',
     cityName: 'Mirpur',
@@ -145,16 +153,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 24),
-    price: 7000,
+    pricing: Pricing(cost: 7000, unit: PricingUnit.bed, period: PricingPeriod.monthly),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_008',
     categoryId: 1,
-    subCategoryId: 2,
+    subCategoryId: 6, // Apartments
     coverImageUrl: 'assets/images/residence/8.png',
     name: 'Stylish Studio Apartment',
     cityName: 'Mirpur',
@@ -166,16 +175,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 26),
-    price: 28000,
+    pricing: Pricing(cost: 28000, unit: PricingUnit.room, period: PricingPeriod.monthly),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_009',
-    categoryId: 2,
-    subCategoryId: 1,
+    categoryId: 1,
+    subCategoryId: 3, // Hostels
     coverImageUrl: 'assets/images/residence/9.png',
     name: 'Comfortable Hostel for Girls',
     cityName: 'Mirpur',
@@ -187,16 +197,17 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 28),
-    price: 11000,
+    pricing: Pricing(cost: 11000, unit: PricingUnit.bed, period: PricingPeriod.monthly),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
   ),
   Entity.residence(
     id: 'res_010',
     categoryId: 1,
-    subCategoryId: 3,
+    subCategoryId: 6, // Apartments
     coverImageUrl: 'assets/images/residence/10.png',
     name: 'Family Apartment with Parking',
     cityName: 'Mirpur',
@@ -208,20 +219,44 @@ final testResidences = <Entity>[
     openingHours: _defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 30),
-    price: 35000,
+    pricing: Pricing(cost: 35000, unit: PricingUnit.room, period: PricingPeriod.monthly),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    listingType: ListingType.forRent,
+  ),
+  // New entry for a property for sale
+  Entity.residence(
+    id: 'res_011',
+    categoryId: 1,
+    subCategoryId: 10, // Houses for Sale
+    coverImageUrl: 'assets/images/residence/11.png',
+    name: 'Spacious House for Sale',
+    cityName: 'Mirpur',
+    sectorName: 'K1',
+    latLng: LatLng(33.1800, 73.5000),
+    avgRating: 0.0,
+    totalReviews: 0,
+    isPopular: false,
+    openingHours: null, // Not applicable for sale
+    entityStatus: null, // Not applicable for sale
+    createdAt: DateTime(2024, 8, 1),
+    pricing: Pricing(cost: 15000000, unit: PricingUnit.property, period: PricingPeriod.oneTime),
+    genderPref: null, // Not applicable for sale
+    isFurnished: null, // Not applicable for sale
+    status: ApprovalStatus.approved,
+    type: EntityType.residence,
+    listingType: ListingType.forSale,
   ),
 ];
 
 final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
+  OpeningHours(day: 'Monday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Tuesday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Wednesday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Thursday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Friday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Saturday', isOpen: true, open: '09:00', close: '21:00'),
+  OpeningHours(day: 'Sunday', isOpen: true, open: '09:00', close: '21:00'),
 ];

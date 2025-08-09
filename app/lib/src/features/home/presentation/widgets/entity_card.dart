@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/currency_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/entity.dart';
@@ -77,13 +78,42 @@ class EntityCard extends StatelessWidget {
                       builder: (context, ref, child) {
                         final priceFormatted = ref
                             .watch(currencyFormatterProvider)
-                            .format(residence.price);
-                        return Text(
-                          '${context.loc.startsFrom} $priceFormatted',
-                          style: context.textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: useElipsis ? TextOverflow.ellipsis : null,
+                            .format(residence.pricing.cost);
+
+                        final priceText =
+                            residence.listingType == ListingType.forSale
+                            ? priceFormatted // For sale, just show the price
+                            : '${context.loc.startsFrom} $priceFormatted';
+
+                        return Row(
+                          children: [
+                            Icon(
+                              residence.pricing.icon,
+                              size: 16.0,
+                              color: context.colorScheme.primary,
+                            ),
+                            gapW4,
+                            Text(
+                              priceText,
+                              style: context.textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: useElipsis
+                                  ? TextOverflow.ellipsis
+                                  : null,
+                            ),
+                            gapW4,
+                            Text(
+                              residence.pricing.displayLabel
+                                  .split(' ')
+                                  .sublist(2)
+                                  .join(' '), // Extract unit and period
+                              style: context.textTheme.labelLarge,
+                              overflow: useElipsis
+                                  ? TextOverflow.ellipsis
+                                  : null,
+                            ),
+                          ],
                         );
                       },
                     );

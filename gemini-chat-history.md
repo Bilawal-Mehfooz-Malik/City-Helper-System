@@ -45,6 +45,20 @@ The project is a Flutter application designed for city navigation and providing 
     - Replaced the old "Residence" sub-categories with a more comprehensive and professional list (e.g., "Hotels", "Guest Houses", "Vacation Homes", "Private Rooms").
     - Added "Houses for Sale" and "Apartments for Sale" sub-categories for Residence.
 
+- **`app/lib/src/core/constants/test_residences.dart`**:
+    - Updated to use the new `Pricing` model and `ListingType`.
+    - Adjusted `OpeningHours` usage and added an example for a "for sale" property.
+
+- **`app/lib/src/features/home/application/filtering_logic.dart`**:
+    - Updated `_compareByPrice` function to correctly use the `pricing.cost` field from the new `Pricing` model.
+
+- **`app/lib/src/features/home/presentation/widgets/entity_card.dart`**:
+    - Updated to display the new `Pricing` model, including the icon and formatted cost/unit/period.
+    - Handled display logic for `ListingType.forSale`.
+
+- **`app/lib/src/features/home/presentation/home_skeletons.dart`**:
+    - Updated `EntityCardSkeletonContent` to include placeholders for the pricing icon, cost, and unit/period.
+
 ### Refactoring & Data Modeling:
 
 - **Pricing Model:**
@@ -60,6 +74,9 @@ The project is a Flutter application designed for city navigation and providing 
     - Integrated the new `Pricing` model and `ListingType` enum.
     - Made rental-specific fields (`openingHours`, `isFurnished`, `genderPref`) nullable in the `Residence` factory to accommodate `forSale` properties.
     - **Removed** the `pricing` field from the `Food` entity, reverting `genderPref` to `required` for `Food` entities.
+
+- **`app/lib/src/features/home/domain/helpers/list_extensions.dart`**:
+    - **Removed** this file to eliminate duplicate code.
 
 ## Git Commit
 - Staged all changes and committed them with the message: "feat: Refactor and stabilize Entity deserialization".

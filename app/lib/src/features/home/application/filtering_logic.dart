@@ -84,15 +84,16 @@ bool _matchGender(Entity entity, EntityFilter filter) {
 // --- Private Sorting Helpers ---
 
 int _compareByPrice(Entity a, Entity b, SortOrder order) {
-  final priceA = a.mapOrNull(residence: (res) => res.price);
-  final priceB = b.mapOrNull(residence: (res) => res.price);
+  final priceA = a.mapOrNull(residence: (res) => res.pricing.cost);
+  final priceB = b.mapOrNull(residence: (res) => res.pricing.cost);
 
-  if (priceA != null && priceB != null) {
-    return order == SortOrder.lowToHigh
-        ? priceA.compareTo(priceB)
-        : priceB.compareTo(priceA);
-  }
-  return 0;
+  if (priceA == null && priceB == null) return 0;
+  if (priceA == null) return order == SortOrder.lowToHigh ? 1 : -1;
+  if (priceB == null) return order == SortOrder.lowToHigh ? -1 : 1;
+
+  return order == SortOrder.lowToHigh
+      ? priceA.compareTo(priceB)
+      : priceB.compareTo(priceA);
 }
 
 int _compareByRating(Entity a, Entity b, SortOrder order) {

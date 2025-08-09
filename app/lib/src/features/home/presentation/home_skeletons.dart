@@ -182,6 +182,23 @@ class EntityCardSkeletonContent extends StatelessWidget {
                 ],
               ),
               Bone.text(words: 5, style: context.textTheme.labelLarge),
+              Row(
+                children: [
+                  Bone.circle(size: 16), // Icon placeholder
+                  gapW4,
+                  Bone.text( // Price placeholder
+                    words: 2,
+                    style: context.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  gapW4,
+                  Bone.text( // Unit/Period placeholder
+                    words: 2,
+                    style: context.textTheme.labelLarge,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
