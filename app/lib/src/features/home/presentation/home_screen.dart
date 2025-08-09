@@ -1,16 +1,17 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/error_message_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
+import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
-import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
-import 'package:app/src/features/home/presentation/sub_categories_list.dart';
+import 'package:app/src/features/home/domain/home_section_identifier.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
-import 'package:app/src/core/utils/error_message_formatter.dart';
+import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -25,59 +26,79 @@ class HomeScreen extends ConsumerWidget {
     this.showBackButton = true,
   });
 
-  // THIS IS THE NEW REFRESH HANDLER
   /// Triggers a refresh of all data providers for the home screen.
-  /// - Resets the subcategory filter.
-  /// - Re-fetches ads, subcategories, popular items, and all entities.
-  /// - The RefreshIndicator will wait for the returned Future to complete.
   Future<void> _onRefresh(WidgetRef ref) async {
-    // Invalidate state controllers to reset filters to their default state.
     ref.invalidate(subcategoryControllerProvider);
+    // Also clear any tracked failures
+    ref
+        .read(homeErrorNotificationControllerProvider.notifier)
+        .clearFailedSections();
 
-    // Refresh all the primary data sources for this screen by calling ref.refresh.
-    // We use Future.wait to run them in parallel and wait for all to finish.
     await Future.wait([
-      // Use .future to get a future from the stream provider that completes
-      // with the first value.
       ref.refresh(subCategoriesListStreamProvider(categoryId).future),
       ref.refresh(adsListFutureProvider(categoryId).future),
-      // Since the subcategory controller was invalidated, its state is now null,
-      // so we refresh the providers for the "All" view.
       ref.refresh(WatchPopularEntitiesProvider(categoryId, null).future),
       ref.refresh(WatchEntitiesProvider(categoryId, null).future),
     ]);
   }
 
+  /// Triggers a selective refresh of only the providers that have failed.
+  Future<void> _onRetry(WidgetRef ref) async {
+    final state = ref.read(homeErrorNotificationControllerProvider);
+    final subCategory = ref.read(subcategoryControllerProvider);
+
+    final futures = <Future<void>>[
+      for (final sectionIdentifier in state.failedSections)
+        switch (sectionIdentifier) {
+          HomeSectionIdentifier.subcategories => ref.refresh(
+            subCategoriesListStreamProvider(categoryId).future,
+          ),
+          HomeSectionIdentifier.ads => ref.refresh(
+            adsListFutureProvider(categoryId).future,
+          ),
+          HomeSectionIdentifier.popular => ref.refresh(
+            WatchPopularEntitiesProvider(categoryId, subCategory).future,
+          ),
+          HomeSectionIdentifier.entities => ref.refresh(
+            WatchEntitiesProvider(categoryId, subCategory).future,
+          ),
+        },
+    ];
+
+    // Clear the failures before retrying
+    ref
+        .read(homeErrorNotificationControllerProvider.notifier)
+        .clearFailedSections();
+
+    await Future.wait(futures);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Listener for the error notification banner
-    ref.listen<Object?>(homeErrorNotificationControllerProvider, (previous, error) {
-      if (error != null) {
-        // Hide any existing snackbars
+    ref.listen<
+      ({Set<HomeSectionIdentifier> failedSections, Object? lastError})
+    >(homeErrorNotificationControllerProvider, (previous, state) {
+      if (state.failedSections.isNotEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        // Show the new error snackbar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(formatErrorMessage(error)),
-            duration: const Duration(seconds: 5), // Keep it visible
+            content: Text(formatErrorMessage(state.lastError!)),
+            duration: const Duration(days: 365), // Make it effectively infinite
             action: SnackBarAction(
               label: context.loc.retry,
-              onPressed: () async {
-                // When retry is pressed, clear the error and refresh the data
-                ref
-                    .read(homeErrorNotificationControllerProvider.notifier)
-                    .clearError();
-                await _onRefresh(ref);
-              },
+              onPressed: () => _onRetry(ref),
             ),
           ),
         );
+      } else {
+        // If there are no more failed sections, dismiss the snackbar
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
       }
     });
 
     return Scaffold(
       body: SafeArea(
-        // The RefreshIndicator is kept for the pull-to-refresh gesture
         child: RefreshIndicator(
           onRefresh: () => _onRefresh(ref),
           child: CustomScrollView(

@@ -18,15 +18,11 @@ class FakeSubCategoriesRepository implements SubCategoriesRepository {
   @override
   Future<List<SubCategory>> fetchSubCategoriesList(CategoryId id) async {
     await delay(addDelay);
-    // TODO: implement fetchSubCategory
-    throw UnimplementedError();
     return Future.value(_filterSubCategoriesByCategoryId(id));
   }
 
   @override
   Stream<List<SubCategory>> watchSubCategoriesList(CategoryId id) async* {
-    // TODO: implement fetchSubCategory
-    throw UnimplementedError();
     await delay(addDelay);
     yield* _subCategories.stream.map(
       (subCategories) => _filterSubCategoriesByCategoryId(id),

@@ -6,6 +6,7 @@ import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
+import 'package:app/src/features/home/domain/home_section_identifier.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +35,7 @@ class SubCategoriesList extends ConsumerWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ref
               .read(homeErrorNotificationControllerProvider.notifier)
-              .addError(error);
+              .addFailedSection(HomeSectionIdentifier.subcategories, error);
         });
         // Return an empty widget to hide this section.
         return const SizedBox.shrink();

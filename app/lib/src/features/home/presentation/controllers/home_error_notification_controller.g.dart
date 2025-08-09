@@ -7,13 +7,13 @@ part of 'home_error_notification_controller.dart';
 // **************************************************************************
 
 String _$homeErrorNotificationControllerHash() =>
-    r'1c02693c7d8eb0bd334600056beb2e3f2b6ed2fa';
+    r'6d399a9c9e4798a99aa07d8e2d720ec2d89cd4e7';
 
 /// See also [HomeErrorNotificationController].
 @ProviderFor(HomeErrorNotificationController)
 final homeErrorNotificationControllerProvider = AutoDisposeNotifierProvider<
   HomeErrorNotificationController,
-  Object?
+  ({Set<HomeSectionIdentifier> failedSections, Object? lastError})
 >.internal(
   HomeErrorNotificationController.new,
   name: r'homeErrorNotificationControllerProvider',
@@ -25,6 +25,9 @@ final homeErrorNotificationControllerProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$HomeErrorNotificationController = AutoDisposeNotifier<Object?>;
+typedef _$HomeErrorNotificationController =
+    AutoDisposeNotifier<
+      ({Set<HomeSectionIdentifier> failedSections, Object? lastError})
+    >;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

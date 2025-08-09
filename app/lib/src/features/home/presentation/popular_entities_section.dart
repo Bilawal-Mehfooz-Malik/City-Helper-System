@@ -13,6 +13,7 @@ import 'package:app/src/features/home/presentation/controllers/list_type_control
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/controllers/home_error_notification_controller.dart';
+import 'package:app/src/features/home/domain/home_section_identifier.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
@@ -91,7 +92,7 @@ class PopularEnitiesSection extends ConsumerWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ref
               .read(homeErrorNotificationControllerProvider.notifier)
-              .addError(error);
+              .addFailedSection(HomeSectionIdentifier.popular, error);
         });
         // Return an empty widget to hide this section.
         return const SizedBox.shrink();
