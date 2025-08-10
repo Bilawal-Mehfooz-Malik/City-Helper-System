@@ -83,16 +83,10 @@ class EntityCard extends StatelessWidget {
                         final priceText =
                             residence.listingType == ListingType.forSale
                             ? priceFormatted // For sale, just show the price
-                            : '${context.loc.startsFrom} $priceFormatted';
+                            : priceFormatted;
 
                         return Row(
                           children: [
-                            Icon(
-                              residence.pricing.icon,
-                              size: 16.0,
-                              color: context.colorScheme.primary,
-                            ),
-                            gapW4,
                             Text(
                               priceText,
                               style: context.textTheme.titleMedium!.copyWith(

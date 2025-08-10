@@ -102,7 +102,7 @@ class EntitiesListSkeleton extends StatelessWidget {
       itemCount: 3,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, __) => EntityCardSkeleton(useCard: false),
+      itemBuilder: (_, _) => EntityCardSkeleton(useCard: false),
       emptyMessage: NoEntityFoundException().message,
     );
   }
@@ -182,23 +182,6 @@ class EntityCardSkeletonContent extends StatelessWidget {
                 ],
               ),
               Bone.text(words: 5, style: context.textTheme.labelLarge),
-              Row(
-                children: [
-                  Bone.circle(size: 16), // Icon placeholder
-                  gapW4,
-                  Bone.text( // Price placeholder
-                    words: 2,
-                    style: context.textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  gapW4,
-                  Bone.text( // Unit/Period placeholder
-                    words: 2,
-                    style: context.textTheme.labelLarge,
-                  ),
-                ],
-              ),
             ],
           ),
         ),
