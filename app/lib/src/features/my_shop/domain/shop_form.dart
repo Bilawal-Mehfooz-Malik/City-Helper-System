@@ -36,7 +36,7 @@ abstract class ShopForm with _$ShopForm {
 
     // Step 4: Business Specific Info
     required List<OpeningHours> openingHours,
-    double? price,
+    double? pricing,
     required bool isFurnished,
     required GenderPreference genderPref,
 
@@ -67,13 +67,13 @@ abstract class ShopForm with _$ShopForm {
       instagramUrl: shop.instagramUrl ?? '',
       websiteUrl: shop.websiteUrl ?? '',
       latLng: shop.latLng,
-      openingHours: shop.openingHours ?? _setDefaultOpeningHours(),
+      openingHours: shop.openingHours,
       genderPref: shop is ResidenceDetail
-          ? shop.genderPref ?? GenderPreference.any
+          ? shop.genderPref
           : shop is FoodDetail
           ? shop.genderPref
           : GenderPreference.any,
-      price: price,
+      pricing: price,
       isFurnished: isFurnished,
     );
   }

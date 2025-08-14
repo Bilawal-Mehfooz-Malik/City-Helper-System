@@ -27,7 +27,10 @@ class ItemTitleSection extends StatelessWidget {
                 ),
                 overflow: useElipsis ? TextOverflow.ellipsis : null,
               ),
-              AverageRatingWidget(entity: entity),
+              AverageRatingWidget(
+                avgRating: entity.avgRating,
+                totalReviews: entity.totalReviews,
+              ),
             ],
           );
         } else {
@@ -44,7 +47,10 @@ class ItemTitleSection extends StatelessWidget {
                   overflow: useElipsis ? TextOverflow.ellipsis : null,
                 ),
               ),
-              AverageRatingWidget(entity: entity),
+              AverageRatingWidget(
+                avgRating: entity.avgRating,
+                totalReviews: entity.totalReviews,
+              ),
             ],
           );
         }

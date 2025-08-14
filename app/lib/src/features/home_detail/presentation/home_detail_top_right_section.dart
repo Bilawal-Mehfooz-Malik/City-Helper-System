@@ -268,7 +268,7 @@ class FurnishedInfo extends StatelessWidget {
           context.loc.furnished,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        Text(residence.isFurnished ? context.loc.yes : context.loc.no),
+        Text(residence.isFurnished == true ? context.loc.yes : context.loc.no),
       ],
     );
   }

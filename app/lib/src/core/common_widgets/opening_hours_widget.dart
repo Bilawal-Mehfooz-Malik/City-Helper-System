@@ -3,6 +3,7 @@ import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/core/utils/date_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail_extensions.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +23,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
   @override
   Widget build(BuildContext context) {
     final todayAbbr = DateFormat.E().format(DateTime.now());
-    final hours = widget.entity.openingHours ?? [];
+    final hours = widget.entity.openingHours;
     final isOpen = widget.entity.isEntityOpen();
 
     final todayIndex = hours.indexWhere(

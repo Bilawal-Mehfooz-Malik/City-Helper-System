@@ -10,6 +10,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/presentation/widgets/average_rating_widget.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail_extensions.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/features/my_shop/application/my_shop_dashboard_provider.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_controller.dart';
@@ -213,7 +214,11 @@ class _ShopInfo extends StatelessWidget {
           style: context.textTheme.bodyLarge,
         ),
         gapH4,
-        AverageRatingWidget(entity: shop, showReviewText: true),
+        AverageRatingWidget(
+          avgRating: shop.avgRating,
+          totalReviews: shop.totalReviews,
+          showReviewText: true,
+        ),
       ],
     );
   }

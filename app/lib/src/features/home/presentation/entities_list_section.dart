@@ -82,7 +82,7 @@ class EntitiesListSection extends ConsumerWidget {
         AsyncValueWidget<List<Entity>>(
           value: entitiesListValue,
           loading: const EntitiesListSkeleton(),
-          error: (_, __) => const SizedBox.shrink(),
+          error: (_, _) => const SizedBox.shrink(),
           data: (entities) => EntitiesGridLayout(
             shrinkWrap: true,
             itemCount: entities.length,

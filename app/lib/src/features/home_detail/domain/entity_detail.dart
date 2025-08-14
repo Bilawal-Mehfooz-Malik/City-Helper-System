@@ -32,14 +32,14 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    List<OpeningHours>? openingHours,
-    OperationalStatus? entityStatus,
+    required List<OpeningHours> openingHours,
+    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.residence) EntityType type,
     required double pricing,
     @Default(false) bool isFurnished,
-    GenderPreference? genderPref,
+    @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
 
     // Detail fields

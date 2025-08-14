@@ -97,7 +97,8 @@ class OpeningHoursEditor extends StatelessWidget {
               Expanded(
                 child: TimePickerField(
                   label: 'Open'.hardcoded,
-                  time: dayHours.open,
+                  // TODO: AN ISSUE
+                  time: dayHours.open!,
                   onChanged: (newTime) {
                     onChanged(
                       OpeningHours(
@@ -113,7 +114,8 @@ class OpeningHoursEditor extends StatelessWidget {
               Expanded(
                 child: TimePickerField(
                   label: 'Close'.hardcoded,
-                  time: dayHours.close,
+                  // TODO: AN ISSUE
+                  time: dayHours.close!,
                   onChanged: (newTime) {
                     onChanged(
                       OpeningHours(

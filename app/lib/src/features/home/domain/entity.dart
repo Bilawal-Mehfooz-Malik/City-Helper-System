@@ -31,14 +31,14 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    List<OpeningHours>? openingHours,
-    OperationalStatus? entityStatus,
+    required List<OpeningHours> openingHours,
+    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.residence) EntityType type,
     required double pricing,
-    bool? isFurnished,
-    GenderPreference? genderPref,
+    @Default(false) bool isFurnished,
+    @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
   }) = Residence;
 

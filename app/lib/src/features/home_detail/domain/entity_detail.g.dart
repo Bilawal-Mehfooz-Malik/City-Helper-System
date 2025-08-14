@@ -21,13 +21,12 @@ ResidenceDetail _$ResidenceDetailFromJson(
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
   openingHours:
-      (json['openingHours'] as List<dynamic>?)
-          ?.map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
+      (json['openingHours'] as List<dynamic>)
+          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
           .toList(),
-  entityStatus: $enumDecodeNullable(
-    _$OperationalStatusEnumMap,
-    json['entityStatus'],
-  ),
+  entityStatus:
+      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+      OperationalStatus.defaultStatus,
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
@@ -37,10 +36,9 @@ ResidenceDetail _$ResidenceDetailFromJson(
       EntityType.residence,
   pricing: (json['pricing'] as num).toDouble(),
   isFurnished: json['isFurnished'] as bool? ?? false,
-  genderPref: $enumDecodeNullable(
-    _$GenderPreferenceEnumMap,
-    json['genderPref'],
-  ),
+  genderPref:
+      $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
+      GenderPreference.any,
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
@@ -80,14 +78,14 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': instance.openingHours?.map((e) => e.toJson()).toList(),
-  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus],
+  'openingHours': instance.openingHours.map((e) => e.toJson()).toList(),
+  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'type': _$EntityTypeEnumMap[instance.type]!,
   'pricing': instance.pricing,
   'isFurnished': instance.isFurnished,
-  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref],
+  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'ownerId': instance.ownerId,
   'description': instance.description,

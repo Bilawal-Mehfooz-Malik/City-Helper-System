@@ -47,9 +47,9 @@ class Step4SpecificsPage extends ConsumerWidget {
                 price: formData.pricing,
                 isFurnished: formData.isFurnished,
                 onPriceChanged: (val) {
-                  final price = double.tryParse(val);
+                  final pricing = double.tryParse(val);
                   wizardController.updateFormData(
-                    formData.copyWith(price: price),
+                    formData.copyWith(pricing: pricing),
                   );
                 },
                 onFurnishedChanged: (val) => wizardController.updateFormData(

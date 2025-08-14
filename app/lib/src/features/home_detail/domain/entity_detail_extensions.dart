@@ -1,12 +1,12 @@
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:intl/intl.dart';
 
-extension EntityExtensions on Entity {
+extension EntityDetailExtensions on EntityDetail {
   bool isEntityOpen() {
-    if (this is Residence) {
-      final residence = this as Residence;
+    if (this is ResidenceDetail) {
+      final residence = this as ResidenceDetail;
       if (residence.listingType == ListingType.forSale) {
         return false; // Properties for sale are never "open" in this context
       }
@@ -76,8 +76,8 @@ extension EntityExtensions on Entity {
         );
         return false;
       }
-    } else if (this is Food) {
-      final food = this as Food;
+    } else if (this is FoodDetail) {
+      final food = this as FoodDetail;
       // Food entities always have required openingHours and entityStatus
       final openingHours = food.openingHours;
       final entityStatus = food.entityStatus;
@@ -145,8 +145,8 @@ extension EntityExtensions on Entity {
 
   bool matchGenderPref(GenderPreference preference) {
     if (preference == GenderPreference.any) return true;
-    if (this is Residence) {
-      final residence = this as Residence;
+    if (this is ResidenceDetail) {
+      final residence = this as ResidenceDetail;
       if (residence.listingType == ListingType.forSale) {
         return false; // Not applicable for properties for sale
       }
@@ -154,21 +154,21 @@ extension EntityExtensions on Entity {
       // Otherwise, it must match the exact preference.
       return residence.genderPref == GenderPreference.any ||
           residence.genderPref == preference;
-    } else if (this is Food) {
-      final food = this as Food;
+    } else if (this is FoodDetail) {
+      final food = this as FoodDetail;
       return food.genderPref == preference;
     }
     return false; // Should not happen
   }
 
   bool checkFurnished(bool furnished) {
-    if (this is Residence) {
-      final residence = this as Residence;
+    if (this is ResidenceDetail) {
+      final residence = this as ResidenceDetail;
       if (residence.listingType == ListingType.forSale) {
         return false; // Not applicable for properties for sale
       }
       return residence.isFurnished == furnished;
-    } else if (this is Food) {
+    } else if (this is FoodDetail) {
       // Not applicable for food, always return true as per original logic
       return true;
     }

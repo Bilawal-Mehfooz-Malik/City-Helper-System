@@ -1,25 +1,26 @@
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
 class AverageRatingWidget extends StatelessWidget {
-  final Entity entity;
+  final double avgRating;
+  final int totalReviews;
   final bool showReviewText;
   const AverageRatingWidget({
     super.key,
-    required this.entity,
     this.showReviewText = false,
+    required this.avgRating,
+    required this.totalReviews,
   });
 
   @override
   Widget build(BuildContext context) {
     final reviewsLabel = context.loc.reviews;
     final ratingText = showReviewText
-        ? '${entity.avgRating.toStringAsFixed(1)} (${entity.totalReviews} $reviewsLabel)'
-        : '${entity.avgRating.toStringAsFixed(1)} (${entity.totalReviews})';
+        ? '${avgRating.toStringAsFixed(1)} ($totalReviews $reviewsLabel)'
+        : '${avgRating.toStringAsFixed(1)} ($totalReviews)';
 
     return Wrap(
       spacing: Sizes.p4,

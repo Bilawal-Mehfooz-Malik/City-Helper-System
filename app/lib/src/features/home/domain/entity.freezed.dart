@@ -38,7 +38,7 @@ Entity _$EntityFromJson(
 /// @nodoc
 mixin _$Entity {
 
- EntityId get id; CategoryId get categoryId; SubCategoryId get subCategoryId; String get coverImageUrl; String get name; String get cityName; String get sectorName;@_latLngJsonConverter LatLng get latLng; double get avgRating; int get totalReviews; bool get isPopular; List<OpeningHours>? get openingHours; OperationalStatus? get entityStatus; ApprovalStatus get status;@_timestampJsonConverter DateTime get createdAt; EntityType get type; GenderPreference? get genderPref;
+ EntityId get id; CategoryId get categoryId; SubCategoryId get subCategoryId; String get coverImageUrl; String get name; String get cityName; String get sectorName;@_latLngJsonConverter LatLng get latLng; double get avgRating; int get totalReviews; bool get isPopular; List<OpeningHours> get openingHours; OperationalStatus get entityStatus; ApprovalStatus get status;@_timestampJsonConverter DateTime get createdAt; EntityType get type; GenderPreference get genderPref;
 /// Create a copy of Entity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -101,12 +101,12 @@ as String,latLng: null == latLng ? _self.latLng : latLng // ignore: cast_nullabl
 as LatLng,avgRating: null == avgRating ? _self.avgRating : avgRating // ignore: cast_nullable_to_non_nullable
 as double,totalReviews: null == totalReviews ? _self.totalReviews : totalReviews // ignore: cast_nullable_to_non_nullable
 as int,isPopular: null == isPopular ? _self.isPopular : isPopular // ignore: cast_nullable_to_non_nullable
-as bool,openingHours: null == openingHours ? _self.openingHours! : openingHours // ignore: cast_nullable_to_non_nullable
-as List<OpeningHours>,entityStatus: null == entityStatus ? _self.entityStatus! : entityStatus // ignore: cast_nullable_to_non_nullable
+as bool,openingHours: null == openingHours ? _self.openingHours : openingHours // ignore: cast_nullable_to_non_nullable
+as List<OpeningHours>,entityStatus: null == entityStatus ? _self.entityStatus : entityStatus // ignore: cast_nullable_to_non_nullable
 as OperationalStatus,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ApprovalStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as EntityType,genderPref: null == genderPref ? _self.genderPref! : genderPref // ignore: cast_nullable_to_non_nullable
+as EntityType,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,
   ));
 }
@@ -192,7 +192,7 @@ return food(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours>? openingHours,  OperationalStatus? entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool? isFurnished,  GenderPreference? genderPref,  ListingType listingType)?  residence,TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)?  food,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType)?  residence,TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)?  food,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Residence() when residence != null:
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType);case Food() when food != null:
@@ -214,7 +214,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours>? openingHours,  OperationalStatus? entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool? isFurnished,  GenderPreference? genderPref,  ListingType listingType)  residence,required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)  food,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType)  residence,required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)  food,}) {final _that = this;
 switch (_that) {
 case Residence():
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType);case Food():
@@ -232,7 +232,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours>? openingHours,  OperationalStatus? entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool? isFurnished,  GenderPreference? genderPref,  ListingType listingType)?  residence,TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)?  food,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType)?  residence,TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular,  List<OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref)?  food,}) {final _that = this;
 switch (_that) {
 case Residence() when residence != null:
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType);case Food() when food != null:
@@ -248,7 +248,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 
 @JsonSerializable(explicitToJson: true)
 class Residence extends Entity {
-  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, final  List<OpeningHours>? openingHours, this.entityStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, required this.pricing, this.isFurnished, this.genderPref, this.listingType = ListingType.forRent, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
+  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, required final  List<OpeningHours> openingHours, this.entityStatus = OperationalStatus.defaultStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, required this.pricing, this.isFurnished = false, this.genderPref = GenderPreference.familyFriendly, this.listingType = ListingType.forRent, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
   factory Residence.fromJson(Map<String, dynamic> json) => _$ResidenceFromJson(json);
 
 @override final  EntityId id;
@@ -262,22 +262,20 @@ class Residence extends Entity {
 @override@JsonKey() final  double avgRating;
 @override@JsonKey() final  int totalReviews;
 @override@JsonKey() final  bool isPopular;
- final  List<OpeningHours>? _openingHours;
-@override List<OpeningHours>? get openingHours {
-  final value = _openingHours;
-  if (value == null) return null;
+ final  List<OpeningHours> _openingHours;
+@override List<OpeningHours> get openingHours {
   if (_openingHours is EqualUnmodifiableListView) return _openingHours;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_openingHours);
 }
 
-@override final  OperationalStatus? entityStatus;
+@override@JsonKey() final  OperationalStatus entityStatus;
 @override@JsonKey() final  ApprovalStatus status;
 @override@_timestampJsonConverter final  DateTime createdAt;
 @override@JsonKey() final  EntityType type;
  final  double pricing;
- final  bool? isFurnished;
-@override final  GenderPreference? genderPref;
+@JsonKey() final  bool isFurnished;
+@override@JsonKey() final  GenderPreference genderPref;
 @JsonKey() final  ListingType listingType;
 
 @JsonKey(name: 'runtimeType')
@@ -317,7 +315,7 @@ abstract mixin class $ResidenceCopyWith<$Res> implements $EntityCopyWith<$Res> {
   factory $ResidenceCopyWith(Residence value, $Res Function(Residence) _then) = _$ResidenceCopyWithImpl;
 @override @useResult
 $Res call({
- EntityId id, CategoryId categoryId, SubCategoryId subCategoryId, String coverImageUrl, String name, String cityName, String sectorName,@_latLngJsonConverter LatLng latLng, double avgRating, int totalReviews, bool isPopular, List<OpeningHours>? openingHours, OperationalStatus? entityStatus, ApprovalStatus status,@_timestampJsonConverter DateTime createdAt, EntityType type, double pricing, bool? isFurnished, GenderPreference? genderPref, ListingType listingType
+ EntityId id, CategoryId categoryId, SubCategoryId subCategoryId, String coverImageUrl, String name, String cityName, String sectorName,@_latLngJsonConverter LatLng latLng, double avgRating, int totalReviews, bool isPopular, List<OpeningHours> openingHours, OperationalStatus entityStatus, ApprovalStatus status,@_timestampJsonConverter DateTime createdAt, EntityType type, double pricing, bool isFurnished, GenderPreference genderPref, ListingType listingType
 });
 
 
@@ -334,7 +332,7 @@ class _$ResidenceCopyWithImpl<$Res>
 
 /// Create a copy of Entity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? categoryId = null,Object? subCategoryId = null,Object? coverImageUrl = null,Object? name = null,Object? cityName = null,Object? sectorName = null,Object? latLng = null,Object? avgRating = null,Object? totalReviews = null,Object? isPopular = null,Object? openingHours = freezed,Object? entityStatus = freezed,Object? status = null,Object? createdAt = null,Object? type = null,Object? pricing = null,Object? isFurnished = freezed,Object? genderPref = freezed,Object? listingType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? categoryId = null,Object? subCategoryId = null,Object? coverImageUrl = null,Object? name = null,Object? cityName = null,Object? sectorName = null,Object? latLng = null,Object? avgRating = null,Object? totalReviews = null,Object? isPopular = null,Object? openingHours = null,Object? entityStatus = null,Object? status = null,Object? createdAt = null,Object? type = null,Object? pricing = null,Object? isFurnished = null,Object? genderPref = null,Object? listingType = null,}) {
   return _then(Residence(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as EntityId,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
@@ -347,15 +345,15 @@ as String,latLng: null == latLng ? _self.latLng : latLng // ignore: cast_nullabl
 as LatLng,avgRating: null == avgRating ? _self.avgRating : avgRating // ignore: cast_nullable_to_non_nullable
 as double,totalReviews: null == totalReviews ? _self.totalReviews : totalReviews // ignore: cast_nullable_to_non_nullable
 as int,isPopular: null == isPopular ? _self.isPopular : isPopular // ignore: cast_nullable_to_non_nullable
-as bool,openingHours: freezed == openingHours ? _self._openingHours : openingHours // ignore: cast_nullable_to_non_nullable
-as List<OpeningHours>?,entityStatus: freezed == entityStatus ? _self.entityStatus : entityStatus // ignore: cast_nullable_to_non_nullable
-as OperationalStatus?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as bool,openingHours: null == openingHours ? _self._openingHours : openingHours // ignore: cast_nullable_to_non_nullable
+as List<OpeningHours>,entityStatus: null == entityStatus ? _self.entityStatus : entityStatus // ignore: cast_nullable_to_non_nullable
+as OperationalStatus,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ApprovalStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as EntityType,pricing: null == pricing ? _self.pricing : pricing // ignore: cast_nullable_to_non_nullable
-as double,isFurnished: freezed == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
-as bool?,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
-as GenderPreference?,listingType: null == listingType ? _self.listingType : listingType // ignore: cast_nullable_to_non_nullable
+as double,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
+as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
+as GenderPreference,listingType: null == listingType ? _self.listingType : listingType // ignore: cast_nullable_to_non_nullable
 as ListingType,
   ));
 }

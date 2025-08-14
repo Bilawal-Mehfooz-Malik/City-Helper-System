@@ -39,7 +39,7 @@ int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,descri
 
 @override
 String toString() {
-  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, messagingNumber: $messagingNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, price: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
+  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, messagingNumber: $messagingNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
 }
 
 
@@ -50,7 +50,7 @@ abstract mixin class $ShopFormCopyWith<$Res>  {
   factory $ShopFormCopyWith(ShopForm value, $Res Function(ShopForm) _then) = _$ShopFormCopyWithImpl;
 @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, List<OpeningHours> openingHours, double? price, bool isFurnished, GenderPreference genderPref, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, List<OpeningHours> openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -67,7 +67,7 @@ class _$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = null,Object? price = freezed,Object? isFurnished = null,Object? genderPref = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = null,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_self.copyWith(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ as String,facebookUrl: null == facebookUrl ? _self.facebookUrl : facebookUrl // 
 as String,instagramUrl: null == instagramUrl ? _self.instagramUrl : instagramUrl // ignore: cast_nullable_to_non_nullable
 as String,websiteUrl: null == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
 as String,openingHours: null == openingHours ? _self.openingHours : openingHours // ignore: cast_nullable_to_non_nullable
-as List<OpeningHours>,price: freezed == price ? _self.pricing : price // ignore: cast_nullable_to_non_nullable
+as List<OpeningHours>,pricing: freezed == pricing ? _self.pricing : pricing // ignore: cast_nullable_to_non_nullable
 as double?,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
 as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,coverImageBytes: freezed == coverImageBytes ? _self.coverImageBytes : coverImageBytes // ignore: cast_nullable_to_non_nullable
@@ -199,7 +199,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? price,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -220,7 +220,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? price,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm():
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -240,7 +240,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? price,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  List<OpeningHours> openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -323,7 +323,7 @@ int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,descri
 
 @override
 String toString() {
-  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, messagingNumber: $messagingNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, price: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
+  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, messagingNumber: $messagingNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
 }
 
 
@@ -334,7 +334,7 @@ abstract mixin class _$ShopFormCopyWith<$Res> implements $ShopFormCopyWith<$Res>
   factory _$ShopFormCopyWith(_ShopForm value, $Res Function(_ShopForm) _then) = __$ShopFormCopyWithImpl;
 @override @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, List<OpeningHours> openingHours, double? price, bool isFurnished, GenderPreference genderPref, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, List<OpeningHours> openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -351,7 +351,7 @@ class __$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = null,Object? price = freezed,Object? isFurnished = null,Object? genderPref = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = null,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_ShopForm(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
@@ -368,7 +368,7 @@ as String,facebookUrl: null == facebookUrl ? _self.facebookUrl : facebookUrl // 
 as String,instagramUrl: null == instagramUrl ? _self.instagramUrl : instagramUrl // ignore: cast_nullable_to_non_nullable
 as String,websiteUrl: null == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
 as String,openingHours: null == openingHours ? _self._openingHours : openingHours // ignore: cast_nullable_to_non_nullable
-as List<OpeningHours>,pricing: freezed == price ? _self.pricing : price // ignore: cast_nullable_to_non_nullable
+as List<OpeningHours>,pricing: freezed == pricing ? _self.pricing : pricing // ignore: cast_nullable_to_non_nullable
 as double?,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
 as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,coverImageBytes: freezed == coverImageBytes ? _self.coverImageBytes : coverImageBytes // ignore: cast_nullable_to_non_nullable
