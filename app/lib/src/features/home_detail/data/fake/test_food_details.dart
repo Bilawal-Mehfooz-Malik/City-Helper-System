@@ -1,6 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -18,7 +18,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 120,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_1',
@@ -30,7 +30,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '123-456-7890',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -46,7 +46,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 98,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_2',
@@ -57,7 +57,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '234-567-8901',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -73,7 +73,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 150,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_3',
@@ -84,7 +84,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '345-678-9012',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -100,7 +100,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 80,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_4',
@@ -111,7 +111,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '456-789-0123',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -127,7 +127,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 200,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_5',
@@ -138,7 +138,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '567-890-1234',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -154,7 +154,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 75,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_6',
@@ -165,7 +165,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '678-901-2345',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -181,7 +181,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 65,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_7',
@@ -192,7 +192,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '789-012-3456',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   FoodDetail(
@@ -208,7 +208,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 55,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_8',
@@ -219,7 +219,7 @@ final List<FoodDetail> testFoodDetails = [
     messagingNumber: '890-123-4567',
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
 ];

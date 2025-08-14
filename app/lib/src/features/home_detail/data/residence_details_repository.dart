@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,7 +17,10 @@ class ResidenceDetailsRepository {
     return _firestore.collection(residenceKey).doc();
   }
 
-  Future<void> updateResidenceStatus(EntityId id, EntityStatus status) async {
+  Future<void> updateResidenceStatus(
+    EntityId id,
+    OperationalStatus status,
+  ) async {
     await _docRef(id).update({'entityStatus': status.name});
   }
 

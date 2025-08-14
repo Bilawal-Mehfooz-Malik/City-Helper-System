@@ -3,8 +3,6 @@ import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -82,7 +80,7 @@ class ShopService {
   Future<void> updateShopStatus({
     required String shopId,
     required CategoryId categoryId,
-    required EntityStatus newStatus,
+    required OperationalStatus newStatus,
   }) async {
     switch (categoryId) {
       case 1:

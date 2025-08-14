@@ -1,30 +1,17 @@
-class OpeningHours {
-  final String day;
-  final String open;
-  final String close;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const OpeningHours({
-    required this.day,
-    required this.open,
-    required this.close,
-  });
+part 'opening_hours.freezed.dart';
+part 'opening_hours.g.dart';
 
-  Map<String, dynamic> toJson() => {'day': day, 'open': open, 'close': close};
+@freezed
+abstract class OpeningHours with _$OpeningHours {
+  const factory OpeningHours({
+    required String day,
+    @Default(true) bool isOpen,
+    String? open,
+    String? close,
+  }) = _OpeningHours;
 
-  factory OpeningHours.fromJson(Map<String, dynamic> json) => OpeningHours(
-    day: json['day'] as String,
-    open: json['open'] as String,
-    close: json['close'] as String,
-  );
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OpeningHours &&
-          day == other.day &&
-          open == other.open &&
-          close == other.close;
-
-  @override
-  int get hashCode => day.hashCode ^ open.hashCode ^ close.hashCode;
+  factory OpeningHours.fromJson(Map<String, Object?> json) =>
+      _$OpeningHoursFromJson(json);
 }

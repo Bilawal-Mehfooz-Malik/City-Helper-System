@@ -3,8 +3,8 @@ import 'package:app/src/core/constants/test_food_list.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 
 class FakeFoodRepository implements FoodRepository {
   FakeFoodRepository({this.addDelay = true});

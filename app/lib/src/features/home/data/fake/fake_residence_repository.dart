@@ -5,7 +5,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 
 class FakeResidenceRepository implements ResidenceRepository {
   FakeResidenceRepository({this.addDelay = true});

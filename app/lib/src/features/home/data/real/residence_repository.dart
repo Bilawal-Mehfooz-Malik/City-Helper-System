@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,7 +28,7 @@ class ResidenceRepository {
   /// Used for all public-facing list views.
   Query<Residence> get _approvedResidencesQuery => _residencesRef.where(
     'status',
-    isEqualTo: Status.approved.name, // Using enum for type-safety
+    isEqualTo: ApprovalStatus.approved.name, // Using enum for type-safety
   );
 
   /// Writes a residence document. Uses the unfiltered ref to allow setting

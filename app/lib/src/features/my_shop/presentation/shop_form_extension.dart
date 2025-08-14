@@ -1,7 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 
 extension ShopFormX on ShopForm {
@@ -26,7 +24,7 @@ extension ShopFormX on ShopForm {
           latLng: latLng!,
           openingHours: openingHours,
           genderPref: genderPref,
-          price: price ?? existingShop.price,
+          pricing: pricing ?? existingShop.pricing,
           isFurnished: isFurnished,
         );
       } else if (existingShop is FoodDetail) {
@@ -69,8 +67,8 @@ extension ShopFormX on ShopForm {
           totalReviews: 0,
           ratingBreakdown: const [],
           isPopular: false,
-          status: Status.pending,
-          entityStatus: EntityStatus.defaultStatus,
+          status: ApprovalStatus.pending,
+          entityStatus: OperationalStatus.defaultStatus,
           openingHours: openingHours,
           updatedAt: now,
           createdAt: now,
@@ -81,7 +79,7 @@ extension ShopFormX on ShopForm {
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
           genderPref: genderPref,
-          price: price ?? 0,
+          pricing: pricing ?? 0,
           isFurnished: isFurnished,
         );
       } else {
@@ -103,8 +101,8 @@ extension ShopFormX on ShopForm {
           totalReviews: 0,
           ratingBreakdown: const [],
           isPopular: false,
-          status: Status.pending,
-          entityStatus: EntityStatus.defaultStatus,
+          status: ApprovalStatus.pending,
+          entityStatus: OperationalStatus.defaultStatus,
           openingHours: openingHours,
           updatedAt: now,
           createdAt: now,

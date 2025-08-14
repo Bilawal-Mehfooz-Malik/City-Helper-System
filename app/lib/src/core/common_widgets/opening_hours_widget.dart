@@ -22,7 +22,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
   @override
   Widget build(BuildContext context) {
     final todayAbbr = DateFormat.E().format(DateTime.now());
-    final hours = widget.entity.openingHours;
+    final hours = widget.entity.openingHours ?? [];
     final isOpen = widget.entity.isEntityOpen();
 
     final todayIndex = hours.indexWhere(
@@ -31,7 +31,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 
     final todayHours = todayIndex >= 0
         ? hours[todayIndex]
-        : OpeningHours(day: '', open: context.loc.closed, close: '');
+        : OpeningHours(day: '', open: context.loc.closed, close: null);
 
     final reorderedHours = todayIndex >= 0
         ? [...hours.sublist(todayIndex), ...hours.sublist(0, todayIndex)]
@@ -83,7 +83,7 @@ class OpeningHoursLabel extends StatelessWidget {
     final closesAtText = loc.closes;
     final opensAtText = loc.opensAt;
 
-    final isClosed = todayHours.open.toLowerCase() == closedText.toLowerCase();
+    final isClosed = todayHours.open?.toLowerCase() == closedText.toLowerCase();
 
     final normalColor = colorScheme.onSurface;
     final openColor = colorScheme.primary;
@@ -101,7 +101,9 @@ class OpeningHoursLabel extends StatelessWidget {
             _coloredSpan(openText, openColor),
             _normalSpan(' • '),
             _normalSpan(
-              '$closesAtText ${formatTimeTo12Hour(todayHours.close)}',
+              todayHours.close != null
+                  ? '$closesAtText ${formatTimeTo12Hour(todayHours.close!)}'
+                  : '',
             ),
           ],
         ),
@@ -113,7 +115,11 @@ class OpeningHoursLabel extends StatelessWidget {
           children: [
             _coloredSpan(closedText, closedColor),
             _normalSpan(' • '),
-            _normalSpan('$opensAtText ${formatTimeTo12Hour(todayHours.open)}'),
+            _normalSpan(
+              todayHours.open != null
+                  ? '$opensAtText ${formatTimeTo12Hour(todayHours.open!)}'
+                  : '',
+            ),
           ],
         ),
       );
@@ -194,7 +200,7 @@ class OpeningHourRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = context.loc;
     final colorScheme = context.colorScheme;
-    final isClosed = hour.open.toLowerCase() == loc.closed.toLowerCase();
+    final isClosed = hour.open?.toLowerCase() == loc.closed.toLowerCase();
 
     final textStyle = isToday
         ? const TextStyle(fontWeight: FontWeight.bold)
@@ -212,7 +218,9 @@ class OpeningHourRow extends StatelessWidget {
             )
           else
             Text(
-              '${formatTimeTo12Hour(hour.open)} – ${formatTimeTo12Hour(hour.close)}',
+              hour.open != null && hour.close != null
+                  ? '${formatTimeTo12Hour(hour.open!)} – ${formatTimeTo12Hour(hour.close!)}'
+                  : '',
               style: textStyle,
             ),
         ],

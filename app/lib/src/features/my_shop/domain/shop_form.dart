@@ -5,8 +5,6 @@ import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -52,7 +50,7 @@ abstract class ShopForm with _$ShopForm {
     double? price;
     bool isFurnished = false;
     if (shop is ResidenceDetail) {
-      price = shop.price;
+      price = shop.pricing;
       isFurnished = shop.isFurnished;
     }
 
@@ -69,9 +67,9 @@ abstract class ShopForm with _$ShopForm {
       instagramUrl: shop.instagramUrl ?? '',
       websiteUrl: shop.websiteUrl ?? '',
       latLng: shop.latLng,
-      openingHours: shop.openingHours,
+      openingHours: shop.openingHours ?? _setDefaultOpeningHours(),
       genderPref: shop is ResidenceDetail
-          ? shop.genderPref
+          ? shop.genderPref ?? GenderPreference.any
           : shop is FoodDetail
           ? shop.genderPref
           : GenderPreference.any,

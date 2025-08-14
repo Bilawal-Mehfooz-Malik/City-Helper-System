@@ -5,7 +5,7 @@ import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_residence_details.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
@@ -63,7 +63,7 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   }
 
   @override
-  Future<void> updateResidenceStatus(EntityId id, EntityStatus status) {
+  Future<void> updateResidenceStatus(EntityId id, OperationalStatus status) {
     // TODO: implement updateResidenceStatus
     throw UnimplementedError();
   }

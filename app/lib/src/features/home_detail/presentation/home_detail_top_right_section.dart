@@ -9,7 +9,6 @@ import 'package:app/src/core/utils/url_launcher_helpers.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/outlined_contact_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/primary_contact_button.dart';
@@ -60,7 +59,7 @@ class HomeDetailTopRightContent extends ConsumerWidget {
     final isResidence = entity is ResidenceDetail;
     final residence = isResidence ? entity as ResidenceDetail : null;
     final formattedPrice = residence != null
-        ? ref.watch(currencyFormatterProvider).format(residence.price)
+        ? ref.watch(currencyFormatterProvider).format(residence.pricing)
         : null;
 
     return Stack(

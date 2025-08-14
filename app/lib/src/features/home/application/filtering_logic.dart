@@ -1,6 +1,5 @@
-import 'package:app/src/features/home/domain/categories/entity.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entity_extensions.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
@@ -96,8 +95,8 @@ bool _matchGender(Entity entity, EntityFilter filter) {
 int _compareByPrice(Entity a, Entity b, SortOrder order) {
   if (a is Residence && b is Residence) {
     return order == SortOrder.lowToHigh
-        ? a.price.compareTo(b.price)
-        : b.price.compareTo(a.price);
+        ? a.pricing.compareTo(b.pricing)
+        : b.pricing.compareTo(a.pricing);
   }
   return 0;
 }

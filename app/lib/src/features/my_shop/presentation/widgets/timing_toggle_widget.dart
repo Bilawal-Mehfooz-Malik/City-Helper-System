@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 /// A widget that provides a clear, descriptive list of status options for the user.
 class TimingToggleWidget extends StatefulWidget {
-  final EntityStatus initialStatus;
-  final ValueChanged<EntityStatus> onStatusChanged;
+  final OperationalStatus initialStatus;
+  final ValueChanged<OperationalStatus> onStatusChanged;
 
   const TimingToggleWidget({
     super.key,
@@ -20,7 +20,7 @@ class TimingToggleWidget extends StatefulWidget {
 }
 
 class _TimingToggleWidgetState extends State<TimingToggleWidget> {
-  late EntityStatus _selectedStatus;
+  late OperationalStatus _selectedStatus;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
   }
 
   // This method is called when the user selects a new option.
-  void _handleStatusChanged(EntityStatus? newStatus) {
+  void _handleStatusChanged(OperationalStatus? newStatus) {
     if (newStatus != null) {
       // Update the local UI state to show the change immediately.
       setState(() {
@@ -64,7 +64,7 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
                   subtitle:
                       'Automatically opens/closes based on your business hours.'
                           .hardcoded,
-                  value: EntityStatus.defaultStatus,
+                  value: OperationalStatus.defaultStatus,
                   groupValue: _selectedStatus,
                   onChanged: _handleStatusChanged,
                 ),
@@ -74,7 +74,7 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
                   subtitle:
                       "Force your shop to appear 'Open', overriding your hours."
                           .hardcoded,
-                  value: EntityStatus.open,
+                  value: OperationalStatus.open,
                   groupValue: _selectedStatus,
                   onChanged: _handleStatusChanged,
                 ),
@@ -84,7 +84,7 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
                   subtitle:
                       "Force your shop to appear 'Closed', overriding your hours."
                           .hardcoded,
-                  value: EntityStatus.close,
+                  value: OperationalStatus.close,
                   groupValue: _selectedStatus,
                   onChanged: _handleStatusChanged,
                 ),
@@ -110,9 +110,9 @@ class _StatusOptionTile extends StatelessWidget {
 
   final String title;
   final String subtitle;
-  final EntityStatus value;
-  final EntityStatus groupValue;
-  final ValueChanged<EntityStatus?> onChanged;
+  final OperationalStatus value;
+  final OperationalStatus groupValue;
+  final ValueChanged<OperationalStatus?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,7 @@ class _StatusOptionTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Radio<EntityStatus>(
+              Radio<OperationalStatus>(
                 value: value,
                 groupValue: groupValue,
                 onChanged: onChanged,

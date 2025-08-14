@@ -14,11 +14,13 @@ enum SortOrder { none, lowToHigh, highToLow }
 
 enum GenderPreference { any, maleOnly, femaleOnly, familyFriendly }
 
-enum EntityStatus { open, close, defaultStatus }
+enum OperationalStatus { open, close, defaultStatus }
 
-enum Status { blocked, pending, approved }
+enum ApprovalStatus { blocked, pending, approved }
 
 enum EntityType { residence, food }
+
+enum ListingType { forRent, forSale }
 
 extension IterableExtension<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T) test) {

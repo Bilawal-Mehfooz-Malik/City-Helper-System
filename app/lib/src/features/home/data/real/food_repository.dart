@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +25,7 @@ class FoodRepository {
   // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
   Query<Food> get _approvedFoodsQuery =>
-      _foodsRef.where('status', isEqualTo: Status.approved.name);
+      _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
 
   /// Writes a food document. Uses the unfiltered ref.
   Future<void> setFood(Food food) async {

@@ -5,8 +5,6 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/food_detail.dart';
-import 'package:app/src/features/home_detail/domain/residence_detail.dart';
 import 'package:app/src/features/my_shop/application/shop_service.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,7 +20,7 @@ class ShopController extends _$ShopController {
   Future<void> updateShopStatus({
     required String shopId,
     required CategoryId categoryId,
-    required EntityStatus newStatus,
+    required OperationalStatus newStatus,
   }) async {
     final shopService = ref.read(shopServiceProvider);
     state = const AsyncLoading();

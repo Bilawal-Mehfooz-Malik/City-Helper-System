@@ -1,6 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
-import 'package:app/src/features/home/domain/categories/food.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final List<Food> testFoods = [
@@ -17,10 +17,10 @@ final List<Food> testFoods = [
     totalReviews: 120,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -36,10 +36,10 @@ final List<Food> testFoods = [
     totalReviews: 98,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -55,10 +55,10 @@ final List<Food> testFoods = [
     totalReviews: 150,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -74,10 +74,10 @@ final List<Food> testFoods = [
     totalReviews: 80,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -93,10 +93,10 @@ final List<Food> testFoods = [
     totalReviews: 200,
     isPopular: true,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -112,10 +112,10 @@ final List<Food> testFoods = [
     totalReviews: 75,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -131,10 +131,10 @@ final List<Food> testFoods = [
     totalReviews: 65,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
   Food(
@@ -150,10 +150,10 @@ final List<Food> testFoods = [
     totalReviews: 55,
     isPopular: false,
     openingHours: _defaultOpeningHours,
-    entityStatus: EntityStatus.defaultStatus,
+    entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
-    status: Status.approved,
+    status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
 ];

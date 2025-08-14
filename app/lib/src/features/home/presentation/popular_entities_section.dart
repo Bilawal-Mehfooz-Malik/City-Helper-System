@@ -7,8 +7,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
-import 'package:app/src/features/home/domain/categories/entity.dart';
-import 'package:app/src/features/home/domain/categories/residence.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
@@ -86,7 +85,7 @@ class PopularEnitiesSection extends ConsumerWidget {
     return AsyncValueWidget<List<Entity>>(
       value: popularEntitiesListValue,
       loading: const PopularEntitesSkeletonList(),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (entities) {
         if (entities.isEmpty) {
           return const SizedBox.shrink();

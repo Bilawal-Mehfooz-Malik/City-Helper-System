@@ -44,7 +44,7 @@ class Step4SpecificsPage extends ConsumerWidget {
             const Divider(),
             if (categoryId == 1)
               ResidenceSpecificSection(
-                price: formData.price,
+                price: formData.pricing,
                 isFurnished: formData.isFurnished,
                 onPriceChanged: (val) {
                   final price = double.tryParse(val);

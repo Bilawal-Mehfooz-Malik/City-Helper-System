@@ -3,24 +3,23 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/json_converters.dart';
-import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-part 'entity_detail.freezed.dart';
-part 'entity_detail.g.dart';
+part 'entity.freezed.dart';
+part 'entity.g.dart';
 
 // Helpers for JSON conversion
 const _latLngJsonConverter = LatLngJsonConverter();
 const _timestampJsonConverter = TimestampJsonConverter();
 
 @freezed
-sealed class EntityDetail with _$EntityDetail {
-  const EntityDetail._();
+sealed class Entity with _$Entity {
+  const Entity._(); // Private constructor for methods
 
   @JsonSerializable(explicitToJson: true)
-  const factory EntityDetail.residence({
+  const factory Entity.residence({
     required EntityId id,
     required CategoryId categoryId,
     required SubCategoryId subCategoryId,
@@ -38,27 +37,13 @@ sealed class EntityDetail with _$EntityDetail {
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.residence) EntityType type,
     required double pricing,
-    @Default(false) bool isFurnished,
+    bool? isFurnished,
     GenderPreference? genderPref,
     @Default(ListingType.forRent) ListingType listingType,
-
-    // Detail fields
-    required UserId ownerId,
-    required String description,
-    required List<String> galleryImageUrls,
-    required String streetAddress,
-    @Default([]) List<RatingBreakdown> ratingBreakdown,
-    String? phoneNumber,
-    String? messagingNumber,
-    @_timestampJsonConverter required DateTime updatedAt,
-    String? websiteUrl,
-    String? instagramUrl,
-    String? facebookUrl,
-    String? email,
-  }) = ResidenceDetail;
+  }) = Residence;
 
   @JsonSerializable(explicitToJson: true)
-  const factory EntityDetail.food({
+  const factory Entity.food({
     required EntityId id,
     required CategoryId categoryId,
     required SubCategoryId subCategoryId,
@@ -76,22 +61,7 @@ sealed class EntityDetail with _$EntityDetail {
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
+  }) = Food;
 
-    // Detail fields
-    required UserId ownerId,
-    required String description,
-    required List<String> galleryImageUrls,
-    required String streetAddress,
-    @Default([]) List<RatingBreakdown> ratingBreakdown,
-    String? phoneNumber,
-    String? messagingNumber,
-    @_timestampJsonConverter required DateTime updatedAt,
-    String? websiteUrl,
-    String? instagramUrl,
-    String? facebookUrl,
-    String? email,
-  }) = FoodDetail;
-
-  factory EntityDetail.fromJson(Map<String, Object?> json) =>
-      _$EntityDetailFromJson(json);
+  factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);
 }
