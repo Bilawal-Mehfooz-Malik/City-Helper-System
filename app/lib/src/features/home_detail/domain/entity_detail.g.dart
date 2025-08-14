@@ -34,7 +34,7 @@ ResidenceDetail _$ResidenceDetailFromJson(
   type:
       $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ??
       EntityType.residence,
-  pricing: (json['pricing'] as num).toDouble(),
+  pricing: (json['price'] as num).toDouble(),
   isFurnished: json['isFurnished'] as bool? ?? false,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
@@ -83,7 +83,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'type': _$EntityTypeEnumMap[instance.type]!,
-  'pricing': instance.pricing,
+  'price': instance.pricing,
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,

@@ -36,7 +36,7 @@ sealed class Entity with _$Entity {
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.residence) EntityType type,
-    required double pricing,
+    @JsonKey(name: 'price') required double pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
