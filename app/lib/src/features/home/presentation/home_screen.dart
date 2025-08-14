@@ -84,7 +84,7 @@ class HomeScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(formatErrorMessage(state.lastError!)),
-            duration: const Duration(days: 365), // Make it effectively infinite
+            duration: const Duration(days: 1), // Make it effectively infinite
             action: SnackBarAction(
               label: context.loc.retry,
               onPressed: () => _onRetry(ref),
