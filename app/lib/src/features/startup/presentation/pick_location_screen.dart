@@ -6,10 +6,8 @@ import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PickLocationScreen extends ConsumerStatefulWidget {
@@ -51,13 +49,6 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     }
   }
 
-  void _saveLocation(BuildContext context) {
-    ref
-        .read(userLocationControllerProvider.notifier)
-        .getLocationFromMap(_pickedLocation);
-    context.goNamed(AppRoute.getStarted.name);
-  }
-
   void _onCameraMove(CameraPosition position) {
     _pickedLocation = position.target;
   }
@@ -67,7 +58,13 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     final isLoading = ref.watch(userLocationControllerProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.loc.pickYourLocation)),
+      appBar: AppBar(
+        title: Text(context.loc.pickYourLocation),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -118,7 +115,10 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
             ),
             FloatingActionButton.large(
               heroTag: 'saveLocationBtn',
-              onPressed: isLoading ? null : () => _saveLocation(context),
+              onPressed: isLoading
+                  ? null
+                  : () => Navigator.of(context).pop(_pickedLocation),
+
               child: const Icon(Icons.check),
             ),
           ],

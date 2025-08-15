@@ -6,47 +6,51 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 String? redirection(Ref ref, GoRouterState state) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  final user = authRepository.currentUser;
-  final isLoggedIn = user != null;
-
   final userLocationState = ref.watch(fetchUserLocationProvider);
   final currentPath = state.uri.path;
 
-  // Step 1: Loading (unchanged)
+  // 1. Handle loading state
   if (userLocationState.isLoading) {
     return currentPath != '/loading' ? '/loading' : null;
   }
 
-  // Step 2: Onboarding - No Location (unchanged)
   final hasUserLocation = userLocationState.value != null;
+
+  // 2. If user has location, but is on startup screen, redirect them.
+  if (hasUserLocation && currentPath.startsWith('/get-started')) {
+    final isLoggedIn = ref.watch(authRepositoryProvider).currentUser != null;
+    if (isLoggedIn) {
+      final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
+      return isAdminMode ? '/my-shop' : '/';
+    } else {
+      return '/';
+    }
+  }
+
+  // 3. If user has NO location, and is NOT on startup screen, redirect them.
   if (!hasUserLocation && !currentPath.startsWith('/get-started')) {
     return '/get-started';
   }
 
-  // Step 3: Handle Auth State (modified)
+  // 4. Handle other auth-based redirects
+  final authRepository = ref.watch(authRepositoryProvider);
+  final user = authRepository.currentUser;
+  final isLoggedIn = user != null;
+
   if (!isLoggedIn) {
     if (currentPath == '/account' ||
         currentPath == '/profile' ||
         currentPath.startsWith('/my-shop')) {
-      return '/'; // If not logged in, block account, profile, and admin pages.
+      return '/';
     }
   } else {
-    // All logic for a logged-in user goes here.
-
-    // FIX: Add logic for startup redirection based on user mode.
-    // This is the key logic for starting the app on the correct screen.
-    // We only perform this check if the user is at the root of the app ('/').
     if (currentPath == '/') {
-      // Read the mode directly from the repository (it's synchronous).
       final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
       if (isAdminMode) {
-        // If in admin mode, redirect from the user homepage to the admin dashboard.
         return '/my-shop';
       }
     }
 
-    // Profile completion logic (unchanged)
     final userProfile = ref.read(getUserByIdProvider(user.uid)).value;
     final isProfileComplete =
         userProfile != null && userProfile.name.trim().isNotEmpty;
@@ -55,23 +59,5 @@ String? redirection(Ref ref, GoRouterState state) {
     }
   }
 
-  // Step 4: Onboarding Block
-  final isPickLocation = currentPath.contains('pick-your-location');
-  if (hasUserLocation &&
-      currentPath.startsWith('/get-started') &&
-      !isPickLocation) {
-    if (isLoggedIn) {
-      final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
-      if (isAdminMode) {
-        return '/my-shop';
-      } else {
-        return '/categories';
-      }
-    } else {
-      // If not logged in but has location, redirect to categories
-      return '/categories';
-    }
-  }
-
-  return null; // No redirection needed.
+  return null;
 }

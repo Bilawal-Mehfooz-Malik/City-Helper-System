@@ -17,7 +17,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
-import 'package:app/src/features/startup/presentation/pick_location_screen.dart';
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:app/src/routers/not_found_screen.dart';
 
@@ -63,18 +62,6 @@ GoRouter appRouter(Ref ref) {
         path: '/get-started',
         name: AppRoute.getStarted.name,
         builder: (context, state) => const StartupScreen(),
-        routes: [
-          GoRoute(
-            path: 'pick-your-location',
-            name: AppRoute.pickYourLocation.name,
-            pageBuilder: (context, state) {
-              return const MaterialPage(
-                fullscreenDialog: true,
-                child: PickLocationScreen(),
-              );
-            },
-          ),
-        ],
       ),
       GoRoute(
         path: '/',
