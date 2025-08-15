@@ -3,6 +3,7 @@ import 'package:app/src/features/home/application/filtering_logic.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
@@ -87,20 +88,9 @@ Stream<List<Entity>> watchPopularEntities(
   if (listType != HomeListType.popular) {
     return popularEntitiesStream;
   } else {
-    // 2. Watch the filter state
+    // 2. Watch the filter state and apply transformations
     final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
-
-    // 3. Combine stream and filter, applying filtering and sorting
-    return popularEntitiesStream.map((entities) {
-      // Step 3a: Filter the entities
-      final filteredEntities = filterEntities(entities, filter);
-
-      // Step 3b: Sort the filtered entities
-      final sortedEntities = sortEntities(filteredEntities, filter);
-
-      // Step 3c: Return the final list
-      return sortedEntities;
-    });
+    return _applyFilteringAndSorting(popularEntitiesStream, filter);
   }
 }
 
@@ -119,19 +109,20 @@ Stream<List<Entity>> watchEntities(
   if (listType != HomeListType.all) {
     return entitiesStream;
   } else {
-    // 2. Watch the filter state
+    // 2. Watch the filter state and apply transformations
     final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
-
-    // 3. Combine stream and filter, applying filtering and sorting
-    return entitiesStream.map((entities) {
-      // Step 3a: Filter the entities
-      final filteredEntities = filterEntities(entities, filter);
-
-      // Step 3b: Sort the filtered entities
-      final sortedEntities = sortEntities(filteredEntities, filter);
-
-      // Step 3c: Return the final list
-      return sortedEntities;
-    });
+    return _applyFilteringAndSorting(entitiesStream, filter);
   }
+}
+
+// Helper method to apply filtering and sorting
+Stream<List<Entity>> _applyFilteringAndSorting(
+  Stream<List<Entity>> entitiesStream,
+  EntityFilter filter,
+) {
+  return entitiesStream.map((entities) {
+    final filteredEntities = filterEntities(entities, filter);
+    final sortedEntities = sortEntities(filteredEntities, filter);
+    return sortedEntities;
+  });
 }

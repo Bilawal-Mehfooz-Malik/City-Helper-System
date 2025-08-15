@@ -1,12 +1,38 @@
+# Plan Checklist
 
-# Plan to Fix Redirection Issue
+- [x] Refactor repetitive logic in `EntityService`.
+- [ ] Implement granular error handling in `combinedErrorStatusProvider`.
 
-1.  **Analyze the routing logic:** Review `app/lib/src/routers/app_router.dart` and `app/lib/src/routers/redirection.dart` to understand the current navigation and redirection implementation.
+---
 
-2.  **Identify the root cause:** The problem lies in `app/lib/src/features/startup/presentation/pick_location_screen.dart`. The `_saveLocation` method incorrectly navigates to `AppRoute.getStarted.name` using `context.goNamed()`. This action pushes the startup screen back onto the navigation stack, allowing the user to go back to it.
+# Plan to Refactor Home Feature Logic and Error Handling
 
-3.  **Propose a solution:** Modify the `_saveLocation` method in `pick_location_screen.dart` to navigate to the main application screen instead of the startup screen. The correct destination is `AppRoute.category.name`, which corresponds to the root path `/`. This change will ensure that the startup flow is properly exited and removed from the navigation history.
+This plan outlines the steps to improve the `home` feature by refactoring duplicated logic and implementing more granular error handling.
 
-4.  **Implement the fix:** Apply the proposed change to the `pick_location_screen.dart` file.
+## 1. Refactor Repetitive Logic in `EntityService`
 
-5.  **Verification:** After the fix is implemented, the redirection should work as expected. When a user picks a location, they will be taken to the main app screen, and they will not be able to navigate back to the location picking or startup screens.
+**Goal:** Eliminate the duplicated filtering and sorting logic within the `watchPopularEntities` and `watchEntities` providers to adhere to the DRY (Don't Repeat Yourself) principle.
+
+**File to Modify:** `app/lib/src/features/home/application/entity_service.dart`
+
+**Steps:**
+
+1.  Create a private helper method named `_applyFilteringAndSorting`.
+2.  This method will accept a `Stream<List<Entity>>` and an `EntityFilter` as arguments.
+3.  It will contain the existing `.map()` logic that applies filtering and sorting to the stream of entities.
+4.  Update both the `watchPopularEntities` and `watchEntities` providers to call this new helper method, passing the appropriate entity stream and filter.
+5.  This will centralize the filtering/sorting logic, making it more maintainable and less error-prone.
+
+## 2. Implement Granular Error Handling
+
+**Goal:** Prevent non-critical data loading errors (e.g., for ads or sub-categories) from causing a screen-wide failure. The main content should still render if possible.
+
+**File to Modify:** `app/lib/src/features/home/presentation/controllers/combined_error_controller.dart`
+
+**Steps:**
+
+1.  Modify the `combinedErrorStatusProvider` to only watch for errors from **critical** data sources, which are the main entity lists.
+2.  Remove the `ref.watch` calls for `subCategoriesListStreamProvider` and `adsListFutureProvider`. The widgets responsible for displaying this data (`SubCategoriesList` and `CarouselAdsList`) already handle their own errors gracefully by hiding the section, so a global error is not needed.
+3.  Correct the provider's logic to intelligently watch only the relevant entity provider (`watchEntitiesProvider` or `watchPopularEntitiesProvider`) based on the state of the `listTypeControllerProvider`. This makes the error checking more precise and fixes a latent bug where both lists were being watched unnecessarily.
+4.  The `HomeScreen` will continue to use this provider, but now it will only show a full-screen error if the main entity list fails to load, resulting in a more resilient UI.
+e
