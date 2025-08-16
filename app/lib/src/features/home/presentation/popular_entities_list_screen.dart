@@ -160,6 +160,7 @@ class _PopularEntitiesListScreenState
   }
 }
 
+// New widget for AppBar
 class _PopularEntitiesListAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   const _PopularEntitiesListAppBar({required this.onBack});
@@ -261,6 +262,7 @@ class _PopularEntitiesListGrid extends ConsumerWidget {
     return SliverToBoxAdapter(
       child: EntitiesGridLayout(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(), // ADDED THIS LINE
         itemCount:
             entities.length + (popularEntitiesState.isLoadingNextPage ? 3 : 0),
         itemBuilder: (_, index) {
