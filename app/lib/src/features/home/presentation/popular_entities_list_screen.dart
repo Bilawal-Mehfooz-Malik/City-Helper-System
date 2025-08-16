@@ -172,23 +172,21 @@ class _PopularEntitiesListScreenState
                 SliverToBoxAdapter(
                   child: EntitiesGridLayout(
                     shrinkWrap: true,
-                    itemCount: entities.length,
+                    itemCount:
+                        entities.length +
+                        (popularEntitiesState.isLoadingNextPage ? 3 : 0),
                     itemBuilder: (_, index) {
-                      final entity = entities[index];
-                      return EntityCard(
-                        entity: entity,
-                        useElipsis: false,
-                        onTap: () => _goToDetails(context, ref, entity),
-                      );
+                      if (index < entities.length) {
+                        final entity = entities[index];
+                        return EntityCard(
+                          entity: entity,
+                          useElipsis: false,
+                          onTap: () => _goToDetails(context, ref, entity),
+                        );
+                      }
+                      return const EntityCardSkeleton(allBorders: true);
                     },
                     emptyMessage: NoEntityFoundException().message,
-                  ),
-                ),
-              if (popularEntitiesState.isLoadingNextPage)
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.all(Sizes.p16),
-                    child: Center(child: EntitiesListSkeleton()),
                   ),
                 ),
               if (popularEntitiesState.paginationError != null &&
