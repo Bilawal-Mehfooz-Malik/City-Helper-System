@@ -29,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
 
   Future<void> _onRefresh(WidgetRef ref) async {
     ref.invalidate(subcategoryControllerProvider);
-    ref.invalidate(popularEntitiesNotifierProvider);
+    ref.invalidate(popularEntitiesNotifierProvider(categoryId)); // Pass categoryId here
 
     await Future.wait([
       ref.refresh(subCategoriesListStreamProvider(categoryId).future),

@@ -45,7 +45,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.9) {
-      ref.read(popularEntitiesNotifierProvider.notifier).fetchNextPage();
+      ref.read(popularEntitiesNotifierProvider(widget.categoryId).notifier).fetchNextPage();
     }
   }
 
@@ -103,7 +103,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
 
   @override
   Widget build(BuildContext context) {
-    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider);
+    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider(widget.categoryId));
     final entities = popularEntitiesState.entities;
 
     // Handle initial error state
@@ -158,7 +158,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
                   return Center(
                     child: ElevatedButton(
                       onPressed: () => ref
-                          .read(popularEntitiesNotifierProvider.notifier)
+                          .read(popularEntitiesNotifierProvider(widget.categoryId).notifier)
                           .fetchNextPage(),
                       child: Text(context.loc.retry),
                     ),

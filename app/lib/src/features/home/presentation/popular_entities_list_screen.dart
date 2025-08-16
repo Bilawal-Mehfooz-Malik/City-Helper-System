@@ -54,7 +54,7 @@ class _PopularEntitiesListScreenState
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.9) {
-      ref.read(popularEntitiesNotifierProvider.notifier).fetchNextPage();
+      ref.read(popularEntitiesNotifierProvider(widget.categoryId).notifier).fetchNextPage();
     }
   }
 
@@ -115,7 +115,7 @@ class _PopularEntitiesListScreenState
 
   @override
   Widget build(BuildContext context) {
-    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider);
+    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider(widget.categoryId));
     final entities = popularEntitiesState.entities;
 
     return PopScope(
@@ -202,7 +202,7 @@ class _PopularEntitiesListScreenState
                             onPressed: () {
                               ref
                                   .read(
-                                    popularEntitiesNotifierProvider.notifier,
+                                    popularEntitiesNotifierProvider(widget.categoryId).notifier,
                                   )
                                   .fetchNextPage();
                             },

@@ -1,3 +1,4 @@
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/application/pagination_limit_provider.dart';
 import 'package:app/src/features/home/domain/entity.dart';
@@ -21,7 +22,8 @@ abstract class PopularEntitiesPaginatedState
 @Riverpod(keepAlive: true)
 class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   @override
-  PopularEntitiesPaginatedState build() {
+  PopularEntitiesPaginatedState build(CategoryId categoryId) {
+    // Added categoryId parameter
     // The build method should not return a future.
     // We trigger the first fetch and return the initial state.
     fetchFirstPage();
@@ -29,9 +31,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   }
 
   Future<void> fetchFirstPage() async {
-    // For now, we are hardcoding categoryId as 1. This should be passed from the UI.
-    // This is a temporary solution to get the feature working.
-    const categoryId = 1;
+    // No hardcoded categoryId here, using the one from the build method
     try {
       final entities = await ref
           .read(entityServiceProvider)
@@ -50,7 +50,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
 
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
 
-    const categoryId = 1; // This should also be passed from the UI
+    // No hardcoded categoryId here, using the one from the build method
 
     try {
       final lastEntityId = state.entities.last.id;
