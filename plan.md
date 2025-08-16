@@ -1,82 +1,80 @@
-# Plan Checklist
+# Plan: Implement Infinite Scroll for Home Feature
 
-- [x] Refactor repetitive logic in `EntityService`.
-- [x] Implement granular and persistent error notifications.
+This plan outlines the steps to implement an infinite scroll/pagination feature on the `HomeScreen`, starting with the "Popular Entities" list. The goal is to load an initial set of items and then fetch more as the user scrolls down, improving initial load time and network usage.
 
 ---
 
-# Plan to Refactor Home Feature Logic and Error Handling
+## 1. Refactor State Management for Pagination
 
-This plan outlines the steps to improve the `home` feature by refactoring duplicated logic and implementing more granular error handling.
-
-## 1. Refactor Repetitive Logic in `EntityService` (Completed)
-
-**Goal:** Eliminate the duplicated filtering and sorting logic within the `watchPopularEntities` and `watchEntities` providers to adhere to the DRY (Don't Repeat Yourself) principle.
-
-**Outcome:** The duplicated logic was successfully extracted into a private `_applyFilteringAndSorting` helper method, making the code in `app/lib/src/features/home/application/entity_service.dart` cleaner and more maintainable.
-
-## 2. Implement Granular and Persistent Error Notifications
-
-**Goal:** Instead of just hiding failed non-critical sections (like ads or sub-categories), display a persistent, non-intrusive error notification at the bottom of the screen. This bar will inform the user of the issue and provide a retry mechanism, without blocking their interaction with the content that loaded successfully.
+**Goal:** Replace the existing "fetch-all" provider for popular entities with a state-managed provider that can handle paginated data, loading states, and errors for subsequent fetches.
 
 ### Detailed Checklist
 
-**Step 2.1: Centralized Non-Critical Error Provider**
-- [x] Rename `combined_error_controller.dart` to `home_error_controller.dart`.
-- [x] In the new file, create `nonCriticalErrorsProvider`.
-- [x] Implement it to watch `adsListFutureProvider` and `subCategoriesListStreamProvider`.
-- [x] The provider will return a `List<String>` of error messages.
+- [ ] **1.1: Create a Pagination State Notifier:**
+    - Create a new file `app/lib/src/features/home/application/popular_entities_paginated_provider.dart`.
+    - Inside, define a `StateNotifier` called `PopularEntitiesNotifier`.
+    - This notifier will manage the state, including:
+        - The list of currently loaded entities (`List<Entity>`).
+        - A flag to indicate if all items have been fetched (`bool hasMore`).
+        - The current pagination cursor/page number.
+        - An error object specifically for pagination (`Object? paginationError`).
+        - A flag indicating if the *next* page is being fetched (`bool isLoadingNextPage`).
 
-**Step 2.2: Persistent Error Widget**
-- [x] Create the new file `persistent_error_bar.dart`.
-- [x] Implement the `PersistentErrorBar` widget to accept an error message and an `onRetry` callback.
-- [x] Style the widget as a bottom bar with text and a "Retry" button.
+- [ ] **1.2: Implement Notifier Logic:**
+    - Implement the `fetchFirstPage()` method for the initial data load.
+    - Implement the `fetchNextPage()` method, which will:
+        - Set `isLoadingNextPage` to `true`.
+        - Call the `EntityService` to get the next batch of data.
+        - On success, append the new entities to the list.
+        - On failure, set the `paginationError`.
+        - Set `isLoadingNextPage` to `false` when done.
 
-**Step 2.3: HomeScreen Integration**
-- [x] In `home_screen.dart`, wrap the `Scaffold` body in a `Stack`.
-- [x] Watch the `nonCriticalErrorsProvider`.
-- [x] Conditionally display the `PersistentErrorBar` at the bottom of the `Stack`.
-- [x] Pass the `_onRefresh` method to the `onRetry` callback.
+- [ ] **1.3: Create the Riverpod Provider:**
+    - Define a `StateNotifierProvider` that creates an instance of `PopularEntitiesNotifier`. This will be the new provider the UI listens to.
 
-**Step 2.4: Finalize Critical Error Handling**
-- [x] In `home_error_controller.dart`, rename `combinedErrorStatusProvider` to `criticalErrorStatusProvider`.
-- [x] Update its logic to only watch the single, critical entity provider based on the current `HomeListType`.
-- [x] Ensure `HomeScreen` uses this provider to display a full-screen error if the main content fails to load.
+## 2. Update Data Layer to Support Pagination
 
----
+**Goal:** Modify the `EntityService` and its underlying data source to fetch entities in chunks instead of all at once.
 
-### Step 2.1: Create a Centralized Non-Critical Error Provider
+### Detailed Checklist
 
-*   **File to Modify:** `app/lib/src/features/home/presentation/controllers/combined_error_controller.dart` (will be repurposed).
-*   **Action:** Create a new provider, `nonCriticalErrorsProvider`, that aggregates errors from non-essential parts of the UI.
-*   **Implementation:**
-    1.  This provider will `watch` the non-critical data providers (`adsListFutureProvider`, `subCategoriesListStreamProvider`).
-    2.  It will check if any of them have an error and will return a list of custom error objects or messages.
-    3.  If no errors are present, it will return an empty list.
+- [ ] **2.1: Analyze Data Fetching:**
+    - Investigate `EntityService` to understand how `watchPopularEntities` currently fetches data from the repository (e.g., Firestore).
 
-### Step 2.2: Design a Persistent Error Widget
+- [ ] **2.2: Update Repository Method:**
+    - Modify the repository method responsible for fetching popular entities to accept pagination parameters (e.g., a `limit` and a `startAfter` document snapshot for Firestore).
 
-*   **File to Create:** `app/lib/src/features/home/presentation/widgets/persistent_error_bar.dart`.
-*   **Action:** Build a reusable UI component to display the error.
-*   **Implementation:**
-    1.  The widget will accept a list of error messages and an `onRetry` callback.
-    2.  It will be styled as a bar that sits at the bottom of the screen, displaying the first error message and a "Retry" button.
-    3.  The "Retry" button will trigger the provided `onRetry` callback.
+- [ ] **2.3: Update Service Method:**
+    - Create a new method in `EntityService` that calls the updated repository method with the correct pagination parameters. This method will be used by the new `PopularEntitiesNotifier`.
 
-### Step 2.3: Integrate the Error Bar into the HomeScreen
+## 3. Integrate Pagination into the HomeScreen UI
 
-*   **File to Modify:** `app/lib/src/features/home/presentation/home_screen.dart`.
-*   **Action:** Update the `HomeScreen` to display the new error bar when non-critical errors occur.
-*   **Implementation:**
-    1.  The `HomeScreen` will `watch` the new `nonCriticalErrorsProvider`.
-    2.  The `Scaffold`'s body will be wrapped in a `Stack` to allow overlaying widgets.
-    3.  If the `nonCriticalErrorsProvider` returns any errors, the `PersistentErrorBar` widget will be displayed at the bottom of the `Stack`.
-    4.  The `onRetry` callback for the error bar will be wired to the `_onRefresh` method that already exists in the `HomeScreen`, allowing the user to refresh all screen data.
+**Goal:** Adapt the `HomeScreen` to use the new paginated provider, listen for scroll events, and display loading/error states correctly at the bottom of the list.
 
-### Step 2.4: Finalize Critical Error Handling
+### Detailed Checklist
 
-*   **File to Modify:** `app/lib/src/features/home/presentation/controllers/combined_error_controller.dart`.
-*   **Action:** The existing `combinedErrorStatusProvider` will be renamed to `criticalErrorStatusProvider` and will be simplified to *only* handle fatal errors.
-*   **Implementation:**
-    1.  This provider will only watch the main entity list provider (`watchEntitiesProvider` or `watchPopularEntitiesProvider`).
-    2.  If this critical data fails to load, it will return an error, and the `HomeScreen` will use this to display a full-screen error message, as the screen is not usable without its main content.
+- [ ] **3.1: Update UI to Use New Provider:**
+    - In `home_screen.dart`, switch from watching the old provider to the new `popularEntitiesNotifierProvider`.
+
+- [ ] **3.2: Implement Scroll Listener:**
+    - Add a `ScrollController` to the `ListView` that displays the popular entities.
+    - Add a listener to the controller to detect when the user has scrolled near the bottom of the list.
+    - When the scroll threshold is met, call `ref.read(popularEntitiesNotifierProvider.notifier).fetchNextPage()`.
+
+- [ ] **3.3: Display Loading and Error Widgets:**
+    - Modify the `ListView.builder`'s `itemBuilder`.
+    - If `state.isLoadingNextPage` is true, show a few `EntityCardSkeleton` widgets (e.g., 3) at the bottom of the list to provide a better loading experience.
+    - If `state.paginationError` is not null, show a compact error widget with a "Retry" button as the last item.
+    - The "Retry" button should call `fetchNextPage()` again, only attempting to reload the failed page.
+
+## 4. Code Cleanup
+
+**Goal:** Remove obsolete code from the previous implementation to keep the codebase clean and maintainable.
+
+### Detailed Checklist
+
+- [ ] **4.1: Remove Old Provider:**
+    - Once the new notifier is fully integrated, find and delete the old `watchPopularEntities` provider.
+
+- [ ] **4.2: Remove Unused Functions:**
+    - Identify and remove any other functions, widgets, or providers that were exclusively used by the old implementation and are now redundant.

@@ -95,6 +95,10 @@
   "@somethingWentWrongTryAgain": {},
   "retry":"Retry",
   "@retry": {},
+  "failedToLoadItems": "Failed to load more items",
+  "@failedToLoadItems": {},
+   "anErrorOccurred": "An error occurred",
+  "@anErrorOccurred": {},
 
   "contactOptions":"Contact Options",
   "@contactOptions": {},

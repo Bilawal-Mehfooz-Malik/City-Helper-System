@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/features/home/application/popular_entities_paginated_provider.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
@@ -6,11 +6,9 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
-import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
-import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
@@ -22,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class PopularEntitiesListScreen extends ConsumerWidget {
+class PopularEntitiesListScreen extends ConsumerStatefulWidget {
   final bool isPushed;
   final CategoryId categoryId;
   const PopularEntitiesListScreen({
@@ -30,6 +28,35 @@ class PopularEntitiesListScreen extends ConsumerWidget {
     this.isPushed = true,
     required this.categoryId,
   });
+
+  @override
+  ConsumerState<PopularEntitiesListScreen> createState() =>
+      _PopularEntitiesListScreenState();
+}
+
+class _PopularEntitiesListScreenState
+    extends ConsumerState<PopularEntitiesListScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent * 0.9) {
+      ref.read(popularEntitiesNotifierProvider.notifier).fetchNextPage();
+    }
+  }
 
   void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
     ref.read(popularDetailViewControllerProvider.notifier).setPopularView(true);
@@ -44,7 +71,7 @@ class PopularEntitiesListScreen extends ConsumerWidget {
       context.pushNamed(
         AppRoute.homeDetail.name,
         pathParameters: {
-          'categoryId': categoryId.toString(),
+          'categoryId': widget.categoryId.toString(),
           'entityId': entity.id,
         },
       );
@@ -62,7 +89,7 @@ class PopularEntitiesListScreen extends ConsumerWidget {
   void _showFilterDialog(BuildContext context, WidgetRef ref) {
     showDialog<void>(
       context: context,
-      builder: (_) => FilterDialog(categoryId: categoryId),
+      builder: (_) => FilterDialog(categoryId: widget.categoryId),
     );
   }
 
@@ -75,9 +102,9 @@ class PopularEntitiesListScreen extends ConsumerWidget {
         .setPopularView(false);
 
     ref
-        .read(filterControllerProvider(categoryId: categoryId).notifier)
+        .read(filterControllerProvider(categoryId: widget.categoryId).notifier)
         .resetFilters();
-    if (isPushed) {
+    if (widget.isPushed) {
       context.pop();
     } else {
       ref
@@ -87,11 +114,10 @@ class PopularEntitiesListScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final subCategory = ref.watch(subcategoryControllerProvider);
-    final entitiesListValue = ref.watch(
-      WatchPopularEntitiesProvider(categoryId, subCategory),
-    );
+  Widget build(BuildContext context) {
+    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider);
+    final entities = popularEntitiesState.entities;
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
@@ -112,6 +138,7 @@ class PopularEntitiesListScreen extends ConsumerWidget {
         ),
         body: SafeArea(
           child: CustomScrollView(
+            controller: _scrollController,
             slivers: [
               SliverToBoxAdapter(
                 child: SectionHeader(
@@ -121,21 +148,25 @@ class PopularEntitiesListScreen extends ConsumerWidget {
                   ),
                   endWidget: IconButton(
                     icon: const Icon(Icons.filter_list_alt),
-                    onPressed: entitiesListValue.isLoading
-                        ? null
-                        : () => _showFilterDialog(context, ref),
+                    onPressed: () => _showFilterDialog(context, ref),
                   ),
                 ),
               ),
               sliverGapH8,
-
-              AsyncValueSliverWidget(
-                value: entitiesListValue,
-                loading: const EntitiesListSkeleton(),
-                data: (entities) => EntitiesGridLayout(
-                  shrinkWrap: true,
+              if (entities.isEmpty &&
+                  popularEntitiesState.paginationError != null)
+                SliverFillRemaining(
+                  child: Center(child: Text(context.loc.anErrorOccurred)),
+                )
+              else if (entities.isEmpty && !popularEntitiesState.hasMore)
+                SliverFillRemaining(
+                  child: Center(child: Text(NoEntityFoundException().message)),
+                )
+              else if (entities.isEmpty)
+                const SliverFillRemaining(child: EntitiesListSkeleton())
+              else
+                EntitiesGridLayout(
                   itemCount: entities.length,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, index) {
                     final entity = entities[index];
                     return EntityCard(
@@ -146,7 +177,42 @@ class PopularEntitiesListScreen extends ConsumerWidget {
                   },
                   emptyMessage: NoEntityFoundException().message,
                 ),
-              ),
+              if (popularEntitiesState.isLoadingNextPage)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(Sizes.p16),
+                    child: Center(child: EntitiesListSkeleton()),
+                  ),
+                ),
+              if (popularEntitiesState.paginationError != null &&
+                  entities.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(Sizes.p16),
+                      child: Column(
+                        children: [
+                          Text(
+                            context.loc.failedToLoadItems,
+                            style: context.textTheme.bodySmall?.copyWith(
+                              color: context.theme.colorScheme.error,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              ref
+                                  .read(
+                                    popularEntitiesNotifierProvider.notifier,
+                                  )
+                                  .fetchNextPage();
+                            },
+                            child: Text(context.loc.retry),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

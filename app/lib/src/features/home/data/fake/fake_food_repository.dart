@@ -37,20 +37,6 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Stream<List<Food>> watchPopularFoodsList() async* {
-    await delay(addDelay);
-    yield* _foods.stream.map(
-      (foods) => foods.where((f) => f.isPopular).toList(),
-    );
-  }
-
-  @override
-  Future<List<Food>> fetchPopularFoodsList() async {
-    await delay(addDelay);
-    return _foods.value.where((f) => f.isPopular).toList();
-  }
-
-  @override
   Stream<List<Food>> watchFoodsListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async* {
@@ -66,28 +52,6 @@ class FakeFoodRepository implements FoodRepository {
   ) async {
     await delay(addDelay);
     return _foods.value.where((f) => f.subCategoryId == subCategoryId).toList();
-  }
-
-  @override
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async* {
-    await delay(addDelay);
-    yield* _foods.stream.map(
-      (foods) => foods
-          .where((f) => f.subCategoryId == subCategoryId && f.isPopular)
-          .toList(),
-    );
-  }
-
-  @override
-  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async {
-    await delay(addDelay);
-    return _foods.value
-        .where((f) => f.subCategoryId == subCategoryId && f.isPopular)
-        .toList();
   }
 
   @override
@@ -110,5 +74,46 @@ class FakeFoodRepository implements FoodRepository {
     } catch (_) {
       return null;
     }
+  }
+
+  @override
+  Future<List<Food>> fetchPopularFoodsList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    await delay(addDelay);
+    final popularFoods = _foods.value.where((f) => f.isPopular == true).toList();
+
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = popularFoods.indexWhere((f) => f.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
+
+    return popularFoods.skip(startIndex).take(limit).toList();
+  }
+
+  @override
+  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
+    SubCategoryId subId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    await delay(addDelay);
+    final popularFoods = _foods.value
+        .where((f) => f.isPopular == true && f.subCategoryId == subId)
+        .toList();
+
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = popularFoods.indexWhere((f) => f.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
+
+    return popularFoods.skip(startIndex).take(limit).toList();
   }
 }

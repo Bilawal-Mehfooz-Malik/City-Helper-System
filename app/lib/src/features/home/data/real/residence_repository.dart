@@ -52,21 +52,19 @@ class ResidenceRepository {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  /// Watches a list of popular, approved residences.
-  Stream<List<Residence>> watchPopularResidencesList() {
-    // Chains another .where() onto the new filtered query
-    return _approvedResidencesQuery
-        .where('isPopular', isEqualTo: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
-  }
-
   /// Fetches a list of popular, approved residences.
-  Future<List<Residence>> fetchPopularResidencesList() async {
-    // Chains another .where() onto the new filtered query
-    final snapshot = await _approvedResidencesQuery
-        .where('isPopular', isEqualTo: true)
-        .get();
+  Future<List<Residence>> fetchPopularResidencesList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    var query = _approvedResidencesQuery.where('isPopular', isEqualTo: true).limit(limit);
+    if (lastEntityId != null) {
+      final lastDoc = await _residencesRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+    final snapshot = await query.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
@@ -90,24 +88,28 @@ class ResidenceRepository {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  // ... (Apply the same change to other list-fetching methods) ...
-  Stream<List<Residence>> watchPopularResidencesListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) {
-    return _approvedResidencesQuery
-        .where('subCategoryId', isEqualTo: subCategoryId)
-        .where('isPopular', isEqualTo: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
-  }
+  
 
   Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
+    {
+    required int limit,
+    String? lastEntityId,
+  }
   ) async {
-    final snapshot = await _approvedResidencesQuery
+    var query = _approvedResidencesQuery
         .where('subCategoryId', isEqualTo: subCategoryId)
         .where('isPopular', isEqualTo: true)
-        .get();
+        .limit(limit);
+
+    if (lastEntityId != null) {
+      final lastDoc = await _residencesRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+
+    final snapshot = await query.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 

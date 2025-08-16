@@ -364,6 +364,18 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
+  /// No description provided for @failedToLoadItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load more items'**
+  String get failedToLoadItems;
+
+  /// No description provided for @anErrorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get anErrorOccurred;
+
   /// No description provided for @contactOptions.
   ///
   /// In en, this message translates to:

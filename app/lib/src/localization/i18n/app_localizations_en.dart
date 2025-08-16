@@ -147,6 +147,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
+  String get failedToLoadItems => 'Failed to load more items';
+
+  @override
+  String get anErrorOccurred => 'An error occurred';
+
+  @override
   String get contactOptions => 'Contact Options';
 
   @override

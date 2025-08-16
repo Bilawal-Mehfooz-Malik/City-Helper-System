@@ -7,7 +7,7 @@ part of 'home_error_controller.dart';
 // **************************************************************************
 
 String _$criticalErrorStatusHash() =>
-    r'd92eedce3e1fe5088ca4e784b57512f8dd19b771';
+    r'3f1ac0e8b3ecac066b74fa75d423bcad06ec3d48';
 
 /// Copied from Dart SDK
 class _SystemHash {

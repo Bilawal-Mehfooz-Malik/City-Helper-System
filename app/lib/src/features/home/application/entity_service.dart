@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/filtering_logic.dart';
+import 'package:app/src/features/home/application/pagination_limit_provider.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
@@ -16,30 +17,45 @@ class EntityService {
   const EntityService(this.ref);
   final Ref ref;
 
-  Stream<List<Entity>> watchPopularEntitiesList(
-    CategoryId categoryId,
+  Future<List<Entity>> fetchPopularEntitiesPaginated({
+    required CategoryId categoryId,
     SubCategoryId? subcategoryId,
-  ) {
+    String? lastEntityId,
+  }) {
+    final limit = ref.read(popularEntitiesLimitProvider);
+
     if (subcategoryId != null) {
       return switch (categoryId) {
         1 =>
-          ref
-              .read(residenceRepositoryProvider)
-              .watchPopularResidencesListBySubCategoryId(subcategoryId),
+          ref.read(residenceRepositoryProvider).fetchPopularResidencesListBySubCategoryId(
+                subcategoryId,
+                limit: limit,
+                lastEntityId: lastEntityId,
+              ),
         2 =>
-          ref
-              .read(foodRepositoryProvider)
-              .watchPopularFoodsListSubCategoryId(subcategoryId),
+          ref.read(foodRepositoryProvider).fetchPopularFoodsListSubCategoryId(
+                subcategoryId,
+                limit: limit,
+                lastEntityId: lastEntityId,
+              ),
         _ => throw InvalidCategoryException(),
       };
     } else {
       return switch (categoryId) {
-        1 => ref.read(residenceRepositoryProvider).watchPopularResidencesList(),
-        2 => ref.read(foodRepositoryProvider).watchPopularFoodsList(),
+        1 => ref.read(residenceRepositoryProvider).fetchPopularResidencesList(
+              limit: limit,
+              lastEntityId: lastEntityId,
+            ),
+        2 => ref.read(foodRepositoryProvider).fetchPopularFoodsList(
+              limit: limit,
+              lastEntityId: lastEntityId,
+            ),
         _ => throw InvalidCategoryException(),
       };
     }
   }
+
+  
 
   Stream<List<Entity>> watchEntitiesList(
     CategoryId categoryId,
@@ -72,27 +88,7 @@ EntityService entityService(Ref ref) {
   return EntityService(ref);
 }
 
-@riverpod
-Stream<List<Entity>> watchPopularEntities(
-  Ref ref,
-  CategoryId categoryId,
-  SubCategoryId? subcategoryId,
-) {
-  // 1. Watch the unfiltered stream of popular entities
-  final popularEntitiesStream = ref
-      .watch(entityServiceProvider)
-      .watchPopularEntitiesList(categoryId, subcategoryId);
 
-  final listType = ref.watch(listTypeControllerProvider);
-
-  if (listType != HomeListType.popular) {
-    return popularEntitiesStream;
-  } else {
-    // 2. Watch the filter state and apply transformations
-    final filter = ref.watch(filterControllerProvider(categoryId: categoryId));
-    return _applyFilteringAndSorting(popularEntitiesStream, filter);
-  }
-}
 
 @riverpod
 Stream<List<Entity>> watchEntities(

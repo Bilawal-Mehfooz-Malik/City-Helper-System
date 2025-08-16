@@ -47,19 +47,21 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  /// Watches a list of popular, approved foods.
-  Stream<List<Food>> watchPopularFoodsList() {
-    return _approvedFoodsQuery
-        .where('isPopular', isEqualTo: true)
-        .snapshots()
-        .map((snap) => snap.docs.map((d) => d.data()).toList());
-  }
+  
 
   /// Fetches a list of popular, approved foods.
-  Future<List<Food>> fetchPopularFoodsList() async {
-    final snap = await _approvedFoodsQuery
-        .where('isPopular', isEqualTo: true)
-        .get();
+  Future<List<Food>> fetchPopularFoodsList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    var query = _approvedFoodsQuery.where('isPopular', isEqualTo: true).limit(limit);
+    if (lastEntityId != null) {
+      final lastDoc = await _foodsRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+    final snap = await query.get();
     return snap.docs.map((d) => d.data()).toList();
   }
 
@@ -79,21 +81,28 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  Stream<List<Food>> watchPopularFoodsListSubCategoryId(SubCategoryId subId) {
-    return _approvedFoodsQuery
-        .where('subCategoryId', isEqualTo: subId)
-        .where('isPopular', isEqualTo: true)
-        .snapshots()
-        .map((snap) => snap.docs.map((d) => d.data()).toList());
-  }
+  
 
   Future<List<Food>> fetchPopularFoodsListSubCategoryId(
     SubCategoryId subId,
+    {
+    required int limit,
+    String? lastEntityId,
+  }
   ) async {
-    final snap = await _approvedFoodsQuery
+    var query = _approvedFoodsQuery
         .where('subCategoryId', isEqualTo: subId)
         .where('isPopular', isEqualTo: true)
-        .get();
+        .limit(limit);
+
+    if (lastEntityId != null) {
+      final lastDoc = await _foodsRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+
+    final snap = await query.get();
     return snap.docs.map((d) => d.data()).toList();
   }
 

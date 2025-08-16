@@ -1,3 +1,4 @@
+import 'package:app/src/features/home/application/popular_entities_paginated_provider.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
@@ -28,11 +29,11 @@ class HomeScreen extends ConsumerWidget {
 
   Future<void> _onRefresh(WidgetRef ref) async {
     ref.invalidate(subcategoryControllerProvider);
+    ref.invalidate(popularEntitiesNotifierProvider);
 
     await Future.wait([
       ref.refresh(subCategoriesListStreamProvider(categoryId).future),
       ref.refresh(adsListFutureProvider(categoryId).future),
-      ref.refresh(WatchPopularEntitiesProvider(categoryId, null).future),
       ref.refresh(WatchEntitiesProvider(categoryId, null).future),
     ]);
   }

@@ -16,14 +16,14 @@ AsyncError<void>? criticalErrorStatus(Ref ref, {required int categoryId}) {
 
   final AsyncValue<Object?> criticalProvider;
 
-  if (listType == HomeListType.popular) {
-    criticalProvider = ref.watch(
-      watchPopularEntitiesProvider(categoryId, subCategoryId),
-    );
-  } else {
+  if (listType == HomeListType.all) {
     criticalProvider = ref.watch(
       watchEntitiesProvider(categoryId, subCategoryId),
     );
+  } else {
+    // When no specific list is active, we don't have a critical provider to watch.
+    // We can return null as there's no critical error to report.
+    return null;
   }
 
   if (criticalProvider.hasError) {

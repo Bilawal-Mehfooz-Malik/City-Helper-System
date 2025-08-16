@@ -40,20 +40,6 @@ class FakeResidenceRepository implements ResidenceRepository {
   }
 
   @override
-  Stream<List<Residence>> watchPopularResidencesList() async* {
-    await delay(addDelay);
-    yield* _residences.stream.map(
-      (residences) => residences.where((r) => r.isPopular).toList(),
-    );
-  }
-
-  @override
-  Future<List<Residence>> fetchPopularResidencesList() async {
-    await delay(addDelay);
-    return _residences.value.where((r) => r.isPopular).toList();
-  }
-
-  @override
   Stream<List<Residence>> watchResidencesListBySubCategoryId(
     SubCategoryId subCategoryId,
   ) async* {
@@ -71,28 +57,6 @@ class FakeResidenceRepository implements ResidenceRepository {
     await delay(addDelay);
     return _residences.value
         .where((r) => r.subCategoryId == subCategoryId)
-        .toList();
-  }
-
-  @override
-  Stream<List<Residence>> watchPopularResidencesListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async* {
-    await delay(addDelay);
-    yield* _residences.stream.map(
-      (residences) => residences
-          .where((r) => r.subCategoryId == subCategoryId && r.isPopular)
-          .toList(),
-    );
-  }
-
-  @override
-  Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async {
-    await delay(addDelay);
-    return _residences.value
-        .where((r) => r.subCategoryId == subCategoryId && r.isPopular)
         .toList();
   }
 
@@ -116,5 +80,46 @@ class FakeResidenceRepository implements ResidenceRepository {
         return null;
       }
     });
+  }
+
+  @override
+  Future<List<Residence>> fetchPopularResidencesList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    await delay(addDelay);
+    final popularResidences = _residences.value.where((r) => r.isPopular == true).toList();
+
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = popularResidences.indexWhere((r) => r.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
+
+    return popularResidences.skip(startIndex).take(limit).toList();
+  }
+
+  @override
+  Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
+    SubCategoryId subCategoryId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    await delay(addDelay);
+    final popularResidences = _residences.value
+        .where((r) => r.isPopular == true && r.subCategoryId == subCategoryId)
+        .toList();
+
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = popularResidences.indexWhere((r) => r.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
+
+    return popularResidences.skip(startIndex).take(limit).toList();
   }
 }
