@@ -144,6 +144,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Something went wrong. Please try again';
 
   @override
+  String get retry => 'Retry';
+
+  @override
   String get contactOptions => 'Contact Options';
 
   @override

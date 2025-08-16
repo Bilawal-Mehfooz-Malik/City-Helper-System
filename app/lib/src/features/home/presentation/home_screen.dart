@@ -5,13 +5,14 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
-import 'package:app/src/features/home/presentation/controllers/combined_error_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/home_error_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
 import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
 import 'package:app/src/features/home/presentation/widgets/home_search_bar.dart';
+import 'package:app/src/features/home/presentation/widgets/persistent_error_bar.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,24 +26,12 @@ class HomeScreen extends ConsumerWidget {
     this.showBackButton = true,
   });
 
-  // THIS IS THE NEW REFRESH HANDLER
-  /// Triggers a refresh of all data providers for the home screen.
-  /// - Resets the subcategory filter.
-  /// - Re-fetches ads, subcategories, popular items, and all entities.
-  /// - The RefreshIndicator will wait for the returned Future to complete.
   Future<void> _onRefresh(WidgetRef ref) async {
-    // Invalidate state controllers to reset filters to their default state.
     ref.invalidate(subcategoryControllerProvider);
 
-    // Refresh all the primary data sources for this screen by calling ref.refresh.
-    // We use Future.wait to run them in parallel and wait for all to finish.
     await Future.wait([
-      // Use .future to get a future from the stream provider that completes
-      // with the first value.
       ref.refresh(subCategoriesListStreamProvider(categoryId).future),
       ref.refresh(adsListFutureProvider(categoryId).future),
-      // Since the subcategory controller was invalidated, its state is now null,
-      // so we refresh the providers for the "All" view.
       ref.refresh(WatchPopularEntitiesProvider(categoryId, null).future),
       ref.refresh(WatchEntitiesProvider(categoryId, null).future),
     ]);
@@ -50,53 +39,71 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final error = ref.watch(
-      combinedErrorStatusProvider(categoryId: categoryId),
+    final criticalError = ref.watch(
+      criticalErrorStatusProvider(categoryId: categoryId),
+    );
+    final nonCriticalErrors = ref.watch(
+      nonCriticalErrorsProvider(categoryId: categoryId),
     );
 
     return Scaffold(
       body: SafeArea(
-        child: error != null
+        child: criticalError != null
             ? CenteredMessageWidget(
                 message: context.loc.somethingWentWrongTryAgain,
               )
-            // THIS IS THE KEY CHANGE: Wrap the CustomScrollView with RefreshIndicator
-            : RefreshIndicator(
-                onRefresh: () => _onRefresh(ref),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      snap: true,
-                      elevation: 0,
-                      floating: true,
-                      titleSpacing: 0,
-                      forceElevated: false,
-                      automaticallyImplyLeading: false,
-                      toolbarHeight: kToolbarHeight + Sizes.p12,
-                      surfaceTintColor: context.theme.scaffoldBackgroundColor,
-                      backgroundColor: context.theme.scaffoldBackgroundColor,
-                      title: HomeSearchBar(
-                        showBackButton: showBackButton,
-                        categoryId: categoryId,
+            : Stack(
+                children: [
+                  RefreshIndicator(
+                    onRefresh: () => _onRefresh(ref),
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverAppBar(
+                          snap: true,
+                          elevation: 0,
+                          floating: true,
+                          titleSpacing: 0,
+                          forceElevated: false,
+                          automaticallyImplyLeading: false,
+                          toolbarHeight: kToolbarHeight + Sizes.p12,
+                          surfaceTintColor:
+                              context.theme.scaffoldBackgroundColor,
+                          backgroundColor:
+                              context.theme.scaffoldBackgroundColor,
+                          title: HomeSearchBar(
+                            showBackButton: showBackButton,
+                            categoryId: categoryId,
+                          ),
+                        ),
+                        sliverGapH8,
+                        SliverToBoxAdapter(
+                          child: SubCategoriesList(categoryId: categoryId),
+                        ),
+                        sliverGapH8,
+                        SliverToBoxAdapter(
+                          child: CarouselAdsList(categoryId: categoryId),
+                        ),
+                        SliverToBoxAdapter(
+                          child: PopularEnitiesSection(categoryId: categoryId),
+                        ),
+                        sliverGapH8,
+                        SliverToBoxAdapter(
+                          child: EntitiesListSection(categoryId: categoryId),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (nonCriticalErrors.isNotEmpty)
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: PersistentErrorBar(
+                        message: nonCriticalErrors.first,
+                        onRetry: () => _onRefresh(ref),
                       ),
                     ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: SubCategoriesList(categoryId: categoryId),
-                    ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: CarouselAdsList(categoryId: categoryId),
-                    ),
-                    SliverToBoxAdapter(
-                      child: PopularEnitiesSection(categoryId: categoryId),
-                    ),
-                    sliverGapH8,
-                    SliverToBoxAdapter(
-                      child: EntitiesListSection(categoryId: categoryId),
-                    ),
-                  ],
-                ),
+                ],
               ),
       ),
     );
