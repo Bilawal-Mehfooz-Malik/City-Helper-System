@@ -45,7 +45,9 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.9) {
-      ref.read(popularEntitiesNotifierProvider(widget.categoryId).notifier).fetchNextPage();
+      ref
+          .read(popularEntitiesNotifierProvider(widget.categoryId).notifier)
+          .fetchNextPage();
     }
   }
 
@@ -103,9 +105,41 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
 
   @override
   Widget build(BuildContext context) {
-    final popularEntitiesState = ref.watch(popularEntitiesNotifierProvider(widget.categoryId));
+    final popularEntitiesState = ref.watch(
+      popularEntitiesNotifierProvider(widget.categoryId),
+    );
     final entities = popularEntitiesState.entities;
 
+    return _PopularEntitiesContent(
+      popularEntitiesState: popularEntitiesState,
+      entities: entities,
+      categoryId: widget.categoryId,
+      scrollController: _scrollController,
+      goToDetails: _goToDetails,
+      onSeeAllPressed: _onSeeAllPressed,
+    );
+  }
+}
+
+class _PopularEntitiesContent extends ConsumerWidget {
+  const _PopularEntitiesContent({
+    required this.popularEntitiesState,
+    required this.entities,
+    required this.categoryId,
+    required this.scrollController,
+    required this.goToDetails,
+    required this.onSeeAllPressed,
+  });
+
+  final PopularEntitiesPaginatedState popularEntitiesState;
+  final List<Entity> entities;
+  final CategoryId categoryId;
+  final ScrollController scrollController;
+  final void Function(BuildContext, WidgetRef, Entity) goToDetails;
+  final void Function(BuildContext, WidgetRef) onSeeAllPressed;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     // Handle initial error state
     if (entities.isEmpty && popularEntitiesState.paginationError != null) {
       return const SizedBox.shrink();
@@ -133,57 +167,84 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
             ),
           ),
           endWidget: CustomTextButton(
-            onPressed: () => _onSeeAllPressed(context, ref),
+            onPressed: () => onSeeAllPressed(context, ref),
             text: context.loc.seeAll,
           ),
         ),
-        SizedBox(
-          height: entities.isNotEmpty && entities.first is Residence
-              ? 300
-              : 275,
-          child: ListView.builder(
-            controller: _scrollController,
-            itemExtent: 280,
-            shrinkWrap: true,
-            itemCount:
-                entities.length +
-                (popularEntitiesState.isLoadingNextPage ? 3 : 0) +
-                (popularEntitiesState.paginationError != null ? 1 : 0),
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-            itemBuilder: (_, index) {
-              if (index >= entities.length) {
-                // If we have a pagination error, show the error widget at the end
-                if (popularEntitiesState.paginationError != null) {
-                  return Center(
-                    child: ElevatedButton(
-                      onPressed: () => ref
-                          .read(popularEntitiesNotifierProvider(widget.categoryId).notifier)
-                          .fetchNextPage(),
-                      child: Text(context.loc.retry),
-                    ),
-                  );
-                }
-                // Otherwise, show the loading skeleton
-                return EntityCardSkeleton(allBorders: false);
-              }
-              final entity = entities[index];
-              return Card(
-                margin: const EdgeInsets.only(
-                  right: Sizes.p8,
-                  top: Sizes.p4,
-                  bottom: Sizes.p4,
-                ),
-                child: EntityCard(
-                  entity: entity,
-                  allBorders: false,
-                  onTap: () => _goToDetails(context, ref, entity),
-                ),
-              );
-            },
-          ),
+        _PopularEntitiesHorizontalList(
+          entities: entities,
+          popularEntitiesState: popularEntitiesState,
+          scrollController: scrollController,
+          categoryId: categoryId,
+          goToDetails: goToDetails,
         ),
       ],
+    );
+  }
+}
+
+class _PopularEntitiesHorizontalList extends ConsumerWidget {
+  const _PopularEntitiesHorizontalList({
+    required this.entities,
+    required this.popularEntitiesState,
+    required this.scrollController,
+    required this.categoryId,
+    required this.goToDetails,
+  });
+
+  final List<Entity> entities;
+  final PopularEntitiesPaginatedState popularEntitiesState;
+  final ScrollController scrollController;
+  final CategoryId categoryId;
+  final void Function(BuildContext, WidgetRef, Entity) goToDetails;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: entities.isNotEmpty && entities.first is Residence ? 300 : 275,
+      child: ListView.builder(
+        controller: scrollController,
+        itemExtent: 280,
+        shrinkWrap: true,
+        itemCount:
+            entities.length +
+            (popularEntitiesState.isLoadingNextPage ? 3 : 0) +
+            (popularEntitiesState.paginationError != null ? 1 : 0),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+        itemBuilder: (_, index) {
+          if (index >= entities.length) {
+            // If we have a pagination error, show the error widget at the end
+            if (popularEntitiesState.paginationError != null) {
+              return Center(
+                child: ElevatedButton(
+                  onPressed: () => ref
+                      .read(
+                        popularEntitiesNotifierProvider(categoryId).notifier,
+                      )
+                      .fetchNextPage(),
+                  child: Text(context.loc.retry),
+                ),
+              );
+            }
+            // Otherwise, show the loading skeleton
+            return EntityCardSkeleton(allBorders: false);
+          }
+          final entity = entities[index];
+          return Card(
+            margin: const EdgeInsets.only(
+              right: Sizes.p8,
+              top: Sizes.p4,
+              bottom: Sizes.p4,
+            ),
+            child: EntityCard(
+              entity: entity,
+              allBorders: false,
+              onTap: () => goToDetails(context, ref, entity),
+            ),
+          );
+        },
+      ),
     );
   }
 }
