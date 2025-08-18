@@ -22,7 +22,7 @@ class CarouselAdsList extends ConsumerWidget {
     return AsyncValueWidget<List<CarouselAd>>(
       value: adsValue,
       loading: const CarouselAdListSkeleton(),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (ads) {
         // Return an empty widget if there are no ads
         if (ads.isEmpty) {

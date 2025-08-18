@@ -102,7 +102,7 @@ class EntitiesListSkeleton extends StatelessWidget {
       itemCount: 3,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, __) => EntityCardSkeleton(useCard: false),
+      itemBuilder: (_, _) => EntityCardSkeleton(useCard: false),
       emptyMessage: NoEntityFoundException().message,
     );
   }

@@ -15,7 +15,7 @@ class PersistentErrorBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final colors = context.colorScheme;
     return Material(
       color: colors.errorContainer,
       child: Padding(

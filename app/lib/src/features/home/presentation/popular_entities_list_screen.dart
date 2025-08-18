@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/features/home/application/popular_entities_paginated_provider.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
@@ -218,7 +219,10 @@ class _PopularEntitiesListErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
-      child: Center(child: Text(context.loc.anErrorOccurred)),
+      child: CenteredMessageWidget(
+        useResponsiveDesign: false,
+        message: context.loc.anErrorOccurred,
+      ),
     );
   }
 }
@@ -230,7 +234,10 @@ class _PopularEntitiesListEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
-      child: Center(child: Text(NoEntityFoundException().message)),
+      child: CenteredMessageWidget(
+        useResponsiveDesign: false,
+        message: NoEntityFoundException().message,
+      ),
     );
   }
 }
@@ -262,7 +269,7 @@ class _PopularEntitiesListGrid extends ConsumerWidget {
     return SliverToBoxAdapter(
       child: EntitiesGridLayout(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(), // ADDED THIS LINE
+        physics: const NeverScrollableScrollPhysics(),
         itemCount:
             entities.length + (popularEntitiesState.isLoadingNextPage ? 3 : 0),
         itemBuilder: (_, index) {
@@ -291,29 +298,14 @@ class _PopularEntitiesListPaginationError extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverToBoxAdapter(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.p16),
-          child: Column(
-            children: [
-              Text(
-                context.loc.failedToLoadItems,
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: context.theme.colorScheme.error,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  ref
-                      .read(
-                        popularEntitiesNotifierProvider(categoryId).notifier,
-                      )
-                      .fetchNextPage();
-                },
-                child: Text(context.loc.retry),
-              ),
-            ],
-          ),
+      child: CenteredMessageWidget(
+        useResponsiveDesign: false,
+        message: context.loc.failedToLoadItems,
+        actions: ElevatedButton(
+          onPressed: () => ref
+              .read(popularEntitiesNotifierProvider(categoryId).notifier)
+              .fetchNextPage(),
+          child: Text(context.loc.retry),
         ),
       ),
     );

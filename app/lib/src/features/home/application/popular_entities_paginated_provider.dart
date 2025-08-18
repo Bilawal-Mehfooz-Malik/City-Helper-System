@@ -23,7 +23,6 @@ abstract class PopularEntitiesPaginatedState
 class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   @override
   PopularEntitiesPaginatedState build(CategoryId categoryId) {
-    // Added categoryId parameter
     // The build method should not return a future.
     // We trigger the first fetch and return the initial state.
     fetchFirstPage();
@@ -31,7 +30,6 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   }
 
   Future<void> fetchFirstPage() async {
-    // No hardcoded categoryId here, using the one from the build method
     try {
       final entities = await ref
           .read(entityServiceProvider)
@@ -49,8 +47,6 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
     if (state.isLoadingNextPage || !state.hasMore) return;
 
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
-
-    // No hardcoded categoryId here, using the one from the build method
 
     try {
       final lastEntityId = state.entities.last.id;

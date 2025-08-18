@@ -22,19 +22,17 @@ class FoodRepository {
         toFirestore: (food, _) => food.toJson(),
       );
 
-  // THIS IS THE KEY CHANGE:
   /// A pre-filtered query that only includes documents with an "approved" status.
   Query<Food> get _approvedFoodsQuery =>
       _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
 
-  /// Writes a food document. Uses the unfiltered ref.
+  /// Writes a food document.
   Future<void> setFood(Food food) async {
     await _foodsRef.doc(food.id).set(food);
   }
 
   /// Watches a list of all approved foods.
   Stream<List<Food>> watchFoodsList() {
-    // Uses the new filtered query
     return _approvedFoodsQuery.snapshots().map(
       (snap) => snap.docs.map((d) => d.data()).toList(),
     );
@@ -42,25 +40,45 @@ class FoodRepository {
 
   /// Fetches a list of all approved foods.
   Future<List<Food>> fetchFoodsList() async {
-    // Uses the new filtered query
     final snap = await _approvedFoodsQuery.get();
     return snap.docs.map((d) => d.data()).toList();
   }
-
-  
 
   /// Fetches a list of popular, approved foods.
   Future<List<Food>> fetchPopularFoodsList({
     required int limit,
     String? lastEntityId,
   }) async {
-    var query = _approvedFoodsQuery.where('isPopular', isEqualTo: true).limit(limit);
+    var query = _approvedFoodsQuery
+        .where('isPopular', isEqualTo: true)
+        .limit(limit);
     if (lastEntityId != null) {
       final lastDoc = await _foodsRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
         query = query.startAfterDocument(lastDoc);
       }
     }
+    final snap = await query.get();
+    return snap.docs.map((d) => d.data()).toList();
+  }
+
+  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
+    SubCategoryId subId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    var query = _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: true)
+        .limit(limit);
+
+    if (lastEntityId != null) {
+      final lastDoc = await _foodsRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+
     final snap = await query.get();
     return snap.docs.map((d) => d.data()).toList();
   }
@@ -81,41 +99,14 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  
-
-  Future<List<Food>> fetchPopularFoodsListSubCategoryId(
-    SubCategoryId subId,
-    {
-    required int limit,
-    String? lastEntityId,
-  }
-  ) async {
-    var query = _approvedFoodsQuery
-        .where('subCategoryId', isEqualTo: subId)
-        .where('isPopular', isEqualTo: true)
-        .limit(limit);
-
-    if (lastEntityId != null) {
-      final lastDoc = await _foodsRef.doc(lastEntityId).get();
-      if (lastDoc.exists) {
-        query = query.startAfterDocument(lastDoc);
-      }
-    }
-
-    final snap = await query.get();
-    return snap.docs.map((d) => d.data()).toList();
-  }
-
   /// Fetches a single food document by its ID, regardless of its status.
   Future<Food?> fetchFood(EntityId id) async {
-    // Uses the original, unfiltered ref
     final doc = await _foodsRef.doc(id).get();
     return doc.exists ? doc.data() : null;
   }
 
   /// Watches a single food document by its ID, regardless of its status.
   Stream<Food?> watchFood(EntityId id) {
-    // Uses the original, unfiltered ref
     return _foodsRef.doc(id).snapshots().map((doc) {
       return doc.exists ? doc.data() : null;
     });

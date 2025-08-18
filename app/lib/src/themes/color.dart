@@ -12,3 +12,5 @@ const imageBackgroundColor = Color.fromRGBO(196, 196, 196, 1);
 
 const darkGreyColor = Color.fromRGBO(212, 218, 226, 1);
 const lightGreyColor = Color.fromRGBO(197, 201, 206, 1);
+
+const amberColor = Colors.amber;

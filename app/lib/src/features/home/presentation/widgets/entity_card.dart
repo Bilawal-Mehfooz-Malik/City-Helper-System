@@ -8,7 +8,6 @@ import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart
 import 'package:app/src/features/home/presentation/widgets/item_title_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,8 +27,10 @@ class EntityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var radius = ThemeHelpers.borderRadius();
-    var borderRadius = BorderRadius.only(topLeft: radius, topRight: radius);
+    var borderRadius = BorderRadius.only(
+      topLeft: Radius.circular(Sizes.p12),
+      topRight: Radius.circular(Sizes.p12),
+    );
 
     final isResidence = entity is Residence;
     final residence = isResidence ? entity as Residence : null;
@@ -46,7 +47,7 @@ class EntityCard extends StatelessWidget {
               CustomImageWrapper(
                 aspectRatio: 4 / 3,
                 borderRadius: allBorders
-                    ? BorderRadius.all(radius)
+                    ? BorderRadius.all(Radius.circular(Sizes.p12))
                     : borderRadius,
                 imageUrl: entity.coverImageUrl,
               ),
