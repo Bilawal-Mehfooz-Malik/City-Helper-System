@@ -3,12 +3,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pagination_limit_provider.g.dart';
 
-@riverpod
-int popularEntitiesLimit(Ref ref) {
-  return 5;
+@Riverpod(keepAlive: true)
+int initialLoadLimit(Ref ref) {
+  return 8;
 }
 
-@riverpod
-int entitiesLimit(Ref ref) {
-  return 5;
+@Riverpod(keepAlive: true)
+int subsequentLoadLimit(Ref ref) {
+  return 4;
 }

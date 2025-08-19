@@ -272,7 +272,7 @@ class _PopularEntitiesListGrid extends ConsumerWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount:
-            entities.length + (popularEntitiesState.isLoadingNextPage ? 3 : 0),
+            entities.length + (popularEntitiesState.isLoadingNextPage ? 4 : 0),
         itemBuilder: (_, index) {
           if (index < entities.length) {
             final entity = entities[index];

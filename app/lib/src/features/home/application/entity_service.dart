@@ -1,5 +1,4 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/home/application/pagination_limit_provider.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
@@ -17,9 +16,8 @@ class EntityService {
     required CategoryId categoryId,
     SubCategoryId? subcategoryId,
     String? lastEntityId,
+    required int limit,
   }) {
-    final limit = ref.read(popularEntitiesLimitProvider);
-
     if (subcategoryId != null) {
       return switch (categoryId) {
         1 =>
@@ -62,9 +60,8 @@ class EntityService {
     required CategoryId categoryId,
     SubCategoryId? subcategoryId,
     String? lastEntityId,
+    required int limit,
   }) {
-    final limit = ref.read(popularEntitiesLimitProvider);
-
     if (subcategoryId != null) {
       return switch (categoryId) {
         1 =>

@@ -209,7 +209,7 @@ class _PopularEntitiesHorizontalList extends ConsumerWidget {
         shrinkWrap: true,
         itemCount:
             entities.length +
-            (popularEntitiesState.isLoadingNextPage ? 3 : 0) +
+            (popularEntitiesState.isLoadingNextPage ? 4 : 0) +
             (popularEntitiesState.paginationError != null ? 1 : 0),
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),

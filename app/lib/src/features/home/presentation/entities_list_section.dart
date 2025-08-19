@@ -118,23 +118,22 @@ class _EntitiesListContent extends ConsumerWidget {
         children: [
           EntitiesGridLayout(
             shrinkWrap: true,
-            itemCount: entities.length,
+            itemCount:
+                entities.length + (entitiesState.isLoadingNextPage ? 4 : 0),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
-              final entity = entities[index];
-              return EntityCard(
-                entity: entity,
-                useElipsis: false,
-                onTap: () => onGoToDetails(entity),
-              );
+              if (index < entities.length) {
+                final entity = entities[index];
+                return EntityCard(
+                  entity: entity,
+                  useElipsis: false,
+                  onTap: () => onGoToDetails(entity),
+                );
+              }
+              return const EntityCardSkeleton(useCard: false);
             },
             emptyMessage: NoEntityFoundException().message,
           ),
-          if (entitiesState.isLoadingNextPage)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: CircularProgressIndicator(),
-            ),
           if (entitiesState.paginationError != null && entities.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),

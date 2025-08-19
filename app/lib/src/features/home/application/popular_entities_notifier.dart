@@ -19,11 +19,15 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
 
   Future<void> fetchFirstPage() async {
     try {
+      final limit = ref.read(initialLoadLimitProvider);
       final entities = await ref
           .read(entityServiceProvider)
-          .fetchPopularEntitiesPaginated(categoryId: categoryId);
+          .fetchPopularEntitiesPaginated(
+            categoryId: categoryId,
+            limit: limit,
+          );
 
-      final hasMore = entities.length == ref.read(popularEntitiesLimitProvider);
+      final hasMore = entities.length == limit;
 
       state = state.copyWith(entities: entities, hasMore: hasMore);
     } catch (e, _) {
@@ -37,16 +41,17 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
 
     try {
+      final limit = ref.read(subsequentLoadLimitProvider);
       final lastEntityId = state.entities.last.id;
       final newEntities = await ref
           .read(entityServiceProvider)
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
             lastEntityId: lastEntityId,
+            limit: limit,
           );
 
-      final hasMore =
-          newEntities.length == ref.read(popularEntitiesLimitProvider);
+      final hasMore = newEntities.length == limit;
 
       state = state.copyWith(
         isLoadingNextPage: false,

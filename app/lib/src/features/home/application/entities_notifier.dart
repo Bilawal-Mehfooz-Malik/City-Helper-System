@@ -22,17 +22,19 @@ class EntitiesNotifier extends _$EntitiesNotifier {
     final filter = ref.read(filterControllerProvider(categoryId: categoryId));
 
     try {
+      final limit = ref.read(initialLoadLimitProvider);
       final entities = await ref
           .read(entityServiceProvider)
           .fetchEntitiesPaginated(
             categoryId: categoryId,
             subcategoryId: subcategoryId,
+            limit: limit,
           );
 
       final filtered = filterEntities(entities, filter);
       final sorted = sortEntities(filtered, filter);
 
-      final hasMore = entities.length == ref.read(entitiesLimitProvider);
+      final hasMore = entities.length == limit;
 
       state = state.copyWith(entities: sorted, hasMore: hasMore);
     } catch (e, _) {
@@ -49,6 +51,7 @@ class EntitiesNotifier extends _$EntitiesNotifier {
     final filter = ref.read(filterControllerProvider(categoryId: categoryId));
 
     try {
+      final limit = ref.read(subsequentLoadLimitProvider);
       final lastEntityId = state.entities.last.id;
       final newEntities = await ref
           .read(entityServiceProvider)
@@ -56,12 +59,13 @@ class EntitiesNotifier extends _$EntitiesNotifier {
             categoryId: categoryId,
             subcategoryId: subcategoryId,
             lastEntityId: lastEntityId,
+            limit: limit,
           );
 
       final filtered = filterEntities(newEntities, filter);
       final sorted = sortEntities(filtered, filter);
 
-      final hasMore = newEntities.length == ref.read(entitiesLimitProvider);
+      final hasMore = newEntities.length == limit;
 
       state = state.copyWith(
         isLoadingNextPage: false,

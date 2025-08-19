@@ -6,42 +6,42 @@ part of 'pagination_limit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$popularEntitiesLimitHash() =>
-    r'b4f1125b42a393db4266ec5c8fac46459bed3daa';
+String _$initialLoadLimitHash() => r'098e50e11456af4806638f81214d8777938150fd';
 
-/// See also [popularEntitiesLimit].
-@ProviderFor(popularEntitiesLimit)
-final popularEntitiesLimitProvider = AutoDisposeProvider<int>.internal(
-  popularEntitiesLimit,
-  name: r'popularEntitiesLimitProvider',
+/// See also [initialLoadLimit].
+@ProviderFor(initialLoadLimit)
+final initialLoadLimitProvider = Provider<int>.internal(
+  initialLoadLimit,
+  name: r'initialLoadLimitProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$popularEntitiesLimitHash,
+          : _$initialLoadLimitHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef PopularEntitiesLimitRef = AutoDisposeProviderRef<int>;
-String _$entitiesLimitHash() => r'62ec99864ab4b90265fc673b7d6a6a593e1fcdd9';
+typedef InitialLoadLimitRef = ProviderRef<int>;
+String _$subsequentLoadLimitHash() =>
+    r'05921cad6e4e59e7996ff8f684d95a05a28cc2e8';
 
-/// See also [entitiesLimit].
-@ProviderFor(entitiesLimit)
-final entitiesLimitProvider = AutoDisposeProvider<int>.internal(
-  entitiesLimit,
-  name: r'entitiesLimitProvider',
+/// See also [subsequentLoadLimit].
+@ProviderFor(subsequentLoadLimit)
+final subsequentLoadLimitProvider = Provider<int>.internal(
+  subsequentLoadLimit,
+  name: r'subsequentLoadLimitProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$entitiesLimitHash,
+          : _$subsequentLoadLimitHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef EntitiesLimitRef = AutoDisposeProviderRef<int>;
+typedef SubsequentLoadLimitRef = ProviderRef<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
