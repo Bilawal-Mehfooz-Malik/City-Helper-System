@@ -13,38 +13,44 @@ class FoodRepository {
 
   static String get foodsKey => 'food_listings';
 
-  /// The base collection reference without any filters.
-  CollectionReference<Food> get _foodsRef => _firestore
-      .collection(foodsKey)
-      .withConverter<Food>(
-        fromFirestore: (snap, _) =>
-            Food.fromJson(Map<String, dynamic>.from(snap.data()!)),
-        toFirestore: (food, _) => food.toJson(),
-      );
-
-  /// A pre-filtered query that only includes documents with an "approved" status.
-  Query<Food> get _approvedFoodsQuery =>
-      _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
-
   /// Writes a food document.
   Future<void> setFood(Food food) async {
     await _foodsRef.doc(food.id).set(food);
   }
 
-  /// Watches a list of all approved foods.
-  Stream<List<Food>> watchFoodsList() {
-    return _approvedFoodsQuery.snapshots().map(
-      (snap) => snap.docs.map((d) => d.data()).toList(),
-    );
-  }
-
-  /// Fetches a list of all approved foods.
-  Future<List<Food>> fetchFoodsList() async {
-    final snap = await _approvedFoodsQuery.get();
+  Future<List<Food>> fetchFoodsList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    var query = _approvedFoodsQuery.limit(limit);
+    if (lastEntityId != null) {
+      final lastDoc = await _foodsRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+    final snap = await query.get();
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  /// Fetches a list of popular, approved foods.
+  Future<List<Food>> fetchFoodsListSubCategoryId(
+    SubCategoryId subId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
+    var query = _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .limit(limit);
+    if (lastEntityId != null) {
+      final lastDoc = await _foodsRef.doc(lastEntityId).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+    final snap = await query.get();
+    return snap.docs.map((d) => d.data()).toList();
+  }
+
   Future<List<Food>> fetchPopularFoodsList({
     required int limit,
     String? lastEntityId,
@@ -83,34 +89,33 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  /// Watches a list of approved foods by sub-category.
-  Stream<List<Food>> watchFoodsListBySubCategoryId(SubCategoryId subId) {
-    return _approvedFoodsQuery
-        .where('subCategoryId', isEqualTo: subId)
-        .snapshots()
-        .map((snap) => snap.docs.map((d) => d.data()).toList());
-  }
-
-  // ... (Apply the same change to other list-fetching methods) ...
-  Future<List<Food>> fetchFoodsListSubCategoryId(SubCategoryId subId) async {
-    final snap = await _approvedFoodsQuery
-        .where('subCategoryId', isEqualTo: subId)
-        .get();
-    return snap.docs.map((d) => d.data()).toList();
-  }
-
-  /// Fetches a single food document by its ID, regardless of its status.
+  /// Fetches a single food document by its ID
   Future<Food?> fetchFood(EntityId id) async {
     final doc = await _foodsRef.doc(id).get();
     return doc.exists ? doc.data() : null;
   }
 
-  /// Watches a single food document by its ID, regardless of its status.
+  /// Watches a single food document by its ID
   Stream<Food?> watchFood(EntityId id) {
     return _foodsRef.doc(id).snapshots().map((doc) {
       return doc.exists ? doc.data() : null;
     });
   }
+
+  // --------------------Helpers--------------------------------
+
+  /// A pre-filtered query that only includes documents with an "approved" status.
+  Query<Food> get _approvedFoodsQuery =>
+      _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
+
+  /// The base collection reference without any filters.
+  CollectionReference<Food> get _foodsRef => _firestore
+      .collection(foodsKey)
+      .withConverter<Food>(
+        fromFirestore: (snap, _) =>
+            Food.fromJson(Map<String, dynamic>.from(snap.data()!)),
+        toFirestore: (food, _) => food.toJson(),
+      );
 }
 
 @Riverpod(keepAlive: true)

@@ -1,13 +1,13 @@
-import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
-import 'package:app/src/features/home/application/entity_service.dart';
+import 'package:app/src/features/home/application/entities_notifier.dart';
+import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
-import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
@@ -57,10 +57,8 @@ class EntitiesListSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subCategory = ref.watch(subcategoryControllerProvider);
-    final entitiesListValue = ref.watch(
-      WatchEntitiesProvider(categoryId, subCategory),
-    );
+    final entitiesState = ref.watch(entitiesNotifierProvider(categoryId));
+    final entities = entitiesState.entities;
 
     return Column(
       spacing: Sizes.p4,
@@ -74,16 +72,51 @@ class EntitiesListSection extends ConsumerWidget {
           ),
           endWidget: IconButton(
             icon: const Icon(Icons.filter_list_alt),
-            onPressed: entitiesListValue.isLoading
-                ? null
-                : () => _showFilterDialog(context),
+            onPressed: () => _showFilterDialog(context),
           ),
         ),
-        AsyncValueWidget<List<Entity>>(
-          value: entitiesListValue,
-          loading: const EntitiesListSkeleton(),
-          error: (_, _) => const SizedBox.shrink(),
-          data: (entities) => EntitiesGridLayout(
+        _EntitiesListContent(
+          entitiesState: entitiesState,
+          entities: entities,
+          onGoToDetails: (entity) => _goToDetails(context, ref, entity),
+          categoryId: categoryId,
+        ),
+      ],
+    );
+  }
+}
+
+class _EntitiesListContent extends ConsumerWidget {
+  const _EntitiesListContent({
+    required this.entitiesState,
+    required this.entities,
+    required this.onGoToDetails,
+    required this.categoryId,
+  });
+
+  final EntitiesPaginatedState entitiesState;
+  final List<Entity> entities;
+  final void Function(Entity) onGoToDetails;
+  final CategoryId categoryId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (entities.isEmpty && entitiesState.paginationError != null) {
+      return CenteredMessageWidget(
+        useResponsiveDesign: false,
+        message: NoEntityFoundException().message,
+      );
+    } else if (entities.isEmpty && !entitiesState.hasMore) {
+      return CenteredMessageWidget(
+        useResponsiveDesign: false,
+        message: NoEntityFoundException().message,
+      );
+    } else if (entities.isEmpty) {
+      return const EntitiesListSkeleton();
+    } else {
+      return Column(
+        children: [
+          EntitiesGridLayout(
             shrinkWrap: true,
             itemCount: entities.length,
             physics: const NeverScrollableScrollPhysics(),
@@ -92,13 +125,33 @@ class EntitiesListSection extends ConsumerWidget {
               return EntityCard(
                 entity: entity,
                 useElipsis: false,
-                onTap: () => _goToDetails(context, ref, entity),
+                onTap: () => onGoToDetails(entity),
               );
             },
             emptyMessage: NoEntityFoundException().message,
           ),
-        ),
-      ],
-    );
+          if (entitiesState.isLoadingNextPage)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: CircularProgressIndicator(),
+            ),
+          if (entitiesState.paginationError != null && entities.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                children: [
+                  Text(context.loc.anErrorOccurred),
+                  ElevatedButton(
+                    onPressed: () => ref
+                        .read(entitiesNotifierProvider(categoryId).notifier)
+                        .fetchNextPage(),
+                    child: Text(context.loc.retry),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      );
+    }
   }
 }

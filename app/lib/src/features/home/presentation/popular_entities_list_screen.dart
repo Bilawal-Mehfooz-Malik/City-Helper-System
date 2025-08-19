@@ -1,5 +1,4 @@
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
-import 'package:app/src/features/home/application/popular_entities_paginated_provider.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
@@ -7,6 +6,8 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
+import 'package:app/src/features/home/application/popular_entities_notifier.dart';
+import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
@@ -261,7 +262,7 @@ class _PopularEntitiesListGrid extends ConsumerWidget {
   });
 
   final List<Entity> entities;
-  final PopularEntitiesPaginatedState popularEntitiesState;
+  final EntitiesPaginatedState popularEntitiesState;
   final void Function(BuildContext, WidgetRef, Entity) onGoToDetails;
 
   @override
@@ -321,7 +322,7 @@ class _PopularEntitiesListMainContent extends ConsumerWidget {
     required this.onGoToDetails,
   });
 
-  final PopularEntitiesPaginatedState popularEntitiesState;
+  final EntitiesPaginatedState popularEntitiesState;
   final List<Entity> entities;
   final CategoryId categoryId;
   final void Function(BuildContext, WidgetRef, Entity) onGoToDetails;

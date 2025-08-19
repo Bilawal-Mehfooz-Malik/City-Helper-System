@@ -25,55 +25,42 @@ class FakeFoodRepository implements FoodRepository {
   }
 
   @override
-  Stream<List<Food>> watchFoodsList() async* {
+  Future<List<Food>> fetchFoodsList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
     await delay(addDelay);
-    yield* _foods.stream;
-  }
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = _foods.value.indexWhere((f) => f.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
 
-  @override
-  Future<List<Food>> fetchFoodsList() async {
-    await delay(addDelay);
-    return _foods.value;
-  }
-
-  @override
-  Stream<List<Food>> watchFoodsListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async* {
-    await delay(addDelay);
-    yield* _foods.stream.map(
-      (foods) => foods.where((f) => f.subCategoryId == subCategoryId).toList(),
-    );
+    return _foods.value.skip(startIndex).take(limit).toList();
   }
 
   @override
   Future<List<Food>> fetchFoodsListSubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async {
+    SubCategoryId subId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
     await delay(addDelay);
-    return _foods.value.where((f) => f.subCategoryId == subCategoryId).toList();
-  }
+    final filteredList = _foods.value
+        .where((f) => f.subCategoryId == subId)
+        .toList();
 
-  @override
-  Stream<Food?> watchFood(EntityId id) async* {
-    await delay(addDelay);
-    yield* _foods.stream.map((foods) {
-      try {
-        return foods.firstWhere((f) => f.id == id);
-      } catch (_) {
-        return null;
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = filteredList.indexWhere((f) => f.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
       }
-    });
-  }
-
-  @override
-  Future<Food?> fetchFood(EntityId id) async {
-    await delay(addDelay);
-    try {
-      return _foods.value.firstWhere((f) => f.id == id);
-    } catch (_) {
-      return null;
     }
+
+    return filteredList.skip(startIndex).take(limit).toList();
   }
 
   @override
@@ -82,7 +69,9 @@ class FakeFoodRepository implements FoodRepository {
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    final popularFoods = _foods.value.where((f) => f.isPopular == true).toList();
+    final popularFoods = _foods.value
+        .where((f) => f.isPopular == true)
+        .toList();
 
     int startIndex = 0;
     if (lastEntityId != null) {
@@ -115,5 +104,27 @@ class FakeFoodRepository implements FoodRepository {
     }
 
     return popularFoods.skip(startIndex).take(limit).toList();
+  }
+
+  @override
+  Stream<Food?> watchFood(EntityId id) async* {
+    await delay(addDelay);
+    yield* _foods.stream.map((foods) {
+      try {
+        return foods.firstWhere((f) => f.id == id);
+      } catch (_) {
+        return null;
+      }
+    });
+  }
+
+  @override
+  Future<Food?> fetchFood(EntityId id) async {
+    await delay(addDelay);
+    try {
+      return _foods.value.firstWhere((f) => f.id == id);
+    } catch (_) {
+      return null;
+    }
   }
 }

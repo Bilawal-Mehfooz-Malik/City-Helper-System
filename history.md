@@ -165,3 +165,32 @@ An "Undefined class 'PopularEntitiesState'" error occurred after the refactoring
 A problem was identified where mouse scrolling worked on the screen, but touch scrolling did not. This was due to the `EntitiesGridLayout` potentially consuming touch events. The fix involved adding `physics: const NeverScrollableScrollPhysics()` to the `EntitiesGridLayout`, ensuring that all scroll events are handled by the parent `CustomScrollView`.
 
 Through these efforts, the `popular_entities_list_screen.dart` is now more robust, visually consistent, and easier to maintain.
+
+---
+
+## Chat History - Implementing Infinite Scroll for All Entities
+
+This session focused on extending the infinite scroll functionality to the main "All Entities" list, mirroring the implementation previously done for the "Popular Entities" list.
+
+### Feature Implementation
+
+Following a detailed plan, we systematically refactored the application to support pagination for all entities.
+
+1.  **State Management:**
+    *   A new `entities_paginated_provider.dart` file was created, introducing `EntitiesNotifier`.
+    *   This notifier manages the state of the main entities list, including the fetched items, loading status, pagination errors, and whether more items are available. It also intelligently watches for changes in filters and subcategories to refetch data when necessary.
+
+2.  **Data and Service Layer Refactoring:**
+    *   The `EntityService` was updated with a new `fetchEntitiesPaginated` method.
+    *   The `FoodRepository` and `ResidenceRepository` were modified to support pagination (`limit` and `lastEntityId`) in their primary data-fetching methods (`fetchFoodsList`, `fetchResidencesList`, etc.).
+
+3.  **UI Integration and Infinite Scroll:**
+    *   The `HomeScreen` was converted to a `ConsumerStatefulWidget` to manage a `ScrollController`.
+    *   A listener on the `ScrollController` now triggers `fetchNextPage()` on the `EntitiesNotifier` when the user scrolls to the bottom of the page.
+    *   The `EntitiesListSection` was refactored to consume the new `entitiesNotifierProvider`, displaying the paginated grid of entities and correctly rendering loading skeletons and pagination error messages at the bottom of the list.
+
+4.  **Code Cleanup:**
+    *   The old, non-paginated `watchEntitiesProvider` and its related methods (`watchEntitiesList`, `_applyFilteringAndSorting`) were removed from `EntityService`.
+    *   The `home_error_controller.dart` was updated to use the new `entitiesNotifierProvider` for its critical error detection, ensuring the error handling system is aligned with the new paginated data flow.
+
+By completing these steps, we have successfully unified the data-loading mechanism across the home screen, making the application more efficient and scalable.

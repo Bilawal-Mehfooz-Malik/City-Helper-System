@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'popular_entities_paginated_provider.dart';
+part of 'popular_entities_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$popularEntitiesNotifierHash() =>
-    r'4c2af23af624c65700d46ae317291dc208296262';
+    r'8941b6ca6c08e03e65503f4fffbe6c9049e4067b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 }
 
 abstract class _$PopularEntitiesNotifier
-    extends BuildlessNotifier<PopularEntitiesPaginatedState> {
+    extends BuildlessNotifier<EntitiesPaginatedState> {
   late final int categoryId;
 
-  PopularEntitiesPaginatedState build(int categoryId);
+  EntitiesPaginatedState build(int categoryId);
 }
 
 /// See also [PopularEntitiesNotifier].
@@ -42,8 +42,7 @@ abstract class _$PopularEntitiesNotifier
 const popularEntitiesNotifierProvider = PopularEntitiesNotifierFamily();
 
 /// See also [PopularEntitiesNotifier].
-class PopularEntitiesNotifierFamily
-    extends Family<PopularEntitiesPaginatedState> {
+class PopularEntitiesNotifierFamily extends Family<EntitiesPaginatedState> {
   /// See also [PopularEntitiesNotifier].
   const PopularEntitiesNotifierFamily();
 
@@ -77,10 +76,7 @@ class PopularEntitiesNotifierFamily
 /// See also [PopularEntitiesNotifier].
 class PopularEntitiesNotifierProvider
     extends
-        NotifierProviderImpl<
-          PopularEntitiesNotifier,
-          PopularEntitiesPaginatedState
-        > {
+        NotifierProviderImpl<PopularEntitiesNotifier, EntitiesPaginatedState> {
   /// See also [PopularEntitiesNotifier].
   PopularEntitiesNotifierProvider(int categoryId)
     : this._internal(
@@ -110,7 +106,7 @@ class PopularEntitiesNotifierProvider
   final int categoryId;
 
   @override
-  PopularEntitiesPaginatedState runNotifierBuild(
+  EntitiesPaginatedState runNotifierBuild(
     covariant PopularEntitiesNotifier notifier,
   ) {
     return notifier.build(categoryId);
@@ -133,10 +129,7 @@ class PopularEntitiesNotifierProvider
   }
 
   @override
-  NotifierProviderElement<
-    PopularEntitiesNotifier,
-    PopularEntitiesPaginatedState
-  >
+  NotifierProviderElement<PopularEntitiesNotifier, EntitiesPaginatedState>
   createElement() {
     return _PopularEntitiesNotifierProviderElement(this);
   }
@@ -159,17 +152,14 @@ class PopularEntitiesNotifierProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin PopularEntitiesNotifierRef
-    on NotifierProviderRef<PopularEntitiesPaginatedState> {
+    on NotifierProviderRef<EntitiesPaginatedState> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
 }
 
 class _PopularEntitiesNotifierProviderElement
     extends
-        NotifierProviderElement<
-          PopularEntitiesNotifier,
-          PopularEntitiesPaginatedState
-        >
+        NotifierProviderElement<PopularEntitiesNotifier, EntitiesPaginatedState>
     with PopularEntitiesNotifierRef {
   _PopularEntitiesNotifierProviderElement(super.provider);
 

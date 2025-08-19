@@ -1,32 +1,20 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/application/pagination_limit_provider.dart';
-import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'popular_entities_paginated_provider.freezed.dart';
-part 'popular_entities_paginated_provider.g.dart';
-
-@freezed
-abstract class PopularEntitiesPaginatedState
-    with _$PopularEntitiesPaginatedState {
-  const factory PopularEntitiesPaginatedState({
-    @Default([]) List<Entity> entities,
-    @Default(true) bool hasMore,
-    Object? paginationError,
-    @Default(false) bool isLoadingNextPage,
-  }) = _PopularEntitiesPaginatedState;
-}
+part 'popular_entities_notifier.g.dart';
 
 @Riverpod(keepAlive: true)
 class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   @override
-  PopularEntitiesPaginatedState build(CategoryId categoryId) {
+  EntitiesPaginatedState build(CategoryId categoryId) {
     // The build method should not return a future.
     // We trigger the first fetch and return the initial state.
     fetchFirstPage();
-    return const PopularEntitiesPaginatedState();
+    return const EntitiesPaginatedState();
   }
 
   Future<void> fetchFirstPage() async {

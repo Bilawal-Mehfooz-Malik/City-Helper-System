@@ -13,6 +13,7 @@ class MessageScreen extends StatelessWidget {
   final bool showAppBar;
   final String? appBarTitle;
   final bool showTitle;
+  final bool useResponsiveDesign;
 
   const MessageScreen({
     super.key,
@@ -23,19 +24,20 @@ class MessageScreen extends StatelessWidget {
     this.showAppBar = false,
     this.appBarTitle,
     this.showTitle = true,
+    this.useResponsiveDesign = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          showAppBar
-              ? AppBar(title: appBarTitle != null ? Text(appBarTitle!) : null)
-              : null,
+      appBar: showAppBar
+          ? AppBar(title: appBarTitle != null ? Text(appBarTitle!) : null)
+          : null,
       body: SafeArea(
         child: ResponsiveCenter(
           paddingInsideCard: const EdgeInsets.all(Sizes.p16),
           child: CenteredMessageWidget(
+            useResponsiveDesign: useResponsiveDesign,
             message: message,
             title: showTitle ? title : null,
             icon: icon,
@@ -54,13 +56,15 @@ class CenteredMessageWidget extends StatelessWidget {
     this.title,
     this.icon,
     this.actions,
-    this.useResponsiveDesign = true,
+    required this.useResponsiveDesign,
+    this.padding = const EdgeInsets.all(Sizes.p16),
   });
 
   final String message;
   final String? title;
   final IconData? icon;
   final Widget? actions;
+  final EdgeInsetsGeometry padding;
   final bool useResponsiveDesign;
 
   @override
@@ -72,7 +76,7 @@ class CenteredMessageWidget extends StatelessWidget {
 
     if (screenType == ScreenType.smallHeight && useResponsiveDesign) {
       return ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
+        padding: padding,
         child: MessageContent(
           icon: icon,
           title: title,

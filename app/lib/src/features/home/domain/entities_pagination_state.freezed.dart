@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'popular_entities_paginated_provider.dart';
+part of 'entities_pagination_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'popular_entities_paginated_provider.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$PopularEntitiesPaginatedState {
+mixin _$EntitiesPaginatedState {
 
  List<Entity> get entities; bool get hasMore; Object? get paginationError; bool get isLoadingNextPage;
-/// Create a copy of PopularEntitiesPaginatedState
+/// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PopularEntitiesPaginatedStateCopyWith<PopularEntitiesPaginatedState> get copyWith => _$PopularEntitiesPaginatedStateCopyWithImpl<PopularEntitiesPaginatedState>(this as PopularEntitiesPaginatedState, _$identity);
+$EntitiesPaginatedStateCopyWith<EntitiesPaginatedState> get copyWith => _$EntitiesPaginatedStateCopyWithImpl<EntitiesPaginatedState>(this as EntitiesPaginatedState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PopularEntitiesPaginatedState&&const DeepCollectionEquality().equals(other.entities, entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntitiesPaginatedState&&const DeepCollectionEquality().equals(other.entities, entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'PopularEntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
+  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $PopularEntitiesPaginatedStateCopyWith<$Res>  {
-  factory $PopularEntitiesPaginatedStateCopyWith(PopularEntitiesPaginatedState value, $Res Function(PopularEntitiesPaginatedState) _then) = _$PopularEntitiesPaginatedStateCopyWithImpl;
+abstract mixin class $EntitiesPaginatedStateCopyWith<$Res>  {
+  factory $EntitiesPaginatedStateCopyWith(EntitiesPaginatedState value, $Res Function(EntitiesPaginatedState) _then) = _$EntitiesPaginatedStateCopyWithImpl;
 @useResult
 $Res call({
  List<Entity> entities, bool hasMore, Object? paginationError, bool isLoadingNextPage
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$PopularEntitiesPaginatedStateCopyWithImpl<$Res>
-    implements $PopularEntitiesPaginatedStateCopyWith<$Res> {
-  _$PopularEntitiesPaginatedStateCopyWithImpl(this._self, this._then);
+class _$EntitiesPaginatedStateCopyWithImpl<$Res>
+    implements $EntitiesPaginatedStateCopyWith<$Res> {
+  _$EntitiesPaginatedStateCopyWithImpl(this._self, this._then);
 
-  final PopularEntitiesPaginatedState _self;
-  final $Res Function(PopularEntitiesPaginatedState) _then;
+  final EntitiesPaginatedState _self;
+  final $Res Function(EntitiesPaginatedState) _then;
 
-/// Create a copy of PopularEntitiesPaginatedState
+/// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isLoadingNextPage = null,}) {
   return _then(_self.copyWith(
@@ -74,8 +74,8 @@ as bool,
 }
 
 
-/// Adds pattern-matching-related methods to [PopularEntitiesPaginatedState].
-extension PopularEntitiesPaginatedStatePatterns on PopularEntitiesPaginatedState {
+/// Adds pattern-matching-related methods to [EntitiesPaginatedState].
+extension EntitiesPaginatedStatePatterns on EntitiesPaginatedState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -88,10 +88,10 @@ extension PopularEntitiesPaginatedStatePatterns on PopularEntitiesPaginatedState
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PopularEntitiesPaginatedState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _EntitiesPaginatedState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState() when $default != null:
+case _EntitiesPaginatedState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -110,10 +110,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PopularEntitiesPaginatedState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _EntitiesPaginatedState value)  $default,){
 final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState():
+case _EntitiesPaginatedState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -131,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PopularEntitiesPaginatedState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _EntitiesPaginatedState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState() when $default != null:
+case _EntitiesPaginatedState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState() when $default != null:
+case _EntitiesPaginatedState() when $default != null:
 return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
   return orElse();
 
@@ -175,7 +175,7 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)  $default,) {final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState():
+case _EntitiesPaginatedState():
 return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
   throw StateError('Unexpected subclass');
 
@@ -195,7 +195,7 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)?  $default,) {final _that = this;
 switch (_that) {
-case _PopularEntitiesPaginatedState() when $default != null:
+case _EntitiesPaginatedState() when $default != null:
 return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
   return null;
 
@@ -207,8 +207,8 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 /// @nodoc
 
 
-class _PopularEntitiesPaginatedState implements PopularEntitiesPaginatedState {
-  const _PopularEntitiesPaginatedState({final  List<Entity> entities = const [], this.hasMore = true, this.paginationError, this.isLoadingNextPage = false}): _entities = entities;
+class _EntitiesPaginatedState implements EntitiesPaginatedState {
+  const _EntitiesPaginatedState({final  List<Entity> entities = const [], this.hasMore = true, this.paginationError, this.isLoadingNextPage = false}): _entities = entities;
   
 
  final  List<Entity> _entities;
@@ -222,17 +222,17 @@ class _PopularEntitiesPaginatedState implements PopularEntitiesPaginatedState {
 @override final  Object? paginationError;
 @override@JsonKey() final  bool isLoadingNextPage;
 
-/// Create a copy of PopularEntitiesPaginatedState
+/// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$PopularEntitiesPaginatedStateCopyWith<_PopularEntitiesPaginatedState> get copyWith => __$PopularEntitiesPaginatedStateCopyWithImpl<_PopularEntitiesPaginatedState>(this, _$identity);
+_$EntitiesPaginatedStateCopyWith<_EntitiesPaginatedState> get copyWith => __$EntitiesPaginatedStateCopyWithImpl<_EntitiesPaginatedState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PopularEntitiesPaginatedState&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EntitiesPaginatedState&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
 }
 
 
@@ -241,15 +241,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'PopularEntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
+  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$PopularEntitiesPaginatedStateCopyWith<$Res> implements $PopularEntitiesPaginatedStateCopyWith<$Res> {
-  factory _$PopularEntitiesPaginatedStateCopyWith(_PopularEntitiesPaginatedState value, $Res Function(_PopularEntitiesPaginatedState) _then) = __$PopularEntitiesPaginatedStateCopyWithImpl;
+abstract mixin class _$EntitiesPaginatedStateCopyWith<$Res> implements $EntitiesPaginatedStateCopyWith<$Res> {
+  factory _$EntitiesPaginatedStateCopyWith(_EntitiesPaginatedState value, $Res Function(_EntitiesPaginatedState) _then) = __$EntitiesPaginatedStateCopyWithImpl;
 @override @useResult
 $Res call({
  List<Entity> entities, bool hasMore, Object? paginationError, bool isLoadingNextPage
@@ -260,17 +260,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$PopularEntitiesPaginatedStateCopyWithImpl<$Res>
-    implements _$PopularEntitiesPaginatedStateCopyWith<$Res> {
-  __$PopularEntitiesPaginatedStateCopyWithImpl(this._self, this._then);
+class __$EntitiesPaginatedStateCopyWithImpl<$Res>
+    implements _$EntitiesPaginatedStateCopyWith<$Res> {
+  __$EntitiesPaginatedStateCopyWithImpl(this._self, this._then);
 
-  final _PopularEntitiesPaginatedState _self;
-  final $Res Function(_PopularEntitiesPaginatedState) _then;
+  final _EntitiesPaginatedState _self;
+  final $Res Function(_EntitiesPaginatedState) _then;
 
-/// Create a copy of PopularEntitiesPaginatedState
+/// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isLoadingNextPage = null,}) {
-  return _then(_PopularEntitiesPaginatedState(
+  return _then(_EntitiesPaginatedState(
 entities: null == entities ? _self._entities : entities // ignore: cast_nullable_to_non_nullable
 as List<Entity>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
 as bool,paginationError: freezed == paginationError ? _self.paginationError : paginationError ,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable

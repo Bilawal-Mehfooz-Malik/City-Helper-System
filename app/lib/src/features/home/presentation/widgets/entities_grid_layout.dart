@@ -35,9 +35,9 @@ class EntitiesGridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
-      return Padding(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: CenteredMessageWidget(message: emptyMessage),
+      return CenteredMessageWidget(
+        useResponsiveDesign: true,
+        message: emptyMessage,
       );
     }
 

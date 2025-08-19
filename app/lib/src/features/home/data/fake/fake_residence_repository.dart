@@ -28,36 +28,44 @@ class FakeResidenceRepository implements ResidenceRepository {
   }
 
   @override
-  Stream<List<Residence>> watchResidencesList() async* {
+  Future<List<Residence>> fetchResidencesList({
+    required int limit,
+    String? lastEntityId,
+  }) async {
     await delay(addDelay);
-    yield* _residences.stream;
-  }
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = _residences.value.indexWhere(
+        (f) => f.id == lastEntityId,
+      );
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
 
-  @override
-  Future<List<Residence>> fetchResidencesList() async {
-    await delay(addDelay);
-    return _residences.value;
-  }
-
-  @override
-  Stream<List<Residence>> watchResidencesListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async* {
-    await delay(addDelay);
-    yield* _residences.stream.map(
-      (residences) =>
-          residences.where((r) => r.subCategoryId == subCategoryId).toList(),
-    );
+    return _residences.value.skip(startIndex).take(limit).toList();
   }
 
   @override
   Future<List<Residence>> fetchResidencesListBySubCategoryId(
-    SubCategoryId subCategoryId,
-  ) async {
+    SubCategoryId subId, {
+    required int limit,
+    String? lastEntityId,
+  }) async {
     await delay(addDelay);
-    return _residences.value
-        .where((r) => r.subCategoryId == subCategoryId)
+    final filteredList = _residences.value
+        .where((f) => f.subCategoryId == subId)
         .toList();
+
+    int startIndex = 0;
+    if (lastEntityId != null) {
+      final lastIndex = filteredList.indexWhere((f) => f.id == lastEntityId);
+      if (lastIndex != -1) {
+        startIndex = lastIndex + 1;
+      }
+    }
+
+    return filteredList.skip(startIndex).take(limit).toList();
   }
 
   @override
@@ -88,11 +96,15 @@ class FakeResidenceRepository implements ResidenceRepository {
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    final popularResidences = _residences.value.where((r) => r.isPopular == true).toList();
+    final popularResidences = _residences.value
+        .where((r) => r.isPopular == true)
+        .toList();
 
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = popularResidences.indexWhere((r) => r.id == lastEntityId);
+      final lastIndex = popularResidences.indexWhere(
+        (r) => r.id == lastEntityId,
+      );
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }
@@ -114,7 +126,9 @@ class FakeResidenceRepository implements ResidenceRepository {
 
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = popularResidences.indexWhere((r) => r.id == lastEntityId);
+      final lastIndex = popularResidences.indexWhere(
+        (r) => r.id == lastEntityId,
+      );
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }

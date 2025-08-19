@@ -31,7 +31,10 @@ class GridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
-      return CenteredMessageWidget(message: emptyMessage);
+      return CenteredMessageWidget(
+        message: emptyMessage,
+        useResponsiveDesign: true,
+      );
     }
 
     return LayoutBuilder(
@@ -42,19 +45,14 @@ class GridLayout extends StatelessWidget {
         // calculate a "responsive" padding that increases
         // when the width is greater than the desktop breakpoint
         // this is used to center the content horizontally on large screens
-        final padding =
-            width > Breakpoint.desktop + Sizes.p32
-                ? (width - Breakpoint.desktop) / 2
-                : Sizes.p16;
+        final padding = width > Breakpoint.desktop + Sizes.p32
+            ? (width - Breakpoint.desktop) / 2
+            : Sizes.p16;
 
         return Padding(
-          padding:
-              useResponsivePadding
-                  ? EdgeInsets.symmetric(
-                    horizontal: padding,
-                    vertical: Sizes.p16,
-                  )
-                  : EdgeInsets.zero,
+          padding: useResponsivePadding
+              ? EdgeInsets.symmetric(horizontal: padding, vertical: Sizes.p16)
+              : EdgeInsets.zero,
           child: AlignedGridView.count(
             physics: physics,
             shrinkWrap: shrinkWrap,

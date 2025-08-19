@@ -7,3 +7,8 @@ part 'pagination_limit_provider.g.dart';
 int popularEntitiesLimit(Ref ref) {
   return 5;
 }
+
+@riverpod
+int entitiesLimit(Ref ref) {
+  return 5;
+}

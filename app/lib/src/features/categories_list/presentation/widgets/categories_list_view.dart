@@ -54,7 +54,10 @@ class CategoriesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (categories.isEmpty) {
-      return CenteredMessageWidget(message: NoCategoryFoundException().message);
+      return CenteredMessageWidget(
+        useResponsiveDesign: true,
+        message: NoCategoryFoundException().message,
+      );
     }
     return ListView.builder(
       shrinkWrap: true,
