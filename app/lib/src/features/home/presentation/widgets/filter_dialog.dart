@@ -4,14 +4,20 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
-import 'package:app/src/features/home/presentation/controllers/filter_controller.dart'; // Reverted import
+import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FilterDialog extends ConsumerStatefulWidget {
-  const FilterDialog({super.key, required this.categoryId});
+  const FilterDialog({
+    super.key,
+    required this.categoryId,
+    required this.filterContext,
+  });
   final CategoryId categoryId;
+  final FilterContext filterContext;
 
   @override
   ConsumerState<FilterDialog> createState() => _FilterDialogState();
@@ -24,7 +30,10 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
   void initState() {
     super.initState();
     _localFilter = ref.read(
-      filterControllerProvider(categoryId: widget.categoryId),
+      filterControllerProvider(
+        categoryId: widget.categoryId,
+        filterContext: widget.filterContext,
+      ),
     );
   }
 
@@ -45,7 +54,10 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(
-      filterControllerProvider(categoryId: widget.categoryId).notifier,
+      filterControllerProvider(
+        categoryId: widget.categoryId,
+        filterContext: widget.filterContext,
+      ).notifier,
     );
 
     return AlertDialog(

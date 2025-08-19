@@ -6,7 +6,7 @@ part of 'filter_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterControllerHash() => r'e49fc0a72ed32ce78bbdad12f62fa838c09b1c99';
+String _$filterControllerHash() => r'b7a0ad2f7285a99840858cda90fb2444f3574903';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,8 +31,12 @@ class _SystemHash {
 
 abstract class _$FilterController extends BuildlessNotifier<EntityFilter> {
   late final int categoryId;
+  late final FilterContext filterContext;
 
-  EntityFilter build({required int categoryId});
+  EntityFilter build({
+    required int categoryId,
+    required FilterContext filterContext,
+  });
 }
 
 /// See also [FilterController].
@@ -45,15 +49,24 @@ class FilterControllerFamily extends Family<EntityFilter> {
   const FilterControllerFamily();
 
   /// See also [FilterController].
-  FilterControllerProvider call({required int categoryId}) {
-    return FilterControllerProvider(categoryId: categoryId);
+  FilterControllerProvider call({
+    required int categoryId,
+    required FilterContext filterContext,
+  }) {
+    return FilterControllerProvider(
+      categoryId: categoryId,
+      filterContext: filterContext,
+    );
   }
 
   @override
   FilterControllerProvider getProviderOverride(
     covariant FilterControllerProvider provider,
   ) {
-    return call(categoryId: provider.categoryId);
+    return call(
+      categoryId: provider.categoryId,
+      filterContext: provider.filterContext,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -75,20 +88,26 @@ class FilterControllerFamily extends Family<EntityFilter> {
 class FilterControllerProvider
     extends NotifierProviderImpl<FilterController, EntityFilter> {
   /// See also [FilterController].
-  FilterControllerProvider({required int categoryId})
-    : this._internal(
-        () => FilterController()..categoryId = categoryId,
-        from: filterControllerProvider,
-        name: r'filterControllerProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$filterControllerHash,
-        dependencies: FilterControllerFamily._dependencies,
-        allTransitiveDependencies:
-            FilterControllerFamily._allTransitiveDependencies,
-        categoryId: categoryId,
-      );
+  FilterControllerProvider({
+    required int categoryId,
+    required FilterContext filterContext,
+  }) : this._internal(
+         () =>
+             FilterController()
+               ..categoryId = categoryId
+               ..filterContext = filterContext,
+         from: filterControllerProvider,
+         name: r'filterControllerProvider',
+         debugGetCreateSourceHash:
+             const bool.fromEnvironment('dart.vm.product')
+                 ? null
+                 : _$filterControllerHash,
+         dependencies: FilterControllerFamily._dependencies,
+         allTransitiveDependencies:
+             FilterControllerFamily._allTransitiveDependencies,
+         categoryId: categoryId,
+         filterContext: filterContext,
+       );
 
   FilterControllerProvider._internal(
     super._createNotifier, {
@@ -98,13 +117,15 @@ class FilterControllerProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.categoryId,
+    required this.filterContext,
   }) : super.internal();
 
   final int categoryId;
+  final FilterContext filterContext;
 
   @override
   EntityFilter runNotifierBuild(covariant FilterController notifier) {
-    return notifier.build(categoryId: categoryId);
+    return notifier.build(categoryId: categoryId, filterContext: filterContext);
   }
 
   @override
@@ -112,13 +133,17 @@ class FilterControllerProvider
     return ProviderOverride(
       origin: this,
       override: FilterControllerProvider._internal(
-        () => create()..categoryId = categoryId,
+        () =>
+            create()
+              ..categoryId = categoryId
+              ..filterContext = filterContext,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         categoryId: categoryId,
+        filterContext: filterContext,
       ),
     );
   }
@@ -130,13 +155,16 @@ class FilterControllerProvider
 
   @override
   bool operator ==(Object other) {
-    return other is FilterControllerProvider && other.categoryId == categoryId;
+    return other is FilterControllerProvider &&
+        other.categoryId == categoryId &&
+        other.filterContext == filterContext;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, categoryId.hashCode);
+    hash = _SystemHash.combine(hash, filterContext.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -147,6 +175,9 @@ class FilterControllerProvider
 mixin FilterControllerRef on NotifierProviderRef<EntityFilter> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
+
+  /// The parameter `filterContext` of this provider.
+  FilterContext get filterContext;
 }
 
 class _FilterControllerProviderElement
@@ -156,6 +187,9 @@ class _FilterControllerProviderElement
 
   @override
   int get categoryId => (origin as FilterControllerProvider).categoryId;
+  @override
+  FilterContext get filterContext =>
+      (origin as FilterControllerProvider).filterContext;
 }
 
 // ignore_for_file: type=lint

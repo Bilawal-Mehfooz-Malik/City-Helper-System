@@ -8,6 +8,7 @@ import 'package:app/src/features/categories_list/domain/categories_exception.dar
 import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entities_grid_layout.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
@@ -51,7 +52,10 @@ class EntitiesListSection extends ConsumerWidget {
   void _showFilterDialog(BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (_) => FilterDialog(categoryId: categoryId),
+      builder: (_) => FilterDialog(
+        categoryId: categoryId,
+        filterContext: FilterContext.all,
+      ),
     );
   }
 
@@ -113,8 +117,7 @@ class _EntitiesListContent extends ConsumerWidget {
       );
     } else if (entities.isEmpty) {
       return const EntitiesListSkeleton();
-    }
-    else {
+    } else {
       return Column(
         children: [
           EntitiesGridLayout(

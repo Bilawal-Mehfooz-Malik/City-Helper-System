@@ -1,0 +1,1 @@
+enum FilterContext { all, popular }

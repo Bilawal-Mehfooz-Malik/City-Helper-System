@@ -2,7 +2,8 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/application/pagination_limit_provider.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
-import 'package:app/src/features/home/presentation/controllers/filter_controller.dart'; // Reverted import
+import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,8 +15,11 @@ class EntitiesNotifier extends _$EntitiesNotifier {
   EntitiesPaginatedState build(CategoryId categoryId) {
     // Watch the filter and subcategory providers to react to changes
     ref.watch(
-      filterControllerProvider(categoryId: categoryId),
-    ); // Reverted provider
+      filterControllerProvider(
+        categoryId: categoryId,
+        filterContext: FilterContext.all,
+      ),
+    );
     ref.watch(subcategoryControllerProvider);
 
     fetchFirstPage();
@@ -24,7 +28,10 @@ class EntitiesNotifier extends _$EntitiesNotifier {
 
   Future<void> fetchFirstPage() async {
     final subcategoryId = ref.read(subcategoryControllerProvider);
-    final filter = ref.read(filterControllerProvider(categoryId: categoryId));
+    final filter = ref.read(filterControllerProvider(
+      categoryId: categoryId,
+      filterContext: FilterContext.all,
+    ));
 
     try {
       final limit = ref.read(initialLoadLimitProvider);
@@ -52,8 +59,11 @@ class EntitiesNotifier extends _$EntitiesNotifier {
 
     final subcategoryId = ref.read(subcategoryControllerProvider);
     final filter = ref.read(
-      filterControllerProvider(categoryId: categoryId),
-    ); // Reverted provider
+      filterControllerProvider(
+        categoryId: categoryId,
+        filterContext: FilterContext.all,
+      ),
+    );
 
     try {
       final limit = ref.read(subsequentLoadLimitProvider);

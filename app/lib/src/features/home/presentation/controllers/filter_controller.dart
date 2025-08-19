@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'filter_controller.g.dart';
@@ -7,7 +8,10 @@ part 'filter_controller.g.dart';
 @Riverpod(keepAlive: true)
 class FilterController extends _$FilterController {
   @override
-  EntityFilter build({required CategoryId categoryId}) {
+  EntityFilter build({
+    required CategoryId categoryId,
+    required FilterContext filterContext,
+  }) {
     return switch (categoryId) {
       1 => const EntityFilter.residence(),
       2 => const EntityFilter.food(),
