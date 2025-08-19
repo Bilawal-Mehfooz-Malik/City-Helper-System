@@ -2,7 +2,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/application/entity_service.dart';
 import 'package:app/src/features/home/application/pagination_limit_provider.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart'; // Reverted import
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'popular_entities_notifier.g.dart';
@@ -11,13 +11,16 @@ part 'popular_entities_notifier.g.dart';
 class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   @override
   EntitiesPaginatedState build(CategoryId categoryId) {
-    // The build method should not return a future.
-    // We trigger the first fetch and return the initial state.
+    // Watch the filter provider to react to changes
+    ref.watch(filterControllerProvider(categoryId: categoryId)); // Reverted provider
+
     fetchFirstPage();
     return const EntitiesPaginatedState();
   }
 
   Future<void> fetchFirstPage() async {
+    final filter = ref.read(filterControllerProvider(categoryId: categoryId)); // Reverted provider
+
     try {
       final limit = ref.read(initialLoadLimitProvider);
       final entities = await ref
@@ -25,6 +28,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
             limit: limit,
+            filter: filter,
           );
 
       final hasMore = entities.length == limit;
@@ -40,6 +44,8 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
 
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
 
+    final filter = ref.read(filterControllerProvider(categoryId: categoryId)); // Reverted provider
+
     try {
       final limit = ref.read(subsequentLoadLimitProvider);
       final lastEntityId = state.entities.last.id;
@@ -49,6 +55,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
             categoryId: categoryId,
             lastEntityId: lastEntityId,
             limit: limit,
+            filter: filter,
           );
 
       final hasMore = newEntities.length == limit;

@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,9 +21,13 @@ class FoodRepository {
 
   Future<List<Food>> fetchFoodsList({
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedFoodsQuery.limit(limit);
+    var query = _buildFilteredQuery(_approvedFoodsQuery, filter);
+
+    query = query.limit(limit);
+
     if (lastEntityId != null) {
       final lastDoc = await _foodsRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
@@ -36,11 +41,15 @@ class FoodRepository {
   Future<List<Food>> fetchFoodsListSubCategoryId(
     SubCategoryId subId, {
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedFoodsQuery
-        .where('subCategoryId', isEqualTo: subId)
-        .limit(limit);
+    var query = _approvedFoodsQuery.where('subCategoryId', isEqualTo: subId);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
+
     if (lastEntityId != null) {
       final lastDoc = await _foodsRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
@@ -53,11 +62,15 @@ class FoodRepository {
 
   Future<List<Food>> fetchPopularFoodsList({
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedFoodsQuery
-        .where('isPopular', isEqualTo: true)
-        .limit(limit);
+    var query = _approvedFoodsQuery.where('isPopular', isEqualTo: true);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
+
     if (lastEntityId != null) {
       final lastDoc = await _foodsRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
@@ -71,12 +84,16 @@ class FoodRepository {
   Future<List<Food>> fetchPopularFoodsListSubCategoryId(
     SubCategoryId subId, {
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
     var query = _approvedFoodsQuery
         .where('subCategoryId', isEqualTo: subId)
-        .where('isPopular', isEqualTo: true)
-        .limit(limit);
+        .where('isPopular', isEqualTo: true);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
 
     if (lastEntityId != null) {
       final lastDoc = await _foodsRef.doc(lastEntityId).get();
@@ -88,6 +105,7 @@ class FoodRepository {
     final snap = await query.get();
     return snap.docs.map((d) => d.data()).toList();
   }
+
 
   /// Fetches a single food document by its ID
   Future<Food?> fetchFood(EntityId id) async {
@@ -103,6 +121,21 @@ class FoodRepository {
   }
 
   // --------------------Helpers--------------------------------
+
+  Query<Food> _buildFilteredQuery(Query<Food> query, FoodFilter filter) {
+    var newQuery = query;
+    if (filter.isOpen) {
+      newQuery = newQuery.where('isOpen', isEqualTo: true);
+    }
+    if (filter.genderPref != GenderPreference.any) {
+      newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
+    }
+    if (filter.ratingSort != SortOrder.none) {
+      newQuery = newQuery.orderBy('rating',
+          descending: filter.ratingSort == SortOrder.highToLow);
+    }
+    return newQuery;
+  }
 
   /// A pre-filtered query that only includes documents with an "approved" status.
   Query<Food> get _approvedFoodsQuery =>

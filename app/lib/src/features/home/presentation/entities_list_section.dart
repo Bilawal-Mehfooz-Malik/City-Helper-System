@@ -113,7 +113,8 @@ class _EntitiesListContent extends ConsumerWidget {
       );
     } else if (entities.isEmpty) {
       return const EntitiesListSkeleton();
-    } else {
+    }
+    else {
       return Column(
         children: [
           EntitiesGridLayout(

@@ -8,8 +8,8 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
-import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/filter_controller.dart'; // Reverted import
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_card.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -83,7 +83,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
         .read(listTypeControllerProvider.notifier)
         .updateListType(HomeListType.popular);
     ref
-        .read(filterControllerProvider(categoryId: widget.categoryId).notifier)
+        .read(filterControllerProvider(categoryId: widget.categoryId).notifier) // Reverted provider
         .resetFilters();
     final screenSize = MediaQuery.sizeOf(context);
     final screenType = ScreenType.determine(

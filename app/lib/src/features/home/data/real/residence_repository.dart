@@ -1,5 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,9 +20,13 @@ class ResidenceRepository {
 
   Future<List<Residence>> fetchResidencesList({
     required int limit,
+    required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedResidencesQuery.limit(limit);
+    var query = _buildFilteredQuery(_approvedResidencesQuery, filter);
+
+    query = query.limit(limit);
+
     if (lastEntityId != null) {
       final lastDoc = await _residencesRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
@@ -35,11 +40,14 @@ class ResidenceRepository {
   Future<List<Residence>> fetchResidencesListBySubCategoryId(
     SubCategoryId subCategoryId, {
     required int limit,
+    required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedResidencesQuery
-        .where('subCategoryId', isEqualTo: subCategoryId)
-        .limit(limit);
+    var query = _approvedResidencesQuery.where('subCategoryId', isEqualTo: subCategoryId);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
 
     if (lastEntityId != null) {
       final lastDoc = await _residencesRef.doc(lastEntityId).get();
@@ -53,11 +61,15 @@ class ResidenceRepository {
 
   Future<List<Residence>> fetchPopularResidencesList({
     required int limit,
+    required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedResidencesQuery
-        .where('isPopular', isEqualTo: true)
-        .limit(limit);
+    var query = _approvedResidencesQuery.where('isPopular', isEqualTo: true);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
+
     if (lastEntityId != null) {
       final lastDoc = await _residencesRef.doc(lastEntityId).get();
       if (lastDoc.exists) {
@@ -71,12 +83,16 @@ class ResidenceRepository {
   Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
     SubCategoryId subCategoryId, {
     required int limit,
+    required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
     var query = _approvedResidencesQuery
         .where('subCategoryId', isEqualTo: subCategoryId)
-        .where('isPopular', isEqualTo: true)
-        .limit(limit);
+        .where('isPopular', isEqualTo: true);
+
+    query = _buildFilteredQuery(query, filter);
+
+    query = query.limit(limit);
 
     if (lastEntityId != null) {
       final lastDoc = await _residencesRef.doc(lastEntityId).get();
@@ -88,6 +104,7 @@ class ResidenceRepository {
     final snapshot = await query.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
+
 
   /// Watches a single residence by its ID
   Stream<Residence?> watchResidence(EntityId id) {
@@ -105,6 +122,31 @@ class ResidenceRepository {
   }
 
   // --------------------Helpers--------------------------
+
+  Query<Residence> _buildFilteredQuery(
+      Query<Residence> query, ResidenceFilter filter) {
+    var newQuery = query;
+
+    if (filter.isOpen) {
+      newQuery = newQuery.where('isOpen', isEqualTo: true);
+    }
+    if (filter.isFurnished) {
+      newQuery = newQuery.where('isFurnished', isEqualTo: true);
+    }
+    if (filter.genderPref != GenderPreference.any) {
+      newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
+    }
+    if (filter.ratingSort != SortOrder.none) {
+      newQuery = newQuery.orderBy('rating',
+          descending: filter.ratingSort == SortOrder.highToLow);
+    }
+    if (filter.priceSort != SortOrder.none) {
+      newQuery = newQuery.orderBy('price',
+          descending: filter.priceSort == SortOrder.highToLow);
+    }
+
+    return newQuery;
+  }
 
   /// The base collection reference without any filters.
   /// Used for fetching single documents by ID or for writing data.

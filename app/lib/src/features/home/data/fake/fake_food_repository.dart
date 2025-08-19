@@ -5,6 +5,8 @@ import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/features/home/domain/entity_extensions.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 
 class FakeFoodRepository implements FoodRepository {
   FakeFoodRepository({this.addDelay = true});
@@ -27,83 +29,92 @@ class FakeFoodRepository implements FoodRepository {
   @override
   Future<List<Food>> fetchFoodsList({
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
     await delay(addDelay);
+    List<Food> filteredFoods = _applyFoodFilter(_foods.value, filter);
+
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = _foods.value.indexWhere((f) => f.id == lastEntityId);
+      final lastIndex = filteredFoods.indexWhere((f) => f.id == lastEntityId);
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }
     }
 
-    return _foods.value.skip(startIndex).take(limit).toList();
+    return filteredFoods.skip(startIndex).take(limit).toList();
   }
 
   @override
   Future<List<Food>> fetchFoodsListSubCategoryId(
     SubCategoryId subId, {
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    final filteredList = _foods.value
+    List<Food> filteredFoods = _foods.value
         .where((f) => f.subCategoryId == subId)
         .toList();
+    filteredFoods = _applyFoodFilter(filteredFoods, filter);
 
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = filteredList.indexWhere((f) => f.id == lastEntityId);
+      final lastIndex = filteredFoods.indexWhere((f) => f.id == lastEntityId);
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }
     }
 
-    return filteredList.skip(startIndex).take(limit).toList();
+    return filteredFoods.skip(startIndex).take(limit).toList();
   }
 
   @override
   Future<List<Food>> fetchPopularFoodsList({
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    final popularFoods = _foods.value
+    List<Food> filteredFoods = _foods.value
         .where((f) => f.isPopular == true)
         .toList();
+    filteredFoods = _applyFoodFilter(filteredFoods, filter);
 
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = popularFoods.indexWhere((f) => f.id == lastEntityId);
+      final lastIndex = filteredFoods.indexWhere((f) => f.id == lastEntityId);
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }
     }
 
-    return popularFoods.skip(startIndex).take(limit).toList();
+    return filteredFoods.skip(startIndex).take(limit).toList();
   }
 
   @override
   Future<List<Food>> fetchPopularFoodsListSubCategoryId(
     SubCategoryId subId, {
     required int limit,
+    required FoodFilter filter,
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    final popularFoods = _foods.value
+    List<Food> filteredFoods = _foods.value
         .where((f) => f.isPopular == true && f.subCategoryId == subId)
         .toList();
+    filteredFoods = _applyFoodFilter(filteredFoods, filter);
 
     int startIndex = 0;
     if (lastEntityId != null) {
-      final lastIndex = popularFoods.indexWhere((f) => f.id == lastEntityId);
+      final lastIndex = filteredFoods.indexWhere((f) => f.id == lastEntityId);
       if (lastIndex != -1) {
         startIndex = lastIndex + 1;
       }
     }
 
-    return popularFoods.skip(startIndex).take(limit).toList();
+    return filteredFoods.skip(startIndex).take(limit).toList();
   }
 
   @override
@@ -126,5 +137,29 @@ class FakeFoodRepository implements FoodRepository {
     } catch (_) {
       return null;
     }
+  }
+
+  List<Food> _applyFoodFilter(List<Food> foods, FoodFilter filter) {
+    List<Food> result = List.from(foods);
+
+    if (filter.isOpen) {
+      result = result.where((food) => food.isEntityOpen()).toList();
+    }
+    if (filter.genderPref != GenderPreference.any) {
+      result = result
+          .where((food) => food.genderPref == filter.genderPref)
+          .toList();
+    }
+    if (filter.ratingSort != SortOrder.none) {
+      result.sort((a, b) {
+        if (filter.ratingSort == SortOrder.highToLow) {
+          return b.avgRating.compareTo(a.avgRating);
+        } else if (filter.ratingSort == SortOrder.lowToHigh) {
+          return a.avgRating.compareTo(b.avgRating);
+        }
+        return 0;
+      });
+    }
+    return result;
   }
 }
