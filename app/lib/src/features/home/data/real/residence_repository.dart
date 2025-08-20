@@ -23,7 +23,8 @@ class ResidenceRepository {
     required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _buildFilteredQuery(_approvedResidencesQuery, filter);
+    var query = _approvedResidencesQuery.where('isPopular', isEqualTo: false);
+    query = _buildFilteredQuery(query, filter);
 
     query = query.limit(limit);
 
@@ -43,7 +44,9 @@ class ResidenceRepository {
     required ResidenceFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedResidencesQuery.where('subCategoryId', isEqualTo: subCategoryId);
+    var query = _approvedResidencesQuery
+        .where('subCategoryId', isEqualTo: subCategoryId)
+        .where('isPopular', isEqualTo: false);
 
     query = _buildFilteredQuery(query, filter);
 

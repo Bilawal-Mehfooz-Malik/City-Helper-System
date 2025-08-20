@@ -36,8 +36,10 @@ class FakeResidenceRepository implements ResidenceRepository {
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    List<Residence> filteredResidences = _applyResidenceFilter(
-      _residences.value,
+    List<Residence> filteredResidences =
+        _residences.value.where((r) => r.isPopular == false).toList();
+    filteredResidences = _applyResidenceFilter(
+      filteredResidences,
       filter,
     );
 
@@ -63,7 +65,7 @@ class FakeResidenceRepository implements ResidenceRepository {
   }) async {
     await delay(addDelay);
     List<Residence> filteredResidences = _residences.value
-        .where((f) => f.subCategoryId == subId)
+        .where((f) => f.subCategoryId == subId && f.isPopular == false)
         .toList();
     filteredResidences = _applyResidenceFilter(filteredResidences, filter);
 

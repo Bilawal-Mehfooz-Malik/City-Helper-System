@@ -33,7 +33,10 @@ class FakeFoodRepository implements FoodRepository {
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    List<Food> filteredFoods = _applyFoodFilter(_foods.value, filter);
+    List<Food> filteredFoods = _foods.value
+        .where((f) => f.isPopular == false)
+        .toList();
+    filteredFoods = _applyFoodFilter(filteredFoods, filter);
 
     int startIndex = 0;
     if (lastEntityId != null) {
@@ -55,7 +58,7 @@ class FakeFoodRepository implements FoodRepository {
   }) async {
     await delay(addDelay);
     List<Food> filteredFoods = _foods.value
-        .where((f) => f.subCategoryId == subId)
+        .where((f) => f.subCategoryId == subId && f.isPopular == false)
         .toList();
     filteredFoods = _applyFoodFilter(filteredFoods, filter);
 

@@ -1,18 +1,7 @@
-EntitiesNotifier - build called for category: 1
-EntitiesNotifier - fetchFirstPage called. Current filter: EntityFilter.residence(isOpen: false, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-PopularEntitiesNotifier - build called for category: 1
-PopularEntitiesNotifier - fetchFirstPage called. Current filter: EntityFilter.residence(isOpen: false, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-EntitiesNotifier - fetchNextPage called. Current filter: EntityFilter.residence(isOpen: false, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-FilterController - applyFilter: EntityFilter.residence(isOpen: true, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-EntitiesNotifier - build called for category: 1
-EntitiesNotifier - fetchFirstPage called. Current filter: EntityFilter.residence(isOpen: true, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-PopularEntitiesNotifier - build called for category: 1
-PopularEntitiesNotifier - fetchFirstPage called. Current filter: EntityFilter.residence(isOpen: true, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
-EntitiesNotifier - fetchNextPage called. Current filter: EntityFilter.residence(isOpen: true, ratingSort: SortOrder.none, isFurnished: false, priceSort: SortOrder.none, genderPref: GenderPreference.any)
 [log] Bad state: No element, dart-sdk/lib/_internal/js_dev_runtime/patch/core_patch.dart 748:28                         get current
 core_patch.dart:748
-      package:app/src/features/home/presentation/controllers/home_error_controller.dart 14:66    criticalErrorStatus
-home_error_controller.dart:14
+      package:app/src/features/home/presentation/controllers/home_error_controller.dart 15:66    criticalErrorStatus
+home_error_controller.dart:15
       package:app/src/features/home/presentation/controllers/home_error_controller.g.dart 75:18  <fn>
 home_error_controller.g.dart:75
       package:riverpod/src/provider/auto_dispose.dart 42:60                                      [_create]
@@ -75,8 +64,8 @@ zone.dart:1804
 js_allow_interop_patch.dart:224
 [log] Bad state: No element, dart-sdk/lib/_internal/js_dev_runtime/patch/core_patch.dart 748:28                         get current
 core_patch.dart:748
-      package:app/src/features/home/presentation/controllers/home_error_controller.dart 14:66    criticalErrorStatus
-home_error_controller.dart:14
+      package:app/src/features/home/presentation/controllers/home_error_controller.dart 15:66    criticalErrorStatus
+home_error_controller.dart:15
       package:app/src/features/home/presentation/controllers/home_error_controller.g.dart 75:18  <fn>
 home_error_controller.g.dart:75
       package:riverpod/src/provider/auto_dispose.dart 42:60                                      [_create]

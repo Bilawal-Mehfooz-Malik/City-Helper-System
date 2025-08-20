@@ -24,7 +24,8 @@ class FoodRepository {
     required FoodFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _buildFilteredQuery(_approvedFoodsQuery, filter);
+    var query = _approvedFoodsQuery.where('isPopular', isEqualTo: false);
+    query = _buildFilteredQuery(query, filter);
 
     query = query.limit(limit);
 
@@ -44,7 +45,9 @@ class FoodRepository {
     required FoodFilter filter,
     String? lastEntityId,
   }) async {
-    var query = _approvedFoodsQuery.where('subCategoryId', isEqualTo: subId);
+    var query = _approvedFoodsQuery
+        .where('subCategoryId', isEqualTo: subId)
+        .where('isPopular', isEqualTo: false);
 
     query = _buildFilteredQuery(query, filter);
 

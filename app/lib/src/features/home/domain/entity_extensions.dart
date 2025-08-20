@@ -8,139 +8,83 @@ extension EntityExtensions on Entity {
     if (this is Residence) {
       final residence = this as Residence;
       if (residence.listingType == ListingType.forSale) {
-        return false; // Properties for sale are never "open" in this context
-      }
-      // For rental residences, proceed with opening hours logic
-      // Note: openingHours and entityStatus are nullable for Residence
-      final openingHours = residence.openingHours;
-      final entityStatus = residence.entityStatus;
-
-      if (entityStatus == OperationalStatus.close) return false;
-      if (entityStatus == OperationalStatus.open) return true;
-
-      if (openingHours.isEmpty) {
-        return false;
-      }
-
-      final now = DateTime.now().toLocal();
-      final currentDay = DateFormat('EEEE').format(now);
-
-      final todayOpeningHours = openingHours.firstWhereOrNull(
-        (hours) => hours.day.toLowerCase() == currentDay.toLowerCase(),
-      );
-
-      if (todayOpeningHours == null || !todayOpeningHours.isOpen) {
-        return false;
-      }
-
-      final openTimeStr = todayOpeningHours.open;
-      final closeTimeStr = todayOpeningHours.close;
-      if (openTimeStr == null || closeTimeStr == null) {
-        return true;
-      }
-
-      if (openTimeStr == closeTimeStr) {
-        return true;
-      }
-
-      try {
-        final format = DateFormat("HH:mm");
-        final openParsed = format.parse(openTimeStr);
-        final closeParsed = format.parse(closeTimeStr);
-
-        final openTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          openParsed.hour,
-          openParsed.minute,
-        );
-        var closeTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          closeParsed.hour,
-          closeParsed.minute,
-        );
-
-        if (closeTime.isBefore(openTime)) {
-          closeTime = closeTime.add(const Duration(days: 1));
-        }
-
-        return now.isAfter(openTime) && now.isBefore(closeTime);
-      } catch (e, st) {
-        AppLogger.logError(
-          'Opening hour parse error for ${residence.name}',
-          error: e,
-          stackTrace: st,
-        );
-        return false;
-      }
-    } else if (this is Food) {
-      final food = this as Food;
-      // Food entities always have required openingHours and entityStatus
-      final openingHours = food.openingHours;
-      final entityStatus = food.entityStatus;
-
-      if (entityStatus == OperationalStatus.close) return false;
-      if (entityStatus == OperationalStatus.open) return true;
-
-      final now = DateTime.now().toLocal();
-      final currentDay = DateFormat('EEEE').format(now);
-
-      final todayOpeningHours = openingHours.firstWhereOrNull(
-        (hours) => hours.day.toLowerCase() == currentDay.toLowerCase(),
-      );
-
-      if (todayOpeningHours == null || !todayOpeningHours.isOpen) {
-        return false;
-      }
-
-      final openTimeStr = todayOpeningHours.open;
-      final closeTimeStr = todayOpeningHours.close;
-      if (openTimeStr == null || closeTimeStr == null) {
-        return true;
-      }
-
-      if (openTimeStr == closeTimeStr) {
-        return true;
-      }
-
-      try {
-        final format = DateFormat("HH:mm");
-        final openParsed = format.parse(openTimeStr);
-        final closeParsed = format.parse(closeTimeStr);
-
-        final openTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          openParsed.hour,
-          openParsed.minute,
-        );
-        var closeTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          closeParsed.hour,
-          closeParsed.minute,
-        );
-
-        if (closeTime.isBefore(openTime)) {
-          closeTime = closeTime.add(const Duration(days: 1));
-        }
-
-        return now.isAfter(openTime) && now.isBefore(closeTime);
-      } catch (e, st) {
-        AppLogger.logError(
-          'Opening hour parse error for ${food.name}',
-          error: e,
-          stackTrace: st,
-        );
         return false;
       }
     }
-    return false; // Should not happen if sealed class is exhaustive
+
+    final openingHours = this.openingHours;
+    final entityStatus = this.entityStatus;
+
+    if (entityStatus == OperationalStatus.close) return false;
+    if (entityStatus == OperationalStatus.open) return true;
+
+    if (openingHours.isEmpty) {
+      return false;
+    }
+
+    final now = DateTime.now().toLocal();
+    final currentDay = DateFormat('EEEE').format(now);
+
+    final todayOpeningHours = openingHours.firstWhereOrNull(
+      (hours) => hours.day.toLowerCase() == currentDay.toLowerCase(),
+    );
+
+    if (todayOpeningHours == null || !todayOpeningHours.isOpen) {
+      return false;
+    }
+
+    final openTimeStr = todayOpeningHours.open;
+    final closeTimeStr = todayOpeningHours.close;
+    if (openTimeStr == null || closeTimeStr == null) {
+      return true;
+    }
+
+    if (openTimeStr == closeTimeStr) {
+      return true;
+    }
+
+    try {
+      DateTime openParsed, closeParsed;
+      try {
+        // First, try parsing with AM/PM format
+        final format = DateFormat("h:mm a");
+        openParsed = format.parse(openTimeStr);
+        closeParsed = format.parse(closeTimeStr);
+      } on FormatException {
+        // If that fails, fall back to 24-hour format
+        final format = DateFormat("HH:mm");
+        openParsed = format.parse(openTimeStr);
+        closeParsed = format.parse(closeTimeStr);
+      }
+
+      final openTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        openParsed.hour,
+        openParsed.minute,
+      );
+      var closeTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        closeParsed.hour,
+        closeParsed.minute,
+      );
+
+      if (closeTime.isBefore(openTime)) {
+        closeTime = closeTime.add(const Duration(days: 1));
+      }
+
+      return now.isAfter(openTime) && now.isBefore(closeTime);
+    } catch (e, st) {
+      AppLogger.logError(
+        'Opening hour parse error for ${this.name}',
+        error: e,
+        stackTrace: st,
+      );
+      return false;
+    }
   }
 
   bool matchGenderPref(GenderPreference preference) {
