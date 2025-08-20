@@ -5,7 +5,6 @@ import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
-import 'package:app/src/features/home/domain/entity_extensions.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 
 class FakeFoodRepository implements FoodRepository {
@@ -145,9 +144,6 @@ class FakeFoodRepository implements FoodRepository {
   List<Food> _applyFoodFilter(List<Food> foods, FoodFilter filter) {
     List<Food> result = List.from(foods);
 
-    if (filter.isOpen) {
-      result = result.where((food) => food.isEntityOpen()).toList();
-    }
     if (filter.genderPref != GenderPreference.any) {
       result = result
           .where((food) => food.genderPref == filter.genderPref)

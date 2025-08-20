@@ -130,9 +130,6 @@ class ResidenceRepository {
       Query<Residence> query, ResidenceFilter filter) {
     var newQuery = query;
 
-    if (filter.isOpen) {
-      newQuery = newQuery.where('isOpen', isEqualTo: true);
-    }
     if (filter.isFurnished) {
       newQuery = newQuery.where('isFurnished', isEqualTo: true);
     }
@@ -140,8 +137,10 @@ class ResidenceRepository {
       newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
     }
     if (filter.ratingSort != SortOrder.none) {
-      newQuery = newQuery.orderBy('rating',
-          descending: filter.ratingSort == SortOrder.highToLow);
+      newQuery = newQuery
+          .where('avgRating', isGreaterThanOrEqualTo: 0)
+          .orderBy('avgRating',
+              descending: filter.ratingSort == SortOrder.highToLow);
     }
     if (filter.priceSort != SortOrder.none) {
       newQuery = newQuery.orderBy('price',

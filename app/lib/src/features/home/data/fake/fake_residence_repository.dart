@@ -6,7 +6,6 @@ import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
-import 'package:app/src/features/home/domain/entity_extensions.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 
 class FakeResidenceRepository implements ResidenceRepository {
@@ -36,12 +35,10 @@ class FakeResidenceRepository implements ResidenceRepository {
     String? lastEntityId,
   }) async {
     await delay(addDelay);
-    List<Residence> filteredResidences =
-        _residences.value.where((r) => r.isPopular == false).toList();
-    filteredResidences = _applyResidenceFilter(
-      filteredResidences,
-      filter,
-    );
+    List<Residence> filteredResidences = _residences.value
+        .where((r) => r.isPopular == false)
+        .toList();
+    filteredResidences = _applyResidenceFilter(filteredResidences, filter);
 
     int startIndex = 0;
     if (lastEntityId != null) {
@@ -161,9 +158,6 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) {
     List<Residence> result = List.from(residences);
 
-    if (filter.isOpen) {
-      result = result.where((residence) => residence.isEntityOpen()).toList();
-    }
     if (filter.isFurnished) {
       result = result.where((residence) => residence.isFurnished).toList();
     }
