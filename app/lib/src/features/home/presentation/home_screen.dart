@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/core/common_widgets/empty_message_widget.dart';
@@ -82,6 +83,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ? CenteredMessageWidget(
                 useResponsiveDesign: true,
                 message: context.loc.somethingWentWrongTryAgain,
+                actions: PrimaryButton(
+                  text: context.loc.refresh,
+                  onPressed: () => _onRefresh(ref),
+                ),
               )
             : Stack(
                 children: [
