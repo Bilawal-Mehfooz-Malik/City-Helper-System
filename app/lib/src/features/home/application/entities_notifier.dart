@@ -23,7 +23,7 @@ class EntitiesNotifier extends _$EntitiesNotifier {
     ref.watch(subcategoryControllerProvider);
 
     fetchFirstPage();
-    return const EntitiesPaginatedState();
+    return const EntitiesPaginatedState(isInitialLoading: true);
   }
 
   Future<void> fetchFirstPage() async {
@@ -46,9 +46,13 @@ class EntitiesNotifier extends _$EntitiesNotifier {
 
       final hasMore = entities.length == limit;
 
-      state = state.copyWith(entities: entities, hasMore: hasMore);
+      state = state.copyWith(
+        entities: entities,
+        hasMore: hasMore,
+        isInitialLoading: false,
+      );
     } catch (e, _) {
-      state = state.copyWith(paginationError: e);
+      state = state.copyWith(paginationError: e, isInitialLoading: false);
     }
   }
 

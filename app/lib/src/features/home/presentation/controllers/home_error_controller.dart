@@ -10,7 +10,10 @@ part 'home_error_controller.g.dart';
 @riverpod
 AsyncError<void>? criticalErrorStatus(Ref ref, {required int categoryId}) {
   final entitiesState = ref.watch(entitiesNotifierProvider(categoryId));
-  // A critical error occurs if the initial fetch failed and there are no entities.
+  // A critical error occurs if the initial fetch failed, there are no entities,
+  // and we are not in a loading state.
+  if (entitiesState.isInitialLoading) return null;
+
   if (entitiesState.entities.isEmpty && entitiesState.paginationError != null) {
     return AsyncError(entitiesState.paginationError!, StackTrace.current);
   }

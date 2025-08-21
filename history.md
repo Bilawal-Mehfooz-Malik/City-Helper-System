@@ -50,3 +50,22 @@ This session focused on two main issues: incorrect open/closed status due to tim
     *   **Fake Repositories (`.../data/fake/`):** In `fake_food_repository.dart` and `fake_residence_repository.dart`, a `.where((e) => e.isPopular == false)` filter was added to the in-memory lists before any other filters were applied.
 
 This ensures that the "Popular" section and the "All" section now show mutually exclusive sets of items.
+
+## Chat History - Advanced Firestore Query Debugging
+
+This session focused on debugging and fixing two advanced Firestore query issues that arose from previous changes.
+
+### 1. Rating Sort Excluding Documents
+
+*   **Problem:** After fixing the sorting field name to `avgRating`, items with a rating of `0` were still being excluded from sorted results.
+*   **Investigation:** This is standard Firestore behavior. When an `orderBy` clause is used, documents that do not contain the specified field are excluded from the result set. It was likely that older documents in the database, created before the `avgRating` field was added to the model with a default, were missing the field entirely.
+*   **Solution:** To force Firestore to include all documents in the sort, a range filter was added to the query. The code in both `food_repository.dart` and `residence_repository.dart` was changed from `.orderBy('avgRating', ...)` to `.where('avgRating', isGreaterThanOrEqualTo: 0).orderBy('avgRating', ...)`. This ensures all documents with a rating, including zero, are considered.
+
+### 2. "Show Open Only" Filter Returning No Items
+
+*   **Problem:** The "Show Open Only" filter was completely broken, returning an empty list even when items should have been visible.
+*   **Investigation:** A critical architectural flaw was identified. The app's query logic in the real repositories was attempting to filter on a boolean field named `isOpen` in Firestore (e.g., `.where('isOpen', isEqualTo: true)`). However, this field does not exist in the database. The open/closed status is a property computed on the client-side within the `isEntityOpen()` method, which cannot be used in a backend query.
+*   **Solution & Recommendation:** The only truly correct solution is to store the open/closed status in the database and update it via a scheduled backend process (like a Cloud Function). Since this was not possible to implement from the agent, the following safe change was made to prevent the app from breaking:
+    1.  The broken `.where('isOpen', isEqualTo: true)` query was removed from the `_buildFilteredQuery` methods in both `food_repository.dart` and `residence_repository.dart`.
+    2.  To maintain consistent behavior, the corresponding client-side filter logic was also removed from the fake repositories (`fake_food_repository.dart` and `fake_residence_repository.dart`).
+*   **Outcome:** The "Show Open Only" switch is now safely disabled across the application. It no longer causes an error, and the feature can be implemented correctly on the backend when ready.

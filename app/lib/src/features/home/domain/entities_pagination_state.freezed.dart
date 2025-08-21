@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EntitiesPaginatedState {
 
- List<Entity> get entities; bool get hasMore; Object? get paginationError; bool get isLoadingNextPage;
+ List<Entity> get entities; bool get hasMore; Object? get paginationError; bool get isInitialLoading; bool get isLoadingNextPage;
 /// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $EntitiesPaginatedStateCopyWith<EntitiesPaginatedState> get copyWith => _$Entiti
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntitiesPaginatedState&&const DeepCollectionEquality().equals(other.entities, entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntitiesPaginatedState&&const DeepCollectionEquality().equals(other.entities, entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(entities),hasMore,const DeepCollectionEquality().hash(paginationError),isLoadingNextPage);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(entities),hasMore,const DeepCollectionEquality().hash(paginationError),isInitialLoading,isLoadingNextPage);
 
 @override
 String toString() {
-  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
+  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isInitialLoading: $isInitialLoading, isLoadingNextPage: $isLoadingNextPage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $EntitiesPaginatedStateCopyWith<$Res>  {
   factory $EntitiesPaginatedStateCopyWith(EntitiesPaginatedState value, $Res Function(EntitiesPaginatedState) _then) = _$EntitiesPaginatedStateCopyWithImpl;
 @useResult
 $Res call({
- List<Entity> entities, bool hasMore, Object? paginationError, bool isLoadingNextPage
+ List<Entity> entities, bool hasMore, Object? paginationError, bool isInitialLoading, bool isLoadingNextPage
 });
 
 
@@ -62,11 +62,12 @@ class _$EntitiesPaginatedStateCopyWithImpl<$Res>
 
 /// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isLoadingNextPage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isInitialLoading = null,Object? isLoadingNextPage = null,}) {
   return _then(_self.copyWith(
 entities: null == entities ? _self.entities : entities // ignore: cast_nullable_to_non_nullable
 as List<Entity>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,paginationError: freezed == paginationError ? _self.paginationError : paginationError ,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
+as bool,paginationError: freezed == paginationError ? _self.paginationError : paginationError ,isInitialLoading: null == isInitialLoading ? _self.isInitialLoading : isInitialLoading // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isInitialLoading,  bool isLoadingNextPage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EntitiesPaginatedState() when $default != null:
-return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
+return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isInitialLoading,_that.isLoadingNextPage);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isInitialLoading,  bool isLoadingNextPage)  $default,) {final _that = this;
 switch (_that) {
 case _EntitiesPaginatedState():
-return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
+return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isInitialLoading,_that.isLoadingNextPage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isLoadingNextPage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Entity> entities,  bool hasMore,  Object? paginationError,  bool isInitialLoading,  bool isLoadingNextPage)?  $default,) {final _that = this;
 switch (_that) {
 case _EntitiesPaginatedState() when $default != null:
-return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadingNextPage);case _:
+return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isInitialLoading,_that.isLoadingNextPage);case _:
   return null;
 
 }
@@ -208,7 +209,7 @@ return $default(_that.entities,_that.hasMore,_that.paginationError,_that.isLoadi
 
 
 class _EntitiesPaginatedState implements EntitiesPaginatedState {
-  const _EntitiesPaginatedState({final  List<Entity> entities = const [], this.hasMore = true, this.paginationError, this.isLoadingNextPage = false}): _entities = entities;
+  const _EntitiesPaginatedState({final  List<Entity> entities = const [], this.hasMore = true, this.paginationError, this.isInitialLoading = false, this.isLoadingNextPage = false}): _entities = entities;
   
 
  final  List<Entity> _entities;
@@ -220,6 +221,7 @@ class _EntitiesPaginatedState implements EntitiesPaginatedState {
 
 @override@JsonKey() final  bool hasMore;
 @override final  Object? paginationError;
+@override@JsonKey() final  bool isInitialLoading;
 @override@JsonKey() final  bool isLoadingNextPage;
 
 /// Create a copy of EntitiesPaginatedState
@@ -232,16 +234,16 @@ _$EntitiesPaginatedStateCopyWith<_EntitiesPaginatedState> get copyWith => __$Ent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EntitiesPaginatedState&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EntitiesPaginatedState&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other.paginationError, paginationError)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_entities),hasMore,const DeepCollectionEquality().hash(paginationError),isLoadingNextPage);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_entities),hasMore,const DeepCollectionEquality().hash(paginationError),isInitialLoading,isLoadingNextPage);
 
 @override
 String toString() {
-  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isLoadingNextPage: $isLoadingNextPage)';
+  return 'EntitiesPaginatedState(entities: $entities, hasMore: $hasMore, paginationError: $paginationError, isInitialLoading: $isInitialLoading, isLoadingNextPage: $isLoadingNextPage)';
 }
 
 
@@ -252,7 +254,7 @@ abstract mixin class _$EntitiesPaginatedStateCopyWith<$Res> implements $Entities
   factory _$EntitiesPaginatedStateCopyWith(_EntitiesPaginatedState value, $Res Function(_EntitiesPaginatedState) _then) = __$EntitiesPaginatedStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Entity> entities, bool hasMore, Object? paginationError, bool isLoadingNextPage
+ List<Entity> entities, bool hasMore, Object? paginationError, bool isInitialLoading, bool isLoadingNextPage
 });
 
 
@@ -269,11 +271,12 @@ class __$EntitiesPaginatedStateCopyWithImpl<$Res>
 
 /// Create a copy of EntitiesPaginatedState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isLoadingNextPage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? entities = null,Object? hasMore = null,Object? paginationError = freezed,Object? isInitialLoading = null,Object? isLoadingNextPage = null,}) {
   return _then(_EntitiesPaginatedState(
 entities: null == entities ? _self._entities : entities // ignore: cast_nullable_to_non_nullable
 as List<Entity>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,paginationError: freezed == paginationError ? _self.paginationError : paginationError ,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
+as bool,paginationError: freezed == paginationError ? _self.paginationError : paginationError ,isInitialLoading: null == isInitialLoading ? _self.isInitialLoading : isInitialLoading // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

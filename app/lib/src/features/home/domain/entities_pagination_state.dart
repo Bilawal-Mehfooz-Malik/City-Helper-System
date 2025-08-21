@@ -9,6 +9,7 @@ abstract class EntitiesPaginatedState with _$EntitiesPaginatedState {
     @Default([]) List<Entity> entities,
     @Default(true) bool hasMore,
     Object? paginationError,
+    @Default(false) bool isInitialLoading,
     @Default(false) bool isLoadingNextPage,
   }) = _EntitiesPaginatedState;
 }
