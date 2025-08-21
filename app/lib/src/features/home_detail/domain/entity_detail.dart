@@ -14,6 +14,7 @@ part 'entity_detail.g.dart';
 // Helpers for JSON conversion
 const _latLngJsonConverter = LatLngJsonConverter();
 const _timestampJsonConverter = TimestampJsonConverter();
+const _openingHoursConverter = OpeningHoursConverter();
 
 @freezed
 sealed class EntityDetail with _$EntityDetail {
@@ -32,7 +33,8 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    required List<OpeningHours> openingHours,
+    @_openingHoursConverter
+    required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
@@ -41,6 +43,9 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(false) bool isFurnished,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
+    @Default("Asia/Karachi") String timezone,
+    @Default(false) bool isOpen,
+    @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields
     required UserId ownerId,
@@ -70,12 +75,16 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    required List<OpeningHours> openingHours,
+    @_openingHoursConverter
+    required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
+    @Default("Asia/Karachi") String timezone,
+    @Default(false) bool isOpen,
+    @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields
     required UserId ownerId,

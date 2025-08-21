@@ -1,127 +1,81 @@
-# Plan: Implement Server-Side Filtering
+# Plan: Implement Backend isOpen Status Logic (v2)
 
-This plan outlines the steps to refactor our data-fetching pipeline to apply filters directly within Firestore queries. This leverages our existing pagination system, ensuring that filtering is efficient, scalable, and cost-effective by only downloading the data the user requests.
-
----
-
-## 1. Update Repository Layer to Build Dynamic Queries
-
-**Goal:** Modify the repository methods to accept an `EntityFilter` object and dynamically construct Firestore queries based on its properties.
-
-### Detailed Checklist
-
-- [x] **1.1: Update `FoodRepository` Methods:**
-    - Modify `fetchFoodsList` and `fetchFoodsListSubCategoryId`.
-    - These methods will now accept a `FoodFilter` object.
-    - Inside each method, build a `Query` object by conditionally adding:
-        - `.where('isOpen', isEqualTo: true)` if `filter.isOpen` is true.
-        - `.where('genderPref', isEqualTo: ...)` if `filter.genderPref` is not `any`.
-        - `.orderBy('rating', ...)` if `filter.ratingSort` is not `none`.
-    - The existing pagination logic (`limit`, `startAfterDocument`) will be applied to this dynamic query.
-
-- [x] **1.2: Update `ResidenceRepository` Methods:**
-    - Modify `fetchResidencesList` and `fetchResidencesListBySubCategoryId`.
-    - These methods will now accept a `ResidenceFilter` object.
-    - Build a `Query` object by conditionally adding `.where()` and `.orderBy()` clauses for `isOpen`, `isFurnished`, `genderPref`, `ratingSort`, and `priceSort`.
-
-- [x] **1.3: Update Popular Entity Fetching Methods:**
-    - Update `fetchPopularFoods` and `fetchPopularResidences` to also accept the relevant filter and apply it to their queries.
-
-## 2. Update Service Layer to Pass Filters
-
-**Goal:** Thread the `EntityFilter` object from the application layer down to the repository layer.
-
-### Detailed Checklist
-
-- [x] **2.1: Update `EntityService` Methods:**
-    - Modify `fetchEntitiesPaginated` and `fetchPopularEntitiesPaginated`.
-    - These methods will now require an `EntityFilter` parameter.
-    - They will pass this filter object down to the appropriate repository method.
-
-## 3. Update Application Layer (Notifiers)
-
-**Goal:** Read the active filter from the UI state and use it when fetching data.
-
-### Detailed Checklist
-
-- [x] **3.1: Update `EntitiesNotifier`:**
-    - In `entities_paginated_provider.dart`, modify the logic that calls `fetchEntitiesPaginated`.
-    - It will now read the current filter from `filterControllerProvider` and pass it to the service method.
-    - The existing logic that re-fetches data when the filter changes will now correctly trigger a new server-side query.
-
-- [x] **3.2: Update `PopularEntitiesNotifier`:**
-    - In `popular_entities_paginated_provider.dart`, apply the same logic as above.
-    - The notifier will read the filter and pass it to `fetchPopularEntitiesPaginated`.
-
-## 4. Verification and Indexing
-
-**Goal:** Test the implementation and create the necessary Firestore indexes.
-
-### Detailed Checklist
-
-- [ ] **4.1: Manual Testing:**
-    - Run the app and test all filter and sort combinations for both "All Entities" and "Popular Entities".
-    - Check the debug console for errors from Firestore about missing indexes.
-
-- [ ] **4.2: Create Composite Indexes:**
-    - As errors appear, use the link provided in the Firestore error message to create the required composite indexes in the Firebase Console.
-    - **Note:** This is a manual step that must be done in the Firebase project settings. The application will not work correctly without these indexes.
-
-# Plan: Introduce Separate Filter Contexts
-
-**Goal:** Allow independent filtering for the "All Entities" list and the "Popular Entities" list.
+This plan outlines the steps to create a robust, server-side system using Cloud Functions and Cloud Tasks to automatically manage an `isOpen` flag on all place documents in Firestore. This version includes timezone support, complex hour handling, and security.
 
 ---
 
-## 1. Create Separate Filter Providers
+### Master Checklist
 
-**Goal:** Define distinct Riverpod providers for each filter context.
-
-### Detailed Checklist
-
-- [x] **1.1: Rename `filterControllerProvider`:**
-    - Rename `app/lib/src/features/home/presentation/controllers/filter_controller.dart` to `app/lib/src/features/home/presentation/controllers/entities_filter_controller.dart`.
-    - Rename the class `FilterController` to `EntitiesFilterController`.
-    - Rename the provider `filterControllerProvider` to `entitiesFilterControllerProvider`.
-
-- [x] **1.2: Create `popular_entities_filter_controller.dart`:**
-    - Create a new file `app/lib/src/features/home/presentation/controllers/popular_entities_filter_controller.dart`.
-    - This file will contain a new `PopularEntitiesFilterController` class and `popularEntitiesFilterControllerProvider`, mirroring the structure of `EntitiesFilterController`.
+- [x] **Phase 1: Project Setup & Configuration**
+- [ ] **Phase 2: Refine Data Model & Migrate Firestore Data**
+- [ ] **Phase 3: Implement Core Backend Logic**
+- [ ] **Phase 4: Implement Cloud Function Triggers**
+- [ ] **Phase 5: Deployment and System Initialization**
+- [ ] **Phase 6: Update Flutter App**
 
 ---
 
-## 2. Update Notifiers to Watch Respective Filter Providers
+### Phase 1: Project Setup & Configuration
 
-**Goal:** Ensure each notifier reacts only to changes in its dedicated filter provider.
+**Goal:** Prepare the local project and Google Cloud environment for backend development.
 
-### Detailed Checklist
-
-- [x] **2.1: Update `EntitiesNotifier`:**
-    - In `app/lib/src/features/home/application/entities_notifier.dart`, change `ref.watch(filterControllerProvider(...))` to `ref.watch(entitiesFilterControllerProvider(...))`.
-    - Change `ref.read(filterControllerProvider(...))` to `ref.read(entitiesFilterControllerProvider(...))`.
-
-- [x] **2.2: Update `PopularEntitiesNotifier`:**
-    - In `app/lib/src/features/home/application/popular_entities_notifier.dart`, change `ref.watch(filterControllerProvider(...))` to `ref.watch(popularEntitiesFilterControllerProvider(...))`.
-    - Change `ref.read(filterControllerProvider(...))` to `ref.read(popularEntitiesFilterControllerProvider(...))`.
+- [x] **1.1:** In the project root, run `firebase init functions` to set up a new functions directory.
+- [x] **1.2:** When prompted, choose **TypeScript** as the language and select **Yes** to enable ESLint.
+- [x] **1.3:** Add the required Node.js dependency for Cloud Tasks by running `npm install @google-cloud/tasks date-fns-tz` inside the new `functions` directory.
+- [x] **1.4:** In the Google Cloud Console, go to "IAM & Admin" and grant the **"Cloud Tasks Enqueuer"** role to the default Cloud Functions service account.
 
 ---
 
-## 3. Update UI Components to Use Correct Filter Context
+### Phase 2: Refine Data Model & Migrate Firestore Data
 
-**Goal:** Modify `FilterDialog` and its calling sites to interact with the appropriate filter provider.
+**Goal:** Update the Firestore document structure to support all real-world scenarios.
 
-### Detailed Checklist
-
-- [x] **3.1: Modify `FilterDialog`:**
-    - Update `app/lib/src/features/home/presentation/widgets/filter_dialog.dart`.
-    - The `FilterDialog` will need a new parameter, e.g., `FilterContext contextType`, to determine which filter provider it should interact with.
-    - Inside `FilterDialog`, use a `switch` statement or `if/else` to read/update either `entitiesFilterControllerProvider` or `popularEntitiesFilterControllerProvider` based on `contextType`.
-
-- [x] **3.2: Update `EntitiesListSection`:**
-    - In `app/lib/src/features/home/presentation/entities_list_section.dart`, when calling `_showFilterDialog`, pass the appropriate `FilterContext` (e.g., `FilterContext.allEntities`).
-
-- [x] **3.3: Update `PopularEntitiesListScreen`:**
-    - In `app/lib/src/features/home/presentation/popular_entities_list_screen.dart`, when calling `_showFilterDialog`, pass the appropriate `FilterContext` (e.g., `FilterContext.popularEntities`).
-    - Also, update the `resetFilters()` call in `_onBack` to use `popularEntitiesFilterControllerProvider`.
+- [ ] **2.1:** Manually update your test documents in the `food` and `residence` collections to match the new, more flexible structure defined in the chat.
+- [ ] **2.2:** Add the `is24Hours` (Boolean) field.
+- [ ] **2.3:** Add the `timezone` (String) field (e.g., "America/New_York").
+- [ ] **2.4:** Restructure the `openingHours` field to be a map with string days and an array of time slots.
+- [ ] **2.5:** Add the `isOpen` (Boolean) and `scheduledTaskNames` (Map) fields with default values.
 
 ---
+
+### Phase 3: Implement Core Backend Logic
+
+**Goal:** Create the central "brain" of the operation in `functions/src/index.ts`.
+
+- [ ] **3.1:** Update TypeScript interfaces to match the new data model.
+- [ ] **3.2:** Implement the `updateAndReschedule` helper function.
+- [ ] **3.3:** **Handle `is24Hours` flag:** If true, set `isOpen: true` and skip all time-based logic.
+- [ ] **3.4:** **Implement Timezone-Aware Logic:** Use `date-fns-tz` to convert the current time to the business's local timezone before checking `openingHours`.
+- [ ] **3.5:** **Handle New `openingHours` Structure:** The logic must now iterate through the array of time slots for the current day.
+- [ ] **3.6:** **Handle Overnight Spans:** Correctly calculate status for time slots that cross midnight.
+- [ ] **3.7:** Implement task cancellation and scheduling using timezone-aware calculations.
+
+---
+
+### Phase 4: Implement Cloud Function Triggers
+
+**Goal:** Create the entry points that will execute our core logic.
+
+- [ ] **4.1:** Create the **`onPlaceWrite`** function for **both** the `residence` and `food` collections.
+- [ ] **4.2:** Implement the **`setOpenStatus`** HTTPS trigger, ensuring it can only be called by Cloud Tasks.
+- [ ] **4.3:** Implement the **`updateAllPlaces`** HTTPS trigger, ensuring it is secured and can only be run by an authenticated admin user.
+
+---
+
+### Phase 5: Deployment and System Initialization
+
+**Goal:** Deploy the backend code and initialize the live data.
+
+- [ ] **5.1:** Deploy the functions via `firebase deploy --only functions`.
+- [ ] **5.2:** Manually trigger the (now secure) `updateAllPlaces` endpoint once to initialize the system.
+- [ ] **5.3:** Verify in the Google Cloud Console that tasks are being created correctly.
+
+---
+
+### Phase 6: Update Flutter App
+
+**Goal:** Modify the app to use the new data model and `isOpen` field.
+
+- [ ] **6.1:** Update the `Entity` and `OpeningHours` models in your Flutter app to match the new Firestore structure.
+- [ ] **6.2:** Update the UI for editing opening hours to support the new flexible structure (multiple slots, string days).
+- [ ] **6.3:** In the repositories, change the "Show Open Only" filter to use `.where('isOpen', '==', true)`.

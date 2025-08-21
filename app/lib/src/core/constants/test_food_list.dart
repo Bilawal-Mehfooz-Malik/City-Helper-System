@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,7 +16,7 @@ final List<Food> testFoods = [
     avgRating: 4.5,
     totalReviews: 120,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -35,7 +35,7 @@ final List<Food> testFoods = [
     avgRating: 4.2,
     totalReviews: 98,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -54,7 +54,7 @@ final List<Food> testFoods = [
     avgRating: 4.7,
     totalReviews: 150,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -73,7 +73,7 @@ final List<Food> testFoods = [
     avgRating: 4.3,
     totalReviews: 80,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -92,7 +92,7 @@ final List<Food> testFoods = [
     avgRating: 4.6,
     totalReviews: 200,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -111,7 +111,7 @@ final List<Food> testFoods = [
     avgRating: 3.9,
     totalReviews: 75,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -130,7 +130,7 @@ final List<Food> testFoods = [
     avgRating: 4.1,
     totalReviews: 65,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
@@ -149,21 +149,11 @@ final List<Food> testFoods = [
     avgRating: 4.0,
     totalReviews: 55,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
     createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
     type: EntityType.food,
   ),
-];
-
-final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];

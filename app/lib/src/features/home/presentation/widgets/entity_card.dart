@@ -53,7 +53,7 @@ class EntityCard extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                child: entity.isEntityOpen()
+                child: entity.isOpen
                     ? OpenIndicator()
                     : CloseIndicator(),
               ),

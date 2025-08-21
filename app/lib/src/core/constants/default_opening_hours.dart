@@ -1,11 +1,25 @@
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/models/time_slot.dart';
 
-List<OpeningHours> defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
-];
+final Map<DayOfWeek, OpeningHours> defaultOpeningHours = {
+  DayOfWeek.monday: const OpeningHours(
+    slots: [TimeSlot(open: "09:00", close: "17:00")],
+  ),
+  DayOfWeek.tuesday: const OpeningHours(
+    slots: [TimeSlot(open: "09:00", close: "17:00")],
+  ),
+  DayOfWeek.wednesday: const OpeningHours(
+    slots: [TimeSlot(open: "09:00", close: "17:00")],
+  ),
+  DayOfWeek.thursday: const OpeningHours(
+    slots: [TimeSlot(open: "09:00", close: "17:00")],
+  ),
+  DayOfWeek.friday: const OpeningHours(
+    slots: [TimeSlot(open: "09:00", close: "17:00")],
+  ),
+  DayOfWeek.saturday: const OpeningHours(
+    slots: [TimeSlot(open: "10:00", close: "18:00")],
+  ),
+  DayOfWeek.sunday: const OpeningHours(isDayOff: true, slots: []),
+};

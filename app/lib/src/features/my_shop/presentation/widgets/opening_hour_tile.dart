@@ -1,11 +1,15 @@
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/models/time_slot.dart';
+import 'package:app/src/core/utils/date_formatter.dart';
+import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
 class OpeningHoursTile extends StatelessWidget {
-  final List<OpeningHours> openingHours;
-  final ValueChanged<List<OpeningHours>> onOpeningHoursChanged;
+  final Map<DayOfWeek, OpeningHours> openingHours;
+  final ValueChanged<Map<DayOfWeek, OpeningHours>> onOpeningHoursChanged;
 
   const OpeningHoursTile({
     super.key,
@@ -17,7 +21,7 @@ class OpeningHoursTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        'Opening Hours: ${openingHours.isEmpty ? "Not Set" : "${openingHours.length} set"}'
+        '${context.loc.editOpeningHours}: ${openingHours.isEmpty ? "Not Set" : "${openingHours.length} days set"}'
             .hardcoded,
       ),
       trailing: const Icon(Icons.access_time),
@@ -26,28 +30,32 @@ class OpeningHoursTile extends StatelessWidget {
   }
 
   Future<void> _editOpeningHours(BuildContext context) async {
-    List<OpeningHours> tempHours = List.from(openingHours);
+    // Create a mutable copy of the opening hours map
+    final Map<DayOfWeek, OpeningHours> tempHours = Map.from(openingHours);
 
     await showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Edit Opening Hours'.hardcoded),
+          title: Text(context.loc.editOpeningHours),
           content: SizedBox(
             width: double.maxFinite,
-            height: 400,
+            height:
+                MediaQuery.of(context).size.height *
+                0.7, // Use a percentage of screen height
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: tempHours.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final dayHours = entry.value;
-
+                children: DayOfWeek.values.map((day) {
+                  final dayHours =
+                      tempHours[day] ??
+                      const OpeningHours(isDayOff: true, slots: []);
                   return OpeningHoursEditor(
+                    day: day,
                     dayHours: dayHours,
                     onChanged: (updatedHours) {
                       setState(() {
-                        tempHours[index] = updatedHours;
+                        tempHours[day] = updatedHours;
                       });
                     },
                   );
@@ -61,7 +69,7 @@ class OpeningHoursTile extends StatelessWidget {
                 onOpeningHoursChanged(tempHours);
                 Navigator.pop(context);
               },
-              child: Text('Done'.hardcoded),
+              child: Text(context.loc.done),
             ),
           ],
         ),
@@ -71,64 +79,94 @@ class OpeningHoursTile extends StatelessWidget {
 }
 
 class OpeningHoursEditor extends StatelessWidget {
+  final DayOfWeek day;
   final OpeningHours dayHours;
   final ValueChanged<OpeningHours> onChanged;
 
   const OpeningHoursEditor({
     super.key,
+    required this.day,
     required this.dayHours,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
+    final dayName = day.name[0].toUpperCase() + day.name.substring(1);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: Sizes.p12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            dayHours.day,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          gapH4,
+          Text(dayName, style: const TextStyle(fontWeight: FontWeight.w600)),
           Row(
             children: [
               Expanded(
-                child: TimePickerField(
-                  label: 'Open'.hardcoded,
-                  // TODO: AN ISSUE
-                  time: dayHours.open!,
-                  onChanged: (newTime) {
+                child: SwitchListTile(
+                  title: Text(loc.closed),
+                  value: dayHours.isDayOff,
+                  onChanged: (value) {
                     onChanged(
-                      OpeningHours(
-                        day: dayHours.day,
-                        open: newTime,
-                        close: dayHours.close,
+                      dayHours.copyWith(
+                        isDayOff: value,
+                        is24Hours: false,
+                        slots: [],
                       ),
                     );
                   },
                 ),
               ),
-              gapH8,
               Expanded(
-                child: TimePickerField(
-                  label: 'Close'.hardcoded,
-                  // TODO: AN ISSUE
-                  time: dayHours.close!,
-                  onChanged: (newTime) {
-                    onChanged(
-                      OpeningHours(
-                        day: dayHours.day,
-                        open: dayHours.open,
-                        close: newTime,
-                      ),
-                    );
-                  },
+                child: SwitchListTile(
+                  title: Text(context.loc.open24Hours),
+                  value: dayHours.is24Hours,
+                  onChanged: dayHours.isDayOff
+                      ? null
+                      : (value) {
+                          onChanged(
+                            dayHours.copyWith(
+                              is24Hours: value,
+                              isDayOff: false,
+                              slots: [],
+                            ),
+                          );
+                        },
                 ),
               ),
             ],
           ),
+          if (!dayHours.isDayOff && !(dayHours.is24Hours)) ...[
+            ...dayHours.slots.asMap().entries.map((entry) {
+              final index = entry.key;
+              final slot = entry.value;
+              return TimeSlotEditor(
+                slot: slot,
+                onChanged: (updatedSlot) {
+                  final newSlots = List<TimeSlot>.from(dayHours.slots);
+                  newSlots[index] = updatedSlot;
+                  onChanged(dayHours.copyWith(slots: newSlots));
+                },
+                onDelete: () {
+                  final newSlots = List<TimeSlot>.from(dayHours.slots);
+                  newSlots.removeAt(index);
+                  onChanged(dayHours.copyWith(slots: newSlots));
+                },
+              );
+            }),
+            TextButton.icon(
+              onPressed: () {
+                final newSlots = List<TimeSlot>.from(dayHours.slots);
+                newSlots.add(
+                  const TimeSlot(open: '09:00', close: '17:00'),
+                ); // Default new slot
+                onChanged(dayHours.copyWith(slots: newSlots));
+              },
+              icon: const Icon(Icons.add),
+              label: Text(context.loc.addSlot),
+            ),
+          ],
           const Divider(),
         ],
       ),
@@ -136,9 +174,46 @@ class OpeningHoursEditor extends StatelessWidget {
   }
 }
 
+class TimeSlotEditor extends StatelessWidget {
+  final TimeSlot slot;
+  final ValueChanged<TimeSlot> onChanged;
+  final VoidCallback onDelete;
+
+  const TimeSlotEditor({
+    super.key,
+    required this.slot,
+    required this.onChanged,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TimePickerField(
+            label: context.loc.open,
+            time: slot.open,
+            onChanged: (newTime) => onChanged(slot.copyWith(open: newTime)),
+          ),
+        ),
+        gapW8,
+        Expanded(
+          child: TimePickerField(
+            label: context.loc.close,
+            time: slot.close,
+            onChanged: (newTime) => onChanged(slot.copyWith(close: newTime)),
+          ),
+        ),
+        IconButton(icon: const Icon(Icons.delete), onPressed: onDelete),
+      ],
+    );
+  }
+}
+
 class TimePickerField extends StatelessWidget {
   final String label;
-  final String time; // expects "HH:mm" format
+  final String time;
   final ValueChanged<String> onChanged;
 
   const TimePickerField({
@@ -150,9 +225,6 @@ class TimePickerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FIX: The time string is already in "HH:mm" format, so it can be displayed directly.
-    final String displayTime = time;
-
     return InkWell(
       onTap: () async {
         final timeParts = time.split(':');
@@ -164,7 +236,6 @@ class TimePickerField extends StatelessWidget {
         final picked = await showTimePicker(
           context: context,
           initialTime: initialTime,
-          // FIX: The builder enforces a 24-hour clock UI.
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(
@@ -183,7 +254,7 @@ class TimePickerField extends StatelessWidget {
       },
       child: InputDecorator(
         decoration: InputDecoration(labelText: label),
-        child: Text(displayTime),
+        child: Text(formatTimeTo12Hour(time)),
       ),
     );
   }

@@ -257,6 +257,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaveAREview => 'Leave a Review';
 
   @override
+  String get editOpeningHours => 'Edit Opening Hours';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get addSlot => 'Add Slot';
+
+  @override
+  String get open24Hours => '24 Hours';
+
+  @override
   String get enterPhoneNum => 'Enter your phone number';
 
   @override

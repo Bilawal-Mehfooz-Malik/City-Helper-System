@@ -1,12 +1,11 @@
-import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/core/utils/date_formatter.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/home_detail/domain/entity_detail_extensions.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
 
 class OpeningHoursWidget extends StatefulWidget {
   final EntityDetail entity;
@@ -22,21 +21,22 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final todayAbbr = DateFormat.E().format(DateTime.now());
-    final hours = widget.entity.openingHours;
-    final isOpen = widget.entity.isEntityOpen();
+    final hoursMap = widget.entity.openingHours;
+    final isOpen = widget.entity.isOpen;
 
-    final todayIndex = hours.indexWhere(
-      (h) => h.day.toLowerCase().startsWith(todayAbbr.toLowerCase()),
-    );
+    final now = DateTime.now();
+    final today = DayOfWeek.values[now.weekday % 7]; // sunday is 0
 
-    final todayHours = todayIndex >= 0
-        ? hours[todayIndex]
-        : OpeningHours(day: '', open: context.loc.closed, close: null);
+    final todayHours =
+        hoursMap[today] ?? const OpeningHours(isDayOff: true, slots: []);
 
-    final reorderedHours = todayIndex >= 0
-        ? [...hours.sublist(todayIndex), ...hours.sublist(0, todayIndex)]
-        : hours;
+    // Create a list of days starting from today for display order
+    final displayDays = DayOfWeek.values.toList();
+    final todayIndex = displayDays.indexOf(today);
+    final reorderedDays = [
+      ...displayDays.sublist(todayIndex),
+      ...displayDays.sublist(0, todayIndex),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,11 +52,14 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
         ),
         if (_isExpanded) ...[
           gapW4,
-          ...reorderedHours.map((hour) {
-            final isToday = hour.day.toLowerCase().startsWith(
-              todayAbbr.toLowerCase(),
+          ...reorderedDays.map((day) {
+            final hourData =
+                hoursMap[day] ?? const OpeningHours(isDayOff: true, slots: []);
+            return OpeningHourRow(
+              day: day,
+              hour: hourData,
+              isToday: day == today,
             );
-            return OpeningHourRow(hour: hour, isToday: isToday);
           }),
         ],
       ],
@@ -79,32 +82,35 @@ class OpeningHoursLabel extends StatelessWidget {
     final loc = context.loc;
     final colorScheme = context.colorScheme;
 
-    final closedText = loc.closed;
-    final openText = loc.open;
-    final closesAtText = loc.closes;
-    final opensAtText = loc.opensAt;
-
-    final isClosed = todayHours.open?.toLowerCase() == closedText.toLowerCase();
-
     final normalColor = colorScheme.onSurface;
     final openColor = colorScheme.primary;
     final closedColor = colorScheme.error;
 
-    if (isClosed) {
-      return _buildColoredText(closedText, closedColor);
+    if (todayHours.isDayOff || todayHours.slots.isEmpty) {
+      return Text(
+        loc.closed,
+        style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
+      );
     }
+
+    final nextSlot = todayHours.slots.first; // Simplified for this example
 
     if (isOpen) {
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
           children: [
-            _coloredSpan(openText, openColor),
-            _normalSpan(' • '),
-            _normalSpan(
-              todayHours.close != null
-                  ? '$closesAtText ${formatTimeTo12Hour(todayHours.close!)}'
-                  : '',
+            TextSpan(
+              text: loc.open,
+              style: TextStyle(color: openColor, fontWeight: FontWeight.w600),
+            ),
+            const TextSpan(
+              text: ' • ',
+              style: TextStyle(fontWeight: FontWeight.w400),
+            ),
+            TextSpan(
+              text: '${loc.closes} ${formatTimeTo12Hour(nextSlot.close)}',
+              style: const TextStyle(fontWeight: FontWeight.w400),
             ),
           ],
         ),
@@ -114,33 +120,23 @@ class OpeningHoursLabel extends StatelessWidget {
         text: TextSpan(
           style: TextStyle(color: normalColor),
           children: [
-            _coloredSpan(closedText, closedColor),
-            _normalSpan(' • '),
-            _normalSpan(
-              todayHours.open != null
-                  ? '$opensAtText ${formatTimeTo12Hour(todayHours.open!)}'
-                  : '',
+            TextSpan(
+              text: loc.closed,
+              style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
+            ),
+            const TextSpan(
+              text: ' • ',
+              style: TextStyle(fontWeight: FontWeight.w400),
+            ),
+            TextSpan(
+              text: '${loc.opensAt} ${formatTimeTo12Hour(nextSlot.open)}',
+              style: const TextStyle(fontWeight: FontWeight.w400),
             ),
           ],
         ),
       );
     }
   }
-
-  TextSpan _coloredSpan(String text, Color color) => TextSpan(
-    text: text,
-    style: TextStyle(color: color, fontWeight: FontWeight.w600),
-  );
-
-  TextSpan _normalSpan(String text) => TextSpan(
-    text: text,
-    style: const TextStyle(fontWeight: FontWeight.w400),
-  );
-
-  Widget _buildColoredText(String text, Color color) => Text(
-    text,
-    style: TextStyle(color: color, fontWeight: FontWeight.w600),
-  );
 }
 
 class OpeningStatusHeader extends StatelessWidget {
@@ -159,7 +155,6 @@ class OpeningStatusHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.colorScheme;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(Sizes.p8),
@@ -172,15 +167,7 @@ class OpeningStatusHeader extends StatelessWidget {
           children: [
             const Icon(Icons.access_time, size: 20),
             gapW8,
-            Expanded(
-              child: DefaultTextStyle.merge(
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: isOpen ? colorScheme.primary : colorScheme.error,
-                ),
-                child: labelWidget,
-              ),
-            ),
+            Expanded(child: labelWidget),
             Icon(
               isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
             ),
@@ -192,38 +179,50 @@ class OpeningStatusHeader extends StatelessWidget {
 }
 
 class OpeningHourRow extends StatelessWidget {
+  final DayOfWeek day;
   final OpeningHours hour;
   final bool isToday;
 
-  const OpeningHourRow({super.key, required this.hour, required this.isToday});
+  const OpeningHourRow({
+    super.key,
+    required this.day,
+    required this.hour,
+    required this.isToday,
+  });
 
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
     final colorScheme = context.colorScheme;
-    final isClosed = hour.open?.toLowerCase() == loc.closed.toLowerCase();
-
     final textStyle = isToday
         ? const TextStyle(fontWeight: FontWeight.bold)
         : const TextStyle();
+    final dayName = day.name[0].toUpperCase() + day.name.substring(1);
+
+    String hoursText;
+    TextStyle hoursTextStyle = textStyle;
+
+    if (hour.isDayOff || hour.slots.isEmpty) {
+      hoursText = loc.closed;
+      hoursTextStyle = textStyle.copyWith(color: colorScheme.error);
+    } else if (hour.is24Hours) {
+      hoursText = 'Open 24 Hours'; // This should be localized
+      hoursTextStyle = textStyle.copyWith(color: colorScheme.primary);
+    } else {
+      hoursText = hour.slots
+          .map(
+            (slot) =>
+                '${formatTimeTo12Hour(slot.open)} – ${formatTimeTo12Hour(slot.close)}',
+          )
+          .join(', ');
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
-          SizedBox(width: 90, child: Text(hour.day, style: textStyle)),
-          if (isClosed)
-            Text(
-              loc.closed,
-              style: textStyle.copyWith(color: colorScheme.error),
-            )
-          else
-            Text(
-              hour.open != null && hour.close != null
-                  ? '${formatTimeTo12Hour(hour.open!)} – ${formatTimeTo12Hour(hour.close!)}'
-                  : '',
-              style: textStyle,
-            ),
+          SizedBox(width: 90, child: Text(dayName, style: textStyle)),
+          Text(hoursText, style: hoursTextStyle),
         ],
       ),
     );

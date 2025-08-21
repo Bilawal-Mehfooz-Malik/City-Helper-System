@@ -2,12 +2,12 @@ import 'dart:typed_data';
 
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:intl/intl.dart';
 
 part 'shop_form.freezed.dart';
 
@@ -35,10 +35,13 @@ abstract class ShopForm with _$ShopForm {
     required String websiteUrl,
 
     // Step 4: Business Specific Info
-    required List<OpeningHours> openingHours,
+    required Map<DayOfWeek, OpeningHours> openingHours,
     double? pricing,
     required bool isFurnished,
     required GenderPreference genderPref,
+    @Default("Asia/Karachi") String timezone,
+    @Default(false) bool isOpen,
+    @Default({}) Map<String, String> scheduledTaskNames,
 
     // Step 5: Media Uploads
     Uint8List? coverImageBytes,
@@ -71,10 +74,13 @@ abstract class ShopForm with _$ShopForm {
       genderPref: shop is ResidenceDetail
           ? shop.genderPref
           : shop is FoodDetail
-          ? shop.genderPref
-          : GenderPreference.any,
+              ? shop.genderPref
+              : GenderPreference.any,
       pricing: price,
       isFurnished: isFurnished,
+      timezone: shop.timezone,
+      isOpen: shop.isOpen,
+      scheduledTaskNames: shop.scheduledTaskNames,
     );
   }
 
@@ -92,19 +98,12 @@ abstract class ShopForm with _$ShopForm {
       instagramUrl: '',
       websiteUrl: '',
       latLng: null,
-      openingHours: _setDefaultOpeningHours(),
+      openingHours: defaultOpeningHours,
       genderPref: GenderPreference.any,
       isFurnished: false,
+      timezone: "Asia/Karachi",
+      isOpen: false,
+      scheduledTaskNames: {},
     );
   }
-}
-
-List<OpeningHours> _setDefaultOpeningHours() {
-  final now = DateTime.now();
-  final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-  return List.generate(7, (index) {
-    final dayDate = startOfWeek.add(Duration(days: index));
-    final day = DateFormat('EEEE').format(dayDate);
-    return OpeningHours(day: day, open: '09:00', close: '21:00');
-  });
 }

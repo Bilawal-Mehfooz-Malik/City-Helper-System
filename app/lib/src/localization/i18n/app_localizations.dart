@@ -580,6 +580,30 @@ abstract class AppLocalizations {
   /// **'Leave a Review'**
   String get leaveAREview;
 
+  /// No description provided for @editOpeningHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Opening Hours'**
+  String get editOpeningHours;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @addSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Slot'**
+  String get addSlot;
+
+  /// No description provided for @open24Hours.
+  ///
+  /// In en, this message translates to:
+  /// **'24 Hours'**
+  String get open24Hours;
+
   /// No description provided for @enterPhoneNum.
   ///
   /// In en, this message translates to:

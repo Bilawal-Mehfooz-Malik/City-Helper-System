@@ -1,4 +1,4 @@
-import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:app/src/core/models/my_data_types.dart';
@@ -17,7 +17,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.5,
     totalReviews: 120,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 10),
@@ -53,7 +53,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.8,
     totalReviews: 95,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 12),
@@ -82,7 +82,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 3.9,
     totalReviews: 60,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 15),
@@ -111,7 +111,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.2,
     totalReviews: 85,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 18),
@@ -140,7 +140,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.7,
     totalReviews: 100,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 20),
@@ -170,7 +170,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.9,
     totalReviews: 150,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 22),
@@ -199,7 +199,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 3.5,
     totalReviews: 45,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 24),
@@ -228,7 +228,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.3,
     totalReviews: 70,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 26),
@@ -257,7 +257,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.4,
     totalReviews: 88,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 28),
@@ -286,7 +286,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     avgRating: 4.6,
     totalReviews: 110,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     type: EntityType.residence,
     createdAt: DateTime(2024, 3, 30),
@@ -303,16 +303,6 @@ final List<ResidenceDetail> testResidenceDetails = [
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
   ),
-];
-
-final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];
 
 final List<RatingBreakdown> _defaultBreakdown = [

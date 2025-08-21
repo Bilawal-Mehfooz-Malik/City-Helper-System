@@ -20,6 +20,8 @@ enum ApprovalStatus { blocked, pending, approved }
 
 enum EntityType { residence, food }
 
+enum DayOfWeek { sunday, monday, tuesday, wednesday, thursday, friday, saturday }
+
 enum ListingType { forRent, forSale }
 
 extension IterableExtension<T> on Iterable<T> {

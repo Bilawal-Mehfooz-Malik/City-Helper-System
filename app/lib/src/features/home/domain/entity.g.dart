@@ -18,10 +18,9 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours:
-      (json['openingHours'] as List<dynamic>)
-          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  openingHours: _openingHoursConverter.fromJson(
+    json['openingHours'] as Map<String, dynamic>,
+  ),
   entityStatus:
       $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
       OperationalStatus.defaultStatus,
@@ -40,6 +39,13 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
+  timezone: json['timezone'] as String? ?? "Asia/Karachi",
+  isOpen: json['isOpen'] as bool? ?? false,
+  scheduledTaskNames:
+      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const {},
   $type: json['runtimeType'] as String?,
 );
 
@@ -55,7 +61,7 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': instance.openingHours.map((e) => e.toJson()).toList(),
+  'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
@@ -64,6 +70,9 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
+  'timezone': instance.timezone,
+  'isOpen': instance.isOpen,
+  'scheduledTaskNames': instance.scheduledTaskNames,
   'runtimeType': instance.$type,
 };
 
@@ -108,10 +117,9 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours:
-      (json['openingHours'] as List<dynamic>)
-          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  openingHours: _openingHoursConverter.fromJson(
+    json['openingHours'] as Map<String, dynamic>,
+  ),
   entityStatus:
       $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
       OperationalStatus.defaultStatus,
@@ -124,6 +132,13 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
+  timezone: json['timezone'] as String? ?? "Asia/Karachi",
+  isOpen: json['isOpen'] as bool? ?? false,
+  scheduledTaskNames:
+      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const {},
   $type: json['runtimeType'] as String?,
 );
 
@@ -139,11 +154,14 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': instance.openingHours.map((e) => e.toJson()).toList(),
+  'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'type': _$EntityTypeEnumMap[instance.type]!,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'timezone': instance.timezone,
+  'isOpen': instance.isOpen,
+  'scheduledTaskNames': instance.scheduledTaskNames,
   'runtimeType': instance.$type,
 };

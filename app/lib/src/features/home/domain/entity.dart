@@ -13,10 +13,11 @@ part 'entity.g.dart';
 // Helpers for JSON conversion
 const _latLngJsonConverter = LatLngJsonConverter();
 const _timestampJsonConverter = TimestampJsonConverter();
+const _openingHoursConverter = OpeningHoursConverter();
 
 @freezed
 sealed class Entity with _$Entity {
-  const Entity._(); // Private constructor for methods
+  const Entity._();
 
   @JsonSerializable(explicitToJson: true)
   const factory Entity.residence({
@@ -31,7 +32,8 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    required List<OpeningHours> openingHours,
+    @_openingHoursConverter
+    required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
@@ -40,6 +42,9 @@ sealed class Entity with _$Entity {
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
+    @Default("Asia/Karachi") String timezone,
+    @Default(false) bool isOpen,
+    @Default({}) Map<String, String> scheduledTaskNames,
   }) = Residence;
 
   @JsonSerializable(explicitToJson: true)
@@ -55,12 +60,16 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    required List<OpeningHours> openingHours,
+    @_openingHoursConverter
+    required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
+    @Default("Asia/Karachi") String timezone,
+    @Default(false) bool isOpen,
+    @Default({}) Map<String, String> scheduledTaskNames,
   }) = Food;
 
   factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);

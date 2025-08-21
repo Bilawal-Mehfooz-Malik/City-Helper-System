@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/cover_and_gallery_image_tile.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/location_picker_tile.dart';
@@ -12,13 +13,13 @@ class LocationAndMediaSection extends StatelessWidget {
   final LatLng? pickedLatLng;
   final Uint8List? coverImageBytes;
   final List<Uint8List> galleryImagesBytes;
-  final List<OpeningHours> openingHours;
+  final Map<DayOfWeek, OpeningHours> openingHours;
   final String? coverImageUrl;
   final List<String> galleryImageUrls;
   final ValueChanged<LatLng?> onLocationPicked;
   final ValueChanged<Uint8List?> onCoverImagePicked;
   final ValueChanged<List<Uint8List>> onGalleryImagesPicked;
-  final ValueChanged<List<OpeningHours>> onOpeningHoursChanged;
+  final ValueChanged<Map<DayOfWeek, OpeningHours>> onOpeningHoursChanged;
   final ValueChanged<String> onExistingGalleryImageDeleted;
 
   const LocationAndMediaSection({

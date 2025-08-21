@@ -20,10 +20,9 @@ ResidenceDetail _$ResidenceDetailFromJson(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours:
-      (json['openingHours'] as List<dynamic>)
-          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  openingHours: _openingHoursConverter.fromJson(
+    json['openingHours'] as Map<String, dynamic>,
+  ),
   entityStatus:
       $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
       OperationalStatus.defaultStatus,
@@ -42,6 +41,13 @@ ResidenceDetail _$ResidenceDetailFromJson(
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
+  timezone: json['timezone'] as String? ?? "Asia/Karachi",
+  isOpen: json['isOpen'] as bool? ?? false,
+  scheduledTaskNames:
+      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const {},
   ownerId: json['ownerId'] as String,
   description: json['description'] as String,
   galleryImageUrls:
@@ -78,7 +84,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': instance.openingHours.map((e) => e.toJson()).toList(),
+  'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
@@ -87,6 +93,9 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
+  'timezone': instance.timezone,
+  'isOpen': instance.isOpen,
+  'scheduledTaskNames': instance.scheduledTaskNames,
   'ownerId': instance.ownerId,
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,
@@ -143,10 +152,9 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours:
-      (json['openingHours'] as List<dynamic>)
-          .map((e) => OpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  openingHours: _openingHoursConverter.fromJson(
+    json['openingHours'] as Map<String, dynamic>,
+  ),
   entityStatus:
       $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
       OperationalStatus.defaultStatus,
@@ -159,6 +167,13 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
+  timezone: json['timezone'] as String? ?? "Asia/Karachi",
+  isOpen: json['isOpen'] as bool? ?? false,
+  scheduledTaskNames:
+      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const {},
   ownerId: json['ownerId'] as String,
   description: json['description'] as String,
   galleryImageUrls:
@@ -195,12 +210,15 @@ Map<String, dynamic> _$FoodDetailToJson(
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': instance.openingHours.map((e) => e.toJson()).toList(),
+  'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'type': _$EntityTypeEnumMap[instance.type]!,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'timezone': instance.timezone,
+  'isOpen': instance.isOpen,
+  'scheduledTaskNames': instance.scheduledTaskNames,
   'ownerId': instance.ownerId,
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,

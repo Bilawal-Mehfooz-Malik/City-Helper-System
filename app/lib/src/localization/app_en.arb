@@ -169,6 +169,15 @@
   "leaveAREview":"Leave a Review",
   "@leaveAREview": {},
 
+  "editOpeningHours":"Edit Opening Hours",
+  "@editOpeningHours": {},
+  "done":"Done",
+  "@done": {},
+  "addSlot":"Add Slot",
+  "@addSlot": {},
+  "open24Hours":"24 Hours",
+  "@open24Hours": {},
+
   "enterPhoneNum":"Enter your phone number",
   "@enterPhoneNum": {},
   "confirmationCodeMessage":"We'll send you a confirmation code.",

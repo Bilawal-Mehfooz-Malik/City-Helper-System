@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OpeningHours {
 
- String get day; bool get isOpen; String? get open; String? get close;
+ bool get isDayOff; bool get is24Hours; List<TimeSlot> get slots;
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $OpeningHoursCopyWith<OpeningHours> get copyWith => _$OpeningHoursCopyWithImpl<O
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.isOpen, isOpen) || other.isOpen == isOpen)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OpeningHours&&(identical(other.isDayOff, isDayOff) || other.isDayOff == isDayOff)&&(identical(other.is24Hours, is24Hours) || other.is24Hours == is24Hours)&&const DeepCollectionEquality().equals(other.slots, slots));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,day,isOpen,open,close);
+int get hashCode => Object.hash(runtimeType,isDayOff,is24Hours,const DeepCollectionEquality().hash(slots));
 
 @override
 String toString() {
-  return 'OpeningHours(day: $day, isOpen: $isOpen, open: $open, close: $close)';
+  return 'OpeningHours(isDayOff: $isDayOff, is24Hours: $is24Hours, slots: $slots)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $OpeningHoursCopyWith<$Res>  {
   factory $OpeningHoursCopyWith(OpeningHours value, $Res Function(OpeningHours) _then) = _$OpeningHoursCopyWithImpl;
 @useResult
 $Res call({
- String day, bool isOpen, String? open, String? close
+ bool isDayOff, bool is24Hours, List<TimeSlot> slots
 });
 
 
@@ -65,13 +65,12 @@ class _$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? day = null,Object? isOpen = null,Object? open = freezed,Object? close = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = null,}) {
   return _then(_self.copyWith(
-day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
-as String,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
-as bool,open: freezed == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
-as String?,close: freezed == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
-as String?,
+isDayOff: null == isDayOff ? _self.isDayOff : isDayOff // ignore: cast_nullable_to_non_nullable
+as bool,is24Hours: null == is24Hours ? _self.is24Hours : is24Hours // ignore: cast_nullable_to_non_nullable
+as bool,slots: null == slots ? _self.slots : slots // ignore: cast_nullable_to_non_nullable
+as List<TimeSlot>,
   ));
 }
 
@@ -156,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String day,  bool isOpen,  String? open,  String? close)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
-return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
+return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
   return orElse();
 
 }
@@ -177,10 +176,10 @@ return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String day,  bool isOpen,  String? open,  String? close)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours():
-return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
+return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +196,10 @@ return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String day,  bool isOpen,  String? open,  String? close)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)?  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
-return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
+return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
   return null;
 
 }
@@ -212,13 +211,18 @@ return $default(_that.day,_that.isOpen,_that.open,_that.close);case _:
 @JsonSerializable()
 
 class _OpeningHours implements OpeningHours {
-  const _OpeningHours({required this.day, this.isOpen = true, this.open, this.close});
+  const _OpeningHours({this.isDayOff = false, this.is24Hours = false, required final  List<TimeSlot> slots}): _slots = slots;
   factory _OpeningHours.fromJson(Map<String, dynamic> json) => _$OpeningHoursFromJson(json);
 
-@override final  String day;
-@override@JsonKey() final  bool isOpen;
-@override final  String? open;
-@override final  String? close;
+@override@JsonKey() final  bool isDayOff;
+@override@JsonKey() final  bool is24Hours;
+ final  List<TimeSlot> _slots;
+@override List<TimeSlot> get slots {
+  if (_slots is EqualUnmodifiableListView) return _slots;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_slots);
+}
+
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OpeningHours&&(identical(other.day, day) || other.day == day)&&(identical(other.isOpen, isOpen) || other.isOpen == isOpen)&&(identical(other.open, open) || other.open == open)&&(identical(other.close, close) || other.close == close));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OpeningHours&&(identical(other.isDayOff, isDayOff) || other.isDayOff == isDayOff)&&(identical(other.is24Hours, is24Hours) || other.is24Hours == is24Hours)&&const DeepCollectionEquality().equals(other._slots, _slots));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,day,isOpen,open,close);
+int get hashCode => Object.hash(runtimeType,isDayOff,is24Hours,const DeepCollectionEquality().hash(_slots));
 
 @override
 String toString() {
-  return 'OpeningHours(day: $day, isOpen: $isOpen, open: $open, close: $close)';
+  return 'OpeningHours(isDayOff: $isDayOff, is24Hours: $is24Hours, slots: $slots)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$OpeningHoursCopyWith<$Res> implements $OpeningHoursCopyWi
   factory _$OpeningHoursCopyWith(_OpeningHours value, $Res Function(_OpeningHours) _then) = __$OpeningHoursCopyWithImpl;
 @override @useResult
 $Res call({
- String day, bool isOpen, String? open, String? close
+ bool isDayOff, bool is24Hours, List<TimeSlot> slots
 });
 
 
@@ -270,13 +274,12 @@ class __$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? day = null,Object? isOpen = null,Object? open = freezed,Object? close = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = null,}) {
   return _then(_OpeningHours(
-day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
-as String,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
-as bool,open: freezed == open ? _self.open : open // ignore: cast_nullable_to_non_nullable
-as String?,close: freezed == close ? _self.close : close // ignore: cast_nullable_to_non_nullable
-as String?,
+isDayOff: null == isDayOff ? _self.isDayOff : isDayOff // ignore: cast_nullable_to_non_nullable
+as bool,is24Hours: null == is24Hours ? _self.is24Hours : is24Hours // ignore: cast_nullable_to_non_nullable
+as bool,slots: null == slots ? _self._slots : slots // ignore: cast_nullable_to_non_nullable
+as List<TimeSlot>,
   ));
 }
 

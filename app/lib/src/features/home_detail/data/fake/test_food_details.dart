@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,7 +17,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.5,
     totalReviews: 120,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -45,7 +45,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.2,
     totalReviews: 98,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -72,7 +72,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.7,
     totalReviews: 150,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -99,7 +99,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.3,
     totalReviews: 80,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -126,7 +126,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.6,
     totalReviews: 200,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -153,7 +153,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 3.9,
     totalReviews: 75,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -180,7 +180,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.1,
     totalReviews: 65,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -207,7 +207,7 @@ final List<FoodDetail> testFoodDetails = [
     avgRating: 4.0,
     totalReviews: 55,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -230,14 +230,4 @@ final List<RatingBreakdown> _defaultBreakdown = [
   RatingBreakdown(stars: 3, count: 5),
   RatingBreakdown(stars: 2, count: 3),
   RatingBreakdown(stars: 1, count: 2),
-];
-
-final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Wednesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];

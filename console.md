@@ -1,7 +1,7 @@
-[log] Bad state: No element, dart-sdk/lib/_internal/js_dev_runtime/patch/core_patch.dart 748:28                         get current
+[log] Invalid argument (json): Expected a Map<String, dynamic> for LatLng conversion, but got List<dynamic>: Instance of 'JSArray<dynamic>', dart-sdk/lib/_internal/js_dev_runtime/patch/core_patch.dart 748:28                         get current
 core_patch.dart:748
-      package:app/src/features/home/presentation/controllers/home_error_controller.dart 15:66    criticalErrorStatus
-home_error_controller.dart:15
+      package:app/src/features/home/presentation/controllers/home_error_controller.dart 18:66    criticalErrorStatus
+home_error_controller.dart:18
       package:app/src/features/home/presentation/controllers/home_error_controller.g.dart 75:18  <fn>
 home_error_controller.g.dart:75
       package:riverpod/src/provider/auto_dispose.dart 42:60                                      [_create]

@@ -1,5 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/core/models/opening_hours.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,7 +16,7 @@ final List<Residence> testResidences = [
     avgRating: 4.5,
     totalReviews: 120,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 10),
     pricing: 25000,
@@ -37,7 +37,7 @@ final List<Residence> testResidences = [
     avgRating: 4.8,
     totalReviews: 95,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 12),
     pricing: 40000,
@@ -58,7 +58,7 @@ final List<Residence> testResidences = [
     avgRating: 3.9,
     totalReviews: 60,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 15),
     pricing: 8000,
@@ -79,7 +79,7 @@ final List<Residence> testResidences = [
     avgRating: 4.2,
     totalReviews: 85,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 18),
     pricing: 15000,
@@ -100,7 +100,7 @@ final List<Residence> testResidences = [
     avgRating: 4.7,
     totalReviews: 100,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 20),
     pricing: 12000,
@@ -121,7 +121,7 @@ final List<Residence> testResidences = [
     avgRating: 4.9,
     totalReviews: 150,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 22),
     pricing: 60000,
@@ -142,7 +142,7 @@ final List<Residence> testResidences = [
     avgRating: 3.5,
     totalReviews: 45,
     isPopular: false,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 24),
     pricing: 7000,
@@ -163,7 +163,7 @@ final List<Residence> testResidences = [
     avgRating: 4.3,
     totalReviews: 70,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 26),
     pricing: 28000,
@@ -184,7 +184,7 @@ final List<Residence> testResidences = [
     avgRating: 4.4,
     totalReviews: 88,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 28),
     pricing: 11000,
@@ -205,7 +205,7 @@ final List<Residence> testResidences = [
     avgRating: 4.6,
     totalReviews: 110,
     isPopular: true,
-    openingHours: _defaultOpeningHours,
+    openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 30),
     pricing: 35000,
@@ -214,19 +214,4 @@ final List<Residence> testResidences = [
     status: ApprovalStatus.approved,
     type: EntityType.residence,
   ),
-];
-
-final List<OpeningHours> _defaultOpeningHours = [
-  OpeningHours(day: 'Monday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Tuesday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(
-    day: 'Wednesday',
-    open: '9:00 AM',
-    close: '9:00 PM',
-    isOpen: false,
-  ),
-  OpeningHours(day: 'Thursday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Friday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Saturday', open: '9:00 AM', close: '9:00 PM'),
-  OpeningHours(day: 'Sunday', open: '9:00 AM', close: '9:00 PM'),
 ];

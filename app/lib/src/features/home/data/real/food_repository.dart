@@ -127,14 +127,16 @@ class FoodRepository {
 
   Query<Food> _buildFilteredQuery(Query<Food> query, FoodFilter filter) {
     var newQuery = query;
+    if (filter.getIsOpen) {
+      newQuery = newQuery.where('isOpen', isEqualTo: true);
+    }
     if (filter.genderPref != GenderPreference.any) {
       newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
     }
     if (filter.ratingSort != SortOrder.none) {
       newQuery = newQuery
           .where('avgRating', isGreaterThanOrEqualTo: 0)
-          .orderBy('avgRating',
-              descending: filter.ratingSort == SortOrder.highToLow);
+          .orderBy('avgRating', descending: filter.ratingSort == SortOrder.highToLow);
     }
     return newQuery;
   }
