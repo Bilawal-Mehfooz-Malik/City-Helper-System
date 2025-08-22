@@ -50,10 +50,17 @@ class EntityCard extends StatelessWidget {
                     : borderRadius,
                 imageUrl: entity.coverImageUrl,
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                child: entity.isOpen ? OpenIndicator() : CloseIndicator(),
-              ),
+              if (entity is Food)
+                if ((entity as Food).isOpen == true)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+                    child: OpenIndicator(),
+                  )
+                else if ((entity as Food).isOpen == false)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+                    child: CloseIndicator(),
+                  ),
             ],
           ),
 

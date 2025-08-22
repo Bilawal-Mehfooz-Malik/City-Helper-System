@@ -22,7 +22,12 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
   @override
   Widget build(BuildContext context) {
     final hoursMap = widget.entity.openingHours;
-    final isOpen = widget.entity.isOpen;
+    final isOpen = (widget.entity is FoodDetail) ? (widget.entity as FoodDetail).isOpen : null;
+
+    // If there are no opening hours, hide the widget entirely.
+    if (hoursMap == null) {
+      return const SizedBox.shrink();
+    }
 
     final now = DateTime.now();
     final today = DayOfWeek.values[now.weekday % 7]; // sunday is 0
@@ -69,7 +74,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 
 class OpeningHoursLabel extends StatelessWidget {
   final OpeningHours todayHours;
-  final bool isOpen;
+  final bool? isOpen;
 
   const OpeningHoursLabel({
     super.key,
@@ -95,7 +100,7 @@ class OpeningHoursLabel extends StatelessWidget {
 
     final nextSlot = todayHours.slots.first; // Simplified for this example
 
-    if (isOpen) {
+    if (isOpen == true) {
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
@@ -115,7 +120,7 @@ class OpeningHoursLabel extends StatelessWidget {
           ],
         ),
       );
-    } else {
+    } else if (isOpen == false) {
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
@@ -135,13 +140,19 @@ class OpeningHoursLabel extends StatelessWidget {
           ],
         ),
       );
+    } else {
+      // isOpen is null
+      return Text(
+        loc.closed,
+        style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
+      );
     }
   }
 }
 
 class OpeningStatusHeader extends StatelessWidget {
   final Widget labelWidget;
-  final bool isOpen;
+  final bool? isOpen;
   final bool isExpanded;
   final VoidCallback onTap;
 

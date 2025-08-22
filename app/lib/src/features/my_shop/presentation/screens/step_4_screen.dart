@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
@@ -36,7 +37,7 @@ class Step4SpecificsPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             OpeningHoursTile(
-              openingHours: formData.openingHours,
+              openingHours: formData.openingHours ?? defaultOpeningHours,
               onOpeningHoursChanged: (hours) => wizardController.updateFormData(
                 formData.copyWith(openingHours: hours),
               ),

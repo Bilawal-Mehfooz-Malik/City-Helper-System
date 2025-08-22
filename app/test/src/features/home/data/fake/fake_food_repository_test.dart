@@ -29,7 +29,7 @@ void main() {
       final food = testFoods.first;
       final expected = testFoods
           .where(
-            (f) => f.categoryId == food.categoryId && f.isOpen && !f.isPopular,
+            (f) => f.categoryId == food.categoryId && f.isOpen == true && !f.isPopular,
           )
           .toList();
 
@@ -61,7 +61,7 @@ void main() {
       final food = testFoods.first;
       final expected = testFoods
           .where(
-            (f) => f.categoryId == food.categoryId && f.isPopular && f.isOpen,
+            (f) => f.categoryId == food.categoryId && f.isPopular && f.isOpen == true,
           )
           .toList();
 
@@ -100,7 +100,7 @@ void main() {
             (f) =>
                 f.categoryId == food.categoryId &&
                 f.subCategoryId == food.subCategoryId &&
-                f.isOpen &&
+                f.isOpen == true &&
                 !f.isPopular,
           )
           .toList();
@@ -145,7 +145,7 @@ void main() {
                 f.categoryId == food.categoryId &&
                 f.subCategoryId == food.subCategoryId &&
                 f.isPopular &&
-                f.isOpen,
+                f.isOpen == true,
           )
           .toList();
 

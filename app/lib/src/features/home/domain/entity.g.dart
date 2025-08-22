@@ -18,9 +18,10 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours: _openingHoursConverter.fromJson(
-    json['openingHours'] as Map<String, dynamic>,
-  ),
+  openingHours: _$JsonConverterFromJson<
+    Map<String, dynamic>,
+    Map<DayOfWeek, OpeningHours>
+  >(json['openingHours'], _openingHoursConverter.fromJson),
   entityStatus:
       $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
       OperationalStatus.defaultStatus,
@@ -40,7 +41,6 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
-  isOpen: json['isOpen'] as bool? ?? false,
   scheduledTaskNames:
       (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
@@ -61,7 +61,11 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'avgRating': instance.avgRating,
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
-  'openingHours': _openingHoursConverter.toJson(instance.openingHours),
+  'openingHours':
+      _$JsonConverterToJson<Map<String, dynamic>, Map<DayOfWeek, OpeningHours>>(
+        instance.openingHours,
+        _openingHoursConverter.toJson,
+      ),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
@@ -71,10 +75,14 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'timezone': instance.timezone,
-  'isOpen': instance.isOpen,
   'scheduledTaskNames': instance.scheduledTaskNames,
   'runtimeType': instance.$type,
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
 
 const _$OperationalStatusEnumMap = {
   OperationalStatus.open: 'open',
@@ -105,6 +113,11 @@ const _$ListingTypeEnumMap = {
   ListingType.forSale: 'forSale',
 };
 
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);
+
 Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   id: json['id'] as String,
   categoryId: (json['categoryId'] as num).toInt(),
@@ -133,7 +146,7 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
-  isOpen: json['isOpen'] as bool? ?? false,
+  isOpen: json['isOpen'] as bool?,
   scheduledTaskNames:
       (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),

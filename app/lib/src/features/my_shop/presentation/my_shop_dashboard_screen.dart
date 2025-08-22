@@ -114,7 +114,16 @@ class _ShopDetailsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSmallScreen = MediaQuery.sizeOf(context).width <= Breakpoint.tablet;
-    final statusIndicator = shop.isOpen ? OpenIndicator() : CloseIndicator();
+    final Widget statusIndicator;
+    if (shop is FoodDetail) {
+      statusIndicator = (shop as FoodDetail).isOpen == true
+          ? OpenIndicator()
+          : (shop as FoodDetail).isOpen == false
+              ? CloseIndicator()
+              : const SizedBox.shrink();
+    } else {
+      statusIndicator = const SizedBox.shrink();
+    }
 
     return Column(
       spacing: Sizes.p16,

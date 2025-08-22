@@ -35,12 +35,12 @@ abstract class ShopForm with _$ShopForm {
     required String websiteUrl,
 
     // Step 4: Business Specific Info
-    required Map<DayOfWeek, OpeningHours> openingHours,
+    Map<DayOfWeek, OpeningHours>? openingHours,
     double? pricing,
     required bool isFurnished,
     required GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
-    @Default(false) bool isOpen,
+    bool? isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Step 5: Media Uploads
@@ -79,7 +79,7 @@ abstract class ShopForm with _$ShopForm {
       pricing: price,
       isFurnished: isFurnished,
       timezone: shop.timezone,
-      isOpen: shop.isOpen,
+      isOpen: (shop is FoodDetail) ? (shop as FoodDetail).isOpen : null,
       scheduledTaskNames: shop.scheduledTaskNames,
     );
   }
@@ -102,7 +102,7 @@ abstract class ShopForm with _$ShopForm {
       genderPref: GenderPreference.any,
       isFurnished: false,
       timezone: "Asia/Karachi",
-      isOpen: false,
+      isOpen: null,
       scheduledTaskNames: {},
     );
   }

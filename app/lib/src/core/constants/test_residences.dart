@@ -37,7 +37,7 @@ final List<Residence> testResidences = [
     avgRating: 4.8,
     totalReviews: 95,
     isPopular: true,
-    openingHours: defaultOpeningHours,
+    openingHours: null, // No specific office hours
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 12),
     pricing: 40000,
@@ -79,7 +79,7 @@ final List<Residence> testResidences = [
     avgRating: 4.2,
     totalReviews: 85,
     isPopular: false,
-    openingHours: defaultOpeningHours,
+    openingHours: null, // No specific office hours
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 18),
     pricing: 15000,
@@ -121,7 +121,7 @@ final List<Residence> testResidences = [
     avgRating: 4.9,
     totalReviews: 150,
     isPopular: true,
-    openingHours: defaultOpeningHours,
+    openingHours: null, // No specific office hours
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 22),
     pricing: 60000,
@@ -163,7 +163,7 @@ final List<Residence> testResidences = [
     avgRating: 4.3,
     totalReviews: 70,
     isPopular: true,
-    openingHours: defaultOpeningHours,
+    openingHours: null, // No specific office hours
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 26),
     pricing: 28000,
@@ -205,7 +205,7 @@ final List<Residence> testResidences = [
     avgRating: 4.6,
     totalReviews: 110,
     isPopular: true,
-    openingHours: defaultOpeningHours,
+    openingHours: null, // No specific office hours
     entityStatus: OperationalStatus.defaultStatus,
     createdAt: DateTime(2024, 3, 30),
     pricing: 35000,

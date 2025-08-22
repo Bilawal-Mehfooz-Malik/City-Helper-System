@@ -98,7 +98,7 @@ class FilterDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return localFilter.when(
-      residence: (isOpen, ratingSort, isFurnished, priceSort, genderPref) =>
+      residence: (ratingSort, isFurnished, priceSort, genderPref) =>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,13 +119,6 @@ class FilterDialogContent extends StatelessWidget {
                 ),
               ),
               gapH8,
-              FilterSwitch(
-                value: isOpen,
-                label: context.loc.showOpenOnly,
-                onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(isOpen: value),
-                ),
-              ),
               FilterSwitch(
                 value: isFurnished,
                 label: context.loc.showFurnishedOnly,

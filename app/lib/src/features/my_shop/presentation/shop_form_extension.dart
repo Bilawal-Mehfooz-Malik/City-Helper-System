@@ -1,3 +1,4 @@
+import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
@@ -42,7 +43,7 @@ extension ShopFormX on ShopForm {
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
           latLng: latLng!,
-          openingHours: openingHours,
+          openingHours: openingHours ?? defaultOpeningHours,
           genderPref: genderPref,
         );
       }
@@ -103,7 +104,7 @@ extension ShopFormX on ShopForm {
           isPopular: false,
           status: ApprovalStatus.pending,
           entityStatus: OperationalStatus.defaultStatus,
-          openingHours: openingHours,
+          openingHours: openingHours ?? defaultOpeningHours,
           updatedAt: now,
           createdAt: now,
           phoneNumber: phoneNumber,

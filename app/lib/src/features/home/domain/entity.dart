@@ -32,8 +32,7 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter
-    required Map<DayOfWeek, OpeningHours> openingHours,
+    @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
@@ -43,7 +42,6 @@ sealed class Entity with _$Entity {
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default("Asia/Karachi") String timezone,
-    @Default(false) bool isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
   }) = Residence;
 
@@ -60,15 +58,14 @@ sealed class Entity with _$Entity {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter
-    required Map<DayOfWeek, OpeningHours> openingHours,
+    @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
-    @Default(false) bool isOpen,
+    bool? isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
   }) = Food;
 

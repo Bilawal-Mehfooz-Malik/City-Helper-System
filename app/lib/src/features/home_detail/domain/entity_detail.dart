@@ -34,7 +34,7 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
     @_openingHoursConverter
-    required Map<DayOfWeek, OpeningHours> openingHours,
+    Map<DayOfWeek, OpeningHours>? openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
@@ -44,7 +44,6 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default("Asia/Karachi") String timezone,
-    @Default(false) bool isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields
@@ -83,7 +82,7 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
-    @Default(false) bool isOpen,
+    bool? isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields

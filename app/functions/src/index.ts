@@ -38,10 +38,10 @@ interface Place {
   name: string;
   timezone: string;
   entityStatus: "open" | "close" | "defaultStatus";
-  openingHours: {
+  openingHours?: { // Can be null for residences
     [day: string]: DailyHours;
   };
-  isOpen?: boolean;
+  isOpen?: boolean | null; // Can be true, false, or null
   scheduledTaskNames?: {
     [key: string]: string;
   };
@@ -124,15 +124,21 @@ async function updateAndReschedule(collectionPath: string, placeId: string, plac
 }
 
 function calculateStatusAndNextTransition(placeData: Place) {
+  // Handle manual overrides first
   if (placeData.entityStatus === "open") return {newStatus: true, nextTransition: null};
   if (placeData.entityStatus === "close") return {newStatus: false, nextTransition: null};
+
+  // If openingHours is missing (e.g., for a residence), set status to null.
+  if (!placeData.openingHours) {
+    return {newStatus: null, nextTransition: null};
+  }
 
   const {timezone, openingHours} = placeData;
   const nowInUTC = new Date();
   const now = toZonedTime(nowInUTC, timezone);
   const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-  let currentStatus = false;
+  let currentStatus: boolean | null = false;
   const transitions: {timestamp: number, status: string}[] = [];
 
   for (let i = 0; i < 2; i++) {
@@ -180,7 +186,7 @@ function calculateStatusAndNextTransition(placeData: Place) {
 // CLOUD FUNCTION TRIGGERS
 // =================================================================================
 
-const collections = ["food_listings", "residence_listings"];
+const collections = ["food_listings"];
 for (const collection of collections) {
   exports[`onWrite_${collection}`] = onDocumentWritten(`${collection}/{placeId}`, async (event) => {
     await updateAndReschedule(collection, event.params.placeId, event.data?.after.data() as Place | undefined);

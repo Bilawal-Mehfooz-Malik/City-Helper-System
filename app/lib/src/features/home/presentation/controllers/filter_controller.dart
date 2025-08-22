@@ -32,7 +32,7 @@ class FilterController extends _$FilterController {
 
   void resetFilters() {
     state = state.when(
-      residence: (_, _, _, _, _) => const EntityFilter.residence(),
+      residence: (_, _, _, _) => const EntityFilter.residence(),
       food: (_, _, _) => const EntityFilter.food(),
       basic: (_, _) => const EntityFilter.basic(),
     );
@@ -48,13 +48,11 @@ class FilterController extends _$FilterController {
     state = state.when(
       residence:
           (
-            currentIsOpen,
             currentRatingSort,
             currentIsFurnished,
             currentPriceSort,
             currentGenderPref,
           ) => EntityFilter.residence(
-            isOpen: isOpen ?? currentIsOpen,
             ratingSort: ratingSort ?? currentRatingSort,
             isFurnished: isFurnished ?? currentIsFurnished,
             priceSort: priceSort ?? currentPriceSort,

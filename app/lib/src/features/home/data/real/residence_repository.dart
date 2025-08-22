@@ -130,9 +130,6 @@ class ResidenceRepository {
       Query<Residence> query, ResidenceFilter filter) {
     var newQuery = query;
 
-    if (filter.getIsOpen) {
-      newQuery = newQuery.where('isOpen', isEqualTo: true);
-    }
     if (filter.isFurnished) {
       newQuery = newQuery.where('isFurnished', isEqualTo: true);
     }

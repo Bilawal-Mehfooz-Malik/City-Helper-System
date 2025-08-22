@@ -145,7 +145,7 @@ class FakeFoodRepository implements FoodRepository {
     List<Food> result = List.from(foods);
 
     if (filter.getIsOpen) {
-      result = result.where((food) => food.isOpen).toList();
+      result = result.where((food) => food.isOpen == true).toList();
     }
     if (filter.genderPref != GenderPreference.any) {
       result = result
