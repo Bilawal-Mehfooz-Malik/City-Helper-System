@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:app/src/features/home/data/fake/fake_food_repository.dart';
 import 'package:app/src/features/home/data/real/food_repository.dart';
 import 'package:app/src/core/constants/test_food_list.dart';
+import 'package:app/src/features/home/domain/entity_filter.dart';
 
 void main() {
   late FoodRepository repository;
@@ -14,21 +15,32 @@ void main() {
     test('fetchFoodsList returns foods by categoryId', () async {
       final food = testFoods.first;
       final expected = testFoods
-          .where((f) => f.categoryId == food.categoryId)
+          .where((f) => f.categoryId == food.categoryId && !f.isPopular)
           .toList();
 
-      final result = await repository.fetchFoodsList();
+      final result = await repository.fetchFoodsList(
+        limit: expected.length,
+        filter: const FoodFilter(),
+      );
       expect(result, expected);
     });
 
-    test('watchFoodsList emits foods by categoryId', () {
+    test('fetchFoodsList filters by isOpen', () async {
       final food = testFoods.first;
       final expected = testFoods
-          .where((f) => f.categoryId == food.categoryId)
+          .where(
+            (f) => f.categoryId == food.categoryId && f.isOpen && !f.isPopular,
+          )
           .toList();
 
-      expect(repository.watchFoodsList(), emits(expected));
+      final result = await repository.fetchFoodsList(
+        limit: expected.length,
+        filter: const FoodFilter(isOpen: true),
+      );
+      expect(result, expected);
     });
+
+    // watchFoodsList is not directly exposed by FoodRepository, so no test needed
   });
 
   group('Popular Food List', () {
@@ -38,17 +50,26 @@ void main() {
           .where((f) => f.categoryId == food.categoryId && f.isPopular)
           .toList();
 
-      final result = await repository.fetchPopularFoodsList();
+      final result = await repository.fetchPopularFoodsList(
+        limit: expected.length,
+        filter: const FoodFilter(),
+      );
       expect(result, expected);
     });
 
-    test('watchPopularFoodsList emits popular foods by categoryId', () {
+    test('fetchPopularFoodsList filters by isOpen', () async {
       final food = testFoods.first;
       final expected = testFoods
-          .where((f) => f.categoryId == food.categoryId && f.isPopular)
+          .where(
+            (f) => f.categoryId == food.categoryId && f.isPopular && f.isOpen,
+          )
           .toList();
 
-      expect(repository.watchPopularFoodsList(), emits(expected));
+      final result = await repository.fetchPopularFoodsList(
+        limit: expected.length,
+        filter: const FoodFilter(isOpen: true),
+      );
+      expect(result, expected);
     });
   });
 
@@ -59,30 +80,37 @@ void main() {
           .where(
             (f) =>
                 f.categoryId == food.categoryId &&
-                f.subCategoryId == food.subCategoryId,
+                f.subCategoryId == food.subCategoryId &&
+                !f.isPopular,
           )
           .toList();
 
       final result = await repository.fetchFoodsListSubCategoryId(
         food.subCategoryId,
+        limit: expected.length,
+        filter: const FoodFilter(),
       );
       expect(result, expected);
     });
 
-    test('watchFoodsListBySubCategoryId emits matching foods', () {
+    test('fetchFoodsListSubCategoryId filters by isOpen', () async {
       final food = testFoods.first;
       final expected = testFoods
           .where(
             (f) =>
                 f.categoryId == food.categoryId &&
-                f.subCategoryId == food.subCategoryId,
+                f.subCategoryId == food.subCategoryId &&
+                f.isOpen &&
+                !f.isPopular,
           )
           .toList();
 
-      expect(
-        repository.watchFoodsListBySubCategoryId(food.subCategoryId),
-        emits(expected),
+      final result = await repository.fetchFoodsListSubCategoryId(
+        food.subCategoryId,
+        limit: expected.length,
+        filter: const FoodFilter(isOpen: true),
       );
+      expect(result, expected);
     });
   });
 
@@ -102,26 +130,31 @@ void main() {
 
         final result = await repository.fetchPopularFoodsListSubCategoryId(
           food.subCategoryId,
+          limit: expected.length,
+          filter: const FoodFilter(),
         );
         expect(result, expected);
       },
     );
 
-    test('watchPopularFoodsListSubCategoryId emits matching popular foods', () {
+    test('fetchPopularFoodsListSubCategoryId filters by isOpen', () async {
       final food = testFoods.first;
       final expected = testFoods
           .where(
             (f) =>
                 f.categoryId == food.categoryId &&
                 f.subCategoryId == food.subCategoryId &&
-                f.isPopular,
+                f.isPopular &&
+                f.isOpen,
           )
           .toList();
 
-      expect(
-        repository.watchPopularFoodsListSubCategoryId(food.subCategoryId),
-        emits(expected),
+      final result = await repository.fetchPopularFoodsListSubCategoryId(
+        food.subCategoryId,
+        limit: expected.length,
+        filter: const FoodFilter(isOpen: true),
       );
+      expect(result, expected);
     });
   });
 
@@ -135,6 +168,23 @@ void main() {
     test('watchFood emits food by id and categoryId', () {
       final food = testFoods.first;
       expect(repository.watchFood(food.id), emits(food));
+    });
+  });
+
+  group('setFood', () {
+    test('adds new food if id does not exist', () async {
+      final newFood = testFoods.first.copyWith(id: 'new-food-id');
+      await repository.setFood(newFood);
+      final result = await repository.fetchFood(newFood.id);
+      expect(result, newFood);
+    });
+
+    test('updates existing food if id exists', () async {
+      final existingFood = testFoods.first;
+      final updatedFood = existingFood.copyWith(name: 'Updated Name');
+      await repository.setFood(updatedFood);
+      final result = await repository.fetchFood(existingFood.id);
+      expect(result, updatedFood);
     });
   });
 }

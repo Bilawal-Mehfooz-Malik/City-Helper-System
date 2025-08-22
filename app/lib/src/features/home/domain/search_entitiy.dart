@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,7 +9,6 @@ part 'search_entitiy.g.dart';
 @freezed
 abstract class SearchEntity with _$SearchEntity {
   const factory SearchEntity({
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'objectID') required EntityId id,
     required String name,
     required String cityName,

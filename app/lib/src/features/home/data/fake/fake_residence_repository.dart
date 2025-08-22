@@ -158,6 +158,9 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) {
     List<Residence> result = List.from(residences);
 
+    if (filter.getIsOpen) {
+      result = result.where((residence) => residence.isOpen).toList();
+    }
     if (filter.isFurnished) {
       result = result.where((residence) => residence.isFurnished).toList();
     }

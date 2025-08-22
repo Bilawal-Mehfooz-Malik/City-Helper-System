@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart'; // adjust path as needed
+import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart';
 import 'package:app/src/core/constants/test_carousel_ads.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 

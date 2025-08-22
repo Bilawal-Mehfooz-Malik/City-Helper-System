@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app/src/features/home/data/fake/fake_sub_categories_repository.dart'; // adjust if needed
+import 'package:app/src/features/home/data/fake/fake_sub_categories_repository.dart';
 import 'package:app/src/core/constants/test_sub_categories.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 
