@@ -24,6 +24,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: true, // Added
   ),
   Residence(
     id: 'res_002',
@@ -45,6 +46,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: false, // Added
   ),
   Residence(
     id: 'res_003',
@@ -66,6 +68,7 @@ final List<Residence> testResidences = [
     isFurnished: false,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: true, // Added
   ),
   Residence(
     id: 'res_004',
@@ -87,6 +90,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: false, // Added
   ),
   Residence(
     id: 'res_005',
@@ -108,6 +112,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: true, // Added
   ),
   Residence(
     id: 'res_006',
@@ -129,6 +134,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: false, // Added
   ),
   Residence(
     id: 'res_007',
@@ -150,6 +156,7 @@ final List<Residence> testResidences = [
     isFurnished: false,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: true, // Added
   ),
   Residence(
     id: 'res_008',
@@ -171,6 +178,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: false, // Added
   ),
   Residence(
     id: 'res_009',
@@ -192,6 +200,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: true, // Added
   ),
   Residence(
     id: 'res_010',
@@ -213,5 +222,6 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     type: EntityType.residence,
+    isRoomAvailable: false, // Added
   ),
 ];

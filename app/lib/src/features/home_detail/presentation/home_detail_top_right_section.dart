@@ -90,6 +90,8 @@ class HomeDetailTopRightContent extends ConsumerWidget {
                 Divider(),
                 FurnishedInfo(residence: residence),
                 Divider(),
+                AvailableInfo(residence: residence), // New widget
+                Divider(), // Add another divider for consistency
               ],
               OpeningHoursWidget(entity: entity),
               if (entity.instagramUrl != null ||
@@ -127,6 +129,27 @@ class HomeDetailTopRightContent extends ConsumerWidget {
               child: Text(context.loc.popular),
             ),
           ),
+      ],
+    );
+  }
+}
+
+class AvailableInfo extends StatelessWidget {
+  final ResidenceDetail residence;
+
+  const AvailableInfo({required this.residence, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = context.loc;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          loc.available, // Using the new localization key
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        Text(residence.isRoomAvailable == true ? loc.yes : loc.no),
       ],
     );
   }

@@ -40,6 +40,7 @@ abstract class ShopForm with _$ShopForm {
     required bool isFurnished,
     required GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
+    @Default(true) bool isRoomAvailable, // New field
     bool? isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
@@ -79,6 +80,7 @@ abstract class ShopForm with _$ShopForm {
       pricing: price,
       isFurnished: isFurnished,
       timezone: shop.timezone,
+      isRoomAvailable: (shop is ResidenceDetail) ? shop.isRoomAvailable : true, // Default to true if not residence
       isOpen: (shop is FoodDetail) ? (shop as FoodDetail).isOpen : null,
       scheduledTaskNames: shop.scheduledTaskNames,
     );
@@ -102,6 +104,7 @@ abstract class ShopForm with _$ShopForm {
       genderPref: GenderPreference.any,
       isFurnished: false,
       timezone: "Asia/Karachi",
+      isRoomAvailable: true, // Default to true
       isOpen: null,
       scheduledTaskNames: {},
     );

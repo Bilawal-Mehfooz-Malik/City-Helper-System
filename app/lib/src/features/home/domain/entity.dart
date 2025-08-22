@@ -42,6 +42,7 @@ sealed class Entity with _$Entity {
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default("Asia/Karachi") String timezone,
+    @Default(true) bool isRoomAvailable,
     @Default({}) Map<String, String> scheduledTaskNames,
   }) = Residence;
 

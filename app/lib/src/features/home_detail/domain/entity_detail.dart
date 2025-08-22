@@ -44,6 +44,7 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default("Asia/Karachi") String timezone,
+    @Default(true) bool isRoomAvailable, // New field
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields

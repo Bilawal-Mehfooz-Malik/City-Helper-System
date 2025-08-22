@@ -56,10 +56,21 @@ class EntityCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
                     child: OpenIndicator(),
                   )
-                else if ((entity as Food).isOpen == false)
+                              else if ((entity as Food).isOpen == false)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+                  child: CloseIndicator(),
+                )
+              else if (entity is Residence) // New logic for Residence
+                if ((entity as Residence).isRoomAvailable == true)
                   Padding(
                     padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                    child: CloseIndicator(),
+                    child: AvailableIndicator(),
+                  )
+                else if ((entity as Residence).isRoomAvailable == false)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
+                    child: UnavailableIndicator(),
                   ),
             ],
           ),

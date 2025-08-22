@@ -140,6 +140,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get close => 'Close';
 
   @override
+  String get available => 'Available';
+
+  @override
+  String get unavailable => 'Unavailable';
+
+  @override
   String get somethingWentWrongTryAgain =>
       'Something went wrong. Please try again';
 

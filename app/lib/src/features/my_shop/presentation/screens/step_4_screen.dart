@@ -47,6 +47,7 @@ class Step4SpecificsPage extends ConsumerWidget {
               ResidenceSpecificSection(
                 price: formData.pricing,
                 isFurnished: formData.isFurnished,
+                isRoomAvailable: formData.isRoomAvailable, // New field
                 onPriceChanged: (val) {
                   final pricing = double.tryParse(val);
                   wizardController.updateFormData(
@@ -55,6 +56,9 @@ class Step4SpecificsPage extends ConsumerWidget {
                 },
                 onFurnishedChanged: (val) => wizardController.updateFormData(
                   formData.copyWith(isFurnished: val),
+                ),
+                onIsRoomAvailableChanged: (val) => wizardController.updateFormData( // New callback
+                  formData.copyWith(isRoomAvailable: val),
                 ),
               ),
             if (categoryId == 1 || categoryId == 2)

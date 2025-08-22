@@ -5,15 +5,19 @@ import 'package:flutter/material.dart';
 class ResidenceSpecificSection extends StatelessWidget {
   final double? price;
   final bool isFurnished;
+  final bool isRoomAvailable; // New field
   final ValueChanged<String> onPriceChanged;
   final ValueChanged<bool> onFurnishedChanged;
+  final ValueChanged<bool> onIsRoomAvailableChanged; // New callback
 
   const ResidenceSpecificSection({
     super.key,
     required this.price,
     required this.isFurnished,
+    required this.isRoomAvailable, // Required
     required this.onPriceChanged,
     required this.onFurnishedChanged,
+    required this.onIsRoomAvailableChanged, // Required
   });
 
   @override
@@ -35,6 +39,13 @@ class ResidenceSpecificSection extends StatelessWidget {
           title: Text('Is Furnished?'.hardcoded),
           value: isFurnished,
           onChanged: onFurnishedChanged,
+        ),
+        SwitchListTile(
+          // New SwitchListTile
+          contentPadding: EdgeInsets.zero,
+          title: Text('Is Room Available?'.hardcoded),
+          value: isRoomAvailable,
+          onChanged: onIsRoomAvailableChanged,
         ),
       ],
     );

@@ -130,6 +130,9 @@ class ResidenceRepository {
       Query<Residence> query, ResidenceFilter filter) {
     var newQuery = query;
 
+    if (filter.isRoomAvailable) { // New filter
+      newQuery = newQuery.where('isRoomAvailable', isEqualTo: true);
+    }
     if (filter.isFurnished) {
       newQuery = newQuery.where('isFurnished', isEqualTo: true);
     }

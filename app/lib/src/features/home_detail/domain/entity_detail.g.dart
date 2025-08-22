@@ -43,6 +43,7 @@ ResidenceDetail _$ResidenceDetailFromJson(
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
+  isRoomAvailable: json['isRoomAvailable'] as bool? ?? true,
   scheduledTaskNames:
       (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
@@ -98,6 +99,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'timezone': instance.timezone,
+  'isRoomAvailable': instance.isRoomAvailable,
   'scheduledTaskNames': instance.scheduledTaskNames,
   'ownerId': instance.ownerId,
   'description': instance.description,
