@@ -43,7 +43,6 @@ sealed class Entity with _$Entity {
     @Default(ListingType.forRent) ListingType listingType,
     @Default("Asia/Karachi") String timezone,
     @Default(true) bool isRoomAvailable,
-    @Default({}) Map<String, String> scheduledTaskNames,
   }) = Residence;
 
   @JsonSerializable(explicitToJson: true)
@@ -66,8 +65,7 @@ sealed class Entity with _$Entity {
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
-    bool? isOpen,
-    @Default({}) Map<String, String> scheduledTaskNames,
+    @Default(false) bool isOpen,
   }) = Food;
 
   factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);

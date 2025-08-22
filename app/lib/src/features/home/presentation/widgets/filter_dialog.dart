@@ -128,7 +128,7 @@ class FilterDialogContent extends StatelessWidget {
               ),
               FilterSwitch( // New FilterSwitch for isRoomAvailable
                 value: isRoomAvailable,
-                label: context.loc.available, // Using the new localization key
+                label: context.loc.showAvailableOnly, // Using the new localization key
                 onChanged: (value) => onFilterChanged(
                   (localFilter as ResidenceFilter).copyWith(isRoomAvailable: value),
                 ),
@@ -299,7 +299,7 @@ class GenderPreferenceChips extends StatelessWidget {
 
   String _localizedGenderText(BuildContext context, GenderPreference gender) {
     return switch (gender) {
-      GenderPreference.any => context.loc.genderPreferenceAny,
+      GenderPreference.any => context.loc.genderPreferenceNone,
       GenderPreference.maleOnly => context.loc.genderPreferenceMaleOnly,
       GenderPreference.femaleOnly => context.loc.genderPreferenceFemaleOnly,
       GenderPreference.familyFriendly =>

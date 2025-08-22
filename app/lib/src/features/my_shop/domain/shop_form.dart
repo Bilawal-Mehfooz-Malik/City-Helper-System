@@ -41,7 +41,7 @@ abstract class ShopForm with _$ShopForm {
     required GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
     @Default(true) bool isRoomAvailable, // New field
-    bool? isOpen,
+    @Default(false) bool isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Step 5: Media Uploads
@@ -81,7 +81,7 @@ abstract class ShopForm with _$ShopForm {
       isFurnished: isFurnished,
       timezone: shop.timezone,
       isRoomAvailable: (shop is ResidenceDetail) ? shop.isRoomAvailable : true, // Default to true if not residence
-      isOpen: (shop is FoodDetail) ? (shop as FoodDetail).isOpen : null,
+      isOpen: (shop is FoodDetail) ? (shop as FoodDetail).isOpen : false, // Default to false if not FoodDetail
       scheduledTaskNames: shop.scheduledTaskNames,
     );
   }
@@ -105,7 +105,7 @@ abstract class ShopForm with _$ShopForm {
       isFurnished: false,
       timezone: "Asia/Karachi",
       isRoomAvailable: true, // Default to true
-      isOpen: null,
+      isOpen: false,
       scheduledTaskNames: {},
     );
   }

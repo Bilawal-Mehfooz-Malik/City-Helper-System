@@ -83,7 +83,7 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,
-    bool? isOpen,
+    @Default(false) bool isOpen,
     @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields

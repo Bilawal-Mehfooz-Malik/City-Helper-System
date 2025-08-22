@@ -42,11 +42,6 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
       ListingType.forRent,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
   isRoomAvailable: json['isRoomAvailable'] as bool? ?? true,
-  scheduledTaskNames:
-      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
   $type: json['runtimeType'] as String?,
 );
 
@@ -77,7 +72,6 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'timezone': instance.timezone,
   'isRoomAvailable': instance.isRoomAvailable,
-  'scheduledTaskNames': instance.scheduledTaskNames,
   'runtimeType': instance.$type,
 };
 
@@ -148,12 +142,7 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
-  isOpen: json['isOpen'] as bool?,
-  scheduledTaskNames:
-      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
+  isOpen: json['isOpen'] as bool? ?? false,
   $type: json['runtimeType'] as String?,
 );
 
@@ -177,6 +166,5 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'timezone': instance.timezone,
   'isOpen': instance.isOpen,
-  'scheduledTaskNames': instance.scheduledTaskNames,
   'runtimeType': instance.$type,
 };

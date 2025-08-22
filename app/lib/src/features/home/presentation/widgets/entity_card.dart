@@ -10,6 +10,9 @@ import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// ---------------------------------------------
+/// ENTITY CARD
+/// ---------------------------------------------
 class EntityCard extends StatelessWidget {
   const EntityCard({
     super.key,
@@ -26,7 +29,7 @@ class EntityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var borderRadius = BorderRadius.only(
+    final borderRadius = BorderRadius.only(
       topLeft: Radius.circular(Sizes.p12),
       topRight: Radius.circular(Sizes.p12),
     );
@@ -39,7 +42,7 @@ class EntityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// [ItemCoverImage]
+          /// [ItemCoverImage + Indicator]
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
@@ -50,28 +53,11 @@ class EntityCard extends StatelessWidget {
                     : borderRadius,
                 imageUrl: entity.coverImageUrl,
               ),
-              if (entity is Food)
-                if ((entity as Food).isOpen == true)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                    child: OpenIndicator(),
-                  )
-                              else if ((entity as Food).isOpen == false)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                  child: CloseIndicator(),
-                )
-              else if (entity is Residence) // New logic for Residence
-                if ((entity as Residence).isRoomAvailable == true)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                    child: AvailableIndicator(),
-                  )
-                else if ((entity as Residence).isRoomAvailable == false)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: Sizes.p4, left: Sizes.p4),
-                    child: UnavailableIndicator(),
-                  ),
+              Positioned(
+                bottom: Sizes.p4,
+                left: Sizes.p4,
+                child: EntityStatusIndicator(entity: entity),
+              ),
             ],
           ),
 
@@ -112,5 +98,30 @@ class EntityCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// ---------------------------------------------
+/// ENTITY STATUS INDICATOR WIDGET
+/// ---------------------------------------------
+class EntityStatusIndicator extends StatelessWidget {
+  const EntityStatusIndicator({super.key, required this.entity});
+
+  final Entity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    if (entity is Food) {
+      final food = entity as Food;
+      if (food.isOpen == true) return const OpenIndicator();
+      if (food.isOpen == false) return const CloseIndicator();
+    } else if (entity is Residence) {
+      final residence = entity as Residence;
+      if (residence.isRoomAvailable == true) return const AvailableIndicator();
+      if (residence.isRoomAvailable == false) {
+        return const UnavailableIndicator();
+      }
+    }
+    return const SizedBox.shrink(); // no indicator fallback
   }
 }

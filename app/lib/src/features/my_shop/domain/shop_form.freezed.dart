@@ -19,7 +19,7 @@ mixin _$ShopForm {
  String get cityName; String get sectorName; String get streetAddress; LatLng? get latLng;// Step 3: Contact & Social Links
  String get phoneNumber; String get messagingNumber; String get email; String get facebookUrl; String get instagramUrl; String get websiteUrl;// Step 4: Business Specific Info
  Map<DayOfWeek, OpeningHours>? get openingHours; double? get pricing; bool get isFurnished; GenderPreference get genderPref; String get timezone; bool get isRoomAvailable;// New field
- bool? get isOpen; Map<String, String> get scheduledTaskNames;// Step 5: Media Uploads
+ bool get isOpen; Map<String, String> get scheduledTaskNames;// Step 5: Media Uploads
  Uint8List? get coverImageBytes; List<Uint8List> get galleryImageBytes; List<String> get galleryUrlsToDelete;
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
@@ -51,7 +51,7 @@ abstract mixin class $ShopFormCopyWith<$Res>  {
   factory $ShopFormCopyWith(ShopForm value, $Res Function(ShopForm) _then) = _$ShopFormCopyWithImpl;
 @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, String timezone, bool isRoomAvailable, bool? isOpen, Map<String, String> scheduledTaskNames, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, String timezone, bool isRoomAvailable, bool isOpen, Map<String, String> scheduledTaskNames, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -68,7 +68,7 @@ class _$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? timezone = null,Object? isRoomAvailable = null,Object? isOpen = freezed,Object? scheduledTaskNames = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? timezone = null,Object? isRoomAvailable = null,Object? isOpen = null,Object? scheduledTaskNames = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_self.copyWith(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
@@ -90,8 +90,8 @@ as double?,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished //
 as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,timezone: null == timezone ? _self.timezone : timezone // ignore: cast_nullable_to_non_nullable
 as String,isRoomAvailable: null == isRoomAvailable ? _self.isRoomAvailable : isRoomAvailable // ignore: cast_nullable_to_non_nullable
-as bool,isOpen: freezed == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
-as bool?,scheduledTaskNames: null == scheduledTaskNames ? _self.scheduledTaskNames : scheduledTaskNames // ignore: cast_nullable_to_non_nullable
+as bool,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
+as bool,scheduledTaskNames: null == scheduledTaskNames ? _self.scheduledTaskNames : scheduledTaskNames // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,coverImageBytes: freezed == coverImageBytes ? _self.coverImageBytes : coverImageBytes // ignore: cast_nullable_to_non_nullable
 as Uint8List?,galleryImageBytes: null == galleryImageBytes ? _self.galleryImageBytes : galleryImageBytes // ignore: cast_nullable_to_non_nullable
 as List<Uint8List>,galleryUrlsToDelete: null == galleryUrlsToDelete ? _self.galleryUrlsToDelete : galleryUrlsToDelete // ignore: cast_nullable_to_non_nullable
@@ -204,7 +204,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool? isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.timezone,_that.isRoomAvailable,_that.isOpen,_that.scheduledTaskNames,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -225,7 +225,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool? isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm():
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.timezone,_that.isRoomAvailable,_that.isOpen,_that.scheduledTaskNames,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -245,7 +245,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool? isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String messagingNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  double? pricing,  bool isFurnished,  GenderPreference genderPref,  String timezone,  bool isRoomAvailable,  bool isOpen,  Map<String, String> scheduledTaskNames,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
 return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.messagingNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.timezone,_that.isRoomAvailable,_that.isOpen,_that.scheduledTaskNames,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
@@ -260,7 +260,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 
 
 class _ShopForm implements ShopForm {
-  const _ShopForm({this.category, this.subCategory, required this.name, required this.description, required this.cityName, required this.sectorName, required this.streetAddress, required this.latLng, required this.phoneNumber, required this.messagingNumber, required this.email, required this.facebookUrl, required this.instagramUrl, required this.websiteUrl, final  Map<DayOfWeek, OpeningHours>? openingHours, this.pricing, required this.isFurnished, required this.genderPref, this.timezone = "Asia/Karachi", this.isRoomAvailable = true, this.isOpen, final  Map<String, String> scheduledTaskNames = const {}, this.coverImageBytes, final  List<Uint8List> galleryImageBytes = const [], final  List<String> galleryUrlsToDelete = const []}): _openingHours = openingHours,_scheduledTaskNames = scheduledTaskNames,_galleryImageBytes = galleryImageBytes,_galleryUrlsToDelete = galleryUrlsToDelete;
+  const _ShopForm({this.category, this.subCategory, required this.name, required this.description, required this.cityName, required this.sectorName, required this.streetAddress, required this.latLng, required this.phoneNumber, required this.messagingNumber, required this.email, required this.facebookUrl, required this.instagramUrl, required this.websiteUrl, final  Map<DayOfWeek, OpeningHours>? openingHours, this.pricing, required this.isFurnished, required this.genderPref, this.timezone = "Asia/Karachi", this.isRoomAvailable = true, this.isOpen = false, final  Map<String, String> scheduledTaskNames = const {}, this.coverImageBytes, final  List<Uint8List> galleryImageBytes = const [], final  List<String> galleryUrlsToDelete = const []}): _openingHours = openingHours,_scheduledTaskNames = scheduledTaskNames,_galleryImageBytes = galleryImageBytes,_galleryUrlsToDelete = galleryUrlsToDelete;
   
 
 // Step 1: Basic Details
@@ -297,7 +297,7 @@ class _ShopForm implements ShopForm {
 @override@JsonKey() final  String timezone;
 @override@JsonKey() final  bool isRoomAvailable;
 // New field
-@override final  bool? isOpen;
+@override@JsonKey() final  bool isOpen;
  final  Map<String, String> _scheduledTaskNames;
 @override@JsonKey() Map<String, String> get scheduledTaskNames {
   if (_scheduledTaskNames is EqualUnmodifiableMapView) return _scheduledTaskNames;
@@ -352,7 +352,7 @@ abstract mixin class _$ShopFormCopyWith<$Res> implements $ShopFormCopyWith<$Res>
   factory _$ShopFormCopyWith(_ShopForm value, $Res Function(_ShopForm) _then) = __$ShopFormCopyWithImpl;
 @override @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, String timezone, bool isRoomAvailable, bool? isOpen, Map<String, String> scheduledTaskNames, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String messagingNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, double? pricing, bool isFurnished, GenderPreference genderPref, String timezone, bool isRoomAvailable, bool isOpen, Map<String, String> scheduledTaskNames, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -369,7 +369,7 @@ class __$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? timezone = null,Object? isRoomAvailable = null,Object? isOpen = freezed,Object? scheduledTaskNames = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? messagingNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? timezone = null,Object? isRoomAvailable = null,Object? isOpen = null,Object? scheduledTaskNames = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_ShopForm(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
@@ -391,8 +391,8 @@ as double?,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished //
 as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,timezone: null == timezone ? _self.timezone : timezone // ignore: cast_nullable_to_non_nullable
 as String,isRoomAvailable: null == isRoomAvailable ? _self.isRoomAvailable : isRoomAvailable // ignore: cast_nullable_to_non_nullable
-as bool,isOpen: freezed == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
-as bool?,scheduledTaskNames: null == scheduledTaskNames ? _self._scheduledTaskNames : scheduledTaskNames // ignore: cast_nullable_to_non_nullable
+as bool,isOpen: null == isOpen ? _self.isOpen : isOpen // ignore: cast_nullable_to_non_nullable
+as bool,scheduledTaskNames: null == scheduledTaskNames ? _self._scheduledTaskNames : scheduledTaskNames // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,coverImageBytes: freezed == coverImageBytes ? _self.coverImageBytes : coverImageBytes // ignore: cast_nullable_to_non_nullable
 as Uint8List?,galleryImageBytes: null == galleryImageBytes ? _self._galleryImageBytes : galleryImageBytes // ignore: cast_nullable_to_non_nullable
 as List<Uint8List>,galleryUrlsToDelete: null == galleryUrlsToDelete ? _self._galleryUrlsToDelete : galleryUrlsToDelete // ignore: cast_nullable_to_non_nullable

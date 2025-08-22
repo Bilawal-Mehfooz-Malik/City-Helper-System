@@ -101,6 +101,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get genderPreferenceAny => 'Any';
 
   @override
+  String get genderPreferenceNone => 'None';
+
+  @override
   String get genderPreferenceMaleOnly => 'Male Only';
 
   @override
@@ -123,6 +126,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get showFurnishedOnly => 'Show furnished only';
+
+  @override
+  String get showAvailableOnly => 'Show available only';
 
   @override
   String get genderPreferenceLabel => 'Gender Preference';

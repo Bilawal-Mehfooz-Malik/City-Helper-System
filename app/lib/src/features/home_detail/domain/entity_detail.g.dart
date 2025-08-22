@@ -183,7 +183,7 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
   timezone: json['timezone'] as String? ?? "Asia/Karachi",
-  isOpen: json['isOpen'] as bool?,
+  isOpen: json['isOpen'] as bool? ?? false,
   scheduledTaskNames:
       (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),

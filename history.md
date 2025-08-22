@@ -1,39 +1,48 @@
-## Chat History - Refactoring `isOpen` for Residences
+## Chat History - Implementing `isRoomAvailable` Feature
 
-This session focused on a significant refactoring of the `isOpen` status, particularly for residences, to improve data modeling, reduce backend costs, and enhance user experience.
+This session focused on implementing the `isRoomAvailable` feature for residences, providing a more relevant availability status than `isOpen`.
 
-### 1. Initial Problem & Design Pivot
+### 1. Data Model Updates
 
-- **Problem**: The `isOpen` status was being calculated and stored for all entities, including residences, which was conceptually awkward (e.g., "is a house open?").
-- **Cost/Complexity**: Maintaining `isOpen` for residences via Cloud Functions and Cloud Tasks was unnecessary and added cost.
-- **User Experience**: Displaying "Open" for residences without office hours was confusing.
-- **New Design Goal**: Completely remove `isOpen` from residences, focusing on "availability" (to be implemented later), while keeping `isOpen` for food shops.
+- **`Entity` & `EntityDetail`**: Added `isRoomAvailable` (boolean, default `true`) to `Residence` and `ResidenceDetail` models.
+- **`ShopForm`**: Added `isRoomAvailable` to the `ShopForm` model, including mapping from `ResidenceDetail` and setting a default value.
 
-### 2. Data Model Refactoring
+### 2. Test Data Update
 
-- **`Entity` & `EntityDetail`**: The `isOpen` field was completely removed from the `Residence` and `ResidenceDetail` classes. It remains on `Food` and `FoodDetail`.
-- **`ShopForm`**: The `isOpen` field was removed from the `ShopForm` model, as it's no longer applicable to residences.
+- **`test_residences.dart`**: Updated test residences to include `isRoomAvailable` with mixed `true` and `false` values for testing.
 
-### 3. Backend Cloud Function Update
+### 3. UI (Form) Implementation
 
-- **Targeted Processing**: The Cloud Function (`app/functions/src/index.ts`) was modified to **only** process the `food_listings` collection for `isOpen` status updates. `residence_listings` are now ignored, reducing Cloud Function execution costs.
+- **`residence_specific_section.dart`**: Added `isRoomAvailable` and its `onChanged` callback to the widget's constructor.
+- **`step_4_screen.dart`**: Updated to pass `isRoomAvailable` and its callback to `ResidenceSpecificSection`.
+- **`filter_dialog.dart`**: Updated the `residence` filter section to include a `FilterSwitch` for `isRoomAvailable` and to use the new `showAvailableOnly` localization key.
 
-### 4. Frontend UI & Filter Adaptation
+### 4. UI (Display) Implementation
 
-- **`EntityFilter`**: The `isOpen` field was removed from the `ResidenceFilter`. The `getIsOpen` getter was updated to reflect this, effectively disabling the "Show Open Only" filter for residences.
-- **`FilterDialog`**: The "Show Open Only" switch is now conditionally hidden when the filter context is for residences.
-- **Display Widgets (`EntityCard`, `MyShopDashboardScreen`, `OpeningHoursWidget`)**: All UI elements that previously displayed the "Open/Closed" indicator were updated. They now check if the entity is a `Food` type before attempting to display `isOpen`, ensuring that residences no longer show this status.
+- **`entity_indicator.dart`**: Added `AvailableIndicator` (green) and `UnavailableIndicator` (red) widgets.
+- **`app_en.arb`**: Added `available` and `unavailable` localization keys.
+- **`entity_card.dart`**: Modified to display `AvailableIndicator` or `UnavailableIndicator` for `Residence` entities based on `isRoomAvailable`.
+- **`home_detail_top_right_section.dart`**: Added `AvailableInfo` widget (similar to `FurnishedInfo`) to display `isRoomAvailable` on the detail page.
 
-### 5. Repository & Test Updates
+### 5. Filtering & Repository Updates
 
-- **Fake Repositories**: The `_applyResidenceFilter` method in `fake_residence_repository.dart` was updated to remove the `isOpen` filtering logic.
-- **Real Repositories**: The `_buildFilteredQuery` method in `residence_repository.dart` was updated to remove the `isOpen` filtering from Firestore queries.
-- **Test Files**: All relevant test files (`fake_food_repository_test.dart`, `fake_residence_repository_test.dart`) were updated to reflect the changes in the `isOpen` property and filter logic.
+- **`entity_filter.dart`**: Added `isRoomAvailable` to `ResidenceFilter`.
+- **`filter_controller.dart`**: Updated to handle `isRoomAvailable` in `updateFilter` and `resetFilters` methods.
+- **`fake_residence_repository.dart`**: Updated `_applyResidenceFilter` to filter by `isRoomAvailable`.
+- **`real_residence_repository.dart`**: Updated `_buildFilteredQuery` to filter by `isRoomAvailable`.
 
-### 6. Resolution of Compiler Errors
+### 6. Backend Refactoring & Migration Function
 
-- Throughout the process, various compiler errors (e.g., `undefined_getter`, `undefined_named_parameter`, type mismatches) were encountered due to the removal of `isOpen` from `Residence` and `ResidenceDetail`. These were systematically addressed by updating affected code paths and ensuring proper type handling.
+- **Cloud Function Refactoring**: Broke down `index.ts` into `config.ts`, `types.ts`, and `core.ts` for better organization.
+- **Data Migration Function**: Implemented `migrateResidenceData` (HTTP-triggered) to:
+    - Add `isRoomAvailable` to existing `residence_listings` documents.
+    - Remove `isOpen` and `scheduledTaskNames` from `residence_listings`.
+    - This function was initially in `migrate.ts` but later moved into `index.ts` for deployment troubleshooting, and then removed after use.
+
+### 7. Resolution of Compiler Errors
+
+- Throughout the process, various compiler errors were encountered and systematically addressed due to the introduction of new fields and refactoring.
 
 ### Current Status
 
-The `isOpen` functionality has been successfully refactored to apply only to `Food` entities. Residences no longer have an `isOpen` status, and the application's frontend and backend reflect this new, more logical design. The groundwork has been laid for implementing a separate "availability" feature for residences in the future.
+The `isRoomAvailable` feature is fully implemented for residences, providing a relevant availability status. The Cloud Functions have been refactored, and a data migration function was provided and used to update existing Firestore data.

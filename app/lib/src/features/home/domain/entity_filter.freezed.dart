@@ -282,13 +282,13 @@ as GenderPreference,
 
 
 class ResidenceFilter extends EntityFilter {
-  const ResidenceFilter({this.ratingSort = SortOrder.none, this.isFurnished = false, this.isRoomAvailable = true, this.priceSort = SortOrder.none, this.genderPref = GenderPreference.any}): super._();
+  const ResidenceFilter({this.ratingSort = SortOrder.none, this.isFurnished = false, this.isRoomAvailable = false, this.priceSort = SortOrder.none, this.genderPref = GenderPreference.any}): super._();
   
 
 @override@JsonKey() final  SortOrder ratingSort;
 @JsonKey() final  bool isFurnished;
 @JsonKey() final  bool isRoomAvailable;
-// New field
+// Default to false (filter off)
 @JsonKey() final  SortOrder priceSort;
 @JsonKey() final  GenderPreference genderPref;
 

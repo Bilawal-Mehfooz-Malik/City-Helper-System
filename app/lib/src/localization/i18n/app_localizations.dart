@@ -274,6 +274,12 @@ abstract class AppLocalizations {
   /// **'Any'**
   String get genderPreferenceAny;
 
+  /// No description provided for @genderPreferenceNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get genderPreferenceNone;
+
   /// No description provided for @genderPreferenceMaleOnly.
   ///
   /// In en, this message translates to:
@@ -321,6 +327,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show furnished only'**
   String get showFurnishedOnly;
+
+  /// No description provided for @showAvailableOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Show available only'**
+  String get showAvailableOnly;
 
   /// No description provided for @genderPreferenceLabel.
   ///
