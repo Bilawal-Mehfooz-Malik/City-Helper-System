@@ -11,6 +11,7 @@ import 'package:app/src/core/app_config/configure_nonweb.dart'
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
 
@@ -18,6 +19,7 @@ void main() async {
   configureGoogleMapsWeb();
 
   final appBootStrap = AppBootStrap();
+  await appBootStrap.setupEmulators();
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);
   runApp(root);
