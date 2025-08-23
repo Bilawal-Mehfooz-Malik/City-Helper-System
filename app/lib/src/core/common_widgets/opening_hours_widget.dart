@@ -33,7 +33,7 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
     final today = DayOfWeek.values[now.weekday % 7]; // sunday is 0
 
     final todayHours =
-        hoursMap[today] ?? const OpeningHours(isDayOff: true, slots: []);
+        hoursMap[today] ?? const OpeningHours(isDayOff: true, slots: null);
 
     // Create a list of days starting from today for display order
     final displayDays = DayOfWeek.values.toList();
@@ -91,14 +91,15 @@ class OpeningHoursLabel extends StatelessWidget {
     final openColor = colorScheme.primary;
     final closedColor = colorScheme.error;
 
-    if (todayHours.isDayOff || todayHours.slots.isEmpty) {
+    if (todayHours.isDayOff || todayHours.slots == null || todayHours.slots!.isEmpty) {
       return Text(
         loc.closed,
         style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
       );
     }
 
-    final nextSlot = todayHours.slots.first; // Simplified for this example
+    // If we reach here, slots is not null and not empty
+    final nextSlot = todayHours.slots!.first; // Now safe to use !
 
     if (isOpen == true) {
       return RichText(
@@ -213,14 +214,14 @@ class OpeningHourRow extends StatelessWidget {
     String hoursText;
     TextStyle hoursTextStyle = textStyle;
 
-    if (hour.isDayOff || hour.slots.isEmpty) {
+    if (hour.isDayOff || hour.slots == null || hour.slots!.isEmpty) {
       hoursText = loc.closed;
       hoursTextStyle = textStyle.copyWith(color: colorScheme.error);
     } else if (hour.is24Hours) {
       hoursText = 'Open 24 Hours'; // This should be localized
       hoursTextStyle = textStyle.copyWith(color: colorScheme.primary);
     } else {
-      hoursText = hour.slots
+      hoursText = hour.slots!
           .map(
             (slot) =>
                 '${formatTimeTo12Hour(slot.open)} – ${formatTimeTo12Hour(slot.close)}',

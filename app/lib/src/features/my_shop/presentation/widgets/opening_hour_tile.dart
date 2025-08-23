@@ -49,7 +49,7 @@ class OpeningHoursTile extends StatelessWidget {
                 children: DayOfWeek.values.map((day) {
                   final dayHours =
                       tempHours[day] ??
-                      const OpeningHours(isDayOff: true, slots: []);
+                      const OpeningHours(isDayOff: true, slots: null);
                   return OpeningHoursEditor(
                     day: day,
                     dayHours: dayHours,
@@ -112,7 +112,7 @@ class OpeningHoursEditor extends StatelessWidget {
                       dayHours.copyWith(
                         isDayOff: value,
                         is24Hours: false,
-                        slots: [],
+                        slots: null,
                       ),
                     );
                   },
@@ -129,7 +129,7 @@ class OpeningHoursEditor extends StatelessWidget {
                             dayHours.copyWith(
                               is24Hours: value,
                               isDayOff: false,
-                              slots: [],
+                              slots: null,
                             ),
                           );
                         },
@@ -138,18 +138,18 @@ class OpeningHoursEditor extends StatelessWidget {
             ],
           ),
           if (!dayHours.isDayOff && !(dayHours.is24Hours)) ...[
-            ...dayHours.slots.asMap().entries.map((entry) {
+            ...(dayHours.slots ?? []).asMap().entries.map((entry) {
               final index = entry.key;
               final slot = entry.value;
               return TimeSlotEditor(
                 slot: slot,
                 onChanged: (updatedSlot) {
-                  final newSlots = List<TimeSlot>.from(dayHours.slots);
+                  final newSlots = List<TimeSlot>.from(dayHours.slots ?? []);
                   newSlots[index] = updatedSlot;
                   onChanged(dayHours.copyWith(slots: newSlots));
                 },
                 onDelete: () {
-                  final newSlots = List<TimeSlot>.from(dayHours.slots);
+                  final newSlots = List<TimeSlot>.from(dayHours.slots ?? []);
                   newSlots.removeAt(index);
                   onChanged(dayHours.copyWith(slots: newSlots));
                 },
@@ -157,7 +157,7 @@ class OpeningHoursEditor extends StatelessWidget {
             }),
             TextButton.icon(
               onPressed: () {
-                final newSlots = List<TimeSlot>.from(dayHours.slots);
+                final newSlots = List<TimeSlot>.from(dayHours.slots ?? []);
                 newSlots.add(
                   const TimeSlot(open: '09:00', close: '17:00'),
                 ); // Default new slot

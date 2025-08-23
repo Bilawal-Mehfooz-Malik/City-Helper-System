@@ -8,7 +8,6 @@ sealed class EntityFilter with _$EntityFilter {
   const EntityFilter._();
 
   const factory EntityFilter.food({
-    @Default(false) bool isOpen,
     @Default(SortOrder.none) SortOrder ratingSort,
     @Default(GenderPreference.any) GenderPreference genderPref,
   }) = FoodFilter;
@@ -22,21 +21,13 @@ sealed class EntityFilter with _$EntityFilter {
   }) = ResidenceFilter;
 
   const factory EntityFilter.basic({
-    @Default(false) bool isOpen,
     @Default(SortOrder.none) SortOrder ratingSort,
   }) = BasicFilter;
 
-  /// A generic getter for isOpen that works across all filter types.
-  bool get getIsOpen => when(
-    food: (isOpen, _, _) => isOpen,
-    residence: (_, _, _, _, _) => false,
-    basic: (isOpen, _) => isOpen,
-  );
-
   /// A generic getter for ratingSort that works across all filter types.
   SortOrder get getRatingSort => when(
-    food: (_, ratingSort, _) => ratingSort,
+    food: (ratingSort, _) => ratingSort,
     residence: (ratingSort, _, _, _, _) => ratingSort,
-    basic: (_, ratingSort) => ratingSort,
+    basic: (ratingSort) => ratingSort,
   );
 }

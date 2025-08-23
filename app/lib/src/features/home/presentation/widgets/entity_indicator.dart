@@ -3,6 +3,40 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:app/src/features/home/domain/entity.dart';
+import 'package:app/src/core/utils/opening_hours_checker.dart';
+
+class EntityStatusIndicator extends StatelessWidget {
+  const EntityStatusIndicator({super.key, required this.entity});
+
+  final Entity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    if (entity is Food) {
+      final food = entity as Food;
+      if (food.isOpen) {
+        return const OpenIndicator();
+      } else {
+        final bool calculatedIsOpen = OpeningHoursChecker.isOpenNow(
+          food.openingHours,
+        );
+        if (calculatedIsOpen) {
+          return const OpenIndicator();
+        } else {
+          return const CloseIndicator();
+        }
+      }
+    } else if (entity is Residence) {
+      final residence = entity as Residence;
+      if (residence.isRoomAvailable == true) return const AvailableIndicator();
+      if (residence.isRoomAvailable == false) {
+        return const UnavailableIndicator();
+      }
+    }
+    return const SizedBox.shrink(); // no indicator fallback
+  }
+}
 
 class OpenIndicator extends StatelessWidget {
   const OpenIndicator({super.key});
@@ -90,7 +124,10 @@ class AvailableIndicator extends StatelessWidget {
             ),
           ),
           Flexible(
-            child: Text(context.loc.available, style: context.textTheme.bodyMedium),
+            child: Text(
+              context.loc.available,
+              style: context.textTheme.bodyMedium,
+            ),
           ),
         ],
       ),
@@ -121,7 +158,10 @@ class UnavailableIndicator extends StatelessWidget {
             ),
           ),
           Flexible(
-            child: Text(context.loc.unavailable, style: context.textTheme.bodyMedium),
+            child: Text(
+              context.loc.unavailable,
+              style: context.textTheme.bodyMedium,
+            ),
           ),
         ],
       ),

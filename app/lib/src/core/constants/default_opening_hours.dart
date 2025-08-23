@@ -18,8 +18,6 @@ final Map<DayOfWeek, OpeningHours> defaultOpeningHours = {
   DayOfWeek.friday: const OpeningHours(
     slots: [TimeSlot(open: "09:00", close: "17:00")],
   ),
-  DayOfWeek.saturday: const OpeningHours(
-    slots: [TimeSlot(open: "10:00", close: "18:00")],
-  ),
-  DayOfWeek.sunday: const OpeningHours(isDayOff: true, slots: []),
+  DayOfWeek.saturday: const OpeningHours(is24Hours: true),
+  DayOfWeek.sunday: const OpeningHours(is24Hours: true),
 };

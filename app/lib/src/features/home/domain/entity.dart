@@ -34,16 +34,12 @@ sealed class Entity with _$Entity {
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
     @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
-    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
-    // TODO: Remove it
-    @Default(EntityType.residence) EntityType type,
     required Pricing pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
-    @Default("Asia/Karachi") String timezone,
     @Default(true) bool isRoomAvailable,
   }) = Residence;
 
@@ -64,10 +60,7 @@ sealed class Entity with _$Entity {
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
-    // TODO: Remove it
-    @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
-    @Default("Asia/Karachi") String timezone,
     @Default(false) bool isOpen,
   }) = Food;
 

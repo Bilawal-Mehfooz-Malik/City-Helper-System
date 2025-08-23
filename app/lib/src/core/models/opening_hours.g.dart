@@ -11,8 +11,8 @@ _OpeningHours _$OpeningHoursFromJson(Map<String, dynamic> json) =>
       isDayOff: json['isDayOff'] as bool? ?? false,
       is24Hours: json['is24Hours'] as bool? ?? false,
       slots:
-          (json['slots'] as List<dynamic>)
-              .map((e) => TimeSlot.fromJson(e as Map<String, dynamic>))
+          (json['slots'] as List<dynamic>?)
+              ?.map((e) => TimeSlot.fromJson(e as Map<String, dynamic>))
               .toList(),
     );
 

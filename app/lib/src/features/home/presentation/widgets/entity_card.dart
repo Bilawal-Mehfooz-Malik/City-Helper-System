@@ -101,27 +101,4 @@ class EntityCard extends StatelessWidget {
   }
 }
 
-/// ---------------------------------------------
-/// ENTITY STATUS INDICATOR WIDGET
-/// ---------------------------------------------
-class EntityStatusIndicator extends StatelessWidget {
-  const EntityStatusIndicator({super.key, required this.entity});
 
-  final Entity entity;
-
-  @override
-  Widget build(BuildContext context) {
-    if (entity is Food) {
-      final food = entity as Food;
-      if (food.isOpen == true) return const OpenIndicator();
-      if (food.isOpen == false) return const CloseIndicator();
-    } else if (entity is Residence) {
-      final residence = entity as Residence;
-      if (residence.isRoomAvailable == true) return const AvailableIndicator();
-      if (residence.isRoomAvailable == false) {
-        return const UnavailableIndicator();
-      }
-    }
-    return const SizedBox.shrink(); // no indicator fallback
-  }
-}

@@ -98,8 +98,14 @@ class FilterDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return localFilter.when(
-      residence: (ratingSort, isFurnished, isRoomAvailable, priceSort, genderPref) =>
-          Column(
+      residence:
+          (
+            ratingSort,
+            isFurnished,
+            isRoomAvailable,
+            priceSort,
+            genderPref,
+          ) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               gapH4,
@@ -126,11 +132,13 @@ class FilterDialogContent extends StatelessWidget {
                   (localFilter as ResidenceFilter).copyWith(isFurnished: value),
                 ),
               ),
-              FilterSwitch( // New FilterSwitch for isRoomAvailable
+              FilterSwitch(
                 value: isRoomAvailable,
-                label: context.loc.showAvailableOnly, // Using the new localization key
+                label: context.loc.showAvailableOnly,
                 onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(isRoomAvailable: value),
+                  (localFilter as ResidenceFilter).copyWith(
+                    isRoomAvailable: value,
+                  ),
                 ),
               ),
               gapH12,
@@ -143,7 +151,7 @@ class FilterDialogContent extends StatelessWidget {
               gapH8,
             ],
           ),
-      food: (isOpen, ratingSort, genderPref) => Column(
+      food: (ratingSort, genderPref) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           gapH4,
@@ -152,14 +160,6 @@ class FilterDialogContent extends StatelessWidget {
             currentValue: ratingSort,
             onChanged: (value) => onFilterChanged(
               (localFilter as FoodFilter).copyWith(ratingSort: value),
-            ),
-          ),
-          gapH8,
-          FilterSwitch(
-            value: isOpen,
-            label: context.loc.showOpenOnly,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as FoodFilter).copyWith(isOpen: value),
             ),
           ),
           gapH12,
@@ -172,7 +172,7 @@ class FilterDialogContent extends StatelessWidget {
           gapH8,
         ],
       ),
-      basic: (isOpen, ratingSort) => Column(
+      basic: (ratingSort) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           gapH4,
@@ -181,14 +181,6 @@ class FilterDialogContent extends StatelessWidget {
             currentValue: ratingSort,
             onChanged: (value) => onFilterChanged(
               (localFilter as BasicFilter).copyWith(ratingSort: value),
-            ),
-          ),
-          gapH8,
-          FilterSwitch(
-            value: isOpen,
-            label: context.loc.showOpenOnly,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as BasicFilter).copyWith(isOpen: value),
             ),
           ),
           gapH8,

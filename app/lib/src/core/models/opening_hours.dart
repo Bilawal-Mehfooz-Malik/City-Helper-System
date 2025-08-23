@@ -9,7 +9,7 @@ abstract class OpeningHours with _$OpeningHours {
   const factory OpeningHours({
     @Default(false) bool isDayOff,
     @Default(false) bool is24Hours,
-    required List<TimeSlot> slots,
+    List<TimeSlot>? slots,
   }) = _OpeningHours;
 
   factory OpeningHours.fromJson(Map<String, Object?> json) =>

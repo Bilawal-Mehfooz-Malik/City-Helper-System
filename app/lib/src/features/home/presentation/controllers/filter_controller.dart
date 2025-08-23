@@ -33,8 +33,8 @@ class FilterController extends _$FilterController {
   void resetFilters() {
     state = state.when(
       residence: (_, _, _, _, _) => const EntityFilter.residence(),
-      food: (_, _, _) => const EntityFilter.food(),
-      basic: (_, _) => const EntityFilter.basic(),
+      food: (_, _) => const EntityFilter.food(),
+      basic: (_) => const EntityFilter.basic(),
     );
   }
 
@@ -61,16 +61,12 @@ class FilterController extends _$FilterController {
             priceSort: priceSort ?? currentPriceSort,
             genderPref: genderPref ?? currentGenderPref,
           ),
-      food: (currentIsOpen, currentRatingSort, currentGenderPref) =>
-          EntityFilter.food(
-            isOpen: isOpen ?? currentIsOpen,
-            ratingSort: ratingSort ?? currentRatingSort,
-            genderPref: genderPref ?? currentGenderPref,
-          ),
-      basic: (currentIsOpen, currentRatingSort) => EntityFilter.basic(
-        isOpen: isOpen ?? currentIsOpen,
+      food: (currentRatingSort, currentGenderPref) => EntityFilter.food(
         ratingSort: ratingSort ?? currentRatingSort,
+        genderPref: genderPref ?? currentGenderPref,
       ),
+      basic: (currentRatingSort) =>
+          EntityFilter.basic(ratingSort: ratingSort ?? currentRatingSort),
     );
   }
 }

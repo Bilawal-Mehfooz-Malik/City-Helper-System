@@ -80,3 +80,52 @@ This session focused on optimizing Cloud Functions for cost and troubleshooting 
 
 - User will manually perform recommended troubleshooting steps for the Firebase CLI and local environment.
 - Once the Cloud Tasks emulator is successfully running, testing of Cloud Task scheduling will resume.
+
+---
+
+## Chat History - Home Feature Enhancements & Bug Fixes
+
+This session focused on several enhancements and bug fixes related to the home feature, including popular entities, pricing, and opening hours logic.
+
+### 1. Popular Entities Critical Error Status
+
+-   **Goal**: Ensure critical errors in fetching popular entities are reported.
+-   **Implementation**: Modified `app/lib/src/features/home/presentation/controllers/home_error_controller.dart` to include `popularEntitiesNotifierProvider` in the `criticalErrorStatus` check.
+
+### 2. Pricing Model Integration
+
+-   **Goal**: Integrate a new `Pricing` model for residences to handle cost, unit, and period.
+-   **Implementation**: 
+    -   Defined `PricingUnit` and `PricingPeriod` enums in `app/lib/src/features/home/domain/pricing.dart`.
+    -   Modified `app/lib/src/features/home/domain/entity.dart` to use `Pricing` object for residence pricing.
+    -   Updated `app/lib/src/features/home/data/real/residence_repository.dart` to sort by `pricing.cost`.
+    -   Updated `app/lib/src/core/constants/test_residences.dart` to use `Pricing` objects and removed duplicate entries.
+    -   Updated `app/lib/src/features/home/data/fake/fake_residence_repository.dart` to sort by `pricing.cost`.
+    -   Refined `displayLabel` in `app/lib/src/features/home/domain/pricing.dart` to output "per [unit] per [period]" format.
+    -   Updated `app/lib/src/features/home/presentation/widgets/entity_card.dart` to correctly display formatted pricing using `currencyFormatterProvider` and `pricing.displayLabel`.
+
+### 3. Currency Formatting (PKR Specific)
+
+-   **Goal**: Configure currency display for Pakistani Rupees (PKR) only.
+-   **Implementation**: Modified `app/lib/src/core/utils/currency_formatter.dart` to use `ur_PK` locale, "Rs. " symbol, and `decimalDigits: 0`.
+
+### 4. Entity Field Refactoring (`timezone`, `EntityType`, `isOpen`)
+
+-   **Goal**: Streamline entity fields and shift `isOpen` logic to client-side.
+-   **Implementation**: 
+    -   Removed `timezone` and `EntityType` from `Residence` and `Food` entities in `app/lib/src/features/home/domain/entity.dart`.
+    -   Removed `EntityType` from `app/lib/src/core/constants/test_food_list.dart` and `app/lib/src/core/constants/test_residences.dart`.
+    -   Removed `isOpen` filtering logic from `app/lib/src/features/home/data/fake/fake_food_repository.dart` and `app/lib/src/features/home/data/real/food_repository.dart`.
+    -   Ensured `isOpen` field remains in `Food` entity for client-side use.
+
+### 5. Opening Hours Logic Refinement & Bug Fixes
+
+-   **Goal**: Correctly determine and display opening status based on `openingHours` data, handling nullable slots and day mapping.
+-   **Implementation**: 
+    -   Created `app/lib/src/core/utils/opening_hours_checker.dart` for client-side `isOpen` calculation.
+    -   Modified `app/lib/src/features/home/presentation/widgets/entity_indicator.dart` to use `OpeningHoursChecker` for `Food` entities.
+    -   Removed `isOpen` filter from `app/lib/src/features/home/presentation/widgets/filter_dialog.dart` and `app/lib/src/features/home/domain/entity_filter.dart`.
+    -   Corrected `opening_hours_checker.dart` to handle `OpeningHours` model's `isDayOff`, `is24Hours`, and nullable `slots` fields.
+    -   Fixed `TimeSlot` field names (`open`, `close` instead of `startTime`, `endTime`) in `opening_hours_checker.dart`.
+    -   Corrected `DayOfWeek` mapping in `opening_hours_checker.dart` (`now.weekday % 7`) to align with enum definition.
+    -   Updated `app/lib/src/core/common_widgets/opening_hours_widget.dart` and `app/lib/src/features/my_shop/presentation/widgets/opening_hour_tile.dart` to handle nullable `slots` in `OpeningHours` model.

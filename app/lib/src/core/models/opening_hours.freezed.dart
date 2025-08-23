@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OpeningHours {
 
- bool get isDayOff; bool get is24Hours; List<TimeSlot> get slots;
+ bool get isDayOff; bool get is24Hours; List<TimeSlot>? get slots;
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $OpeningHoursCopyWith<$Res>  {
   factory $OpeningHoursCopyWith(OpeningHours value, $Res Function(OpeningHours) _then) = _$OpeningHoursCopyWithImpl;
 @useResult
 $Res call({
- bool isDayOff, bool is24Hours, List<TimeSlot> slots
+ bool isDayOff, bool is24Hours, List<TimeSlot>? slots
 });
 
 
@@ -65,12 +65,12 @@ class _$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = freezed,}) {
   return _then(_self.copyWith(
 isDayOff: null == isDayOff ? _self.isDayOff : isDayOff // ignore: cast_nullable_to_non_nullable
 as bool,is24Hours: null == is24Hours ? _self.is24Hours : is24Hours // ignore: cast_nullable_to_non_nullable
-as bool,slots: null == slots ? _self.slots : slots // ignore: cast_nullable_to_non_nullable
-as List<TimeSlot>,
+as bool,slots: freezed == slots ? _self.slots : slots // ignore: cast_nullable_to_non_nullable
+as List<TimeSlot>?,
   ));
 }
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot>? slots)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
 return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
@@ -176,7 +176,7 @@ return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDayOff,  bool is24Hours,  List<TimeSlot>? slots)  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours():
 return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
@@ -196,7 +196,7 @@ return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDayOff,  bool is24Hours,  List<TimeSlot> slots)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDayOff,  bool is24Hours,  List<TimeSlot>? slots)?  $default,) {final _that = this;
 switch (_that) {
 case _OpeningHours() when $default != null:
 return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
@@ -211,16 +211,18 @@ return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
 @JsonSerializable()
 
 class _OpeningHours implements OpeningHours {
-  const _OpeningHours({this.isDayOff = false, this.is24Hours = false, required final  List<TimeSlot> slots}): _slots = slots;
+  const _OpeningHours({this.isDayOff = false, this.is24Hours = false, final  List<TimeSlot>? slots}): _slots = slots;
   factory _OpeningHours.fromJson(Map<String, dynamic> json) => _$OpeningHoursFromJson(json);
 
 @override@JsonKey() final  bool isDayOff;
 @override@JsonKey() final  bool is24Hours;
- final  List<TimeSlot> _slots;
-@override List<TimeSlot> get slots {
+ final  List<TimeSlot>? _slots;
+@override List<TimeSlot>? get slots {
+  final value = _slots;
+  if (value == null) return null;
   if (_slots is EqualUnmodifiableListView) return _slots;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_slots);
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$OpeningHoursCopyWith<$Res> implements $OpeningHoursCopyWi
   factory _$OpeningHoursCopyWith(_OpeningHours value, $Res Function(_OpeningHours) _then) = __$OpeningHoursCopyWithImpl;
 @override @useResult
 $Res call({
- bool isDayOff, bool is24Hours, List<TimeSlot> slots
+ bool isDayOff, bool is24Hours, List<TimeSlot>? slots
 });
 
 
@@ -274,12 +276,12 @@ class __$OpeningHoursCopyWithImpl<$Res>
 
 /// Create a copy of OpeningHours
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isDayOff = null,Object? is24Hours = null,Object? slots = freezed,}) {
   return _then(_OpeningHours(
 isDayOff: null == isDayOff ? _self.isDayOff : isDayOff // ignore: cast_nullable_to_non_nullable
 as bool,is24Hours: null == is24Hours ? _self.is24Hours : is24Hours // ignore: cast_nullable_to_non_nullable
-as bool,slots: null == slots ? _self._slots : slots // ignore: cast_nullable_to_non_nullable
-as List<TimeSlot>,
+as bool,slots: freezed == slots ? _self._slots : slots // ignore: cast_nullable_to_non_nullable
+as List<TimeSlot>?,
   ));
 }
 

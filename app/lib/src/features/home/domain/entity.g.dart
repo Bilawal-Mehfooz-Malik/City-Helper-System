@@ -22,16 +22,10 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
     Map<String, dynamic>,
     Map<DayOfWeek, OpeningHours>
   >(json['openingHours'], _openingHoursConverter.fromJson),
-  entityStatus:
-      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
-      OperationalStatus.defaultStatus,
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
-  type:
-      $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ??
-      EntityType.residence,
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
   genderPref:
@@ -40,7 +34,6 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
-  timezone: json['timezone'] as String? ?? "Asia/Karachi",
   isRoomAvailable: json['isRoomAvailable'] as bool? ?? true,
   $type: json['runtimeType'] as String?,
 );
@@ -62,15 +55,12 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
         instance.openingHours,
         _openingHoursConverter.toJson,
       ),
-  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
-  'type': _$EntityTypeEnumMap[instance.type]!,
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
-  'timezone': instance.timezone,
   'isRoomAvailable': instance.isRoomAvailable,
   'runtimeType': instance.$type,
 };
@@ -80,21 +70,10 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) => json == null ? null : fromJson(json as Json);
 
-const _$OperationalStatusEnumMap = {
-  OperationalStatus.open: 'open',
-  OperationalStatus.close: 'close',
-  OperationalStatus.defaultStatus: 'defaultStatus',
-};
-
 const _$ApprovalStatusEnumMap = {
   ApprovalStatus.blocked: 'blocked',
   ApprovalStatus.pending: 'pending',
   ApprovalStatus.approved: 'approved',
-};
-
-const _$EntityTypeEnumMap = {
-  EntityType.residence: 'residence',
-  EntityType.food: 'food',
 };
 
 const _$GenderPreferenceEnumMap = {
@@ -136,12 +115,9 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
-  type:
-      $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ?? EntityType.food,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
-  timezone: json['timezone'] as String? ?? "Asia/Karachi",
   isOpen: json['isOpen'] as bool? ?? false,
   $type: json['runtimeType'] as String?,
 );
@@ -162,9 +138,13 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
-  'type': _$EntityTypeEnumMap[instance.type]!,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
-  'timezone': instance.timezone,
   'isOpen': instance.isOpen,
   'runtimeType': instance.$type,
+};
+
+const _$OperationalStatusEnumMap = {
+  OperationalStatus.open: 'open',
+  OperationalStatus.close: 'close',
+  OperationalStatus.defaultStatus: 'defaultStatus',
 };

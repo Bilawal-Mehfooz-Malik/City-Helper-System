@@ -126,9 +126,6 @@ class FoodRepository {
 
   Query<Food> _buildFilteredQuery(Query<Food> query, FoodFilter filter) {
     var newQuery = query;
-    if (filter.getIsOpen) {
-      newQuery = newQuery.where('isOpen', isEqualTo: true);
-    }
     if (filter.genderPref != GenderPreference.any) {
       newQuery = newQuery.where(
         'genderPref',
