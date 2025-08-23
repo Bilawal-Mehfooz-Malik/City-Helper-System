@@ -288,7 +288,6 @@ class ResidenceFilter extends EntityFilter {
 @override@JsonKey() final  SortOrder ratingSort;
 @JsonKey() final  bool isFurnished;
 @JsonKey() final  bool isRoomAvailable;
-// Default to false (filter off)
 @JsonKey() final  SortOrder priceSort;
 @JsonKey() final  GenderPreference genderPref;
 

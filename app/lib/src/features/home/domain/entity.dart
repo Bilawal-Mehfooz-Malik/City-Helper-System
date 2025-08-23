@@ -36,6 +36,7 @@ sealed class Entity with _$Entity {
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
+    // TODO: Remove it
     @Default(EntityType.residence) EntityType type,
     @JsonKey(name: 'price') required double pricing,
     @Default(false) bool isFurnished,
@@ -62,6 +63,7 @@ sealed class Entity with _$Entity {
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
+    // TODO: Remove it
     @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default("Asia/Karachi") String timezone,

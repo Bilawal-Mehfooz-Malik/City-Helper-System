@@ -5,6 +5,7 @@ import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import { onRequest } from "firebase-functions/v2/https";
 import { updateAndReschedule } from "./core";
 import { Place } from "./types";
+import * as logger from "firebase-functions/logger"; // Import logger
 
 // INITIALIZATION
 initializeApp();
@@ -15,7 +16,21 @@ const firestore = getFirestore();
 const collections = ["food_listings"];
 for (const collection of collections) {
   exports[`onWrite_${collection}`] = onDocumentWritten(`${collection}/{placeId}`, async (event) => {
-    await updateAndReschedule(firestore, tasksClient, collection, event.params.placeId, event.data?.after.data() as Place | undefined);
+    const beforeData = event.data?.before.data() as Place | undefined;
+    const afterData = event.data?.after.data() as Place | undefined;
+
+    // Only proceed if relevant fields have changed or if it's a new document
+    const relevantFieldsChanged =
+      !beforeData || // New document
+      JSON.stringify(beforeData.openingHours) !== JSON.stringify(afterData?.openingHours) ||
+      beforeData.entityStatus !== afterData?.entityStatus;
+
+    if (!relevantFieldsChanged) {
+      logger.info(`No relevant changes for ${event.params.placeId}. Skipping update.`);
+      return; // Exit early if no relevant changes
+    }
+
+    await updateAndReschedule(firestore, tasksClient, collection, event.params.placeId, afterData);
   });
 }
 
@@ -36,6 +51,7 @@ export const setOpenStatus = onRequest({ timeoutSeconds: 300 }, async (request, 
     await updateAndReschedule(firestore, tasksClient, collectionPath, placeId, doc.data() as Place);
     response.status(200).send("OK");
   } catch (error) {
+    logger.error("Error in setOpenStatus:", error); // Enhanced logging
     response.status(500).send("Internal Server Error");
   }
 });

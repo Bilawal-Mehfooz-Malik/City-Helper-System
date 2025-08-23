@@ -108,7 +108,6 @@ class ResidenceRepository {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-
   /// Watches a single residence by its ID
   Stream<Residence?> watchResidence(EntityId id) {
     return _residencesRef
@@ -119,7 +118,6 @@ class ResidenceRepository {
 
   /// Fetches a single residence by its ID
   Future<Residence?> fetchResidence(EntityId id) async {
-    // Uses the original, unfiltered ref
     final snapshot = await _residencesRef.doc(id).get();
     return snapshot.exists ? snapshot.data() : null;
   }
@@ -127,25 +125,37 @@ class ResidenceRepository {
   // --------------------Helpers--------------------------
 
   Query<Residence> _buildFilteredQuery(
-      Query<Residence> query, ResidenceFilter filter) {
+    Query<Residence> query,
+    ResidenceFilter filter,
+  ) {
     var newQuery = query;
 
-    if (filter.isRoomAvailable) { // New filter
+    if (filter.isRoomAvailable) {
+      // New filter
       newQuery = newQuery.where('isRoomAvailable', isEqualTo: true);
     }
     if (filter.isFurnished) {
       newQuery = newQuery.where('isFurnished', isEqualTo: true);
     }
     if (filter.genderPref != GenderPreference.any) {
-      newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
+      newQuery = newQuery.where(
+        'genderPref',
+        isEqualTo: filter.genderPref.name,
+      );
     }
     if (filter.ratingSort != SortOrder.none) {
       newQuery = newQuery
           .where('avgRating', isGreaterThanOrEqualTo: 0)
-          .orderBy('avgRating', descending: filter.ratingSort == SortOrder.highToLow);
+          .orderBy(
+            'avgRating',
+            descending: filter.ratingSort == SortOrder.highToLow,
+          );
     }
     if (filter.priceSort != SortOrder.none) {
-      newQuery = newQuery.orderBy('price', descending: filter.priceSort == SortOrder.highToLow);
+      newQuery = newQuery.orderBy(
+        'price',
+        descending: filter.priceSort == SortOrder.highToLow,
+      );
     }
 
     return newQuery;

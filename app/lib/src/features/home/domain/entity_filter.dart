@@ -16,7 +16,7 @@ sealed class EntityFilter with _$EntityFilter {
   const factory EntityFilter.residence({
     @Default(SortOrder.none) SortOrder ratingSort,
     @Default(false) bool isFurnished,
-    @Default(false) bool isRoomAvailable, // Default to false (filter off)
+    @Default(false) bool isRoomAvailable,
     @Default(SortOrder.none) SortOrder priceSort,
     @Default(GenderPreference.any) GenderPreference genderPref,
   }) = ResidenceFilter;

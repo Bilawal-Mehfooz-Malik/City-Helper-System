@@ -109,7 +109,6 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-
   /// Fetches a single food document by its ID
   Future<Food?> fetchFood(EntityId id) async {
     final doc = await _foodsRef.doc(id).get();
@@ -131,12 +130,18 @@ class FoodRepository {
       newQuery = newQuery.where('isOpen', isEqualTo: true);
     }
     if (filter.genderPref != GenderPreference.any) {
-      newQuery = newQuery.where('genderPref', isEqualTo: filter.genderPref.name);
+      newQuery = newQuery.where(
+        'genderPref',
+        isEqualTo: filter.genderPref.name,
+      );
     }
     if (filter.ratingSort != SortOrder.none) {
       newQuery = newQuery
           .where('avgRating', isGreaterThanOrEqualTo: 0)
-          .orderBy('avgRating', descending: filter.ratingSort == SortOrder.highToLow);
+          .orderBy(
+            'avgRating',
+            descending: filter.ratingSort == SortOrder.highToLow,
+          );
     }
     return newQuery;
   }

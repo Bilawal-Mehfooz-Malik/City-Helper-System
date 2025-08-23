@@ -158,7 +158,8 @@ class FakeResidenceRepository implements ResidenceRepository {
   ) {
     List<Residence> result = List.from(residences);
 
-    if (filter.isRoomAvailable) { // New filter
+    if (filter.isRoomAvailable) {
+      // New filter
       result = result.where((residence) => residence.isRoomAvailable).toList();
     }
     if (filter.isFurnished) {

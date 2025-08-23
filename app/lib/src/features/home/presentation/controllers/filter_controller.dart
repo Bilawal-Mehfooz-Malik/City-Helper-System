@@ -32,8 +32,7 @@ class FilterController extends _$FilterController {
 
   void resetFilters() {
     state = state.when(
-      residence: (_, _, _, _, _) =>
-          const EntityFilter.residence(), // Added _ for new parameter
+      residence: (_, _, _, _, _) => const EntityFilter.residence(),
       food: (_, _, _) => const EntityFilter.food(),
       basic: (_, _) => const EntityFilter.basic(),
     );
@@ -42,7 +41,7 @@ class FilterController extends _$FilterController {
   void updateFilter({
     bool? isOpen,
     bool? isFurnished,
-    bool? isRoomAvailable, // New parameter
+    bool? isRoomAvailable,
     SortOrder? priceSort,
     SortOrder? ratingSort,
     GenderPreference? genderPref,
@@ -58,8 +57,7 @@ class FilterController extends _$FilterController {
           ) => EntityFilter.residence(
             ratingSort: ratingSort ?? currentRatingSort,
             isFurnished: isFurnished ?? currentIsFurnished,
-            isRoomAvailable:
-                isRoomAvailable ?? currentIsRoomAvailable, // New field
+            isRoomAvailable: isRoomAvailable ?? currentIsRoomAvailable,
             priceSort: priceSort ?? currentPriceSort,
             genderPref: genderPref ?? currentGenderPref,
           ),

@@ -38,7 +38,8 @@ Entity _$EntityFromJson(
 /// @nodoc
 mixin _$Entity {
 
- EntityId get id; CategoryId get categoryId; SubCategoryId get subCategoryId; String get coverImageUrl; String get name; String get cityName; String get sectorName;@_latLngJsonConverter LatLng get latLng; double get avgRating; int get totalReviews; bool get isPopular;@_openingHoursConverter Map<DayOfWeek, OpeningHours>? get openingHours; OperationalStatus get entityStatus; ApprovalStatus get status;@_timestampJsonConverter DateTime get createdAt; EntityType get type; GenderPreference get genderPref; String get timezone;
+ EntityId get id; CategoryId get categoryId; SubCategoryId get subCategoryId; String get coverImageUrl; String get name; String get cityName; String get sectorName;@_latLngJsonConverter LatLng get latLng; double get avgRating; int get totalReviews; bool get isPopular;@_openingHoursConverter Map<DayOfWeek, OpeningHours>? get openingHours; OperationalStatus get entityStatus; ApprovalStatus get status;@_timestampJsonConverter DateTime get createdAt;// TODO: Remove it
+ EntityType get type; GenderPreference get genderPref; String get timezone;
 /// Create a copy of Entity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -275,6 +276,7 @@ class Residence extends Entity {
 @override@JsonKey() final  OperationalStatus entityStatus;
 @override@JsonKey() final  ApprovalStatus status;
 @override@_timestampJsonConverter final  DateTime createdAt;
+// TODO: Remove it
 @override@JsonKey() final  EntityType type;
 @JsonKey(name: 'price') final  double pricing;
 @JsonKey() final  bool isFurnished;
@@ -396,6 +398,7 @@ class Food extends Entity {
 @override@JsonKey() final  OperationalStatus entityStatus;
 @override@JsonKey() final  ApprovalStatus status;
 @override@_timestampJsonConverter final  DateTime createdAt;
+// TODO: Remove it
 @override@JsonKey() final  EntityType type;
 @override@JsonKey() final  GenderPreference genderPref;
 @override@JsonKey() final  String timezone;

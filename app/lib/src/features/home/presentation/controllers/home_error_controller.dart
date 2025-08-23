@@ -7,6 +7,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_error_controller.g.dart';
 
+// TODO: Add popular entities in critical error check?
+
 @riverpod
 AsyncError<void>? criticalErrorStatus(Ref ref, {required int categoryId}) {
   final entitiesState = ref.watch(entitiesNotifierProvider(categoryId));
