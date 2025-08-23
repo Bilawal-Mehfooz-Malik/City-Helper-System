@@ -153,7 +153,7 @@ class ResidenceRepository {
     }
     if (filter.priceSort != SortOrder.none) {
       newQuery = newQuery.orderBy(
-        'price',
+        'pricing.cost',
         descending: filter.priceSort == SortOrder.highToLow,
       );
     }

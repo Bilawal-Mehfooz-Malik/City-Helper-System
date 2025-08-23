@@ -6,6 +6,7 @@ import 'package:app/src/features/home/domain/json_converters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
 
 part 'entity.freezed.dart';
 part 'entity.g.dart';
@@ -38,7 +39,7 @@ sealed class Entity with _$Entity {
     @_timestampJsonConverter required DateTime createdAt,
     // TODO: Remove it
     @Default(EntityType.residence) EntityType type,
-    @JsonKey(name: 'price') required double pricing,
+    required Pricing pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,

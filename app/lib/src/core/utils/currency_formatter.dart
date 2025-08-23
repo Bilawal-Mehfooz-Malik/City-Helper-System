@@ -12,6 +12,6 @@ NumberFormat currencyFormatter(Ref ref) {
   return NumberFormat.currency(
     locale: 'ur_PK',
     symbol: 'Rs. ',
-    decimalDigits: 2,
+    decimalDigits: 0,
   );
 }

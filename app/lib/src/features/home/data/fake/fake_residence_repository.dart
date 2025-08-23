@@ -183,9 +183,9 @@ class FakeResidenceRepository implements ResidenceRepository {
     if (filter.priceSort != SortOrder.none) {
       result.sort((a, b) {
         if (filter.priceSort == SortOrder.highToLow) {
-          return b.pricing.compareTo(a.pricing);
+          return b.pricing.cost.compareTo(a.pricing.cost);
         } else if (filter.priceSort == SortOrder.lowToHigh) {
-          return a.pricing.compareTo(b.pricing);
+          return a.pricing.cost.compareTo(b.pricing.cost);
         }
         return 0;
       });

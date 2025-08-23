@@ -80,9 +80,9 @@ class EntityCard extends StatelessWidget {
                     builder: (context, ref, child) {
                       final priceFormatted = ref
                           .watch(currencyFormatterProvider)
-                          .format(residence.pricing);
+                          .format(residence.pricing.cost);
                       return Text(
-                        '${context.loc.startsFrom} $priceFormatted',
+                        '$priceFormatted ${residence.pricing.displayLabel}',
                         style: context.textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

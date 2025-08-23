@@ -1,4 +1,5 @@
 import 'package:app/src/features/home/application/entities_notifier.dart';
+import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -7,17 +8,29 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_error_controller.g.dart';
 
-// TODO: Add popular entities in critical error check?
-
 @riverpod
 AsyncError<void>? criticalErrorStatus(Ref ref, {required int categoryId}) {
   final entitiesState = ref.watch(entitiesNotifierProvider(categoryId));
+  final popularEntitiesState = ref.watch(
+    popularEntitiesNotifierProvider(categoryId),
+  );
+
   // A critical error occurs if the initial fetch failed, there are no entities,
   // and we are not in a loading state.
-  if (entitiesState.isInitialLoading) return null;
+  if (entitiesState.isInitialLoading && popularEntitiesState.isInitialLoading) {
+    return null;
+  }
 
   if (entitiesState.entities.isEmpty && entitiesState.paginationError != null) {
     return AsyncError(entitiesState.paginationError!, StackTrace.current);
+  }
+
+  if (popularEntitiesState.entities.isEmpty &&
+      popularEntitiesState.paginationError != null) {
+    return AsyncError(
+      popularEntitiesState.paginationError!,
+      StackTrace.current,
+    );
   }
   return null;
 }

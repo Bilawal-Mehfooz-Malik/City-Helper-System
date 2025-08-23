@@ -194,7 +194,7 @@ return food(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type, @JsonKey(name: 'price')  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)?  residence,TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)?  food,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  Pricing pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)?  residence,TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)?  food,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Residence() when residence != null:
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType,_that.timezone,_that.isRoomAvailable);case Food() when food != null:
@@ -216,7 +216,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type, @JsonKey(name: 'price')  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)  residence,required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)  food,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  Pricing pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)  residence,required TResult Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)  food,}) {final _that = this;
 switch (_that) {
 case Residence():
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType,_that.timezone,_that.isRoomAvailable);case Food():
@@ -234,7 +234,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type, @JsonKey(name: 'price')  double pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)?  residence,TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)?  food,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours>? openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  Pricing pricing,  bool isFurnished,  GenderPreference genderPref,  ListingType listingType,  String timezone,  bool isRoomAvailable)?  residence,TResult? Function( EntityId id,  CategoryId categoryId,  SubCategoryId subCategoryId,  String coverImageUrl,  String name,  String cityName,  String sectorName, @_latLngJsonConverter  LatLng latLng,  double avgRating,  int totalReviews,  bool isPopular, @_openingHoursConverter  Map<DayOfWeek, OpeningHours> openingHours,  OperationalStatus entityStatus,  ApprovalStatus status, @_timestampJsonConverter  DateTime createdAt,  EntityType type,  GenderPreference genderPref,  String timezone,  bool isOpen)?  food,}) {final _that = this;
 switch (_that) {
 case Residence() when residence != null:
 return residence(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_that.name,_that.cityName,_that.sectorName,_that.latLng,_that.avgRating,_that.totalReviews,_that.isPopular,_that.openingHours,_that.entityStatus,_that.status,_that.createdAt,_that.type,_that.pricing,_that.isFurnished,_that.genderPref,_that.listingType,_that.timezone,_that.isRoomAvailable);case Food() when food != null:
@@ -250,7 +250,7 @@ return food(_that.id,_that.categoryId,_that.subCategoryId,_that.coverImageUrl,_t
 
 @JsonSerializable(explicitToJson: true)
 class Residence extends Entity {
-  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, @_openingHoursConverter final  Map<DayOfWeek, OpeningHours>? openingHours, this.entityStatus = OperationalStatus.defaultStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, @JsonKey(name: 'price') required this.pricing, this.isFurnished = false, this.genderPref = GenderPreference.familyFriendly, this.listingType = ListingType.forRent, this.timezone = "Asia/Karachi", this.isRoomAvailable = true, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
+  const Residence({required this.id, required this.categoryId, required this.subCategoryId, required this.coverImageUrl, required this.name, required this.cityName, required this.sectorName, @_latLngJsonConverter required this.latLng, this.avgRating = 0.0, this.totalReviews = 0, this.isPopular = false, @_openingHoursConverter final  Map<DayOfWeek, OpeningHours>? openingHours, this.entityStatus = OperationalStatus.defaultStatus, this.status = ApprovalStatus.pending, @_timestampJsonConverter required this.createdAt, this.type = EntityType.residence, required this.pricing, this.isFurnished = false, this.genderPref = GenderPreference.familyFriendly, this.listingType = ListingType.forRent, this.timezone = "Asia/Karachi", this.isRoomAvailable = true, final  String? $type}): _openingHours = openingHours,$type = $type ?? 'residence',super._();
   factory Residence.fromJson(Map<String, dynamic> json) => _$ResidenceFromJson(json);
 
 @override final  EntityId id;
@@ -278,7 +278,7 @@ class Residence extends Entity {
 @override@_timestampJsonConverter final  DateTime createdAt;
 // TODO: Remove it
 @override@JsonKey() final  EntityType type;
-@JsonKey(name: 'price') final  double pricing;
+ final  Pricing pricing;
 @JsonKey() final  bool isFurnished;
 @override@JsonKey() final  GenderPreference genderPref;
 @JsonKey() final  ListingType listingType;
@@ -322,11 +322,11 @@ abstract mixin class $ResidenceCopyWith<$Res> implements $EntityCopyWith<$Res> {
   factory $ResidenceCopyWith(Residence value, $Res Function(Residence) _then) = _$ResidenceCopyWithImpl;
 @override @useResult
 $Res call({
- EntityId id, CategoryId categoryId, SubCategoryId subCategoryId, String coverImageUrl, String name, String cityName, String sectorName,@_latLngJsonConverter LatLng latLng, double avgRating, int totalReviews, bool isPopular,@_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours, OperationalStatus entityStatus, ApprovalStatus status,@_timestampJsonConverter DateTime createdAt, EntityType type,@JsonKey(name: 'price') double pricing, bool isFurnished, GenderPreference genderPref, ListingType listingType, String timezone, bool isRoomAvailable
+ EntityId id, CategoryId categoryId, SubCategoryId subCategoryId, String coverImageUrl, String name, String cityName, String sectorName,@_latLngJsonConverter LatLng latLng, double avgRating, int totalReviews, bool isPopular,@_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours, OperationalStatus entityStatus, ApprovalStatus status,@_timestampJsonConverter DateTime createdAt, EntityType type, Pricing pricing, bool isFurnished, GenderPreference genderPref, ListingType listingType, String timezone, bool isRoomAvailable
 });
 
 
-
+$PricingCopyWith<$Res> get pricing;
 
 }
 /// @nodoc
@@ -358,7 +358,7 @@ as OperationalStatus,status: null == status ? _self.status : status // ignore: c
 as ApprovalStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as EntityType,pricing: null == pricing ? _self.pricing : pricing // ignore: cast_nullable_to_non_nullable
-as double,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
+as Pricing,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
 as bool,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference,listingType: null == listingType ? _self.listingType : listingType // ignore: cast_nullable_to_non_nullable
 as ListingType,timezone: null == timezone ? _self.timezone : timezone // ignore: cast_nullable_to_non_nullable
@@ -367,7 +367,16 @@ as bool,
   ));
 }
 
-
+/// Create a copy of Entity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PricingCopyWith<$Res> get pricing {
+  
+  return $PricingCopyWith<$Res>(_self.pricing, (value) {
+    return _then(_self.copyWith(pricing: value));
+  });
+}
 }
 
 /// @nodoc
