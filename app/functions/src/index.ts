@@ -1,57 +1,60 @@
-import { initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import { CloudTasksClient } from "@google-cloud/tasks";
-import { onDocumentWritten } from "firebase-functions/v2/firestore";
-import { onRequest } from "firebase-functions/v2/https";
-import { updateAndReschedule } from "./core";
-import { Place } from "./types";
-import * as logger from "firebase-functions/logger"; // Import logger
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-// INITIALIZATION
-initializeApp();
-const tasksClient = new CloudTasksClient();
-const firestore = getFirestore();
-
-// CLOUD FUNCTION TRIGGERS
-const collections = ["food_listings"];
-for (const collection of collections) {
-  exports[`onWrite_${collection}`] = onDocumentWritten(`${collection}/{placeId}`, async (event) => {
-    const beforeData = event.data?.before.data() as Place | undefined;
-    const afterData = event.data?.after.data() as Place | undefined;
-
-    // Only proceed if relevant fields have changed or if it's a new document
-    const relevantFieldsChanged =
-      !beforeData || // New document
-      JSON.stringify(beforeData.openingHours) !== JSON.stringify(afterData?.openingHours) ||
-      beforeData.entityStatus !== afterData?.entityStatus;
-
-    if (!relevantFieldsChanged) {
-      logger.info(`No relevant changes for ${event.params.placeId}. Skipping update.`);
-      return; // Exit early if no relevant changes
-    }
-
-    await updateAndReschedule(firestore, tasksClient, collection, event.params.placeId, afterData);
-  });
+// Initialize Firebase Admin if not already initialized
+if (!admin.apps.length) {
+  admin.initializeApp();
 }
+const firestore = admin.firestore();
 
-export const setOpenStatus = onRequest({ timeoutSeconds: 300 }, async (request, response) => {
+export const migrateResidencePricing = functions.https.onRequest(async (req, res) => {
   try {
-    const { collectionPath, placeId } = request.body;
-    if (!collectionPath || !placeId) {
-      response.status(400).send("Invalid payload. 'collectionPath' and 'placeId' are required.");
-      return;
+    const collectionRef = firestore.collection("residence_listings");
+    const snapshot = await collectionRef.get();
+
+    const batch = firestore.batch();
+    let updatedCount = 0;
+
+    for (const doc of snapshot.docs) {
+      const data = doc.data();
+      // Check if the document has the old 'price' field and not the new 'pricing' field
+      if (data.price !== undefined && data.pricing === undefined) {
+        const oldPrice = data.price;
+        let newUnit = "person"; // Default for rentals
+        let newPeriod = "oneTime"; // Default for one-time payments (like sales or initial fees)
+
+        // Determine unit and period based on listingType
+        if (data.listingType === "forSale") {
+          newUnit = "unit"; // More appropriate for a house for sale
+          newPeriod = "oneTime"; // Still one-time for a sale
+        } else if (data.listingType === "forRent") {
+          newUnit = "person"; // Default for rentals, can be adjusted if 'room' is more common
+          newPeriod = "month"; // Assuming rentals are typically monthly
+        }
+        // If listingType is undefined or other, it will use the initial defaults ("person", "oneTime")
+
+        const newPricing = {
+          cost: oldPrice,
+          unit: newUnit,
+          period: newPeriod,
+        };
+
+        batch.update(doc.ref, {
+          pricing: newPricing,
+          price: admin.firestore.FieldValue.delete(), // Remove the old field
+        });
+        updatedCount++;
+      }
     }
 
-    const doc = await firestore.collection(collectionPath).doc(placeId).get();
-    if (!doc.exists) {
-      response.status(404).send("Document not found.");
-      return;
+    if (updatedCount > 0) {
+      await batch.commit();
+      res.status(200).send(`Migration complete. Updated ${updatedCount} documents.`);
+    } else {
+      res.status(200).send("No documents found requiring pricing migration.");
     }
-
-    await updateAndReschedule(firestore, tasksClient, collectionPath, placeId, doc.data() as Place);
-    response.status(200).send("OK");
   } catch (error) {
-    logger.error("Error in setOpenStatus:", error); // Enhanced logging
-    response.status(500).send("Internal Server Error");
+    console.error("Error during pricing migration:", error);
+    res.status(500).send("Error during pricing migration.");
   }
 });

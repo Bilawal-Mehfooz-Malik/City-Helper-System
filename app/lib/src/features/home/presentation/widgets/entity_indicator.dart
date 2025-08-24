@@ -1,4 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/themes/theme_helpers.dart';
@@ -15,17 +16,20 @@ class EntityStatusIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entity is Food) {
       final food = entity as Food;
-      if (food.isOpen) {
-        return const OpenIndicator();
-      } else {
-        final bool calculatedIsOpen = OpeningHoursChecker.isOpenNow(
-          food.openingHours,
-        );
-        if (calculatedIsOpen) {
+      switch (food.entityStatus) {
+        case OperationalStatus.open:
           return const OpenIndicator();
-        } else {
+        case OperationalStatus.close:
           return const CloseIndicator();
-        }
+        case OperationalStatus.defaultStatus:
+          final bool calculatedIsOpen = OpeningHoursChecker.isOpenNow(
+            food.openingHours,
+          );
+          if (calculatedIsOpen) {
+            return const OpenIndicator();
+          } else {
+            return const CloseIndicator();
+          }
       }
     } else if (entity is Residence) {
       final residence = entity as Residence;

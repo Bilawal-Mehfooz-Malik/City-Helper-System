@@ -118,7 +118,6 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
-  isOpen: json['isOpen'] as bool? ?? false,
   $type: json['runtimeType'] as String?,
 );
 
@@ -139,7 +138,6 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
-  'isOpen': instance.isOpen,
   'runtimeType': instance.$type,
 };
 

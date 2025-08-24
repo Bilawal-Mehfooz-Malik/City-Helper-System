@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:app/src/core/models/my_data_types.dart'; // Added import
 
 part 'pricing.freezed.dart';
 part 'pricing.g.dart';
@@ -34,6 +35,24 @@ abstract class Pricing with _$Pricing {
   }) = _Pricing;
 
   const Pricing._();
+
+  factory Pricing.fromListingType({
+    required double cost,
+    required ListingType listingType,
+  }) {
+    PricingUnit defaultUnit;
+    PricingPeriod defaultPeriod;
+
+    if (listingType == ListingType.forSale) {
+      defaultUnit = PricingUnit.unit;
+      defaultPeriod = PricingPeriod.oneTime;
+    } else {
+      defaultUnit = PricingUnit.person;
+      defaultPeriod = PricingPeriod.month;
+    }
+
+    return Pricing(cost: cost, unit: defaultUnit, period: defaultPeriod);
+  }
 
   String get displayLabel {
     if (period == PricingPeriod.oneTime) {

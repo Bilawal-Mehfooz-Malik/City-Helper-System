@@ -19,7 +19,7 @@ void main() async {
   configureGoogleMapsWeb();
 
   final appBootStrap = AppBootStrap();
-  await appBootStrap.setupEmulators();
+  // await appBootStrap.setupEmulators();
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);
   runApp(root);

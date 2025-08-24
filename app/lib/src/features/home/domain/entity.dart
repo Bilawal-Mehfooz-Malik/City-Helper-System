@@ -61,7 +61,6 @@ sealed class Entity with _$Entity {
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
     @Default(GenderPreference.any) GenderPreference genderPref,
-    @Default(false) bool isOpen,
   }) = Food;
 
   factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);

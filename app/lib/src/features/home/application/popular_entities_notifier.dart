@@ -4,6 +4,7 @@ import 'package:app/src/features/home/application/pagination_limit_provider.dart
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'popular_entities_notifier.g.dart';
@@ -19,16 +20,22 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
         filterContext: FilterContext.popular,
       ),
     );
+    ref.watch(subcategoryControllerProvider);
 
     fetchFirstPage();
     return const EntitiesPaginatedState();
   }
 
   Future<void> fetchFirstPage() async {
-    final filter = ref.read(filterControllerProvider(
-      categoryId: categoryId,
-      filterContext: FilterContext.popular,
-    ));
+    final subcategoryId = ref.read(
+      subcategoryControllerProvider,
+    ); // Read subcategory
+    final filter = ref.read(
+      filterControllerProvider(
+        categoryId: categoryId,
+        filterContext: FilterContext.popular,
+      ),
+    );
 
     try {
       final limit = ref.read(initialLoadLimitProvider);
@@ -36,6 +43,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
           .read(entityServiceProvider)
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
+            subcategoryId: subcategoryId, // Pass subcategoryId
             limit: limit,
             filter: filter,
           );
@@ -53,10 +61,15 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
 
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
 
-    final filter = ref.read(filterControllerProvider(
-      categoryId: categoryId,
-      filterContext: FilterContext.popular,
-    ));
+    final subcategoryId = ref.read(
+      subcategoryControllerProvider,
+    ); // Read subcategory
+    final filter = ref.read(
+      filterControllerProvider(
+        categoryId: categoryId,
+        filterContext: FilterContext.popular,
+      ),
+    );
 
     try {
       final limit = ref.read(subsequentLoadLimitProvider);
@@ -65,6 +78,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
           .read(entityServiceProvider)
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
+            subcategoryId: subcategoryId, // Pass subcategoryId
             lastEntityId: lastEntityId,
             limit: limit,
             filter: filter,
