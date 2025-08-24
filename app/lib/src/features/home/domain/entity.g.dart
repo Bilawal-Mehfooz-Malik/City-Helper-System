@@ -25,7 +25,6 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
-  createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
   genderPref:
@@ -35,6 +34,7 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
   isRoomAvailable: json['isRoomAvailable'] as bool? ?? true,
+  updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
   $type: json['runtimeType'] as String?,
 );
 
@@ -56,12 +56,12 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
         _openingHoursConverter.toJson,
       ),
   'status': _$ApprovalStatusEnumMap[instance.status]!,
-  'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'isRoomAvailable': instance.isRoomAvailable,
+  'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'runtimeType': instance.$type,
 };
 
@@ -114,10 +114,10 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
-  createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
+  updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
   $type: json['runtimeType'] as String?,
 );
 
@@ -136,8 +136,8 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
-  'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'runtimeType': instance.$type,
 };
 

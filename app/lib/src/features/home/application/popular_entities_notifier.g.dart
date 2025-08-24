@@ -7,7 +7,7 @@ part of 'popular_entities_notifier.dart';
 // **************************************************************************
 
 String _$popularEntitiesNotifierHash() =>
-    r'd9dd4901c2e81d21459e85b0a4db094e5d56b28b';
+    r'73c2f264074f2030f0093ee3c6d13687696bf46a';
 
 /// Copied from Dart SDK
 class _SystemHash {

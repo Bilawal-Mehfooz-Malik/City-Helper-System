@@ -158,6 +158,8 @@ class FakeFoodRepository implements FoodRepository {
         }
         return 0;
       });
+    } else {
+      result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     }
     return result;
   }

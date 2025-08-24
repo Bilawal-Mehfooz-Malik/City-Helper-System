@@ -140,6 +140,9 @@ class FoodRepository {
             descending: filter.ratingSort == SortOrder.highToLow,
           );
     }
+    if (filter.ratingSort == SortOrder.none) {
+      newQuery = newQuery.orderBy('updatedAt', descending: true);
+    }
     return newQuery;
   }
 

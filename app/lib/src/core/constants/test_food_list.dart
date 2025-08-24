@@ -19,9 +19,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '2',
@@ -38,9 +37,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '3',
@@ -57,9 +55,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '4',
@@ -76,9 +73,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '5',
@@ -95,9 +91,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '6',
@@ -114,9 +109,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '7',
@@ -133,9 +127,8 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
   Food(
     id: '8',
@@ -152,8 +145,7 @@ final List<Food> testFoods = [
     openingHours: defaultOpeningHours,
     entityStatus: OperationalStatus.defaultStatus,
     genderPref: GenderPreference.familyFriendly,
-    createdAt: DateTime.now(),
     status: ApprovalStatus.approved,
-
+    updatedAt: DateTime.now(),
   ),
 ];

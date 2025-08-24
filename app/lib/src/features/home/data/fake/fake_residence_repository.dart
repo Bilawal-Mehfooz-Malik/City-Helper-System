@@ -190,6 +190,10 @@ class FakeResidenceRepository implements ResidenceRepository {
         return 0;
       });
     }
+    if (filter.ratingSort == SortOrder.none &&
+        filter.priceSort == SortOrder.none) {
+      result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+    }
     return result;
   }
 }

@@ -13,8 +13,8 @@ part 'entity.g.dart';
 
 // Helpers for JSON conversion
 const _latLngJsonConverter = LatLngJsonConverter();
-const _timestampJsonConverter = TimestampJsonConverter();
 const _openingHoursConverter = OpeningHoursConverter();
+const _timestampJsonConverter = TimestampJsonConverter();
 
 @freezed
 sealed class Entity with _$Entity {
@@ -35,12 +35,12 @@ sealed class Entity with _$Entity {
     @Default(false) bool isPopular,
     @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
-    @_timestampJsonConverter required DateTime createdAt,
     required Pricing pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default(true) bool isRoomAvailable,
+    @_timestampJsonConverter required DateTime updatedAt,
   }) = Residence;
 
   @JsonSerializable(explicitToJson: true)
@@ -59,8 +59,8 @@ sealed class Entity with _$Entity {
     @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
-    @_timestampJsonConverter required DateTime createdAt,
     @Default(GenderPreference.any) GenderPreference genderPref,
+    @_timestampJsonConverter required DateTime updatedAt,
   }) = Food;
 
   factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);

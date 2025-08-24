@@ -18,7 +18,6 @@ final List<Residence> testResidences = [
     totalReviews: 120,
     isPopular: true,
     openingHours: defaultOpeningHours,
-    createdAt: DateTime(2024, 3, 10),
     pricing: Pricing(
       cost: 25000,
       period: PricingPeriod.month,
@@ -28,6 +27,7 @@ final List<Residence> testResidences = [
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_002',
@@ -42,12 +42,12 @@ final List<Residence> testResidences = [
     totalReviews: 95,
     isPopular: true,
     openingHours: null, // No specific office hours
-    createdAt: DateTime(2024, 3, 12),
     pricing: Pricing(cost: 40000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_003',
@@ -62,12 +62,12 @@ final List<Residence> testResidences = [
     totalReviews: 60,
     isPopular: false,
     openingHours: defaultOpeningHours,
-    createdAt: DateTime(2024, 3, 15),
     pricing: Pricing(cost: 8000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_004',
@@ -82,12 +82,12 @@ final List<Residence> testResidences = [
     totalReviews: 85,
     isPopular: false,
     openingHours: null, // No specific office hours
-    createdAt: DateTime(2024, 3, 18),
     pricing: Pricing(cost: 15000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_005',
@@ -102,12 +102,12 @@ final List<Residence> testResidences = [
     totalReviews: 100,
     isPopular: false,
     openingHours: defaultOpeningHours,
-    createdAt: DateTime(2024, 3, 20),
     pricing: Pricing(cost: 12000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_006',
@@ -122,12 +122,12 @@ final List<Residence> testResidences = [
     totalReviews: 150,
     isPopular: true,
     openingHours: null, // No specific office hours
-    createdAt: DateTime(2024, 3, 22),
     pricing: Pricing(cost: 60000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_007',
@@ -142,12 +142,12 @@ final List<Residence> testResidences = [
     totalReviews: 45,
     isPopular: false,
     openingHours: defaultOpeningHours,
-    createdAt: DateTime(2024, 3, 24),
     pricing: Pricing(cost: 7000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
     status: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_008',
@@ -162,12 +162,12 @@ final List<Residence> testResidences = [
     totalReviews: 70,
     isPopular: true,
     openingHours: null, // No specific office hours
-    createdAt: DateTime(2024, 3, 26),
     pricing: Pricing(cost: 28000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_009',
@@ -182,12 +182,12 @@ final List<Residence> testResidences = [
     totalReviews: 88,
     isPopular: true,
     openingHours: defaultOpeningHours,
-    createdAt: DateTime(2024, 3, 28),
     pricing: Pricing(cost: 11000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
+    updatedAt: DateTime.now(),
   ),
   Residence(
     id: 'res_010',
@@ -202,11 +202,11 @@ final List<Residence> testResidences = [
     totalReviews: 110,
     isPopular: true,
     openingHours: null, // No specific office hours
-    createdAt: DateTime(2024, 3, 30),
     pricing: Pricing(cost: 35000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
     status: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
+    updatedAt: DateTime.now(),
   ),
 ];

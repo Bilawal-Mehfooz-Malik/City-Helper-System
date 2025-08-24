@@ -157,6 +157,10 @@ class ResidenceRepository {
         descending: filter.priceSort == SortOrder.highToLow,
       );
     }
+    if (filter.priceSort == SortOrder.none &&
+        filter.ratingSort == SortOrder.none) {
+      newQuery = newQuery.orderBy('updatedAt', descending: true);
+    }
 
     return newQuery;
   }
