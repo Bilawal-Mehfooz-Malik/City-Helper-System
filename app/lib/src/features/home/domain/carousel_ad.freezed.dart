@@ -15,7 +15,24 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CarouselAd {
 
- CategoryId get categoryId; SubCategoryId get subCategoryId; CarouselAdId get id; String get imageUrl; String get targetUrl; DateTime get validFrom; DateTime get validUntil; AdStatus get status;
+ CarouselAdId get id;// Unique ad identifier
+ BusinessId get businessId;// ID of the owning business/shop
+ CategoryId get categoryId;// e.g., CategoryId (int)
+ SubCategoryId? get subcategoryId;// Optional: ID of the subcategory
+ String get imageUrl;// URL to the 16:9 ad banner image
+ AdLinkType get linkType;// "internal_profile" or "external_url"
+ EntityId? get internalProfileId;// Conditional: ID of the in-app profile to link to
+ String? get externalUrl;// Conditional: Full URL to an external website
+ DateTime get startDate;// When the ad starts showing
+ DateTime get endDate;// When the ad stops showing
+ DateTime get createdAt;// Ad creation timestamp
+ DateTime get updatedAt;// Last update timestamp
+ bool get isActive;// True if ad is active
+ int get priorityScore;// Numerical priority: 1 (Basic), 2 (Premium), 3 (Featured)
+ DateTime? get lastShownAt;// Timestamp of the last time this ad was shown
+ int get impressionCount;// Number of times ad has been shown
+ int get clickCount;// Number of times ad has been clicked
+ AdApprovalStatus get status;
 /// Create a copy of CarouselAd
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +45,16 @@ $CarouselAdCopyWith<CarouselAd> get copyWith => _$CarouselAdCopyWithImpl<Carouse
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CarouselAd&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.id, id) || other.id == id)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.targetUrl, targetUrl) || other.targetUrl == targetUrl)&&(identical(other.validFrom, validFrom) || other.validFrom == validFrom)&&(identical(other.validUntil, validUntil) || other.validUntil == validUntil)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CarouselAd&&(identical(other.id, id) || other.id == id)&&(identical(other.businessId, businessId) || other.businessId == businessId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkType, linkType) || other.linkType == linkType)&&(identical(other.internalProfileId, internalProfileId) || other.internalProfileId == internalProfileId)&&(identical(other.externalUrl, externalUrl) || other.externalUrl == externalUrl)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.priorityScore, priorityScore) || other.priorityScore == priorityScore)&&(identical(other.lastShownAt, lastShownAt) || other.lastShownAt == lastShownAt)&&(identical(other.impressionCount, impressionCount) || other.impressionCount == impressionCount)&&(identical(other.clickCount, clickCount) || other.clickCount == clickCount)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,subCategoryId,id,imageUrl,targetUrl,validFrom,validUntil,status);
+int get hashCode => Object.hash(runtimeType,id,businessId,categoryId,subcategoryId,imageUrl,linkType,internalProfileId,externalUrl,startDate,endDate,createdAt,updatedAt,isActive,priorityScore,lastShownAt,impressionCount,clickCount,status);
 
 @override
 String toString() {
-  return 'CarouselAd(categoryId: $categoryId, subCategoryId: $subCategoryId, id: $id, imageUrl: $imageUrl, targetUrl: $targetUrl, validFrom: $validFrom, validUntil: $validUntil, status: $status)';
+  return 'CarouselAd(id: $id, businessId: $businessId, categoryId: $categoryId, subcategoryId: $subcategoryId, imageUrl: $imageUrl, linkType: $linkType, internalProfileId: $internalProfileId, externalUrl: $externalUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, priorityScore: $priorityScore, lastShownAt: $lastShownAt, impressionCount: $impressionCount, clickCount: $clickCount, status: $status)';
 }
 
 
@@ -48,7 +65,7 @@ abstract mixin class $CarouselAdCopyWith<$Res>  {
   factory $CarouselAdCopyWith(CarouselAd value, $Res Function(CarouselAd) _then) = _$CarouselAdCopyWithImpl;
 @useResult
 $Res call({
- CategoryId categoryId, SubCategoryId subCategoryId, CarouselAdId id, String imageUrl, String targetUrl, DateTime validFrom, DateTime validUntil, AdStatus status
+ CarouselAdId id, BusinessId businessId, CategoryId categoryId, SubCategoryId? subcategoryId, String imageUrl, AdLinkType linkType, EntityId? internalProfileId, String? externalUrl, DateTime startDate, DateTime endDate, DateTime createdAt, DateTime updatedAt, bool isActive, int priorityScore, DateTime? lastShownAt, int impressionCount, int clickCount, AdApprovalStatus status
 });
 
 
@@ -65,17 +82,27 @@ class _$CarouselAdCopyWithImpl<$Res>
 
 /// Create a copy of CarouselAd
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? categoryId = null,Object? subCategoryId = null,Object? id = null,Object? imageUrl = null,Object? targetUrl = null,Object? validFrom = null,Object? validUntil = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? businessId = null,Object? categoryId = null,Object? subcategoryId = freezed,Object? imageUrl = null,Object? linkType = null,Object? internalProfileId = freezed,Object? externalUrl = freezed,Object? startDate = null,Object? endDate = null,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? priorityScore = null,Object? lastShownAt = freezed,Object? impressionCount = null,Object? clickCount = null,Object? status = null,}) {
   return _then(_self.copyWith(
-categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as CategoryId,subCategoryId: null == subCategoryId ? _self.subCategoryId : subCategoryId // ignore: cast_nullable_to_non_nullable
-as SubCategoryId,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as CarouselAdId,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,targetUrl: null == targetUrl ? _self.targetUrl : targetUrl // ignore: cast_nullable_to_non_nullable
-as String,validFrom: null == validFrom ? _self.validFrom : validFrom // ignore: cast_nullable_to_non_nullable
-as DateTime,validUntil: null == validUntil ? _self.validUntil : validUntil // ignore: cast_nullable_to_non_nullable
-as DateTime,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AdStatus,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as CarouselAdId,businessId: null == businessId ? _self.businessId : businessId // ignore: cast_nullable_to_non_nullable
+as BusinessId,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as CategoryId,subcategoryId: freezed == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
+as SubCategoryId?,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,linkType: null == linkType ? _self.linkType : linkType // ignore: cast_nullable_to_non_nullable
+as AdLinkType,internalProfileId: freezed == internalProfileId ? _self.internalProfileId : internalProfileId // ignore: cast_nullable_to_non_nullable
+as EntityId?,externalUrl: freezed == externalUrl ? _self.externalUrl : externalUrl // ignore: cast_nullable_to_non_nullable
+as String?,startDate: null == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
+as DateTime,endDate: null == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,priorityScore: null == priorityScore ? _self.priorityScore : priorityScore // ignore: cast_nullable_to_non_nullable
+as int,lastShownAt: freezed == lastShownAt ? _self.lastShownAt : lastShownAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,impressionCount: null == impressionCount ? _self.impressionCount : impressionCount // ignore: cast_nullable_to_non_nullable
+as int,clickCount: null == clickCount ? _self.clickCount : clickCount // ignore: cast_nullable_to_non_nullable
+as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as AdApprovalStatus,
   ));
 }
 
@@ -160,10 +187,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CategoryId categoryId,  SubCategoryId subCategoryId,  CarouselAdId id,  String imageUrl,  String targetUrl,  DateTime validFrom,  DateTime validUntil,  AdStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CarouselAdId id,  BusinessId businessId,  CategoryId categoryId,  SubCategoryId? subcategoryId,  String imageUrl,  AdLinkType linkType,  EntityId? internalProfileId,  String? externalUrl,  DateTime startDate,  DateTime endDate,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int priorityScore,  DateTime? lastShownAt,  int impressionCount,  int clickCount,  AdApprovalStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CarouselAd() when $default != null:
-return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_that.targetUrl,_that.validFrom,_that.validUntil,_that.status);case _:
+return $default(_that.id,_that.businessId,_that.categoryId,_that.subcategoryId,_that.imageUrl,_that.linkType,_that.internalProfileId,_that.externalUrl,_that.startDate,_that.endDate,_that.createdAt,_that.updatedAt,_that.isActive,_that.priorityScore,_that.lastShownAt,_that.impressionCount,_that.clickCount,_that.status);case _:
   return orElse();
 
 }
@@ -181,10 +208,10 @@ return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CategoryId categoryId,  SubCategoryId subCategoryId,  CarouselAdId id,  String imageUrl,  String targetUrl,  DateTime validFrom,  DateTime validUntil,  AdStatus status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CarouselAdId id,  BusinessId businessId,  CategoryId categoryId,  SubCategoryId? subcategoryId,  String imageUrl,  AdLinkType linkType,  EntityId? internalProfileId,  String? externalUrl,  DateTime startDate,  DateTime endDate,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int priorityScore,  DateTime? lastShownAt,  int impressionCount,  int clickCount,  AdApprovalStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _CarouselAd():
-return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_that.targetUrl,_that.validFrom,_that.validUntil,_that.status);case _:
+return $default(_that.id,_that.businessId,_that.categoryId,_that.subcategoryId,_that.imageUrl,_that.linkType,_that.internalProfileId,_that.externalUrl,_that.startDate,_that.endDate,_that.createdAt,_that.updatedAt,_that.isActive,_that.priorityScore,_that.lastShownAt,_that.impressionCount,_that.clickCount,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +228,10 @@ return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CategoryId categoryId,  SubCategoryId subCategoryId,  CarouselAdId id,  String imageUrl,  String targetUrl,  DateTime validFrom,  DateTime validUntil,  AdStatus status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CarouselAdId id,  BusinessId businessId,  CategoryId categoryId,  SubCategoryId? subcategoryId,  String imageUrl,  AdLinkType linkType,  EntityId? internalProfileId,  String? externalUrl,  DateTime startDate,  DateTime endDate,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int priorityScore,  DateTime? lastShownAt,  int impressionCount,  int clickCount,  AdApprovalStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _CarouselAd() when $default != null:
-return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_that.targetUrl,_that.validFrom,_that.validUntil,_that.status);case _:
+return $default(_that.id,_that.businessId,_that.categoryId,_that.subcategoryId,_that.imageUrl,_that.linkType,_that.internalProfileId,_that.externalUrl,_that.startDate,_that.endDate,_that.createdAt,_that.updatedAt,_that.isActive,_that.priorityScore,_that.lastShownAt,_that.impressionCount,_that.clickCount,_that.status);case _:
   return null;
 
 }
@@ -216,17 +243,44 @@ return $default(_that.categoryId,_that.subCategoryId,_that.id,_that.imageUrl,_th
 @JsonSerializable()
 
 class _CarouselAd implements CarouselAd {
-  const _CarouselAd({required this.categoryId, required this.subCategoryId, required this.id, required this.imageUrl, required this.targetUrl, required this.validFrom, required this.validUntil, this.status = AdStatus.active});
+  const _CarouselAd({required this.id, required this.businessId, required this.categoryId, this.subcategoryId, required this.imageUrl, required this.linkType, this.internalProfileId, this.externalUrl, required this.startDate, required this.endDate, required this.createdAt, required this.updatedAt, this.isActive = true, this.priorityScore = 1, this.lastShownAt, this.impressionCount = 0, this.clickCount = 0, this.status = AdApprovalStatus.pending});
   factory _CarouselAd.fromJson(Map<String, dynamic> json) => _$CarouselAdFromJson(json);
 
-@override final  CategoryId categoryId;
-@override final  SubCategoryId subCategoryId;
 @override final  CarouselAdId id;
+// Unique ad identifier
+@override final  BusinessId businessId;
+// ID of the owning business/shop
+@override final  CategoryId categoryId;
+// e.g., CategoryId (int)
+@override final  SubCategoryId? subcategoryId;
+// Optional: ID of the subcategory
 @override final  String imageUrl;
-@override final  String targetUrl;
-@override final  DateTime validFrom;
-@override final  DateTime validUntil;
-@override@JsonKey() final  AdStatus status;
+// URL to the 16:9 ad banner image
+@override final  AdLinkType linkType;
+// "internal_profile" or "external_url"
+@override final  EntityId? internalProfileId;
+// Conditional: ID of the in-app profile to link to
+@override final  String? externalUrl;
+// Conditional: Full URL to an external website
+@override final  DateTime startDate;
+// When the ad starts showing
+@override final  DateTime endDate;
+// When the ad stops showing
+@override final  DateTime createdAt;
+// Ad creation timestamp
+@override final  DateTime updatedAt;
+// Last update timestamp
+@override@JsonKey() final  bool isActive;
+// True if ad is active
+@override@JsonKey() final  int priorityScore;
+// Numerical priority: 1 (Basic), 2 (Premium), 3 (Featured)
+@override final  DateTime? lastShownAt;
+// Timestamp of the last time this ad was shown
+@override@JsonKey() final  int impressionCount;
+// Number of times ad has been shown
+@override@JsonKey() final  int clickCount;
+// Number of times ad has been clicked
+@override@JsonKey() final  AdApprovalStatus status;
 
 /// Create a copy of CarouselAd
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +295,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CarouselAd&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.id, id) || other.id == id)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.targetUrl, targetUrl) || other.targetUrl == targetUrl)&&(identical(other.validFrom, validFrom) || other.validFrom == validFrom)&&(identical(other.validUntil, validUntil) || other.validUntil == validUntil)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CarouselAd&&(identical(other.id, id) || other.id == id)&&(identical(other.businessId, businessId) || other.businessId == businessId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkType, linkType) || other.linkType == linkType)&&(identical(other.internalProfileId, internalProfileId) || other.internalProfileId == internalProfileId)&&(identical(other.externalUrl, externalUrl) || other.externalUrl == externalUrl)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.priorityScore, priorityScore) || other.priorityScore == priorityScore)&&(identical(other.lastShownAt, lastShownAt) || other.lastShownAt == lastShownAt)&&(identical(other.impressionCount, impressionCount) || other.impressionCount == impressionCount)&&(identical(other.clickCount, clickCount) || other.clickCount == clickCount)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,subCategoryId,id,imageUrl,targetUrl,validFrom,validUntil,status);
+int get hashCode => Object.hash(runtimeType,id,businessId,categoryId,subcategoryId,imageUrl,linkType,internalProfileId,externalUrl,startDate,endDate,createdAt,updatedAt,isActive,priorityScore,lastShownAt,impressionCount,clickCount,status);
 
 @override
 String toString() {
-  return 'CarouselAd(categoryId: $categoryId, subCategoryId: $subCategoryId, id: $id, imageUrl: $imageUrl, targetUrl: $targetUrl, validFrom: $validFrom, validUntil: $validUntil, status: $status)';
+  return 'CarouselAd(id: $id, businessId: $businessId, categoryId: $categoryId, subcategoryId: $subcategoryId, imageUrl: $imageUrl, linkType: $linkType, internalProfileId: $internalProfileId, externalUrl: $externalUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, priorityScore: $priorityScore, lastShownAt: $lastShownAt, impressionCount: $impressionCount, clickCount: $clickCount, status: $status)';
 }
 
 
@@ -261,7 +315,7 @@ abstract mixin class _$CarouselAdCopyWith<$Res> implements $CarouselAdCopyWith<$
   factory _$CarouselAdCopyWith(_CarouselAd value, $Res Function(_CarouselAd) _then) = __$CarouselAdCopyWithImpl;
 @override @useResult
 $Res call({
- CategoryId categoryId, SubCategoryId subCategoryId, CarouselAdId id, String imageUrl, String targetUrl, DateTime validFrom, DateTime validUntil, AdStatus status
+ CarouselAdId id, BusinessId businessId, CategoryId categoryId, SubCategoryId? subcategoryId, String imageUrl, AdLinkType linkType, EntityId? internalProfileId, String? externalUrl, DateTime startDate, DateTime endDate, DateTime createdAt, DateTime updatedAt, bool isActive, int priorityScore, DateTime? lastShownAt, int impressionCount, int clickCount, AdApprovalStatus status
 });
 
 
@@ -278,17 +332,27 @@ class __$CarouselAdCopyWithImpl<$Res>
 
 /// Create a copy of CarouselAd
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? categoryId = null,Object? subCategoryId = null,Object? id = null,Object? imageUrl = null,Object? targetUrl = null,Object? validFrom = null,Object? validUntil = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? businessId = null,Object? categoryId = null,Object? subcategoryId = freezed,Object? imageUrl = null,Object? linkType = null,Object? internalProfileId = freezed,Object? externalUrl = freezed,Object? startDate = null,Object? endDate = null,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? priorityScore = null,Object? lastShownAt = freezed,Object? impressionCount = null,Object? clickCount = null,Object? status = null,}) {
   return _then(_CarouselAd(
-categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as CategoryId,subCategoryId: null == subCategoryId ? _self.subCategoryId : subCategoryId // ignore: cast_nullable_to_non_nullable
-as SubCategoryId,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as CarouselAdId,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,targetUrl: null == targetUrl ? _self.targetUrl : targetUrl // ignore: cast_nullable_to_non_nullable
-as String,validFrom: null == validFrom ? _self.validFrom : validFrom // ignore: cast_nullable_to_non_nullable
-as DateTime,validUntil: null == validUntil ? _self.validUntil : validUntil // ignore: cast_nullable_to_non_nullable
-as DateTime,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AdStatus,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as CarouselAdId,businessId: null == businessId ? _self.businessId : businessId // ignore: cast_nullable_to_non_nullable
+as BusinessId,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as CategoryId,subcategoryId: freezed == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
+as SubCategoryId?,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,linkType: null == linkType ? _self.linkType : linkType // ignore: cast_nullable_to_non_nullable
+as AdLinkType,internalProfileId: freezed == internalProfileId ? _self.internalProfileId : internalProfileId // ignore: cast_nullable_to_non_nullable
+as EntityId?,externalUrl: freezed == externalUrl ? _self.externalUrl : externalUrl // ignore: cast_nullable_to_non_nullable
+as String?,startDate: null == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
+as DateTime,endDate: null == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,priorityScore: null == priorityScore ? _self.priorityScore : priorityScore // ignore: cast_nullable_to_non_nullable
+as int,lastShownAt: freezed == lastShownAt ? _self.lastShownAt : lastShownAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,impressionCount: null == impressionCount ? _self.impressionCount : impressionCount // ignore: cast_nullable_to_non_nullable
+as int,clickCount: null == clickCount ? _self.clickCount : clickCount // ignore: cast_nullable_to_non_nullable
+as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as AdApprovalStatus,
   ));
 }
 

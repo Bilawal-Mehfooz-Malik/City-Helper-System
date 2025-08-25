@@ -64,7 +64,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     await Future.wait([
       ref.refresh(subCategoriesListFutureProvider(widget.categoryId).future),
-      ref.refresh(adsListFutureProvider(widget.categoryId).future),
+      ref.refresh(carouselAdsListFutureProvider(widget.categoryId).future),
     ]);
   }
 

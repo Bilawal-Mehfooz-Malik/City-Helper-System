@@ -45,7 +45,7 @@ class CarouselAdListSkeleton extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: Bone.square(
-                borderRadius: BorderRadius.circular(Sizes.p12),
+                borderRadius: BorderRadius.circular(Sizes.p16),
               ),
             ),
           ),

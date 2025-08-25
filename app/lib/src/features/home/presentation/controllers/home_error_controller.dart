@@ -46,7 +46,7 @@ List<String> nonCriticalErrors(Ref ref, {required int categoryId}) {
     errors.add('Could not load sub-categories.'.hardcoded);
   }
 
-  final adsValue = ref.watch(adsListFutureProvider(categoryId));
+  final adsValue = ref.watch(carouselAdsListFutureProvider(categoryId));
   if (adsValue.hasError) {
     errors.add('Could not load ads.'.hardcoded);
   }

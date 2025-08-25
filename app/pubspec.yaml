@@ -31,6 +31,7 @@ dependencies:
   firebase_auth: 6.0.0
   firebase_core: 4.0.0
   algolia_helper_flutter: 1.2.1
+  cloud_functions: 6.0.0
 
 
   # others

@@ -7,7 +7,7 @@ part of 'ads_carousel_repository.dart';
 // **************************************************************************
 
 String _$adsCarouselRepositoryHash() =>
-    r'debbf1bc1d4c7be497e11ddd37ec2851c51c4859';
+    r'f652812c9755afeb62d5d0bcbeff07c72e1eb5f4';
 
 /// See also [adsCarouselRepository].
 @ProviderFor(adsCarouselRepository)
@@ -25,7 +25,8 @@ final adsCarouselRepositoryProvider = Provider<AdsCarouselRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AdsCarouselRepositoryRef = ProviderRef<AdsCarouselRepository>;
-String _$adsListStreamHash() => r'8bdb4ffbeb3fbb3ac222a07d4e11ca6b4709c90c';
+String _$carouselAdsListFutureHash() =>
+    r'e9305a153a0c26a5d0cf57e0bc825d251a3087ce';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -48,23 +49,23 @@ class _SystemHash {
   }
 }
 
-/// See also [adsListStream].
-@ProviderFor(adsListStream)
-const adsListStreamProvider = AdsListStreamFamily();
+/// See also [carouselAdsListFuture].
+@ProviderFor(carouselAdsListFuture)
+const carouselAdsListFutureProvider = CarouselAdsListFutureFamily();
 
-/// See also [adsListStream].
-class AdsListStreamFamily extends Family<AsyncValue<List<CarouselAd>>> {
-  /// See also [adsListStream].
-  const AdsListStreamFamily();
+/// See also [carouselAdsListFuture].
+class CarouselAdsListFutureFamily extends Family<AsyncValue<List<CarouselAd>>> {
+  /// See also [carouselAdsListFuture].
+  const CarouselAdsListFutureFamily();
 
-  /// See also [adsListStream].
-  AdsListStreamProvider call(int categoryId) {
-    return AdsListStreamProvider(categoryId);
+  /// See also [carouselAdsListFuture].
+  CarouselAdsListFutureProvider call(int categoryId) {
+    return CarouselAdsListFutureProvider(categoryId);
   }
 
   @override
-  AdsListStreamProvider getProviderOverride(
-    covariant AdsListStreamProvider provider,
+  CarouselAdsListFutureProvider getProviderOverride(
+    covariant CarouselAdsListFutureProvider provider,
   ) {
     return call(provider.categoryId);
   }
@@ -81,151 +82,30 @@ class AdsListStreamFamily extends Family<AsyncValue<List<CarouselAd>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'adsListStreamProvider';
+  String? get name => r'carouselAdsListFutureProvider';
 }
 
-/// See also [adsListStream].
-class AdsListStreamProvider
-    extends AutoDisposeStreamProvider<List<CarouselAd>> {
-  /// See also [adsListStream].
-  AdsListStreamProvider(int categoryId)
-    : this._internal(
-        (ref) => adsListStream(ref as AdsListStreamRef, categoryId),
-        from: adsListStreamProvider,
-        name: r'adsListStreamProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$adsListStreamHash,
-        dependencies: AdsListStreamFamily._dependencies,
-        allTransitiveDependencies:
-            AdsListStreamFamily._allTransitiveDependencies,
-        categoryId: categoryId,
-      );
-
-  AdsListStreamProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.categoryId,
-  }) : super.internal();
-
-  final int categoryId;
-
-  @override
-  Override overrideWith(
-    Stream<List<CarouselAd>> Function(AdsListStreamRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: AdsListStreamProvider._internal(
-        (ref) => create(ref as AdsListStreamRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        categoryId: categoryId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeStreamProviderElement<List<CarouselAd>> createElement() {
-    return _AdsListStreamProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is AdsListStreamProvider && other.categoryId == categoryId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, categoryId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin AdsListStreamRef on AutoDisposeStreamProviderRef<List<CarouselAd>> {
-  /// The parameter `categoryId` of this provider.
-  int get categoryId;
-}
-
-class _AdsListStreamProviderElement
-    extends AutoDisposeStreamProviderElement<List<CarouselAd>>
-    with AdsListStreamRef {
-  _AdsListStreamProviderElement(super.provider);
-
-  @override
-  int get categoryId => (origin as AdsListStreamProvider).categoryId;
-}
-
-String _$adsListFutureHash() => r'3ba086a3084bc1ce94b2f6155054839234cb7ebb';
-
-/// See also [adsListFuture].
-@ProviderFor(adsListFuture)
-const adsListFutureProvider = AdsListFutureFamily();
-
-/// See also [adsListFuture].
-class AdsListFutureFamily extends Family<AsyncValue<List<CarouselAd>>> {
-  /// See also [adsListFuture].
-  const AdsListFutureFamily();
-
-  /// See also [adsListFuture].
-  AdsListFutureProvider call(int categoryId) {
-    return AdsListFutureProvider(categoryId);
-  }
-
-  @override
-  AdsListFutureProvider getProviderOverride(
-    covariant AdsListFutureProvider provider,
-  ) {
-    return call(provider.categoryId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'adsListFutureProvider';
-}
-
-/// See also [adsListFuture].
-class AdsListFutureProvider
+/// See also [carouselAdsListFuture].
+class CarouselAdsListFutureProvider
     extends AutoDisposeFutureProvider<List<CarouselAd>> {
-  /// See also [adsListFuture].
-  AdsListFutureProvider(int categoryId)
+  /// See also [carouselAdsListFuture].
+  CarouselAdsListFutureProvider(int categoryId)
     : this._internal(
-        (ref) => adsListFuture(ref as AdsListFutureRef, categoryId),
-        from: adsListFutureProvider,
-        name: r'adsListFutureProvider',
+        (ref) =>
+            carouselAdsListFuture(ref as CarouselAdsListFutureRef, categoryId),
+        from: carouselAdsListFutureProvider,
+        name: r'carouselAdsListFutureProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$adsListFutureHash,
-        dependencies: AdsListFutureFamily._dependencies,
+                : _$carouselAdsListFutureHash,
+        dependencies: CarouselAdsListFutureFamily._dependencies,
         allTransitiveDependencies:
-            AdsListFutureFamily._allTransitiveDependencies,
+            CarouselAdsListFutureFamily._allTransitiveDependencies,
         categoryId: categoryId,
       );
 
-  AdsListFutureProvider._internal(
+  CarouselAdsListFutureProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -239,12 +119,13 @@ class AdsListFutureProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<CarouselAd>> Function(AdsListFutureRef provider) create,
+    FutureOr<List<CarouselAd>> Function(CarouselAdsListFutureRef provider)
+    create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: AdsListFutureProvider._internal(
-        (ref) => create(ref as AdsListFutureRef),
+      override: CarouselAdsListFutureProvider._internal(
+        (ref) => create(ref as CarouselAdsListFutureRef),
         from: from,
         name: null,
         dependencies: null,
@@ -257,12 +138,13 @@ class AdsListFutureProvider
 
   @override
   AutoDisposeFutureProviderElement<List<CarouselAd>> createElement() {
-    return _AdsListFutureProviderElement(this);
+    return _CarouselAdsListFutureProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is AdsListFutureProvider && other.categoryId == categoryId;
+    return other is CarouselAdsListFutureProvider &&
+        other.categoryId == categoryId;
   }
 
   @override
@@ -276,18 +158,19 @@ class AdsListFutureProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin AdsListFutureRef on AutoDisposeFutureProviderRef<List<CarouselAd>> {
+mixin CarouselAdsListFutureRef
+    on AutoDisposeFutureProviderRef<List<CarouselAd>> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
 }
 
-class _AdsListFutureProviderElement
+class _CarouselAdsListFutureProviderElement
     extends AutoDisposeFutureProviderElement<List<CarouselAd>>
-    with AdsListFutureRef {
-  _AdsListFutureProviderElement(super.provider);
+    with CarouselAdsListFutureRef {
+  _CarouselAdsListFutureProviderElement(super.provider);
 
   @override
-  int get categoryId => (origin as AdsListFutureProvider).categoryId;
+  int get categoryId => (origin as CarouselAdsListFutureProvider).categoryId;
 }
 
 String _$adStreamHash() => r'95e83729e28e2d7e799bbdee395553c1051abbd5';

@@ -1,61 +1,88 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/carousel_ad.dart';
-import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart'; // NEW
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ads_carousel_repository.g.dart';
 
 class AdsCarouselRepository {
-  AdsCarouselRepository(this._firestore);
+  AdsCarouselRepository(
+    this._functions,
+    this._firestore,
+  ); // MODIFIED CONSTRUCTOR
 
-  final FirebaseFirestore _firestore;
+  final FirebaseFunctions _functions; // NEW
+  final FirebaseFirestore _firestore; // KEPT FOR fetchAdById/watchAdById
 
-  static String get adsCarouselKey => 'ads_carousel';
-
+  // Collection reference for direct Firestore reads (e.g., for admin/business owner views)
   CollectionReference<CarouselAd> get _adsRef => _firestore
-      .collection(adsCarouselKey)
+      .collection('carousel_ads') // Using 'ads' as per plan
       .withConverter<CarouselAd>(
         fromFirestore: (snap, _) =>
             CarouselAd.fromJson(Map<String, dynamic>.from(snap.data()!)),
         toFirestore: (ad, _) => ad.toJson(),
       );
 
-  Future<List<CarouselAd>> fetchAds(CategoryId categoryId) async {
-    final snap = await _adsRef.where('categoryId', isEqualTo: categoryId).get();
-    return snap.docs.map((d) => d.data()).toList();
+  // Method to fetch ads for the carousel using Cloud Function
+  Future<List<CarouselAd>> fetchCarouselAds(
+    CategoryId categoryId, {
+    SubCategoryId? subcategoryId,
+  }) async {
+    try {
+      // Prepare the data to send to the Cloud Function
+      final Map<String, dynamic> data = {'categoryId': categoryId};
+      if (subcategoryId != null) {
+        data['subcategoryId'] = subcategoryId;
+      }
+
+      // The type parameter here is good, it tells you the function returns a list of dynamic items.
+      final result = await _functions
+          .httpsCallable('getCarouselAds')
+          .call<List<dynamic>>(data);
+
+      return result.data
+          .map((e) => CarouselAd.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } on FirebaseFunctionsException catch (e) {
+      print('Cloud Function Error: ${e.code} - ${e.message}');
+      rethrow;
+    } catch (e) {
+      print('Error fetching carousel ads: $e');
+      rethrow;
+    }
   }
 
-  Stream<List<CarouselAd>> watchAds(CategoryId categoryId) {
-    return _adsRef
-        .where('categoryId', isEqualTo: categoryId)
-        .snapshots()
-        .map((snap) => snap.docs.map((d) => d.data()).toList());
+  // Method to record ad impression using Cloud Function
+  Future<void> recordAdImpression(CarouselAdId adId) async {
+    try {
+      await _functions.httpsCallable('recordAdImpression').call<dynamic>({
+        'adId': adId,
+      });
+    } on FirebaseFunctionsException catch (e) {
+      print('Cloud Function Error: ${e.code} - ${e.message}');
+      // Log error, but don't rethrow as it shouldn't block UI
+    } catch (e) {
+      print('Error recording impression: $e');
+    }
   }
 
-  Future<List<CarouselAd>> fetchAdsBySubCategory(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) async {
-    final snap = await _adsRef
-        .where('categoryId', isEqualTo: categoryId)
-        .where('subCategoryId', isEqualTo: subCategoryId)
-        .get();
-    return snap.docs.map((d) => d.data()).toList();
+  // Method to record ad click using Cloud Function
+  Future<void> recordAdClick(CarouselAdId adId) async {
+    try {
+      await _functions.httpsCallable('recordAdClick').call<dynamic>({
+        'adId': adId,
+      });
+    } on FirebaseFunctionsException catch (e) {
+      print('Cloud Function Error: ${e.code} - ${e.message}');
+      // Log error, but don't rethrow as it shouldn't block UI
+    } catch (e) {
+      print('Error recording click: $e');
+    }
   }
 
-  Stream<List<CarouselAd>> watchAdsBySubCategory(
-    CategoryId categoryId,
-    SubCategoryId subCategoryId,
-  ) {
-    return _adsRef
-        .where('categoryId', isEqualTo: categoryId)
-        .where('subCategoryId', isEqualTo: subCategoryId)
-        .snapshots()
-        .map((snap) => snap.docs.map((d) => d.data()).toList());
-  }
-
+  // Keep fetchAdById and watchAdById for specific ad lookups (e.g., admin/business owner views)
   Future<CarouselAd?> fetchAdById(CarouselAdId adId) async {
     final doc = await _adsRef.doc(adId).get();
     return doc.exists ? doc.data() : null;
@@ -71,33 +98,20 @@ class AdsCarouselRepository {
 
 @Riverpod(keepAlive: true)
 AdsCarouselRepository adsCarouselRepository(Ref ref) {
-  return AdsCarouselRepository(FirebaseFirestore.instance);
+  return AdsCarouselRepository(
+    FirebaseFunctions.instance,
+    FirebaseFirestore.instance,
+  ); // MODIFIED INITIALIZATION
 }
 
+// NEW Riverpod provider for fetching carousel ads
 @riverpod
-Stream<List<CarouselAd>> adsListStream(Ref ref, CategoryId categoryId) {
+Future<List<CarouselAd>> carouselAdsListFuture(Ref ref, CategoryId categoryId) {
   final repo = ref.watch(adsCarouselRepositoryProvider);
-  final selectedSubcategory = ref.watch(subcategoryControllerProvider);
-
-  if (selectedSubcategory != null) {
-    return repo.watchAdsBySubCategory(categoryId, selectedSubcategory);
-  }
-
-  return repo.watchAds(categoryId);
+  return repo.fetchCarouselAds(categoryId);
 }
 
-@riverpod
-Future<List<CarouselAd>> adsListFuture(Ref ref, CategoryId categoryId) {
-  final repo = ref.watch(adsCarouselRepositoryProvider);
-  final selectedSubcategory = ref.watch(subcategoryControllerProvider);
-
-  if (selectedSubcategory != null) {
-    return repo.fetchAdsBySubCategory(categoryId, selectedSubcategory);
-  }
-
-  return repo.fetchAds(categoryId);
-}
-
+// Keep existing adStream and adFuture for specific ad lookups
 @riverpod
 Stream<CarouselAd?> adStream(Ref ref, CarouselAdId adId) {
   final repo = ref.watch(adsCarouselRepositoryProvider);

@@ -1,7 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart';
 import 'package:app/src/core/constants/test_carousel_ads.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home/data/fake/fake_ads_carousel_repository.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late FakeAdsCarouselRepository repository;
@@ -11,86 +11,105 @@ void main() {
   });
 
   group('FakeAdsCarouselRepository', () {
-    test('fetchAds returns only ads for given categoryId', () async {
-      final CategoryId categoryId = testCarouselAds.first.categoryId;
-      final expected =
-          testCarouselAds.where((ad) => ad.categoryId == categoryId).toList();
+    group('fetchCarouselAds', () {
+      test('returns only ads for given categoryId', () async {
+        final categoryId = testCarouselAds.first.categoryId;
+        final result = await repository.fetchCarouselAds(categoryId);
 
-      final result = await repository.fetchAds(categoryId);
-      expect(result, expected);
+        // All returned ads should have the correct categoryId
+        expect(result.every((ad) => ad.categoryId == categoryId), isTrue);
+        // Should not be empty as there are matching ads
+        expect(result, isNotEmpty);
+      });
+
+      test(
+        'returns ads filtered by subcategoryId when provided',
+        () async {
+          final adWithSubcategory = testCarouselAds.firstWhere((ad) => ad.subcategoryId != null);
+          final categoryId = adWithSubcategory.categoryId;
+          final subcategoryId = adWithSubcategory.subcategoryId!;
+
+          final result = await repository.fetchCarouselAds(
+            categoryId,
+            subcategoryId: subcategoryId,
+          );
+
+          // All returned ads should have the correct categoryId and subcategoryId
+          expect(
+            result.every((ad) =>
+                ad.categoryId == categoryId && ad.subcategoryId == subcategoryId),
+            isTrue,
+          );
+          expect(result, isNotEmpty);
+        },
+      );
+
+      test('returns an empty list for a category with no valid ads', () async {
+        const nonExistentCategoryId = 999;
+        final result = await repository.fetchCarouselAds(nonExistentCategoryId);
+        expect(result, isEmpty);
+      });
     });
 
-    test('watchAds emits only ads for given categoryId', () {
-      final CategoryId categoryId = testCarouselAds.last.categoryId;
-      final expected =
-          testCarouselAds.where((ad) => ad.categoryId == categoryId).toList();
+    group('recordAdClick', () {
+      test('increments click count for the given adId', () async {
+        final ad = testCarouselAds.first;
+        final initialAdState = await repository.fetchAdById(ad.id);
+        expect(initialAdState, isNotNull);
 
-      expect(repository.watchAds(categoryId), emits(expected));
+        await repository.recordAdClick(ad.id);
+
+        final finalAdState = await repository.fetchAdById(ad.id);
+        expect(finalAdState, isNotNull);
+        expect(finalAdState!.clickCount, initialAdState!.clickCount + 1);
+      });
     });
-    test(
-      'fetchAdsBySubCategory returns matching ads for given categoryId and subCategoryId',
-      () async {
+
+    group('recordAdImpression', () {
+      test('increments impression count and updates lastShownAt', () async {
         final ad = testCarouselAds.first;
-        final expectedAds =
-            testCarouselAds
-                .where(
-                  (a) =>
-                      a.categoryId == ad.categoryId &&
-                      a.subCategoryId == ad.subCategoryId,
-                )
-                .toList();
+        final initialAdState = await repository.fetchAdById(ad.id);
+        expect(initialAdState, isNotNull);
 
-        final result = await repository.fetchAdsBySubCategory(
-          ad.categoryId,
-          ad.subCategoryId,
-        );
+        await repository.recordAdImpression(ad.id);
 
-        expect(result, expectedAds);
-      },
-    );
-
-    test(
-      'watchAdsBySubCategory emits matching ads for given categoryId and subCategoryId',
-      () {
-        final ad = testCarouselAds.first;
-        final expected =
-            testCarouselAds
-                .where(
-                  (a) =>
-                      a.categoryId == ad.categoryId &&
-                      a.subCategoryId == ad.subCategoryId,
-                )
-                .toList();
-
+        final finalAdState = await repository.fetchAdById(ad.id);
+        expect(finalAdState, isNotNull);
         expect(
-          repository.watchAdsBySubCategory(ad.categoryId, ad.subCategoryId),
-          emits(expected),
+          finalAdState!.impressionCount,
+          initialAdState!.impressionCount + 1,
         );
-      },
-    );
-
-    test('fetchAdById returns correct ad', () async {
-      final ad = testCarouselAds.first;
-      final result = await repository.fetchAdById(ad.id);
-
-      expect(result, ad);
+        // lastShownAt should be updated, so it's not equal to the initial state's lastShownAt
+        expect(finalAdState.lastShownAt, isNot(initialAdState.lastShownAt));
+      });
     });
 
-    test('fetchAdById returns null for invalid id', () async {
-      const CarouselAdId invalidId = 'invalid-id';
-      final result = await repository.fetchAdById(invalidId);
+    group('fetchAdById', () {
+      test('returns correct ad', () async {
+        final ad = testCarouselAds.first;
+        final result = await repository.fetchAdById(ad.id);
 
-      expect(result, isNull);
+        expect(result, ad);
+      });
+
+      test('returns null for invalid id', () async {
+        const CarouselAdId invalidId = 'invalid-id';
+        final result = await repository.fetchAdById(invalidId);
+
+        expect(result, isNull);
+      });
     });
 
-    test('watchAdById emits correct ad', () {
-      final ad = testCarouselAds.first;
-      expect(repository.watchAdById(ad.id), emits(ad));
-    });
+    group('watchAdById', () {
+      test('emits correct ad', () {
+        final ad = testCarouselAds.first;
+        expect(repository.watchAdById(ad.id), emits(ad));
+      });
 
-    test('watchAdById emits null for invalid id', () {
-      const CarouselAdId invalidId = 'invalid-id';
-      expect(repository.watchAdById(invalidId), emits(null));
+      test('emits null for invalid id', () {
+        const CarouselAdId invalidId = 'invalid-id';
+        expect(repository.watchAdById(invalidId), emits(null));
+      });
     });
   });
 }
