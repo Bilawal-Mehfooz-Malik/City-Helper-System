@@ -1,9 +1,14 @@
-Current DateTime: 2025-08-23 20:33:45.282
-Current DayOfWeek: DayOfWeek.friday
-Today's OpeningHours: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)])
-Current DateTime: 2025-08-23 20:33:45.312
-Current DayOfWeek: DayOfWeek.friday
-Today's OpeningHours: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)])
-Current DateTime: 2025-08-23 20:33:45.336
-Current DayOfWeek: DayOfWeek.friday
-Today's OpeningHours: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)])
+Expected: 'foodC'
+  Actual: '6'
+   Which: is different.
+          Expected: foodC
+            Actual: 6
+                    ^
+           Differ at offset 0
+
+package:matcher                                                        expect
+package:flutter_test/src/widget_tester.dart 474:18                     expect
+test\src\features\home\data\fake\fake_food_repository_test.dart 137:7  main.<fn>.<fn>
+
+
+from this test: fetchFoodsList sorts by updatedAt descending by default

@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.invalidate(entitiesNotifierProvider(widget.categoryId));
 
     await Future.wait([
-      ref.refresh(subCategoriesListStreamProvider(widget.categoryId).future),
+      ref.refresh(subCategoriesListFutureProvider(widget.categoryId).future),
       ref.refresh(adsListFutureProvider(widget.categoryId).future),
     ]);
   }

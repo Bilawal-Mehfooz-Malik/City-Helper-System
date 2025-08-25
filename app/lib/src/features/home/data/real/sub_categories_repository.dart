@@ -32,31 +32,12 @@ class SubCategoriesRepository {
     return snap.docs.map((doc) => doc.data()).toList();
   }
 
-  Stream<List<SubCategory>> watchSubCategoriesList(CategoryId categoryId) {
-    return _ref
-        .where('categoryId', isEqualTo: categoryId)
-        .orderBy('sortOrder')
-        .snapshots()
-        .map((snap) => snap.docs.map((doc) => doc.data()).toList());
-  }
-
   Future<SubCategory?> fetchSubCategory(SubCategoryId id) async {
     final query = await _ref.where('id', isEqualTo: id).limit(1).get();
     if (query.docs.isNotEmpty) {
       return query.docs.first.data();
     }
     return null;
-  }
-
-  Stream<SubCategory?> watchSubCategory(SubCategoryId id) {
-    return _ref
-        .where('id', isEqualTo: id)
-        .limit(1)
-        .snapshots()
-        .map(
-          (snapshot) =>
-              snapshot.docs.isNotEmpty ? snapshot.docs.first.data() : null,
-        );
   }
 }
 
@@ -66,21 +47,9 @@ SubCategoriesRepository subCategoriesRepository(Ref ref) {
 }
 
 @riverpod
-Stream<List<SubCategory>> subCategoriesListStream(Ref ref, CategoryId id) {
-  final repo = ref.watch(subCategoriesRepositoryProvider);
-  return repo.watchSubCategoriesList(id);
-}
-
-@riverpod
 Future<List<SubCategory>> subCategoriesListFuture(Ref ref, CategoryId id) {
   final repo = ref.watch(subCategoriesRepositoryProvider);
   return repo.fetchSubCategoriesList(id);
-}
-
-@riverpod
-Stream<SubCategory?> subCategoryStream(Ref ref, SubCategoryId id) {
-  final categoriesRepository = ref.watch(subCategoriesRepositoryProvider);
-  return categoriesRepository.watchSubCategory(id);
 }
 
 @riverpod

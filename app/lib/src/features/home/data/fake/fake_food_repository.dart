@@ -8,10 +8,11 @@ import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 
 class FakeFoodRepository implements FoodRepository {
-  FakeFoodRepository({this.addDelay = true});
+  FakeFoodRepository({this.addDelay = true, List<Food>? initialFoods})
+    : _foods = InMemoryStore<List<Food>>(List.from(initialFoods ?? testFoods));
   final bool addDelay;
 
-  final _foods = InMemoryStore<List<Food>>(List.from(testFoods));
+  final InMemoryStore<List<Food>> _foods;
 
   @override
   Future<void> setFood(Food food) async {

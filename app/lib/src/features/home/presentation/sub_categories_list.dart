@@ -22,7 +22,7 @@ class SubCategoriesList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the async subcategories provider for the given categoryId
     final subCategoryValue = ref.watch(
-      subCategoriesListStreamProvider(categoryId),
+      subCategoriesListFutureProvider(categoryId),
     );
 
     return AsyncValueWidget<List<SubCategory>>(

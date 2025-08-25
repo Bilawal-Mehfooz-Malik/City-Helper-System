@@ -40,7 +40,7 @@ List<String> nonCriticalErrors(Ref ref, {required int categoryId}) {
   final errors = <String>[];
 
   final subCategoryValue = ref.watch(
-    subCategoriesListStreamProvider(categoryId),
+    subCategoriesListFutureProvider(categoryId),
   );
   if (subCategoryValue.hasError) {
     errors.add('Could not load sub-categories.'.hardcoded);

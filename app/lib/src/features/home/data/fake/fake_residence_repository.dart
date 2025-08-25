@@ -9,12 +9,16 @@ import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 
 class FakeResidenceRepository implements ResidenceRepository {
-  FakeResidenceRepository({this.addDelay = true});
+  FakeResidenceRepository({
+    this.addDelay = true,
+    List<Residence>? initialResidences,
+  }) : _residences = InMemoryStore<List<Residence>>(
+         List.from(initialResidences ?? testResidences),
+       );
 
   final bool addDelay;
 
-  // Preloaded list of fake residences
-  final _residences = InMemoryStore<List<Residence>>(List.from(testResidences));
+  final InMemoryStore<List<Residence>> _residences;
 
   @override
   Future<void> setResidence(Residence residence) async {

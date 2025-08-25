@@ -23,7 +23,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
     ref.watch(subcategoryControllerProvider);
 
     fetchFirstPage();
-    return const EntitiesPaginatedState();
+    return const EntitiesPaginatedState(isInitialLoading: true);
   }
 
   Future<void> fetchFirstPage() async {
@@ -43,16 +43,20 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
           .read(entityServiceProvider)
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
-            subcategoryId: subcategoryId, // Pass subcategoryId
+            subcategoryId: subcategoryId,
             limit: limit,
             filter: filter,
           );
 
       final hasMore = entities.length == limit;
 
-      state = state.copyWith(entities: entities, hasMore: hasMore);
+      state = state.copyWith(
+        entities: entities,
+        hasMore: hasMore,
+        isInitialLoading: false,
+      );
     } catch (e, _) {
-      state = state.copyWith(paginationError: e);
+      state = state.copyWith(paginationError: e, isInitialLoading: false);
     }
   }
 
@@ -61,9 +65,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
 
     state = state.copyWith(isLoadingNextPage: true, paginationError: null);
 
-    final subcategoryId = ref.read(
-      subcategoryControllerProvider,
-    ); // Read subcategory
+    final subcategoryId = ref.read(subcategoryControllerProvider);
     final filter = ref.read(
       filterControllerProvider(
         categoryId: categoryId,
@@ -78,7 +80,7 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
           .read(entityServiceProvider)
           .fetchPopularEntitiesPaginated(
             categoryId: categoryId,
-            subcategoryId: subcategoryId, // Pass subcategoryId
+            subcategoryId: subcategoryId,
             lastEntityId: lastEntityId,
             limit: limit,
             filter: filter,

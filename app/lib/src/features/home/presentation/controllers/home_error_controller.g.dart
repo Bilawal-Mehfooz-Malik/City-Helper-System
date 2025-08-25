@@ -154,7 +154,7 @@ class _CriticalErrorStatusProviderElement
   int get categoryId => (origin as CriticalErrorStatusProvider).categoryId;
 }
 
-String _$nonCriticalErrorsHash() => r'3d5a3800e6c16f5329f161507dc5950d5a8b76c2';
+String _$nonCriticalErrorsHash() => r'2357e697276ae1b0ebd7cbfa7b264c34552d6e65';
 
 /// See also [nonCriticalErrors].
 @ProviderFor(nonCriticalErrors)

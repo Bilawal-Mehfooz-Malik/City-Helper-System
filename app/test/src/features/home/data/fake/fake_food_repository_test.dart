@@ -8,15 +8,17 @@ void main() {
   late FoodRepository repository;
 
   setUp(() {
-    repository = FakeFoodRepository(addDelay: false);
+    repository = FakeFoodRepository(addDelay: false, initialFoods: testFoods);
   });
 
   group('General Food List', () {
     test('fetchFoodsList returns foods by categoryId', () async {
       final food = testFoods.first;
-      final expected = testFoods
-          .where((f) => f.categoryId == food.categoryId && !f.isPopular)
-          .toList();
+      final expected =
+          testFoods
+              .where((f) => f.categoryId == food.categoryId && !f.isPopular)
+              .toList()
+            ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final result = await repository.fetchFoodsList(
         limit: expected.length,
@@ -24,16 +26,16 @@ void main() {
       );
       expect(result, expected);
     });
-
-    // watchFoodsList is not directly exposed by FoodRepository, so no test needed
   });
 
   group('Popular Food List', () {
     test('fetchPopularFoodsList returns popular foods by categoryId', () async {
       final food = testFoods.first;
-      final expected = testFoods
-          .where((f) => f.categoryId == food.categoryId && f.isPopular)
-          .toList();
+      final expected =
+          testFoods
+              .where((f) => f.categoryId == food.categoryId && f.isPopular)
+              .toList()
+            ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final result = await repository.fetchPopularFoodsList(
         limit: expected.length,
@@ -46,14 +48,16 @@ void main() {
   group('Subcategory Food List', () {
     test('fetchFoodsListSubCategoryId returns matching foods', () async {
       final food = testFoods.first;
-      final expected = testFoods
-          .where(
-            (f) =>
-                f.categoryId == food.categoryId &&
-                f.subCategoryId == food.subCategoryId &&
-                !f.isPopular,
-          )
-          .toList();
+      final expected =
+          testFoods
+              .where(
+                (f) =>
+                    f.categoryId == food.categoryId &&
+                    f.subCategoryId == food.subCategoryId &&
+                    !f.isPopular,
+              )
+              .toList()
+            ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final result = await repository.fetchFoodsListSubCategoryId(
         food.subCategoryId,
@@ -69,14 +73,16 @@ void main() {
       'fetchPopularFoodsListSubCategoryId returns matching popular foods',
       () async {
         final food = testFoods.first;
-        final expected = testFoods
-            .where(
-              (f) =>
-                  f.categoryId == food.categoryId &&
-                  f.subCategoryId == food.subCategoryId &&
-                  f.isPopular,
-            )
-            .toList();
+        final expected =
+            testFoods
+                .where(
+                  (f) =>
+                      f.categoryId == food.categoryId &&
+                      f.subCategoryId == food.subCategoryId &&
+                      f.isPopular,
+                )
+                .toList()
+              ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
         final result = await repository.fetchPopularFoodsListSubCategoryId(
           food.subCategoryId,
@@ -103,22 +109,35 @@ void main() {
 
   group('Sorting', () {
     test('fetchFoodsList sorts by updatedAt descending by default', () async {
-      final food1 = testFoods[0].copyWith(updatedAt: DateTime(2023, 1, 1));
-      final food2 = testFoods[1].copyWith(updatedAt: DateTime(2023, 1, 2));
-      final food3 = testFoods[2].copyWith(updatedAt: DateTime(2023, 1, 3));
+      final foodA = testFoods[0].copyWith(
+        id: 'foodA',
+        updatedAt: DateTime(2023, 1, 1),
+        isPopular: false,
+      );
+      final foodB = testFoods[1].copyWith(
+        id: 'foodB',
+        updatedAt: DateTime(2023, 1, 2),
+        isPopular: false,
+      );
+      final foodC = testFoods[2].copyWith(
+        id: 'foodC',
+        updatedAt: DateTime(2023, 1, 3),
+        isPopular: false,
+      );
 
-      repository.setFood(food1);
-      repository.setFood(food2);
-      repository.setFood(food3);
+      final testRepository = FakeFoodRepository(
+        addDelay: false,
+        initialFoods: [foodA, foodB, foodC],
+      );
 
-      final result = await repository.fetchFoodsList(
+      final result = await testRepository.fetchFoodsList(
         limit: 3,
         filter: const FoodFilter(),
       );
 
-      expect(result[0].id, food3.id);
-      expect(result[1].id, food2.id);
-      expect(result[2].id, food1.id);
+      expect(result[0].id, foodC.id);
+      expect(result[1].id, foodB.id);
+      expect(result[2].id, foodA.id);
     });
   });
 

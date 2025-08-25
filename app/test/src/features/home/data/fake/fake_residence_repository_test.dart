@@ -8,12 +8,16 @@ void main() {
   late ResidenceRepository repository;
 
   setUp(() {
-    repository = FakeResidenceRepository(addDelay: false);
+    repository = FakeResidenceRepository(
+      addDelay: false,
+      initialResidences: testResidences,
+    );
   });
 
   group('General Residence List', () {
     test('fetchResidencesList returns residences by categoryId', () async {
-      final expected = testResidences.where((r) => !r.isPopular).toList();
+      final expected = testResidences.where((r) => !r.isPopular).toList()
+        ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final result = await repository.fetchResidencesList(
         limit: expected.length,
@@ -29,7 +33,8 @@ void main() {
     test(
       'fetchPopularResidencesList returns popular residences by categoryId',
       () async {
-        final expected = testResidences.where((r) => r.isPopular).toList();
+        final expected = testResidences.where((r) => r.isPopular).toList()
+          ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
         final result = await repository.fetchPopularResidencesList(
           limit: expected.length,
@@ -45,11 +50,15 @@ void main() {
       'fetchResidencesListBySubCategoryId returns matching residences',
       () async {
         final residence = testResidences.first;
-        final expected = testResidences
-            .where(
-              (r) => r.subCategoryId == residence.subCategoryId && !r.isPopular,
-            )
-            .toList();
+        final expected =
+            testResidences
+                .where(
+                  (r) =>
+                      r.subCategoryId == residence.subCategoryId &&
+                      !r.isPopular,
+                )
+                .toList()
+              ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
         final result = await repository.fetchResidencesListBySubCategoryId(
           residence.subCategoryId,
@@ -66,11 +75,14 @@ void main() {
       'fetchPopularResidencesListBySubCategoryId returns matching popular residences',
       () async {
         final residence = testResidences.first;
-        final expected = testResidences
-            .where(
-              (r) => r.subCategoryId == residence.subCategoryId && r.isPopular,
-            )
-            .toList();
+        final expected =
+            testResidences
+                .where(
+                  (r) =>
+                      r.subCategoryId == residence.subCategoryId && r.isPopular,
+                )
+                .toList()
+              ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
         final result = await repository
             .fetchPopularResidencesListBySubCategoryId(
@@ -101,20 +113,27 @@ void main() {
       'fetchResidencesList sorts by updatedAt descending by default',
       () async {
         final residence1 = testResidences[0].copyWith(
+          id: 'residence1',
           updatedAt: DateTime(2023, 1, 1),
+          isPopular: false,
         );
         final residence2 = testResidences[1].copyWith(
+          id: 'residence2',
           updatedAt: DateTime(2023, 1, 2),
+          isPopular: false,
         );
         final residence3 = testResidences[2].copyWith(
+          id: 'residence3',
           updatedAt: DateTime(2023, 1, 3),
+          isPopular: false,
         );
 
-        repository.setResidence(residence1);
-        repository.setResidence(residence2);
-        repository.setResidence(residence3);
+        final testRepository = FakeResidenceRepository(
+          addDelay: false,
+          initialResidences: [residence1, residence2, residence3],
+        );
 
-        final result = await repository.fetchResidencesList(
+        final result = await testRepository.fetchResidencesList(
           limit: 3,
           filter: const ResidenceFilter(),
         );
