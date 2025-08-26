@@ -1,3 +1,45 @@
+## Chat History - Carousel Ads: Caching, Refactoring & Robustness
+
+This session focused on significantly improving the Carousel Ads feature by implementing robust caching, optimizing backend communication, refactoring code for maintainability, and temporarily disabling the feature in the UI.
+
+### 1. Impression Batching & Cost Optimization
+
+-   **Goal**: Address concerns about high Cloud Function invocation counts from ad impressions.
+-   **Implementation**:
+    -   The inefficient system of recording one impression per function call was replaced.
+    -   A "buffer and batch" system was implemented in the `AdInteractionNotifier`. The app now collects impression events for 10 seconds and sends them to the backend in a single, efficient batch call (`recordAdImpressions`).
+    -   The backend was updated with a new batch-ready Cloud Function, and the old, inefficient endpoint was removed.
+
+### 2. Advanced Ad Fetching & Caching Logic
+
+-   **Goal**: Make ad fetching context-aware and improve performance by caching results.
+-   **Implementation**:
+    -   Implemented a "fallback" strategy: the app now tries to fetch ads for a specific **subcategory** first. If none are found, it falls back to the general parent **category** to ensure the ad space is never empty.
+    -   A granular caching mechanism was built using Riverpod "family" providers (`finalCarouselAdsProvider` with `keepAlive: true`). Each unique category/subcategory pair now has its own independent cache, making navigation between screens fast and eliminating unnecessary server calls after the initial load.
+
+### 3. Code Refactoring & Cleanup
+
+-   **Goal**: Improve the structure and maintainability of the backend Cloud Functions code.
+-   **Implementation**:
+    -   Refactored the monolithic `index.ts` file into a more organized structure with three separate files: `types.ts` (for data structures), `logic.ts` (for business logic), and `index.ts` (as a clean entry point).
+    -   Removed deprecated functions (`seedCarouselAds`, `recordAdImpression`) from the backend.
+    -   Updated Flutter test files (`fake_ads_carousel_repository_test.dart`) to align with the new, refactored repository API.
+
+### 4. Image Loading Robustness
+
+-   **Goal**: Make the display of ad images more resilient to transient network errors.
+-   **Implementation**:
+    -   Implemented an automatic retry mechanism in the `CustomImage` widget.
+    -   If a network image fails to load, the widget will now automatically retry the download up to 3 times with a short delay between attempts.
+    -   The logic was designed to be smart, correctly appending query parameters to not break existing Firebase Storage URLs.
+
+### 5. Temporarily Disabling the Feature
+
+-   **Goal**: Provide an easy way to disable the ads feature to save costs during development.
+-   **Implementation**: After discussing several strategies (server-side vs. client-side feature flags), the `CarouselAdsList` widget was commented out from the `HomeScreen` UI as the most direct approach.
+
+---
+
 ## Chat History - Carousel Ads E2E Testing & Debugging
 
 This session focused on implementing the full end-to-end flow for the Carousel Ads feature, from backend logic to frontend interaction, and involved an extensive debugging process to get it working with live Firebase services.

@@ -1,6 +1,5 @@
 import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/application/popular_entities_notifier.dart';
-import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,11 +44,11 @@ List<String> nonCriticalErrors(Ref ref, {required int categoryId}) {
   if (subCategoryValue.hasError) {
     errors.add('Could not load sub-categories.'.hardcoded);
   }
-
-  final adsValue = ref.watch(carouselAdsListFutureProvider(categoryId));
-  if (adsValue.hasError) {
-    errors.add('Could not load ads.'.hardcoded);
-  }
+  // TODO: Ads are disabled for now
+  // final adsValue = ref.watch(carouselAdsListFutureProvider(categoryId));
+  // if (adsValue.hasError) {
+  //   errors.add('Could not load ads.'.hardcoded);
+  // }
 
   return errors;
 }

@@ -10,7 +10,6 @@ import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/features/home/presentation/controllers/home_error_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
-import 'package:app/src/features/home/presentation/carousel_ads_list.dart';
 import 'package:app/src/features/home/presentation/sub_categories_list.dart';
 import 'package:app/src/features/home/presentation/popular_entities_section.dart';
 import 'package:app/src/features/home/presentation/widgets/home_search_bar.dart';
@@ -119,9 +118,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                         sliverGapH8,
-                        SliverToBoxAdapter(
-                          child: CarouselAdsList(categoryId: widget.categoryId),
-                        ),
+                        // TODO: Re-enable ads when in production
+                        // SliverToBoxAdapter(
+                        //   child: CarouselAdsList(categoryId: widget.categoryId),
+                        // ),
                         SliverToBoxAdapter(
                           child: PopularEnitiesSection(
                             categoryId: widget.categoryId,

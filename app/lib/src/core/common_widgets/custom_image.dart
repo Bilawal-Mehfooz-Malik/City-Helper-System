@@ -151,7 +151,9 @@ class _CustomImageState extends ConsumerState<CustomImage> {
             final uri = Uri.parse(widget.imageUrl!);
             final newParams = Map<String, dynamic>.from(uri.queryParameters);
             newParams['retry'] = _retryCount.toString();
-            _effectiveImageUrl = uri.replace(queryParameters: newParams).toString();
+            _effectiveImageUrl = uri
+                .replace(queryParameters: newParams)
+                .toString();
           });
         }
       });
@@ -211,7 +213,9 @@ class _CustomImageState extends ConsumerState<CustomImage> {
   Widget _buildInMemoryImage(Widget errorPlaceholder) {
     final userId = _effectiveImageUrl!.replaceFirst('inmemory://', '');
     final bytes = ref.watch(inMemoryImageStorageProvider).getImageBytes(userId);
-    return bytes != null ? Image.memory(bytes, fit: widget.fit) : errorPlaceholder;
+    return bytes != null
+        ? Image.memory(bytes, fit: widget.fit)
+        : errorPlaceholder;
   }
 
   Widget _buildNetworkImage(Widget errorPlaceholder) {
@@ -226,9 +230,11 @@ class _CustomImageState extends ConsumerState<CustomImage> {
         }
         return errorPlaceholder;
       },
-      placeholder: (_, __) => Skeletonizer(
+      placeholder: (_, _) => Skeletonizer(
         enabled: true,
-        child: widget.useCircleLoading ? const Bone.circle() : const Bone.square(),
+        child: widget.useCircleLoading
+            ? const Bone.circle()
+            : const Bone.square(),
       ),
     );
   }

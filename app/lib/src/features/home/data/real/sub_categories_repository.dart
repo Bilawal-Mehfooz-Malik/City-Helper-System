@@ -46,13 +46,13 @@ SubCategoriesRepository subCategoriesRepository(Ref ref) {
   return SubCategoriesRepository(FirebaseFirestore.instance);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<SubCategory>> subCategoriesListFuture(Ref ref, CategoryId id) {
   final repo = ref.watch(subCategoriesRepositoryProvider);
   return repo.fetchSubCategoriesList(id);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<SubCategory?> subCategoryFuture(Ref ref, SubCategoryId id) {
   final categoriesRepository = ref.watch(subCategoriesRepositoryProvider);
   return categoriesRepository.fetchSubCategory(id);

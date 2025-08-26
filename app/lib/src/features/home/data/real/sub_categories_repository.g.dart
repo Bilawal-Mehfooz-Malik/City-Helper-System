@@ -27,7 +27,7 @@ final subCategoriesRepositoryProvider =
 // ignore: unused_element
 typedef SubCategoriesRepositoryRef = ProviderRef<SubCategoriesRepository>;
 String _$subCategoriesListFutureHash() =>
-    r'e4a949cec83e4b6916f3493d7451018acd80c913';
+    r'3fc7f69de5daf9c71035e362f9f30c339e14b931';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -89,7 +89,7 @@ class SubCategoriesListFutureFamily
 
 /// See also [subCategoriesListFuture].
 class SubCategoriesListFutureProvider
-    extends AutoDisposeFutureProvider<List<SubCategory>> {
+    extends FutureProvider<List<SubCategory>> {
   /// See also [subCategoriesListFuture].
   SubCategoriesListFutureProvider(int id)
     : this._internal(
@@ -138,7 +138,7 @@ class SubCategoriesListFutureProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<SubCategory>> createElement() {
+  FutureProviderElement<List<SubCategory>> createElement() {
     return _SubCategoriesListFutureProviderElement(this);
   }
 
@@ -158,14 +158,13 @@ class SubCategoriesListFutureProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin SubCategoriesListFutureRef
-    on AutoDisposeFutureProviderRef<List<SubCategory>> {
+mixin SubCategoriesListFutureRef on FutureProviderRef<List<SubCategory>> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _SubCategoriesListFutureProviderElement
-    extends AutoDisposeFutureProviderElement<List<SubCategory>>
+    extends FutureProviderElement<List<SubCategory>>
     with SubCategoriesListFutureRef {
   _SubCategoriesListFutureProviderElement(super.provider);
 
@@ -173,7 +172,7 @@ class _SubCategoriesListFutureProviderElement
   int get id => (origin as SubCategoriesListFutureProvider).id;
 }
 
-String _$subCategoryFutureHash() => r'5235ceba539dfcdbf718971df3ca503b22b5c34b';
+String _$subCategoryFutureHash() => r'f4e0b261a18165e273b07631313663d4ee406af9';
 
 /// See also [subCategoryFuture].
 @ProviderFor(subCategoryFuture)
@@ -212,8 +211,7 @@ class SubCategoryFutureFamily extends Family<AsyncValue<SubCategory?>> {
 }
 
 /// See also [subCategoryFuture].
-class SubCategoryFutureProvider
-    extends AutoDisposeFutureProvider<SubCategory?> {
+class SubCategoryFutureProvider extends FutureProvider<SubCategory?> {
   /// See also [subCategoryFuture].
   SubCategoryFutureProvider(int id)
     : this._internal(
@@ -261,7 +259,7 @@ class SubCategoryFutureProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<SubCategory?> createElement() {
+  FutureProviderElement<SubCategory?> createElement() {
     return _SubCategoryFutureProviderElement(this);
   }
 
@@ -281,13 +279,13 @@ class SubCategoryFutureProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin SubCategoryFutureRef on AutoDisposeFutureProviderRef<SubCategory?> {
+mixin SubCategoryFutureRef on FutureProviderRef<SubCategory?> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _SubCategoryFutureProviderElement
-    extends AutoDisposeFutureProviderElement<SubCategory?>
+    extends FutureProviderElement<SubCategory?>
     with SubCategoryFutureRef {
   _SubCategoryFutureProviderElement(super.provider);
 
