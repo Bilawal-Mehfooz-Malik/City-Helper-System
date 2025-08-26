@@ -89,7 +89,8 @@ class CustomImageWrapper extends StatelessWidget {
 /// local files (XFile), in-memory cache, or project assets.
 ///
 /// It handles loading states, errors, and platform-specific quirks for localhost URLs.
-class CustomImage extends ConsumerWidget {
+/// It also includes an automatic retry mechanism for failed network images.
+class CustomImage extends ConsumerStatefulWidget {
   const CustomImage({
     super.key,
     this.imageUrl,
@@ -111,47 +112,94 @@ class CustomImage extends ConsumerWidget {
   final Widget? placeholder;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CustomImage> createState() => _CustomImageState();
+}
+
+class _CustomImageState extends ConsumerState<CustomImage> {
+  int _retryCount = 0;
+  String? _effectiveImageUrl;
+
+  // --- Retry Logic Configuration ---
+  static const int _maxRetries = 3;
+  static const Duration _retryDelay = Duration(seconds: 2);
+
+  @override
+  void initState() {
+    super.initState();
+    _effectiveImageUrl = widget.imageUrl;
+  }
+
+  @override
+  void didUpdateWidget(CustomImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If the imageUrl from the parent widget changes, reset the state.
+    if (widget.imageUrl != oldWidget.imageUrl) {
+      setState(() {
+        _retryCount = 0;
+        _effectiveImageUrl = widget.imageUrl;
+      });
+    }
+  }
+
+  void _retry() {
+    if (_retryCount < _maxRetries) {
+      Future.delayed(_retryDelay, () {
+        if (mounted) {
+          setState(() {
+            _retryCount++;
+            // Append a dummy query param to force a reload. Handles existing query params.
+            final uri = Uri.parse(widget.imageUrl!);
+            final newParams = Map<String, dynamic>.from(uri.queryParameters);
+            newParams['retry'] = _retryCount.toString();
+            _effectiveImageUrl = uri.replace(queryParameters: newParams).toString();
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final errorPlaceholder = ImageErrorPlaceholder(
-      iconSize: placeholderIconSize,
+      iconSize: widget.placeholderIconSize,
     );
 
     // Priority 1: Local file (from image picker).
-    if (imageXFile != null) {
+    if (widget.imageXFile != null) {
       final imageProvider = kIsWeb
-          ? NetworkImage(imageXFile!.path) as ImageProvider
-          : FileImage(File(imageXFile!.path));
+          ? NetworkImage(widget.imageXFile!.path) as ImageProvider
+          : FileImage(File(widget.imageXFile!.path));
 
       return Image(
         image: imageProvider,
-        fit: fit,
+        fit: widget.fit,
         errorBuilder: (context, error, stack) => errorPlaceholder,
       );
     }
 
     // Priority 2: No valid source provided.
-    if (imageUrl == null || imageUrl!.isEmpty) {
+    if (_effectiveImageUrl == null || _effectiveImageUrl!.isEmpty) {
       // Use the injected placeholder, or default to the generic error one.
-      return placeholder ?? errorPlaceholder;
+      return widget.placeholder ?? errorPlaceholder;
     }
 
     // Priority 3: In-memory image.
-    if (imageUrl!.startsWith('inmemory://')) {
-      return _buildInMemoryImage(ref, errorPlaceholder);
+    if (_effectiveImageUrl!.startsWith('inmemory://')) {
+      return _buildInMemoryImage(errorPlaceholder);
     }
 
     // Priority 4: Network image.
-    if (imageUrl!.startsWith('http')) {
+    if (_effectiveImageUrl!.startsWith('http')) {
       return _buildNetworkImage(errorPlaceholder);
     }
 
     // Priority 5: Local asset image.
     return Image.asset(
-      imageUrl!,
-      fit: fit,
+      _effectiveImageUrl!,
+      fit: widget.fit,
       errorBuilder: (context, error, stackTrace) {
         AppLogger.logError(
-          'Failed to load asset: $imageUrl',
+          'Failed to load asset: $_effectiveImageUrl',
           error: error,
           stackTrace: stackTrace,
         );
@@ -160,23 +208,27 @@ class CustomImage extends ConsumerWidget {
     );
   }
 
-  Widget _buildInMemoryImage(WidgetRef ref, Widget errorPlaceholder) {
-    final userId = imageUrl!.replaceFirst('inmemory://', '');
+  Widget _buildInMemoryImage(Widget errorPlaceholder) {
+    final userId = _effectiveImageUrl!.replaceFirst('inmemory://', '');
     final bytes = ref.watch(inMemoryImageStorageProvider).getImageBytes(userId);
-    return bytes != null ? Image.memory(bytes, fit: fit) : errorPlaceholder;
+    return bytes != null ? Image.memory(bytes, fit: widget.fit) : errorPlaceholder;
   }
 
   Widget _buildNetworkImage(Widget errorPlaceholder) {
     return CachedNetworkImage(
-      imageUrl: _localhostFriendlyImageUrl(imageUrl!),
-      fit: fit,
+      imageUrl: _localhostFriendlyImageUrl(_effectiveImageUrl!),
+      fit: widget.fit,
       errorWidget: (context, url, error) {
         AppLogger.logError('Failed to load image from URL: $url', error: error);
+        // Trigger a retry if we haven't exceeded the max count.
+        if (_retryCount < _maxRetries) {
+          _retry();
+        }
         return errorPlaceholder;
       },
       placeholder: (_, __) => Skeletonizer(
         enabled: true,
-        child: useCircleLoading ? const Bone.circle() : const Bone.square(),
+        child: widget.useCircleLoading ? const Bone.circle() : const Bone.square(),
       ),
     );
   }
