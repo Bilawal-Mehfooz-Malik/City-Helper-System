@@ -26,7 +26,7 @@ final adsCarouselRepositoryProvider = Provider<AdsCarouselRepository>.internal(
 // ignore: unused_element
 typedef AdsCarouselRepositoryRef = ProviderRef<AdsCarouselRepository>;
 String _$carouselAdsListFutureHash() =>
-    r'e9305a153a0c26a5d0cf57e0bc825d251a3087ce';
+    r'da70273e5e8afd84446360de05c81fed970f8dd3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -59,15 +59,18 @@ class CarouselAdsListFutureFamily extends Family<AsyncValue<List<CarouselAd>>> {
   const CarouselAdsListFutureFamily();
 
   /// See also [carouselAdsListFuture].
-  CarouselAdsListFutureProvider call(int categoryId) {
-    return CarouselAdsListFutureProvider(categoryId);
+  CarouselAdsListFutureProvider call(int categoryId, {int? subcategoryId}) {
+    return CarouselAdsListFutureProvider(
+      categoryId,
+      subcategoryId: subcategoryId,
+    );
   }
 
   @override
   CarouselAdsListFutureProvider getProviderOverride(
     covariant CarouselAdsListFutureProvider provider,
   ) {
-    return call(provider.categoryId);
+    return call(provider.categoryId, subcategoryId: provider.subcategoryId);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -86,13 +89,15 @@ class CarouselAdsListFutureFamily extends Family<AsyncValue<List<CarouselAd>>> {
 }
 
 /// See also [carouselAdsListFuture].
-class CarouselAdsListFutureProvider
-    extends AutoDisposeFutureProvider<List<CarouselAd>> {
+class CarouselAdsListFutureProvider extends FutureProvider<List<CarouselAd>> {
   /// See also [carouselAdsListFuture].
-  CarouselAdsListFutureProvider(int categoryId)
+  CarouselAdsListFutureProvider(int categoryId, {int? subcategoryId})
     : this._internal(
-        (ref) =>
-            carouselAdsListFuture(ref as CarouselAdsListFutureRef, categoryId),
+        (ref) => carouselAdsListFuture(
+          ref as CarouselAdsListFutureRef,
+          categoryId,
+          subcategoryId: subcategoryId,
+        ),
         from: carouselAdsListFutureProvider,
         name: r'carouselAdsListFutureProvider',
         debugGetCreateSourceHash:
@@ -103,6 +108,7 @@ class CarouselAdsListFutureProvider
         allTransitiveDependencies:
             CarouselAdsListFutureFamily._allTransitiveDependencies,
         categoryId: categoryId,
+        subcategoryId: subcategoryId,
       );
 
   CarouselAdsListFutureProvider._internal(
@@ -113,9 +119,11 @@ class CarouselAdsListFutureProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.categoryId,
+    required this.subcategoryId,
   }) : super.internal();
 
   final int categoryId;
+  final int? subcategoryId;
 
   @override
   Override overrideWith(
@@ -132,25 +140,28 @@ class CarouselAdsListFutureProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         categoryId: categoryId,
+        subcategoryId: subcategoryId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<CarouselAd>> createElement() {
+  FutureProviderElement<List<CarouselAd>> createElement() {
     return _CarouselAdsListFutureProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
     return other is CarouselAdsListFutureProvider &&
-        other.categoryId == categoryId;
+        other.categoryId == categoryId &&
+        other.subcategoryId == subcategoryId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, categoryId.hashCode);
+    hash = _SystemHash.combine(hash, subcategoryId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -158,19 +169,24 @@ class CarouselAdsListFutureProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin CarouselAdsListFutureRef
-    on AutoDisposeFutureProviderRef<List<CarouselAd>> {
+mixin CarouselAdsListFutureRef on FutureProviderRef<List<CarouselAd>> {
   /// The parameter `categoryId` of this provider.
   int get categoryId;
+
+  /// The parameter `subcategoryId` of this provider.
+  int? get subcategoryId;
 }
 
 class _CarouselAdsListFutureProviderElement
-    extends AutoDisposeFutureProviderElement<List<CarouselAd>>
+    extends FutureProviderElement<List<CarouselAd>>
     with CarouselAdsListFutureRef {
   _CarouselAdsListFutureProviderElement(super.provider);
 
   @override
   int get categoryId => (origin as CarouselAdsListFutureProvider).categoryId;
+  @override
+  int? get subcategoryId =>
+      (origin as CarouselAdsListFutureProvider).subcategoryId;
 }
 
 String _$adStreamHash() => r'95e83729e28e2d7e799bbdee395553c1051abbd5';
@@ -407,6 +423,143 @@ class _AdFutureProviderElement
 
   @override
   String get adId => (origin as AdFutureProvider).adId;
+}
+
+String _$finalCarouselAdsHash() => r'2ec19d55118c2380d6d8cbf8b46cd64ddc6f84ff';
+
+/// See also [finalCarouselAds].
+@ProviderFor(finalCarouselAds)
+const finalCarouselAdsProvider = FinalCarouselAdsFamily();
+
+/// See also [finalCarouselAds].
+class FinalCarouselAdsFamily extends Family<AsyncValue<List<CarouselAd>>> {
+  /// See also [finalCarouselAds].
+  const FinalCarouselAdsFamily();
+
+  /// See also [finalCarouselAds].
+  FinalCarouselAdsProvider call(int categoryId, {int? subcategoryId}) {
+    return FinalCarouselAdsProvider(categoryId, subcategoryId: subcategoryId);
+  }
+
+  @override
+  FinalCarouselAdsProvider getProviderOverride(
+    covariant FinalCarouselAdsProvider provider,
+  ) {
+    return call(provider.categoryId, subcategoryId: provider.subcategoryId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'finalCarouselAdsProvider';
+}
+
+/// See also [finalCarouselAds].
+class FinalCarouselAdsProvider extends FutureProvider<List<CarouselAd>> {
+  /// See also [finalCarouselAds].
+  FinalCarouselAdsProvider(int categoryId, {int? subcategoryId})
+    : this._internal(
+        (ref) => finalCarouselAds(
+          ref as FinalCarouselAdsRef,
+          categoryId,
+          subcategoryId: subcategoryId,
+        ),
+        from: finalCarouselAdsProvider,
+        name: r'finalCarouselAdsProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$finalCarouselAdsHash,
+        dependencies: FinalCarouselAdsFamily._dependencies,
+        allTransitiveDependencies:
+            FinalCarouselAdsFamily._allTransitiveDependencies,
+        categoryId: categoryId,
+        subcategoryId: subcategoryId,
+      );
+
+  FinalCarouselAdsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.categoryId,
+    required this.subcategoryId,
+  }) : super.internal();
+
+  final int categoryId;
+  final int? subcategoryId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<CarouselAd>> Function(FinalCarouselAdsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FinalCarouselAdsProvider._internal(
+        (ref) => create(ref as FinalCarouselAdsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        categoryId: categoryId,
+        subcategoryId: subcategoryId,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<List<CarouselAd>> createElement() {
+    return _FinalCarouselAdsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FinalCarouselAdsProvider &&
+        other.categoryId == categoryId &&
+        other.subcategoryId == subcategoryId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, categoryId.hashCode);
+    hash = _SystemHash.combine(hash, subcategoryId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FinalCarouselAdsRef on FutureProviderRef<List<CarouselAd>> {
+  /// The parameter `categoryId` of this provider.
+  int get categoryId;
+
+  /// The parameter `subcategoryId` of this provider.
+  int? get subcategoryId;
+}
+
+class _FinalCarouselAdsProviderElement
+    extends FutureProviderElement<List<CarouselAd>>
+    with FinalCarouselAdsRef {
+  _FinalCarouselAdsProviderElement(super.provider);
+
+  @override
+  int get categoryId => (origin as FinalCarouselAdsProvider).categoryId;
+  @override
+  int? get subcategoryId => (origin as FinalCarouselAdsProvider).subcategoryId;
 }
 
 // ignore_for_file: type=lint

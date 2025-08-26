@@ -7,7 +7,7 @@ part of 'ad_interaction_controller.dart';
 // **************************************************************************
 
 String _$adInteractionNotifierHash() =>
-    r'9f29bb34ce2ea126d6723a0b8e510a591611fb2d';
+    r'03263b3d36375883901b329f474d6d9928cd30e6';
 
 /// See also [AdInteractionNotifier].
 @ProviderFor(AdInteractionNotifier)

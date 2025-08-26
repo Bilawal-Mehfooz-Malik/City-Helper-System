@@ -65,22 +65,43 @@ void main() {
       });
     });
 
-    group('recordAdImpression', () {
-      test('increments impression count and updates lastShownAt', () async {
-        final ad = testCarouselAds.first;
-        final initialAdState = await repository.fetchAdById(ad.id);
-        expect(initialAdState, isNotNull);
+    group('recordAdImpressions', () {
+      test('increments impression count and updates lastShownAt for multiple ads', () async {
+        // Select a few ads to test with
+        final adsToUpdate = [testCarouselAds[0], testCarouselAds[1]];
+        final adIdsToUpdate = adsToUpdate.map((ad) => ad.id).toList();
 
-        await repository.recordAdImpression(ad.id);
-
-        final finalAdState = await repository.fetchAdById(ad.id);
-        expect(finalAdState, isNotNull);
-        expect(
-          finalAdState!.impressionCount,
-          initialAdState!.impressionCount + 1,
+        // Get initial states
+        final initialStates = await Future.wait(
+          adIdsToUpdate.map((id) => repository.fetchAdById(id)),
         );
-        // lastShownAt should be updated, so it's not equal to the initial state's lastShownAt
-        expect(finalAdState.lastShownAt, isNot(initialAdState.lastShownAt));
+
+        // Record impressions
+        await repository.recordAdImpressions(adIdsToUpdate);
+
+        // Get final states
+        final finalStates = await Future.wait(
+          adIdsToUpdate.map((id) => repository.fetchAdById(id)),
+        );
+
+        // Verify that counts and timestamps were updated for each ad
+        for (var i = 0; i < adsToUpdate.length; i++) {
+          final initialAd = initialStates[i];
+          final finalAd = finalStates[i];
+          expect(finalAd, isNotNull);
+          expect(initialAd, isNotNull);
+          expect(finalAd!.impressionCount, initialAd!.impressionCount + 1);
+          expect(finalAd.lastShownAt, isNot(initialAd.lastShownAt));
+        }
+      });
+
+      test('does not throw when called with an empty list', () async {
+        // This test simply ensures that calling the method with an empty list
+        // does not result in an error.
+        await expectLater(
+          repository.recordAdImpressions([]),
+          completes,
+        );
       });
     });
 

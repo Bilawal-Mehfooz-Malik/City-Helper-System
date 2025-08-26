@@ -6,6 +6,7 @@ import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/domain/carousel_ad.dart';
 import 'package:app/src/features/home/presentation/controllers/ad_interaction_controller.dart';
+import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/home_skeletons.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -15,9 +16,38 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// uses [16/9] AspectRatio
-class CarouselAdsList extends ConsumerWidget {
+class CarouselAdsList extends ConsumerStatefulWidget {
   final CategoryId categoryId;
   const CarouselAdsList({super.key, required this.categoryId});
+
+  @override
+  ConsumerState<CarouselAdsList> createState() => _CarouselAdsListState();
+}
+
+class _CarouselAdsListState extends ConsumerState<CarouselAdsList> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Record the impression for the first ad when the data is available.
+    // This ensures the first ad is counted before any user interaction.
+    final subcategoryId = ref.read(subcategoryControllerProvider);
+    final adsValue = ref.read(
+      finalCarouselAdsProvider(widget.categoryId, subcategoryId: subcategoryId),
+    );
+    if (adsValue.hasValue) {
+      final ads = adsValue.asData!.value;
+      if (ads.isNotEmpty) {
+        // Use a post-frame callback to avoid calling setState during build.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            ref
+                .read(adInteractionNotifierProvider.notifier)
+                .recordAdImpression(ads.first.id);
+          }
+        });
+      }
+    }
+  }
 
   // The UI is responsible for navigation and showing errors.
   // The controller is responsible for the business logic.
@@ -55,13 +85,16 @@ class CarouselAdsList extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     // Listen to the controller state to show a snackbar on error.
     ref.listen<AsyncValue<void>>(adInteractionNotifierProvider, (_, state) {
       state.showAlertDialogOnError(context);
     });
 
-    final adsValue = ref.watch(carouselAdsListFutureProvider(categoryId));
+    final subcategoryId = ref.watch(subcategoryControllerProvider);
+    final adsValue = ref.watch(
+      finalCarouselAdsProvider(widget.categoryId, subcategoryId: subcategoryId),
+    );
 
     return AsyncValueWidget<List<CarouselAd>>(
       value: adsValue,
@@ -83,6 +116,12 @@ class CarouselAdsList extends ConsumerWidget {
                 autoPlayInterval: const Duration(seconds: 5),
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
                 autoPlayCurve: Curves.fastOutSlowIn,
+                onPageChanged: (index, reason) {
+                  final ad = ads[index];
+                  ref
+                      .read(adInteractionNotifierProvider.notifier)
+                      .recordAdImpression(ad.id);
+                },
               ),
               itemBuilder: (_, index, _) {
                 final ad = ads[index];
