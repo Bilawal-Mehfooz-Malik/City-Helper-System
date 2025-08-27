@@ -110,9 +110,7 @@ class OpeningHoursLabel extends StatelessWidget {
 
     // Handle explicit operational status overrides
     if (entity.entityStatus == OperationalStatus.open) {
-      final openText = isFood
-          ? loc.open
-          : loc.available; // Use existing localization keys
+      final openText = isFood ? loc.open : loc.officeOpen; // Changed for Residence
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
@@ -125,9 +123,7 @@ class OpeningHoursLabel extends StatelessWidget {
         ),
       );
     } else if (entity.entityStatus == OperationalStatus.close) {
-      final closedText = isFood
-          ? loc.closed
-          : loc.unavailable; // Use existing localization keys
+      final closedText = isFood ? loc.closed : loc.officeClosed; // Changed for Residence
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
