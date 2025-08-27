@@ -400,6 +400,12 @@ abstract class AppLocalizations {
   /// **'An error occurred'**
   String get anErrorOccurred;
 
+  /// No description provided for @searching.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching...'**
+  String get searching;
+
   /// No description provided for @contactOptions.
   ///
   /// In en, this message translates to:

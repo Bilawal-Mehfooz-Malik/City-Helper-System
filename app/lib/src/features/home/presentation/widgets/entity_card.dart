@@ -6,7 +6,6 @@ import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart';
 import 'package:app/src/features/home/presentation/widgets/item_title_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,8 +68,7 @@ class EntityCard extends StatelessWidget {
               children: [
                 ItemTitleSection(entity: entity, useElipsis: useElipsis),
                 Text(
-                  '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} '
-                      .hardcoded,
+                  '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} ',
                   style: context.textTheme.labelLarge,
                   overflow: useElipsis ? TextOverflow.ellipsis : null,
                 ),
@@ -100,5 +98,3 @@ class EntityCard extends StatelessWidget {
     );
   }
 }
-
-

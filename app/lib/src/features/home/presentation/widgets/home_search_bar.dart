@@ -8,7 +8,6 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/data/real/entity_search_repository.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -181,7 +180,7 @@ class _SearchSuggestionsState extends ConsumerState<_SearchSuggestions> {
     if (widget.currentText != _debouncedQuery) {
       return _SuggestionBuilderMessage(
         icon: Icons.hourglass_empty,
-        message: 'Searching...'.hardcoded,
+        message: context.loc.searching,
       );
     }
 
@@ -199,7 +198,7 @@ class _SearchSuggestionsState extends ConsumerState<_SearchSuggestions> {
       ),
       loading: () => _SuggestionBuilderMessage(
         icon: Icons.hourglass_empty,
-        message: 'Searching...'.hardcoded,
+        message: context.loc.searching,
       ),
       error: (e, _) => _SuggestionBuilderMessage(
         icon: Icons.error,

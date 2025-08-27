@@ -107,6 +107,8 @@
   "@failedToLoadItems": {},
    "anErrorOccurred": "An error occurred",
   "@anErrorOccurred": {},
+  "searching":"Searching...",
+  "@searching": {},
 
   "contactOptions":"Contact Options",
   "@contactOptions": {},
