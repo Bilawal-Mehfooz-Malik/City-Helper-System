@@ -6,6 +6,7 @@ import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/opening_hours_checker.dart'; // New import
 
 class OpeningHoursWidget extends StatefulWidget {
   final EntityDetail entity;
@@ -22,7 +23,6 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
   @override
   Widget build(BuildContext context) {
     final hoursMap = widget.entity.openingHours;
-    final isOpen = (widget.entity is FoodDetail) ? (widget.entity as FoodDetail).isOpen : null;
 
     // If there are no opening hours, hide the widget entirely.
     if (hoursMap == null) {
@@ -34,6 +34,17 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 
     final todayHours =
         hoursMap[today] ?? const OpeningHours(isDayOff: true, slots: null);
+
+    // Calculate isOpen dynamically based on entityStatus
+    bool? calculatedIsOpen;
+    if (widget.entity.entityStatus == OperationalStatus.open) {
+      calculatedIsOpen = true;
+    } else if (widget.entity.entityStatus == OperationalStatus.close) {
+      calculatedIsOpen = false;
+    } else {
+      // OperationalStatus.defaultStatus
+      calculatedIsOpen = OpeningHoursChecker.isOpenNow(hoursMap);
+    }
 
     // Create a list of days starting from today for display order
     final displayDays = DayOfWeek.values.toList();
@@ -48,10 +59,11 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
       children: [
         OpeningStatusHeader(
           labelWidget: OpeningHoursLabel(
+            entity: widget.entity, // Pass the entity
             todayHours: todayHours,
-            isOpen: isOpen,
+            isOpen: calculatedIsOpen, // Pass calculated isOpen
           ),
-          isOpen: isOpen,
+          isOpen: calculatedIsOpen, // Pass calculated isOpen
           isExpanded: _isExpanded,
           onTap: () => setState(() => _isExpanded = !_isExpanded),
         ),
@@ -73,11 +85,13 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 }
 
 class OpeningHoursLabel extends StatelessWidget {
+  final EntityDetail entity; // New parameter
   final OpeningHours todayHours;
   final bool? isOpen;
 
   const OpeningHoursLabel({
     super.key,
+    required this.entity, // Required new parameter
     required this.todayHours,
     required this.isOpen,
   });
@@ -91,23 +105,63 @@ class OpeningHoursLabel extends StatelessWidget {
     final openColor = colorScheme.primary;
     final closedColor = colorScheme.error;
 
-    if (todayHours.isDayOff || todayHours.slots == null || todayHours.slots!.isEmpty) {
-      return Text(
-        loc.closed,
-        style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
-      );
-    }
+    // Determine if it's a Food or Residence entity
+    final isFood = entity is FoodDetail;
 
-    // If we reach here, slots is not null and not empty
-    final nextSlot = todayHours.slots!.first; // Now safe to use !
-
-    if (isOpen == true) {
+    // Handle explicit operational status overrides
+    if (entity.entityStatus == OperationalStatus.open) {
+      final openText = isFood
+          ? loc.open
+          : loc.available; // Use existing localization keys
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
           children: [
             TextSpan(
-              text: loc.open,
+              text: openText,
+              style: TextStyle(color: openColor, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+      );
+    } else if (entity.entityStatus == OperationalStatus.close) {
+      final closedText = isFood
+          ? loc.closed
+          : loc.unavailable; // Use existing localization keys
+      return RichText(
+        text: TextSpan(
+          style: TextStyle(color: normalColor),
+          children: [
+            TextSpan(
+              text: closedText,
+              style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Handle defaultStatus (calculated open/closed)
+    if (todayHours.isDayOff ||
+        todayHours.slots == null ||
+        todayHours.slots!.isEmpty) {
+      final closedText = isFood ? loc.closed : loc.officeClosed;
+      return Text(
+        closedText,
+        style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
+      );
+    }
+
+    final nextSlot = todayHours.slots!.first;
+
+    if (isOpen == true) {
+      final openText = isFood ? loc.open : loc.officeOpen;
+      return RichText(
+        text: TextSpan(
+          style: TextStyle(color: normalColor),
+          children: [
+            TextSpan(
+              text: openText,
               style: TextStyle(color: openColor, fontWeight: FontWeight.w600),
             ),
             const TextSpan(
@@ -122,12 +176,13 @@ class OpeningHoursLabel extends StatelessWidget {
         ),
       );
     } else if (isOpen == false) {
+      final closedText = isFood ? loc.closed : loc.officeClosed;
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
           children: [
             TextSpan(
-              text: loc.closed,
+              text: closedText,
               style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
             ),
             const TextSpan(
@@ -142,9 +197,11 @@ class OpeningHoursLabel extends StatelessWidget {
         ),
       );
     } else {
-      // isOpen is null
+      // This case should ideally not be reached if calculatedIsOpen is always true/false
+      // but as a fallback, show closed.
+      final closedText = isFood ? loc.closed : loc.officeClosed;
       return Text(
-        loc.closed,
+        closedText,
         style: TextStyle(color: closedColor, fontWeight: FontWeight.w600),
       );
     }
@@ -218,7 +275,7 @@ class OpeningHourRow extends StatelessWidget {
       hoursText = loc.closed;
       hoursTextStyle = textStyle.copyWith(color: colorScheme.error);
     } else if (hour.is24Hours) {
-      hoursText = 'Open 24 Hours'; // This should be localized
+      hoursText = loc.open24Hours;
       hoursTextStyle = textStyle.copyWith(color: colorScheme.primary);
     } else {
       hoursText = hour.slots!

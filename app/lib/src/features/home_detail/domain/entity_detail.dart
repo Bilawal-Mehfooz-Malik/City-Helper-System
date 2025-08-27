@@ -45,7 +45,6 @@ sealed class EntityDetail with _$EntityDetail {
     // Operational Status & Timestamps
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
-    @Default(false) bool isOpen,
     @_timestampJsonConverter required DateTime createdAt,
     @_timestampJsonConverter required DateTime updatedAt,
     @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
@@ -95,7 +94,6 @@ sealed class EntityDetail with _$EntityDetail {
     // Operational Status & Timestamps
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
-    @Default(false) bool isOpen,
     @_timestampJsonConverter required DateTime createdAt,
     @_timestampJsonConverter required DateTime updatedAt,
     @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,

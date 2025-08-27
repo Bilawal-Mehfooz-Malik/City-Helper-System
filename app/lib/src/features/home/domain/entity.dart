@@ -34,7 +34,7 @@ sealed class Entity with _$Entity {
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
     @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
-    @Default(ApprovalStatus.pending) ApprovalStatus status,
+    @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
     required Pricing pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.familyFriendly) GenderPreference genderPref,
@@ -57,8 +57,9 @@ sealed class Entity with _$Entity {
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
     @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
-    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
-    @Default(ApprovalStatus.pending) ApprovalStatus status,
+    @Default(OperationalStatus.defaultStatus)
+    OperationalStatus operationalStatus,
+    @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @_timestampJsonConverter required DateTime updatedAt,
   }) = Food;

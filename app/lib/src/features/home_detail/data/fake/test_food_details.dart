@@ -18,7 +18,7 @@ final List<FoodDetail> testFoodDetails = [
     totalReviews: 120,
     isPopular: true,
     openingHours: defaultOpeningHours,
-    entityStatus: OperationalStatus.defaultStatus,
+    entityStatus: OperationalStatus.open,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     ownerId: 'owner_1',
@@ -32,7 +32,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '2',
@@ -60,7 +59,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '3',
@@ -88,7 +86,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '4',
@@ -116,7 +113,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '5',
@@ -144,7 +140,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '6',
@@ -172,7 +167,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '7',
@@ -200,7 +194,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: false,
   ),
   FoodDetail(
     id: '8',
@@ -228,7 +221,6 @@ final List<FoodDetail> testFoodDetails = [
     genderPref: GenderPreference.familyFriendly,
     ratingBreakdown: _defaultBreakdown,
     status: ApprovalStatus.approved,
-    isOpen: true,
   ),
 ];
 

@@ -1,9 +1,11 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/popular_detail_view_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -53,7 +55,10 @@ class HomeDetailAppBar extends ConsumerWidget implements PreferredSizeWidget {
           child: AppBarContent(name: BoneMock.title),
         ),
         // TODO: check is it ok or not?
-        data: (entity) => AppBarContent(name: entity?.name),
+        data: (entity) => AppBarContent(
+          name: entity?.name,
+          isPopular: entity?.isPopular ?? false, // Pass isPopular
+        ),
       ),
     );
   }
@@ -64,10 +69,26 @@ class HomeDetailAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
 class AppBarContent extends StatelessWidget {
   final String? name;
-  const AppBarContent({super.key, required this.name});
+  final bool isPopular; // New parameter
+  const AppBarContent({
+    super.key,
+    required this.name,
+    this.isPopular = false,
+  }); // Initialize new parameter
 
   @override
   Widget build(BuildContext context) {
-    return Text(name ?? context.loc.somethingWentWrong);
+    return Row(
+      // Use Row to place icon next to text
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(name ?? context.loc.somethingWentWrong),
+        if (isPopular) ...[
+          // Conditionally display icon
+          gapW4,
+          Icon(Icons.local_fire_department, color: amberColor, size: 25),
+        ],
+      ],
+    );
   }
 }

@@ -22,8 +22,8 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
     Map<String, dynamic>,
     Map<DayOfWeek, OpeningHours>
   >(json['openingHours'], _openingHoursConverter.fromJson),
-  status:
-      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+  approvalStatus:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
@@ -55,7 +55,7 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
         instance.openingHours,
         _openingHoursConverter.toJson,
       ),
-  'status': _$ApprovalStatusEnumMap[instance.status]!,
+  'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
@@ -108,11 +108,14 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   openingHours: _openingHoursConverter.fromJson(
     json['openingHours'] as Map<String, dynamic>,
   ),
-  entityStatus:
-      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+  operationalStatus:
+      $enumDecodeNullable(
+        _$OperationalStatusEnumMap,
+        json['operationalStatus'],
+      ) ??
       OperationalStatus.defaultStatus,
-  status:
-      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+  approvalStatus:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
@@ -134,8 +137,8 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
   'openingHours': _openingHoursConverter.toJson(instance.openingHours),
-  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
-  'status': _$ApprovalStatusEnumMap[instance.status]!,
+  'operationalStatus': _$OperationalStatusEnumMap[instance.operationalStatus]!,
+  'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'runtimeType': instance.$type,

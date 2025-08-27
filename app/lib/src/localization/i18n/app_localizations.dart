@@ -364,6 +364,18 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get close;
 
+  /// No description provided for @officeOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Office Open'**
+  String get officeOpen;
+
+  /// No description provided for @officeClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Office Closed'**
+  String get officeClosed;
+
   /// No description provided for @available.
   ///
   /// In en, this message translates to:

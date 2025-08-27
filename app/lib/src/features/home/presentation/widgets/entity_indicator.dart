@@ -16,7 +16,7 @@ class EntityStatusIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entity is Food) {
       final food = entity as Food;
-      switch (food.entityStatus) {
+      switch (food.operationalStatus) {
         case OperationalStatus.open:
           return const OpenIndicator();
         case OperationalStatus.close:

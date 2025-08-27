@@ -16,6 +16,7 @@ import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
+import 'package:app/src/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -62,74 +63,51 @@ class HomeDetailTopRightContent extends ConsumerWidget {
         ? ref.watch(currencyFormatterProvider).format(residence.pricing.cost)
         : null;
 
-    return Stack(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            top: entity.isPopular ? Sizes.p40 : Sizes.p16,
-            bottom: Sizes.p16,
-          ),
-          child: Column(
-            spacing: Sizes.p4,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (formattedPrice != null) ...[
-                Text(
-                  '${context.loc.startsFrom} $formattedPrice',
-                  style: context.textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                gapH4,
-              ],
-
-              LocationRow(entity: entity),
-              Divider(),
-              _RatingRow(entity: entity, isSmall: isSmall),
-              if (residence != null) ...[
-                Divider(),
-                FurnishedInfo(residence: residence),
-                Divider(),
-                AvailableInfo(residence: residence), // New widget
-                Divider(), // Add another divider for consistency
-              ],
-              OpeningHoursWidget(entity: entity),
-              if (entity.instagramUrl != null ||
-                  entity.facebookUrl != null ||
-                  entity.messagingNumber != null ||
-                  entity.phoneNumber != null ||
-                  entity.email != null ||
-                  entity.websiteUrl != null) ...[
-                Divider(),
-                Text(
-                  context.loc.contactOptions,
-                  style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                gapH4,
-                ContactOptionsRow(entity: entity),
-              ],
-            ],
-          ),
-        ),
-        if (entity.isPopular)
-          Positioned(
-            right: Sizes.p4,
-            top: Sizes.p4,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: Sizes.p16,
-                vertical: Sizes.p4,
+    return Padding(
+      padding: EdgeInsets.only(top: Sizes.p16, bottom: Sizes.p16),
+      child: Column(
+        spacing: Sizes.p4,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (formattedPrice != null) ...[
+            Text(
+              '$formattedPrice ${residence?.pricing.displayLabel}',
+              style: context.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
               ),
-              decoration: BoxDecoration(
-                color: Colors.amber.shade300,
-                borderRadius: BorderRadius.circular(Sizes.p16),
-              ),
-              child: Text(context.loc.popular),
             ),
-          ),
-      ],
+            gapH4,
+          ],
+
+          LocationRow(entity: entity),
+          Divider(),
+          _RatingRow(entity: entity, isSmall: isSmall),
+          if (residence != null) ...[
+            Divider(),
+            FurnishedInfo(residence: residence),
+            Divider(),
+            AvailableInfo(residence: residence), // New widget
+            Divider(), // Add another divider for consistency
+          ],
+          OpeningHoursWidget(entity: entity),
+          if (entity.instagramUrl != null ||
+              entity.facebookUrl != null ||
+              entity.messagingNumber != null ||
+              entity.phoneNumber != null ||
+              entity.email != null ||
+              entity.websiteUrl != null) ...[
+            Divider(),
+            Text(
+              context.loc.contactOptions,
+              style: context.textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            gapH4,
+            ContactOptionsRow(entity: entity),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -180,7 +158,7 @@ class _RatingRow extends ConsumerWidget {
         context: context,
         barrierDismissible: true,
         barrierLabel: context.loc.leaveAREview,
-        pageBuilder: (_, __, ___) {
+        pageBuilder: (_, _, _) {
           return Align(
             alignment: Alignment.centerRight,
             child: SizedBox(
@@ -233,7 +211,8 @@ class _RatingRow extends ConsumerWidget {
             spacing: Sizes.p4,
             runSpacing: Sizes.p4,
             children: [
-              Icon(Icons.star, color: Colors.amber, size: 20),
+              // TODO: Use amberColor from theme
+              Icon(Icons.star, color: amberColor, size: 20),
               Text(entity.avgRating.toStringAsFixed(1)),
               Text('(${entity.totalReviews} ${context.loc.reviews})'.hardcoded),
             ],

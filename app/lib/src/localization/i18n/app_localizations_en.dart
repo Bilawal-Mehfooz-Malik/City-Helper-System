@@ -146,6 +146,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get close => 'Close';
 
   @override
+  String get officeOpen => 'Office Open';
+
+  @override
+  String get officeClosed => 'Office Closed';
+
+  @override
   String get available => 'Available';
 
   @override

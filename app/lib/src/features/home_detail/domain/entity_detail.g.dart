@@ -32,7 +32,6 @@ ResidenceDetail _$ResidenceDetailFromJson(
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
-  isOpen: json['isOpen'] as bool? ?? false,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
   openingHours: _$JsonConverterFromJson<
@@ -81,7 +80,6 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'ratingBreakdown': instance.ratingBreakdown.map((e) => e.toJson()).toList(),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
-  'isOpen': instance.isOpen,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'openingHours':
@@ -164,7 +162,6 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
   status:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
-  isOpen: json['isOpen'] as bool? ?? false,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
   openingHours: _openingHoursConverter.fromJson(
@@ -208,7 +205,6 @@ Map<String, dynamic> _$FoodDetailToJson(
   'ratingBreakdown': instance.ratingBreakdown.map((e) => e.toJson()).toList(),
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
-  'isOpen': instance.isOpen,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'openingHours': _openingHoursConverter.toJson(instance.openingHours),

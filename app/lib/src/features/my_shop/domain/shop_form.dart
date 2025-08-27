@@ -82,9 +82,6 @@ abstract class ShopForm with _$ShopForm {
       isRoomAvailable: (shop is ResidenceDetail)
           ? shop.isRoomAvailable
           : true, // Default to true if not residence
-      isOpen: (shop is FoodDetail)
-          ? (shop).isOpen
-          : false, // Default to false if not FoodDetail
     );
   }
 

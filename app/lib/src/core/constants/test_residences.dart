@@ -25,7 +25,7 @@ final List<Residence> testResidences = [
     ),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
     updatedAt: DateTime.now(),
   ),
@@ -45,7 +45,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 40000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
     updatedAt: DateTime.now(),
   ),
@@ -65,7 +65,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 8000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
     updatedAt: DateTime.now(),
   ),
@@ -85,7 +85,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 15000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
     updatedAt: DateTime.now(),
   ),
@@ -105,7 +105,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 12000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
     updatedAt: DateTime.now(),
   ),
@@ -125,7 +125,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 60000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
     updatedAt: DateTime.now(),
   ),
@@ -145,7 +145,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 7000),
     genderPref: GenderPreference.maleOnly,
     isFurnished: false,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
     updatedAt: DateTime.now(),
   ),
@@ -165,7 +165,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 28000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
     updatedAt: DateTime.now(),
   ),
@@ -185,7 +185,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 11000),
     genderPref: GenderPreference.femaleOnly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
     updatedAt: DateTime.now(),
   ),
@@ -205,7 +205,7 @@ final List<Residence> testResidences = [
     pricing: Pricing(cost: 35000),
     genderPref: GenderPreference.familyFriendly,
     isFurnished: true,
-    status: ApprovalStatus.approved,
+    approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
     updatedAt: DateTime.now(),
   ),

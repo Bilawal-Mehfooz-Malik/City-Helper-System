@@ -31,7 +31,7 @@ class _RightSectionContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Sizes.p40,
+        top: Sizes.p16,
         bottom: Sizes.p16,
         left: !isSmall ? Sizes.p16 : 0,
         right: !isSmall ? Sizes.p16 : 0,
