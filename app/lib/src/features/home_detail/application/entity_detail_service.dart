@@ -7,7 +7,6 @@ import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/review/domain/review.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rxdart/rxdart.dart';
 
 part 'entity_detail_service.g.dart';
 
@@ -28,20 +27,6 @@ class EntityDetailsService {
       _ => throw InvalidCategoryException(),
     };
   }
-
-  Stream<EntityDetail?> watchEntityDetails(
-    CategoryId categoryId,
-    EntityId entityId,
-  ) {
-    return switch (categoryId) {
-      1 =>
-        ref
-            .read(residenceDetailsRepositoryProvider)
-            .watchResidenceDetails(entityId),
-      2 => ref.read(foodDetailsRepositoryProvider).watchFoodDetails(entityId),
-      _ => throw InvalidCategoryException(),
-    };
-  }
 }
 
 @riverpod
@@ -57,16 +42,6 @@ Future<EntityDetail?> fetchEntityDetails(
 ) async {
   final entityDetailsRepo = ref.watch(entityDetailsServiceProvider);
   return entityDetailsRepo.fetchEntityDetails(categoryId, entityId);
-}
-
-@riverpod
-Stream<EntityDetail?> watchEntityDetails(
-  Ref ref,
-  CategoryId categoryId,
-  EntityId entityId,
-) {
-  final entityDetailsRepo = ref.watch(entityDetailsServiceProvider);
-  return entityDetailsRepo.watchEntityDetails(categoryId, entityId);
 }
 
 /// Combines entity detail and reviews into one fetch
@@ -85,32 +60,4 @@ Future<(EntityDetail?, List<Review>)> fetchEntityWithReviews(
   final results = await Future.wait([entityFuture, reviewsFuture]);
 
   return (results[0] as EntityDetail?, results[1] as List<Review>);
-}
-
-@riverpod
-Stream<(EntityDetail?, List<Review>)> watchEntityWithReviews(
-  Ref ref,
-  (CategoryId, EntityId) args,
-) {
-  final (categoryId, entityId) = args;
-
-  // Watch both providers – these return AsyncValue<EntityDetail?> and AsyncValue<List<Review>>
-  final entityAsyncValue = ref.watch(
-    watchEntityDetailsProvider(categoryId, entityId),
-  );
-  final reviewsAsyncValue = ref.watch(watchReviewsListProvider(entityId));
-
-  // Combine the latest AsyncValues using Rx
-  return Rx.combineLatest2(
-    Stream.value(entityAsyncValue),
-    Stream.value(reviewsAsyncValue),
-    (AsyncValue<EntityDetail?> entity, AsyncValue<List<Review>> reviews) {
-      if (entity.isLoading || reviews.isLoading) {
-        return (null, <Review>[]);
-      }
-      if (entity.hasError) throw entity.error!;
-      if (reviews.hasError) throw reviews.error!;
-      return (entity.value, reviews.value ?? []);
-    },
-  );
 }

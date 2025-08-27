@@ -23,14 +23,5 @@ void main() {
       final result = await repository.fetchFoodDetails('invalid-id');
       expect(result, isNull);
     });
-
-    test('watchFoodDetails emits correct food by id and categoryId', () {
-      final food = testFoodDetails.first;
-      expect(repository.watchFoodDetails(food.id), emits(food));
-    });
-
-    test('watchFoodDetails emits null if food not found', () {
-      expect(repository.watchFoodDetails('invalid-id'), emits(null));
-    });
   });
 }

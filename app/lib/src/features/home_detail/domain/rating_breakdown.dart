@@ -1,24 +1,20 @@
-class RatingBreakdown {
-  final int stars;
-  final int count;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  RatingBreakdown({required this.stars, required this.count});
+part 'rating_breakdown.freezed.dart';
+part 'rating_breakdown.g.dart';
+
+@freezed
+abstract class RatingBreakdown with _$RatingBreakdown {
+  const factory RatingBreakdown({required int stars, required int count}) =
+      _RatingBreakdown;
+
+  const RatingBreakdown._();
 
   double percentageOf(int totalRatings) {
     if (totalRatings == 0) return 0.0;
     return (count / totalRatings) * 100;
   }
 
-  Map<String, dynamic> toJson() => {'stars': stars, 'count': count};
-
-  factory RatingBreakdown.fromJson(Map<String, dynamic> json) =>
-      RatingBreakdown(stars: json['stars'] as int, count: json['count'] as int);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RatingBreakdown && stars == other.stars && count == other.count;
-
-  @override
-  int get hashCode => stars.hashCode ^ count.hashCode;
+  factory RatingBreakdown.fromJson(Map<String, Object?> json) =>
+      _$RatingBreakdownFromJson(json);
 }

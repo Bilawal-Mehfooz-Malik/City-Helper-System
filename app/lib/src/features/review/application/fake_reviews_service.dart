@@ -1,7 +1,5 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/home/data/fake/fake_food_repository.dart';
-import 'package:app/src/features/home/data/fake/fake_residence_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/fake/fake_residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
@@ -12,8 +10,6 @@ import 'package:app/src/localization/string_hardcoded.dart';
 
 class FakeReviewsService implements ReviewsService {
   const FakeReviewsService({
-    required this.fakeResidenceRepository,
-    required this.fakeFoodRepository,
     required this.authRepository,
     required this.reviewsRepository,
     required this.fakeFoodDetailsRepository,
@@ -22,8 +18,6 @@ class FakeReviewsService implements ReviewsService {
 
   final FakeResidenceDetailsRepository fakeResidenceDetailsRepository;
   final FakeFoodDetailsRepository fakeFoodDetailsRepository;
-  final FakeResidenceRepository fakeResidenceRepository;
-  final FakeFoodRepository fakeFoodRepository;
   final AuthRepository authRepository;
   final ReviewsRepository reviewsRepository;
 
@@ -55,7 +49,9 @@ class FakeReviewsService implements ReviewsService {
     final ratingBreakdown = _calculateBreakdown(reviews);
 
     if (categoryId == 1) {
-      final entity = await fakeResidenceRepository.fetchResidence(entityId);
+      final entity = await fakeResidenceDetailsRepository.fetchResidenceDetails(
+        entityId,
+      );
       final entityDetail = await fakeResidenceDetailsRepository
           .fetchResidenceDetails(entityId);
       if (entity == null) throw StateError('Residence not found.'.hardcoded);
@@ -72,10 +68,10 @@ class FakeReviewsService implements ReviewsService {
         ratingBreakdown: ratingBreakdown,
       );
 
-      await fakeResidenceRepository.setResidence(updatedEntity);
+      await fakeResidenceDetailsRepository.setResidenceDetail(updatedEntity);
       await fakeResidenceDetailsRepository.setResidenceDetail(updatedDetail);
     } else if (categoryId == 2) {
-      final entity = await fakeFoodRepository.fetchFood(entityId);
+      final entity = await fakeFoodDetailsRepository.fetchFoodDetails(entityId);
       final detail = await fakeFoodDetailsRepository.fetchFoodDetails(entityId);
       if (entity == null) throw StateError('Food not found.');
       if (detail == null) throw StateError('Food Details not found.');
@@ -88,7 +84,7 @@ class FakeReviewsService implements ReviewsService {
         totalReviews: reviews.length,
         ratingBreakdown: ratingBreakdown,
       );
-      await fakeFoodRepository.setFood(updatedEntity);
+      await fakeFoodDetailsRepository.setFoodDetail(updatedEntity);
       await fakeFoodDetailsRepository.setFoodDetail(updatedDetail);
     } else {
       throw UnsupportedError('Unknown category: $categoryId');

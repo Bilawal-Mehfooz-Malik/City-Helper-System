@@ -120,28 +120,6 @@ class FakeFoodRepository implements FoodRepository {
     return filteredFoods.skip(startIndex).take(limit).toList();
   }
 
-  @override
-  Stream<Food?> watchFood(EntityId id) async* {
-    await delay(addDelay);
-    yield* _foods.stream.map((foods) {
-      try {
-        return foods.firstWhere((f) => f.id == id);
-      } catch (_) {
-        return null;
-      }
-    });
-  }
-
-  @override
-  Future<Food?> fetchFood(EntityId id) async {
-    await delay(addDelay);
-    try {
-      return _foods.value.firstWhere((f) => f.id == id);
-    } catch (_) {
-      return null;
-    }
-  }
-
   List<Food> _applyFoodFilter(List<Food> foods, FoodFilter filter) {
     List<Food> result = List.from(foods);
 

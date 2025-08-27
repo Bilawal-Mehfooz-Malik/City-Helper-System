@@ -33,7 +33,7 @@ class HomeDetailScreen extends ConsumerWidget {
     }
 
     final combinedValue = ref.watch(
-      watchEntityWithReviewsProvider((categoryId, entityId!)),
+      fetchEntityWithReviewsProvider((categoryId, entityId!)),
     );
 
     final isSmall = isSmallScreen(context);

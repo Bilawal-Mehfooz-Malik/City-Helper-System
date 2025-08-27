@@ -109,19 +109,6 @@ class FoodRepository {
     return snap.docs.map((d) => d.data()).toList();
   }
 
-  /// Fetches a single food document by its ID
-  Future<Food?> fetchFood(EntityId id) async {
-    final doc = await _foodsRef.doc(id).get();
-    return doc.exists ? doc.data() : null;
-  }
-
-  /// Watches a single food document by its ID
-  Stream<Food?> watchFood(EntityId id) {
-    return _foodsRef.doc(id).snapshots().map((doc) {
-      return doc.exists ? doc.data() : null;
-    });
-  }
-
   // --------------------Helpers--------------------------------
 
   Query<Food> _buildFilteredQuery(Query<Food> query, FoodFilter filter) {

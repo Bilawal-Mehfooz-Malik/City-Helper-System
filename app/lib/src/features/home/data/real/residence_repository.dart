@@ -107,21 +107,6 @@ class ResidenceRepository {
     final snapshot = await query.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
-
-  /// Watches a single residence by its ID
-  Stream<Residence?> watchResidence(EntityId id) {
-    return _residencesRef
-        .doc(id)
-        .snapshots()
-        .map((snapshot) => snapshot.exists ? snapshot.data() : null);
-  }
-
-  /// Fetches a single residence by its ID
-  Future<Residence?> fetchResidence(EntityId id) async {
-    final snapshot = await _residencesRef.doc(id).get();
-    return snapshot.exists ? snapshot.data() : null;
-  }
-
   // --------------------Helpers--------------------------
 
   Query<Residence> _buildFilteredQuery(

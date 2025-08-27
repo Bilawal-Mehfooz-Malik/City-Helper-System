@@ -49,16 +49,6 @@ class ResidenceDetailsRepository {
     return null;
   }
 
-  /// ✅ Real-time updates
-  Stream<ResidenceDetail?> watchResidenceDetails(EntityId id) {
-    return _docRef(id).snapshots().map((snapshot) {
-      if (snapshot.exists && snapshot.data() != null) {
-        return ResidenceDetail.fromJson(snapshot.data()!);
-      }
-      return null;
-    });
-  }
-
   /// ✅ One-time fetch
   Future<ResidenceDetail?> fetchResidenceDetails(EntityId id) async {
     final doc = await _docRef(id).get();

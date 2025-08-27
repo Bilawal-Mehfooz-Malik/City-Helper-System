@@ -95,19 +95,6 @@ void main() {
     );
   });
 
-  group('Single Residence', () {
-    test('fetchResidence returns residence by id and categoryId', () async {
-      final residence = testResidences.first;
-      final result = await repository.fetchResidence(residence.id);
-      expect(result, residence);
-    });
-
-    test('watchResidence emits residence by id and categoryId', () {
-      final residence = testResidences.first;
-      expect(repository.watchResidence(residence.id), emits(residence));
-    });
-  });
-
   group('Sorting', () {
     test(
       'fetchResidencesList sorts by updatedAt descending by default',
@@ -143,24 +130,5 @@ void main() {
         expect(result[2].id, residence1.id);
       },
     );
-  });
-
-  group('setResidence', () {
-    test('adds new residence if id does not exist', () async {
-      final newResidence = testResidences.first.copyWith(
-        id: 'new-residence-id',
-      );
-      await repository.setResidence(newResidence);
-      final result = await repository.fetchResidence(newResidence.id);
-      expect(result, newResidence);
-    });
-
-    test('updates existing residence if id exists', () async {
-      final existingResidence = testResidences.first;
-      final updatedResidence = existingResidence.copyWith(name: 'Updated Name');
-      await repository.setResidence(updatedResidence);
-      final result = await repository.fetchResidence(existingResidence.id);
-      expect(result, updatedResidence);
-    });
   });
 }

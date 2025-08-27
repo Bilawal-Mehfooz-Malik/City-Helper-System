@@ -51,8 +51,6 @@ extension AppBootstrapFakes on AppBootStrap {
     final reviewsRepository = FakeReviewsRepository(addDelay: false);
     final authRepository = FakeAuthRepository(addDelay: false);
     final reviewsService = FakeReviewsService(
-      fakeResidenceRepository: residenceRepository,
-      fakeFoodRepository: foodRepository,
       authRepository: authRepository,
       reviewsRepository: reviewsRepository,
       fakeFoodDetailsRepository: foodDetailsRepository,
@@ -66,7 +64,9 @@ extension AppBootstrapFakes on AppBootStrap {
     return ProviderContainer(
       overrides: [
         // * [StartupFeatureRepository] is overridden with [FakeStartupFeatureRepository]
-        userLocationRepositoryProvider.overrideWith((ref) => userLocationRepository),
+        userLocationRepositoryProvider.overrideWith(
+          (ref) => userLocationRepository,
+        ),
         geoLocatorRepositoryProvider.overrideWithValue(geoLocatorRepository),
         googleMapBuilderProvider.overrideWithValue(
           (latLng) => FakeMapWidget(latLng: latLng),

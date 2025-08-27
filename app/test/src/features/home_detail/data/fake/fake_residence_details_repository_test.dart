@@ -23,20 +23,5 @@ void main() {
       final result = await repository.fetchResidenceDetails('invalid-id');
       expect(result, isNull);
     });
-
-    test(
-      'watchResidenceDetails emits correct residence by id and categoryId',
-      () {
-        final residence = testResidenceDetails.first;
-        expect(
-          repository.watchResidenceDetails(residence.id),
-          emits(residence),
-        );
-      },
-    );
-
-    test('watchResidenceDetails emits null if residence not found', () {
-      expect(repository.watchResidenceDetails('invalid-id'), emits(null));
-    });
   });
 }

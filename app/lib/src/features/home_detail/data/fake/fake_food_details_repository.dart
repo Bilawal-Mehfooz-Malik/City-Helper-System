@@ -34,14 +34,6 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   }
 
   @override
-  Stream<FoodDetail?> watchFoodDetails(EntityId id) async* {
-    await delay(addDelay);
-    yield* _foods.stream.map(
-      (foods) => foods.firstWhereOrNull((food) => food.id == id),
-    );
-  }
-
-  @override
   Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) {
     // TODO: implement fetchFoodDetailsByOwnerId
     throw UnimplementedError();

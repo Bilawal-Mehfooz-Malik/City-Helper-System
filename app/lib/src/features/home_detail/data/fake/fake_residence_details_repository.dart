@@ -36,15 +36,6 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   }
 
   @override
-  Stream<ResidenceDetail?> watchResidenceDetails(EntityId id) async* {
-    await delay(addDelay);
-    yield* _residences.stream.map(
-      (residences) =>
-          residences.firstWhereOrNull((residence) => residence.id == id),
-    );
-  }
-
-  @override
   Future<ResidenceDetail?> fetchResidenceDetailsByOwnerId(UserId id) {
     // TODO: implement fetchResidenceDetailsByOwnerId
     throw UnimplementedError();

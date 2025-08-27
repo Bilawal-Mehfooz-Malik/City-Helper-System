@@ -45,8 +45,6 @@ extension AppBootstrapFakes on AppBootStrap {
     final reviewsRepository = FakeReviewsRepository();
     final authRepository = FakeAuthRepository();
     final reviewsService = FakeReviewsService(
-      fakeResidenceRepository: residenceRepository,
-      fakeFoodRepository: foodRepository,
       authRepository: authRepository,
       reviewsRepository: reviewsRepository,
       fakeFoodDetailsRepository: foodDetailsRepository,

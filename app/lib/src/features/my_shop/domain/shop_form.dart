@@ -54,7 +54,7 @@ abstract class ShopForm with _$ShopForm {
     double? price;
     bool isFurnished = false;
     if (shop is ResidenceDetail) {
-      price = shop.pricing;
+      price = shop.pricing.cost;
       isFurnished = shop.isFurnished;
     }
 

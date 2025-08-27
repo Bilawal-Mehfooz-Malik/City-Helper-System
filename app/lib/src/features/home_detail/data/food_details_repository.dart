@@ -43,15 +43,6 @@ class FoodDetailsRepository {
     return null;
   }
 
-  Stream<FoodDetail?> watchFoodDetails(EntityId id) {
-    return _docRef(id).snapshots().map((snapshot) {
-      if (snapshot.exists && snapshot.data() != null) {
-        return FoodDetail.fromJson(snapshot.data()!);
-      }
-      return null;
-    });
-  }
-
   Future<FoodDetail?> fetchFoodDetails(EntityId id) async {
     final doc = await _docRef(id).get();
     if (doc.exists && doc.data() != null) {

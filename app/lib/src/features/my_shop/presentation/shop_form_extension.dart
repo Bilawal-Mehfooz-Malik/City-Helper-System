@@ -1,5 +1,6 @@
 import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home/domain/pricing.dart'; // Added this line
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 
@@ -25,7 +26,7 @@ extension ShopFormX on ShopForm {
           latLng: latLng!,
           openingHours: openingHours,
           genderPref: genderPref,
-          pricing: pricing ?? existingShop.pricing,
+          pricing: pricing != null ? Pricing(cost: pricing!) : existingShop.pricing,
           isFurnished: isFurnished,
         );
       } else if (existingShop is FoodDetail) {
@@ -79,7 +80,7 @@ extension ShopFormX on ShopForm {
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
           genderPref: genderPref,
-          pricing: pricing ?? 0,
+          pricing: pricing != null ? Pricing(cost: pricing!) : Pricing(cost: 0),
           isFurnished: isFurnished,
         );
       } else {

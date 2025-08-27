@@ -84,28 +84,6 @@ class FakeResidenceRepository implements ResidenceRepository {
   }
 
   @override
-  Future<Residence?> fetchResidence(EntityId id) async {
-    await delay(addDelay);
-    try {
-      return _residences.value.firstWhere((r) => r.id == id);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  @override
-  Stream<Residence?> watchResidence(EntityId id) async* {
-    await delay(addDelay);
-    yield* _residences.stream.map((residences) {
-      try {
-        return residences.firstWhere((r) => r.id == id);
-      } catch (_) {
-        return null;
-      }
-    });
-  }
-
-  @override
   Future<List<Residence>> fetchPopularResidencesList({
     required int limit,
     required ResidenceFilter filter,

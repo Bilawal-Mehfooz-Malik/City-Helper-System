@@ -94,19 +94,6 @@ void main() {
     );
   });
 
-  group('Single Food', () {
-    test('fetchFood returns food by id and categoryId', () async {
-      final food = testFoods.first;
-      final result = await repository.fetchFood(food.id);
-      expect(result, food);
-    });
-
-    test('watchFood emits food by id and categoryId', () {
-      final food = testFoods.first;
-      expect(repository.watchFood(food.id), emits(food));
-    });
-  });
-
   group('Sorting', () {
     test('fetchFoodsList sorts by updatedAt descending by default', () async {
       final foodA = testFoods[0].copyWith(
@@ -138,23 +125,6 @@ void main() {
       expect(result[0].id, foodC.id);
       expect(result[1].id, foodB.id);
       expect(result[2].id, foodA.id);
-    });
-  });
-
-  group('setFood', () {
-    test('adds new food if id does not exist', () async {
-      final newFood = testFoods.first.copyWith(id: 'new-food-id');
-      await repository.setFood(newFood);
-      final result = await repository.fetchFood(newFood.id);
-      expect(result, newFood);
-    });
-
-    test('updates existing food if id exists', () async {
-      final existingFood = testFoods.first;
-      final updatedFood = existingFood.copyWith(name: 'Updated Name');
-      await repository.setFood(updatedFood);
-      final result = await repository.fetchFood(existingFood.id);
-      expect(result, updatedFood);
     });
   });
 }

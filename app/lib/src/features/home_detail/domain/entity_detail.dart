@@ -3,6 +3,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/json_converters.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,76 +23,99 @@ sealed class EntityDetail with _$EntityDetail {
 
   @JsonSerializable(explicitToJson: true)
   const factory EntityDetail.residence({
+    // Core Identifiers & Basic Info
     required EntityId id,
     required CategoryId categoryId,
     required SubCategoryId subCategoryId,
-    required String coverImageUrl,
     required String name,
+    required String coverImageUrl,
+
+    // Location
     required String cityName,
     required String sectorName,
     @_latLngJsonConverter required LatLng latLng,
+    required String streetAddress,
+
+    // Ratings & Popularity
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
+    @Default([]) List<RatingBreakdown> ratingBreakdown,
+
+    // Operational Status & Timestamps
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
+    @Default(false) bool isOpen,
     @_timestampJsonConverter required DateTime createdAt,
-    required double pricing,
+    @_timestampJsonConverter required DateTime updatedAt,
+    @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
+
+    // Contact Information
+    required UserId ownerId,
+    String? phoneNumber,
+    String? messagingNumber,
+    String? email,
+    String? websiteUrl,
+    String? instagramUrl,
+    String? facebookUrl,
+
+    // Descriptions & Media
+    required String description,
+    required List<String> galleryImageUrls,
+
+    // Specific Attributes
+    required Pricing pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
     @Default(true) bool isRoomAvailable,
-    @Default(false) bool isOpen,
-    // Detail fields
-    required UserId ownerId,
-    required String description,
-    required List<String> galleryImageUrls,
-    required String streetAddress,
-    @Default([]) List<RatingBreakdown> ratingBreakdown,
-    String? phoneNumber,
-    String? messagingNumber,
-    @_timestampJsonConverter required DateTime updatedAt,
-    String? websiteUrl,
-    String? instagramUrl,
-    String? facebookUrl,
-    String? email,
   }) = ResidenceDetail;
 
   @JsonSerializable(explicitToJson: true)
   const factory EntityDetail.food({
+    // Core Identifiers & Basic Info
     required EntityId id,
     required CategoryId categoryId,
     required SubCategoryId subCategoryId,
-    required String coverImageUrl,
     required String name,
+    required String coverImageUrl,
+
+    // Location
     required String cityName,
     required String sectorName,
     @_latLngJsonConverter required LatLng latLng,
+    required String streetAddress,
+
+    // Ratings & Popularity
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
+    @Default([]) List<RatingBreakdown> ratingBreakdown,
+
+    // Operational Status & Timestamps
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
-    @_timestampJsonConverter required DateTime createdAt,
-    @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(false) bool isOpen,
+    @_timestampJsonConverter required DateTime createdAt,
+    @_timestampJsonConverter required DateTime updatedAt,
+    @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
 
-    // Detail fields
+    // Contact Information
     required UserId ownerId,
-    required String description,
-    required List<String> galleryImageUrls,
-    required List<String> menuImageUrls,
-    required String streetAddress,
-    @Default([]) List<RatingBreakdown> ratingBreakdown,
     String? phoneNumber,
     String? messagingNumber,
-    @_timestampJsonConverter required DateTime updatedAt,
+    String? email,
     String? websiteUrl,
     String? instagramUrl,
     String? facebookUrl,
-    String? email,
+
+    // Descriptions & Media
+    required String description,
+    required List<String> galleryImageUrls,
+    required List<String> menuImageUrls,
+
+    // Specific Attributes
+    @Default(GenderPreference.any) GenderPreference genderPref,
   }) = FoodDetail;
 
   factory EntityDetail.fromJson(Map<String, Object?> json) =>
