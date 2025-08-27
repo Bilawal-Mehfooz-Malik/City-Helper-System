@@ -64,6 +64,9 @@ class ReviewSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (reviewsLoadFailed) {
+      return const SizedBox.shrink(); // Hide the entire section
+    }
     return ResponsiveCenter(
       showCard: isSmall ? false : true,
       paddingInsideCard: isSmall
@@ -80,19 +83,10 @@ class ReviewSection extends StatelessWidget {
             ),
           ),
           gapH16,
-          if (!reviewsLoadFailed) // Conditionally hide RatingGraph
-            InkWell(
-              onTap: () => _goToReviewList(context),
-              child: RatingGraph(entity: entity),
-            ),
-          if (reviewsLoadFailed && reviews.isEmpty) // Display message if reviews failed to load
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-              child: Text(
-                context.loc.reviewsLoadFailedMessage, // Use the same message as PersistentErrorBar
-                style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.error),
-              ),
-            ),
+          InkWell(
+            onTap: () => _goToReviewList(context),
+            child: RatingGraph(entity: entity),
+          ),
           gapH16,
           ReviewsListView(reviews: reviews),
           if (reviews.isNotEmpty)

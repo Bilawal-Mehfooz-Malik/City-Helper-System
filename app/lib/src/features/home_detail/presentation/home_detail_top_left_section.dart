@@ -74,6 +74,7 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
                     onTap: () => _openImageViewer(context, index),
                     child: CustomImageWrapper(
                       aspectRatio: 16 / 9,
+                      borderRadius: BorderRadius.circular(Sizes.p16),
                       imageUrl: widget.images[index],
                     ),
                   );

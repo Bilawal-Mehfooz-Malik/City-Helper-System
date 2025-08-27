@@ -70,6 +70,5 @@ fetchEntityWithReviews(Ref ref, (CategoryId, EntityId) args) async {
     reviews = []; // Ensure reviews is empty on failure
   }
 
-  print('Fetched entity and reviews: $entity, ${reviews.length} reviews');
   return (entity, reviews, reviewsLoadFailed);
 }

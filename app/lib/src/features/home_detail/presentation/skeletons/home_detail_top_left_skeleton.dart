@@ -25,7 +25,7 @@ class _CarouselSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: Bone.square(borderRadius: BorderRadius.circular(Sizes.p12)),
+      child: Bone.square(borderRadius: BorderRadius.circular(Sizes.p16)),
     );
   }
 }
