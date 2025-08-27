@@ -33,20 +33,16 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter
-    Map<DayOfWeek, OpeningHours>? openingHours,
+    @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
-    @Default(EntityType.residence) EntityType type,
-    @JsonKey(name: 'price') required double pricing,
+    required double pricing,
     @Default(false) bool isFurnished,
     @Default(GenderPreference.any) GenderPreference genderPref,
     @Default(ListingType.forRent) ListingType listingType,
-    @Default("Asia/Karachi") String timezone,
-    @Default(true) bool isRoomAvailable, // New field
-    @Default({}) Map<String, String> scheduledTaskNames,
-
+    @Default(true) bool isRoomAvailable,
+    @Default(false) bool isOpen,
     // Detail fields
     required UserId ownerId,
     required String description,
@@ -75,21 +71,18 @@ sealed class EntityDetail with _$EntityDetail {
     @Default(0.0) double avgRating,
     @Default(0) int totalReviews,
     @Default(false) bool isPopular,
-    @_openingHoursConverter
-    required Map<DayOfWeek, OpeningHours> openingHours,
+    @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
     @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus status,
     @_timestampJsonConverter required DateTime createdAt,
-    @Default(EntityType.food) EntityType type,
     @Default(GenderPreference.any) GenderPreference genderPref,
-    @Default("Asia/Karachi") String timezone,
     @Default(false) bool isOpen,
-    @Default({}) Map<String, String> scheduledTaskNames,
 
     // Detail fields
     required UserId ownerId,
     required String description,
     required List<String> galleryImageUrls,
+    required List<String> menuImageUrls,
     required String streetAddress,
     @Default([]) List<RatingBreakdown> ratingBreakdown,
     String? phoneNumber,

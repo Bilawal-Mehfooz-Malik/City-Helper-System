@@ -75,14 +75,16 @@ abstract class ShopForm with _$ShopForm {
       genderPref: shop is ResidenceDetail
           ? shop.genderPref
           : shop is FoodDetail
-              ? shop.genderPref
-              : GenderPreference.any,
+          ? shop.genderPref
+          : GenderPreference.any,
       pricing: price,
       isFurnished: isFurnished,
-      timezone: shop.timezone,
-      isRoomAvailable: (shop is ResidenceDetail) ? shop.isRoomAvailable : true, // Default to true if not residence
-      isOpen: (shop is FoodDetail) ? (shop as FoodDetail).isOpen : false, // Default to false if not FoodDetail
-      scheduledTaskNames: shop.scheduledTaskNames,
+      isRoomAvailable: (shop is ResidenceDetail)
+          ? shop.isRoomAvailable
+          : true, // Default to true if not residence
+      isOpen: (shop is FoodDetail)
+          ? (shop).isOpen
+          : false, // Default to false if not FoodDetail
     );
   }
 

@@ -51,7 +51,6 @@ extension ShopFormX on ShopForm {
     } else {
       if (category!.id == 1) {
         return ResidenceDetail(
-          type: EntityType.residence,
           id: '',
           ownerId: '',
           categoryId: category!.id,
@@ -85,13 +84,13 @@ extension ShopFormX on ShopForm {
         );
       } else {
         return FoodDetail(
-          type: EntityType.food,
           id: '',
           ownerId: '',
           categoryId: category!.id,
           subCategoryId: subCategory?.id ?? -1,
           coverImageUrl: '',
           galleryImageUrls: [],
+          menuImageUrls: [],
           latLng: latLng!,
           name: name,
           description: description,

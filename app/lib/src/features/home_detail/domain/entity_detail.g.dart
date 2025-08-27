@@ -31,10 +31,7 @@ ResidenceDetail _$ResidenceDetailFromJson(
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
-  type:
-      $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ??
-      EntityType.residence,
-  pricing: (json['price'] as num).toDouble(),
+  pricing: (json['pricing'] as num).toDouble(),
   isFurnished: json['isFurnished'] as bool? ?? false,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
@@ -42,13 +39,8 @@ ResidenceDetail _$ResidenceDetailFromJson(
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
-  timezone: json['timezone'] as String? ?? "Asia/Karachi",
   isRoomAvailable: json['isRoomAvailable'] as bool? ?? true,
-  scheduledTaskNames:
-      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
+  isOpen: json['isOpen'] as bool? ?? false,
   ownerId: json['ownerId'] as String,
   description: json['description'] as String,
   galleryImageUrls:
@@ -93,14 +85,12 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
-  'type': _$EntityTypeEnumMap[instance.type]!,
-  'price': instance.pricing,
+  'pricing': instance.pricing,
   'isFurnished': instance.isFurnished,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
-  'timezone': instance.timezone,
   'isRoomAvailable': instance.isRoomAvailable,
-  'scheduledTaskNames': instance.scheduledTaskNames,
+  'isOpen': instance.isOpen,
   'ownerId': instance.ownerId,
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,
@@ -131,11 +121,6 @@ const _$ApprovalStatusEnumMap = {
   ApprovalStatus.blocked: 'blocked',
   ApprovalStatus.pending: 'pending',
   ApprovalStatus.approved: 'approved',
-};
-
-const _$EntityTypeEnumMap = {
-  EntityType.residence: 'residence',
-  EntityType.food: 'food',
 };
 
 const _$GenderPreferenceEnumMap = {
@@ -177,24 +162,18 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
-  type:
-      $enumDecodeNullable(_$EntityTypeEnumMap, json['type']) ?? EntityType.food,
   genderPref:
       $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
       GenderPreference.any,
-  timezone: json['timezone'] as String? ?? "Asia/Karachi",
   isOpen: json['isOpen'] as bool? ?? false,
-  scheduledTaskNames:
-      (json['scheduledTaskNames'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
   ownerId: json['ownerId'] as String,
   description: json['description'] as String,
   galleryImageUrls:
       (json['galleryImageUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+  menuImageUrls:
+      (json['menuImageUrls'] as List<dynamic>).map((e) => e as String).toList(),
   streetAddress: json['streetAddress'] as String,
   ratingBreakdown:
       (json['ratingBreakdown'] as List<dynamic>?)
@@ -229,14 +208,12 @@ Map<String, dynamic> _$FoodDetailToJson(
   'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
   'status': _$ApprovalStatusEnumMap[instance.status]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
-  'type': _$EntityTypeEnumMap[instance.type]!,
   'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
-  'timezone': instance.timezone,
   'isOpen': instance.isOpen,
-  'scheduledTaskNames': instance.scheduledTaskNames,
   'ownerId': instance.ownerId,
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,
+  'menuImageUrls': instance.menuImageUrls,
   'streetAddress': instance.streetAddress,
   'ratingBreakdown': instance.ratingBreakdown.map((e) => e.toJson()).toList(),
   'phoneNumber': instance.phoneNumber,
