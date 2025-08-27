@@ -59,7 +59,7 @@ extension AppBootstrapFakes on AppBootStrap {
     final imageUploadRepository = FakeImageUploadRepository(
       InMemoryImageStorage(),
     );
-    final userRepository = FakeUserRepository();
+    final userRepository = FakeUserRepository(addDelay: false);
 
     return ProviderContainer(
       overrides: [

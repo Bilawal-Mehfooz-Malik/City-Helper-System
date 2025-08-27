@@ -8,18 +8,21 @@ import 'package:app/src/features/home_detail/presentation/widgets/description_wi
 import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeDetailBottomSection extends StatelessWidget {
+class HomeDetailBottomSection extends ConsumerWidget {
   final EntityDetail entity;
   final List<Review> reviews;
+  final bool reviewsLoadFailed;
   const HomeDetailBottomSection({
     super.key,
     required this.entity,
     required this.reviews,
+    required this.reviewsLoadFailed,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isSmall = isSmallScreen(context);
 
     return Column(
@@ -27,7 +30,13 @@ class HomeDetailBottomSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _DescriptionSection(entity: entity, isSmall: isSmall),
-        ReviewSection(entity: entity, isSmall: isSmall, reviews: reviews),
+
+        ReviewSection(
+          entity: entity,
+          isSmall: isSmall,
+          reviews: reviews,
+          reviewsLoadFailed: reviewsLoadFailed,
+        ),
       ],
     );
   }

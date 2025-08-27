@@ -19,11 +19,13 @@ import 'package:timeago/timeago.dart' as timeago;
 class ReviewSection extends StatelessWidget {
   final EntityDetail entity;
   final List<Review> reviews;
+  final bool reviewsLoadFailed; // New parameter
   const ReviewSection({
     super.key,
     required this.isSmall,
     required this.entity,
     required this.reviews,
+    required this.reviewsLoadFailed, // New parameter
   });
 
   final bool isSmall;
@@ -39,7 +41,7 @@ class ReviewSection extends StatelessWidget {
         context: context,
         barrierDismissible: true,
         barrierLabel: 'Reviews',
-        pageBuilder: (_, __, ___) {
+        pageBuilder: (_, _, _) {
           return Align(
             alignment: Alignment.centerRight,
             child: SizedBox(
@@ -78,10 +80,19 @@ class ReviewSection extends StatelessWidget {
             ),
           ),
           gapH16,
-          InkWell(
-            onTap: () => _goToReviewList(context),
-            child: RatingGraph(entity: entity),
-          ),
+          if (!reviewsLoadFailed) // Conditionally hide RatingGraph
+            InkWell(
+              onTap: () => _goToReviewList(context),
+              child: RatingGraph(entity: entity),
+            ),
+          if (reviewsLoadFailed && reviews.isEmpty) // Display message if reviews failed to load
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+              child: Text(
+                context.loc.reviewsLoadFailedMessage, // Use the same message as PersistentErrorBar
+                style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.error),
+              ),
+            ),
           gapH16,
           ReviewsListView(reviews: reviews),
           if (reviews.isNotEmpty)
@@ -124,7 +135,7 @@ class ReviewListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeAgo = timeago.format(review.updatedAt);
-    final userAsync = ref.watch(getUserByIdProvider(review.userId));
+    final userAsync = ref.watch(fetchUserByIdProvider(review.userId));
 
     return AsyncValueWidget(
       value: userAsync,

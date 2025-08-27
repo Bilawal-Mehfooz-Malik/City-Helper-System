@@ -187,7 +187,7 @@ class _FetchEntityDetailsProviderElement
 }
 
 String _$fetchEntityWithReviewsHash() =>
-    r'b2ff39beecccd6d843669fbfb9acb34934687352';
+    r'e54f35210c48a9695a2ddac7e9e7f3921ac366e3';
 
 /// Combines entity detail and reviews into one fetch
 ///
@@ -199,7 +199,10 @@ const fetchEntityWithReviewsProvider = FetchEntityWithReviewsFamily();
 ///
 /// Copied from [fetchEntityWithReviews].
 class FetchEntityWithReviewsFamily
-    extends Family<AsyncValue<(EntityDetail?, List<Review>)>> {
+    extends
+        Family<
+          AsyncValue<(EntityDetail?, List<Review>, bool reviewsLoadFailed)>
+        > {
   /// Combines entity detail and reviews into one fetch
   ///
   /// Copied from [fetchEntityWithReviews].
@@ -238,7 +241,10 @@ class FetchEntityWithReviewsFamily
 ///
 /// Copied from [fetchEntityWithReviews].
 class FetchEntityWithReviewsProvider
-    extends AutoDisposeFutureProvider<(EntityDetail?, List<Review>)> {
+    extends
+        AutoDisposeFutureProvider<
+          (EntityDetail?, List<Review>, bool reviewsLoadFailed)
+        > {
   /// Combines entity detail and reviews into one fetch
   ///
   /// Copied from [fetchEntityWithReviews].
@@ -271,7 +277,7 @@ class FetchEntityWithReviewsProvider
 
   @override
   Override overrideWith(
-    FutureOr<(EntityDetail?, List<Review>)> Function(
+    FutureOr<(EntityDetail?, List<Review>, bool reviewsLoadFailed)> Function(
       FetchEntityWithReviewsRef provider,
     )
     create,
@@ -291,7 +297,9 @@ class FetchEntityWithReviewsProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<(EntityDetail?, List<Review>)>
+  AutoDisposeFutureProviderElement<
+    (EntityDetail?, List<Review>, bool reviewsLoadFailed)
+  >
   createElement() {
     return _FetchEntityWithReviewsProviderElement(this);
   }
@@ -313,13 +321,19 @@ class FetchEntityWithReviewsProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin FetchEntityWithReviewsRef
-    on AutoDisposeFutureProviderRef<(EntityDetail?, List<Review>)> {
+    on
+        AutoDisposeFutureProviderRef<
+          (EntityDetail?, List<Review>, bool reviewsLoadFailed)
+        > {
   /// The parameter `args` of this provider.
   (int, String) get args;
 }
 
 class _FetchEntityWithReviewsProviderElement
-    extends AutoDisposeFutureProviderElement<(EntityDetail?, List<Review>)>
+    extends
+        AutoDisposeFutureProviderElement<
+          (EntityDetail?, List<Review>, bool reviewsLoadFailed)
+        >
     with FetchEntityWithReviewsRef {
   _FetchEntityWithReviewsProviderElement(super.provider);
 

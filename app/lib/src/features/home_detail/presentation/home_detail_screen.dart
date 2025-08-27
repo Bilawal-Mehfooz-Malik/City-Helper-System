@@ -4,6 +4,7 @@ import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/features/home/presentation/widgets/persistent_error_bar.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_app_bar.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_bottom_section.dart';
@@ -45,42 +46,69 @@ class HomeDetailScreen extends ConsumerWidget {
         isPushed: isPushed,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-          child: AsyncValueWidget(
-            value: combinedValue,
-            loading: const HomeDetailSkeleton(),
-            error: (e, st) =>
-                EmptyPlaceholderWidget(message: context.loc.somethingWentWrong),
-            data: (tuple) {
-              final entity = tuple.$1;
-              final reviews = tuple.$2;
-
-              // Avoid showing empty state if entity is null (treat it like still loading)
-              if (entity == null) {
-                return const HomeDetailSkeleton();
-              }
-
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-                child: Column(
-                  spacing: Sizes.p8,
-                  children: [
-                    ResponsiveTwoColumnLayout(
-                      startContent: entity.galleryImageUrls.isEmpty
-                          ? const SizedBox.shrink()
-                          : HomeDetailTopLeftSection(
-                              images: entity.galleryImageUrls,
-                            ),
-                      endContent: HomeDetailTopRightSection(entity: entity),
-                      spacing: isSmall ? Sizes.p8 : Sizes.p16,
-                    ),
-                    HomeDetailBottomSection(entity: entity, reviews: reviews),
-                  ],
+        child: Stack(
+          // Wrap with Stack
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+              child: AsyncValueWidget(
+                value: combinedValue,
+                loading: const HomeDetailSkeleton(),
+                error: (e, st) => EmptyPlaceholderWidget(
+                  message: context.loc.somethingWentWrong,
                 ),
-              );
-            },
-          ),
+                data: (tuple) {
+                  final entity = tuple.$1;
+                  final reviews = tuple.$2;
+                  final reviewsLoadFailed = tuple.$3; // Extract the new flag
+
+                  // Avoid showing empty state if entity is null (treat it like still loading)
+                  if (entity == null) {
+                    return const HomeDetailSkeleton();
+                  }
+
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+                    child: Column(
+                      spacing: Sizes.p8,
+                      children: [
+                        ResponsiveTwoColumnLayout(
+                          startContent: entity.galleryImageUrls.isEmpty
+                              ? const SizedBox.shrink()
+                              : HomeDetailTopLeftSection(
+                                  images: entity.galleryImageUrls,
+                                ),
+                          endContent: HomeDetailTopRightSection(entity: entity),
+                          spacing: isSmall ? Sizes.p8 : Sizes.p16,
+                        ),
+                        HomeDetailBottomSection(
+                          entity: entity,
+                          reviews: reviews,
+                          reviewsLoadFailed: reviewsLoadFailed, // Pass the flag
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            // Sticky error bar at the bottom
+            if (combinedValue.hasValue &&
+                combinedValue.value!.$3) // Check if reviewsLoadFailed is true
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: PersistentErrorBar(
+                  message: context.loc.reviewsLoadFailedMessage,
+                  onRetry: () {
+                    ref.invalidate(
+                      fetchEntityWithReviewsProvider((categoryId, entityId!)),
+                    );
+                  },
+                ),
+              ),
+          ],
         ),
       ),
     );

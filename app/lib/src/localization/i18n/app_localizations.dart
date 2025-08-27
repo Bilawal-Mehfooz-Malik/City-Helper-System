@@ -610,6 +610,12 @@ abstract class AppLocalizations {
   /// **'Leave a Review'**
   String get leaveAREview;
 
+  /// No description provided for @reviewsLoadFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load reviews. Please try again.'**
+  String get reviewsLoadFailedMessage;
+
   /// No description provided for @editOpeningHours.
   ///
   /// In en, this message translates to:

@@ -1,3 +1,4 @@
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
@@ -46,18 +47,29 @@ Future<EntityDetail?> fetchEntityDetails(
 
 /// Combines entity detail and reviews into one fetch
 @riverpod
-Future<(EntityDetail?, List<Review>)> fetchEntityWithReviews(
-  Ref ref,
-  (CategoryId, EntityId) args,
-) async {
+Future<(EntityDetail?, List<Review>, bool reviewsLoadFailed)>
+fetchEntityWithReviews(Ref ref, (CategoryId, EntityId) args) async {
   final (categoryId, entityId) = args;
 
+  // Fetch entity details (critical)
   final entityFuture = ref.watch(
     fetchEntityDetailsProvider(categoryId, entityId).future,
   );
-  final reviewsFuture = ref.watch(fetchReviewsListProvider(entityId).future);
+  final entity =
+      await entityFuture; // If this fails, it will throw and propagate
 
-  final results = await Future.wait([entityFuture, reviewsFuture]);
+  // Fetch reviews (non-critical)
+  List<Review> reviews = [];
+  bool reviewsLoadFailed = false;
+  try {
+    final reviewsFuture = ref.watch(fetchReviewsListProvider(entityId).future);
+    reviews = await reviewsFuture;
+  } catch (e, s) {
+    AppLogger.logError('Failed to fetch reviews', error: e, stackTrace: s);
+    reviewsLoadFailed = true;
+    reviews = []; // Ensure reviews is empty on failure
+  }
 
-  return (results[0] as EntityDetail?, results[1] as List<Review>);
+  print('Fetched entity and reviews: $entity, ${reviews.length} reviews');
+  return (entity, reviews, reviewsLoadFailed);
 }

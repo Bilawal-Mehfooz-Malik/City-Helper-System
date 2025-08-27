@@ -1,39 +1,40 @@
 import 'dart:async';
 
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
+import 'package:app/src/core/utils/in_memory_store.dart';
+import 'package:app/src/features/auth/data/fake/test_users.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FakeUserRepository implements UserRepository {
   FakeUserRepository({this.addDelay = true});
-
-  final Map<String, AppUser> _userStore = {};
-  final Map<String, Stream<AppUser?>> _userStreams = {};
-  final Map<String, StreamController<AppUser?>> _controllers = {};
   final bool addDelay;
 
-  /// Simulate creating a user document
+  final _users = InMemoryStore<List<AppUser>>(List.from(testUsers));
+
   @override
   Future<void> createUserProfile({required AppUser user}) async {
     await delay(addDelay);
-    _userStore[user.uid] = user;
-    _controllers[user.uid]?.add(user);
+    final current = _users.value;
+    final index = current.indexWhere((u) => u.uid == user.uid);
+    if (index != -1) {
+      current[index] = user;
+    } else {
+      current.add(user);
+    }
+    _users.value = [...current];
   }
 
-  /// Simulate reading user document as stream
   @override
   Stream<AppUser?> getUserById(String uid) {
-    if (!_controllers.containsKey(uid)) {
-      final controller = StreamController<AppUser?>.broadcast();
-      controller.add(_userStore[uid]);
-      _controllers[uid] = controller;
-      _userStreams[uid] = controller.stream;
-    }
-    return _userStreams[uid]!;
+    // This is a Stream method, but for fake, we can just return a single value stream
+    return _users.stream.map(
+      (users) => users.firstWhereOrNull((user) => user.uid == uid),
+    );
   }
 
-  /// Simulate updating a user document
   @override
   Future<void> updateUserProfile({
     required String uid,
@@ -43,37 +44,40 @@ class FakeUserRepository implements UserRepository {
     bool removeProfileImage = false,
   }) async {
     await delay(addDelay);
-    final existing = _userStore[uid];
-    if (existing == null) return;
-
-    final updated = existing.copyWith(
-      name: name ?? existing.name,
-      profileImageUrl: removeProfileImage
-          ? null
-          : (profilePicUrl ?? existing.profileImageUrl),
-      lastLocation: location ?? existing.lastLocation,
-    );
-
-    _userStore[uid] = updated;
-    _controllers[uid]?.add(updated);
-  }
-
-  /// Dispose all streams (optional for tests)
-  void dispose() {
-    for (final controller in _controllers.values) {
-      controller.close();
+    final current = _users.value;
+    final index = current.indexWhere((u) => u.uid == uid);
+    if (index != -1) {
+      final user = current[index];
+      final updatedUser = user.copyWith(
+        name: name ?? user.name,
+        profileImageUrl: removeProfileImage
+            ? null
+            : profilePicUrl ?? user.profileImageUrl,
+        lastLocation: location ?? user.lastLocation,
+      );
+      current[index] = updatedUser;
+      _users.value = [...current];
     }
   }
 
   @override
-  Future<AppUser?> fetchUserById(String uid) {
-    // TODO: implement fetchUserById
-    throw UnimplementedError();
+  Future<AppUser?> fetchUserById(String uid) async {
+    await delay(addDelay);
+    final users = _users.value;
+    return users.firstWhereOrNull((user) => user.uid == uid);
   }
 
   @override
-  Future<void> updateUser(AppUser user) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future<void> updateUser(AppUser user) async {
+    await delay(addDelay);
+    final current = _users.value;
+    final index = current.indexWhere((u) => u.uid == user.uid);
+    if (index != -1) {
+      current[index] = user;
+      _users.value = [...current];
+    } else {
+      current.add(user);
+      _users.value = [...current];
+    }
   }
 }

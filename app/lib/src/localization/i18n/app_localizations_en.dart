@@ -272,6 +272,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaveAREview => 'Leave a Review';
 
   @override
+  String get reviewsLoadFailedMessage =>
+      'Failed to load reviews. Please try again.';
+
+  @override
   String get editOpeningHours => 'Edit Opening Hours';
 
   @override

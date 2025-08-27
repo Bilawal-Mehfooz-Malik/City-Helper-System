@@ -59,7 +59,7 @@ class HomeDetailTopRightContent extends ConsumerWidget {
     final isResidence = entity is ResidenceDetail;
     final residence = isResidence ? entity as ResidenceDetail : null;
     final formattedPrice = residence != null
-        ? ref.watch(currencyFormatterProvider).format(residence.pricing)
+        ? ref.watch(currencyFormatterProvider).format(residence.pricing.cost)
         : null;
 
     return Stack(

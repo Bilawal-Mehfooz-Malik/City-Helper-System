@@ -178,6 +178,8 @@
   "@submit": {},
   "leaveAREview":"Leave a Review",
   "@leaveAREview": {},
+  "reviewsLoadFailedMessage":"Failed to load reviews. Please try again.",
+  "@reviewsLoadFailedMessage": {},
 
   "editOpeningHours":"Edit Opening Hours",
   "@editOpeningHours": {},

@@ -81,3 +81,8 @@ UserRepository userRepository(Ref ref) {
 Stream<AppUser?> getUserById(Ref ref, String uid) {
   return ref.read(userRepositoryProvider).getUserById(uid);
 }
+
+@riverpod
+Future<AppUser?> fetchUserById(Ref ref, String uid) {
+  return ref.read(userRepositoryProvider).fetchUserById(uid);
+}

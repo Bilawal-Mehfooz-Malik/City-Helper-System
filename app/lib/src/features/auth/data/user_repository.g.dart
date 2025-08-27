@@ -165,5 +165,126 @@ class _GetUserByIdProviderElement
   String get uid => (origin as GetUserByIdProvider).uid;
 }
 
+String _$fetchUserByIdHash() => r'd19551808e0ecad2521885b9abb875d8d8c5988a';
+
+/// See also [fetchUserById].
+@ProviderFor(fetchUserById)
+const fetchUserByIdProvider = FetchUserByIdFamily();
+
+/// See also [fetchUserById].
+class FetchUserByIdFamily extends Family<AsyncValue<AppUser?>> {
+  /// See also [fetchUserById].
+  const FetchUserByIdFamily();
+
+  /// See also [fetchUserById].
+  FetchUserByIdProvider call(String uid) {
+    return FetchUserByIdProvider(uid);
+  }
+
+  @override
+  FetchUserByIdProvider getProviderOverride(
+    covariant FetchUserByIdProvider provider,
+  ) {
+    return call(provider.uid);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchUserByIdProvider';
+}
+
+/// See also [fetchUserById].
+class FetchUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
+  /// See also [fetchUserById].
+  FetchUserByIdProvider(String uid)
+    : this._internal(
+        (ref) => fetchUserById(ref as FetchUserByIdRef, uid),
+        from: fetchUserByIdProvider,
+        name: r'fetchUserByIdProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$fetchUserByIdHash,
+        dependencies: FetchUserByIdFamily._dependencies,
+        allTransitiveDependencies:
+            FetchUserByIdFamily._allTransitiveDependencies,
+        uid: uid,
+      );
+
+  FetchUserByIdProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.uid,
+  }) : super.internal();
+
+  final String uid;
+
+  @override
+  Override overrideWith(
+    FutureOr<AppUser?> Function(FetchUserByIdRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchUserByIdProvider._internal(
+        (ref) => create(ref as FetchUserByIdRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        uid: uid,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<AppUser?> createElement() {
+    return _FetchUserByIdProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchUserByIdProvider && other.uid == uid;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, uid.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchUserByIdRef on AutoDisposeFutureProviderRef<AppUser?> {
+  /// The parameter `uid` of this provider.
+  String get uid;
+}
+
+class _FetchUserByIdProviderElement
+    extends AutoDisposeFutureProviderElement<AppUser?>
+    with FetchUserByIdRef {
+  _FetchUserByIdProviderElement(super.provider);
+
+  @override
+  String get uid => (origin as FetchUserByIdProvider).uid;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
