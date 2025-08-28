@@ -148,7 +148,7 @@ class _RatingRow extends ConsumerWidget {
 
   void _goToWriteReviewScreen(BuildContext context) {
     if (isSmall) {
-      context.goNamed(
+      context.pushNamed(
         AppRoute.leaveReview.name,
         pathParameters: {
           'categoryId': entity.categoryId.toString(),

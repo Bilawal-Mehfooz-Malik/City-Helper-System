@@ -12,6 +12,7 @@ import 'package:app/src/features/home_detail/presentation/widgets/full_screen_ph
 import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.dart';
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
+import 'package:app/src/features/review/presentation/review_list_screen.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,6 +34,7 @@ enum AppRoute {
   popularDetail,
   photoViewer,
   leaveReview,
+  reviewList,
   auth,
   profile,
   account,
@@ -103,7 +105,6 @@ GoRouter appRouter(Ref ref) {
                       );
                     },
                   ),
-                  
                 ],
               ),
               GoRoute(
@@ -134,6 +135,23 @@ GoRouter appRouter(Ref ref) {
                       return MaterialPage(
                         fullscreenDialog: true,
                         child: LeaveReviewScreen(
+                          entityId: entityId,
+                          categoryId: categoryId,
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'reviews', // Path for ReviewListScreen
+                    name: AppRoute.reviewList.name,
+                    pageBuilder: (context, state) {
+                      final entityId = state.pathParameters['entityId']!;
+                      final categoryId = int.parse(
+                        state.pathParameters['categoryId']!,
+                      );
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: ReviewListScreen(
                           entityId: entityId,
                           categoryId: categoryId,
                         ),

@@ -1,7 +1,7 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/rating_filter_controller.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/review_sort_controller.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
@@ -13,9 +13,18 @@ import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:app/src/core/models/my_data_types.dart'; // for EntityId, CategoryId
+import 'package:app/src/features/home_detail/application/entity_detail_service.dart'; // fetchEntityDetailsProvider
+
 class ReviewListScreen extends ConsumerStatefulWidget {
-  final EntityDetail entity;
-  const ReviewListScreen({super.key, required this.entity});
+  final EntityId entityId;
+  final CategoryId categoryId;
+
+  const ReviewListScreen({
+    super.key,
+    required this.entityId,
+    required this.categoryId,
+  });
 
   @override
   ConsumerState<ReviewListScreen> createState() => _ReviewListScreenState();
@@ -45,7 +54,7 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
       ref
           .read(
             paginatedReviewsNotifierProvider(
-              entityId: widget.entity.id,
+              entityId: widget.entityId,
               sortOption: sortOption,
               ratingFilter: ratingFilter,
             ).notifier,
@@ -58,118 +67,147 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
   Widget build(BuildContext context) {
     final ratingFilter = ref.watch(ratingFilterControllerProvider);
     final sortOption = ref.watch(reviewSortControllerProvider);
-    final reviewsValue = ref.watch(
-      paginatedReviewsNotifierProvider(
-        entityId: widget.entity.id,
-        sortOption: sortOption,
-        ratingFilter: ratingFilter,
-      ),
+
+    final entityDetailValue = ref.watch(
+      fetchEntityDetailsProvider(widget.categoryId, widget.entityId),
     );
 
     return Scaffold(
       appBar: AppBar(title: Text(context.loc.reviews)),
-      body: SafeArea(
-        child: AsyncValueWidget(
-          // Wrap the whole CustomScrollView in AsyncValueWidget
-          value: reviewsValue,
-          data: (paginationState) {
-            final reviews = paginationState.reviews;
-            return CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverPadding(
-                  // Apply padding to the whole scroll view
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.p16,
-                    vertical: Sizes.p4,
+      body: AsyncValueWidget(
+        value: entityDetailValue,
+        data: (entity) {
+          if (entity == null) {
+            return Center(child: Text('Entity not found'.hardcoded));
+          }
+
+          final reviewsValue = ref.watch(
+            paginatedReviewsNotifierProvider(
+              entityId: entity.id,
+              sortOption: sortOption,
+              ratingFilter: ratingFilter,
+            ),
+          );
+
+          return AsyncValueWidget(
+            value: reviewsValue,
+            data: (paginationState) {
+              final reviews = paginationState.reviews;
+
+              return CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.p16,
+                      vertical: Sizes.p4,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        RatingGraph(entity: entity),
+                        gapH8,
+                        _RatingFilterChips(),
+                        gapH8,
+                        _SortRow(),
+                        gapH16,
+                      ]),
+                    ),
                   ),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                      RatingGraph(entity: widget.entity),
-                      gapH8,
-                      _RatingFilterChips(),
-                      gapH8,
-                      _SortRow(),
-                      gapH16,
-                    ]),
-                  ),
-                ),
-                if (reviews.isEmpty) // Use SliverFillRemaining for empty state
-                  SliverFillRemaining(
-                    hasScrollBody: false, // Important for centering
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: Sizes.p24),
-                      child: Center(
-                        child: Text(
-                          context.loc.no_reviews_found,
-                          style: context.textTheme.bodyLarge,
+                  if (reviews.isEmpty)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: Sizes.p24,
+                        ),
+                        child: Center(
+                          child: Text(
+                            context.loc.no_reviews_found,
+                            style: context.textTheme.bodyLarge,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                else
-                  SliverPadding(
-                    // New SliverPadding for reviews list
-                    padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          if (index == reviews.length) {
-                            // Loading indicator or error message for next page
-                            if (paginationState.isLoadingNextPage) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (paginationState.paginationError !=
-                                null) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: Sizes.p16,
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        context.loc.error_loading_more_reviews,
-                                      ),
-                                      gapH8,
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          ref
+                    )
+                  else
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Sizes.p16,
+                      ),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            if (index == reviews.length) {
+                              if (paginationState.isLoadingNextPage) {
+                                return const Padding(
+                                  padding: EdgeInsets.all(Sizes.p16),
+                                  child: CenteredProgressIndicator(),
+                                );
+                              } else if (paginationState.paginationError !=
+                                  null) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: Sizes.p16,
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          context
+                                              .loc
+                                              .error_loading_more_reviews,
+                                        ),
+                                        gapH8,
+                                        ElevatedButton(
+                                          onPressed: () => ref
                                               .read(
                                                 paginatedReviewsNotifierProvider(
-                                                  entityId: widget.entity.id,
+                                                  entityId: entity.id,
                                                   sortOption: sortOption,
                                                   ratingFilter: ratingFilter,
                                                 ).notifier,
                                               )
-                                              .fetchNextPage();
-                                        },
-                                        child: Text(context.loc.retry),
-                                      ),
-                                    ],
+                                              .fetchNextPage(),
+                                          child: Text(context.loc.retry),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else if (!paginationState.hasMore) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: Sizes.p16,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      context.loc.end_of_reviews_message,
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
                             }
-                            return const SizedBox.shrink(); // Should not happen if hasMore is false
-                          }
-                          final review = reviews[index];
-                          return ReviewListTile(review: review);
-                        },
-                        childCount:
-                            reviews.length +
-                            (paginationState.isLoadingNextPage ||
-                                    paginationState.paginationError != null
-                                ? 1
-                                : 0),
+
+                            final review = reviews[index];
+                            return ReviewListTile(review: review);
+                          },
+                          childCount:
+                              reviews.length +
+                              (paginationState.isLoadingNextPage ||
+                                      paginationState.paginationError != null ||
+                                      (!paginationState.hasMore &&
+                                          reviews.isNotEmpty)
+                                  ? 1
+                                  : 0),
+                        ),
                       ),
                     ),
-                  ),
-              ],
-            );
-          },
-        ),
+                ],
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -227,7 +265,6 @@ class _SortRow extends ConsumerWidget {
       children: [
         Text(getSortLabel(selectedSort), style: context.textTheme.titleMedium),
         PopupMenuButton<ReviewSortOption>(
-          // Removed nullable option
           icon: const Icon(Icons.filter_list),
           tooltip: context.loc.filtersTitle,
           onSelected: (value) {

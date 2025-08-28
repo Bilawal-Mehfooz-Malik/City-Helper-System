@@ -11,9 +11,11 @@ import 'package:app/src/features/review/presentation/review_list_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
 import 'package:app/src/features/review/presentation/review_skeleton.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ReviewSection extends StatelessWidget {
@@ -47,17 +49,21 @@ class ReviewSection extends StatelessWidget {
             child: SizedBox(
               width: screenSize.width * 0.45,
               height: double.infinity,
-              child: ReviewListScreen(entity: entity),
+              child: ReviewListScreen(
+                entityId: entity.id,
+                categoryId: entity.categoryId,
+              ), // Updated
             ),
           );
         },
       );
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          fullscreenDialog: true,
-          builder: (context) => ReviewListScreen(entity: entity),
-        ),
+      context.pushNamed(
+        AppRoute.reviewList.name,
+        pathParameters: {
+          'categoryId': entity.categoryId.toString(),
+          'entityId': entity.id,
+        },
       );
     }
   }
