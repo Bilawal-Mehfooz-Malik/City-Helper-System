@@ -222,6 +222,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get description => 'Description';
 
   @override
+  String get menu => 'Menu';
+
+  @override
   String get seeLess => 'See less';
 
   @override

@@ -1,3 +1,32 @@
-[GoRouter] getting location for name: "homeDetail", pathParameters: {categoryId: 1, entityId: res_001}
-[GoRouter] pushing /home/1/detail/res_001
-Fetched entity and reviews: EntityDetail.residence(id: res_001, categoryId: 1, subCategoryId: 1, name: Cozy Apartment in Mirpur, coverImageUrl: assets/images/residence/1.png, cityName: Mirpur, sectorName: F1, latLng: LatLng(33.184, 73.5186), streetAddress: Street 10, Sector F1, Mirpur, avgRating: 4.5, totalReviews: 120, isPopular: true, ratingBreakdown: [RatingBreakdown(stars: 5, count: 30), RatingBreakdown(stars: 4, count: 15), RatingBreakdown(stars: 3, count: 5), RatingBreakdown(stars: 2, count: 3), RatingBreakdown(stars: 1, count: 2)], entityStatus: OperationalStatus.defaultStatus, status: ApprovalStatus.approved, isOpen: false, createdAt: 2024-03-10 00:00:00.000, updatedAt: 2024-04-10 00:00:00.000, openingHours: {DayOfWeek.monday: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)]), DayOfWeek.tuesday: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)]), DayOfWeek.wednesday: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)]), DayOfWeek.thursday: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)]), DayOfWeek.friday: OpeningHours(isDayOff: false, is24Hours: false, slots: [TimeSlot(open: 09:00, close: 17:00)]), DayOfWeek.saturday: OpeningHours(isDayOff: false, is24Hours: true, slots: null), DayOfWeek.sunday: OpeningHours(isDayOff: false, is24Hours: true, slots: null)}, ownerId: owner_001, phoneNumber: 03451234567, messagingNumber: 03451234567, email: null, websiteUrl: null, instagramUrl: null, facebookUrl: null, description: A cozy, family-friendly apartment located in the heart of Sector F1., galleryImageUrls: [assets/images/residence/1.png, assets/images/residence/1.png, assets/images/residence/1.png, assets/images/residence/1.png, assets/images/residence/1.png], pricing: Pricing(cost: 25000, unit: PricingUnit.person, period: PricingPeriod.oneTime), isFurnished: true, genderPref: GenderPreference.familyFriendly, listingType: ListingType.forRent, isRoomAvailable: true), 5 reviews
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user2.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user4.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user5.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[GoRouter] getting location for name: "photoViewer"
+[GoRouter] pushing /photo-viewer
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user2.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user4.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.
+[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user5.jpg?retry=4
+          🔥 Exception: EncodingError: The source image cannot be decoded.
+[ERROR] EncodingError: The source image cannot be decoded.

@@ -1,46 +1,82 @@
+---
+
+## Chat History - Home Screen & Home Detail UI Refinements
+
+This session focused on addressing various UI and display issues on the home screen and home detail screen, including filtering, popular indicators, pricing, and dynamic open/closed status.
+
+### 1. Popular Entities Filtering Debugging
+
+-   **Goal**: Investigate why popular entities were appearing in normal entity lists.
+-   **Investigation**: Examined `EntitiesNotifier`, `PopularEntitiesNotifier`, `EntityService`, `FakeResidenceRepository`, `FakeFoodRepository`, `test_residences.dart`, and `test_food_list.dart`.
+-   **Conclusion**: Determined that the filtering logic and test data were correct, and the issue was a misunderstanding.
+
+### 2. Popular Indicator Refinement
+
+-   **Goal**: Improve the visual display of the "popular" status on the home detail screen.
+-   **Implementation**:
+    -   Changed the "popular" indicator from a star icon to a flame icon (`Icons.local_fire_department`).
+    -   Implemented the flame icon next to the entity's name in both the `AppBar` (`AppBarContent`) and the `HomeDetailTopRightSection` (`ItemTitleSection`).
+
+### 3. Pricing Display Confirmation
+
+-   **Goal**: Confirm the correct display of pricing information on the home detail screen.
+-   **Confirmation**: Verified that the `formattedPrice` and `displayLabel` were correctly combined and displayed, and confirmed with the user that the "Starts from" text was not desired.
+
+### 4. Dynamic Open/Closed Status Display
+
+-   **Goal**: Implement a more dynamic and context-aware display for entity open/closed status.
+-   **Implementation**:
+    -   Modified `OpeningHoursWidget` to dynamically calculate `isOpen` based on `entity.entityStatus` and `OpeningHoursChecker.isOpenNow`.
+    -   Refactored `OpeningHoursLabel` to receive the `EntityDetail` object.
+    -   Implemented dynamic text for open/closed status in `OpeningHoursLabel`:
+        -   For `Food`: "Open" / "Closed" (for both explicit and calculated status).
+        -   For `Residence`: "Office Open" / "Office Closed" (for both explicit and calculated status).
+    -   Added new localization keys (`officeOpen`, `officeClosed`) to `app/lib/src/localization/app_en.arb`.
+
+### 5. Home Detail Right Section Redesign Attempt
+
+-   **Goal**: Redesign the right section of the home detail screen for a more modern, professional, and user-friendly look.
+-   **Attempted Implementation**: Proposed and implemented a refactoring using `Card`s for grouping and new custom widgets (`_PriceAndLocationSection`, `_RatingAndReviewSection`, `_ResidenceSpecificsSection`, `_OpeningHoursSection`, `_ContactOptionsSection`).
+-   **Outcome**: The user was dissatisfied with the result and reverted the changes, preferring their own previous design.
 
 ---
 
-## Chat History - Home Detail Feature Enhancements & Error Handling
+## Chat History - Menu Images & Fullscreen Photo Viewer Enhancements
 
-This session focused on refining the `home_detail` feature, implementing robust error handling, and debugging various UI and data fetching issues.
+This session focused on enhancing the `HomeDetailScreen` with a new "Menu Images" section for food entities and refining the `FullscreenPhotoViewer`.
 
-### 1. `EntityDetail` Refactoring & `RatingBreakdown` Conversion
+### 1. Dynamic Open/Closed Status Display Refinement
 
--   **Goal**: Improve code organization and leverage Freezed for data models.
--   **Implementation**:
-    -   Reordered fields in `app/lib/src/features/home_detail/domain/entity_detail.dart` for better readability and logical grouping.
-    -   Converted `app/lib/src/features/home_detail/domain/rating_breakdown.dart` to a Freezed class, removing manual `toJson`, `fromJson`, `==`, and `hashCode` implementations.
+-   **Goal**: Hide the opening hours section and its divider if opening hours are null.
+-   **Implementation**: Modified `app/lib/src/features/home_detail/presentation/home_detail_top_right_section.dart` to conditionally render `OpeningHoursWidget` and its associated `Divider` based on `entity.openingHours` being null. This also fixed an inconsistency where non-residence entities lacked a divider.
 
-### 2. `Pricing` Integration & `ShopForm` Update
+### 2. Menu Images Section Implementation
 
--   **Goal**: Integrate the new `Pricing` Freezed class into `Residence` entities and related forms.
--   **Implementation**:
-    -   Updated `app/lib/src/features/home_detail/data/fake/test_residence_details.dart` to use the `Pricing` object for residence pricing.
-    -   Modified `app/lib/src/features/my_shop/presentation/shop_form_extension.dart` to correctly handle the `Pricing` object when converting `ShopForm` to `ResidenceDetail`.
+-   **Goal**: Add a new section to display menu images for food entities on the `HomeDetailScreen`.
+-   **Design Decisions**:
+    -   **Placement**: Decided on a full-width section below the main details (`ResponsiveTwoColumnLayout`) and above the reviews (`HomeDetailBottomSection`).
+    -   **Aspect Ratio**: Settled on a 3:4 portrait aspect ratio for menu image thumbnails, based on user feedback.
+    -   **Height**: Set the horizontal list height to 240px.
+    -   **Widget**: Used `ListView.separated` with `CustomImageWrapper` for skeleton loading and better image handling.
+-   **Implementation Steps**:
+    -   Confirmed `FoodDetail` already had `menuImageUrls`.
+    -   Added placeholder `menuImageUrls` to `app/lib/src/features/home_detail/data/fake/test_food_details.dart`.
+    -   Created `app/lib/src/features/home_detail/presentation/widgets/menu_section.dart`.
+    -   Added "menu" localization key to `app/lib/src/localization/app_en.arb`.
+    -   Integrated `MenuSection` into `app/lib/src/features/home_detail/presentation/home_detail_bottom_section.dart`, conditionally showing it for `FoodDetail` with images.
 
-### 3. Granular Error Handling for Entity Details & Reviews
+### 3. Fullscreen Photo Viewer Enhancements & Bug Fixes
 
--   **Goal**: Implement distinct error handling for critical (entity data) and non-critical (reviews data) fetching failures.
--   **Implementation**:
-    -   Modified `fetchEntityWithReviews` in `app/lib/src/features/home_detail/application/entity_detail_service.dart` to:
-        -   Re-throw errors if entity data fetching fails (critical).
-        -   Catch errors and set a `reviewsLoadFailed` flag if reviews data fetching fails (non-critical).
-    -   Updated `app/lib/src/features/home_detail/presentation/home_detail_screen.dart` to:
-        -   Display `EmptyPlaceholderWidget` for critical errors.
-        -   Display `PersistentErrorBar` at the bottom for non-critical review loading errors.
-    -   Modified `app/lib/src/features/home_detail/presentation/home_detail_bottom_section.dart` to pass the `reviewsLoadFailed` flag.
-    -   Modified `app/lib/src/features/home_detail/presentation/widgets/review_section.dart` to hide the entire review section if `reviewsLoadFailed` is true.
-    -   Added `reviewsLoadFailedMessage` to `app/lib/src/localization/app_en.arb`.
-
-### 4. Debugging & Testing Enhancements
-
--   **Goal**: Diagnose and resolve "infinite loading" issues and ensure error handling works as expected.
--   **Implementation**:
-    -   Identified and corrected a bug in `fetchEntityWithReviews` where `reviewsLoadFailed` was always returned as `true`.
-    -   Created `app/lib/src/features/auth/data/test_users.dart` and `app/lib/src/features/auth/data/fake_user_repository.dart` for testing user data fetching.
-    -   Modified `app/lib/src/features/auth/data/user_repository.dart` to include both `Stream<AppUser?> getUserById` and `Future<AppUser?> fetchUserById` providers.
-    -   Updated `ReviewListTile` to use `fetchUserByIdProvider`.
-    -   Set `addDelay: false` for `FakeUserRepository` in `app_bootstrap_fakes.dart` and `app_bootstrap_local.dart` to prevent perceived "infinite loading" from delays in fake data fetching.
-    -   Injected and removed temporary exceptions in `fake_reviews_repository.dart` and `fake_residence_details_repository.dart` for testing critical and non-critical error paths.
-    -   Confirmed that popular entities were not incorrectly showing in normal entity lists.
+-   **Goal**: Improve the `FullscreenPhotoViewer`'s functionality and address UI issues.
+-   **Bug Fix (Asset vs. Network Image)**:
+    -   **Issue**: Viewer failed to load network images, treating them as local assets.
+    -   **Fix**: Modified `app/lib/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart` to use `CustomImage` (which handles both network and asset images) instead of `AssetImage`.
+-   **UI Refinements**:
+    -   **Rounded Corners (Conditional)**:
+        -   **Issue**: Dialog had sharp corners, or `ClipRRect` caused mobile cropping.
+        -   **Fix**: Removed `ClipRRect` from `full_screen_photo_viewer.dart`. Applied `ClipRRect` conditionally around the `FullscreenPhotoViewer` within the `Dialog` in `menu_section.dart` and `home_detail_top_left_section.dart` (for large screens only), using `Sizes.p16` for `borderRadius`.
+    -   **Image Fit**: Changed `BoxFit.cover` to `BoxFit.contain` for `CustomImage` in `full_screen_photo_viewer.dart` to prevent cropping.
+    -   **Button Placement & Visibility**:
+        -   **Issue**: User disliked `AppBar` on large screens and wanted navigation buttons back.
+        -   **Fix**: Made `AppBar` conditional (only on small screens). On large screens, close button is `Positioned` with a background. Re-introduced `Positioned` next/previous navigation buttons for large screens.
+        -   **Close Button Position (Small Screen)**: Moved the close button to the top-right corner of the `AppBar` on small screens.

@@ -2,10 +2,11 @@ import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home_detail/presentation/widgets/carousel_button.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:app/src/routers/app_router.dart';
 
 class HomeDetailTopLeftSection extends StatefulWidget {
   final List<String> images;
@@ -24,13 +25,9 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
     final isSmall = isSmallScreen(context);
 
     if (isSmall) {
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => FullscreenPhotoViewer(
-            images: widget.images,
-            initialIndex: initialIndex,
-          ),
-        ),
+      context.pushNamed(
+        AppRoute.photoViewer.name,
+        extra: {'images': widget.images, 'initialIndex': initialIndex},
       );
     } else {
       showDialog<void>(
@@ -38,11 +35,11 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
         builder: (_) => Dialog(
           backgroundColor: context.colorScheme.surface,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Sizes.p24),
+            borderRadius: BorderRadius.circular(Sizes.p16),
           ),
           insetPadding: const EdgeInsets.all(Sizes.p16),
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Sizes.p16),
             child: FullscreenPhotoViewer(
               images: widget.images,
               initialIndex: initialIndex,
@@ -84,22 +81,6 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
                   onPageChanged: (index, _) {
                     setState(() => _current = index);
                   },
-                ),
-              ),
-              // Left Navigation Arrow
-              Positioned(
-                left: Sizes.p8,
-                child: CarouselButton(
-                  icon: Icons.arrow_back_ios_new,
-                  onPressed: () => _controller.previousPage(),
-                ),
-              ),
-              // Right Navigation Arrow
-              Positioned(
-                right: Sizes.p8,
-                child: CarouselButton(
-                  icon: Icons.arrow_forward_ios,
-                  onPressed: () => _controller.nextPage(),
                 ),
               ),
               // Pagination Dots

@@ -46,7 +46,7 @@ Future<EntityDetail?> fetchEntityDetails(
 }
 
 /// Combines entity detail and reviews into one fetch
-@riverpod
+@Riverpod(keepAlive: true)
 Future<(EntityDetail?, List<Review>, bool reviewsLoadFailed)>
 fetchEntityWithReviews(Ref ref, (CategoryId, EntityId) args) async {
   final (categoryId, entityId) = args;

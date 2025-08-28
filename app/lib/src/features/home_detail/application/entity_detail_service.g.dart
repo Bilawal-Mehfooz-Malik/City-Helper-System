@@ -187,7 +187,7 @@ class _FetchEntityDetailsProviderElement
 }
 
 String _$fetchEntityWithReviewsHash() =>
-    r'583eb34b3168dacb70c28d64aea709e44ead58ef';
+    r'c52d973c385b4c135472601807311f7e3ad7ca9c';
 
 /// Combines entity detail and reviews into one fetch
 ///
@@ -242,9 +242,7 @@ class FetchEntityWithReviewsFamily
 /// Copied from [fetchEntityWithReviews].
 class FetchEntityWithReviewsProvider
     extends
-        AutoDisposeFutureProvider<
-          (EntityDetail?, List<Review>, bool reviewsLoadFailed)
-        > {
+        FutureProvider<(EntityDetail?, List<Review>, bool reviewsLoadFailed)> {
   /// Combines entity detail and reviews into one fetch
   ///
   /// Copied from [fetchEntityWithReviews].
@@ -297,9 +295,7 @@ class FetchEntityWithReviewsProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<
-    (EntityDetail?, List<Review>, bool reviewsLoadFailed)
-  >
+  FutureProviderElement<(EntityDetail?, List<Review>, bool reviewsLoadFailed)>
   createElement() {
     return _FetchEntityWithReviewsProviderElement(this);
   }
@@ -322,7 +318,7 @@ class FetchEntityWithReviewsProvider
 // ignore: unused_element
 mixin FetchEntityWithReviewsRef
     on
-        AutoDisposeFutureProviderRef<
+        FutureProviderRef<
           (EntityDetail?, List<Review>, bool reviewsLoadFailed)
         > {
   /// The parameter `args` of this provider.
@@ -331,7 +327,7 @@ mixin FetchEntityWithReviewsRef
 
 class _FetchEntityWithReviewsProviderElement
     extends
-        AutoDisposeFutureProviderElement<
+        FutureProviderElement<
           (EntityDetail?, List<Review>, bool reviewsLoadFailed)
         >
     with FetchEntityWithReviewsRef {

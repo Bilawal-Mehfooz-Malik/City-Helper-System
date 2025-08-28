@@ -87,9 +87,11 @@ class HomeDetailTopRightContent extends ConsumerWidget {
             FurnishedInfo(residence: residence),
             Divider(),
             AvailableInfo(residence: residence), // New widget
-            Divider(), // Add another divider for consistency
           ],
-          OpeningHoursWidget(entity: entity),
+          if (entity.openingHours != null) ...[
+            const Divider(),
+            OpeningHoursWidget(entity: entity),
+          ],
           if (entity.instagramUrl != null ||
               entity.facebookUrl != null ||
               entity.messagingNumber != null ||

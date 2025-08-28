@@ -69,7 +69,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
         },
       );
     } else {
-      context.goNamed(
+      context.pushNamed(
         AppRoute.homeDetail.name,
         pathParameters: {
           'categoryId': entity.categoryId.toString(),
@@ -103,7 +103,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
           .read(selectedCategoryViewControllerProvider.notifier)
           .setSelectedCategoryView(SelectedCategoryView.popular);
     } else {
-      context.goNamed(
+      context.pushNamed(
         AppRoute.popular.name,
         pathParameters: {'categoryId': widget.categoryId.toString()},
       );

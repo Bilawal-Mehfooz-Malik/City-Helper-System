@@ -25,7 +25,11 @@ final List<FoodDetail> testFoodDetails = [
     description:
         'Delicious food with a variety of options. Great for families!',
     galleryImageUrls: [],
-    menuImageUrls: [],
+    menuImageUrls: [
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4gdZkCfrPT3Dkjpuer3EBmrFwZzb-SQ-PCg&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4gdZkCfrPT3Dkjpuer3EBmrFwZzb-SQ-PCg&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4gdZkCfrPT3Dkjpuer3EBmrFwZzb-SQ-PCg&s',
+    ],
     streetAddress: '123 Main St',
     phoneNumber: '123-456-7890',
     messagingNumber: '123-456-7890',

@@ -10,6 +10,8 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:app/src/features/home_detail/presentation/widgets/menu_section.dart';
+
 class HomeDetailBottomSection extends ConsumerWidget {
   final EntityDetail entity;
   final List<Review> reviews;
@@ -24,11 +26,16 @@ class HomeDetailBottomSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSmall = isSmallScreen(context);
+    final foodDetail = entity is FoodDetail ? entity as FoodDetail : null;
 
     return Column(
       spacing: Sizes.p8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (foodDetail != null && foodDetail.menuImageUrls.isNotEmpty) ...[
+          MenuSection(menuImageUrls: foodDetail.menuImageUrls),
+          gapH8,
+        ],
         _DescriptionSection(entity: entity, isSmall: isSmall),
 
         ReviewSection(

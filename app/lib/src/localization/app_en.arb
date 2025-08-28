@@ -146,6 +146,8 @@
   "@closes": {},
   "description":"Description",
   "@description": {},
+  "menu": "Menu",
+  "@menu": {},
   "seeLess":"See less",
   "@seeLess": {},
   "seeMore":"See more",

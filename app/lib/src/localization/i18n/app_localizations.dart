@@ -514,6 +514,12 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get description;
 
+  /// No description provided for @menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menu;
+
   /// No description provided for @seeLess.
   ///
   /// In en, this message translates to:
