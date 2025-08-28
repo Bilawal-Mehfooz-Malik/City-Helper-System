@@ -1,104 +1,103 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:app/src/features/review/domain/review.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/rating_filter_controller.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/review_sort_controller.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
-import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart';
+import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart'; // Contains ReviewListTile
+import 'package:app/src/features/review/application/paginated_reviews_notifier.dart';
+import 'package:app/src/features/review/domain/review_sorting.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReviewListScreen extends ConsumerWidget {
+class ReviewListScreen extends ConsumerStatefulWidget {
   final EntityDetail entity;
   const ReviewListScreen({super.key, required this.entity});
 
-  List<Review> _filterReviewsByRating(
-    List<Review> reviews,
-    int? selectedRating,
-  ) {
-    if (selectedRating == null) return reviews;
+  @override
+  ConsumerState<ReviewListScreen> createState() => _ReviewListScreenState();
+}
 
-    return reviews.where((r) {
-      final rating = r.rating;
-      switch (selectedRating) {
-        case 1:
-          return rating < 2.0;
-        case 2:
-          return rating >= 2.0 && rating < 3.0;
-        case 3:
-          return rating >= 3.0 && rating < 4.0;
-        case 4:
-          return rating >= 4.0 && rating < 5.0;
-        case 5:
-          return rating >= 5.0;
-        default:
-          return true;
-      }
-    }).toList();
-  }
+class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
+  final _scrollController = ScrollController();
 
-  List<Review> _sortReviews(
-    List<Review> reviews,
-    ReviewSortOption? sortOption,
-  ) {
-    if (sortOption == null) return reviews;
-    final sorted = [...reviews];
-    switch (sortOption) {
-      case ReviewSortOption.latest:
-        sorted.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-        break;
-      case ReviewSortOption.oldest:
-        sorted.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
-        break;
-      case ReviewSortOption.highest:
-        sorted.sort((a, b) => b.rating.compareTo(a.rating));
-        break;
-      case ReviewSortOption.lowest:
-        sorted.sort((a, b) => a.rating.compareTo(b.rating));
-        break;
-    }
-    return sorted;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final reviewsValue = ref.watch(watchReviewsListProvider(entity.id));
-    final selectedFilter = ref.watch(ratingFilterControllerProvider);
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent * 0.9) {
+      final sortOption = ref.read(reviewSortControllerProvider);
+      final ratingFilter = ref.read(ratingFilterControllerProvider);
+      ref
+          .read(
+            paginatedReviewsNotifierProvider(
+              entityId: widget.entity.id,
+              sortOption: sortOption,
+              ratingFilter: ratingFilter,
+            ).notifier,
+          )
+          .fetchNextPage();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ratingFilter = ref.watch(ratingFilterControllerProvider);
     final sortOption = ref.watch(reviewSortControllerProvider);
+    final reviewsValue = ref.watch(
+      paginatedReviewsNotifierProvider(
+        entityId: widget.entity.id,
+        sortOption: sortOption,
+        ratingFilter: ratingFilter,
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(context.loc.reviews)),
       body: SafeArea(
-        child: ResponsiveScrollable(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.p16,
-            vertical: Sizes.p4,
-          ),
-          child: AsyncValueWidget(
-            value: reviewsValue,
-            data: (reviews) {
-              final filteredReviews = _filterReviewsByRating(
-                reviews,
-                selectedFilter,
-              );
-              final sortedReviews = _sortReviews(filteredReviews, sortOption);
-
-              return Column(
-                spacing: Sizes.p8,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RatingGraph(entity: entity),
-
-                  _RatingFilterChips(),
-                  _SortRow(),
-                  if (sortedReviews.isEmpty)
-                    Padding(
+        child: AsyncValueWidget(
+          // Wrap the whole CustomScrollView in AsyncValueWidget
+          value: reviewsValue,
+          data: (paginationState) {
+            final reviews = paginationState.reviews;
+            return CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  // Apply padding to the whole scroll view
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Sizes.p16,
+                    vertical: Sizes.p4,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      RatingGraph(entity: widget.entity),
+                      gapH8,
+                      _RatingFilterChips(),
+                      gapH8,
+                      _SortRow(),
+                      gapH16,
+                    ]),
+                  ),
+                ),
+                if (reviews.isEmpty) // Use SliverFillRemaining for empty state
+                  SliverFillRemaining(
+                    hasScrollBody: false, // Important for centering
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: Sizes.p24),
                       child: Center(
                         child: Text(
@@ -106,13 +105,70 @@ class ReviewListScreen extends ConsumerWidget {
                           style: context.textTheme.bodyLarge,
                         ),
                       ),
-                    )
-                  else
-                    ReviewsListView(reviews: sortedReviews),
-                ],
-              );
-            },
-          ),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    // New SliverPadding for reviews list
+                    padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          if (index == reviews.length) {
+                            // Loading indicator or error message for next page
+                            if (paginationState.isLoadingNextPage) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (paginationState.paginationError !=
+                                null) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: Sizes.p16,
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        context.loc.error_loading_more_reviews,
+                                      ),
+                                      gapH8,
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(
+                                                paginatedReviewsNotifierProvider(
+                                                  entityId: widget.entity.id,
+                                                  sortOption: sortOption,
+                                                  ratingFilter: ratingFilter,
+                                                ).notifier,
+                                              )
+                                              .fetchNextPage();
+                                        },
+                                        child: Text(context.loc.retry),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                            return const SizedBox.shrink(); // Should not happen if hasMore is false
+                          }
+                          final review = reviews[index];
+                          return ReviewListTile(review: review);
+                        },
+                        childCount:
+                            reviews.length +
+                            (paginationState.isLoadingNextPage ||
+                                    paginationState.paginationError != null
+                                ? 1
+                                : 0),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -153,8 +209,7 @@ class _SortRow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSort = ref.watch(reviewSortControllerProvider);
 
-    String getSortLabel(ReviewSortOption? option) {
-      if (option == null) return context.loc.filtersTitle;
+    String getSortLabel(ReviewSortOption option) {
       switch (option) {
         case ReviewSortOption.latest:
           return context.loc.latest;
@@ -171,7 +226,8 @@ class _SortRow extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(getSortLabel(selectedSort), style: context.textTheme.titleMedium),
-        PopupMenuButton<ReviewSortOption?>(
+        PopupMenuButton<ReviewSortOption>(
+          // Removed nullable option
           icon: const Icon(Icons.filter_list),
           tooltip: context.loc.filtersTitle,
           onSelected: (value) {

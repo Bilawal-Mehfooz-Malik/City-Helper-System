@@ -249,6 +249,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_reviews_found => 'No reviews found for this rating';
 
   @override
+  String get end_of_reviews_message =>
+      'You\'ve reached the end of the reviews!';
+
+  @override
+  String get error_loading_more_reviews =>
+      'Failed to load more reviews. Tap to retry.';
+
+  @override
   String get none => 'None';
 
   @override

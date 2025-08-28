@@ -28,9 +28,39 @@ final testUsers = [
   ),
   AppUser(
     uid: 'user_005',
-    name: 'Test User Five',
-    profileImageUrl: 'https://example.com/user5.jpg',
     phoneNumber: '+1234567894',
+    name: 'Alice Smith',
+    profileImageUrl: 'https://example.com/user5.jpg',
+  ),
+  AppUser(
+    uid: 'user_002_res001',
+    name: 'Jane Doe',
+    phoneNumber: '+1987654321',
+    profileImageUrl: 'https://example.com/user_jane.jpg',
+  ),
+  AppUser(
+    uid: 'user_003_res001',
+    name: 'John Smith',
+    phoneNumber: '+1234567892',
+    profileImageUrl: 'https://example.com/user_john.jpg',
+  ),
+  AppUser(
+    uid: 'user_004_res001',
+    name: 'Emily White',
+    phoneNumber: '+1234567893',
+    profileImageUrl: 'https://example.com/user_emily.jpg',
+  ),
+  AppUser(
+    uid: 'user_005_res001',
+    name: 'David Brown',
+    phoneNumber: '+1234567894',
+    profileImageUrl: 'https://example.com/user_david.jpg',
+  ),
+  AppUser(
+    uid: 'user_006_res001',
+    name: 'Sarah Green',
+    phoneNumber: '+1234567895',
+    profileImageUrl: 'https://example.com/user_sarah.jpg',
   ),
   AppUser(
     uid: 'user_006',

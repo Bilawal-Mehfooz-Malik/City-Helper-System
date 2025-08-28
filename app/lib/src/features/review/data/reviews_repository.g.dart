@@ -409,5 +409,128 @@ class _UserReviewFutureProviderElement
   String get entityId => (origin as UserReviewFutureProvider).entityId;
 }
 
+String _$reviewsPreviewListHash() =>
+    r'b0eaaa7e09d43247fae4735a5b3cacfea964d85d';
+
+/// See also [reviewsPreviewList].
+@ProviderFor(reviewsPreviewList)
+const reviewsPreviewListProvider = ReviewsPreviewListFamily();
+
+/// See also [reviewsPreviewList].
+class ReviewsPreviewListFamily extends Family<AsyncValue<List<Review>>> {
+  /// See also [reviewsPreviewList].
+  const ReviewsPreviewListFamily();
+
+  /// See also [reviewsPreviewList].
+  ReviewsPreviewListProvider call(String entityId) {
+    return ReviewsPreviewListProvider(entityId);
+  }
+
+  @override
+  ReviewsPreviewListProvider getProviderOverride(
+    covariant ReviewsPreviewListProvider provider,
+  ) {
+    return call(provider.entityId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'reviewsPreviewListProvider';
+}
+
+/// See also [reviewsPreviewList].
+class ReviewsPreviewListProvider
+    extends AutoDisposeFutureProvider<List<Review>> {
+  /// See also [reviewsPreviewList].
+  ReviewsPreviewListProvider(String entityId)
+    : this._internal(
+        (ref) => reviewsPreviewList(ref as ReviewsPreviewListRef, entityId),
+        from: reviewsPreviewListProvider,
+        name: r'reviewsPreviewListProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$reviewsPreviewListHash,
+        dependencies: ReviewsPreviewListFamily._dependencies,
+        allTransitiveDependencies:
+            ReviewsPreviewListFamily._allTransitiveDependencies,
+        entityId: entityId,
+      );
+
+  ReviewsPreviewListProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.entityId,
+  }) : super.internal();
+
+  final String entityId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Review>> Function(ReviewsPreviewListRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ReviewsPreviewListProvider._internal(
+        (ref) => create(ref as ReviewsPreviewListRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        entityId: entityId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Review>> createElement() {
+    return _ReviewsPreviewListProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ReviewsPreviewListProvider && other.entityId == entityId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, entityId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ReviewsPreviewListRef on AutoDisposeFutureProviderRef<List<Review>> {
+  /// The parameter `entityId` of this provider.
+  String get entityId;
+}
+
+class _ReviewsPreviewListProviderElement
+    extends AutoDisposeFutureProviderElement<List<Review>>
+    with ReviewsPreviewListRef {
+  _ReviewsPreviewListProviderElement(super.provider);
+
+  @override
+  String get entityId => (origin as ReviewsPreviewListProvider).entityId;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

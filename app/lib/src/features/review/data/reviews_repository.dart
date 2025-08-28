@@ -1,6 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/review/domain/review.dart';
+import 'package:app/src/features/review/domain/review_sorting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -71,6 +72,67 @@ class ReviewsRepository {
   Future<void> deleteReview(EntityId entityId, UserId userId) {
     return _reviewsRef.doc(_docId(entityId, userId)).delete();
   }
+
+  Future<List<Review>> fetchPaginatedReviews({
+    required EntityId entityId,
+    required ReviewSortOption sortOption,
+    int? ratingFilter,
+    required int limit,
+    List<dynamic>? cursor,
+  }) async {
+    Query query = _reviewsRef.where('entityId', isEqualTo: entityId);
+
+    // Apply rating filter
+    if (ratingFilter != null) {
+      final double lowerBound = ratingFilter.toDouble();
+      if (ratingFilter == 5) {
+        query = query.where('rating', isGreaterThanOrEqualTo: lowerBound);
+      } else if (ratingFilter == 1) {
+        query = query.where('rating', isLessThan: 2.0);
+      } else {
+        query = query
+            .where('rating', isGreaterThanOrEqualTo: lowerBound)
+            .where('rating', isLessThan: lowerBound + 1.0);
+      }
+    }
+
+    // Apply sorting
+    switch (sortOption) {
+      case ReviewSortOption.latest:
+        query = query.orderBy('updatedAt', descending: true);
+        break;
+      case ReviewSortOption.oldest:
+        query = query.orderBy('updatedAt', descending: false);
+        break;
+      case ReviewSortOption.highest:
+        query = query.orderBy('rating', descending: true);
+        query = query.orderBy('updatedAt', descending: true);
+        break;
+      case ReviewSortOption.lowest:
+        query = query.orderBy('rating', descending: false);
+        query = query.orderBy('updatedAt', descending: true);
+        break;
+    }
+
+    if (cursor != null) {
+      query = query.startAfter(cursor);
+    }
+
+    final snapshot = await query.limit(limit).get();
+
+    return snapshot.docs
+        .map((doc) => Review.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<Review>> fetchReviewsPreviewList(EntityId entityId) async {
+    final query = await _reviewsRef
+        .where('entityId', isEqualTo: entityId)
+        .orderBy('updatedAt', descending: true)
+        .limit(5)
+        .get();
+    return query.docs.map((doc) => Review.fromJson(doc.data())).toList();
+  }
 }
 
 @riverpod
@@ -98,4 +160,10 @@ Future<Review?> userReviewFuture(Ref ref, EntityId entityId) {
   } else {
     return Future.value(null);
   }
+}
+
+@riverpod
+Future<List<Review>> reviewsPreviewList(Ref ref, EntityId entityId) {
+  final repository = ref.watch(reviewsRepositoryProvider);
+  return repository.fetchReviewsPreviewList(entityId);
 }

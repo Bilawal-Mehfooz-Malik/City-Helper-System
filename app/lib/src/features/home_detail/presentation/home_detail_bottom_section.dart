@@ -34,7 +34,6 @@ class HomeDetailBottomSection extends ConsumerWidget {
       children: [
         if (foodDetail != null && foodDetail.menuImageUrls.isNotEmpty) ...[
           MenuSection(menuImageUrls: foodDetail.menuImageUrls),
-          gapH8,
         ],
         _DescriptionSection(entity: entity, isSmall: isSmall),
 

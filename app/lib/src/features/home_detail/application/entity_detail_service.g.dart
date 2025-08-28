@@ -187,7 +187,7 @@ class _FetchEntityDetailsProviderElement
 }
 
 String _$fetchEntityWithReviewsHash() =>
-    r'c52d973c385b4c135472601807311f7e3ad7ca9c';
+    r'bb18cc857fa1ba29808872c409c9106fee42d47f';
 
 /// Combines entity detail and reviews into one fetch
 ///

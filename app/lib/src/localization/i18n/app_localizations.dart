@@ -568,6 +568,18 @@ abstract class AppLocalizations {
   /// **'No reviews found for this rating'**
   String get no_reviews_found;
 
+  /// No description provided for @end_of_reviews_message.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached the end of the reviews!'**
+  String get end_of_reviews_message;
+
+  /// No description provided for @error_loading_more_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load more reviews. Tap to retry.'**
+  String get error_loading_more_reviews;
+
   /// No description provided for @none.
   ///
   /// In en, this message translates to:

@@ -62,7 +62,7 @@ fetchEntityWithReviews(Ref ref, (CategoryId, EntityId) args) async {
   List<Review> reviews = [];
   bool reviewsLoadFailed = false;
   try {
-    final reviewsFuture = ref.watch(fetchReviewsListProvider(entityId).future);
+    final reviewsFuture = ref.watch(reviewsPreviewListProvider(entityId).future);
     reviews = await reviewsFuture;
   } catch (e, s) {
     AppLogger.logError('Failed to fetch reviews', error: e, stackTrace: s);
