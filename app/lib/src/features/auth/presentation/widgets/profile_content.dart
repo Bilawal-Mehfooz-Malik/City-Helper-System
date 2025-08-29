@@ -6,7 +6,6 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/presentation/widgets/profile_image_widget.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +20,7 @@ import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
+import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 
@@ -71,16 +70,25 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       return;
     }
 
+    final location = ref.read(profileLocationControllerProvider).value;
+
     final bool isEditMode = existingProfile != null;
 
     if (isEditMode) {
       final isNameUnchanged = name == existingProfile.name;
       final isImageUnchanged = _pickedImageBytes == null && !_removeImage;
+      final isLocationUnchanged = location == existingProfile.lastLocation;
 
-      if (isNameUnchanged && isImageUnchanged) {
+      if (isNameUnchanged && isImageUnchanged && isLocationUnchanged) {
         if (mounted) context.pop();
         return;
       }
+    }
+
+    if (location != null) {
+      await ref
+          .read(profileLocationControllerProvider.notifier)
+          .saveLocation(location);
     }
 
     final result = isEditMode
@@ -126,8 +134,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
     final user = ref.watch(authStateChangesProvider).value;
-    final savedUserLocation = ref.watch(fetchUserLocationProvider).value;
-    final userLocation = ref.watch(userLocationControllerProvider).value;
+    final userLocation = ref.watch(profileLocationControllerProvider).value;
     final defaultLocation = ref.watch(defaultLocationProvider);
     final mapBuilder = ref.watch(googleMapBuilderProvider);
 
@@ -229,20 +236,16 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                           AppRoute.pickYourLocation.name,
                         );
                         if (result == null) return;
+
                         ref
-                            .read(userLocationControllerProvider.notifier)
-                            .getLocationFromMap(result);
+                            .read(profileLocationControllerProvider.notifier)
+                            .updateLocation(result);
                       },
                 child: AbsorbPointer(
                   absorbing: !authState.isLoading,
                   child: SizedBox(
                     height: 200,
-                    child: mapBuilder(
-                      profile?.lastLocation ??
-                          savedUserLocation ??
-                          userLocation ??
-                          defaultLocation,
-                    ),
+                    child: mapBuilder(userLocation ?? defaultLocation),
                   ),
                 ),
               ),

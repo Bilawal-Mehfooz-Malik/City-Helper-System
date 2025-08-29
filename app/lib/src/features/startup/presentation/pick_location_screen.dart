@@ -4,7 +4,8 @@ import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
+import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
+
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +21,18 @@ class PickLocationScreen extends ConsumerStatefulWidget {
 class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   late LatLng _pickedLocation;
   final _controller = Completer<GoogleMapController>();
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    final previousLocation = ref.read(userLocationControllerProvider).value;
+    final previousLocation = ref.read(profileLocationControllerProvider).value;
     final defaultLoc = ref.read(defaultLocationProvider);
     _pickedLocation = previousLocation ?? defaultLoc;
   }
@@ -42,7 +50,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   Future<void> _getCurrentLocation() async {
     final location = await ref
-        .read(userLocationControllerProvider.notifier)
+        .read(profileLocationControllerProvider.notifier)
         .getCurrentLocation();
     if (location != null) {
       await _moveCamera(location, zoomLevel: 18);
@@ -51,11 +59,17 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
   void _onCameraMove(CameraPosition position) {
     _pickedLocation = position.target;
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      ref
+          .read(profileLocationControllerProvider.notifier)
+          .updateLocation(_pickedLocation);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(userLocationControllerProvider).isLoading;
+    final locationAsync = ref.watch(profileLocationControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -104,8 +118,8 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               backgroundColor: context.colorScheme.onPrimary,
               foregroundColor: context.colorScheme.primary,
               shape: const CircleBorder(),
-              onPressed: isLoading ? null : _getCurrentLocation,
-              child: isLoading
+              onPressed: locationAsync.isLoading ? null : _getCurrentLocation,
+              child: locationAsync.isLoading
                   ? const SizedBox(
                       height: 25,
                       width: 25,
@@ -115,7 +129,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
             ),
             FloatingActionButton.large(
               heroTag: 'saveLocationBtn',
-              onPressed: isLoading
+              onPressed: locationAsync.isLoading
                   ? null
                   : () => Navigator.of(context).pop(_pickedLocation),
 
