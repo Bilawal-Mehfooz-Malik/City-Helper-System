@@ -22,7 +22,6 @@ class AuthFlowScreen extends ConsumerStatefulWidget {
 
 class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   final _phoneNumberController = TextEditingController();
-  FocusNode? _focusNode;
   TextEditingController? _otpController;
   bool _isValidCode = false;
 
@@ -30,13 +29,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   AuthFlowStep _currentStep = AuthFlowStep.phoneNumber;
 
   String get _fullPhoneNumber =>
-      '+$_countryCode ${_phoneNumberController.text.trim()}';
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
+      '+$_countryCode${_phoneNumberController.text.replaceAll(RegExp(r'\D'), '').trim()}';
 
   void _setupOtpController() {
     _otpController?.removeListener(_validateOtpCode);
@@ -60,7 +53,6 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   void dispose() {
     _phoneNumberController.dispose();
     _otpController?.dispose();
-    _focusNode?.dispose();
     super.dispose();
   }
 
@@ -77,7 +69,6 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
     if (mounted) {
       _setupOtpController();
       setState(() => _currentStep = AuthFlowStep.otp);
-      _focusNode?.requestFocus();
     }
   }
 
@@ -114,12 +105,11 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         break;
       case AuthFlowStep.otp:
         child = OtpContent(
+          key: ValueKey(_currentStep),
           phoneNumber: _fullPhoneNumber,
           otpController: _otpController!,
-          focusNode: _focusNode!,
           isValidCode: _isValidCode,
           onBack: () => setState(() {
-            _otpController?.dispose();
             _otpController = null;
             _currentStep = AuthFlowStep.phoneNumber;
           }),

@@ -8,6 +8,7 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app/src/core/utils/phone_number_formatter.dart';
 
 class PhoneNumberContent extends ConsumerWidget {
   final String countryCode;
@@ -26,7 +27,7 @@ class PhoneNumberContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authControllerProvider);
-    final isValid = phoneNumberController.text.trim().length == 10;
+    final isValid = phoneNumberController.text.trim().length == 11;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -68,6 +69,7 @@ class PhoneNumberContent extends ConsumerWidget {
                 controller: phoneNumberController,
                 keyboardType: TextInputType.phone,
                 onchanged: onchanged,
+                inputFormatters: [PhoneNumberFormatter()],
               ),
             ),
           ],

@@ -1,254 +1,65 @@
-[GoRouter] getting location for name: "homeDetail", pathParameters: {categoryId: 1, entityId: res_001}
-[GoRouter] pushing /home/1/detail/res_001
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-PaginatedReviewsNotifier build: hasMore = true
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-PaginatedReviewsNotifier fetchNextPage: newReviews.length = 3, hasMore = true
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_david.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_david.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════
-The following message was thrown resolving an image codec:
-EncodingError: The source image cannot be decoded.
+══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+The following assertion was thrown while finalizing the widget tree:
+A FocusNode was used after being disposed.
+Once you have called dispose() on a FocusNode, it can no longer be used.
 
-When the exception was thrown, this was the stack
-
-Image provider: CachedNetworkImageProvider("https://example.com/user_jane.jpg?retry=4", scale: 1)
-Image key: CachedNetworkImageProvider("https://example.com/user_jane.jpg?retry=4", scale: 1)
+When the exception was thrown, this was the stack:
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 266:3       throw_
+errors.dart:266
+package:flutter/src/foundation/change_notifier.dart 182:9                         <fn>
+change_notifier.dart:182
+package:flutter/src/foundation/change_notifier.dart 188:14                        debugAssertNotDisposed
+change_notifier.dart:188
+package:flutter/src/foundation/change_notifier.dart 377:27                        dispose
+change_notifier.dart:377
+package:flutter/src/widgets/focus_manager.dart 1119:11                            dispose
+focus_manager.dart:1119
+package:app/src/features/auth/presentation/widgets/otp_content.dart 45:5          dispose
+otp_content.dart:45
+package:flutter/src/widgets/framework.dart 5922:5                                 unmount
+framework.dart:5922
+package:flutter_riverpod/src/consumer.dart 575:11                                 unmount
+consumer.dart:575
+package:flutter/src/widgets/framework.dart 2075:12                                [_unmount]
+framework.dart:2075
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+dart-sdk/lib/internal/iterable.dart 49:7                                          forEach
+iterable.dart:49
+package:flutter/src/widgets/framework.dart 2084:15                                [_unmountAll]
+framework.dart:2084
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+package:flutter/src/widgets/framework.dart 2965:7                                 lockState
+framework.dart:2965
+package:flutter/src/widgets/framework.dart 3288:7                                 finalizeTree
+framework.dart:3288
+package:flutter/src/widgets/binding.dart 1247:7                                   drawFrame
+binding.dart:1247
+package:flutter/src/rendering/binding.dart 495:5                                  [_handlePersistentFrameCallback]
+binding.dart:495
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+package:flutter/src/scheduler/binding.dart 1438:7                                 [_invokeFrameCallback]
+binding.dart:1438
+package:flutter/src/scheduler/binding.dart 1351:9                                 handleDrawFrame
+binding.dart:1351
+package:flutter/src/scheduler/binding.dart 1204:5                                 [_handleDrawFrame]
+binding.dart:1204
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+lib/_engine/engine/platform_dispatcher.dart 1312:5                                invoke
+platform_dispatcher.dart:1312
+lib/_engine/engine/platform_dispatcher.dart 255:5                                 invokeOnDrawFrame
+platform_dispatcher.dart:255
+lib/_engine/engine/frame_service.dart 189:32                                      [_renderFrame]
+frame_service.dart:189
+lib/_engine/engine/frame_service.dart 101:9                                       <fn>
+frame_service.dart:101
+dart-sdk/lib/async/zone.dart 1849:54                                              runUnary
+zone.dart:1849
+dart-sdk/lib/async/zone.dart 1804:26                                              <fn>
+zone.dart:1804
+dart-sdk/lib/_internal/js_dev_runtime/patch/js_allow_interop_patch.dart 224:27    _callDartFunctionFast1
+js_allow_interop_patch.dart:224
 ════════════════════════════════════════════════════════════════════════════════════════════════════
-2
-Another exception was thrown: EncodingError: The source image cannot be decoded.
-PaginatedReviewsNotifier fetchNextPage: newReviews.length = 3, hasMore = true
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user3.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user1.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_emily.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-Another exception was thrown: EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_david.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_sarah.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user4.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user5.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-2
-Another exception was thrown: EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-PaginatedReviewsNotifier fetchNextPage: newReviews.length = 0, hasMore = false
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_john.jpg?retry=5
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_david.jpg?retry=2
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user4.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_sarah.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user5.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_jane.jpg
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_david.jpg?retry=3
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user4.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.
-[ERROR] ❌ ERROR [AppLogger]: Failed to load image from URL: https://example.com/user_sarah.jpg?retry=1
-          🔥 Exception: EncodingError: The source image cannot be decoded.
-[ERROR] EncodingError: The source image cannot be decoded.

@@ -11,7 +11,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class OtpContent extends ConsumerWidget {
   final String phoneNumber;
   final TextEditingController otpController;
-  final FocusNode focusNode;
   final VoidCallback onBack;
   final VoidCallback onSubmit;
   final bool isValidCode;
@@ -20,7 +19,6 @@ class OtpContent extends ConsumerWidget {
     super.key,
     required this.phoneNumber,
     required this.otpController,
-    required this.focusNode,
     required this.onBack,
     required this.onSubmit,
     required this.isValidCode,
@@ -70,7 +68,6 @@ class OtpContent extends ConsumerWidget {
           length: 6,
           appContext: context,
           controller: otpController,
-          focusNode: focusNode,
           keyboardType: TextInputType.number,
           pinTheme: PinTheme(
             fieldWidth: 50,
