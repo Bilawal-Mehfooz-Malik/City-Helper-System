@@ -73,12 +73,16 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
           width: 96,
           height: 96,
           child: ClipOval(
-            child: CustomImageWrapper(
-              fit: BoxFit.cover,
-              borderRadius: BorderRadius.circular(50),
-              imageXFile: _pickedFile,
-              imageUrl: _pickedFile == null ? _imageUrl : null,
-            ),
+            child: showImage
+                ? CustomImageWrapper(
+                    fit: BoxFit.cover,
+                    borderRadius: BorderRadius.circular(50),
+                    imageXFile: _pickedFile,
+                    imageUrl: _pickedFile == null ? _imageUrl : null,
+                  )
+                : CircleAvatar(
+                    child: Icon(Icons.person, size: 48),
+                  ),
           ),
         ),
         gapH16,

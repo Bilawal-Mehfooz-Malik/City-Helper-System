@@ -370,6 +370,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_removePhoto => 'Remove Photo';
 
   @override
+  String get profileIncompleteTitle => 'Profile Incomplete';
+
+  @override
+  String get profileIncompleteContent =>
+      'Please complete your profile to proceed.';
+
+  @override
+  String get completeProfileButton => 'Complete Profile';
+
+  @override
   String profile_registeredNumber(Object phoneNumber) {
     return 'Registered number: $phoneNumber';
   }

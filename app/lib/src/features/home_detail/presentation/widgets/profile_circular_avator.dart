@@ -1,5 +1,7 @@
+import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/user_mode_controller.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
@@ -89,22 +91,43 @@ class _LoggedInAvatar extends ConsumerWidget {
     final isAdminMode = ref.watch(userModeControllerProvider);
 
     return PopupMenuButton<String>(
-      onSelected: (value) {
+      onSelected: (value) async {
+        // Marked as async
         switch (value) {
           case 'account':
             context.goNamed(AppRoute.account.name);
             break;
           // FIX: Renamed 'admin' to a more generic 'switch_mode'.
           case 'switch_mode':
-            // Toggle the mode via the controller.
-            ref.read(userModeControllerProvider.notifier).toggleMode();
-            // Navigate to the appropriate screen after switching.
-            if (isAdminMode) {
-              // If we WERE in admin mode, go to the user home screen.
-              context.goNamed(AppRoute.category.name);
+            final appUser = await ref.read(
+              fetchUserByIdProvider(userId).future,
+            );
+            if (!context.mounted) return; // Added mounted check
+            if (appUser != null && appUser.isProfileComplete) {
+              // Toggle the mode via the controller.
+              ref.read(userModeControllerProvider.notifier).toggleMode();
+              // Navigate to the appropriate screen after switching.
+              if (isAdminMode) {
+                // If we WERE in admin mode, go to the user home screen.
+                context.goNamed(AppRoute.category.name);
+              } else {
+                // If we WERE in user mode, go to the admin screen.
+                context.goNamed(AppRoute.myShop.name);
+              }
             } else {
-              // If we WERE in user mode, go to the admin screen.
-              context.goNamed(AppRoute.myShop.name);
+                            showAlertDialog(
+                context: context,
+                useFilledButton: true,
+                title: context.loc.profileIncompleteTitle,
+                content: context.loc.profileIncompleteContent,
+                cancelActionText: context.loc.cancel,
+                defaultActionText: context.loc.completeProfileButton,
+                defaultAction: () {
+                  if (!context.mounted) return;
+                  Navigator.of(context).pop();
+                  context.pushNamed(AppRoute.profile.name);
+                },
+              );
             }
             break;
         }
@@ -128,12 +151,14 @@ class _LoggedInAvatar extends ConsumerWidget {
       child: profileData.when(
         data: (profile) => SizedBox.square(
           dimension: avatarSize,
-          child: CustomImageWrapper(
-            useCircleLoading: true,
-            imageUrl: profile?.profileImageUrl,
-            placeholderIconSize: avatarIconSize,
-            borderRadius: BorderRadius.circular(50),
-          ),
+          child: profile?.profileImageUrl != null
+              ? CustomImageWrapper(
+                  useCircleLoading: true,
+                  imageUrl: profile?.profileImageUrl,
+                  placeholderIconSize: avatarIconSize,
+                  borderRadius: BorderRadius.circular(50),
+                )
+              : CircleAvatar(child: Icon(Icons.person, size: avatarIconSize)),
         ),
         loading: () => _LoadingAvatar(avatarSize: avatarSize),
         error: (_, _) => _ErrorAvatar(

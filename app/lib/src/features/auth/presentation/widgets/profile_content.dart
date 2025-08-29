@@ -39,9 +39,14 @@ class ProfileContent extends ConsumerStatefulWidget {
 class _ProfileContentState extends ConsumerState<ProfileContent> {
   XFile? _pickedImage;
   Uint8List? _pickedImageBytes;
-  bool _isEditMode = false;
   bool _removeImage = false;
-  final _nameController = TextEditingController();
+  late final TextEditingController _nameController; // Marked as late final
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(); // Initialize here
+  }
 
   @override
   void dispose() {
@@ -49,7 +54,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit(AppUser? existingProfile) async {
     final name = _nameController.text.trim();
 
     if (name.length < 4) {
@@ -63,19 +68,19 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       return;
     }
 
-    final existingProfile = ref.read(getUserByIdProvider(user.uid)).value;
+    final bool isEditMode = existingProfile != null;
 
-    if (_isEditMode && existingProfile != null) {
+    if (isEditMode) {
       final isNameUnchanged = name == existingProfile.name;
       final isImageUnchanged = _pickedImageBytes == null && !_removeImage;
 
       if (isNameUnchanged && isImageUnchanged) {
-        context.pop();
+        if (mounted) context.pop();
         return;
       }
     }
 
-    final result = _isEditMode
+    final result = isEditMode
         ? await controller.updateUser(
             name: name,
             profileImageBytes: _pickedImageBytes,
@@ -142,11 +147,21 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             )
           : const CenteredProgressIndicator(),
       data: (profile) {
-        if (!_isEditMode && profile != null) {
-          _isEditMode = true;
+        // Determine if we are in edit mode or create mode
+        final bool isEditMode = profile != null;
+
+        // Initialize _nameController only once when profile data is first available
+        // or when it changes from null to not null (or vice-versa)
+        if (isEditMode && _nameController.text.isEmpty) {
           _nameController.text = profile.name;
-          _pickedImage = null; // start clean - no local picked file
-          _pickedImageBytes = null; // clear bytes, rely on existing URL
+          _pickedImage = null; // Clear any temporary picked image
+          _pickedImageBytes = null;
+        } else if (!isEditMode && _nameController.text.isNotEmpty) {
+          // If profile becomes null (e.g., user logs out or profile deleted)
+          // and we were in edit mode, reset to create mode.
+          _nameController.clear();
+          _pickedImage = null;
+          _pickedImageBytes = null;
         }
 
         return SingleChildScrollView(
@@ -155,7 +170,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                _isEditMode
+                isEditMode
                     ? context.loc.account_editProfile
                     : context.loc.profile_welcome,
                 style: context.textTheme.headlineSmall?.copyWith(
@@ -229,8 +244,8 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 useMaxSize: true,
                 isDisabled: _nameController.text.trim().length < 4,
                 isLoading: authState.isLoading,
-                onPressed: _submit,
-                text: _isEditMode
+                onPressed: () => _submit(profile), // Pass profile to _submit
+                text: isEditMode
                     ? context.loc.common_save
                     : context.loc.profile_finishSignup,
               ),

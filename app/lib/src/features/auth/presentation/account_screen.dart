@@ -10,6 +10,7 @@ import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
@@ -49,7 +50,13 @@ class AccountScreen extends ConsumerWidget {
       body: AsyncValueWidget(
         value: userProfile,
         data: (profile) {
-          if (profile == null) return const SizedBox.shrink();
+          if (profile == null || !profile.isProfileComplete) {
+            // If profile is null or incomplete, redirect to profile creation
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.goNamed(AppRoute.profile.name);
+            });
+            return const SizedBox.shrink();
+          }
 
           final location =
               profile.lastLocation ?? userLocation ?? defaultLocation;
@@ -66,11 +73,15 @@ class AccountScreen extends ConsumerWidget {
                     width: 96,
                     height: 96,
                     child: ClipOval(
-                      child: CustomImageWrapper(
-                        fit: BoxFit.cover,
-                        borderRadius: BorderRadius.circular(50),
-                        imageUrl: profile.profileImageUrl,
-                      ),
+                      child: profile.profileImageUrl != null
+                          ? CustomImageWrapper(
+                              fit: BoxFit.cover,
+                              borderRadius: BorderRadius.circular(50),
+                              imageUrl: profile.profileImageUrl,
+                            )
+                          : CircleAvatar(
+                              child: Icon(Icons.person, size: 48),
+                            ),
                     ),
                   ),
                   gapH16,

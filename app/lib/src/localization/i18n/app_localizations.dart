@@ -790,6 +790,24 @@ abstract class AppLocalizations {
   /// **'Remove Photo'**
   String get profile_removePhoto;
 
+  /// No description provided for @profileIncompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Incomplete'**
+  String get profileIncompleteTitle;
+
+  /// No description provided for @profileIncompleteContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Please complete your profile to proceed.'**
+  String get profileIncompleteContent;
+
+  /// No description provided for @completeProfileButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Profile'**
+  String get completeProfileButton;
+
   /// Shows the registered phone number on profile screen
   ///
   /// In en, this message translates to:

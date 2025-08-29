@@ -36,6 +36,20 @@ class FakeAuthRepository implements AuthRepository {
     }
     _verifiedPhoneNumber = verificationId;
     _otpStorage.remove(verificationId);
+
+    // Simulate user sign-in after successful OTP verification
+    final user = _users.firstWhere(
+      (u) => u.phoneNumber == _verifiedPhoneNumber,
+      orElse: () => AppUser(
+        uid: _uuid.v4(),
+        phoneNumber: _verifiedPhoneNumber!,
+        name: 'Test User', // Default name for new fake users
+      ),
+    );
+
+    if (!_users.contains(user)) _users.add(user);
+    _authState.value = user;
+    _verifiedPhoneNumber = null;
   }
 
   Future<void> signInWithVerifiedPhone({required String name}) async {

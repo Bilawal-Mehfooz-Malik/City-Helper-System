@@ -157,12 +157,14 @@ class ReviewListTile extends ConsumerWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        child: CustomImageWrapper(
-                          fit: BoxFit.cover,
-                          placeholderIconSize: 15,
-                          imageUrl: user.profileImageUrl,
-                          borderRadius: BorderRadius.circular(48),
-                        ),
+                        child: user.profileImageUrl != null
+                            ? CustomImageWrapper(
+                                fit: BoxFit.cover,
+                                placeholderIconSize: 15,
+                                imageUrl: user.profileImageUrl,
+                                borderRadius: BorderRadius.circular(48),
+                              )
+                            : Icon(Icons.person, size: 24),
                       ),
                       gapW12,
                       Column(

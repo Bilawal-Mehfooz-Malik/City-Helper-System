@@ -245,6 +245,13 @@
   "@profile_createSuccessMessage": {},
   "profile_removePhoto":"Remove Photo",
   "@profile_removePhoto": {},
+
+  "profileIncompleteTitle": "Profile Incomplete",
+  "@profileIncompleteTitle": {},
+  "profileIncompleteContent": "Please complete your profile to proceed.",
+  "@profileIncompleteContent": {},
+  "completeProfileButton": "Complete Profile",
+  "@completeProfileButton": {},
   "@profile_registeredNumber": {
     "description": "Shows the registered phone number on profile screen",
     "placeholders": {

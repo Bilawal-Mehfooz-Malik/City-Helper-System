@@ -8,6 +8,8 @@ import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:app/src/core/utils/url_launcher_helpers.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/outlined_contact_button.dart';
@@ -174,7 +176,7 @@ class _RatingRow extends ConsumerWidget {
     }
   }
 
-  void _checkIsUserLoggedIn(BuildContext context, WidgetRef ref) {
+  void _checkIsUserLoggedIn(BuildContext context, WidgetRef ref) async {
     final user = ref.watch(authStateChangesProvider).value;
     if (user == null) {
       showAlertDialog(
@@ -187,7 +189,23 @@ class _RatingRow extends ConsumerWidget {
         defaultAction: () => _goToLoginScreen(context),
       );
     } else {
-      _goToWriteReviewScreen(context);
+      final appUser = await ref.read(fetchUserByIdProvider(user.uid).future);
+      if (appUser != null && appUser.isProfileComplete) {
+        _goToWriteReviewScreen(context);
+      } else {
+        showAlertDialog(
+          context: context,
+          useFilledButton: true,
+          title: context.loc.profileIncompleteTitle,
+          content: context.loc.profileIncompleteContent,
+          cancelActionText: context.loc.cancel,
+          defaultActionText: context.loc.completeProfileButton,
+          defaultAction: () {
+            Navigator.of(context).pop();
+            context.pushNamed(AppRoute.profile.name);
+          },
+        );
+      }
     }
   }
 

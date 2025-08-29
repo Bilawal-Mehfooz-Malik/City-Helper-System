@@ -21,3 +21,7 @@ abstract class AppUser with _$AppUser {
   factory AppUser.fromJson(Map<String, Object?> json) =>
       _$AppUserFromJson(json);
 }
+
+extension AppUserExtension on AppUser {
+  bool get isProfileComplete => name.isNotEmpty && profileImageUrl != null;
+}
