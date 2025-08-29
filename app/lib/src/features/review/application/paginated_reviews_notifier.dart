@@ -21,17 +21,13 @@ class PaginatedReviewsNotifier extends _$PaginatedReviewsNotifier {
   }) async {
     final reviews = await _fetchPage(limit: _reviewsPerPage);
 
-    print('PaginatedReviewsNotifier build: hasMore = ${reviews.length == _reviewsPerPage}');
     return ReviewPaginationState(
       reviews: reviews,
       hasMore: reviews.length == _reviewsPerPage,
     );
   }
 
-  Future<List<Review>> _fetchPage({
-    required int limit,
-    List<dynamic>? cursor,
-  }) {
+  Future<List<Review>> _fetchPage({required int limit, List<dynamic>? cursor}) {
     final reviewsRepo = ref.read(reviewsRepositoryProvider);
     // The build method's parameters are automatically passed to the notifier.
     return reviewsRepo.fetchPaginatedReviews(
@@ -51,18 +47,22 @@ class PaginatedReviewsNotifier extends _$PaginatedReviewsNotifier {
       return;
     }
 
-    state = AsyncData(currentState.copyWith(
-      isLoadingNextPage: true,
-      clearPaginationError: true,
-    ));
+    state = AsyncData(
+      currentState.copyWith(
+        isLoadingNextPage: true,
+        clearPaginationError: true,
+      ),
+    );
 
     try {
       final lastReview = currentState.reviews.last;
       final cursor = _getCursorFromReview(lastReview);
 
-      final newReviews = await _fetchPage(limit: _reviewsPerPage, cursor: cursor);
+      final newReviews = await _fetchPage(
+        limit: _reviewsPerPage,
+        cursor: cursor,
+      );
 
-      print('PaginatedReviewsNotifier fetchNextPage: newReviews.length = ${newReviews.length}, hasMore = ${newReviews.length == _reviewsPerPage}');
       state = AsyncData(
         currentState.copyWith(
           reviews: [...currentState.reviews, ...newReviews],

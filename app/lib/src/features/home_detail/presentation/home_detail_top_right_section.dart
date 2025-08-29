@@ -125,10 +125,7 @@ class AvailableInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          loc.available, // Using the new localization key
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
+        Text(loc.available, style: TextStyle(fontWeight: FontWeight.w600)),
         Text(residence.isRoomAvailable == true ? loc.yes : loc.no),
       ],
     );
@@ -297,10 +294,10 @@ class ContactOptionsRow extends StatelessWidget {
           ),
         if (entity.messagingNumber != null)
           DetailContactButton(
-            icon: Icons.chat,
+            icon: FontAwesomeIcons.whatsapp,
             color: context.colorScheme.primary,
-            label: context.loc.message,
-            onPressed: () => launchSms(entity.messagingNumber!, context),
+            label: context.loc.whatsapp,
+            onPressed: () => launchWhatsApp(entity.messagingNumber!, context),
           ),
         if (entity.facebookUrl != null)
           OutlinedContactButton(

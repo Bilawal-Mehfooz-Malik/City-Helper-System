@@ -7,7 +7,7 @@ part of 'paginated_reviews_notifier.dart';
 // **************************************************************************
 
 String _$paginatedReviewsNotifierHash() =>
-    r'737369a197d748797ceab24f18fccd5646ff5a21';
+    r'adc476f69af45e11c6f932d8878f964377ac0d95';
 
 /// Copied from Dart SDK
 class _SystemHash {

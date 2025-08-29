@@ -54,10 +54,9 @@ class HomeDetailAppBar extends ConsumerWidget implements PreferredSizeWidget {
           enabled: true,
           child: AppBarContent(name: BoneMock.title),
         ),
-        // TODO: check is it ok or not?
         data: (entity) => AppBarContent(
           name: entity?.name,
-          isPopular: entity?.isPopular ?? false, // Pass isPopular
+          isPopular: entity?.isPopular ?? false,
         ),
       ),
     );

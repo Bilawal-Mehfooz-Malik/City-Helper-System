@@ -466,6 +466,12 @@ abstract class AppLocalizations {
   /// **'Message'**
   String get message;
 
+  /// No description provided for @whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get whatsapp;
+
   /// No description provided for @facebook.
   ///
   /// In en, this message translates to:

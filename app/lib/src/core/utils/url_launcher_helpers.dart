@@ -21,6 +21,11 @@ Future<void> launchSms(String phoneNumber, BuildContext context) async {
   await _tryLaunch(uri, context, 'SMS');
 }
 
+Future<void> launchWhatsApp(String phoneNumber, BuildContext context) async {
+  final uri = Uri.parse('https://wa.me/$phoneNumber');
+  await _tryLaunch(uri, context, 'WhatsApp');
+}
+
 Future<void> launchEmail(String emailAddress, BuildContext context) async {
   final uri = Uri(scheme: 'mailto', path: emailAddress);
   await _tryLaunch(uri, context, 'Email');

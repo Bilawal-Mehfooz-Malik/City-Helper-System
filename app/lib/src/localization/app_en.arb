@@ -130,6 +130,8 @@
   "@call": {},
   "message":"Message",
   "@message": {},
+  "whatsapp":"WhatsApp",
+  "@whatsapp": {},
   "facebook":"Facebook",
   "@facebook": {},
   "instagram":"Instagram",

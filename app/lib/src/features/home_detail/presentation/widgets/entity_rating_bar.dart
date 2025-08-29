@@ -1,3 +1,4 @@
+import 'package:app/src/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -38,7 +39,8 @@ class EntityRatingBar extends StatelessWidget {
         Icons.star,
         // * Keys for testing using find.byKey()
         key: starRatingKey(index),
-        color: Colors.amber,
+        // TODO: Use color from theme
+        color: amberColor,
       ),
       onRatingUpdate: onRatingUpdate,
     );

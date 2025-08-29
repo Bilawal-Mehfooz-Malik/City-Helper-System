@@ -10,7 +10,6 @@ import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-// Renamed to correct the "Avatar" typo.
 class ProfileCircularAvatar extends ConsumerWidget {
   final double avatarSize;
   final double avatarIconSize;

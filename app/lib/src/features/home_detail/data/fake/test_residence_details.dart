@@ -23,7 +23,7 @@ final List<ResidenceDetail> testResidenceDetails = [
     createdAt: DateTime(2024, 3, 10),
     ownerId: 'owner_001',
     description:
-        'A cozy, family-friendly apartment located in the heart of Sector F1.',
+        'A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1. A cozy, family-friendly apartment located in the heart of Sector F1.',
     galleryImageUrls: [
       'assets/images/residence/1.png',
       'assets/images/residence/1.png',

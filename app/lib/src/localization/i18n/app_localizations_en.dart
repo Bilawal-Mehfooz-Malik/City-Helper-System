@@ -198,6 +198,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get message => 'Message';
 
   @override
+  String get whatsapp => 'WhatsApp';
+
+  @override
   String get facebook => 'Facebook';
 
   @override

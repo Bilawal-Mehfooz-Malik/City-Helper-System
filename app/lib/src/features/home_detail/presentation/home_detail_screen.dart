@@ -47,7 +47,6 @@ class HomeDetailScreen extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Stack(
-          // Wrap with Stack
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
@@ -60,9 +59,8 @@ class HomeDetailScreen extends ConsumerWidget {
                 data: (tuple) {
                   final entity = tuple.$1;
                   final reviews = tuple.$2;
-                  final reviewsLoadFailed = tuple.$3; // Extract the new flag
+                  final reviewsLoadFailed = tuple.$3;
 
-                  // Avoid showing empty state if entity is null (treat it like still loading)
                   if (entity == null) {
                     return const HomeDetailSkeleton();
                   }
@@ -84,7 +82,7 @@ class HomeDetailScreen extends ConsumerWidget {
                         HomeDetailBottomSection(
                           entity: entity,
                           reviews: reviews,
-                          reviewsLoadFailed: reviewsLoadFailed, // Pass the flag
+                          reviewsLoadFailed: reviewsLoadFailed,
                         ),
                       ],
                     ),
@@ -93,8 +91,7 @@ class HomeDetailScreen extends ConsumerWidget {
               ),
             ),
             // Sticky error bar at the bottom
-            if (combinedValue.hasValue &&
-                combinedValue.value!.$3) // Check if reviewsLoadFailed is true
+            if (combinedValue.hasValue && combinedValue.value!.$3)
               Positioned(
                 bottom: 0,
                 left: 0,
