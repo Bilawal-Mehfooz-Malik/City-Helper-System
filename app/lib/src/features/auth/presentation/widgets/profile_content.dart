@@ -6,10 +6,12 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/presentation/widgets/profile_image_widget.dart';
+import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:app/src/core/common_widgets/custom_text_field.dart';
@@ -41,6 +43,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
   Uint8List? _pickedImageBytes;
   bool _removeImage = false;
   late final TextEditingController _nameController; // Marked as late final
+  bool _isProfileLoaded = false;
 
   @override
   void initState() {
@@ -123,12 +126,13 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
     final user = ref.watch(authStateChangesProvider).value;
+    final savedUserLocation = ref.watch(fetchUserLocationProvider).value;
     final userLocation = ref.watch(userLocationControllerProvider).value;
     final defaultLocation = ref.watch(defaultLocationProvider);
     final mapBuilder = ref.watch(googleMapBuilderProvider);
 
     final profileValue = user != null
-        ? ref.watch(getUserByIdProvider(user.uid))
+        ? ref.watch(fetchUserByIdProvider(user.uid))
         : const AsyncValue<AppUser?>.data(null);
 
     return AsyncValueWidget(
@@ -138,7 +142,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
               builder: (context, constraints) {
                 final safeHeight = constraints.hasBoundedHeight
                     ? constraints.maxHeight
-                    : MediaQuery.of(context).size.height * 0.5;
+                    : MediaQuery.sizeOf(context).height * 0.5;
                 return ConstrainedBox(
                   constraints: BoxConstraints(minHeight: safeHeight),
                   child: const CenteredProgressIndicator(),
@@ -147,21 +151,14 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             )
           : const CenteredProgressIndicator(),
       data: (profile) {
-        // Determine if we are in edit mode or create mode
         final bool isEditMode = profile != null;
 
-        // Initialize _nameController only once when profile data is first available
-        // or when it changes from null to not null (or vice-versa)
-        if (isEditMode && _nameController.text.isEmpty) {
+        if (isEditMode && !_isProfileLoaded) {
           _nameController.text = profile.name;
-          _pickedImage = null; // Clear any temporary picked image
-          _pickedImageBytes = null;
-        } else if (!isEditMode && _nameController.text.isNotEmpty) {
-          // If profile becomes null (e.g., user logs out or profile deleted)
-          // and we were in edit mode, reset to create mode.
+          _isProfileLoaded = true; // Mark as loaded
+        } else if (!isEditMode) {
           _nameController.clear();
-          _pickedImage = null;
-          _pickedImageBytes = null;
+          _isProfileLoaded = false; // Reset for create mode
         }
 
         return SingleChildScrollView(
@@ -211,7 +208,6 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 controller: _nameController,
                 hintText: context.loc.profile_fullNameHint,
                 keyboardType: TextInputType.name,
-                onchanged: (value) => setState(() {}),
               ),
               gapH16,
 
@@ -225,29 +221,47 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 ),
               ),
               gapH4,
-              GestureDetector(
+              InkWell(
                 onTap: authState.isLoading
                     ? null
-                    : () => context.pushNamed(AppRoute.pickYourLocation.name),
+                    : () async {
+                        final result = await context.pushNamed<LatLng>(
+                          AppRoute.pickYourLocation.name,
+                        );
+                        if (result == null) return;
+                        ref
+                            .read(userLocationControllerProvider.notifier)
+                            .getLocationFromMap(result);
+                      },
                 child: AbsorbPointer(
                   absorbing: !authState.isLoading,
                   child: SizedBox(
                     height: 200,
-                    child: mapBuilder(userLocation ?? defaultLocation),
+                    child: mapBuilder(
+                      profile?.lastLocation ??
+                          savedUserLocation ??
+                          userLocation ??
+                          defaultLocation,
+                    ),
                   ),
                 ),
               ),
 
               gapH16,
 
-              PrimaryButton(
-                useMaxSize: true,
-                isDisabled: _nameController.text.trim().length < 4,
-                isLoading: authState.isLoading,
-                onPressed: () => _submit(profile), // Pass profile to _submit
-                text: isEditMode
-                    ? context.loc.common_save
-                    : context.loc.profile_finishSignup,
+              ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _nameController,
+                builder: (context, value, child) {
+                  return PrimaryButton(
+                    useMaxSize: true,
+                    isDisabled: value.text.trim().length < 4,
+                    isLoading: authState.isLoading,
+                    onPressed: () => _submit(profile),
+                    text: isEditMode
+                        ? context.loc.common_save
+                        : context.loc.profile_finishSignup,
+                  );
+                },
               ),
             ],
           ),

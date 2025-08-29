@@ -22,7 +22,7 @@ class AuthFlowScreen extends ConsumerStatefulWidget {
 
 class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   final _phoneNumberController = TextEditingController();
-  TextEditingController? _otpController;
+  late final TextEditingController _otpController;
   bool _isValidCode = false;
 
   final String _countryCode = '92';
@@ -31,17 +31,20 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   String get _fullPhoneNumber =>
       '+$_countryCode${_phoneNumberController.text.replaceAll(RegExp(r'\D'), '').trim()}';
 
-  void _setupOtpController() {
-    _otpController?.removeListener(_validateOtpCode);
-    _otpController?.dispose();
-
+  @override
+  void initState() {
+    super.initState();
     _otpController = TextEditingController();
-    _otpController!.addListener(_validateOtpCode);
+    _otpController.addListener(_validateOtpCode);
+  }
+
+  void _setupOtpController() {
+    _otpController.clear();
     _isValidCode = false;
   }
 
   void _validateOtpCode() {
-    final isValid = _otpController!.text.trim().length == 6;
+    final isValid = _otpController.text.trim().length == 6;
     if (isValid != _isValidCode) {
       setState(() {
         _isValidCode = isValid;
@@ -52,7 +55,8 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   @override
   void dispose() {
     _phoneNumberController.dispose();
-    _otpController?.dispose();
+    _otpController.removeListener(_validateOtpCode);
+    _otpController.dispose();
     super.dispose();
   }
 
@@ -73,7 +77,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   }
 
   Future<void> _verifyOtp() async {
-    final code = _otpController!.text.trim();
+    final code = _otpController.text.trim();
     final result = await ref
         .read(authControllerProvider.notifier)
         .verifyOtp(code: code);
@@ -107,10 +111,11 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         child = OtpContent(
           key: ValueKey(_currentStep),
           phoneNumber: _fullPhoneNumber,
-          otpController: _otpController!,
+          otpController: _otpController,
           isValidCode: _isValidCode,
           onBack: () => setState(() {
-            _otpController = null;
+            _otpController.clear();
+            _isValidCode = false;
             _currentStep = AuthFlowStep.phoneNumber;
           }),
           onSubmit: _verifyOtp,

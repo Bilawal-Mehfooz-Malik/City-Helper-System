@@ -20,6 +20,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
+import 'package:app/src/features/startup/presentation/pick_location_screen.dart';
 import 'package:app/src/routers/not_found_screen.dart';
 
 part 'app_router.g.dart';
@@ -197,6 +198,12 @@ GoRouter appRouter(Ref ref) {
             ),
           );
         },
+      ),
+      GoRoute(
+        path: '/pick-your-location',
+        name: AppRoute.pickYourLocation.name,
+        pageBuilder: (context, state) =>
+            MaterialPage(fullscreenDialog: true, child: PickLocationScreen()),
       ),
       GoRoute(
         path: '/my-shop',
