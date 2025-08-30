@@ -6,6 +6,7 @@ import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/presentation/controllers/profile_image_controller.dart';
 import 'package:app/src/features/auth/presentation/widgets/profile_image_widget.dart';
 import 'package:app/src/features/auth/presentation/widgets/profile_location_map.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -44,10 +45,6 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
   @override
   void dispose() {
     _nameController.dispose();
-    // Clear the image state when the screen is disposed
-    Future.microtask(
-      () => ref.read(profileImageControllerProvider.notifier).clear(),
-    );
     super.dispose();
   }
 
@@ -185,7 +182,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
               CustomTextField(
                 enabled: !authState.isLoading,
                 controller: _nameController,
-                hintText: context.loc.profile_fullNameHint,
+                hintText: 'Enter your name (min 4 characters)'.hardcoded,
                 keyboardType: TextInputType.name,
               ),
               gapH16,

@@ -48,6 +48,7 @@ extension AppBootstrapFakes on AppBootStrap {
     final residenceDetailsRepository = FakeResidenceDetailsRepository(
       addDelay: false,
     );
+    final inMemoryStorage = InMemoryImageStorage();
     final reviewsRepository = FakeReviewsRepository(addDelay: false);
     final authRepository = FakeAuthRepository(addDelay: false);
     final reviewsService = FakeReviewsService(
@@ -56,9 +57,7 @@ extension AppBootstrapFakes on AppBootStrap {
       fakeFoodDetailsRepository: foodDetailsRepository,
       fakeResidenceDetailsRepository: residenceDetailsRepository,
     );
-    final imageUploadRepository = FakeImageUploadRepository(
-      InMemoryImageStorage(),
-    );
+    final imageUploadRepository = FakeImageUploadRepository(inMemoryStorage);
     final userRepository = FakeUserRepository(addDelay: false);
 
     return ProviderContainer(
@@ -87,6 +86,7 @@ extension AppBootstrapFakes on AppBootStrap {
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
         reviewsServiceProvider.overrideWithValue(reviewsService),
+        inMemoryImageStorageProvider.overrideWithValue(inMemoryStorage),
         ...overrides, // Place test-specific overrides last to ensure precedence
       ],
       observers: [

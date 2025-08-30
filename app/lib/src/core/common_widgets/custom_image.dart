@@ -212,7 +212,8 @@ class _CustomImageState extends ConsumerState<CustomImage> {
 
   Widget _buildInMemoryImage(Widget errorPlaceholder) {
     final userId = _effectiveImageUrl!.replaceFirst('inmemory://', '');
-    final bytes = ref.watch(inMemoryImageStorageProvider).getImageBytes(userId);
+    final bytes = ref.read(inMemoryImageStorageProvider).getImageBytes(userId);
+    if (bytes == null) {}
     return bytes != null
         ? Image.memory(bytes, fit: widget.fit)
         : errorPlaceholder;

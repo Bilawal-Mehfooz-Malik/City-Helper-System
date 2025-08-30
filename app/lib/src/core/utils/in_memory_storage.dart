@@ -15,6 +15,10 @@ class InMemoryImageStorage {
 
   Uint8List? getImageBytes(String userId) => _images[userId];
 
+  void deleteImage(String userId) {
+    _images.remove(userId);
+  }
+
   void clear() => _images.clear();
 }
 

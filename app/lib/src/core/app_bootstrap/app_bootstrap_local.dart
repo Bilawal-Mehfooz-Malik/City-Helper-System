@@ -52,11 +52,10 @@ extension AppBootstrapFakes on AppBootStrap {
     );
 
     final prefs = await SharedPreferences.getInstance();
+    final inMemoryStorage = InMemoryImageStorage();
     final userLocationRepository = UserLocationRepository(prefs);
     final userModeReposiory = UserModeRepository(prefs);
-    final imageUploadRepository = FakeImageUploadRepository(
-      InMemoryImageStorage(),
-    );
+    final imageUploadRepository = FakeImageUploadRepository(inMemoryStorage);
     final userRepository = FakeUserRepository(addDelay: false);
     final authService = FakeAuthService(
       authRepository: authRepository,
@@ -89,6 +88,7 @@ extension AppBootstrapFakes on AppBootStrap {
         reviewsServiceProvider.overrideWithValue(reviewsService),
         authServiceProvider.overrideWithValue(authService),
         userModeRepositoryProvider.overrideWithValue(userModeReposiory),
+        inMemoryImageStorageProvider.overrideWithValue(inMemoryStorage),
       ],
       observers: [
         // * This observer logs all AsyncError states that are set by the controllers

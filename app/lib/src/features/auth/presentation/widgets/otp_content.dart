@@ -27,6 +27,7 @@ class OtpContent extends ConsumerStatefulWidget {
 class _OtpContentState extends ConsumerState<OtpContent> {
   late final TextEditingController _otpController;
   bool _isValidCode = false;
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -37,6 +38,8 @@ class _OtpContentState extends ConsumerState<OtpContent> {
 
   @override
   void dispose() {
+    if (_isDisposed) return;
+    _isDisposed = true;
     _otpController.removeListener(_validateOtpCode);
     _otpController.dispose();
     super.dispose();
