@@ -22,8 +22,6 @@ class AuthFlowScreen extends ConsumerStatefulWidget {
 
 class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   final _phoneNumberController = TextEditingController();
-  late final TextEditingController _otpController;
-  bool _isValidCode = false;
 
   final String _countryCode = '92';
   AuthFlowStep _currentStep = AuthFlowStep.phoneNumber;
@@ -32,31 +30,8 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
       '+$_countryCode${_phoneNumberController.text.replaceAll(RegExp(r'\D'), '').trim()}';
 
   @override
-  void initState() {
-    super.initState();
-    _otpController = TextEditingController();
-    _otpController.addListener(_validateOtpCode);
-  }
-
-  void _setupOtpController() {
-    _otpController.clear();
-    _isValidCode = false;
-  }
-
-  void _validateOtpCode() {
-    final isValid = _otpController.text.trim().length == 6;
-    if (isValid != _isValidCode) {
-      setState(() {
-        _isValidCode = isValid;
-      });
-    }
-  }
-
-  @override
   void dispose() {
     _phoneNumberController.dispose();
-    _otpController.removeListener(_validateOtpCode);
-    _otpController.dispose();
     super.dispose();
   }
 
@@ -71,13 +46,11 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
     }
 
     if (mounted) {
-      _setupOtpController();
       setState(() => _currentStep = AuthFlowStep.otp);
     }
   }
 
-  Future<void> _verifyOtp() async {
-    final code = _otpController.text.trim();
+  Future<void> _verifyOtp(String code) async {
     final result = await ref
         .read(authControllerProvider.notifier)
         .verifyOtp(code: code);
@@ -109,13 +82,9 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         break;
       case AuthFlowStep.otp:
         child = OtpContent(
-          key: ValueKey(_currentStep),
+          key: const ValueKey('OtpContent'), // Use a constant key
           phoneNumber: _fullPhoneNumber,
-          otpController: _otpController,
-          isValidCode: _isValidCode,
           onBack: () => setState(() {
-            _otpController.clear();
-            _isValidCode = false;
             _currentStep = AuthFlowStep.phoneNumber;
           }),
           onSubmit: _verifyOtp,
@@ -123,6 +92,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         break;
       case AuthFlowStep.profile:
         child = ProfileContent(
+          key: const ValueKey('ProfileContent'),
           phoneNumber: _fullPhoneNumber,
           isSmallScreen: isSmall,
         );

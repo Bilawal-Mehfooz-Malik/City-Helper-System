@@ -83,7 +83,9 @@ class GetLocationContent extends ConsumerWidget {
                 onPressed: () async {
                   final pickedLocation = await showGeneralDialog<LatLng>(
                     context: context,
-                    pageBuilder: (_, _, _) => const PickLocationScreen(),
+                    pageBuilder: (_, _, _) => PickLocationScreen(
+                      initialLocation: locationValue.value,
+                    ),
                   );
                   if (pickedLocation != null) {
                     locationNotifier.getLocationFromMap(pickedLocation);

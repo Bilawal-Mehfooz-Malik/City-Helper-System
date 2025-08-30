@@ -1,28 +1,23 @@
-import 'dart:typed_data';
-
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
+import 'package:app/src/features/auth/presentation/controllers/profile_image_controller.dart';
 import 'package:app/src/features/auth/presentation/widgets/profile_image_widget.dart';
-import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
+import 'package:app/src/features/auth/presentation/widgets/profile_location_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:app/src/core/common_widgets/custom_text_field.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/routers/app_router.dart';
 
 class ProfileContent extends ConsumerStatefulWidget {
   final String phoneNumber;
@@ -38,21 +33,21 @@ class ProfileContent extends ConsumerStatefulWidget {
 }
 
 class _ProfileContentState extends ConsumerState<ProfileContent> {
-  XFile? _pickedImage;
-  Uint8List? _pickedImageBytes;
-  bool _removeImage = false;
-  late final TextEditingController _nameController; // Marked as late final
-  bool _isProfileLoaded = false;
+  late final TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(); // Initialize here
+    _nameController = TextEditingController();
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    // Clear the image state when the screen is disposed
+    Future.microtask(
+      () => ref.read(profileImageControllerProvider.notifier).clear(),
+    );
     super.dispose();
   }
 
@@ -62,6 +57,14 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     if (name.length < 4) {
       return;
     }
+
+    // Get image state from the provider
+    final imageState = ref.read(profileImageControllerProvider);
+    final imageFile = imageState.imageFile;
+    final removeImage = imageState.imageRemoved;
+
+    // Read bytes from XFile if it exists
+    final imageBytes = imageFile != null ? await imageFile.readAsBytes() : null;
 
     final controller = ref.read(authControllerProvider.notifier);
     final user = ref.read(authStateChangesProvider).value;
@@ -76,7 +79,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
     if (isEditMode) {
       final isNameUnchanged = name == existingProfile.name;
-      final isImageUnchanged = _pickedImageBytes == null && !_removeImage;
+      final isImageUnchanged = imageBytes == null && !removeImage;
       final isLocationUnchanged = location == existingProfile.lastLocation;
 
       if (isNameUnchanged && isImageUnchanged && isLocationUnchanged) {
@@ -94,12 +97,12 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     final result = isEditMode
         ? await controller.updateUser(
             name: name,
-            profileImageBytes: _pickedImageBytes,
-            removeProfileImage: _removeImage,
+            profileImageBytes: imageBytes,
+            removeProfileImage: removeImage,
           )
         : await controller.createUser(
             name: name,
-            profileImageBytes: _pickedImageBytes,
+            profileImageBytes: imageBytes,
           );
 
     if (!mounted) {
@@ -113,30 +116,10 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     }
   }
 
-  void _onImageChanged(XFile? file) async {
-    if (file == null) {
-      setState(() {
-        _pickedImage = null;
-        _pickedImageBytes = null;
-      });
-      return;
-    }
-
-    final bytes = await file.readAsBytes();
-
-    setState(() {
-      _pickedImage = file;
-      _pickedImageBytes = bytes;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
     final user = ref.watch(authStateChangesProvider).value;
-    final userLocation = ref.watch(profileLocationControllerProvider).value;
-    final defaultLocation = ref.watch(defaultLocationProvider);
-    final mapBuilder = ref.watch(googleMapBuilderProvider);
 
     final profileValue = user != null
         ? ref.watch(fetchUserByIdProvider(user.uid))
@@ -160,12 +143,10 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       data: (profile) {
         final bool isEditMode = profile != null;
 
-        if (isEditMode && !_isProfileLoaded) {
+        if (isEditMode && _nameController.text.isEmpty) {
           _nameController.text = profile.name;
-          _isProfileLoaded = true; // Mark as loaded
         } else if (!isEditMode) {
           _nameController.clear();
-          _isProfileLoaded = false; // Reset for create mode
         }
 
         return SingleChildScrollView(
@@ -187,16 +168,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
               ProfileImageWidget(
                 initialImageUrl: profile?.profileImageUrl,
-                initialImageFile: _pickedImage,
                 isLoading: authState.isLoading,
-                onImageChanged: _onImageChanged,
-                onImageRemoved: () {
-                  setState(() {
-                    _pickedImage = null;
-                    _pickedImageBytes = null;
-                    _removeImage = true;
-                  });
-                },
               ),
 
               gapH24,
@@ -228,27 +200,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 ),
               ),
               gapH4,
-              InkWell(
-                onTap: authState.isLoading
-                    ? null
-                    : () async {
-                        final result = await context.pushNamed<LatLng>(
-                          AppRoute.pickYourLocation.name,
-                        );
-                        if (result == null) return;
-
-                        ref
-                            .read(profileLocationControllerProvider.notifier)
-                            .updateLocation(result);
-                      },
-                child: AbsorbPointer(
-                  absorbing: !authState.isLoading,
-                  child: SizedBox(
-                    height: 200,
-                    child: mapBuilder(userLocation ?? defaultLocation),
-                  ),
-                ),
-              ),
+              const ProfileLocationMap(),
 
               gapH16,
 

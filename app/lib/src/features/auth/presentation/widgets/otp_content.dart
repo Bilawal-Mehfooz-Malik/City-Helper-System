@@ -8,30 +8,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpContent extends ConsumerWidget {
+class OtpContent extends ConsumerStatefulWidget {
   final String phoneNumber;
-  final TextEditingController otpController;
   final VoidCallback onBack;
-  final VoidCallback onSubmit;
-  final bool isValidCode;
+  final ValueChanged<String> onSubmit;
 
   const OtpContent({
     super.key,
     required this.phoneNumber,
-    required this.otpController,
     required this.onBack,
     required this.onSubmit,
-    required this.isValidCode,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OtpContent> createState() => _OtpContentState();
+}
+
+class _OtpContentState extends ConsumerState<OtpContent> {
+  late final TextEditingController _otpController;
+  bool _isValidCode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _otpController = TextEditingController();
+    _otpController.addListener(_validateOtpCode);
+  }
+
+  @override
+  void dispose() {
+    _otpController.removeListener(_validateOtpCode);
+    _otpController.dispose();
+    super.dispose();
+  }
+
+  void _validateOtpCode() {
+    final isValid = _otpController.text.trim().length == 6;
+    if (isValid != _isValidCode) {
+      setState(() {
+        _isValidCode = isValid;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        PhoneAvatar(),
+        const PhoneAvatar(),
         gapH24,
         Text(
           context.loc.confirmCode_title,
@@ -47,12 +74,12 @@ class OtpContent extends ConsumerWidget {
           alignment: WrapAlignment.center,
           children: [
             Text(
-              context.loc.confirmCode_sentMessage(phoneNumber),
+              context.loc.confirmCode_sentMessage(widget.phoneNumber),
               style: TextStyle(color: context.colorScheme.onSurfaceVariant),
               textAlign: TextAlign.center,
             ),
             InkWell(
-              onTap: onBack,
+              onTap: widget.onBack,
               child: Text(
                 context.loc.confirmCode_changeNumber,
                 style: TextStyle(
@@ -67,7 +94,7 @@ class OtpContent extends ConsumerWidget {
         PinCodeTextField(
           length: 6,
           appContext: context,
-          controller: otpController,
+          controller: _otpController,
           keyboardType: TextInputType.number,
           pinTheme: PinTheme(
             fieldWidth: 50,
@@ -85,10 +112,10 @@ class OtpContent extends ConsumerWidget {
         gapH24,
         PrimaryButton(
           useMaxSize: true,
-          isDisabled: !isValidCode,
+          isDisabled: !_isValidCode,
           isLoading: authState.isLoading,
           text: context.loc.confirmCode_verifyButton,
-          onPressed: onSubmit,
+          onPressed: () => widget.onSubmit(_otpController.text.trim()),
         ),
       ],
     );

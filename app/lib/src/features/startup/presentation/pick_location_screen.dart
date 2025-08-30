@@ -12,7 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PickLocationScreen extends ConsumerStatefulWidget {
-  const PickLocationScreen({super.key});
+  final LatLng? initialLocation;
+  const PickLocationScreen({super.key, this.initialLocation});
 
   @override
   ConsumerState<PickLocationScreen> createState() => _PickLocationScreenState();
@@ -32,9 +33,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   @override
   void initState() {
     super.initState();
-    final previousLocation = ref.read(profileLocationControllerProvider).value;
-    final defaultLoc = ref.read(defaultLocationProvider);
-    _pickedLocation = previousLocation ?? defaultLoc;
+    _pickedLocation = widget.initialLocation ?? ref.read(defaultLocationProvider);
   }
 
   Future<void> _moveCamera(LatLng target, {double zoomLevel = 13.0}) async {
