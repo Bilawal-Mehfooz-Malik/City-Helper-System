@@ -56,7 +56,11 @@ class _RealGoogleMapWidgetState extends ConsumerState<RealGoogleMapWidget> {
         key: ValueKey(widget.latLng),
         mapType: _mapType,
         initialCameraPosition: _cameraPosition,
-        onMapCreated: (controller) => _controller.complete(controller),
+        onMapCreated: (controller) {
+          if (!_controller.isCompleted) {
+            _controller.complete(controller);
+          }
+        },
         markers: {
           Marker(
             markerId: const MarkerId('user_location'),

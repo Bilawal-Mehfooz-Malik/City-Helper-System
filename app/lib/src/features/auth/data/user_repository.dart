@@ -49,7 +49,7 @@ class UserRepository {
     }
 
     if (location != null) {
-      data['lastLocation'] = location;
+      data['lastLocation'] = location.toJson();
     }
 
     if (data.isNotEmpty) {
