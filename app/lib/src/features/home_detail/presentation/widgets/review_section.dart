@@ -12,6 +12,7 @@ import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.d
 import 'package:app/src/features/review/presentation/review_skeleton.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
+import 'package:app/src/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -156,16 +157,23 @@ class ReviewListTile extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
+                      SizedBox.square(
+                        dimension: 30,
                         child: user.profileImageUrl != null
-                            ? CustomImageWrapper(
-                                fit: BoxFit.cover,
-                                placeholderIconSize: 15,
-                                imageUrl: user.profileImageUrl,
-                                borderRadius: BorderRadius.circular(48),
+                            ? ClipOval(
+                                child: CustomImage(
+                                  fit: BoxFit.cover,
+                                  placeholderIconSize: 15,
+                                  imageUrl: user.profileImageUrl,
+                                  useCircleLoading: true,
+                                ),
                               )
-                            : Icon(Icons.person, size: 24),
+                            : const CircleAvatar(
+                                radius: 15,
+                                child: Icon(Icons.person, size: 16),
+                              ),
                       ),
+
                       gapW12,
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +197,7 @@ class ReviewListTile extends ConsumerWidget {
                     itemCount: 5,
                     itemSize: 18.0,
                     itemBuilder: (context, _) =>
-                        const Icon(Icons.star, color: Colors.amber),
+                        const Icon(Icons.star, color: amberColor),
                   ),
                 ],
               ),

@@ -1,9 +1,10 @@
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/review/domain/review.dart';
+import 'package:app/src/features/review/data/review_stats_calculator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -31,19 +32,7 @@ class ReviewsService {
     // Fetch all reviews for this entity
     final reviews = await repo.fetchReviewsList(entityId);
 
-    final totalReviews = reviews.length;
-    final avgRating =
-        reviews.fold<double>(0, (sum, r) => sum + r.rating) / totalReviews;
-
-    // Build breakdown: Map<int, int> => {5: 10, 4: 2, ...}
-    final Map<int, int> breakdownMap = {};
-    for (final r in reviews) {
-      final rounded = r.rating.round();
-      breakdownMap[rounded] = (breakdownMap[rounded] ?? 0) + 1;
-    }
-    final breakdown = breakdownMap.entries
-        .map((e) => RatingBreakdown(stars: e.key, count: e.value))
-        .toList();
+    final stats = calculateReviewStats(reviews);
 
     // Update entity
     if (categoryId == 1) {
@@ -51,23 +40,29 @@ class ReviewsService {
       final current = await residenceRepo.fetchResidenceDetails(entityId);
       if (current != null) {
         final updated = current.copyWith(
-          avgRating: avgRating,
-          totalReviews: totalReviews,
-          ratingBreakdown: breakdown,
+          avgRating: stats.avgRating,
+          totalReviews: stats.totalReviews,
+          ratingBreakdown: stats.ratingBreakdown,
         );
         await residenceRepo.setResidenceDetail(updated);
       }
+      _ref.invalidate(fetchEntityDetailsProvider(categoryId, entityId));
+      _ref.invalidate(reviewsPreviewListProvider(entityId));
+      _ref.invalidate(fetchEntityWithReviewsProvider((categoryId, entityId)));
     } else if (categoryId == 2) {
       final foodRepo = _ref.read(foodDetailsRepositoryProvider);
       final current = await foodRepo.fetchFoodDetails(entityId);
       if (current != null) {
         final updated = current.copyWith(
-          avgRating: avgRating,
-          totalReviews: totalReviews,
-          ratingBreakdown: breakdown,
+          avgRating: stats.avgRating,
+          totalReviews: stats.totalReviews,
+          ratingBreakdown: stats.ratingBreakdown,
         );
         await foodRepo.setFoodDetail(updated);
       }
+      _ref.invalidate(fetchEntityDetailsProvider(categoryId, entityId));
+      _ref.invalidate(reviewsPreviewListProvider(entityId));
+      _ref.invalidate(fetchEntityWithReviewsProvider((categoryId, entityId)));
     }
   }
 }
@@ -76,20 +71,3 @@ class ReviewsService {
 ReviewsService reviewsService(Ref ref) {
   return ReviewsService(ref);
 }
-
-// /// Check if a entity was previously reviewed by the user
-// @riverpod
-// Future<Review?> userReviewFuture(Ref ref, EntityId entityId) {
-//   throw UnimplementedError();
-// }
-
-// /// Check if a entity was previously reviewed by the user
-// @riverpod
-// Stream<Review?> userReviewStream(Ref ref, EntityId entityId) {
-//   final user = ref.watch(authStateChangesProvider).value;
-//   if (user != null) {
-//     return ref.watch(reviewsRepositoryProvider).watchReview(entityId, user.uid);
-//   } else {
-//     return Stream.value(null);
-//   }
-// }

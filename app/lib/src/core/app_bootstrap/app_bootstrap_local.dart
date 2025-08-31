@@ -25,9 +25,8 @@ import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
 import 'package:app/src/features/review/data/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/review/application/fake_reviews_service.dart';
+
 import 'package:app/src/features/review/data/reviews_repository.dart';
-import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -44,12 +43,6 @@ extension AppBootstrapFakes on AppBootStrap {
     final residenceDetailsRepository = FakeResidenceDetailsRepository();
     final reviewsRepository = FakeReviewsRepository();
     final authRepository = FakeAuthRepository();
-    final reviewsService = FakeReviewsService(
-      authRepository: authRepository,
-      reviewsRepository: reviewsRepository,
-      fakeFoodDetailsRepository: foodDetailsRepository,
-      fakeResidenceDetailsRepository: residenceDetailsRepository,
-    );
 
     final prefs = await SharedPreferences.getInstance();
     final inMemoryStorage = InMemoryImageStorage();
@@ -85,7 +78,6 @@ extension AppBootstrapFakes on AppBootStrap {
         authRepositoryProvider.overrideWithValue(authRepository),
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
-        reviewsServiceProvider.overrideWithValue(reviewsService),
         authServiceProvider.overrideWithValue(authService),
         userModeRepositoryProvider.overrideWithValue(userModeReposiory),
         inMemoryImageStorageProvider.overrideWithValue(inMemoryStorage),

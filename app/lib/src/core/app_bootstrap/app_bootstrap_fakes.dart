@@ -22,9 +22,7 @@ import 'package:app/src/features/home_detail/data/fake/fake_residence_details_re
 import 'package:app/src/features/review/data/fake_reviews_repository.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
-import 'package:app/src/features/review/application/fake_reviews_service.dart';
 import 'package:app/src/features/review/data/reviews_repository.dart';
-import 'package:app/src/features/review/application/reviews_service.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
 import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
@@ -51,12 +49,7 @@ extension AppBootstrapFakes on AppBootStrap {
     final inMemoryStorage = InMemoryImageStorage();
     final reviewsRepository = FakeReviewsRepository(addDelay: false);
     final authRepository = FakeAuthRepository(addDelay: false);
-    final reviewsService = FakeReviewsService(
-      authRepository: authRepository,
-      reviewsRepository: reviewsRepository,
-      fakeFoodDetailsRepository: foodDetailsRepository,
-      fakeResidenceDetailsRepository: residenceDetailsRepository,
-    );
+
     final imageUploadRepository = FakeImageUploadRepository(inMemoryStorage);
     final userRepository = FakeUserRepository(addDelay: false);
 
@@ -85,7 +78,6 @@ extension AppBootstrapFakes on AppBootStrap {
         authRepositoryProvider.overrideWithValue(authRepository),
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
-        reviewsServiceProvider.overrideWithValue(reviewsService),
         inMemoryImageStorageProvider.overrideWithValue(inMemoryStorage),
         ...overrides, // Place test-specific overrides last to ensure precedence
       ],

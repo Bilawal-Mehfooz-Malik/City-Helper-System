@@ -117,6 +117,7 @@ This also fixed an inconsistency where non-residence entities lacked a divider.
         -   **Issue**: User disliked `AppBar` on large screens and wanted navigation buttons back.
         -   **Fix**: Made `AppBar` conditional (only on small screens). On large screens, close button is `Positioned` with a background. Re-introduced `Positioned` next/previous navigation buttons for large screens.
         -   **Close Button Position (Small Screen)**: Moved the close button to the top-right corner of the `AppBar` on small screens.
+
 ---
 
 ## Chat History - Image Gallery & Review Section Enhancements
