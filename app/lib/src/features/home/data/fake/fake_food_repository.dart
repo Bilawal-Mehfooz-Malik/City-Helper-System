@@ -125,7 +125,7 @@ class FakeFoodRepository implements FoodRepository {
 
     if (filter.genderPref != GenderPreference.any) {
       result = result
-          .where((food) => food.genderPref == filter.genderPref)
+          .where((food) => food.genderPreference == filter.genderPref)
           .toList();
     }
     if (filter.ratingSort != SortOrder.none) {

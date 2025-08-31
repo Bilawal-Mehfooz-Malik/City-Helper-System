@@ -23,7 +23,7 @@ final List<Residence> testResidences = [
       period: PricingPeriod.month,
       unit: PricingUnit.room,
     ),
-    genderPref: GenderPreference.familyFriendly,
+    genderPreference: GenderPreference.familyFriendly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
@@ -43,7 +43,7 @@ final List<Residence> testResidences = [
     isPopular: true,
     openingHours: null, // No specific office hours
     pricing: Pricing(cost: 40000),
-    genderPref: GenderPreference.maleOnly,
+    genderPreference: GenderPreference.maleOnly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
@@ -63,7 +63,7 @@ final List<Residence> testResidences = [
     isPopular: false,
     openingHours: defaultOpeningHours,
     pricing: Pricing(cost: 8000),
-    genderPref: GenderPreference.maleOnly,
+    genderPreference: GenderPreference.maleOnly,
     isFurnished: false,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
@@ -83,7 +83,7 @@ final List<Residence> testResidences = [
     isPopular: false,
     openingHours: null, // No specific office hours
     pricing: Pricing(cost: 15000),
-    genderPref: GenderPreference.femaleOnly,
+    genderPreference: GenderPreference.femaleOnly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
@@ -103,7 +103,7 @@ final List<Residence> testResidences = [
     isPopular: false,
     openingHours: defaultOpeningHours,
     pricing: Pricing(cost: 12000),
-    genderPref: GenderPreference.femaleOnly,
+    genderPreference: GenderPreference.femaleOnly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
@@ -123,7 +123,7 @@ final List<Residence> testResidences = [
     isPopular: true,
     openingHours: null, // No specific office hours
     pricing: Pricing(cost: 60000),
-    genderPref: GenderPreference.familyFriendly,
+    genderPreference: GenderPreference.familyFriendly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
@@ -143,7 +143,7 @@ final List<Residence> testResidences = [
     isPopular: false,
     openingHours: defaultOpeningHours,
     pricing: Pricing(cost: 7000),
-    genderPref: GenderPreference.maleOnly,
+    genderPreference: GenderPreference.maleOnly,
     isFurnished: false,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
@@ -163,7 +163,7 @@ final List<Residence> testResidences = [
     isPopular: true,
     openingHours: null, // No specific office hours
     pricing: Pricing(cost: 28000),
-    genderPref: GenderPreference.familyFriendly,
+    genderPreference: GenderPreference.familyFriendly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added
@@ -183,7 +183,7 @@ final List<Residence> testResidences = [
     isPopular: true,
     openingHours: defaultOpeningHours,
     pricing: Pricing(cost: 11000),
-    genderPref: GenderPreference.femaleOnly,
+    genderPreference: GenderPreference.femaleOnly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: true, // Added
@@ -203,7 +203,7 @@ final List<Residence> testResidences = [
     isPopular: true,
     openingHours: null, // No specific office hours
     pricing: Pricing(cost: 35000),
-    genderPref: GenderPreference.familyFriendly,
+    genderPreference: GenderPreference.familyFriendly,
     isFurnished: true,
     approvalStatus: ApprovalStatus.approved,
     isRoomAvailable: false, // Added

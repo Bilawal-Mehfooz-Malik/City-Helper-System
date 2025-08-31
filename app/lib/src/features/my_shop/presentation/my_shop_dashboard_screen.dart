@@ -149,7 +149,7 @@ class _ShopDetailsView extends ConsumerWidget {
         ),
         Divider(),
         TimingToggleWidget(
-          initialStatus: shop.entityStatus,
+          initialStatus: shop.operationalStatus,
           onStatusChanged: (newStatus) => ref
               .read(shopControllerProvider.notifier)
               .updateShopStatus(

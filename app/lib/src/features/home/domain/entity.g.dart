@@ -27,8 +27,11 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
       ApprovalStatus.pending,
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
-  genderPref:
-      $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
+  genderPreference:
+      $enumDecodeNullable(
+        _$GenderPreferenceEnumMap,
+        json['genderPreference'],
+      ) ??
       GenderPreference.familyFriendly,
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
@@ -58,7 +61,7 @@ Map<String, dynamic> _$ResidenceToJson(Residence instance) => <String, dynamic>{
   'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
-  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'isRoomAvailable': instance.isRoomAvailable,
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
@@ -117,8 +120,11 @@ Food _$FoodFromJson(Map<String, dynamic> json) => Food(
   approvalStatus:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,
-  genderPref:
-      $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
+  genderPreference:
+      $enumDecodeNullable(
+        _$GenderPreferenceEnumMap,
+        json['genderPreference'],
+      ) ??
       GenderPreference.any,
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
   $type: json['runtimeType'] as String?,
@@ -139,7 +145,7 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
   'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'operationalStatus': _$OperationalStatusEnumMap[instance.operationalStatus]!,
   'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
-  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'runtimeType': instance.$type,
 };

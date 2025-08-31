@@ -43,8 +43,9 @@ sealed class EntityDetail with _$EntityDetail {
     @Default([]) List<RatingBreakdown> ratingBreakdown,
 
     // Operational Status & Timestamps
-    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
-    @Default(ApprovalStatus.pending) ApprovalStatus status,
+    @Default(OperationalStatus.defaultStatus)
+    OperationalStatus operationalStatus,
+    @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
     @_timestampJsonConverter required DateTime createdAt,
     @_timestampJsonConverter required DateTime updatedAt,
     @_openingHoursConverter Map<DayOfWeek, OpeningHours>? openingHours,
@@ -52,7 +53,7 @@ sealed class EntityDetail with _$EntityDetail {
     // Contact Information
     required UserId ownerId,
     String? phoneNumber,
-    String? messagingNumber,
+    String? waNumber,
     String? email,
     String? websiteUrl,
     String? instagramUrl,
@@ -65,7 +66,7 @@ sealed class EntityDetail with _$EntityDetail {
     // Specific Attributes
     required Pricing pricing,
     @Default(false) bool isFurnished,
-    @Default(GenderPreference.any) GenderPreference genderPref,
+    @Default(GenderPreference.any) GenderPreference genderPreference,
     @Default(ListingType.forRent) ListingType listingType,
     @Default(true) bool isRoomAvailable,
   }) = ResidenceDetail;
@@ -92,8 +93,9 @@ sealed class EntityDetail with _$EntityDetail {
     @Default([]) List<RatingBreakdown> ratingBreakdown,
 
     // Operational Status & Timestamps
-    @Default(OperationalStatus.defaultStatus) OperationalStatus entityStatus,
-    @Default(ApprovalStatus.pending) ApprovalStatus status,
+    @Default(OperationalStatus.defaultStatus)
+    OperationalStatus operationalStatus,
+    @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
     @_timestampJsonConverter required DateTime createdAt,
     @_timestampJsonConverter required DateTime updatedAt,
     @_openingHoursConverter required Map<DayOfWeek, OpeningHours> openingHours,
@@ -101,7 +103,7 @@ sealed class EntityDetail with _$EntityDetail {
     // Contact Information
     required UserId ownerId,
     String? phoneNumber,
-    String? messagingNumber,
+    String? waNumber,
     String? email,
     String? websiteUrl,
     String? instagramUrl,
@@ -113,7 +115,7 @@ sealed class EntityDetail with _$EntityDetail {
     required List<String> menuImageUrls,
 
     // Specific Attributes
-    @Default(GenderPreference.any) GenderPreference genderPref,
+    @Default(GenderPreference.any) GenderPreference genderPreference,
   }) = FoodDetail;
 
   factory EntityDetail.fromJson(Map<String, Object?> json) =>

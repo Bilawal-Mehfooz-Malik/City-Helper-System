@@ -149,7 +149,7 @@ class FakeResidenceRepository implements ResidenceRepository {
     }
     if (filter.genderPref != GenderPreference.any) {
       result = result
-          .where((residence) => residence.genderPref == filter.genderPref)
+          .where((residence) => residence.genderPreference == filter.genderPref)
           .toList();
     }
     if (filter.ratingSort != SortOrder.none) {

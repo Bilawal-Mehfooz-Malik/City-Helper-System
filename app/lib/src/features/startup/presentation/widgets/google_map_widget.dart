@@ -38,19 +38,13 @@ class _RealGoogleMapWidgetState extends ConsumerState<RealGoogleMapWidget> {
     _cameraPosition = CameraPosition(zoom: _zoom, target: widget.latLng);
   }
 
-  Future<void> _moveCameraToNewLocation() async {
-    final controller = await _controller.future;
-    await controller.moveCamera(
-      CameraUpdate.newCameraPosition(_cameraPosition),
-    );
-  }
-
   @override
   void didUpdateWidget(covariant RealGoogleMapWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.latLng != widget.latLng) {
-      _cameraPosition = CameraPosition(zoom: _zoom, target: widget.latLng);
-      _moveCameraToNewLocation();
+      setState(() {
+        _cameraPosition = CameraPosition(zoom: _zoom, target: widget.latLng);
+      });
     }
   }
 
@@ -59,6 +53,7 @@ class _RealGoogleMapWidgetState extends ConsumerState<RealGoogleMapWidget> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Sizes.p8),
       child: GoogleMap(
+        key: ValueKey(widget.latLng),
         mapType: _mapType,
         initialCameraPosition: _cameraPosition,
         onMapCreated: (controller) => _controller.complete(controller),

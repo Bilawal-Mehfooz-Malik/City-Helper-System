@@ -37,9 +37,9 @@ class _OpeningHoursWidgetState extends State<OpeningHoursWidget> {
 
     // Calculate isOpen dynamically based on entityStatus
     bool? calculatedIsOpen;
-    if (widget.entity.entityStatus == OperationalStatus.open) {
+    if (widget.entity.operationalStatus == OperationalStatus.open) {
       calculatedIsOpen = true;
-    } else if (widget.entity.entityStatus == OperationalStatus.close) {
+    } else if (widget.entity.operationalStatus == OperationalStatus.close) {
       calculatedIsOpen = false;
     } else {
       // OperationalStatus.defaultStatus
@@ -109,8 +109,10 @@ class OpeningHoursLabel extends StatelessWidget {
     final isFood = entity is FoodDetail;
 
     // Handle explicit operational status overrides
-    if (entity.entityStatus == OperationalStatus.open) {
-      final openText = isFood ? loc.open : loc.officeOpen; // Changed for Residence
+    if (entity.operationalStatus == OperationalStatus.open) {
+      final openText = isFood
+          ? loc.open
+          : loc.officeOpen; // Changed for Residence
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),
@@ -122,8 +124,10 @@ class OpeningHoursLabel extends StatelessWidget {
           ],
         ),
       );
-    } else if (entity.entityStatus == OperationalStatus.close) {
-      final closedText = isFood ? loc.closed : loc.officeClosed; // Changed for Residence
+    } else if (entity.operationalStatus == OperationalStatus.close) {
+      final closedText = isFood
+          ? loc.closed
+          : loc.officeClosed; // Changed for Residence
       return RichText(
         text: TextSpan(
           style: TextStyle(color: normalColor),

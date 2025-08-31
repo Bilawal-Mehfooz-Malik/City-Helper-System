@@ -15,7 +15,7 @@ extension ShopFormX on ShopForm {
           name: name,
           description: description,
           phoneNumber: phoneNumber,
-          messagingNumber: messagingNumber,
+          waNumber: messagingNumber,
           cityName: cityName,
           sectorName: sectorName,
           streetAddress: streetAddress,
@@ -25,8 +25,10 @@ extension ShopFormX on ShopForm {
           websiteUrl: websiteUrl,
           latLng: latLng!,
           openingHours: openingHours,
-          genderPref: genderPref,
-          pricing: pricing != null ? Pricing(cost: pricing!) : existingShop.pricing,
+          genderPreference: genderPref,
+          pricing: pricing != null
+              ? Pricing(cost: pricing!)
+              : existingShop.pricing,
           isFurnished: isFurnished,
         );
       } else if (existingShop is FoodDetail) {
@@ -35,7 +37,7 @@ extension ShopFormX on ShopForm {
           name: name,
           description: description,
           phoneNumber: phoneNumber,
-          messagingNumber: messagingNumber,
+          waNumber: messagingNumber,
           cityName: cityName,
           sectorName: sectorName,
           streetAddress: streetAddress,
@@ -45,7 +47,7 @@ extension ShopFormX on ShopForm {
           websiteUrl: websiteUrl,
           latLng: latLng!,
           openingHours: openingHours ?? defaultOpeningHours,
-          genderPref: genderPref,
+          genderPreference: genderPref,
         );
       }
       return existingShop;
@@ -68,18 +70,18 @@ extension ShopFormX on ShopForm {
           totalReviews: 0,
           ratingBreakdown: const [],
           isPopular: false,
-          status: ApprovalStatus.pending,
-          entityStatus: OperationalStatus.defaultStatus,
+          approvalStatus: ApprovalStatus.pending,
+          operationalStatus: OperationalStatus.defaultStatus,
           openingHours: openingHours,
           updatedAt: now,
           createdAt: now,
           phoneNumber: phoneNumber,
-          messagingNumber: messagingNumber,
+          waNumber: messagingNumber,
           email: email,
           facebookUrl: facebookUrl,
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
-          genderPref: genderPref,
+          genderPreference: genderPref,
           pricing: pricing != null ? Pricing(cost: pricing!) : Pricing(cost: 0),
           isFurnished: isFurnished,
         );
@@ -102,18 +104,18 @@ extension ShopFormX on ShopForm {
           totalReviews: 0,
           ratingBreakdown: const [],
           isPopular: false,
-          status: ApprovalStatus.pending,
-          entityStatus: OperationalStatus.defaultStatus,
+          approvalStatus: ApprovalStatus.pending,
+          operationalStatus: OperationalStatus.defaultStatus,
           openingHours: openingHours ?? defaultOpeningHours,
           updatedAt: now,
           createdAt: now,
           phoneNumber: phoneNumber,
-          messagingNumber: messagingNumber,
+          waNumber: messagingNumber,
           email: email,
           facebookUrl: facebookUrl,
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
-          genderPref: genderPref,
+          genderPreference: genderPref,
         );
       }
     }

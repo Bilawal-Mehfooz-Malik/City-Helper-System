@@ -26,11 +26,14 @@ ResidenceDetail _$ResidenceDetailFromJson(
           ?.map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  entityStatus:
-      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+  operationalStatus:
+      $enumDecodeNullable(
+        _$OperationalStatusEnumMap,
+        json['operationalStatus'],
+      ) ??
       OperationalStatus.defaultStatus,
-  status:
-      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+  approvalStatus:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
@@ -40,7 +43,7 @@ ResidenceDetail _$ResidenceDetailFromJson(
   >(json['openingHours'], _openingHoursConverter.fromJson),
   ownerId: json['ownerId'] as String,
   phoneNumber: json['phoneNumber'] as String?,
-  messagingNumber: json['messagingNumber'] as String?,
+  waNumber: json['waNumber'] as String?,
   email: json['email'] as String?,
   websiteUrl: json['websiteUrl'] as String?,
   instagramUrl: json['instagramUrl'] as String?,
@@ -52,8 +55,11 @@ ResidenceDetail _$ResidenceDetailFromJson(
           .toList(),
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
-  genderPref:
-      $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
+  genderPreference:
+      $enumDecodeNullable(
+        _$GenderPreferenceEnumMap,
+        json['genderPreference'],
+      ) ??
       GenderPreference.any,
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
@@ -78,8 +84,8 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
   'ratingBreakdown': instance.ratingBreakdown.map((e) => e.toJson()).toList(),
-  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
-  'status': _$ApprovalStatusEnumMap[instance.status]!,
+  'operationalStatus': _$OperationalStatusEnumMap[instance.operationalStatus]!,
+  'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'openingHours':
@@ -89,7 +95,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
       ),
   'ownerId': instance.ownerId,
   'phoneNumber': instance.phoneNumber,
-  'messagingNumber': instance.messagingNumber,
+  'waNumber': instance.waNumber,
   'email': instance.email,
   'websiteUrl': instance.websiteUrl,
   'instagramUrl': instance.instagramUrl,
@@ -98,7 +104,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'galleryImageUrls': instance.galleryImageUrls,
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
-  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'isRoomAvailable': instance.isRoomAvailable,
   'runtimeType': instance.$type,
@@ -156,11 +162,14 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
           ?.map((e) => RatingBreakdown.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  entityStatus:
-      $enumDecodeNullable(_$OperationalStatusEnumMap, json['entityStatus']) ??
+  operationalStatus:
+      $enumDecodeNullable(
+        _$OperationalStatusEnumMap,
+        json['operationalStatus'],
+      ) ??
       OperationalStatus.defaultStatus,
-  status:
-      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['status']) ??
+  approvalStatus:
+      $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
@@ -169,7 +178,7 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
   ),
   ownerId: json['ownerId'] as String,
   phoneNumber: json['phoneNumber'] as String?,
-  messagingNumber: json['messagingNumber'] as String?,
+  waNumber: json['waNumber'] as String?,
   email: json['email'] as String?,
   websiteUrl: json['websiteUrl'] as String?,
   instagramUrl: json['instagramUrl'] as String?,
@@ -181,8 +190,11 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
           .toList(),
   menuImageUrls:
       (json['menuImageUrls'] as List<dynamic>).map((e) => e as String).toList(),
-  genderPref:
-      $enumDecodeNullable(_$GenderPreferenceEnumMap, json['genderPref']) ??
+  genderPreference:
+      $enumDecodeNullable(
+        _$GenderPreferenceEnumMap,
+        json['genderPreference'],
+      ) ??
       GenderPreference.any,
   $type: json['runtimeType'] as String?,
 );
@@ -203,14 +215,14 @@ Map<String, dynamic> _$FoodDetailToJson(
   'totalReviews': instance.totalReviews,
   'isPopular': instance.isPopular,
   'ratingBreakdown': instance.ratingBreakdown.map((e) => e.toJson()).toList(),
-  'entityStatus': _$OperationalStatusEnumMap[instance.entityStatus]!,
-  'status': _$ApprovalStatusEnumMap[instance.status]!,
+  'operationalStatus': _$OperationalStatusEnumMap[instance.operationalStatus]!,
+  'approvalStatus': _$ApprovalStatusEnumMap[instance.approvalStatus]!,
   'createdAt': _timestampJsonConverter.toJson(instance.createdAt),
   'updatedAt': _timestampJsonConverter.toJson(instance.updatedAt),
   'openingHours': _openingHoursConverter.toJson(instance.openingHours),
   'ownerId': instance.ownerId,
   'phoneNumber': instance.phoneNumber,
-  'messagingNumber': instance.messagingNumber,
+  'waNumber': instance.waNumber,
   'email': instance.email,
   'websiteUrl': instance.websiteUrl,
   'instagramUrl': instance.instagramUrl,
@@ -218,6 +230,6 @@ Map<String, dynamic> _$FoodDetailToJson(
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,
   'menuImageUrls': instance.menuImageUrls,
-  'genderPref': _$GenderPreferenceEnumMap[instance.genderPref]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
   'runtimeType': instance.$type,
 };

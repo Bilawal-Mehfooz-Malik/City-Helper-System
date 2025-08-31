@@ -1,1 +1,2 @@
-i have camera first pointed on default locaiton then it moves to my locaiton why? i just want to point directly on my locaiton if provided what is the issue with google map widget like why using default first then moving to pointed lcoatin? 
+Failed to initialize reCAPTCHA Enterprise config. Triggering the reCAPTCHA v2 verification.
+[log] [firebase_auth/invalid-app-credential] The phone verification request contains an invalid application verifier. The reCAPTCHA token response is either invalid or expired.,

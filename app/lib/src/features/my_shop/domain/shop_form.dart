@@ -62,7 +62,7 @@ abstract class ShopForm with _$ShopForm {
       name: shop.name,
       description: shop.description,
       phoneNumber: shop.phoneNumber ?? '',
-      messagingNumber: shop.messagingNumber ?? '',
+      messagingNumber: shop.waNumber ?? '',
       cityName: shop.cityName,
       sectorName: shop.sectorName,
       streetAddress: shop.streetAddress,
@@ -73,9 +73,9 @@ abstract class ShopForm with _$ShopForm {
       latLng: shop.latLng,
       openingHours: shop.openingHours,
       genderPref: shop is ResidenceDetail
-          ? shop.genderPref
+          ? shop.genderPreference
           : shop is FoodDetail
-          ? shop.genderPref
+          ? shop.genderPreference
           : GenderPreference.any,
       pricing: price,
       isFurnished: isFurnished,

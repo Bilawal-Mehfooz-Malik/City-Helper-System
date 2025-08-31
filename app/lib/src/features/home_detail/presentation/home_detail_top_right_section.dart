@@ -96,7 +96,7 @@ class HomeDetailTopRightContent extends ConsumerWidget {
           ],
           if (entity.instagramUrl != null ||
               entity.facebookUrl != null ||
-              entity.messagingNumber != null ||
+              entity.waNumber != null ||
               entity.phoneNumber != null ||
               entity.email != null ||
               entity.websiteUrl != null) ...[
@@ -190,9 +190,10 @@ class _RatingRow extends ConsumerWidget {
       );
     } else {
       final appUser = await ref.read(fetchUserByIdProvider(user.uid).future);
-      if (appUser != null && appUser.isProfileComplete) {
+      if (appUser != null && appUser.isProfileComplete && context.mounted) {
         _goToWriteReviewScreen(context);
       } else {
+        if (!context.mounted) return;
         showAlertDialog(
           context: context,
           useFilledButton: true,
@@ -310,12 +311,12 @@ class ContactOptionsRow extends StatelessWidget {
             label: context.loc.call,
             onPressed: () => launchPhone(entity.phoneNumber!, context),
           ),
-        if (entity.messagingNumber != null)
+        if (entity.waNumber != null)
           DetailContactButton(
             icon: FontAwesomeIcons.whatsapp,
             color: context.colorScheme.primary,
             label: context.loc.whatsapp,
-            onPressed: () => launchWhatsApp(entity.messagingNumber!, context),
+            onPressed: () => launchWhatsApp(entity.waNumber!, context),
           ),
         if (entity.facebookUrl != null)
           OutlinedContactButton(
