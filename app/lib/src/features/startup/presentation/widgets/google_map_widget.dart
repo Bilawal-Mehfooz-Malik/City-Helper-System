@@ -50,9 +50,7 @@ class _RealGoogleMapWidgetState extends ConsumerState<RealGoogleMapWidget> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.latLng != widget.latLng) {
       _cameraPosition = CameraPosition(zoom: _zoom, target: widget.latLng);
-      if (_controller.isCompleted) {
-        _moveCameraToNewLocation();
-      }
+      _moveCameraToNewLocation();
     }
   }
 

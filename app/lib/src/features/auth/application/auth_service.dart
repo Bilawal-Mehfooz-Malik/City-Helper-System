@@ -8,7 +8,6 @@ import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
-import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -41,13 +40,13 @@ class AuthService {
   Future<void> createUserProfile({
     required String name,
     Uint8List? profileImageBytes,
+    LatLng? location,
   }) async {
     final user = ref.read(authRepositoryProvider).currentUser;
     if (user == null) {
       throw UserNotAuthenticatedException();
     }
 
-    final userLocation = ref.read(userLocationControllerProvider).value;
     final defaultLocation = ref.read(defaultLocationProvider);
 
     String? imageUrl;
@@ -60,7 +59,7 @@ class AuthService {
       name: name,
       phoneNumber: user.phoneNumber,
       profileImageUrl: imageUrl,
-      lastLocation: userLocation ?? defaultLocation,
+      lastLocation: location ?? defaultLocation,
     );
 
     await ref.read(userRepositoryProvider).createUserProfile(user: appUser);

@@ -23,5 +23,5 @@ abstract class AppUser with _$AppUser {
 }
 
 extension AppUserExtension on AppUser {
-  bool get isProfileComplete => name.isNotEmpty && profileImageUrl != null;
+  bool get isProfileComplete => name.isNotEmpty;
 }

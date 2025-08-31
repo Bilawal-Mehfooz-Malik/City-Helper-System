@@ -19,6 +19,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ProfileContent extends ConsumerStatefulWidget {
   final String phoneNumber;
@@ -70,25 +71,40 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       return;
     }
 
-    final location = ref.read(profileLocationControllerProvider).value;
+    final newLocation = ref.read(profileLocationControllerProvider).value;
 
     final bool isEditMode = existingProfile != null;
+
+    // --- Location comparison logic ---
+    bool locationChanged = false;
+    if (isEditMode) {
+      if (existingProfile.lastLocation == null && newLocation != null) {
+        locationChanged = true;
+      } else if (existingProfile.lastLocation != null && newLocation == null) {
+        locationChanged = true;
+      } else if (existingProfile.lastLocation != null && newLocation != null) {
+        if (!_locationsEqual(existingProfile.lastLocation!, newLocation)) {
+          locationChanged = true;
+        }
+      }
+    }
+    // --- End of location comparison ---
 
     if (isEditMode) {
       final isNameUnchanged = name == existingProfile.name;
       final isImageUnchanged = imageBytes == null && !removeImage;
-      final isLocationUnchanged = location == existingProfile.lastLocation;
 
-      if (isNameUnchanged && isImageUnchanged && isLocationUnchanged) {
+      if (isNameUnchanged && isImageUnchanged && !locationChanged) {
         if (mounted) context.pop();
         return;
       }
     }
 
-    if (location != null) {
+    // Save location to profileLocationController if it's a new location or has changed
+    if (newLocation != null && (isEditMode ? locationChanged : true)) {
       await ref
           .read(profileLocationControllerProvider.notifier)
-          .saveLocation(location);
+          .saveLocation(newLocation);
     }
 
     final result = isEditMode
@@ -96,10 +112,12 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             name: name,
             profileImageBytes: imageBytes,
             removeProfileImage: removeImage,
+            location: locationChanged ? newLocation : null,
           )
         : await controller.createUser(
             name: name,
             profileImageBytes: imageBytes,
+            location: newLocation,
           );
 
     if (!mounted) {
@@ -111,6 +129,12 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     } else {
       context.pop();
     }
+  }
+
+  // Utility method to compare LatLng values
+  bool _locationsEqual(LatLng a, LatLng b) {
+    return (a.latitude - b.latitude).abs() < 0.00001 &&
+        (a.longitude - b.longitude).abs() < 0.00001;
   }
 
   @override

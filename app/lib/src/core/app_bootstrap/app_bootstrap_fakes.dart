@@ -1,6 +1,8 @@
 import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
 import 'package:app/src/core/exceptions/async_error_logger.dart';
 import 'package:app/src/core/utils/in_memory_storage.dart';
+import 'package:app/src/features/auth/application/auth_service.dart';
+import 'package:app/src/features/auth/application/fake_auth_service.dart';
 import 'package:app/src/features/auth/data/fake/fake_image_upload_repository.dart';
 import 'package:app/src/features/auth/data/fake/fake_user_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
@@ -30,6 +32,7 @@ import 'package:app/src/features/startup/data/real/user_location_repository.dart
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/widgets/fake_map_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
   ProviderContainer createFakeProviderContainer({
@@ -52,6 +55,12 @@ extension AppBootstrapFakes on AppBootStrap {
 
     final imageUploadRepository = FakeImageUploadRepository(inMemoryStorage);
     final userRepository = FakeUserRepository(addDelay: false);
+    final authService = FakeAuthService(
+      authRepository: authRepository,
+      userRepository: userRepository,
+      imageUploadRepository: imageUploadRepository,
+      defaultLocation: LatLng(33.150691628036256, 73.74845167724608),
+    );
 
     return ProviderContainer(
       overrides: [
@@ -79,6 +88,7 @@ extension AppBootstrapFakes on AppBootStrap {
         imageUploadRepositoryProvider.overrideWithValue(imageUploadRepository),
         userRepositoryProvider.overrideWithValue(userRepository),
         inMemoryImageStorageProvider.overrideWithValue(inMemoryStorage),
+        authServiceProvider.overrideWithValue(authService),
         ...overrides, // Place test-specific overrides last to ensure precedence
       ],
       observers: [

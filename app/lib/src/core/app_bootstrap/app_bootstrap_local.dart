@@ -55,7 +55,6 @@ extension AppBootstrapFakes on AppBootStrap {
       userRepository: userRepository,
       imageUploadRepository: imageUploadRepository,
       defaultLocation: LatLng(33.150691628036256, 73.74845167724608),
-      userLocation: await userLocationRepository.fetchUserLocation(),
     );
 
     return ProviderContainer(

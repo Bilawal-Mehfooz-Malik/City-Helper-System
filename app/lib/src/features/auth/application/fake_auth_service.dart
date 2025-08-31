@@ -17,14 +17,12 @@ class FakeAuthService extends AuthService {
     required this.userRepository,
     required this.imageUploadRepository,
     required this.defaultLocation,
-    required this.userLocation,
   }) : super(FakeRef());
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
   final ImageUploadRepository imageUploadRepository;
   final LatLng defaultLocation;
-  final LatLng? userLocation;
 
   @override
   Future<String> uploadUserProfileImage(
@@ -50,6 +48,7 @@ class FakeAuthService extends AuthService {
   Future<void> createUserProfile({
     required String name,
     Uint8List? profileImageBytes,
+    LatLng? location,
   }) async {
     final user = authRepository.currentUser;
     if (user == null) throw UserNotAuthenticatedException();
@@ -64,7 +63,7 @@ class FakeAuthService extends AuthService {
       name: name,
       phoneNumber: user.phoneNumber,
       profileImageUrl: imageUrl,
-      lastLocation: userLocation ?? defaultLocation,
+      lastLocation: location ?? defaultLocation,
     );
 
     await userRepository.createUserProfile(user: appUser);

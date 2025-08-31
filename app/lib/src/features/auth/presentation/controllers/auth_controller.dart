@@ -1,12 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:app/src/core/utils/default_location_provider.dart';
 import 'package:app/src/features/auth/application/auth_service.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
-import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
 import 'package:app/src/features/auth/presentation/controllers/verification_id_controller.dart';
-import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -68,6 +65,7 @@ class AuthController extends _$AuthController {
   Future<AsyncValue<void>> createUser({
     required String name,
     Uint8List? profileImageBytes,
+    LatLng? location,
   }) async {
     state = const AsyncLoading();
 
@@ -75,6 +73,7 @@ class AuthController extends _$AuthController {
       await _authService.createUserProfile(
         name: name,
         profileImageBytes: profileImageBytes,
+        location: location,
       );
     });
 
@@ -87,6 +86,7 @@ class AuthController extends _$AuthController {
     required String name,
     Uint8List? profileImageBytes,
     bool removeProfileImage = false,
+    LatLng? location,
   }) async {
     state = const AsyncLoading();
 
@@ -94,33 +94,15 @@ class AuthController extends _$AuthController {
       final user = _authRepo.currentUser;
       if (user == null) throw UserNotAuthenticatedException();
 
-      final location = ref.read(userLocationControllerProvider).value;
-      final defaultLocation = ref.read(defaultLocationProvider);
-      final currentLocation = location ?? defaultLocation;
-
-      final existingProfile = ref.read(getUserByIdProvider(user.uid)).value;
-      LatLng? finalLocation = currentLocation;
-
-      if (existingProfile?.lastLocation != null &&
-          _locationsEqual(existingProfile!.lastLocation!, currentLocation)) {
-        finalLocation = null;
-      }
-
       await _authService.updateUserProfile(
         name: name,
         profileImageBytes: profileImageBytes,
-        location: finalLocation,
+        location: location,
         removeProfileImage: removeProfileImage,
       );
     });
 
     state = result;
     return result;
-  }
-
-  // Utility method to compare LatLng values
-  bool _locationsEqual(LatLng a, LatLng b) {
-    return (a.latitude - b.latitude).abs() < 0.00001 &&
-        (a.longitude - b.longitude).abs() < 0.00001;
   }
 }
