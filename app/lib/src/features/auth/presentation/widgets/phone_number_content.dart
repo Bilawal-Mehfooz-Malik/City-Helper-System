@@ -29,60 +29,65 @@ class PhoneNumberContent extends ConsumerWidget {
     final authState = ref.watch(authControllerProvider);
     final isValid = phoneNumberController.text.trim().length == 11;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        PhoneAvatar(),
-        gapH24,
-        Text(
-          context.loc.enterPhoneNum,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PhoneAvatar(),
+          gapH24,
+          Text(
+            context.loc.enterPhoneNum,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        gapH4,
-        Text(
-          context.loc.confirmationCodeMessage,
-          style: TextStyle(color: context.colorScheme.onSurfaceVariant),
-          textAlign: TextAlign.center,
-        ),
-        gapH24,
-        Row(
-          children: [
-            SizedBox(
-              width: 80,
-              child: DropdownButtonFormField<String>(
-                value: countryCode,
-                items: [countryCode].map((code) {
-                  return DropdownMenuItem(value: code, child: Text('+$code'));
-                }).toList(),
-                onChanged: null,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+          gapH4,
+          Text(
+            context.loc.confirmationCodeMessage,
+            style: TextStyle(color: context.colorScheme.onSurfaceVariant),
+            textAlign: TextAlign.center,
+          ),
+          gapH24,
+          Row(
+            children: [
+              SizedBox(
+                width: 80,
+                child: DropdownButtonFormField<String>(
+                  value: countryCode,
+                  items: [countryCode].map((code) {
+                    return DropdownMenuItem(value: code, child: Text('+$code'));
+                  }).toList(),
+                  onChanged: null,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
-            ),
-            gapW12,
-            Expanded(
-              child: CustomTextField(
-                enabled: !authState.isLoading,
-                hintText: '3XX XXXXXXX'.hardcoded,
-                controller: phoneNumberController,
-                keyboardType: TextInputType.phone,
-                onchanged: onchanged,
-                inputFormatters: [PhoneNumberFormatter()],
+              gapW12,
+              Expanded(
+                child: CustomTextField(
+                  enabled: !authState.isLoading,
+                  hintText: '3XX XXXXXXX'.hardcoded,
+                  controller: phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  onchanged: onchanged,
+                  inputFormatters: [PhoneNumberFormatter()],
+                ),
               ),
-            ),
-          ],
-        ),
-        gapH24,
-        PrimaryButton(
-          useMaxSize: true,
-          text: context.loc.continueText,
-          isDisabled: !isValid,
-          isLoading: authState.isLoading,
-          onPressed: onSubmit,
-        ),
-      ],
+            ],
+          ),
+          gapH24,
+          PrimaryButton(
+            useMaxSize: true,
+            text: context.loc.continueText,
+            isDisabled: !isValid,
+            isLoading: authState.isLoading,
+            onPressed: onSubmit,
+          ),
+        ],
+      ),
     );
   }
 }

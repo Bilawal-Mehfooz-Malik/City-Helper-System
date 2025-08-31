@@ -122,103 +122,105 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
         ? ref.watch(fetchUserByIdProvider(user.uid))
         : const AsyncValue<AppUser?>.data(null);
 
-    return AsyncValueWidget(
-      value: profileValue,
-      loading: widget.isSmallScreen
-          ? LayoutBuilder(
-              builder: (context, constraints) {
-                final safeHeight = constraints.hasBoundedHeight
-                    ? constraints.maxHeight
-                    : MediaQuery.sizeOf(context).height * 0.5;
-                return ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: safeHeight),
-                  child: const CenteredProgressIndicator(),
-                );
-              },
-            )
-          : const CenteredProgressIndicator(),
-      data: (profile) {
-        final bool isEditMode = profile != null;
-
-        if (isEditMode && _nameController.text.isEmpty) {
-          _nameController.text = profile.name;
-        } else if (!isEditMode) {
-          _nameController.clear();
-        }
-
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(Sizes.p16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                isEditMode
-                    ? context.loc.account_editProfile
-                    : context.loc.profile_welcome,
-                style: context.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              gapH4,
-              Text(context.loc.profile_subtitle, textAlign: TextAlign.center),
-              gapH24,
-
-              ProfileImageWidget(
-                initialImageUrl: profile?.profileImageUrl,
-                isLoading: authState.isLoading,
-              ),
-
-              gapH24,
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  context.loc.profile_fullNameLabel,
-                  style: context.textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              gapH4,
-              CustomTextField(
-                enabled: !authState.isLoading,
-                controller: _nameController,
-                hintText: 'Enter your name (min 4 characters)'.hardcoded,
-                keyboardType: TextInputType.name,
-              ),
-              gapH16,
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  context.loc.account_yourLocation,
-                  style: context.textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              gapH4,
-              const ProfileLocationMap(),
-
-              gapH16,
-
-              ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _nameController,
-                builder: (context, value, child) {
-                  return PrimaryButton(
-                    useMaxSize: true,
-                    isDisabled: value.text.trim().length < 4,
-                    isLoading: authState.isLoading,
-                    onPressed: () => _submit(profile),
-                    text: isEditMode
-                        ? context.loc.common_save
-                        : context.loc.profile_finishSignup,
+    return Padding(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: AsyncValueWidget(
+        value: profileValue,
+        loading: widget.isSmallScreen
+            ? LayoutBuilder(
+                builder: (context, constraints) {
+                  final safeHeight = constraints.hasBoundedHeight
+                      ? constraints.maxHeight
+                      : MediaQuery.sizeOf(context).height * 0.5;
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: safeHeight),
+                    child: const CenteredProgressIndicator(),
                   );
                 },
-              ),
-            ],
-          ),
-        );
-      },
+              )
+            : const CenteredProgressIndicator(),
+        data: (profile) {
+          final bool isEditMode = profile != null;
+
+          if (isEditMode && _nameController.text.isEmpty) {
+            _nameController.text = profile.name;
+          } else if (!isEditMode) {
+            _nameController.clear();
+          }
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  isEditMode
+                      ? context.loc.account_editProfile
+                      : context.loc.profile_welcome,
+                  style: context.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                gapH4,
+                Text(context.loc.profile_subtitle, textAlign: TextAlign.center),
+                gapH24,
+
+                ProfileImageWidget(
+                  initialImageUrl: profile?.profileImageUrl,
+                  isLoading: authState.isLoading,
+                ),
+
+                gapH24,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    context.loc.profile_fullNameLabel,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                gapH4,
+                CustomTextField(
+                  enabled: !authState.isLoading,
+                  controller: _nameController,
+                  hintText: 'Enter your name (min 4 characters)'.hardcoded,
+                  keyboardType: TextInputType.name,
+                ),
+                gapH16,
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    context.loc.account_yourLocation,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                gapH4,
+                const ProfileLocationMap(),
+
+                gapH16,
+
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: _nameController,
+                  builder: (context, value, child) {
+                    return PrimaryButton(
+                      useMaxSize: true,
+                      isDisabled: value.text.trim().length < 4,
+                      isLoading: authState.isLoading,
+                      onPressed: () => _submit(profile),
+                      text: isEditMode
+                          ? context.loc.common_save
+                          : context.loc.profile_finishSignup,
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

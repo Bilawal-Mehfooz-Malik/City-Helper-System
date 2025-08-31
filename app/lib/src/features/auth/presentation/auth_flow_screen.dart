@@ -4,7 +4,6 @@ import 'package:app/src/core/utils/is_small_screen.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/auth/presentation/widgets/otp_content.dart';
@@ -21,13 +20,17 @@ class AuthFlowScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
-  final _phoneNumberController = TextEditingController();
-
+  late TextEditingController _phoneNumberController;
   final String _countryCode = '92';
   AuthFlowStep _currentStep = AuthFlowStep.phoneNumber;
-
   String get _fullPhoneNumber =>
       '+$_countryCode${_phoneNumberController.text.replaceAll(RegExp(r'\D'), '').trim()}';
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneNumberController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -65,7 +68,11 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
     }
   }
 
-  void _onPhoneNumberChanged(_) => setState(() {});
+  void _onPhoneNumberChanged(_) {
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +89,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         break;
       case AuthFlowStep.otp:
         child = OtpContent(
-          key: const ValueKey('OtpContent'), // Use a constant key
+          key: const ValueKey('OtpContent'),
           phoneNumber: _fullPhoneNumber,
           onBack: () => setState(() {
             _currentStep = AuthFlowStep.phoneNumber;
@@ -105,16 +112,8 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: isSmall
-              ? ResponsiveScrollable(
-                  maxContentWidth: 400,
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-                  child: child,
-                )
-              : ResponsiveCenter(
-                  maxContentWidth: 400,
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-                  child: child,
-                ),
+              ? ResponsiveScrollable(maxContentWidth: 400, child: child)
+              : ResponsiveCenter(maxContentWidth: 400, child: child),
         ),
       ),
     );

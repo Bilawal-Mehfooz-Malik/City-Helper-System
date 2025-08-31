@@ -35,6 +35,15 @@ class AccountScreen extends ConsumerWidget {
     }
   }
 
+  String _formatPhoneNumberForDisplay(String phoneNumber) {
+    if (phoneNumber.startsWith('+92') && phoneNumber.length == 13) {
+      // Format for Pakistan numbers: +92 3XX XXXXXXX
+      return '${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 6)} ${phoneNumber.substring(6)}';
+    }
+    // Return original number if it doesn't match the expected format
+    return phoneNumber;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateChangesProvider).value;
@@ -79,9 +88,7 @@ class AccountScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(50),
                               imageUrl: profile.profileImageUrl,
                             )
-                          : CircleAvatar(
-                              child: Icon(Icons.person, size: 48),
-                            ),
+                          : CircleAvatar(child: Icon(Icons.person, size: 48)),
                     ),
                   ),
                   gapH16,
@@ -96,7 +103,7 @@ class AccountScreen extends ConsumerWidget {
                   ),
                   gapH8,
                   Text(
-                    profile.phoneNumber,
+                    _formatPhoneNumberForDisplay(profile.phoneNumber),
                     style: TextStyle(
                       color: context.colorScheme.onSurfaceVariant,
                     ),

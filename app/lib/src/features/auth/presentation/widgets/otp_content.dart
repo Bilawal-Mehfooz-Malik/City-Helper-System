@@ -45,7 +45,17 @@ class _OtpContentState extends ConsumerState<OtpContent> {
     super.dispose();
   }
 
+  String _formatPhoneNumberForDisplay(String phoneNumber) {
+    if (phoneNumber.startsWith('+92') && phoneNumber.length == 13) {
+      // Format for Pakistan numbers: +92 3XX XXXXXXX
+      return '${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 6)} ${phoneNumber.substring(6)}';
+    }
+    // Return original number if it doesn't match the expected format
+    return phoneNumber;
+  }
+
   void _validateOtpCode() {
+    if (!mounted) return;
     final isValid = _otpController.text.trim().length == 6;
     if (isValid != _isValidCode) {
       setState(() {
@@ -58,69 +68,75 @@ class _OtpContentState extends ConsumerState<OtpContent> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const PhoneAvatar(),
-        gapH24,
-        Text(
-          context.loc.confirmCode_title,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        gapH8,
-        Wrap(
-          spacing: Sizes.p4,
-          runSpacing: Sizes.p4,
-          alignment: WrapAlignment.center,
-          children: [
-            Text(
-              context.loc.confirmCode_sentMessage(widget.phoneNumber),
-              style: TextStyle(color: context.colorScheme.onSurfaceVariant),
-              textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const PhoneAvatar(),
+          gapH24,
+          Text(
+            context.loc.confirmCode_title,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-            InkWell(
-              onTap: widget.onBack,
-              child: Text(
-                context.loc.confirmCode_changeNumber,
-                style: TextStyle(
-                  color: context.colorScheme.primary,
-                  fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+          ),
+          gapH8,
+          Wrap(
+            spacing: Sizes.p4,
+            runSpacing: Sizes.p4,
+            alignment: WrapAlignment.center,
+            children: [
+              Text(
+                context.loc.confirmCode_sentMessage(
+                  _formatPhoneNumberForDisplay(widget.phoneNumber),
+                ),
+                style: TextStyle(color: context.colorScheme.onSurfaceVariant),
+                textAlign: TextAlign.center,
+              ),
+              InkWell(
+                onTap: widget.onBack,
+                child: Text(
+                  context.loc.confirmCode_changeNumber,
+                  style: TextStyle(
+                    color: context.colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        gapH32,
-        PinCodeTextField(
-          length: 6,
-          appContext: context,
-          controller: _otpController,
-          keyboardType: TextInputType.number,
-          pinTheme: PinTheme(
-            fieldWidth: 50,
-            fieldHeight: 50,
-            shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(Sizes.p8),
-            activeFillColor: context.colorScheme.onPrimary,
-            inactiveFillColor: context.colorScheme.onPrimary,
-            selectedFillColor: context.colorScheme.onPrimary,
-            activeColor: context.colorScheme.onSurfaceVariant,
-            inactiveColor: context.colorScheme.onSurfaceVariant,
-            selectedColor: context.colorScheme.primary,
+            ],
           ),
-        ),
-        gapH24,
-        PrimaryButton(
-          useMaxSize: true,
-          isDisabled: !_isValidCode,
-          isLoading: authState.isLoading,
-          text: context.loc.confirmCode_verifyButton,
-          onPressed: () => widget.onSubmit(_otpController.text.trim()),
-        ),
-      ],
+          gapH32,
+          PinCodeTextField(
+            length: 6,
+            appContext: context,
+            controller: _otpController,
+            autoDisposeControllers: false,
+            keyboardType: TextInputType.number,
+            pinTheme: PinTheme(
+              fieldWidth: 50,
+              fieldHeight: 50,
+              shape: PinCodeFieldShape.box,
+              borderRadius: BorderRadius.circular(Sizes.p8),
+              activeFillColor: context.colorScheme.onPrimary,
+              inactiveFillColor: context.colorScheme.onPrimary,
+              selectedFillColor: context.colorScheme.onPrimary,
+              activeColor: context.colorScheme.onSurfaceVariant,
+              inactiveColor: context.colorScheme.onSurfaceVariant,
+              selectedColor: context.colorScheme.primary,
+            ),
+          ),
+          gapH24,
+          PrimaryButton(
+            useMaxSize: true,
+            isDisabled: !_isValidCode,
+            isLoading: authState.isLoading,
+            text: context.loc.confirmCode_verifyButton,
+            onPressed: () => widget.onSubmit(_otpController.text.trim()),
+          ),
+        ],
+      ),
     );
   }
 }
