@@ -208,8 +208,8 @@ return $default(_that.isDayOff,_that.is24Hours,_that.slots);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _OpeningHours implements OpeningHours {
   const _OpeningHours({this.isDayOff = false, this.is24Hours = false, final  List<TimeSlot>? slots}): _slots = slots;
   factory _OpeningHours.fromJson(Map<String, dynamic> json) => _$OpeningHoursFromJson(json);

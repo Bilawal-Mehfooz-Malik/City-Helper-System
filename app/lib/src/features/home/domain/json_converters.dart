@@ -51,7 +51,9 @@ class OpeningHoursConverter
       final day = DayOfWeek.values.byName(key);
       return MapEntry(
         day,
-        OpeningHours.fromJson(value as Map<String, dynamic>),
+        value == null
+            ? const OpeningHours(isDayOff: true)
+            : OpeningHours.fromJson(value as Map<String, dynamic>),
       );
     });
   }

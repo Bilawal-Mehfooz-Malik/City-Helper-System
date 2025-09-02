@@ -35,7 +35,9 @@ class ResidenceRepository {
       }
     }
     final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs.map((doc) {
+      return doc.data();
+    }).toList();
   }
 
   Future<List<Residence>> fetchResidencesListBySubCategoryId(
@@ -59,7 +61,9 @@ class ResidenceRepository {
       }
     }
     final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs.map((doc) {
+      return doc.data();
+    }).toList();
   }
 
   Future<List<Residence>> fetchPopularResidencesList({
@@ -80,7 +84,9 @@ class ResidenceRepository {
       }
     }
     final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs.map((doc) {
+      return doc.data();
+    }).toList();
   }
 
   Future<List<Residence>> fetchPopularResidencesListBySubCategoryId(
@@ -105,7 +111,9 @@ class ResidenceRepository {
     }
 
     final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs.map((doc) {
+      return doc.data();
+    }).toList();
   }
   // --------------------Helpers--------------------------
 
@@ -124,7 +132,7 @@ class ResidenceRepository {
     }
     if (filter.genderPref != GenderPreference.any) {
       newQuery = newQuery.where(
-        'genderPref',
+        'genderPreference',
         isEqualTo: filter.genderPref.name,
       );
     }
@@ -162,8 +170,10 @@ class ResidenceRepository {
 
   /// A pre-filtered query that only includes documents with an "approved" status.
   /// Used for all public-facing list views.
-  Query<Residence> get _approvedResidencesQuery =>
-      _residencesRef.where('status', isEqualTo: ApprovalStatus.approved.name);
+  Query<Residence> get _approvedResidencesQuery => _residencesRef.where(
+    'approvalStatus',
+    isEqualTo: ApprovalStatus.approved.name,
+  );
 }
 
 @Riverpod(keepAlive: true)

@@ -20,5 +20,5 @@ Map<String, dynamic> _$OpeningHoursToJson(_OpeningHours instance) =>
     <String, dynamic>{
       'isDayOff': instance.isDayOff,
       'is24Hours': instance.is24Hours,
-      'slots': instance.slots,
+      'slots': instance.slots?.map((e) => e.toJson()).toList(),
     };

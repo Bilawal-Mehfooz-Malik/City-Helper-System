@@ -115,7 +115,7 @@ class FoodRepository {
     var newQuery = query;
     if (filter.genderPref != GenderPreference.any) {
       newQuery = newQuery.where(
-        'genderPref',
+        'genderPreference',
         isEqualTo: filter.genderPref.name,
       );
     }
@@ -134,8 +134,10 @@ class FoodRepository {
   }
 
   /// A pre-filtered query that only includes documents with an "approved" status.
-  Query<Food> get _approvedFoodsQuery =>
-      _foodsRef.where('status', isEqualTo: ApprovalStatus.approved.name);
+  Query<Food> get _approvedFoodsQuery => _foodsRef.where(
+    'approvalStatus',
+    isEqualTo: ApprovalStatus.approved.name,
+  );
 
   /// The base collection reference without any filters.
   CollectionReference<Food> get _foodsRef => _firestore
