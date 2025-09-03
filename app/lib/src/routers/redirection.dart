@@ -51,11 +51,22 @@ String? redirection(Ref ref, GoRouterState state) {
       }
     }
 
-    final userProfile = ref.read(getUserByIdProvider(user.uid)).value;
+    final userProfileValue = ref.watch(getUserByIdProvider(user.uid));
+    final userProfile = userProfileValue.valueOrNull;
     final isProfileComplete =
         userProfile != null && userProfile.name.trim().isNotEmpty;
-    if (currentPath == '/auth') {
-      return isProfileComplete ? '/' : '/profile';
+
+    if (isProfileComplete) {
+      if (currentPath == '/profile' || currentPath == '/auth') {
+        return '/';
+      }
+    } else {
+      if (currentPath != '/profile' && currentPath != '/auth') {
+        if (userProfileValue.isLoading) {
+          return null;
+        }
+        return '/profile';
+      }
     }
   }
 

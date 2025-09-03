@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/application/popular_entities_notifier.dart';
@@ -7,6 +8,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
+import 'package:app/src/features/home/presentation/controllers/ad_interaction_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/home_error_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
 import 'package:app/src/features/home/presentation/entities_list_section.dart';
@@ -76,6 +78,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       nonCriticalErrorsProvider(categoryId: widget.categoryId),
     );
 
+    final adInteractionState = ref.watch(adInteractionNotifierProvider);
+    final isAdLoading = adInteractionState.isLoading;
+
     return Scaffold(
       body: SafeArea(
         child: criticalError != null
@@ -89,51 +94,54 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               )
             : Stack(
                 children: [
-                  RefreshIndicator(
-                    onRefresh: () => _onRefresh(ref),
-                    child: CustomScrollView(
-                      controller: _scrollController,
-                      slivers: [
-                        SliverAppBar(
-                          snap: true,
-                          elevation: 0,
-                          floating: true,
-                          titleSpacing: 0,
-                          forceElevated: false,
-                          automaticallyImplyLeading: false,
-                          toolbarHeight: kToolbarHeight + Sizes.p12,
-                          surfaceTintColor:
-                              context.theme.scaffoldBackgroundColor,
-                          backgroundColor:
-                              context.theme.scaffoldBackgroundColor,
-                          title: HomeSearchBar(
-                            showBackButton: widget.showBackButton,
-                            categoryId: widget.categoryId,
+                  AbsorbPointer(
+                    absorbing: isAdLoading,
+                    child: RefreshIndicator(
+                      onRefresh: () => _onRefresh(ref),
+                      child: CustomScrollView(
+                        controller: _scrollController,
+                        slivers: [
+                          SliverAppBar(
+                            snap: true,
+                            elevation: 0,
+                            floating: true,
+                            titleSpacing: 0,
+                            forceElevated: false,
+                            automaticallyImplyLeading: false,
+                            toolbarHeight: kToolbarHeight + Sizes.p12,
+                            surfaceTintColor:
+                                context.theme.scaffoldBackgroundColor,
+                            backgroundColor:
+                                context.theme.scaffoldBackgroundColor,
+                            title: HomeSearchBar(
+                              showBackButton: widget.showBackButton,
+                              categoryId: widget.categoryId,
+                            ),
                           ),
-                        ),
-                        sliverGapH8,
-                        SliverToBoxAdapter(
-                          child: SubCategoriesList(
-                            categoryId: widget.categoryId,
+                          sliverGapH8,
+                          SliverToBoxAdapter(
+                            child: SubCategoriesList(
+                              categoryId: widget.categoryId,
+                            ),
                           ),
-                        ),
-                        sliverGapH8,
-                        // TODO: Re-enable ads when in production
-                        // SliverToBoxAdapter(
-                        //   child: CarouselAdsList(categoryId: widget.categoryId),
-                        // ),
-                        SliverToBoxAdapter(
-                          child: PopularEnitiesSection(
-                            categoryId: widget.categoryId,
+                          sliverGapH8,
+                          // TODO: Re-enable ads when in production
+                          // SliverToBoxAdapter(
+                          //   child: CarouselAdsList(categoryId: widget.categoryId),
+                          // ),
+                          SliverToBoxAdapter(
+                            child: PopularEnitiesSection(
+                              categoryId: widget.categoryId,
+                            ),
                           ),
-                        ),
-                        sliverGapH8,
-                        SliverToBoxAdapter(
-                          child: EntitiesListSection(
-                            categoryId: widget.categoryId,
+                          sliverGapH8,
+                          SliverToBoxAdapter(
+                            child: EntitiesListSection(
+                              categoryId: widget.categoryId,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   if (nonCriticalErrors.isNotEmpty)
@@ -146,6 +154,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         onRetry: () => _onRefresh(ref),
                       ),
                     ),
+                  if (isAdLoading)
+                    ModalBarrier(
+                      dismissible: false,
+                      color: context.colorScheme.surface.withAlpha(204),
+                    ),
+                  if (isAdLoading) const CenteredProgressIndicator(),
                 ],
               ),
       ),

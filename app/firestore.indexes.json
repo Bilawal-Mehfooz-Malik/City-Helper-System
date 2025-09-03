@@ -1,0 +1,2526 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "subcategories",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "categoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "sortOrder",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "carousel_ads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "categoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startDate",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "priorityScore",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "lastShownAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "carousel_ads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "categoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subcategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startDate",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "priorityScore",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "lastShownAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "residence_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isRoomAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isFurnished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "pricing.cost",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}

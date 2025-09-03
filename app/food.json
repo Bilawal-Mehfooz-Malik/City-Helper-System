@@ -1,0 +1,368 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "food_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "approvalStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPopular",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subCategoryId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "genderPreference",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reviews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "entityId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "rating",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}
