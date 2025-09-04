@@ -8,21 +8,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step5MediaPage extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
-  final ShopForm initialForm;
+  final ShopFormWizardControllerProvider wizardProvider;
   final String? initialCoverUrl;
   final List<String> initialGalleryUrls;
 
   const Step5MediaPage({
     super.key,
     required this.formKey,
-    required this.initialForm,
+    required this.wizardProvider,
     this.initialCoverUrl,
     required this.initialGalleryUrls,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wizardProvider = shopFormWizardControllerProvider(initialForm);
     final wizardState = ref.watch(wizardProvider);
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;

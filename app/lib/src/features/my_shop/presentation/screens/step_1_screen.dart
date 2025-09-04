@@ -14,7 +14,7 @@ class Step1BasicDetailsPage extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
   final List<Category> allCategories;
   final List<SubCategory> initialSubCategories;
-  final ShopForm initialForm;
+  final ShopFormWizardControllerProvider wizardProvider;
   final bool isEditing;
 
   const Step1BasicDetailsPage({
@@ -22,13 +22,12 @@ class Step1BasicDetailsPage extends ConsumerWidget {
     required this.formKey,
     required this.allCategories,
     required this.initialSubCategories,
-    required this.initialForm,
+    required this.wizardProvider,
     required this.isEditing,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wizardProvider = shopFormWizardControllerProvider(initialForm);
     final wizardState = ref.watch(wizardProvider);
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;

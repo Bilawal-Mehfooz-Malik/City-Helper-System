@@ -7,7 +7,9 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/widgets/average_rating_widget.dart';
+import 'package:app/src/features/home/presentation/widgets/entity_indicator.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/features/my_shop/application/my_shop_dashboard_provider.dart';
@@ -113,16 +115,9 @@ class _ShopDetailsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSmallScreen = MediaQuery.sizeOf(context).width <= Breakpoint.tablet;
-    final Widget statusIndicator;
-    // if (shop is FoodDetail) {
-    //   statusIndicator = (shop as FoodDetail).isOpen == true
-    //       ? OpenIndicator()
-    //       : (shop as FoodDetail).isOpen == false
-    //           ? CloseIndicator()
-    //           : const SizedBox.shrink();
-    // } else {
-    statusIndicator = const SizedBox.shrink();
-    // }
+    final statusIndicator = EntityStatusIndicator(
+      entity: Entity.fromDetail(shop),
+    );
 
     return Column(
       spacing: Sizes.p16,

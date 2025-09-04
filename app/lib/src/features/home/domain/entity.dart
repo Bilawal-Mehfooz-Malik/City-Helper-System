@@ -3,6 +3,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/features/home/domain/json_converters.dart';
+import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -65,4 +66,48 @@ sealed class Entity with _$Entity {
   }) = Food;
 
   factory Entity.fromJson(Map<String, Object?> json) => _$EntityFromJson(json);
+
+  factory Entity.fromDetail(EntityDetail detail) {
+    return switch (detail) {
+      ResidenceDetail() => Residence(
+          id: detail.id,
+          categoryId: detail.categoryId,
+          subCategoryId: detail.subCategoryId,
+          coverImageUrl: detail.coverImageUrl,
+          name: detail.name,
+          cityName: detail.cityName,
+          sectorName: detail.sectorName,
+          latLng: detail.latLng,
+          avgRating: detail.avgRating,
+          totalReviews: detail.totalReviews,
+          isPopular: detail.isPopular,
+          openingHours: detail.openingHours,
+          approvalStatus: detail.approvalStatus,
+          pricing: detail.pricing,
+          isFurnished: detail.isFurnished,
+          genderPreference: detail.genderPreference,
+          listingType: detail.listingType,
+          isRoomAvailable: detail.isRoomAvailable,
+          updatedAt: detail.updatedAt,
+        ),
+      FoodDetail() => Food(
+          id: detail.id,
+          categoryId: detail.categoryId,
+          subCategoryId: detail.subCategoryId,
+          coverImageUrl: detail.coverImageUrl,
+          name: detail.name,
+          cityName: detail.cityName,
+          sectorName: detail.sectorName,
+          latLng: detail.latLng,
+          avgRating: detail.avgRating,
+          totalReviews: detail.totalReviews,
+          isPopular: detail.isPopular,
+          openingHours: detail.openingHours,
+          operationalStatus: detail.operationalStatus,
+          approvalStatus: detail.approvalStatus,
+          genderPreference: detail.genderPreference,
+          updatedAt: detail.updatedAt,
+        ),
+    };
+  }
 }

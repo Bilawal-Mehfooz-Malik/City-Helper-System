@@ -20,36 +20,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ShopFormScreen extends ConsumerWidget {
+class ShopFormScreen extends ConsumerStatefulWidget {
   final EntityDetail? initialShop;
   const ShopFormScreen({super.key, this.initialShop});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isEditing = initialShop != null;
-    return isEditing ? _buildEditModeBody(ref) : _buildCreateModeBody(ref);
+  ConsumerState<ShopFormScreen> createState() => _ShopFormScreenState();
+}
+
+class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
+  late final ShopFormWizardControllerProvider wizardProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialForm = widget.initialShop != null
+        ? ShopForm.fromEntityDetail(widget.initialShop!)
+        : ShopForm.defaults();
+    wizardProvider = shopFormWizardControllerProvider(initialForm);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isEditing = widget.initialShop != null;
+    final wizardState = ref.watch(wizardProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${isEditing ? 'Edit' : 'Register'} Shop - Step ${wizardState.currentPage + 1}/$kShopFormTotalPages',
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => context.pop(),
+        ),
+      ),
+      body: isEditing ? _buildEditModeBody(ref) : _buildCreateModeBody(ref),
+    );
   }
 
   Widget _buildEditModeBody(WidgetRef ref) {
     final initialDataAsync = ref.watch(
       initialShopCategoryDataProvider(
-        categoryId: initialShop!.categoryId,
-        subCategoryId: initialShop!.subCategoryId,
+        categoryId: widget.initialShop!.categoryId,
+        subCategoryId: widget.initialShop!.subCategoryId,
       ),
     );
     return AsyncValueWidget<ShopFormInitialData>(
       value: initialDataAsync,
       data: (initialData) {
-        final initialForm = ShopForm.fromEntityDetail(initialShop!).copyWith(
-          category: initialData.selectedCategory,
-          subCategory: initialData.selectedSubCategory,
-        );
         return ShopFormWizard(
-          key: ValueKey(initialShop!.id),
-          initialShop: initialShop,
+          key: ValueKey(widget.initialShop!.id),
+          initialShop: widget.initialShop,
           allCategories: initialData.allCategories,
           initialSubCategories: initialData.subCategoryOptions,
-          initialForm: initialForm,
+          wizardProvider: wizardProvider,
         );
       },
     );
@@ -64,7 +89,7 @@ class ShopFormScreen extends ConsumerWidget {
         initialShop: null,
         allCategories: allCategories,
         initialSubCategories: const [],
-        initialForm: ShopForm.defaults(),
+        wizardProvider: wizardProvider,
       ),
     );
   }
@@ -72,16 +97,16 @@ class ShopFormScreen extends ConsumerWidget {
 
 class ShopFormWizard extends ConsumerStatefulWidget {
   final EntityDetail? initialShop;
-  final ShopForm initialForm;
   final List<Category> allCategories;
   final List<SubCategory> initialSubCategories;
+  final ShopFormWizardControllerProvider wizardProvider;
 
   const ShopFormWizard({
     super.key,
     this.initialShop,
-    required this.initialForm,
     required this.allCategories,
     required this.initialSubCategories,
+    required this.wizardProvider,
   });
 
   @override
@@ -98,13 +123,13 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
   }
 
   Future<void> _submitShop() async {
-    final wizardProvider = shopFormWizardControllerProvider(widget.initialForm);
-    final currentFormData = ref.read(wizardProvider).formData;
+    final currentFormData = ref.read(widget.wizardProvider).formData;
     final isEditing = widget.initialShop != null;
 
     // FIX: Check for changes before submitting in edit mode
     if (isEditing) {
-      final bool hasDataChanged = widget.initialForm != currentFormData;
+      final initialForm = ShopForm.fromEntityDetail(widget.initialShop!);
+      final bool hasDataChanged = initialForm != currentFormData;
       final bool haveImagesChanged =
           currentFormData.coverImageBytes != null ||
           currentFormData.galleryImageBytes.isNotEmpty ||
@@ -146,10 +171,9 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
 
   @override
   Widget build(BuildContext context) {
-    final wizardProvider = shopFormWizardControllerProvider(widget.initialForm);
     final isEditing = widget.initialShop != null;
-    final wizardState = ref.watch(wizardProvider);
-    final wizardController = ref.read(wizardProvider.notifier);
+    final wizardState = ref.watch(widget.wizardProvider);
+    final wizardController = ref.read(widget.wizardProvider.notifier);
     final shopControllerState = ref.watch(shopControllerProvider);
     final isLastPage = wizardState.currentPage == kShopFormTotalPages - 1;
 
@@ -165,7 +189,10 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
       }
     });
 
-    ref.listen(wizardProvider.select((s) => s.currentPage), (_, nextPage) {
+    ref.listen(widget.wizardProvider.select((s) => s.currentPage), (
+      _,
+      nextPage,
+    ) {
       _pageController.animateToPage(
         nextPage,
         duration: const Duration(milliseconds: 400),
@@ -173,83 +200,76 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
       );
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${isEditing ? 'Edit' : 'Register'} Shop - Step ${wizardState.currentPage + 1}/$kShopFormTotalPages',
+    return Column(
+      children: [
+        Expanded(
+          child: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              Step1BasicDetailsPage(
+                formKey: wizardState.formKeys[0],
+                allCategories: widget.allCategories,
+                initialSubCategories: widget.initialSubCategories,
+                wizardProvider: widget.wizardProvider,
+                isEditing: isEditing,
+              ),
+              Step2LocationPage(
+                formKey: wizardState.formKeys[1],
+                wizardProvider: widget.wizardProvider,
+              ),
+              Step3ContactPage(
+                formKey: wizardState.formKeys[2],
+                wizardProvider: widget.wizardProvider,
+              ),
+              Step4SpecificsPage(
+                formKey: wizardState.formKeys[3],
+                wizardProvider: widget.wizardProvider,
+              ),
+              Step5MediaPage(
+                formKey: wizardState.formKeys[4],
+                initialCoverUrl: widget.initialShop?.coverImageUrl,
+                initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
+                wizardProvider: widget.wizardProvider,
+              ),
+            ],
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => context.pop(),
-        ),
-      ),
-      body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            Step1BasicDetailsPage(
-              formKey: wizardState.formKeys[0],
-              allCategories: widget.allCategories,
-              initialSubCategories: widget.initialSubCategories,
-              initialForm: widget.initialForm,
-              isEditing: isEditing,
-            ),
-            Step2LocationPage(
-              formKey: wizardState.formKeys[1],
-              initialForm: widget.initialForm,
-            ),
-            Step3ContactPage(
-              formKey: wizardState.formKeys[2],
-              initialForm: widget.initialForm,
-            ),
-            Step4SpecificsPage(
-              formKey: wizardState.formKeys[3],
-              initialForm: widget.initialForm,
-            ),
-            Step5MediaPage(
-              formKey: wizardState.formKeys[4],
-              initialCoverUrl: widget.initialShop?.coverImageUrl,
-              initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
-              initialForm: widget.initialForm,
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (wizardState.currentPage > 0)
-              TextButton.icon(
-                icon: const Icon(Icons.arrow_back_ios),
-                label: Text('Back'.hardcoded),
-                onPressed: wizardController.previousPage,
-              )
-            else
-              const SizedBox(),
-            PrimaryButton(
-              isLoading: shopControllerState.isLoading,
-              onPressed: () {
-                if (isLastPage) {
-                  if (wizardState
-                      .formKeys[wizardState.currentPage]
-                      .currentState!
-                      .validate()) {
-                    _submitShop();
+        BottomAppBar(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (wizardState.currentPage > 0)
+                TextButton.icon(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  label: Text('Back'.hardcoded),
+                  onPressed: wizardController.previousPage,
+                )
+              else
+                const SizedBox(),
+              PrimaryButton(
+                isLoading: shopControllerState.isLoading,
+                onPressed: () {
+                  if (isLastPage) {
+                    if (wizardState
+                        .formKeys[wizardState.currentPage]
+                        .currentState!
+                        .validate()) {
+                      _submitShop();
+                    }
+                  } else {
+                    wizardController.nextPage();
                   }
-                } else {
-                  wizardController.nextPage();
-                }
-              },
-              text: isLastPage
-                  ? (isEditing ? 'Save Changes' : 'Submit'.hardcoded)
-                  : 'Next'.hardcoded,
-            ),
-          ],
+                },
+                text: isLastPage
+                    ? (isEditing ? 'Save Changes' : 'Submit'.hardcoded)
+                    : 'Next'.hardcoded,
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

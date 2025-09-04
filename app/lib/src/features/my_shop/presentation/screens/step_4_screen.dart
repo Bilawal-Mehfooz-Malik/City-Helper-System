@@ -12,17 +12,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step4SpecificsPage extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
-  final ShopForm initialForm;
+  final ShopFormWizardControllerProvider wizardProvider;
 
   const Step4SpecificsPage({
     super.key,
     required this.formKey,
-    required this.initialForm,
+    required this.wizardProvider,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wizardProvider = shopFormWizardControllerProvider(initialForm);
     final wizardState = ref.watch(wizardProvider);
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;

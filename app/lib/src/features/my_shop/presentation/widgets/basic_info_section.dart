@@ -19,6 +19,20 @@ class BasicInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const int maxWords = 500; // Reasonable limit for UX
+
+    // Word count validator
+    String? validateDescription(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Description is required'.hardcoded;
+      }
+      final wordCount = value.trim().split(RegExp(r'\s+')).length;
+      if (wordCount > maxWords) {
+        return 'Description cannot exceed $maxWords words'.hardcoded;
+      }
+      return null;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,7 +43,13 @@ class BasicInfoSection extends StatelessWidget {
           onChanged: onNameChanged,
           decoration: InputDecoration(
             hintText: 'Enter your shop name'.hardcoded,
-            border: const OutlineInputBorder(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 10,
+            ),
           ),
           validator: (val) =>
               val!.isEmpty ? 'Name is required'.hardcoded : null,
@@ -37,17 +57,32 @@ class BasicInfoSection extends StatelessWidget {
         gapH8,
         Text('Description *'.hardcoded, style: context.textTheme.titleMedium),
         gapH4,
-        TextFormField(
-          initialValue: description,
-          onChanged: onDescriptionChanged,
-          decoration: InputDecoration(
-            hintText: 'Write information about your shop'.hardcoded,
-            border: const OutlineInputBorder(),
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxHeight: 300, // Max height to prevent excessive growth
+            minHeight: 80, // Min height for empty field
           ),
-          keyboardType: TextInputType.multiline,
-          maxLines: 3,
-          validator: (val) =>
-              val!.isEmpty ? 'Description is required'.hardcoded : null,
+          child: TextFormField(
+            initialValue: description,
+            onChanged: onDescriptionChanged,
+            decoration: InputDecoration(
+              hintText:
+                  'Write about your business, what you offer, your values, etc.'
+                      .hardcoded,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+            ),
+            keyboardType: TextInputType.multiline,
+            maxLines: null, // Dynamic height
+            maxLength: 5000, // Char limit to support ~500 words
+            textAlignVertical: TextAlignVertical.top,
+            validator: validateDescription,
+          ),
         ),
       ],
     );

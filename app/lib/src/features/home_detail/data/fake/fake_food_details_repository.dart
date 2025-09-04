@@ -16,6 +16,7 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
 
   @override
   Future<void> setFoodDetail(FoodDetail updated) async {
+    await delay(addDelay);
     final current = _foods.value;
     final index = current.indexWhere((f) => f.id == updated.id);
     if (index != -1) {
@@ -30,30 +31,48 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   Future<FoodDetail?> fetchFoodDetails(EntityId id) async {
     await delay(addDelay);
     final foods = _foods.value;
-    return foods.firstWhereOrNull((food) => food.id == id);
-  }
-
-  @override
-  Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) {
-    // TODO: implement fetchFoodDetailsByOwnerId
-    throw UnimplementedError();
-  }
-
-  @override
-  DocumentReference<Object?> getNewFoodsDocRef() {
-    // TODO: implement getNewFoodsDocRef
-    throw UnimplementedError();
+    try {
+      return foods.firstWhere((food) => food.id == id);
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
   Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {
-    // TODO: implement watchFoodDetailsByOwnerId
-    throw UnimplementedError();
+    return _foods.stream.map((foods) {
+      try {
+        return foods.firstWhere((food) => food.ownerId == id);
+      } catch (e) {
+        return null;
+      }
+    });
   }
 
   @override
-  Future<void> updateFoodStatus(EntityId id, OperationalStatus status) {
-    // TODO: implement updateFoodStatus
-    throw UnimplementedError();
+  Future<FoodDetail?> fetchFoodDetailsByOwnerId(UserId id) async {
+    await delay(addDelay);
+    return await watchFoodDetailsByOwnerId(id).first;
+  }
+
+  @override
+  Future<void> updateFoodStatus(EntityId id, OperationalStatus status) async {
+    await delay(addDelay);
+    final current = _foods.value;
+    final index = current.indexWhere((f) => f.id == id);
+    if (index != -1) {
+      final oldFood = current[index];
+      current[index] = (oldFood).copyWith(operationalStatus: status);
+      _foods.value = [...current];
+    }
+  }
+
+  @override
+  DocumentReference<Object?> getNewFoodsDocRef() {
+    // In a fake repository, we don't need a real DocumentReference.
+    // The ID is typically generated on the client side for fake data.
+    throw UnimplementedError(
+      'getNewFoodsDocRef is not implemented in the fake repository',
+    );
   }
 }
