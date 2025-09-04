@@ -7,14 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step5MediaPage extends ConsumerWidget {
-  final GlobalKey<FormState> formKey;
   final ShopFormWizardControllerProvider wizardProvider;
   final String? initialCoverUrl;
   final List<String> initialGalleryUrls;
 
   const Step5MediaPage({
     super.key,
-    required this.formKey,
     required this.wizardProvider,
     this.initialCoverUrl,
     required this.initialGalleryUrls,
@@ -26,40 +24,37 @@ class Step5MediaPage extends ConsumerWidget {
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;
 
-    return Form(
-      key: formKey,
-      child: ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          spacing: Sizes.p12,
-          children: [
-            CoverImageTile(
-              coverImageBytes: formData.coverImageBytes,
-              coverImageUrl: initialCoverUrl,
-              onCoverImagePicked: (bytes) => wizardController.updateFormData(
-                formData.copyWith(coverImageBytes: bytes),
-              ),
+    return ResponsiveScrollable(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        spacing: Sizes.p12,
+        children: [
+          CoverImageTile(
+            coverImageBytes: formData.coverImageBytes,
+            coverImageUrl: initialCoverUrl,
+            onCoverImagePicked: (bytes) => wizardController.updateFormData(
+              formData.copyWith(coverImageBytes: bytes),
             ),
-            GalleryImagesTile(
-              galleryImageBytes: formData.galleryImageBytes,
-              galleryImagesUrl: initialGalleryUrls
-                  .where((url) => !formData.galleryUrlsToDelete.contains(url))
-                  .toList(),
-              onGalleryImagesPicked: (bytesList) =>
-                  wizardController.updateFormData(
-                    formData.copyWith(galleryImageBytes: bytesList),
-                  ),
-              onExistingImageDeleted: (url) {
-                final updatedUrls = List<String>.from(
-                  formData.galleryUrlsToDelete,
-                )..add(url);
+          ),
+          GalleryImagesTile(
+            galleryImageBytes: formData.galleryImageBytes,
+            galleryImagesUrl: initialGalleryUrls
+                .where((url) => !formData.galleryUrlsToDelete.contains(url))
+                .toList(),
+            onGalleryImagesPicked: (bytesList) =>
                 wizardController.updateFormData(
-                  formData.copyWith(galleryUrlsToDelete: updatedUrls),
-                );
-              },
-            ),
-          ],
-        ),
+                  formData.copyWith(galleryImageBytes: bytesList),
+                ),
+            onExistingImageDeleted: (url) {
+              final updatedUrls = List<String>.from(
+                formData.galleryUrlsToDelete,
+              )..add(url);
+              wizardController.updateFormData(
+                formData.copyWith(galleryUrlsToDelete: updatedUrls),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

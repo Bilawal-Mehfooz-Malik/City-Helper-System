@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step1BasicDetailsPage extends ConsumerWidget {
-  final GlobalKey<FormState> formKey;
   final List<Category> allCategories;
   final List<SubCategory> initialSubCategories;
   final ShopFormWizardControllerProvider wizardProvider;
@@ -19,7 +18,6 @@ class Step1BasicDetailsPage extends ConsumerWidget {
 
   const Step1BasicDetailsPage({
     super.key,
-    required this.formKey,
     required this.allCategories,
     required this.initialSubCategories,
     required this.wizardProvider,
@@ -36,43 +34,40 @@ class Step1BasicDetailsPage extends ConsumerWidget {
         ? ref.watch(subCategoriesListFutureProvider(formData.category!.id))
         : null;
 
-    return Form(
-      key: formKey,
-      child: ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          spacing: Sizes.p12,
-          children: [
-            CategorySection(
-              isEditing: isEditing,
-              allCategories: allCategories,
-              subCategoryOptions:
-                  subCategoryOptionsAsync?.valueOrNull ?? initialSubCategories,
-              selectedCategory: formData.category,
-              selectedSubCategory: formData.subCategory,
-              onCategoryChanged: (category) {
-                final updatedForm = formData.copyWith(
-                  category: category,
-                  subCategory: null,
-                );
-                wizardController.updateFormData(updatedForm);
-              },
-              onSubCategoryChanged: (subCategory) => wizardController
-                  .updateFormData(formData.copyWith(subCategory: subCategory)),
+    return ResponsiveScrollable(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        spacing: Sizes.p12,
+        children: [
+          CategorySection(
+            isEditing: isEditing,
+            allCategories: allCategories,
+            subCategoryOptions:
+                subCategoryOptionsAsync?.valueOrNull ?? initialSubCategories,
+            selectedCategory: formData.category,
+            selectedSubCategory: formData.subCategory,
+            onCategoryChanged: (category) {
+              final updatedForm = formData.copyWith(
+                category: category,
+                subCategory: null,
+              );
+              wizardController.updateFormData(updatedForm);
+            },
+            onSubCategoryChanged: (subCategory) => wizardController
+                .updateFormData(formData.copyWith(subCategory: subCategory)),
+          ),
+          gapH12,
+          // FIX: This call is now valid and will not cause an error.
+          BasicInfoSection(
+            name: formData.name,
+            description: formData.description,
+            onNameChanged: (val) =>
+                wizardController.updateFormData(formData.copyWith(name: val)),
+            onDescriptionChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(description: val),
             ),
-            gapH12,
-            // FIX: This call is now valid and will not cause an error.
-            BasicInfoSection(
-              name: formData.name,
-              description: formData.description,
-              onNameChanged: (val) =>
-                  wizardController.updateFormData(formData.copyWith(name: val)),
-              onDescriptionChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(description: val),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

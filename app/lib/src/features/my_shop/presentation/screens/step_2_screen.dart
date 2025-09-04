@@ -8,14 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step2LocationPage extends ConsumerWidget {
-  final GlobalKey<FormState> formKey;
   final ShopFormWizardControllerProvider wizardProvider;
 
-  const Step2LocationPage({
-    super.key,
-    required this.formKey,
-    required this.wizardProvider,
-  });
+  const Step2LocationPage({super.key, required this.wizardProvider});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,48 +18,42 @@ class Step2LocationPage extends ConsumerWidget {
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;
 
-    return Form(
-      key: formKey,
-      child: ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: Sizes.p12,
-          children: [
-            TextFormField(
-              initialValue: formData.cityName,
-              decoration: InputDecoration(labelText: 'City *'.hardcoded),
-              validator: (val) => val!.isEmpty ? 'Required'.hardcoded : null,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(cityName: val),
-              ),
+    return ResponsiveScrollable(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: Sizes.p12,
+        children: [
+          TextFormField(
+            initialValue: formData.cityName,
+            decoration: InputDecoration(labelText: 'City *'.hardcoded),
+            onChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(cityName: val),
             ),
-            TextFormField(
-              initialValue: formData.sectorName,
-              decoration: InputDecoration(labelText: 'Sector *'.hardcoded),
-              validator: (val) => val!.isEmpty ? 'Required'.hardcoded : null,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(sectorName: val),
-              ),
+          ),
+          TextFormField(
+            initialValue: formData.sectorName,
+            decoration: InputDecoration(labelText: 'Sector *'.hardcoded),
+            onChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(sectorName: val),
             ),
-            TextFormField(
-              initialValue: formData.streetAddress,
-              decoration: InputDecoration(
-                labelText: 'Street Address *'.hardcoded,
-              ),
-              validator: (val) => val!.isEmpty ? 'Required'.hardcoded : null,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(streetAddress: val),
-              ),
+          ),
+          TextFormField(
+            initialValue: formData.streetAddress,
+            decoration: InputDecoration(
+              labelText: 'Street Address *'.hardcoded,
             ),
-            LocationPickerTile(
-              pickedLatLng: formData.latLng,
-              onLocationPicked: (latLng) => wizardController.updateFormData(
-                formData.copyWith(latLng: latLng),
-              ),
+            onChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(streetAddress: val),
             ),
-          ],
-        ),
+          ),
+          LocationPickerTile(
+            pickedLatLng: formData.latLng,
+            onLocationPicked: (latLng) => wizardController.updateFormData(
+              formData.copyWith(latLng: latLng),
+            ),
+          ),
+        ],
       ),
     );
   }

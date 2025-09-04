@@ -141,16 +141,7 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
       }
     }
 
-    if (currentFormData.category == null ||
-        currentFormData.latLng == null ||
-        (!isEditing && currentFormData.coverImageBytes == null)) {
-      showSnackBar(
-        context: context,
-        message:
-            'Please fill all required fields, including category, location, and cover image.',
-      );
-      return;
-    }
+    
 
     final shopToSave = currentFormData.toEntityDetail(widget.initialShop);
 
@@ -208,26 +199,21 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               Step1BasicDetailsPage(
-                formKey: wizardState.formKeys[0],
                 allCategories: widget.allCategories,
                 initialSubCategories: widget.initialSubCategories,
                 wizardProvider: widget.wizardProvider,
                 isEditing: isEditing,
               ),
               Step2LocationPage(
-                formKey: wizardState.formKeys[1],
                 wizardProvider: widget.wizardProvider,
               ),
               Step3ContactPage(
-                formKey: wizardState.formKeys[2],
                 wizardProvider: widget.wizardProvider,
               ),
               Step4SpecificsPage(
-                formKey: wizardState.formKeys[3],
                 wizardProvider: widget.wizardProvider,
               ),
               Step5MediaPage(
-                formKey: wizardState.formKeys[4],
                 initialCoverUrl: widget.initialShop?.coverImageUrl,
                 initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
                 wizardProvider: widget.wizardProvider,
@@ -252,14 +238,21 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
                 isLoading: shopControllerState.isLoading,
                 onPressed: () {
                   if (isLastPage) {
-                    if (wizardState
-                        .formKeys[wizardState.currentPage]
-                        .currentState!
-                        .validate()) {
+                    if (wizardController.validateAllPages()) { // New validation check
                       _submitShop();
+                    } else {
+                      showSnackBar( // Show error if validation fails
+                        context: context,
+                        message: 'Please fill all required fields.',
+                      );
                     }
                   } else {
-                    wizardController.nextPage();
+                    if (!wizardController.nextPage()) { // Check if page advanced
+                      showSnackBar( // Show error if validation fails
+                        context: context,
+                        message: 'Please fill all required fields on this page.',
+                      );
+                    }
                   }
                 },
                 text: isLastPage

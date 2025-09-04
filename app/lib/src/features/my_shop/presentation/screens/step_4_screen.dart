@@ -12,14 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step4SpecificsPage extends ConsumerWidget {
-  final GlobalKey<FormState> formKey;
   final ShopFormWizardControllerProvider wizardProvider;
 
-  const Step4SpecificsPage({
-    super.key,
-    required this.formKey,
-    required this.wizardProvider,
-  });
+  const Step4SpecificsPage({super.key, required this.wizardProvider});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,63 +23,60 @@ class Step4SpecificsPage extends ConsumerWidget {
     final ShopForm formData = wizardState.formData;
     final categoryId = formData.category?.id;
 
-    return Form(
-      key: formKey,
-      child: ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          spacing: Sizes.p12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            OpeningHoursTile(
-              openingHours: formData.openingHours ?? defaultOpeningHours,
-              onOpeningHoursChanged: (hours) => wizardController.updateFormData(
-                formData.copyWith(openingHours: hours),
-              ),
+    return ResponsiveScrollable(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        spacing: Sizes.p12,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          OpeningHoursTile(
+            openingHours: formData.openingHours ?? defaultOpeningHours,
+            onOpeningHoursChanged: (hours) => wizardController.updateFormData(
+              formData.copyWith(openingHours: hours),
             ),
-            const Divider(),
-            if (categoryId == 1)
-              ResidenceSpecificSection(
-                price: formData.pricing?.cost,
-                isFurnished: formData.isFurnished,
-                isRoomAvailable: formData.isRoomAvailable, // New field
-                onPriceChanged: (val) {
-                  final pricing = double.tryParse(val);
+          ),
+          const Divider(),
+          if (categoryId == 1)
+            ResidenceSpecificSection(
+              price: formData.pricing?.cost,
+              isFurnished: formData.isFurnished,
+              isRoomAvailable: formData.isRoomAvailable, // New field
+              onPriceChanged: (val) {
+                final pricing = double.tryParse(val);
+                wizardController.updateFormData(
+                  formData.copyWith(pricing: Pricing(cost: pricing ?? 0.0)),
+                );
+              },
+              onFurnishedChanged: (val) => wizardController.updateFormData(
+                formData.copyWith(isFurnished: val),
+              ),
+              onIsRoomAvailableChanged: (val) =>
                   wizardController.updateFormData(
-                    formData.copyWith(pricing: Pricing(cost: pricing ?? 0.0)),
+                    // New callback
+                    formData.copyWith(isRoomAvailable: val),
+                  ),
+            ),
+          if (categoryId == 1 || categoryId == 2)
+            DropdownButtonFormField<GenderPreference>(
+              value: formData.genderPref,
+              decoration: InputDecoration(
+                labelText: 'Gender Preference'.hardcoded,
+                border: const OutlineInputBorder(),
+              ),
+              items: GenderPreference.values
+                  .map(
+                    (gp) => DropdownMenuItem(value: gp, child: Text(gp.name)),
+                  )
+                  .toList(),
+              onChanged: (val) {
+                if (val != null) {
+                  wizardController.updateFormData(
+                    formData.copyWith(genderPref: val),
                   );
-                },
-                onFurnishedChanged: (val) => wizardController.updateFormData(
-                  formData.copyWith(isFurnished: val),
-                ),
-                onIsRoomAvailableChanged: (val) =>
-                    wizardController.updateFormData(
-                      // New callback
-                      formData.copyWith(isRoomAvailable: val),
-                    ),
-              ),
-            if (categoryId == 1 || categoryId == 2)
-              DropdownButtonFormField<GenderPreference>(
-                value: formData.genderPref,
-                decoration: InputDecoration(
-                  labelText: 'Gender Preference'.hardcoded,
-                  border: const OutlineInputBorder(),
-                ),
-                items: GenderPreference.values
-                    .map(
-                      (gp) => DropdownMenuItem(value: gp, child: Text(gp.name)),
-                    )
-                    .toList(),
-                onChanged: (val) {
-                  if (val != null) {
-                    wizardController.updateFormData(
-                      formData.copyWith(genderPref: val),
-                    );
-                  }
-                },
-              ),
-          ],
-        ),
+                }
+              },
+            ),
+        ],
       ),
     );
   }

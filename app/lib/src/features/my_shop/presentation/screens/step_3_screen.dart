@@ -8,14 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step3ContactPage extends ConsumerWidget {
-  final GlobalKey<FormState> formKey;
   final ShopFormWizardControllerProvider wizardProvider;
 
-  const Step3ContactPage({
-    super.key,
-    required this.formKey,
-    required this.wizardProvider,
-  });
+  const Step3ContactPage({super.key, required this.wizardProvider});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,56 +18,52 @@ class Step3ContactPage extends ConsumerWidget {
     final wizardController = ref.read(wizardProvider.notifier);
     final ShopForm formData = wizardState.formData;
 
-    return Form(
-      key: formKey,
-      child: ResponsiveScrollable(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          spacing: Sizes.p12,
-          children: [
-            TextFormField(
-              initialValue: formData.phoneNumber,
-              decoration: InputDecoration(labelText: 'Phone Number'.hardcoded),
-              keyboardType: TextInputType.phone,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(phoneNumber: val),
-              ),
+    return ResponsiveScrollable(
+      padding: const EdgeInsets.all(Sizes.p16),
+      child: Column(
+        spacing: Sizes.p12,
+        children: [
+          TextFormField(
+            initialValue: formData.phoneNumber,
+            decoration: InputDecoration(labelText: 'Phone Number'.hardcoded),
+            keyboardType: TextInputType.phone,
+            onChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(phoneNumber: val),
             ),
-            TextFormField(
-              initialValue: formData.waNumber,
-              decoration: InputDecoration(
-                labelText: 'Messaging Number'.hardcoded,
-              ),
-              keyboardType: TextInputType.phone,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(waNumber: val),
-              ),
+          ),
+          TextFormField(
+            initialValue: formData.waNumber,
+            decoration: InputDecoration(
+              labelText: 'Messaging Number'.hardcoded,
             ),
-            TextFormField(
-              initialValue: formData.email,
-              decoration: InputDecoration(labelText: 'Email Address'.hardcoded),
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(email: val),
-              ),
+            keyboardType: TextInputType.phone,
+            onChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(waNumber: val),
             ),
-            const Divider(),
-            SocialMediaSection(
-              facebook: formData.facebookUrl,
-              instagram: formData.instagramUrl,
-              website: formData.websiteUrl,
-              onFacebookChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(facebookUrl: val),
-              ),
-              onInstagramChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(instagramUrl: val),
-              ),
-              onWebsiteChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(websiteUrl: val),
-              ),
+          ),
+          TextFormField(
+            initialValue: formData.email,
+            decoration: InputDecoration(labelText: 'Email Address'.hardcoded),
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (val) =>
+                wizardController.updateFormData(formData.copyWith(email: val)),
+          ),
+          const Divider(),
+          SocialMediaSection(
+            facebook: formData.facebookUrl,
+            instagram: formData.instagramUrl,
+            website: formData.websiteUrl,
+            onFacebookChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(facebookUrl: val),
             ),
-          ],
-        ),
+            onInstagramChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(instagramUrl: val),
+            ),
+            onWebsiteChanged: (val) => wizardController.updateFormData(
+              formData.copyWith(websiteUrl: val),
+            ),
+          ),
+        ],
       ),
     );
   }

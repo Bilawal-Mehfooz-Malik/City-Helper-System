@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ShopFormWizardState {
 
- int get currentPage; ShopForm get formData; List<GlobalKey<FormState>> get formKeys;
+ int get currentPage; ShopForm get formData;
 /// Create a copy of ShopFormWizardState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ShopFormWizardStateCopyWith<ShopFormWizardState> get copyWith => _$ShopFormWiza
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopFormWizardState&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.formData, formData) || other.formData == formData)&&const DeepCollectionEquality().equals(other.formKeys, formKeys));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopFormWizardState&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.formData, formData) || other.formData == formData));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentPage,formData,const DeepCollectionEquality().hash(formKeys));
+int get hashCode => Object.hash(runtimeType,currentPage,formData);
 
 @override
 String toString() {
-  return 'ShopFormWizardState(currentPage: $currentPage, formData: $formData, formKeys: $formKeys)';
+  return 'ShopFormWizardState(currentPage: $currentPage, formData: $formData)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ShopFormWizardStateCopyWith<$Res>  {
   factory $ShopFormWizardStateCopyWith(ShopFormWizardState value, $Res Function(ShopFormWizardState) _then) = _$ShopFormWizardStateCopyWithImpl;
 @useResult
 $Res call({
- int currentPage, ShopForm formData, List<GlobalKey<FormState>> formKeys
+ int currentPage, ShopForm formData
 });
 
 
@@ -62,12 +62,11 @@ class _$ShopFormWizardStateCopyWithImpl<$Res>
 
 /// Create a copy of ShopFormWizardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentPage = null,Object? formData = null,Object? formKeys = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentPage = null,Object? formData = null,}) {
   return _then(_self.copyWith(
 currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,formData: null == formData ? _self.formData : formData // ignore: cast_nullable_to_non_nullable
-as ShopForm,formKeys: null == formKeys ? _self.formKeys : formKeys // ignore: cast_nullable_to_non_nullable
-as List<GlobalKey<FormState>>,
+as ShopForm,
   ));
 }
 /// Create a copy of ShopFormWizardState
@@ -161,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentPage,  ShopForm formData,  List<GlobalKey<FormState>> formKeys)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentPage,  ShopForm formData)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShopFormWizardState() when $default != null:
-return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
+return $default(_that.currentPage,_that.formData);case _:
   return orElse();
 
 }
@@ -182,10 +181,10 @@ return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentPage,  ShopForm formData,  List<GlobalKey<FormState>> formKeys)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentPage,  ShopForm formData)  $default,) {final _that = this;
 switch (_that) {
 case _ShopFormWizardState():
-return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
+return $default(_that.currentPage,_that.formData);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +201,10 @@ return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentPage,  ShopForm formData,  List<GlobalKey<FormState>> formKeys)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentPage,  ShopForm formData)?  $default,) {final _that = this;
 switch (_that) {
 case _ShopFormWizardState() when $default != null:
-return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
+return $default(_that.currentPage,_that.formData);case _:
   return null;
 
 }
@@ -217,18 +216,11 @@ return $default(_that.currentPage,_that.formData,_that.formKeys);case _:
 
 
 class _ShopFormWizardState implements ShopFormWizardState {
-  const _ShopFormWizardState({this.currentPage = 0, required this.formData, required final  List<GlobalKey<FormState>> formKeys}): _formKeys = formKeys;
+  const _ShopFormWizardState({this.currentPage = 0, required this.formData});
   
 
 @override@JsonKey() final  int currentPage;
 @override final  ShopForm formData;
- final  List<GlobalKey<FormState>> _formKeys;
-@override List<GlobalKey<FormState>> get formKeys {
-  if (_formKeys is EqualUnmodifiableListView) return _formKeys;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_formKeys);
-}
-
 
 /// Create a copy of ShopFormWizardState
 /// with the given fields replaced by the non-null parameter values.
@@ -240,16 +232,16 @@ _$ShopFormWizardStateCopyWith<_ShopFormWizardState> get copyWith => __$ShopFormW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopFormWizardState&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.formData, formData) || other.formData == formData)&&const DeepCollectionEquality().equals(other._formKeys, _formKeys));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopFormWizardState&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.formData, formData) || other.formData == formData));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentPage,formData,const DeepCollectionEquality().hash(_formKeys));
+int get hashCode => Object.hash(runtimeType,currentPage,formData);
 
 @override
 String toString() {
-  return 'ShopFormWizardState(currentPage: $currentPage, formData: $formData, formKeys: $formKeys)';
+  return 'ShopFormWizardState(currentPage: $currentPage, formData: $formData)';
 }
 
 
@@ -260,7 +252,7 @@ abstract mixin class _$ShopFormWizardStateCopyWith<$Res> implements $ShopFormWiz
   factory _$ShopFormWizardStateCopyWith(_ShopFormWizardState value, $Res Function(_ShopFormWizardState) _then) = __$ShopFormWizardStateCopyWithImpl;
 @override @useResult
 $Res call({
- int currentPage, ShopForm formData, List<GlobalKey<FormState>> formKeys
+ int currentPage, ShopForm formData
 });
 
 
@@ -277,12 +269,11 @@ class __$ShopFormWizardStateCopyWithImpl<$Res>
 
 /// Create a copy of ShopFormWizardState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentPage = null,Object? formData = null,Object? formKeys = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentPage = null,Object? formData = null,}) {
   return _then(_ShopFormWizardState(
 currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,formData: null == formData ? _self.formData : formData // ignore: cast_nullable_to_non_nullable
-as ShopForm,formKeys: null == formKeys ? _self._formKeys : formKeys // ignore: cast_nullable_to_non_nullable
-as List<GlobalKey<FormState>>,
+as ShopForm,
   ));
 }
 
