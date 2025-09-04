@@ -2,6 +2,7 @@ import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/opening_hour_tile.dart';
@@ -44,21 +45,23 @@ class Step4SpecificsPage extends ConsumerWidget {
             const Divider(),
             if (categoryId == 1)
               ResidenceSpecificSection(
-                price: formData.pricing,
+                price: formData.pricing?.cost,
                 isFurnished: formData.isFurnished,
                 isRoomAvailable: formData.isRoomAvailable, // New field
                 onPriceChanged: (val) {
                   final pricing = double.tryParse(val);
                   wizardController.updateFormData(
-                    formData.copyWith(pricing: pricing),
+                    formData.copyWith(pricing: Pricing(cost: pricing ?? 0.0)),
                   );
                 },
                 onFurnishedChanged: (val) => wizardController.updateFormData(
                   formData.copyWith(isFurnished: val),
                 ),
-                onIsRoomAvailableChanged: (val) => wizardController.updateFormData( // New callback
-                  formData.copyWith(isRoomAvailable: val),
-                ),
+                onIsRoomAvailableChanged: (val) =>
+                    wizardController.updateFormData(
+                      // New callback
+                      formData.copyWith(isRoomAvailable: val),
+                    ),
               ),
             if (categoryId == 1 || categoryId == 2)
               DropdownButtonFormField<GenderPreference>(

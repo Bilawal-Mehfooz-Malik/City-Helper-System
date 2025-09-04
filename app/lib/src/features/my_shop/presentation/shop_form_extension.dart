@@ -15,7 +15,7 @@ extension ShopFormX on ShopForm {
           name: name,
           description: description,
           phoneNumber: phoneNumber,
-          waNumber: messagingNumber,
+          waNumber: waNumber,
           cityName: cityName,
           sectorName: sectorName,
           streetAddress: streetAddress,
@@ -26,9 +26,7 @@ extension ShopFormX on ShopForm {
           latLng: latLng!,
           openingHours: openingHours,
           genderPreference: genderPref,
-          pricing: pricing != null
-              ? Pricing(cost: pricing!)
-              : existingShop.pricing,
+          pricing: pricing != null ? pricing! : existingShop.pricing,
           isFurnished: isFurnished,
         );
       } else if (existingShop is FoodDetail) {
@@ -37,7 +35,7 @@ extension ShopFormX on ShopForm {
           name: name,
           description: description,
           phoneNumber: phoneNumber,
-          waNumber: messagingNumber,
+          waNumber: waNumber,
           cityName: cityName,
           sectorName: sectorName,
           streetAddress: streetAddress,
@@ -76,13 +74,13 @@ extension ShopFormX on ShopForm {
           updatedAt: now,
           createdAt: now,
           phoneNumber: phoneNumber,
-          waNumber: messagingNumber,
+          waNumber: waNumber,
           email: email,
           facebookUrl: facebookUrl,
           instagramUrl: instagramUrl,
           websiteUrl: websiteUrl,
           genderPreference: genderPref,
-          pricing: pricing != null ? Pricing(cost: pricing!) : Pricing(cost: 0),
+          pricing: pricing != null ? pricing! : Pricing(cost: 0),
           isFurnished: isFurnished,
         );
       } else {
@@ -110,7 +108,7 @@ extension ShopFormX on ShopForm {
           updatedAt: now,
           createdAt: now,
           phoneNumber: phoneNumber,
-          waNumber: messagingNumber,
+          waNumber: waNumber,
           email: email,
           facebookUrl: facebookUrl,
           instagramUrl: instagramUrl,

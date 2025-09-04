@@ -4,6 +4,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/features/home/domain/pricing.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,7 +29,7 @@ abstract class ShopForm with _$ShopForm {
 
     // Step 3: Contact & Social Links
     required String phoneNumber,
-    required String messagingNumber,
+    required String waNumber,
     required String email,
     required String facebookUrl,
     required String instagramUrl,
@@ -36,25 +37,23 @@ abstract class ShopForm with _$ShopForm {
 
     // Step 4: Business Specific Info
     Map<DayOfWeek, OpeningHours>? openingHours,
-    double? pricing,
+    Pricing? pricing,
     required bool isFurnished,
     required GenderPreference genderPref,
-    @Default("Asia/Karachi") String timezone,
-    @Default(true) bool isRoomAvailable, // New field
-    @Default(false) bool isOpen,
-    @Default({}) Map<String, String> scheduledTaskNames,
+    @Default(true) bool isRoomAvailable,
 
     // Step 5: Media Uploads
     Uint8List? coverImageBytes,
+    // TODO: Add menuImagesUrls
     @Default([]) List<Uint8List> galleryImageBytes,
-    @Default([]) List<String> galleryUrlsToDelete, // For editing
+    @Default([]) List<String> galleryUrlsToDelete,
   }) = _ShopForm;
 
   factory ShopForm.fromEntityDetail(EntityDetail shop) {
-    double? price;
+    Pricing? pricing;
     bool isFurnished = false;
     if (shop is ResidenceDetail) {
-      price = shop.pricing.cost;
+      pricing = shop.pricing;
       isFurnished = shop.isFurnished;
     }
 
@@ -62,7 +61,7 @@ abstract class ShopForm with _$ShopForm {
       name: shop.name,
       description: shop.description,
       phoneNumber: shop.phoneNumber ?? '',
-      messagingNumber: shop.waNumber ?? '',
+      waNumber: shop.waNumber ?? '',
       cityName: shop.cityName,
       sectorName: shop.sectorName,
       streetAddress: shop.streetAddress,
@@ -77,7 +76,7 @@ abstract class ShopForm with _$ShopForm {
           : shop is FoodDetail
           ? shop.genderPreference
           : GenderPreference.any,
-      pricing: price,
+      pricing: pricing,
       isFurnished: isFurnished,
       isRoomAvailable: (shop is ResidenceDetail)
           ? shop.isRoomAvailable
@@ -90,7 +89,7 @@ abstract class ShopForm with _$ShopForm {
       name: '',
       description: '',
       phoneNumber: '',
-      messagingNumber: '',
+      waNumber: '',
       cityName: '',
       sectorName: '',
       streetAddress: '',
@@ -102,10 +101,7 @@ abstract class ShopForm with _$ShopForm {
       openingHours: defaultOpeningHours,
       genderPref: GenderPreference.any,
       isFurnished: false,
-      timezone: "Asia/Karachi",
       isRoomAvailable: true, // Default to true
-      isOpen: false,
-      scheduledTaskNames: {},
     );
   }
 }

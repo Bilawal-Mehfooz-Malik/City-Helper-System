@@ -39,13 +39,13 @@ class Step3ContactPage extends ConsumerWidget {
               ),
             ),
             TextFormField(
-              initialValue: formData.messagingNumber,
+              initialValue: formData.waNumber,
               decoration: InputDecoration(
                 labelText: 'Messaging Number'.hardcoded,
               ),
               keyboardType: TextInputType.phone,
               onChanged: (val) => wizardController.updateFormData(
-                formData.copyWith(messagingNumber: val),
+                formData.copyWith(waNumber: val),
               ),
             ),
             TextFormField(
