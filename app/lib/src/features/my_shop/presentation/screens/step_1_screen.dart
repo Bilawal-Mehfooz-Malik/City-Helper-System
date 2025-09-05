@@ -46,6 +46,7 @@ class Step1BasicDetailsPage extends ConsumerWidget {
                 subCategoryOptionsAsync?.valueOrNull ?? initialSubCategories,
             selectedCategory: formData.category,
             selectedSubCategory: formData.subCategory,
+            selectedListingType: formData.listingType,
             onCategoryChanged: (category) {
               final updatedForm = formData.copyWith(
                 category: category,
@@ -55,9 +56,10 @@ class Step1BasicDetailsPage extends ConsumerWidget {
             },
             onSubCategoryChanged: (subCategory) => wizardController
                 .updateFormData(formData.copyWith(subCategory: subCategory)),
+            onListingTypeChanged: (listingType) => wizardController
+                .updateFormData(formData.copyWith(listingType: listingType)),
           ),
           gapH12,
-          // FIX: This call is now valid and will not cause an error.
           BasicInfoSection(
             name: formData.name,
             description: formData.description,

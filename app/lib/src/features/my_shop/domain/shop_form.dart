@@ -20,6 +20,7 @@ abstract class ShopForm with _$ShopForm {
     SubCategory? subCategory,
     required String name,
     required String description,
+    ListingType? listingType,
 
     // Step 2: Location Info
     required String cityName,
@@ -52,9 +53,11 @@ abstract class ShopForm with _$ShopForm {
   factory ShopForm.fromEntityDetail(EntityDetail shop) {
     Pricing? pricing;
     bool isFurnished = false;
+    ListingType? listingType;
     if (shop is ResidenceDetail) {
       pricing = shop.pricing;
       isFurnished = shop.isFurnished;
+      listingType = shop.listingType;
     }
 
     return ShopForm(
@@ -74,10 +77,11 @@ abstract class ShopForm with _$ShopForm {
       genderPref: shop is ResidenceDetail
           ? shop.genderPreference
           : shop is FoodDetail
-          ? shop.genderPreference
-          : GenderPreference.any,
+              ? shop.genderPreference
+              : GenderPreference.any,
       pricing: pricing,
       isFurnished: isFurnished,
+      listingType: listingType,
       isRoomAvailable: (shop is ResidenceDetail)
           ? shop.isRoomAvailable
           : true, // Default to true if not residence
@@ -101,6 +105,7 @@ abstract class ShopForm with _$ShopForm {
       openingHours: defaultOpeningHours,
       genderPref: GenderPreference.any,
       isFurnished: false,
+      listingType: ListingType.forRent,
       isRoomAvailable: true, // Default to true
     );
   }

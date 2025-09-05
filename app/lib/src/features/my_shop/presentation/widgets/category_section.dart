@@ -1,4 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -9,8 +10,10 @@ class CategorySection extends StatelessWidget {
   final List<SubCategory> subCategoryOptions;
   final Category? selectedCategory;
   final SubCategory? selectedSubCategory;
+  final ListingType? selectedListingType;
   final ValueChanged<Category?> onCategoryChanged;
   final ValueChanged<SubCategory?> onSubCategoryChanged;
+  final ValueChanged<ListingType?> onListingTypeChanged;
   final bool isEditing;
 
   const CategorySection({
@@ -19,44 +22,68 @@ class CategorySection extends StatelessWidget {
     required this.subCategoryOptions,
     required this.selectedCategory,
     required this.selectedSubCategory,
+    required this.selectedListingType,
     required this.onCategoryChanged,
     required this.onSubCategoryChanged,
+    required this.onListingTypeChanged,
     this.isEditing = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Expanded(
-          flex: 2,
-          child: DropdownButtonFormField<Category>(
-            value: selectedCategory,
-            decoration: InputDecoration(
-              labelText: 'Category *'.hardcoded,
-              border: const OutlineInputBorder(),
-              filled: isEditing,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: DropdownButtonFormField<Category>(
+                value: selectedCategory,
+                decoration: InputDecoration(
+                  labelText: 'Category *'.hardcoded,
+                  border: const OutlineInputBorder(),
+                  filled: isEditing,
+                ),
+                items: allCategories
+                    .map(
+                      (cat) =>
+                          DropdownMenuItem(value: cat, child: Text(cat.name)),
+                    )
+                    .toList(),
+                onChanged: isEditing ? null : onCategoryChanged,
+                validator: (value) =>
+                    value == null ? 'Required'.hardcoded : null,
+              ),
             ),
-            items: allCategories
-                .map(
-                  (cat) => DropdownMenuItem(value: cat, child: Text(cat.name)),
-                )
-                .toList(),
-            // FIX: Disable the dropdown by setting onChanged to null if editing
-            onChanged: isEditing ? null : onCategoryChanged,
-            validator: (value) => value == null ? 'Required'.hardcoded : null,
-          ),
+            gapW8,
+            Expanded(
+              flex: 3,
+              child: SubCategoryDropdown(
+                subCategoryOptions: subCategoryOptions,
+                selectedSubCategory: selectedSubCategory,
+                onChanged: selectedCategory == null ? null : onSubCategoryChanged,
+              ),
+            ),
+          ],
         ),
-        gapW8,
-        Expanded(
-          flex: 3,
-          child: SubCategoryDropdown(
-            subCategoryOptions: subCategoryOptions,
-            selectedSubCategory: selectedSubCategory,
-            onChanged: selectedCategory == null ? null : onSubCategoryChanged,
+        if (selectedCategory?.id == 1)
+          Padding(
+            padding: const EdgeInsets.only(top: Sizes.p12),
+            child: DropdownButtonFormField<ListingType>(
+              value: selectedListingType,
+              decoration: InputDecoration(
+                labelText: 'Listing Type *'.hardcoded,
+                border: const OutlineInputBorder(),
+              ),
+              items: ListingType.values
+                  .map((lt) => DropdownMenuItem(value: lt, child: Text(lt.name)))
+                  .toList(),
+              onChanged: onListingTypeChanged,
+              validator: (value) =>
+                  value == null ? 'Required'.hardcoded : null,
+            ),
           ),
-        ),
       ],
     );
   }

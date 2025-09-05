@@ -23,6 +23,13 @@ class Step4SpecificsPage extends ConsumerWidget {
     final ShopForm formData = wizardState.formData;
     final categoryId = formData.category?.id;
 
+    final pricing =
+        formData.pricing ??
+        Pricing.fromListingType(
+          cost: 0.0,
+          listingType: formData.listingType ?? ListingType.forRent,
+        );
+
     return ResponsiveScrollable(
       padding: const EdgeInsets.all(Sizes.p16),
       child: Column(
@@ -38,23 +45,20 @@ class Step4SpecificsPage extends ConsumerWidget {
           ),
           if (categoryId == 1)
             ResidenceSpecificSection(
-              price: formData.pricing?.cost,
+              pricing: pricing,
+              listingType: formData.listingType,
               isFurnished: formData.isFurnished,
-              isRoomAvailable: formData.isRoomAvailable, // New field
-              onPriceChanged: (val) {
-                final pricing = double.tryParse(val);
+              isRoomAvailable: formData.isRoomAvailable,
+              onPricingChanged: (newPricing) {
                 wizardController.updateFormData(
-                  formData.copyWith(pricing: Pricing(cost: pricing ?? 0.0)),
+                  formData.copyWith(pricing: newPricing),
                 );
               },
               onFurnishedChanged: (val) => wizardController.updateFormData(
                 formData.copyWith(isFurnished: val),
               ),
-              onIsRoomAvailableChanged: (val) =>
-                  wizardController.updateFormData(
-                    // New callback
-                    formData.copyWith(isRoomAvailable: val),
-                  ),
+              onIsRoomAvailableChanged: (val) => wizardController
+                  .updateFormData(formData.copyWith(isRoomAvailable: val)),
             ),
           if (categoryId == 1 || categoryId == 2)
             DropdownButtonFormField<GenderPreference>(

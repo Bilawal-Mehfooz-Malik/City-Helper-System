@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 mixin _$ShopForm {
 
 // Step 1: Basic Details
- Category? get category; SubCategory? get subCategory; String get name; String get description;// Step 2: Location Info
+ Category? get category; SubCategory? get subCategory; String get name; String get description; ListingType? get listingType;// Step 2: Location Info
  String get cityName; String get sectorName; String get streetAddress; LatLng? get latLng;// Step 3: Contact & Social Links
  String get phoneNumber; String get waNumber; String get email; String get facebookUrl; String get instagramUrl; String get websiteUrl;// Step 4: Business Specific Info
  Map<DayOfWeek, OpeningHours>? get openingHours; Pricing? get pricing; bool get isFurnished; GenderPreference get genderPref; bool get isRoomAvailable;// Step 5: Media Uploads
@@ -31,16 +31,16 @@ $ShopFormCopyWith<ShopForm> get copyWith => _$ShopFormCopyWithImpl<ShopForm>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopForm&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.cityName, cityName) || other.cityName == cityName)&&(identical(other.sectorName, sectorName) || other.sectorName == sectorName)&&(identical(other.streetAddress, streetAddress) || other.streetAddress == streetAddress)&&(identical(other.latLng, latLng) || other.latLng == latLng)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.waNumber, waNumber) || other.waNumber == waNumber)&&(identical(other.email, email) || other.email == email)&&(identical(other.facebookUrl, facebookUrl) || other.facebookUrl == facebookUrl)&&(identical(other.instagramUrl, instagramUrl) || other.instagramUrl == instagramUrl)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&const DeepCollectionEquality().equals(other.openingHours, openingHours)&&(identical(other.pricing, pricing) || other.pricing == pricing)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&const DeepCollectionEquality().equals(other.coverImageBytes, coverImageBytes)&&const DeepCollectionEquality().equals(other.galleryImageBytes, galleryImageBytes)&&const DeepCollectionEquality().equals(other.galleryUrlsToDelete, galleryUrlsToDelete));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopForm&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.listingType, listingType) || other.listingType == listingType)&&(identical(other.cityName, cityName) || other.cityName == cityName)&&(identical(other.sectorName, sectorName) || other.sectorName == sectorName)&&(identical(other.streetAddress, streetAddress) || other.streetAddress == streetAddress)&&(identical(other.latLng, latLng) || other.latLng == latLng)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.waNumber, waNumber) || other.waNumber == waNumber)&&(identical(other.email, email) || other.email == email)&&(identical(other.facebookUrl, facebookUrl) || other.facebookUrl == facebookUrl)&&(identical(other.instagramUrl, instagramUrl) || other.instagramUrl == instagramUrl)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&const DeepCollectionEquality().equals(other.openingHours, openingHours)&&(identical(other.pricing, pricing) || other.pricing == pricing)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&const DeepCollectionEquality().equals(other.coverImageBytes, coverImageBytes)&&const DeepCollectionEquality().equals(other.galleryImageBytes, galleryImageBytes)&&const DeepCollectionEquality().equals(other.galleryUrlsToDelete, galleryUrlsToDelete));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,description,cityName,sectorName,streetAddress,latLng,phoneNumber,waNumber,email,facebookUrl,instagramUrl,websiteUrl,const DeepCollectionEquality().hash(openingHours),pricing,isFurnished,genderPref,isRoomAvailable,const DeepCollectionEquality().hash(coverImageBytes),const DeepCollectionEquality().hash(galleryImageBytes),const DeepCollectionEquality().hash(galleryUrlsToDelete)]);
+int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,description,listingType,cityName,sectorName,streetAddress,latLng,phoneNumber,waNumber,email,facebookUrl,instagramUrl,websiteUrl,const DeepCollectionEquality().hash(openingHours),pricing,isFurnished,genderPref,isRoomAvailable,const DeepCollectionEquality().hash(coverImageBytes),const DeepCollectionEquality().hash(galleryImageBytes),const DeepCollectionEquality().hash(galleryUrlsToDelete)]);
 
 @override
 String toString() {
-  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, waNumber: $waNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, isRoomAvailable: $isRoomAvailable, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
+  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, listingType: $listingType, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, waNumber: $waNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, isRoomAvailable: $isRoomAvailable, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $ShopFormCopyWith<$Res>  {
   factory $ShopFormCopyWith(ShopForm value, $Res Function(ShopForm) _then) = _$ShopFormCopyWithImpl;
 @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String waNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, Pricing? pricing, bool isFurnished, GenderPreference genderPref, bool isRoomAvailable, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, ListingType? listingType, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String waNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, Pricing? pricing, bool isFurnished, GenderPreference genderPref, bool isRoomAvailable, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -68,13 +68,14 @@ class _$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? waNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? isRoomAvailable = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? listingType = freezed,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? waNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? isRoomAvailable = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_self.copyWith(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
 as SubCategory?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,cityName: null == cityName ? _self.cityName : cityName // ignore: cast_nullable_to_non_nullable
+as String,listingType: freezed == listingType ? _self.listingType : listingType // ignore: cast_nullable_to_non_nullable
+as ListingType?,cityName: null == cityName ? _self.cityName : cityName // ignore: cast_nullable_to_non_nullable
 as String,sectorName: null == sectorName ? _self.sectorName : sectorName // ignore: cast_nullable_to_non_nullable
 as String,streetAddress: null == streetAddress ? _self.streetAddress : streetAddress // ignore: cast_nullable_to_non_nullable
 as String,latLng: freezed == latLng ? _self.latLng : latLng // ignore: cast_nullable_to_non_nullable
@@ -213,10 +214,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  ListingType? listingType,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
-return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
+return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.listingType,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
   return orElse();
 
 }
@@ -234,10 +235,10 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Category? category,  SubCategory? subCategory,  String name,  String description,  ListingType? listingType,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm():
-return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
+return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.listingType,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -254,10 +255,10 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Category? category,  SubCategory? subCategory,  String name,  String description,  ListingType? listingType,  String cityName,  String sectorName,  String streetAddress,  LatLng? latLng,  String phoneNumber,  String waNumber,  String email,  String facebookUrl,  String instagramUrl,  String websiteUrl,  Map<DayOfWeek, OpeningHours>? openingHours,  Pricing? pricing,  bool isFurnished,  GenderPreference genderPref,  bool isRoomAvailable,  Uint8List? coverImageBytes,  List<Uint8List> galleryImageBytes,  List<String> galleryUrlsToDelete)?  $default,) {final _that = this;
 switch (_that) {
 case _ShopForm() when $default != null:
-return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
+return $default(_that.category,_that.subCategory,_that.name,_that.description,_that.listingType,_that.cityName,_that.sectorName,_that.streetAddress,_that.latLng,_that.phoneNumber,_that.waNumber,_that.email,_that.facebookUrl,_that.instagramUrl,_that.websiteUrl,_that.openingHours,_that.pricing,_that.isFurnished,_that.genderPref,_that.isRoomAvailable,_that.coverImageBytes,_that.galleryImageBytes,_that.galleryUrlsToDelete);case _:
   return null;
 
 }
@@ -269,7 +270,7 @@ return $default(_that.category,_that.subCategory,_that.name,_that.description,_t
 
 
 class _ShopForm implements ShopForm {
-  const _ShopForm({this.category, this.subCategory, required this.name, required this.description, required this.cityName, required this.sectorName, required this.streetAddress, required this.latLng, required this.phoneNumber, required this.waNumber, required this.email, required this.facebookUrl, required this.instagramUrl, required this.websiteUrl, final  Map<DayOfWeek, OpeningHours>? openingHours, this.pricing, required this.isFurnished, required this.genderPref, this.isRoomAvailable = true, this.coverImageBytes, final  List<Uint8List> galleryImageBytes = const [], final  List<String> galleryUrlsToDelete = const []}): _openingHours = openingHours,_galleryImageBytes = galleryImageBytes,_galleryUrlsToDelete = galleryUrlsToDelete;
+  const _ShopForm({this.category, this.subCategory, required this.name, required this.description, this.listingType, required this.cityName, required this.sectorName, required this.streetAddress, required this.latLng, required this.phoneNumber, required this.waNumber, required this.email, required this.facebookUrl, required this.instagramUrl, required this.websiteUrl, final  Map<DayOfWeek, OpeningHours>? openingHours, this.pricing, required this.isFurnished, required this.genderPref, this.isRoomAvailable = true, this.coverImageBytes, final  List<Uint8List> galleryImageBytes = const [], final  List<String> galleryUrlsToDelete = const []}): _openingHours = openingHours,_galleryImageBytes = galleryImageBytes,_galleryUrlsToDelete = galleryUrlsToDelete;
   
 
 // Step 1: Basic Details
@@ -277,6 +278,7 @@ class _ShopForm implements ShopForm {
 @override final  SubCategory? subCategory;
 @override final  String name;
 @override final  String description;
+@override final  ListingType? listingType;
 // Step 2: Location Info
 @override final  String cityName;
 @override final  String sectorName;
@@ -333,16 +335,16 @@ _$ShopFormCopyWith<_ShopForm> get copyWith => __$ShopFormCopyWithImpl<_ShopForm>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopForm&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.cityName, cityName) || other.cityName == cityName)&&(identical(other.sectorName, sectorName) || other.sectorName == sectorName)&&(identical(other.streetAddress, streetAddress) || other.streetAddress == streetAddress)&&(identical(other.latLng, latLng) || other.latLng == latLng)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.waNumber, waNumber) || other.waNumber == waNumber)&&(identical(other.email, email) || other.email == email)&&(identical(other.facebookUrl, facebookUrl) || other.facebookUrl == facebookUrl)&&(identical(other.instagramUrl, instagramUrl) || other.instagramUrl == instagramUrl)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&const DeepCollectionEquality().equals(other._openingHours, _openingHours)&&(identical(other.pricing, pricing) || other.pricing == pricing)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&const DeepCollectionEquality().equals(other.coverImageBytes, coverImageBytes)&&const DeepCollectionEquality().equals(other._galleryImageBytes, _galleryImageBytes)&&const DeepCollectionEquality().equals(other._galleryUrlsToDelete, _galleryUrlsToDelete));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopForm&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.listingType, listingType) || other.listingType == listingType)&&(identical(other.cityName, cityName) || other.cityName == cityName)&&(identical(other.sectorName, sectorName) || other.sectorName == sectorName)&&(identical(other.streetAddress, streetAddress) || other.streetAddress == streetAddress)&&(identical(other.latLng, latLng) || other.latLng == latLng)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.waNumber, waNumber) || other.waNumber == waNumber)&&(identical(other.email, email) || other.email == email)&&(identical(other.facebookUrl, facebookUrl) || other.facebookUrl == facebookUrl)&&(identical(other.instagramUrl, instagramUrl) || other.instagramUrl == instagramUrl)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&const DeepCollectionEquality().equals(other._openingHours, _openingHours)&&(identical(other.pricing, pricing) || other.pricing == pricing)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&const DeepCollectionEquality().equals(other.coverImageBytes, coverImageBytes)&&const DeepCollectionEquality().equals(other._galleryImageBytes, _galleryImageBytes)&&const DeepCollectionEquality().equals(other._galleryUrlsToDelete, _galleryUrlsToDelete));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,description,cityName,sectorName,streetAddress,latLng,phoneNumber,waNumber,email,facebookUrl,instagramUrl,websiteUrl,const DeepCollectionEquality().hash(_openingHours),pricing,isFurnished,genderPref,isRoomAvailable,const DeepCollectionEquality().hash(coverImageBytes),const DeepCollectionEquality().hash(_galleryImageBytes),const DeepCollectionEquality().hash(_galleryUrlsToDelete)]);
+int get hashCode => Object.hashAll([runtimeType,category,subCategory,name,description,listingType,cityName,sectorName,streetAddress,latLng,phoneNumber,waNumber,email,facebookUrl,instagramUrl,websiteUrl,const DeepCollectionEquality().hash(_openingHours),pricing,isFurnished,genderPref,isRoomAvailable,const DeepCollectionEquality().hash(coverImageBytes),const DeepCollectionEquality().hash(_galleryImageBytes),const DeepCollectionEquality().hash(_galleryUrlsToDelete)]);
 
 @override
 String toString() {
-  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, waNumber: $waNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, isRoomAvailable: $isRoomAvailable, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
+  return 'ShopForm(category: $category, subCategory: $subCategory, name: $name, description: $description, listingType: $listingType, cityName: $cityName, sectorName: $sectorName, streetAddress: $streetAddress, latLng: $latLng, phoneNumber: $phoneNumber, waNumber: $waNumber, email: $email, facebookUrl: $facebookUrl, instagramUrl: $instagramUrl, websiteUrl: $websiteUrl, openingHours: $openingHours, pricing: $pricing, isFurnished: $isFurnished, genderPref: $genderPref, isRoomAvailable: $isRoomAvailable, coverImageBytes: $coverImageBytes, galleryImageBytes: $galleryImageBytes, galleryUrlsToDelete: $galleryUrlsToDelete)';
 }
 
 
@@ -353,7 +355,7 @@ abstract mixin class _$ShopFormCopyWith<$Res> implements $ShopFormCopyWith<$Res>
   factory _$ShopFormCopyWith(_ShopForm value, $Res Function(_ShopForm) _then) = __$ShopFormCopyWithImpl;
 @override @useResult
 $Res call({
- Category? category, SubCategory? subCategory, String name, String description, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String waNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, Pricing? pricing, bool isFurnished, GenderPreference genderPref, bool isRoomAvailable, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
+ Category? category, SubCategory? subCategory, String name, String description, ListingType? listingType, String cityName, String sectorName, String streetAddress, LatLng? latLng, String phoneNumber, String waNumber, String email, String facebookUrl, String instagramUrl, String websiteUrl, Map<DayOfWeek, OpeningHours>? openingHours, Pricing? pricing, bool isFurnished, GenderPreference genderPref, bool isRoomAvailable, Uint8List? coverImageBytes, List<Uint8List> galleryImageBytes, List<String> galleryUrlsToDelete
 });
 
 
@@ -370,13 +372,14 @@ class __$ShopFormCopyWithImpl<$Res>
 
 /// Create a copy of ShopForm
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? waNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? isRoomAvailable = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? subCategory = freezed,Object? name = null,Object? description = null,Object? listingType = freezed,Object? cityName = null,Object? sectorName = null,Object? streetAddress = null,Object? latLng = freezed,Object? phoneNumber = null,Object? waNumber = null,Object? email = null,Object? facebookUrl = null,Object? instagramUrl = null,Object? websiteUrl = null,Object? openingHours = freezed,Object? pricing = freezed,Object? isFurnished = null,Object? genderPref = null,Object? isRoomAvailable = null,Object? coverImageBytes = freezed,Object? galleryImageBytes = null,Object? galleryUrlsToDelete = null,}) {
   return _then(_ShopForm(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
 as SubCategory?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,cityName: null == cityName ? _self.cityName : cityName // ignore: cast_nullable_to_non_nullable
+as String,listingType: freezed == listingType ? _self.listingType : listingType // ignore: cast_nullable_to_non_nullable
+as ListingType?,cityName: null == cityName ? _self.cityName : cityName // ignore: cast_nullable_to_non_nullable
 as String,sectorName: null == sectorName ? _self.sectorName : sectorName // ignore: cast_nullable_to_non_nullable
 as String,streetAddress: null == streetAddress ? _self.streetAddress : streetAddress // ignore: cast_nullable_to_non_nullable
 as String,latLng: freezed == latLng ? _self.latLng : latLng // ignore: cast_nullable_to_non_nullable
