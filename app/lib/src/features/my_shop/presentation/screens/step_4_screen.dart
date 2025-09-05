@@ -34,6 +34,7 @@ class Step4SpecificsPage extends ConsumerWidget {
             onOpeningHoursChanged: (hours) => wizardController.updateFormData(
               formData.copyWith(openingHours: hours),
             ),
+            categoryId: categoryId ?? 0,
           ),
           const Divider(),
           if (categoryId == 1)

@@ -30,8 +30,13 @@ class LocationPickerTile extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Pick shop location by clicking on map'.hardcoded,
+          'Pick Your Shop Location *'.hardcoded,
           style: context.textTheme.titleMedium,
+        ),
+        Text(
+          "Tap below to open the map. Stand at your business door, press the location icon above the check button to find your spot, then press the check button to save it."
+              .hardcoded,
+          style: context.textTheme.labelLarge,
         ),
         GestureDetector(
           onTap: () async {

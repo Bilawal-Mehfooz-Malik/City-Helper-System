@@ -17,10 +17,10 @@ class ShopFormWizardController extends _$ShopFormWizardController {
   bool _validateCurrentPage() {
     final formData = state.formData;
     switch (state.currentPage) {
-      case 0: // Step 1: Basic Details (Name, Category, SubCategory)
+      case 0:
         if (ShopFormValidator.validateName(formData.name) != null) return false;
-        if (formData.category == null) return false; // Category is required
-        // SubCategory is optional, so no validation here
+        if (formData.category == null) return false; // required
+        if (formData.subCategory == null) return false; // required
         break;
       case 1: // Step 2: Location (City, Sector, Street Address, LatLng)
         if (ShopFormValidator.validateCity(formData.cityName) != null) {
@@ -36,11 +36,6 @@ class ShopFormWizardController extends _$ShopFormWizardController {
         if (formData.latLng == null) return false; // LatLng is required
         break;
       case 2: // Step 3: Contact (Phone, Messaging, Email, Social Media)
-        if (ShopFormValidator.validatePhoneNumber(formData.phoneNumber) !=
-            null) {
-          return false;
-        }
-        // Messaging number and email are optional, social media URLs are optional
         break;
       case 3: // Step 4: Specifics (Opening Hours, Pricing, Gender Preference)
         // Opening hours are optional, pricing is optional, gender preference is optional
@@ -53,7 +48,8 @@ class ShopFormWizardController extends _$ShopFormWizardController {
     return true;
   }
 
-  bool nextPage() { // Changed return type to bool
+  bool nextPage() {
+    // Changed return type to bool
     if (_validateCurrentPage()) {
       if (state.currentPage < kShopFormTotalPages - 1) {
         state = state.copyWith(currentPage: state.currentPage + 1);
@@ -69,10 +65,14 @@ class ShopFormWizardController extends _$ShopFormWizardController {
       final originalPage = state.currentPage;
       state = state.copyWith(currentPage: i);
       if (!_validateCurrentPage()) {
-        state = state.copyWith(currentPage: originalPage); // Restore original page
+        state = state.copyWith(
+          currentPage: originalPage,
+        ); // Restore original page
         return false; // Validation failed for this page
       }
-      state = state.copyWith(currentPage: originalPage); // Restore original page
+      state = state.copyWith(
+        currentPage: originalPage,
+      ); // Restore original page
     }
     return true; // All pages validated successfully
   }

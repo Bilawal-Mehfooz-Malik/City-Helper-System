@@ -11,7 +11,6 @@ class CategorySection extends StatelessWidget {
   final SubCategory? selectedSubCategory;
   final ValueChanged<Category?> onCategoryChanged;
   final ValueChanged<SubCategory?> onSubCategoryChanged;
-  // FIX: Added flag to handle edit mode state
   final bool isEditing;
 
   const CategorySection({
@@ -22,7 +21,7 @@ class CategorySection extends StatelessWidget {
     required this.selectedSubCategory,
     required this.onCategoryChanged,
     required this.onSubCategoryChanged,
-    this.isEditing = false, // Default to false
+    this.isEditing = false,
   });
 
   @override
@@ -37,8 +36,6 @@ class CategorySection extends StatelessWidget {
             decoration: InputDecoration(
               labelText: 'Category *'.hardcoded,
               border: const OutlineInputBorder(),
-              // FIX: Visually indicate that the field is disabled
-              fillColor: isEditing ? Colors.grey.shade200 : null,
               filled: isEditing,
             ),
             items: allCategories
@@ -82,7 +79,7 @@ class SubCategoryDropdown extends StatelessWidget {
     return DropdownButtonFormField<SubCategory>(
       value: selectedSubCategory,
       decoration: InputDecoration(
-        labelText: 'Choose Sub Category'.hardcoded,
+        labelText: 'Choose Sub Category *'.hardcoded,
         border: const OutlineInputBorder(),
       ),
       items: subCategoryOptions

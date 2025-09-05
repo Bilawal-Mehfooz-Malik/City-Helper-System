@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/location_picker_tile.dart';
@@ -22,31 +23,58 @@ class Step2LocationPage extends ConsumerWidget {
       padding: const EdgeInsets.all(Sizes.p16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: Sizes.p12,
         children: [
+          Text(
+            'Business City Name *'.hardcoded,
+            style: context.textTheme.titleMedium,
+          ),
+          gapH4,
           TextFormField(
             initialValue: formData.cityName,
-            decoration: InputDecoration(labelText: 'City *'.hardcoded),
+            decoration: InputDecoration(
+              hintText: 'e.g. Mirpur'.hardcoded,
+              border: const OutlineInputBorder(),
+            ),
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(cityName: val),
             ),
           ),
+          gapH8,
+
+          Text(
+            'Business Sector Name *'.hardcoded,
+            style: context.textTheme.titleMedium,
+          ),
+          gapH4,
           TextFormField(
             initialValue: formData.sectorName,
-            decoration: InputDecoration(labelText: 'Sector *'.hardcoded),
+            decoration: InputDecoration(
+              hintText: 'e.g. C4'.hardcoded,
+              border: const OutlineInputBorder(),
+            ),
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(sectorName: val),
             ),
           ),
+          gapH8,
+
+          Text(
+            'Business Street Address *'.hardcoded,
+            style: context.textTheme.titleMedium,
+          ),
+          gapH4,
           TextFormField(
             initialValue: formData.streetAddress,
             decoration: InputDecoration(
-              labelText: 'Street Address *'.hardcoded,
+              hintText: 'e.g. 1st Floor, ABC Building'.hardcoded,
+              border: const OutlineInputBorder(),
             ),
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(streetAddress: val),
             ),
           ),
+          gapH16,
+
           LocationPickerTile(
             pickedLatLng: formData.latLng,
             onLocationPicked: (latLng) => wizardController.updateFormData(

@@ -19,20 +19,6 @@ class BasicInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const int maxWords = 500; // Reasonable limit for UX
-
-    // Word count validator
-    String? validateDescription(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Description is required'.hardcoded;
-      }
-      final wordCount = value.trim().split(RegExp(r'\s+')).length;
-      if (wordCount > maxWords) {
-        return 'Description cannot exceed $maxWords words'.hardcoded;
-      }
-      return null;
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -51,8 +37,6 @@ class BasicInfoSection extends StatelessWidget {
               vertical: 10,
             ),
           ),
-          validator: (val) =>
-              val!.isEmpty ? 'Name is required'.hardcoded : null,
         ),
         gapH8,
         Text('Description *'.hardcoded, style: context.textTheme.titleMedium),
@@ -66,9 +50,7 @@ class BasicInfoSection extends StatelessWidget {
             initialValue: description,
             onChanged: onDescriptionChanged,
             decoration: InputDecoration(
-              hintText:
-                  'Write about your business, what you offer, your values, etc.'
-                      .hardcoded,
+              hintText: 'Write about your business'.hardcoded,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
@@ -81,7 +63,6 @@ class BasicInfoSection extends StatelessWidget {
             maxLines: null, // Dynamic height
             maxLength: 5000, // Char limit to support ~500 words
             textAlignVertical: TextAlignVertical.top,
-            validator: validateDescription,
           ),
         ),
       ],

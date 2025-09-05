@@ -27,7 +27,7 @@ class SocialMediaSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Facebook Profile'.hardcoded,
+          'Facebook Profile (optional)'.hardcoded,
           style: context.textTheme.titleMedium,
         ),
         gapH4,
@@ -35,13 +35,13 @@ class SocialMediaSection extends StatelessWidget {
           initialValue: facebook,
           onChanged: onFacebookChanged,
           decoration: InputDecoration(
-            hintText: 'Enter your facebook url'.hardcoded,
+            hintText: 'e.g. @yourshop'.hardcoded,
+            border: OutlineInputBorder(),
           ),
-          keyboardType: TextInputType.url,
         ),
         gapH8,
         Text(
-          'Instagram Profile'.hardcoded,
+          'Instagram Profile (optional)'.hardcoded,
           style: context.textTheme.titleMedium,
         ),
         gapH4,
@@ -49,18 +49,22 @@ class SocialMediaSection extends StatelessWidget {
           initialValue: instagram,
           onChanged: onInstagramChanged,
           decoration: InputDecoration(
-            hintText: 'Enter your instagram url'.hardcoded,
+            border: OutlineInputBorder(),
+            hintText: 'e.g. @yourshop'.hardcoded,
           ),
-          keyboardType: TextInputType.url,
         ),
         gapH8,
-        Text('Website Link'.hardcoded, style: context.textTheme.titleMedium),
+        Text(
+          'Website Link (optional)'.hardcoded,
+          style: context.textTheme.titleMedium,
+        ),
         gapH4,
         TextFormField(
           initialValue: website,
           onChanged: onWebsiteChanged,
           decoration: InputDecoration(
-            hintText: 'Enter your website url'.hardcoded,
+            border: OutlineInputBorder(),
+            hintText: 'e.g. www.yourshop.com'.hardcoded,
           ),
           keyboardType: TextInputType.url,
         ),

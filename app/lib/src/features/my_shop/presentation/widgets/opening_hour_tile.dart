@@ -3,6 +3,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/models/opening_hours.dart';
 import 'package:app/src/core/models/time_slot.dart';
 import 'package:app/src/core/utils/date_formatter.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
@@ -10,26 +11,61 @@ import 'package:flutter/material.dart';
 class OpeningHoursTile extends StatelessWidget {
   final Map<DayOfWeek, OpeningHours> openingHours;
   final ValueChanged<Map<DayOfWeek, OpeningHours>> onOpeningHoursChanged;
+  final int categoryId;
 
   const OpeningHoursTile({
     super.key,
     required this.openingHours,
     required this.onOpeningHoursChanged,
+    required this.categoryId,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        '${context.loc.editOpeningHours}: ${openingHours.isEmpty ? "Not Set" : "${openingHours.length} days set"}'
-            .hardcoded,
+    final title = switch (categoryId) {
+      1 => 'Office Opening Hours'.hardcoded,
+      2 => 'Opening Hours'.hardcoded,
+      _ => 'Shop Opening Hours'.hardcoded,
+    };
+
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Sizes.p8),
+        side: BorderSide(
+          color: context.colorScheme.outline.withValues(alpha: 0.5),
+          width: 1,
+        ),
       ),
-      trailing: const Icon(Icons.access_time),
-      onTap: () => _editOpeningHours(context),
+      child: InkWell(
+        onTap: () => _editOpeningHours(context, title),
+        borderRadius: BorderRadius.circular(Sizes.p8),
+        child: Padding(
+          padding: const EdgeInsets.all(Sizes.p16),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: context.textTheme.titleMedium),
+                    gapH4,
+                    Text(
+                      'Set the days and times your shop is open *'.hardcoded,
+                      style: context.textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.access_time, color: context.colorScheme.primary),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Future<void> _editOpeningHours(BuildContext context) async {
+  Future<void> _editOpeningHours(BuildContext context, String title) async {
     // Create a mutable copy of the opening hours map
     final Map<DayOfWeek, OpeningHours> tempHours = Map.from(openingHours);
 
@@ -37,12 +73,10 @@ class OpeningHoursTile extends StatelessWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text(context.loc.editOpeningHours),
+          title: Text(title),
           content: SizedBox(
             width: double.maxFinite,
-            height:
-                MediaQuery.of(context).size.height *
-                0.7, // Use a percentage of screen height
+            height: MediaQuery.sizeOf(context).height * 0.7,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
