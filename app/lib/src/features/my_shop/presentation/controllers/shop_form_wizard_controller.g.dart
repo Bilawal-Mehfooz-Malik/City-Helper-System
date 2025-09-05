@@ -7,7 +7,7 @@ part of 'shop_form_wizard_controller.dart';
 // **************************************************************************
 
 String _$shopFormWizardControllerHash() =>
-    r'45a766eb1c8187ebf5ddd7005d2083d34c09628d';
+    r'02f2526ef2133bb054fe5e5d53f8e7f223b9efa5';
 
 /// Copied from Dart SDK
 class _SystemHash {

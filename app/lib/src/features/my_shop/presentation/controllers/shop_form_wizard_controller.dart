@@ -38,7 +38,10 @@ class ShopFormWizardController extends _$ShopFormWizardController {
       case 2: // Step 3: Contact (Phone, Messaging, Email, Social Media)
         break;
       case 3: // Step 4: Specifics (Opening Hours, Pricing, Gender Preference)
-        // Opening hours are optional, pricing is optional, gender preference is optional
+        if (formData.openingHours == null) return false;
+        if (formData.category?.id == 1) {
+          if (formData.pricing == null) return false;
+        }
         break;
       case 4: // Step 5: Media (Cover Image, Gallery Images)
         // Cover image is required for new shops, but not for editing
