@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationAndMediaSection extends StatelessWidget {
+  final CategoryId categoryId;
   final LatLng? pickedLatLng;
   final Uint8List? coverImageBytes;
   final List<Uint8List> galleryImagesBytes;
@@ -29,6 +30,7 @@ class LocationAndMediaSection extends StatelessWidget {
     required this.galleryImagesBytes,
     required this.openingHours,
     this.coverImageUrl,
+    required this.categoryId,
     this.galleryImageUrls = const [],
     required this.onLocationPicked,
     required this.onCoverImagePicked,
@@ -58,6 +60,7 @@ class LocationAndMediaSection extends StatelessWidget {
           onExistingImageDeleted: onExistingGalleryImageDeleted,
         ),
         OpeningHoursTile(
+          categoryId: categoryId,
           openingHours: openingHours,
           onOpeningHoursChanged: onOpeningHoursChanged,
         ),

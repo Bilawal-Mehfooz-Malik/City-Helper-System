@@ -22,13 +22,13 @@ class BasicInfoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Shop Name *'.hardcoded, style: context.textTheme.titleMedium),
+        Text('Business Name *'.hardcoded, style: context.textTheme.titleMedium),
         gapH4,
         TextFormField(
           initialValue: name,
           onChanged: onNameChanged,
           decoration: InputDecoration(
-            hintText: 'Enter your shop name'.hardcoded,
+            hintText: 'Enter your business name'.hardcoded,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

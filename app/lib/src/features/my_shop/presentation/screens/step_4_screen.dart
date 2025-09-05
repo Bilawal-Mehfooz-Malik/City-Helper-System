@@ -36,7 +36,6 @@ class Step4SpecificsPage extends ConsumerWidget {
             ),
             categoryId: categoryId ?? 0,
           ),
-          const Divider(),
           if (categoryId == 1)
             ResidenceSpecificSection(
               price: formData.pricing?.cost,

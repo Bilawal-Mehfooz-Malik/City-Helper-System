@@ -23,9 +23,9 @@ class OpeningHoursTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = switch (categoryId) {
-      1 => 'Office Opening Hours'.hardcoded,
-      2 => 'Opening Hours'.hardcoded,
-      _ => 'Shop Opening Hours'.hardcoded,
+      1 => 'Office Opening Hours *'.hardcoded,
+      2 => 'Opening Hours *'.hardcoded,
+      _ => 'Shop Opening Hours *'.hardcoded,
     };
 
     return Card(
@@ -51,7 +51,7 @@ class OpeningHoursTile extends StatelessWidget {
                     Text(title, style: context.textTheme.titleMedium),
                     gapH4,
                     Text(
-                      'Set the days and times your shop is open *'.hardcoded,
+                      'Set the days and times your business is open'.hardcoded,
                       style: context.textTheme.bodyMedium,
                     ),
                   ],
@@ -66,46 +66,89 @@ class OpeningHoursTile extends StatelessWidget {
   }
 
   Future<void> _editOpeningHours(BuildContext context, String title) async {
-    // Create a mutable copy of the opening hours map
     final Map<DayOfWeek, OpeningHours> tempHours = Map.from(openingHours);
 
     await showDialog<void>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text(title),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: MediaQuery.sizeOf(context).height * 0.7,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: DayOfWeek.values.map((day) {
-                  final dayHours =
-                      tempHours[day] ??
-                      const OpeningHours(isDayOff: true, slots: null);
-                  return OpeningHoursEditor(
-                    day: day,
-                    dayHours: dayHours,
-                    onChanged: (updatedHours) {
-                      setState(() {
-                        tempHours[day] = updatedHours;
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.p8),
+        ),
+        elevation: 4,
+        child: DefaultTabController(
+          length: DayOfWeek.values.length,
+          child: Padding(
+            padding: const EdgeInsets.all(Sizes.p16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: context.textTheme.titleLarge),
+                gapH8,
+                Text(
+                  "Set your business opening hours for each day".hardcoded,
+                  style: context.textTheme.bodyMedium,
+                ),
+                gapH12,
+                TabBar(
+                  isScrollable: true,
+                  tabs: DayOfWeek.values.map((day) {
+                    final dayName =
+                        day.name[0].toUpperCase() + day.name.substring(1);
+                    return Tab(text: dayName.substring(0, 3)); // e.g., "Mon"
+                  }).toList(),
+                  labelStyle: context.textTheme.titleMedium,
+                  labelColor: context.colorScheme.primary,
+                  unselectedLabelColor: context.colorScheme.onSurface,
+                  indicatorColor: context.colorScheme.primary,
+                ),
+                gapH8,
+                Expanded(
+                  child: TabBarView(
+                    children: DayOfWeek.values.map((day) {
+                      final dayHours =
+                          tempHours[day] ??
+                          const OpeningHours(isDayOff: true, slots: null);
+                      return SingleChildScrollView(
+                        child: OpeningHoursEditor(
+                          day: day,
+                          dayHours: dayHours,
+                          onChanged: (updatedHours) {
+                            (context as Element).markNeedsBuild();
+                            tempHours[day] = updatedHours;
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                gapH12,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        context.loc.cancel,
+                        style: TextStyle(color: context.colorScheme.primary),
+                      ),
+                    ),
+                    gapW8,
+                    TextButton(
+                      onPressed: () {
+                        onOpeningHoursChanged(tempHours);
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        context.loc.done,
+                        style: TextStyle(color: context.colorScheme.primary),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                onOpeningHoursChanged(tempHours);
-                Navigator.pop(context);
-              },
-              child: Text(context.loc.done),
-            ),
-          ],
         ),
       ),
     );
@@ -189,12 +232,11 @@ class OpeningHoursEditor extends StatelessWidget {
                 },
               );
             }),
+            gapH4,
             TextButton.icon(
               onPressed: () {
                 final newSlots = List<TimeSlot>.from(dayHours.slots ?? []);
-                newSlots.add(
-                  const TimeSlot(open: '09:00', close: '17:00'),
-                ); // Default new slot
+                newSlots.add(const TimeSlot(open: '09:00', close: '17:00'));
                 onChanged(dayHours.copyWith(slots: newSlots));
               },
               icon: const Icon(Icons.add),
