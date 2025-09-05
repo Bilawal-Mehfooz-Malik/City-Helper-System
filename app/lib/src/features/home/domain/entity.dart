@@ -38,7 +38,7 @@ sealed class Entity with _$Entity {
     @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
     required Pricing pricing,
     @Default(false) bool isFurnished,
-    @Default(GenderPreference.familyFriendly) GenderPreference genderPreference,
+    GenderPreference? genderPreference,
     @Default(ListingType.forRent) ListingType listingType,
     @Default(true) bool isRoomAvailable,
     @_timestampJsonConverter required DateTime updatedAt,
@@ -61,7 +61,7 @@ sealed class Entity with _$Entity {
     @Default(OperationalStatus.defaultStatus)
     OperationalStatus operationalStatus,
     @Default(ApprovalStatus.pending) ApprovalStatus approvalStatus,
-    @Default(GenderPreference.any) GenderPreference genderPreference,
+    GenderPreference? genderPreference,
     @_timestampJsonConverter required DateTime updatedAt,
   }) = Food;
 

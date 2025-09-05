@@ -23,8 +23,7 @@ class Step4SpecificsPage extends ConsumerWidget {
     final ShopForm formData = wizardState.formData;
     final categoryId = formData.category?.id;
 
-    final pricing =
-        formData.pricing ??
+    final pricing = formData.pricing ??
         Pricing.fromListingType(
           cost: 0.0,
           listingType: formData.listingType ?? ListingType.forRent,
@@ -57,15 +56,16 @@ class Step4SpecificsPage extends ConsumerWidget {
               onFurnishedChanged: (val) => wizardController.updateFormData(
                 formData.copyWith(isFurnished: val),
               ),
-              onIsRoomAvailableChanged: (val) => wizardController
-                  .updateFormData(formData.copyWith(isRoomAvailable: val)),
+              onIsRoomAvailableChanged: (val) =>
+                  wizardController.updateFormData(formData.copyWith(isRoomAvailable: val)),
             ),
           if (categoryId == 1 || categoryId == 2)
-            DropdownButtonFormField<GenderPreference>(
+            DropdownButtonFormField<GenderPreference?>(
               value: formData.genderPref,
               decoration: InputDecoration(
                 labelText: 'Gender Preference'.hardcoded,
                 border: const OutlineInputBorder(),
+                hintText: 'Select Gender Preference'.hardcoded,
               ),
               items: GenderPreference.values
                   .map(
@@ -73,11 +73,9 @@ class Step4SpecificsPage extends ConsumerWidget {
                   )
                   .toList(),
               onChanged: (val) {
-                if (val != null) {
-                  wizardController.updateFormData(
-                    formData.copyWith(genderPref: val),
-                  );
-                }
+                wizardController.updateFormData(
+                  formData.copyWith(genderPref: val),
+                );
               },
             ),
         ],

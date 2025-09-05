@@ -55,12 +55,10 @@ ResidenceDetail _$ResidenceDetailFromJson(
           .toList(),
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
-  genderPreference:
-      $enumDecodeNullable(
-        _$GenderPreferenceEnumMap,
-        json['genderPreference'],
-      ) ??
-      GenderPreference.any,
+  genderPreference: $enumDecodeNullable(
+    _$GenderPreferenceEnumMap,
+    json['genderPreference'],
+  ),
   listingType:
       $enumDecodeNullable(_$ListingTypeEnumMap, json['listingType']) ??
       ListingType.forRent,
@@ -104,7 +102,7 @@ Map<String, dynamic> _$ResidenceDetailToJson(
   'galleryImageUrls': instance.galleryImageUrls,
   'pricing': instance.pricing.toJson(),
   'isFurnished': instance.isFurnished,
-  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference],
   'listingType': _$ListingTypeEnumMap[instance.listingType]!,
   'isRoomAvailable': instance.isRoomAvailable,
   'runtimeType': instance.$type,
@@ -128,7 +126,6 @@ Value? _$JsonConverterFromJson<Json, Value>(
 ) => json == null ? null : fromJson(json as Json);
 
 const _$GenderPreferenceEnumMap = {
-  GenderPreference.any: 'any',
   GenderPreference.maleOnly: 'maleOnly',
   GenderPreference.femaleOnly: 'femaleOnly',
   GenderPreference.familyFriendly: 'familyFriendly',
@@ -190,12 +187,10 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
           .toList(),
   menuImageUrls:
       (json['menuImageUrls'] as List<dynamic>).map((e) => e as String).toList(),
-  genderPreference:
-      $enumDecodeNullable(
-        _$GenderPreferenceEnumMap,
-        json['genderPreference'],
-      ) ??
-      GenderPreference.any,
+  genderPreference: $enumDecodeNullable(
+    _$GenderPreferenceEnumMap,
+    json['genderPreference'],
+  ),
   $type: json['runtimeType'] as String?,
 );
 
@@ -230,6 +225,6 @@ Map<String, dynamic> _$FoodDetailToJson(
   'description': instance.description,
   'galleryImageUrls': instance.galleryImageUrls,
   'menuImageUrls': instance.menuImageUrls,
-  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference]!,
+  'genderPreference': _$GenderPreferenceEnumMap[instance.genderPreference],
   'runtimeType': instance.$type,
 };

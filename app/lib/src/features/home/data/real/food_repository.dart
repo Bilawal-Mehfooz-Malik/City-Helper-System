@@ -113,10 +113,10 @@ class FoodRepository {
 
   Query<Food> _buildFilteredQuery(Query<Food> query, FoodFilter filter) {
     var newQuery = query;
-    if (filter.genderPref != GenderPreference.any) {
+    if (filter.genderPref != null) {
       newQuery = newQuery.where(
         'genderPreference',
-        isEqualTo: filter.genderPref.name,
+        isEqualTo: filter.genderPref!.name,
       );
     }
     if (filter.ratingSort != SortOrder.none) {

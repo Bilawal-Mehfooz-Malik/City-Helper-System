@@ -9,7 +9,7 @@ sealed class EntityFilter with _$EntityFilter {
 
   const factory EntityFilter.food({
     @Default(SortOrder.none) SortOrder ratingSort,
-    @Default(GenderPreference.any) GenderPreference genderPref,
+    GenderPreference? genderPref,
   }) = FoodFilter;
 
   const factory EntityFilter.residence({
@@ -17,7 +17,7 @@ sealed class EntityFilter with _$EntityFilter {
     @Default(false) bool isFurnished,
     @Default(false) bool isRoomAvailable,
     @Default(SortOrder.none) SortOrder priceSort,
-    @Default(GenderPreference.any) GenderPreference genderPref,
+    GenderPreference? genderPref,
   }) = ResidenceFilter;
 
   const factory EntityFilter.basic({

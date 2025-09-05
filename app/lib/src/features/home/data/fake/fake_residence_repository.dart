@@ -147,7 +147,7 @@ class FakeResidenceRepository implements ResidenceRepository {
     if (filter.isFurnished) {
       result = result.where((residence) => residence.isFurnished).toList();
     }
-    if (filter.genderPref != GenderPreference.any) {
+    if (filter.genderPref != null) {
       result = result
           .where((residence) => residence.genderPreference == filter.genderPref)
           .toList();

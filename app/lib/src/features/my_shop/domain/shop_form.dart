@@ -40,7 +40,7 @@ abstract class ShopForm with _$ShopForm {
     Map<DayOfWeek, OpeningHours>? openingHours,
     Pricing? pricing,
     required bool isFurnished,
-    required GenderPreference genderPref,
+    GenderPreference? genderPref,
     @Default(true) bool isRoomAvailable,
 
     // Step 5: Media Uploads
@@ -78,7 +78,7 @@ abstract class ShopForm with _$ShopForm {
           ? shop.genderPreference
           : shop is FoodDetail
               ? shop.genderPreference
-              : GenderPreference.any,
+              : null,
       pricing: pricing,
       isFurnished: isFurnished,
       listingType: listingType,
@@ -103,7 +103,7 @@ abstract class ShopForm with _$ShopForm {
       websiteUrl: '',
       latLng: null,
       openingHours: defaultOpeningHours,
-      genderPref: GenderPreference.any,
+      genderPref: null,
       isFurnished: false,
       listingType: ListingType.forRent,
       isRoomAvailable: true, // Default to true

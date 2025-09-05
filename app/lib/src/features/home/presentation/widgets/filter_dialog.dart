@@ -259,8 +259,8 @@ class GenderPreferenceChips extends StatelessWidget {
     required this.onSelected,
   });
 
-  final GenderPreference selected;
-  final ValueChanged<GenderPreference> onSelected;
+  final GenderPreference? selected;
+  final ValueChanged<GenderPreference?> onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -281,7 +281,13 @@ class GenderPreferenceChips extends StatelessWidget {
             return ChoiceChip(
               label: Text(_localizedGenderText(context, gender)),
               selected: selected == gender,
-              onSelected: (_) => onSelected(gender),
+              onSelected: (_) {
+                if (selected == gender) {
+                  onSelected(null);
+                } else {
+                  onSelected(gender);
+                }
+              },
             );
           }).toList(),
         ),
@@ -291,7 +297,6 @@ class GenderPreferenceChips extends StatelessWidget {
 
   String _localizedGenderText(BuildContext context, GenderPreference gender) {
     return switch (gender) {
-      GenderPreference.any => context.loc.genderPreferenceNone,
       GenderPreference.maleOnly => context.loc.genderPreferenceMaleOnly,
       GenderPreference.femaleOnly => context.loc.genderPreferenceFemaleOnly,
       GenderPreference.familyFriendly =>

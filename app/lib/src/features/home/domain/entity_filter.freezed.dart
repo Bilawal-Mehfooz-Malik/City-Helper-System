@@ -153,7 +153,7 @@ return basic(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SortOrder ratingSort,  GenderPreference genderPref)?  food,TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference genderPref)?  residence,TResult Function( SortOrder ratingSort)?  basic,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SortOrder ratingSort,  GenderPreference? genderPref)?  food,TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)?  residence,TResult Function( SortOrder ratingSort)?  basic,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case FoodFilter() when food != null:
 return food(_that.ratingSort,_that.genderPref);case ResidenceFilter() when residence != null:
@@ -176,7 +176,7 @@ return basic(_that.ratingSort);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SortOrder ratingSort,  GenderPreference genderPref)  food,required TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference genderPref)  residence,required TResult Function( SortOrder ratingSort)  basic,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SortOrder ratingSort,  GenderPreference? genderPref)  food,required TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)  residence,required TResult Function( SortOrder ratingSort)  basic,}) {final _that = this;
 switch (_that) {
 case FoodFilter():
 return food(_that.ratingSort,_that.genderPref);case ResidenceFilter():
@@ -195,7 +195,7 @@ return basic(_that.ratingSort);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SortOrder ratingSort,  GenderPreference genderPref)?  food,TResult? Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference genderPref)?  residence,TResult? Function( SortOrder ratingSort)?  basic,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SortOrder ratingSort,  GenderPreference? genderPref)?  food,TResult? Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)?  residence,TResult? Function( SortOrder ratingSort)?  basic,}) {final _that = this;
 switch (_that) {
 case FoodFilter() when food != null:
 return food(_that.ratingSort,_that.genderPref);case ResidenceFilter() when residence != null:
@@ -212,11 +212,11 @@ return basic(_that.ratingSort);case _:
 
 
 class FoodFilter extends EntityFilter {
-  const FoodFilter({this.ratingSort = SortOrder.none, this.genderPref = GenderPreference.any}): super._();
+  const FoodFilter({this.ratingSort = SortOrder.none, this.genderPref}): super._();
   
 
 @override@JsonKey() final  SortOrder ratingSort;
-@JsonKey() final  GenderPreference genderPref;
+ final  GenderPreference? genderPref;
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
@@ -248,7 +248,7 @@ abstract mixin class $FoodFilterCopyWith<$Res> implements $EntityFilterCopyWith<
   factory $FoodFilterCopyWith(FoodFilter value, $Res Function(FoodFilter) _then) = _$FoodFilterCopyWithImpl;
 @override @useResult
 $Res call({
- SortOrder ratingSort, GenderPreference genderPref
+ SortOrder ratingSort, GenderPreference? genderPref
 });
 
 
@@ -265,11 +265,11 @@ class _$FoodFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? genderPref = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? genderPref = freezed,}) {
   return _then(FoodFilter(
 ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
-as SortOrder,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
-as GenderPreference,
+as SortOrder,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
+as GenderPreference?,
   ));
 }
 
@@ -280,14 +280,14 @@ as GenderPreference,
 
 
 class ResidenceFilter extends EntityFilter {
-  const ResidenceFilter({this.ratingSort = SortOrder.none, this.isFurnished = false, this.isRoomAvailable = false, this.priceSort = SortOrder.none, this.genderPref = GenderPreference.any}): super._();
+  const ResidenceFilter({this.ratingSort = SortOrder.none, this.isFurnished = false, this.isRoomAvailable = false, this.priceSort = SortOrder.none, this.genderPref}): super._();
   
 
 @override@JsonKey() final  SortOrder ratingSort;
 @JsonKey() final  bool isFurnished;
 @JsonKey() final  bool isRoomAvailable;
 @JsonKey() final  SortOrder priceSort;
-@JsonKey() final  GenderPreference genderPref;
+ final  GenderPreference? genderPref;
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
@@ -319,7 +319,7 @@ abstract mixin class $ResidenceFilterCopyWith<$Res> implements $EntityFilterCopy
   factory $ResidenceFilterCopyWith(ResidenceFilter value, $Res Function(ResidenceFilter) _then) = _$ResidenceFilterCopyWithImpl;
 @override @useResult
 $Res call({
- SortOrder ratingSort, bool isFurnished, bool isRoomAvailable, SortOrder priceSort, GenderPreference genderPref
+ SortOrder ratingSort, bool isFurnished, bool isRoomAvailable, SortOrder priceSort, GenderPreference? genderPref
 });
 
 
@@ -336,14 +336,14 @@ class _$ResidenceFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? isFurnished = null,Object? isRoomAvailable = null,Object? priceSort = null,Object? genderPref = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? isFurnished = null,Object? isRoomAvailable = null,Object? priceSort = null,Object? genderPref = freezed,}) {
   return _then(ResidenceFilter(
 ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
 as SortOrder,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
 as bool,isRoomAvailable: null == isRoomAvailable ? _self.isRoomAvailable : isRoomAvailable // ignore: cast_nullable_to_non_nullable
 as bool,priceSort: null == priceSort ? _self.priceSort : priceSort // ignore: cast_nullable_to_non_nullable
-as SortOrder,genderPref: null == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
-as GenderPreference,
+as SortOrder,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
+as GenderPreference?,
   ));
 }
 

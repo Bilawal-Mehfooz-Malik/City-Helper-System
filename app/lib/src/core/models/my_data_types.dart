@@ -13,7 +13,7 @@ typedef GoogleMapBuilder = Widget Function(LatLng latLng);
 
 enum SortOrder { none, lowToHigh, highToLow }
 
-enum GenderPreference { any, maleOnly, femaleOnly, familyFriendly }
+enum GenderPreference { maleOnly, femaleOnly, familyFriendly }
 
 enum OperationalStatus { open, close, defaultStatus }
 

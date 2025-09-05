@@ -123,7 +123,7 @@ class FakeFoodRepository implements FoodRepository {
   List<Food> _applyFoodFilter(List<Food> foods, FoodFilter filter) {
     List<Food> result = List.from(foods);
 
-    if (filter.genderPref != GenderPreference.any) {
+    if (filter.genderPref != null) {
       result = result
           .where((food) => food.genderPreference == filter.genderPref)
           .toList();

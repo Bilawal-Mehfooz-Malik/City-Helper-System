@@ -66,7 +66,7 @@ sealed class EntityDetail with _$EntityDetail {
     // Specific Attributes
     required Pricing pricing,
     @Default(false) bool isFurnished,
-    @Default(GenderPreference.any) GenderPreference genderPreference,
+    GenderPreference? genderPreference,
     @Default(ListingType.forRent) ListingType listingType,
     @Default(true) bool isRoomAvailable,
   }) = ResidenceDetail;
@@ -115,7 +115,7 @@ sealed class EntityDetail with _$EntityDetail {
     required List<String> menuImageUrls,
 
     // Specific Attributes
-    @Default(GenderPreference.any) GenderPreference genderPreference,
+    GenderPreference? genderPreference,
   }) = FoodDetail;
 
   factory EntityDetail.fromJson(Map<String, Object?> json) =>
