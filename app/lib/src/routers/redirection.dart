@@ -44,34 +44,36 @@ String? redirection(Ref ref, GoRouterState state) {
       return '/';
     }
   } else {
-    final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
-    if (isAdminMode) {
-      if (!currentPath.startsWith('/my-shop') &&
-          currentPath != '/account' &&
-          currentPath != '/profile') {
-        return '/my-shop';
-      }
-    } else {
-      if (currentPath.startsWith('/my-shop')) {
-        return '/';
-      }
-    }
-
+    // User is logged in
     final userProfileValue = ref.watch(getUserByIdProvider(user.uid));
-    final userProfile = userProfileValue.valueOrNull;
+    final userProfile = userProfileValue.value;
     final isProfileComplete =
         userProfile != null && userProfile.name.trim().isNotEmpty;
 
-    if (isProfileComplete) {
-      if (currentPath == '/profile' || currentPath == '/auth') {
-        return '/';
-      }
-    } else {
+    // If profile is incomplete, redirect to profile screen
+    if (!isProfileComplete) {
       if (currentPath != '/profile' && currentPath != '/auth') {
         if (userProfileValue.isLoading) {
           return null;
         }
         return '/profile';
+      }
+    } else {
+      // Profile is complete
+      // Handle admin mode redirection
+      final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
+      if (isAdminMode) {
+        if (!currentPath.startsWith('/my-shop') &&
+            currentPath != '/account' &&
+            currentPath != '/profile' &&
+            currentPath != '/pick-your-location') {
+          return '/my-shop';
+        }
+      } else {
+        // Not admin mode
+        if (currentPath.startsWith('/my-shop')) {
+          return '/';
+        }
       }
     }
   }

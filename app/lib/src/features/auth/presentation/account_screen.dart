@@ -60,10 +60,6 @@ class AccountScreen extends ConsumerWidget {
         value: userProfile,
         data: (profile) {
           if (profile == null || !profile.isProfileComplete) {
-            // If profile is null or incomplete, redirect to profile creation
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.goNamed(AppRoute.profile.name);
-            });
             return const SizedBox.shrink();
           }
 

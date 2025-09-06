@@ -68,85 +68,89 @@ class OpeningHoursTile extends StatelessWidget {
   Future<void> _editOpeningHours(BuildContext context, String title) async {
     final Map<DayOfWeek, OpeningHours> tempHours = Map.from(openingHours);
 
-    await showDialog<void>(
-      context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Sizes.p8),
-        ),
-        elevation: 4,
-        child: DefaultTabController(
-          length: DayOfWeek.values.length,
-          child: Padding(
-            padding: const EdgeInsets.all(Sizes.p16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: context.textTheme.titleLarge),
-                gapH8,
-                Text(
-                  "Set your business opening hours for each day".hardcoded,
-                  style: context.textTheme.bodyMedium,
-                ),
-                gapH12,
-                TabBar(
-                  isScrollable: true,
-                  tabs: DayOfWeek.values.map((day) {
-                    final dayName =
-                        day.name[0].toUpperCase() + day.name.substring(1);
-                    return Tab(text: dayName.substring(0, 3)); // e.g., "Mon"
-                  }).toList(),
-                  labelStyle: context.textTheme.titleMedium,
-                  labelColor: context.colorScheme.primary,
-                  unselectedLabelColor: context.colorScheme.onSurface,
-                  indicatorColor: context.colorScheme.primary,
-                ),
-                gapH8,
-                Expanded(
-                  child: TabBarView(
-                    children: DayOfWeek.values.map((day) {
-                      final dayHours =
-                          tempHours[day] ??
-                          const OpeningHours(isDayOff: true, slots: null);
-                      return SingleChildScrollView(
-                        child: OpeningHoursEditor(
-                          day: day,
-                          dayHours: dayHours,
-                          onChanged: (updatedHours) {
-                            (context as Element).markNeedsBuild();
-                            tempHours[day] = updatedHours;
-                          },
-                        ),
-                      );
-                    }).toList(),
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text(title),
+            leading: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          body: DefaultTabController(
+            length: DayOfWeek.values.length,
+            child: Padding(
+              padding: const EdgeInsets.all(Sizes.p16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Set your business opening hours for each day".hardcoded,
+                    style: context.textTheme.bodyMedium,
                   ),
-                ),
-                gapH12,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        context.loc.cancel,
-                        style: TextStyle(color: context.colorScheme.primary),
-                      ),
+                  gapH12,
+                  TabBar(
+                    isScrollable: true,
+                    tabs: DayOfWeek.values.map((day) {
+                      final dayName =
+                          day.name[0].toUpperCase() + day.name.substring(1);
+                      return Tab(text: dayName.substring(0, 3)); // e.g., "Mon"
+                    }).toList(),
+                    labelStyle: context.textTheme.titleMedium,
+                    labelColor: context.colorScheme.primary,
+                    unselectedLabelColor: context.colorScheme.onSurface,
+                    indicatorColor: context.colorScheme.primary,
+                  ),
+                  gapH8,
+                  Expanded(
+                    child: TabBarView(
+                      children: DayOfWeek.values.map((day) {
+                        final dayHours =
+                            tempHours[day] ??
+                            const OpeningHours(isDayOff: true, slots: null);
+                        return SingleChildScrollView(
+                          child: OpeningHoursEditor(
+                            day: day,
+                            dayHours: dayHours,
+                            onChanged: (updatedHours) {
+                              (context as Element).markNeedsBuild();
+                              tempHours[day] = updatedHours;
+                            },
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    gapW8,
-                    TextButton(
-                      onPressed: () {
-                        onOpeningHoursChanged(tempHours);
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        context.loc.done,
-                        style: TextStyle(color: context.colorScheme.primary),
+                  ),
+                  gapH12,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          context.loc.cancel,
+                          style: TextStyle(color: context.colorScheme.primary),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      gapW8,
+                      TextButton(
+                        onPressed: () {
+                          onOpeningHoursChanged(tempHours);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          context.loc.done,
+                          style: TextStyle(color: context.colorScheme.primary),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

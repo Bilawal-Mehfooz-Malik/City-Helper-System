@@ -145,7 +145,9 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
       final bool haveImagesChanged =
           currentFormData.coverImageBytes != null ||
           currentFormData.galleryImageBytes.isNotEmpty ||
-          currentFormData.galleryUrlsToDelete.isNotEmpty;
+          currentFormData.galleryUrlsToDelete.isNotEmpty ||
+          currentFormData.menuImageBytes.isNotEmpty ||
+          currentFormData.menuUrlsToDelete.isNotEmpty;
 
       if (!hasDataChanged && !haveImagesChanged) {
         context.pop();
