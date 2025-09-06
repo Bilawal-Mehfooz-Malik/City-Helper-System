@@ -44,10 +44,16 @@ String? redirection(Ref ref, GoRouterState state) {
       return '/';
     }
   } else {
-    if (currentPath == '/') {
-      final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
-      if (isAdminMode) {
+    final isAdminMode = ref.read(userModeRepositoryProvider).getIsAdminMode();
+    if (isAdminMode) {
+      if (!currentPath.startsWith('/my-shop') &&
+          currentPath != '/account' &&
+          currentPath != '/profile') {
         return '/my-shop';
+      }
+    } else {
+      if (currentPath.startsWith('/my-shop')) {
+        return '/';
       }
     }
 

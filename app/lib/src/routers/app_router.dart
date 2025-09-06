@@ -9,6 +9,7 @@ import 'package:app/src/features/home/presentation/popular_entities_list_screen.
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_screen.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart';
+import 'package:app/src/features/my_shop/presentation/controllers/user_mode_controller.dart';
 import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.dart';
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
@@ -57,6 +58,9 @@ GoRouter appRouter(Ref ref) {
 
   // Refresh router on auth state change
   ref.listen(authStateChangesProvider, (_, _) => router.refresh());
+
+  // Refresh router on user mode change
+  ref.listen(userModeControllerProvider, (_, _) => router.refresh());
 
   return router = GoRouter(
     initialLocation: initialLocation,

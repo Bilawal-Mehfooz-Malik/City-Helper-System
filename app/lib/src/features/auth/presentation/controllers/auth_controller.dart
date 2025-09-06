@@ -4,6 +4,7 @@ import 'package:app/src/features/auth/application/auth_service.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
 import 'package:app/src/features/auth/presentation/controllers/verification_id_controller.dart';
+import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,8 +20,12 @@ class AuthController extends _$AuthController {
 
   Future<void> signOut() async {
     final authRepository = ref.read(authRepositoryProvider);
+    final userModeRepository = ref.read(userModeRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() => authRepository.signOut());
+    state = await AsyncValue.guard(() async {
+      await authRepository.signOut();
+      await userModeRepository.setIsAdminMode(false);
+    });
   }
 
   // ------------------ OTP FLOW ------------------

@@ -95,7 +95,7 @@ class _LoggedInAvatar extends ConsumerWidget {
         // Marked as async
         switch (value) {
           case 'account':
-            context.goNamed(AppRoute.account.name);
+            context.pushNamed(AppRoute.account.name);
             break;
           // FIX: Renamed 'admin' to a more generic 'switch_mode'.
           case 'switch_mode':
@@ -115,7 +115,7 @@ class _LoggedInAvatar extends ConsumerWidget {
                 context.goNamed(AppRoute.myShop.name);
               }
             } else {
-                            showAlertDialog(
+              showAlertDialog(
                 context: context,
                 useFilledButton: true,
                 title: context.loc.profileIncompleteTitle,
