@@ -25,34 +25,110 @@ class LocationPickerTile extends ConsumerWidget {
     final defaultLocation = ref.watch(defaultLocationProvider);
     final location = pickedLatLng ?? defaultLocation;
 
-    return Column(
-      spacing: Sizes.p4,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Pick Your Shop Location *'.hardcoded,
-          style: context.textTheme.titleMedium,
+    return Card(
+      elevation: 2,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Sizes.p8),
+        side: BorderSide(
+          color: context.colorScheme.outline.withValues(alpha: 0.5),
+          width: 1,
         ),
-        Text(
-          "Tap below to open the map. Stand at your business door, press the location icon above the check button to find your spot, then press the check button to save it."
-              .hardcoded,
-          style: context.textTheme.labelLarge,
-        ),
-        GestureDetector(
-          onTap: () async {
-            final result = await context.pushNamed<LatLng>(
-              AppRoute.pickYourLocation.name,
-            );
-            if (result != null) {
-              onLocationPicked(result);
-            }
-          },
-          child: AbsorbPointer(
-            absorbing: true,
-            child: SizedBox(height: 250, child: mapBuilder(location)),
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              context.colorScheme.surface,
+              context.colorScheme.surface.withValues(alpha: 0.9),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
-      ],
+        child: Padding(
+          padding: const EdgeInsets.all(Sizes.p16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Pick Your Shop Location *'.hardcoded,
+                style: context.textTheme.titleMedium,
+              ),
+              gapH4,
+              Text(
+                "Tap the map or button below to select your shop's location. Stand at your business door, press the location icon to find your spot, then save it."
+                    .hardcoded,
+                style: context.textTheme.labelLarge,
+              ),
+              gapH8,
+              GestureDetector(
+                onTap: () async {
+                  final result = await context.pushNamed<LatLng>(
+                    AppRoute.pickYourLocation.name,
+                  );
+                  if (result != null) onLocationPicked(result);
+                },
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Sizes.p8),
+                    border: Border.all(
+                      color: context.colorScheme.outline.withValues(alpha: 0.5),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.colorScheme.shadow.withValues(
+                          alpha: 0.1,
+                        ),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Sizes.p8),
+                    child: AbsorbPointer(
+                      absorbing: true,
+                      child: mapBuilder(location),
+                    ),
+                  ),
+                ),
+              ),
+              gapH8,
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    final result = await context.pushNamed<LatLng>(
+                      AppRoute.pickYourLocation.name,
+                    );
+                    if (result != null) onLocationPicked(result);
+                  },
+                  icon: Icon(
+                    Icons.location_pin,
+                    color: context.colorScheme.onPrimary,
+                  ),
+                  label: Text(
+                    'Select Location'.hardcoded,
+                    style: TextStyle(color: context.colorScheme.onPrimary),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: context.colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Sizes.p8),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.p16,
+                      vertical: Sizes.p12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

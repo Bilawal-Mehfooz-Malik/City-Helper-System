@@ -22,59 +22,35 @@ class Step2LocationPage extends ConsumerWidget {
     return ResponsiveScrollable(
       padding: const EdgeInsets.all(Sizes.p16),
       child: Column(
+        spacing: Sizes.p8,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Business City Name *'.hardcoded,
-            style: context.textTheme.titleMedium,
-          ),
-          gapH4,
-          TextFormField(
+          LocationFieldCard(
+            title: 'Business City Name *'.hardcoded,
+            hint: 'e.g. Mirpur'.hardcoded,
             initialValue: formData.cityName,
-            decoration: InputDecoration(
-              hintText: 'e.g. Mirpur'.hardcoded,
-              border: const OutlineInputBorder(),
-            ),
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(cityName: val),
             ),
           ),
-          gapH8,
-
-          Text(
-            'Business Sector Name *'.hardcoded,
-            style: context.textTheme.titleMedium,
-          ),
-          gapH4,
-          TextFormField(
+          LocationFieldCard(
+            title: 'Business Sector Name *'.hardcoded,
+            hint: 'e.g. C4'.hardcoded,
             initialValue: formData.sectorName,
-            decoration: InputDecoration(
-              hintText: 'e.g. C4'.hardcoded,
-              border: const OutlineInputBorder(),
-            ),
+
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(sectorName: val),
             ),
           ),
-          gapH8,
-
-          Text(
-            'Business Street Address *'.hardcoded,
-            style: context.textTheme.titleMedium,
-          ),
-          gapH4,
-          TextFormField(
+          LocationFieldCard(
+            title: 'Business Street Address *'.hardcoded,
+            hint: 'e.g. 1st Floor, ABC Building'.hardcoded,
             initialValue: formData.streetAddress,
-            decoration: InputDecoration(
-              hintText: 'e.g. 1st Floor, ABC Building'.hardcoded,
-              border: const OutlineInputBorder(),
-            ),
+
             onChanged: (val) => wizardController.updateFormData(
               formData.copyWith(streetAddress: val),
             ),
           ),
-          gapH16,
-
           LocationPickerTile(
             pickedLatLng: formData.latLng,
             onLocationPicked: (latLng) => wizardController.updateFormData(
@@ -82,6 +58,57 @@ class Step2LocationPage extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LocationFieldCard extends StatelessWidget {
+  final String title;
+  final String hint;
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+
+  const LocationFieldCard({
+    super.key,
+    required this.title,
+    required this.hint,
+    required this.initialValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Sizes.p8),
+        side: BorderSide(
+          color: context.colorScheme.outline.withAlpha(126),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(Sizes.p16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: context.textTheme.titleMedium),
+            gapH4,
+            TextFormField(
+              initialValue: initialValue,
+              decoration: InputDecoration(
+                hintText: hint,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.p8),
+                ),
+                filled: true,
+                fillColor: context.colorScheme.surface.withAlpha(25),
+              ),
+              onChanged: onChanged,
+            ),
+          ],
+        ),
       ),
     );
   }

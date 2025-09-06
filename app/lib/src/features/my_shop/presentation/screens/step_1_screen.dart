@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
@@ -37,36 +38,72 @@ class Step1BasicDetailsPage extends ConsumerWidget {
     return ResponsiveScrollable(
       padding: const EdgeInsets.all(Sizes.p16),
       child: Column(
-        spacing: Sizes.p12,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategorySection(
-            isEditing: isEditing,
-            allCategories: allCategories,
-            subCategoryOptions:
-                subCategoryOptionsAsync?.valueOrNull ?? initialSubCategories,
-            selectedCategory: formData.category,
-            selectedSubCategory: formData.subCategory,
-            selectedListingType: formData.listingType,
-            onCategoryChanged: (category) {
-              final updatedForm = formData.copyWith(
-                category: category,
-                subCategory: null,
-              );
-              wizardController.updateFormData(updatedForm);
-            },
-            onSubCategoryChanged: (subCategory) => wizardController
-                .updateFormData(formData.copyWith(subCategory: subCategory)),
-            onListingTypeChanged: (listingType) => wizardController
-                .updateFormData(formData.copyWith(listingType: listingType)),
+          Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Sizes.p8),
+              side: BorderSide(
+                color: context.colorScheme.outline.withAlpha(
+                  128,
+                ), // 50% opacity
+                width: 1,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(Sizes.p16),
+              child: CategorySection(
+                isEditing: isEditing,
+                allCategories: allCategories,
+                subCategoryOptions:
+                    subCategoryOptionsAsync?.valueOrNull ??
+                    initialSubCategories,
+                selectedCategory: formData.category,
+                selectedSubCategory: formData.subCategory,
+                selectedListingType: formData.listingType,
+                onCategoryChanged: (category) {
+                  final updatedForm = formData.copyWith(
+                    category: category,
+                    subCategory: null,
+                  );
+                  wizardController.updateFormData(updatedForm);
+                },
+                onSubCategoryChanged: (subCategory) =>
+                    wizardController.updateFormData(
+                      formData.copyWith(subCategory: subCategory),
+                    ),
+                onListingTypeChanged: (listingType) =>
+                    wizardController.updateFormData(
+                      formData.copyWith(listingType: listingType),
+                    ),
+              ),
+            ),
           ),
-          gapH12,
-          BasicInfoSection(
-            name: formData.name,
-            description: formData.description,
-            onNameChanged: (val) =>
-                wizardController.updateFormData(formData.copyWith(name: val)),
-            onDescriptionChanged: (val) => wizardController.updateFormData(
-              formData.copyWith(description: val),
+          const SizedBox(height: Sizes.p16),
+          Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Sizes.p8),
+              side: BorderSide(
+                color: context.colorScheme.outline.withAlpha(
+                  128,
+                ), // 50% opacity
+                width: 1,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(Sizes.p16),
+              child: BasicInfoSection(
+                name: formData.name,
+                description: formData.description,
+                onNameChanged: (val) => wizardController.updateFormData(
+                  formData.copyWith(name: val),
+                ),
+                onDescriptionChanged: (val) => wizardController.updateFormData(
+                  formData.copyWith(description: val),
+                ),
+              ),
             ),
           ),
         ],

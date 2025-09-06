@@ -38,7 +38,7 @@ class ResidenceSpecificSection extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Sizes.p8),
             side: BorderSide(
-              color: context.colorScheme.outline.withValues(alpha: 0.5),
+              color: context.colorScheme.outline.withAlpha(128),
               width: 1,
             ),
           ),
@@ -67,63 +67,87 @@ class ResidenceSpecificSection extends StatelessWidget {
                   keyboardType: TextInputType.number,
                 ),
                 gapH12,
-                Row(
+                Wrap(
+                  spacing: Sizes.p8,
+                  runSpacing: Sizes.p8,
                   children: [
-                    Expanded(
-                      child: DropdownButtonFormField<PricingUnit>(
-                        value: price.unit,
-                        decoration: InputDecoration(
-                          labelText: 'Unit *'.hardcoded,
-                          border: const OutlineInputBorder(),
-                        ),
-                        items: PricingUnit.values
-                            .map(
-                              (unit) => DropdownMenuItem(
-                                value: unit,
-                                child: Text(unit.label),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final halfWidth = (constraints.maxWidth - Sizes.p8) / 2;
+
+                        return Row(
+                          spacing: Sizes.p8,
+                          children: [
+                            SizedBox(
+                              width: halfWidth,
+                              child: DropdownButtonFormField<PricingUnit>(
+                                value: price.unit,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Unit *'.hardcoded,
+                                  border: const OutlineInputBorder(),
+                                ),
+                                items: PricingUnit.values
+                                    .map(
+                                      (unit) => DropdownMenuItem(
+                                        value: unit,
+                                        child: Text(unit.label),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (unit) {
+                                  if (unit != null) {
+                                    onPricingChanged(
+                                      price.copyWith(unit: unit),
+                                    );
+                                  }
+                                },
                               ),
-                            )
-                            .toList(),
-                        onChanged: (unit) {
-                          if (unit != null) {
-                            onPricingChanged(price.copyWith(unit: unit));
-                          }
-                        },
-                      ),
-                    ),
-                    gapW8,
-                    Expanded(
-                      child: DropdownButtonFormField<PricingPeriod>(
-                        value: isForSale ? PricingPeriod.oneTime : price.period,
-                        decoration: InputDecoration(
-                          labelText: 'Period *'.hardcoded,
-                          hintText: isForSale
-                              ? 'Not applicable for sale'.hardcoded
-                              : 'Like monthly or yearly'.hardcoded,
-                          border: const OutlineInputBorder(),
-                          filled: isForSale,
-                          fillColor: context.colorScheme.surface.withValues(
-                            alpha: 0.1,
-                          ),
-                        ),
-                        items: PricingPeriod.values
-                            .map(
-                              (period) => DropdownMenuItem(
-                                value: period,
-                                child: Text(period.label),
+                            ),
+                            SizedBox(
+                              width: halfWidth,
+                              child: DropdownButtonFormField<PricingPeriod>(
+                                value: isForSale
+                                    ? PricingPeriod.oneTime
+                                    : price.period,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Period *'.hardcoded,
+                                  hintText: isForSale
+                                      ? 'Not applicable for sale'.hardcoded
+                                      : 'Like monthly or yearly'.hardcoded,
+                                  border: const OutlineInputBorder(),
+                                  filled: isForSale,
+                                  fillColor: context.colorScheme.surface
+                                      .withAlpha(179),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12.0,
+                                    horizontal: 8.0,
+                                  ),
+                                ),
+                                itemHeight: 48,
+                                items: PricingPeriod.values
+                                    .map(
+                                      (period) => DropdownMenuItem(
+                                        value: period,
+                                        child: Text(period.label),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: isForSale
+                                    ? null
+                                    : (period) {
+                                        if (period != null) {
+                                          onPricingChanged(
+                                            price.copyWith(period: period),
+                                          );
+                                        }
+                                      },
                               ),
-                            )
-                            .toList(),
-                        onChanged: isForSale
-                            ? null
-                            : (period) {
-                                if (period != null) {
-                                  onPricingChanged(
-                                    price.copyWith(period: period),
-                                  );
-                                }
-                              },
-                      ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -137,7 +161,7 @@ class ResidenceSpecificSection extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Sizes.p8),
             side: BorderSide(
-              color: context.colorScheme.outline.withValues(alpha: 0.5),
+              color: context.colorScheme.outline.withAlpha(128),
               width: 1,
             ),
           ),
