@@ -141,8 +141,6 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
       }
     }
 
-    
-
     final shopToSave = currentFormData.toEntityDetail(widget.initialShop);
 
     final bool success = await ref
@@ -204,16 +202,10 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
                 wizardProvider: widget.wizardProvider,
                 isEditing: isEditing,
               ),
-              Step2LocationPage(
-                wizardProvider: widget.wizardProvider,
-              ),
-              Step3ContactPage(
-                wizardProvider: widget.wizardProvider,
-              ),
-              Step4SpecificsPage(
-                wizardProvider: widget.wizardProvider,
-              ),
-              Step5MediaPage(
+              Step2LocationPage(wizardProvider: widget.wizardProvider),
+              Step3ContactPage(wizardProvider: widget.wizardProvider),
+              Step4SpecificsPage(wizardProvider: widget.wizardProvider),
+              Step5Screen(
                 initialCoverUrl: widget.initialShop?.coverImageUrl,
                 initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
                 wizardProvider: widget.wizardProvider,
@@ -238,19 +230,24 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
                 isLoading: shopControllerState.isLoading,
                 onPressed: () {
                   if (isLastPage) {
-                    if (wizardController.validateAllPages()) { // New validation check
+                    if (wizardController.validateAllPages()) {
+                      // New validation check
                       _submitShop();
                     } else {
-                      showSnackBar( // Show error if validation fails
+                      showSnackBar(
+                        // Show error if validation fails
                         context: context,
                         message: 'Please fill all required fields.',
                       );
                     }
                   } else {
-                    if (!wizardController.nextPage()) { // Check if page advanced
-                      showSnackBar( // Show error if validation fails
+                    if (!wizardController.nextPage()) {
+                      // Check if page advanced
+                      showSnackBar(
+                        // Show error if validation fails
                         context: context,
-                        message: 'Please fill all required fields on this page.',
+                        message:
+                            'Please fill all required fields on this page.',
                       );
                     }
                   }
