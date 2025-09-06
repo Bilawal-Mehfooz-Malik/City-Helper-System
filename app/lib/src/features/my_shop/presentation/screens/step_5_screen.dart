@@ -28,6 +28,7 @@ class Step5MediaPage extends ConsumerWidget {
       padding: const EdgeInsets.all(Sizes.p16),
       child: Column(
         spacing: Sizes.p12,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CoverImageTile(
             coverImageBytes: formData.coverImageBytes,
