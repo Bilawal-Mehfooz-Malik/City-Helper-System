@@ -19,6 +19,7 @@ class ImageUploadRepository {
   static const String _profileImage = 'profile.jpg';
   static const String _coverImage = 'cover.jpg';
   static const String _galleryFolder = 'gallery';
+  static const String _menuFolder = 'menu';
 
   // --- SHOP IMAGE METHODS ---
 
@@ -65,6 +66,16 @@ class ImageUploadRepository {
     return await _uploadData(ref, imageBytes, "Shop Gallery: $shopId");
   }
 
+  Future<String> uploadShopMenuImage({
+    required Uint8List imageBytes,
+    required UserId userId,
+    required EntityId shopId,
+  }) async {
+    final imageId = const Uuid().v4();
+    final ref = _shopMenuImageRef(userId, shopId, imageId);
+    return await _uploadData(ref, imageBytes, "Shop Menu: $shopId");
+  }
+
   Future<void> deleteShopGalleryImage({required String imageUrl}) async {
     try {
       final ref = _storage.refFromURL(imageUrl);
@@ -72,6 +83,19 @@ class ImageUploadRepository {
     } catch (e, st) {
       AppLogger.logError(
         'Failed to delete gallery image',
+        error: e,
+        stackTrace: st,
+      );
+    }
+  }
+
+  Future<void> deleteShopMenuImage({required String imageUrl}) async {
+    try {
+      final ref = _storage.refFromURL(imageUrl);
+      await ref.delete();
+    } catch (e, st) {
+      AppLogger.logError(
+        'Failed to delete menu image',
         error: e,
         stackTrace: st,
       );
@@ -116,6 +140,12 @@ class ImageUploadRepository {
     EntityId shopId,
     String imageId,
   ) => _storage.ref('$_shopsPath/$userId/$shopId/$_galleryFolder/$imageId.jpg');
+
+  Reference _shopMenuImageRef(
+    UserId userId,
+    EntityId shopId,
+    String imageId,
+  ) => _storage.ref('$_shopsPath/$userId/$shopId/$_menuFolder/$imageId.jpg');
 
   Reference _shopRootRef(UserId userId, EntityId shopId) =>
       _storage.ref('$_shopsPath/$userId/$shopId');

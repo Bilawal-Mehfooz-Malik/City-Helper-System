@@ -40,6 +40,8 @@ class ShopController extends _$ShopController {
     required Uint8List? coverImageBytes,
     required List<Uint8List> galleryImagesBytes,
     required List<String> galleryUrlsToDelete,
+    required List<Uint8List> menuImagesBytes,
+    required List<String> menuUrlsToDelete,
   }) async {
     state = const AsyncLoading();
     try {
@@ -58,6 +60,13 @@ class ShopController extends _$ShopController {
       if (galleryUrlsToDelete.isNotEmpty) {
         final deletionFutures = galleryUrlsToDelete.map(
           (url) => imageRepo.deleteShopGalleryImage(imageUrl: url),
+        );
+        await Future.wait(deletionFutures);
+      }
+
+      if (menuUrlsToDelete.isNotEmpty) {
+        final deletionFutures = menuUrlsToDelete.map(
+          (url) => imageRepo.deleteShopMenuImage(imageUrl: url),
         );
         await Future.wait(deletionFutures);
       }
@@ -81,12 +90,30 @@ class ShopController extends _$ShopController {
         ),
       );
 
-      final existingUrls = isEditing
+      final newMenuImageUrls = await Future.wait(
+        menuImagesBytes.map(
+          (bytes) => imageRepo.uploadShopMenuImage(
+            imageBytes: bytes,
+            userId: userId,
+            shopId: shopId,
+          ),
+        ),
+      );
+
+      final existingGalleryUrls = isEditing
           ? shop.galleryImageUrls
                 .where((url) => !galleryUrlsToDelete.contains(url))
                 .toList()
           : <String>[];
-      final finalGalleryUrls = [...existingUrls, ...newGalleryImageUrls];
+      final finalGalleryUrls = [...existingGalleryUrls, ...newGalleryImageUrls];
+
+      final existingMenuUrls = (isEditing && shop is FoodDetail)
+          ? shop.menuImageUrls
+                .where((url) => !menuUrlsToDelete.contains(url))
+                .toList()
+          : <String>[];
+
+      final finalMenuUrls = [...existingMenuUrls, ...newMenuImageUrls];
 
       final finalCoverUrl = newCoverImageUrl ?? shop.coverImageUrl;
 
@@ -104,6 +131,7 @@ class ShopController extends _$ShopController {
           ownerId: userId,
           coverImageUrl: finalCoverUrl,
           galleryImageUrls: finalGalleryUrls,
+          menuImageUrls: finalMenuUrls,
         );
       } else {
         throw InvalidCategoryException();

@@ -93,4 +93,43 @@ class FakeImageUploadRepository implements ImageUploadRepository {
     ); // Store under 'gallery/imageId'
     return 'inmemory://$userId/$shopId/gallery/$imageId'; // Dummy URL
   }
+
+  @override
+  Future<String> uploadShopMenuImage({
+    required Uint8List imageBytes,
+    required UserId userId,
+    required EntityId shopId,
+  }) async {
+    await delay(addDelay);
+    final imageId = _uuid.v4(); // Generate unique ID for menu image
+    _storage.storeShopImage(
+      userId,
+      shopId,
+      'menu/$imageId',
+      imageBytes,
+    ); // Store under 'menu/imageId'
+    return 'inmemory://$userId/$shopId/menu/$imageId'; // Dummy URL
+  }
+
+  @override
+  Future<void> deleteShopMenuImage({required String imageUrl}) async {
+    await delay(addDelay);
+    // Parse the imageUrl to extract userId, shopId, and imageId
+    // Assuming imageUrl format: inmemory://<userId>/<shopId>/menu/<imageId>
+    final uri = Uri.parse(imageUrl);
+    final pathSegments = uri.pathSegments;
+
+    if (pathSegments.length >= 3) {
+      final userId = pathSegments[0];
+      final shopId = pathSegments[1];
+      final imageId = pathSegments.length == 4
+          ? pathSegments[3]
+          : 'cover'; // Handle cover vs menu
+      _storage.deleteShopImage(userId, shopId, imageId);
+    } else {
+      AppLogger.logWarning(
+        'Warning: Could not parse imageUrl for deletion: $imageUrl',
+      );
+    }
+  }
 }

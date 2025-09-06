@@ -45,9 +45,10 @@ abstract class ShopForm with _$ShopForm {
 
     // Step 5: Media Uploads
     Uint8List? coverImageBytes,
-    // TODO: Add menuImagesUrls
     @Default([]) List<Uint8List> galleryImageBytes,
     @Default([]) List<String> galleryUrlsToDelete,
+    @Default([]) List<Uint8List> menuImageBytes,
+    @Default([]) List<String> menuUrlsToDelete,
   }) = _ShopForm;
 
   factory ShopForm.fromEntityDetail(EntityDetail shop) {

@@ -163,6 +163,8 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
           coverImageBytes: currentFormData.coverImageBytes,
           galleryImagesBytes: currentFormData.galleryImageBytes,
           galleryUrlsToDelete: currentFormData.galleryUrlsToDelete,
+          menuImagesBytes: currentFormData.menuImageBytes,
+          menuUrlsToDelete: currentFormData.menuUrlsToDelete,
         );
 
     if (success && mounted) {
@@ -220,6 +222,9 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
               Step5MediaPage(
                 initialCoverUrl: widget.initialShop?.coverImageUrl,
                 initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
+                initialMenuUrls: (widget.initialShop is FoodDetail)
+                    ? (widget.initialShop as FoodDetail).menuImageUrls
+                    : [],
                 wizardProvider: widget.wizardProvider,
               ),
             ],
