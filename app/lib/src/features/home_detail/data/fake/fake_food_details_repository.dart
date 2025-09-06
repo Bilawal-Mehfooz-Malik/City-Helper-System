@@ -29,6 +29,15 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   }
 
   @override
+  Future<void> deleteFoodDetail(EntityId id) async {
+    await delay(addDelay);
+    _foods.value = [
+      for (final food in _foods.value)
+        if (food.id != id) food,
+    ];
+  }
+
+  @override
   Future<FoodDetail?> fetchFoodDetails(EntityId id) async {
     await delay(addDelay);
     final foods = _foods.value;

@@ -145,4 +145,29 @@ class ShopController extends _$ShopController {
       return false;
     }
   }
+
+  Future<void> deleteShop({
+    required String shopId,
+    required CategoryId categoryId,
+  }) async {
+    state = const AsyncLoading();
+    try {
+      final authUser = ref.read(authStateChangesProvider).value;
+      if (authUser == null) throw Exception('User not logged in'.hardcoded);
+
+      final userId = authUser.uid;
+      final shopService = ref.read(shopServiceProvider);
+      final imageRepo = ref.read(imageUploadRepositoryProvider);
+
+      // Delete all images associated with the shop
+      await imageRepo.deleteAllShopImages(userId: userId, shopId: shopId);
+
+      // Delete the shop document from Firestore
+      await shopService.deleteShop(categoryId: categoryId, shopId: shopId);
+
+      state = const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
+  }
 }

@@ -432,4 +432,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Log out';
+
+  @override
+  String get deleteShop => 'Delete Shop';
+
+  @override
+  String get deleteShopConfirmationTitle => 'Delete Shop';
+
+  @override
+  String get deleteShopConfirmationContent =>
+      'Are you sure you want to delete your shop? This action cannot be undone.';
+
+  @override
+  String get delete => 'Delete';
 }

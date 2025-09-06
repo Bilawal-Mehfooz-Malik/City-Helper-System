@@ -310,5 +310,13 @@
   "areYouSure": "Are you sure?",
   "@areYouSure": {},
   "logout": "Log out",
-  "@logout": {}
+  "@logout": {},
+  "deleteShop": "Delete Shop",
+  "@deleteShop": {},
+  "deleteShopConfirmationTitle": "Delete Shop",
+  "@deleteShopConfirmationTitle": {},
+  "deleteShopConfirmationContent": "Are you sure you want to delete your shop? This action cannot be undone.",
+  "@deleteShopConfirmationContent": {},
+  "delete": "Delete",
+  "@delete": {}
 }

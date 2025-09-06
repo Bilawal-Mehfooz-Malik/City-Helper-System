@@ -1,5 +1,7 @@
+import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
+import 'package:app/src/core/common_widgets/custom_outlined_button.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
 import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
@@ -119,6 +121,10 @@ class _ShopDetailsView extends ConsumerWidget {
       entity: Entity.fromDetail(shop),
     );
 
+    // Listen to delete status from controller
+    final deleteState = ref.watch(shopControllerProvider);
+    final isDeleting = deleteState.isLoading; // true when deleteShop is running
+
     return Column(
       spacing: Sizes.p16,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,13 +142,14 @@ class _ShopDetailsView extends ConsumerWidget {
                 ),
                 endContent: _ShopInfo(shop: shop),
               ),
-              // For larger screens, the indicator is positioned on the top-right of the card.
               if (!isSmallScreen)
                 Positioned(bottom: 0, right: 0, child: statusIndicator),
             ],
           ),
         ),
         Divider(),
+
+        /// Disable this toggle while deleting
         TimingToggleWidget(
           initialStatus: shop.operationalStatus,
           onStatusChanged: (newStatus) => ref
@@ -152,6 +159,30 @@ class _ShopDetailsView extends ConsumerWidget {
                 categoryId: shop.categoryId,
                 newStatus: newStatus,
               ),
+        ),
+
+        gapH16,
+
+        /// Delete button with loader
+        CustomOutlinedButton(
+          useMaxSize: true,
+          text: context.loc.deleteShop,
+          isLoading: isDeleting,
+          isDisabled: isDeleting, // block other presses
+          onPressed: () async {
+            final didConfirm = await showAlertDialog(
+              context: context,
+              title: context.loc.deleteShopConfirmationTitle,
+              content: context.loc.deleteShopConfirmationContent,
+              cancelActionText: context.loc.cancel,
+              defaultActionText: context.loc.delete,
+            );
+            if (didConfirm == true) {
+              ref
+                  .read(shopControllerProvider.notifier)
+                  .deleteShop(shopId: shop.id, categoryId: shop.categoryId);
+            }
+          },
         ),
       ],
     );

@@ -20,14 +20,19 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   @override
   Future<void> setResidenceDetail(ResidenceDetail updated) async {
     await delay(addDelay);
-    final current = _residences.value;
-    final index = current.indexWhere((r) => r.id == updated.id);
-    if (index != -1) {
-      current[index] = updated;
-    } else {
-      current.add(updated);
-    }
-    _residences.value = [...current];
+    _residences.value = [
+      for (final residence in _residences.value)
+        if (residence.id == updated.id) updated else residence,
+    ];
+  }
+
+  @override
+  Future<void> deleteResidenceDetail(EntityId id) async {
+    await delay(addDelay);
+    _residences.value = [
+      for (final residence in _residences.value)
+        if (residence.id != id) residence,
+    ];
   }
 
   @override

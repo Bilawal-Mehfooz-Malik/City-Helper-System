@@ -909,6 +909,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log out'**
   String get logout;
+
+  /// No description provided for @deleteShop.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Shop'**
+  String get deleteShop;
+
+  /// No description provided for @deleteShopConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Shop'**
+  String get deleteShopConfirmationTitle;
+
+  /// No description provided for @deleteShopConfirmationContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your shop? This action cannot be undone.'**
+  String get deleteShopConfirmationContent;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 }
 
 class _AppLocalizationsDelegate

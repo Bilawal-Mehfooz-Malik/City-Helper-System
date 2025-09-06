@@ -21,6 +21,10 @@ class FoodDetailsRepository {
     await _docRef(updated.id).set(updated.toJson());
   }
 
+  Future<void> deleteFoodDetail(EntityId id) async {
+    await _docRef(id).delete();
+  }
+
   Future<void> updateFoodStatus(EntityId id, OperationalStatus status) async {
     await _docRef(id).update({'entityStatus': status.name});
   }

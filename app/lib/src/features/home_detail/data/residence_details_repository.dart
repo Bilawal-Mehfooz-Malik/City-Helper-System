@@ -29,6 +29,10 @@ class ResidenceDetailsRepository {
     await _docRef(updated.id).set(updated.toJson());
   }
 
+  Future<void> deleteResidenceDetail(EntityId id) async {
+    await _docRef(id).delete();
+  }
+
   /// ✅ Real-time updates
   Stream<ResidenceDetail?> watchResidenceDetailsByOwnerId(UserId id) {
     return _docRefByOwnerId(id).snapshots().map((snapshot) {

@@ -96,6 +96,22 @@ class ShopService {
         throw InvalidCategoryException();
     }
   }
+
+  Future<void> deleteShop({
+    required String shopId,
+    required CategoryId categoryId,
+  }) async {
+    switch (categoryId) {
+      case 1:
+        await ref.read(residenceDetailsRepositoryProvider).deleteResidenceDetail(shopId);
+        break;
+      case 2:
+        await ref.read(foodDetailsRepositoryProvider).deleteFoodDetail(shopId);
+        break;
+      default:
+        throw InvalidCategoryException();
+    }
+  }
 }
 
 @riverpod
