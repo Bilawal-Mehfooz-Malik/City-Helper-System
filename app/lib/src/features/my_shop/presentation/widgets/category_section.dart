@@ -62,7 +62,9 @@ class CategorySection extends StatelessWidget {
               child: SubCategoryDropdown(
                 subCategoryOptions: subCategoryOptions,
                 selectedSubCategory: selectedSubCategory,
-                onChanged: selectedCategory == null ? null : onSubCategoryChanged,
+                onChanged: selectedCategory == null
+                    ? null
+                    : onSubCategoryChanged,
               ),
             ),
           ],
@@ -77,11 +79,12 @@ class CategorySection extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
               items: ListingType.values
-                  .map((lt) => DropdownMenuItem(value: lt, child: Text(lt.name)))
+                  .map(
+                    (lt) => DropdownMenuItem(value: lt, child: Text(lt.name)),
+                  )
                   .toList(),
               onChanged: onListingTypeChanged,
-              validator: (value) =>
-                  value == null ? 'Required'.hardcoded : null,
+              validator: (value) => value == null ? 'Required'.hardcoded : null,
             ),
           ),
       ],

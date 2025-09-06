@@ -53,7 +53,7 @@ class ShopController extends _$ShopController {
       final isEditing = shop.id.isNotEmpty;
       final shopId = isEditing
           ? shop.id
-          : (await shopService.getShopDocument(categoryId)).id;
+          : await shopService.getShopDocument(categoryId);
 
       if (galleryUrlsToDelete.isNotEmpty) {
         final deletionFutures = galleryUrlsToDelete.map(

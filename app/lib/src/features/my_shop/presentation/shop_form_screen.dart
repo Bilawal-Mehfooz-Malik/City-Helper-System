@@ -60,12 +60,24 @@ class _ShopFormScreenState extends ConsumerState<ShopFormScreen> {
   }
 
   Widget _buildEditModeBody(WidgetRef ref) {
-    final initialDataAsync = ref.watch(
-      initialShopCategoryDataProvider(
-        categoryId: widget.initialShop!.categoryId,
-        subCategoryId: widget.initialShop!.subCategoryId,
-      ),
+    final provider = initialShopCategoryDataProvider(
+      categoryId: widget.initialShop!.categoryId,
+      subCategoryId: widget.initialShop!.subCategoryId,
     );
+
+    ref.listen<AsyncValue<ShopFormInitialData>>(provider, (previous, next) {
+      if (next.hasValue) {
+        final initialData = next.value!;
+        ref
+            .read(wizardProvider.notifier)
+            .setInitialCategoryData(
+              initialData.selectedCategory,
+              initialData.selectedSubCategory,
+            );
+      }
+    });
+
+    final initialDataAsync = ref.watch(provider);
     return AsyncValueWidget<ShopFormInitialData>(
       value: initialDataAsync,
       data: (initialData) {
@@ -205,7 +217,7 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
               Step2LocationPage(wizardProvider: widget.wizardProvider),
               Step3ContactPage(wizardProvider: widget.wizardProvider),
               Step4SpecificsPage(wizardProvider: widget.wizardProvider),
-              Step5Screen(
+              Step5MediaPage(
                 initialCoverUrl: widget.initialShop?.coverImageUrl,
                 initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
                 wizardProvider: widget.wizardProvider,

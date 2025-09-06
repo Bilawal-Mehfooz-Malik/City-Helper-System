@@ -13,8 +13,8 @@ class FoodDetailsRepository {
 
   static String get foodsKey => 'food_listings';
 
-  DocumentReference getNewFoodsDocRef() {
-    return _firestore.collection(foodsKey).doc();
+  String getNewFoodsDocRef() {
+    return _firestore.collection(foodsKey).doc().id;
   }
 
   Future<void> setFoodDetail(FoodDetail updated) async {

@@ -1,6 +1,8 @@
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_state.dart';
-import 'package:app/src/features/my_shop/domain/shop_form_validator.dart'; //
+import 'package:app/src/features/categories_list/domain/category.dart';
+import 'package:app/src/features/home/domain/sub_category.dart';
+import 'package:app/src/features/my_shop/domain/shop_form_validator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'shop_form_wizard_controller.g.dart';
@@ -12,6 +14,19 @@ class ShopFormWizardController extends _$ShopFormWizardController {
   @override
   ShopFormWizardState build(ShopForm initialFormData) {
     return ShopFormWizardState(formData: initialFormData);
+  }
+
+  void setInitialCategoryData(Category? category, SubCategory? subCategory) {
+    final currentFormData = state.formData;
+    if (currentFormData.category != category ||
+        currentFormData.subCategory != subCategory) {
+      state = state.copyWith(
+        formData: currentFormData.copyWith(
+          category: category,
+          subCategory: subCategory,
+        ),
+      );
+    }
   }
 
   bool _validateCurrentPage() {

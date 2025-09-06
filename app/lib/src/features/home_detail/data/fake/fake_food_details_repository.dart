@@ -6,13 +6,14 @@ import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_food_details.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class FakeFoodDetailsRepository implements FoodDetailsRepository {
   FakeFoodDetailsRepository({this.addDelay = true});
   final bool addDelay;
 
   final _foods = InMemoryStore<List<FoodDetail>>(List.from(testFoodDetails));
+  final Uuid _uuid = const Uuid(); // Initialize Uuid
 
   @override
   Future<void> setFoodDetail(FoodDetail updated) async {
@@ -68,11 +69,8 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
   }
 
   @override
-  DocumentReference<Object?> getNewFoodsDocRef() {
-    // In a fake repository, we don't need a real DocumentReference.
-    // The ID is typically generated on the client side for fake data.
-    throw UnimplementedError(
-      'getNewFoodsDocRef is not implemented in the fake repository',
-    );
+  String getNewFoodsDocRef() {
+    // Changed return type to String
+    return _uuid.v4(); // Return the generated ID directly
   }
 }

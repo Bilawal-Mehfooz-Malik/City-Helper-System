@@ -3,7 +3,6 @@ import 'package:app/src/features/home/domain/home_exceptions.dart';
 import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -49,7 +48,7 @@ class ShopService {
     return food;
   }
 
-  Future<DocumentReference> getShopDocument(CategoryId categoryId) async {
+  Future<String> getShopDocument(CategoryId categoryId) async {
     return switch (categoryId) {
       1 => ref.read(residenceDetailsRepositoryProvider).getNewResidenceDocRef(),
       2 => ref.read(foodDetailsRepositoryProvider).getNewFoodsDocRef(),

@@ -1,23 +1,28 @@
 import 'dart:typed_data';
 
+import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/core/utils/in_memory_storage.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
+import 'package:uuid/uuid.dart'; // Import Uuid for generating unique IDs
 
 class FakeImageUploadRepository implements ImageUploadRepository {
   final InMemoryImageStorage _storage;
   final bool addDelay;
+  final Uuid _uuid; // Add Uuid instance
 
-  FakeImageUploadRepository(this._storage, {this.addDelay = true});
+  FakeImageUploadRepository(this._storage, {this.addDelay = true})
+    : _uuid = const Uuid(); // Initialize Uuid
 
   @override
   Future<void> deleteProfileImage(String userId) async {
     await delay(addDelay);
-    _storage.deleteImage(userId);
+    _storage.deleteProfileImage(userId); // Use new method
   }
 
-  Uint8List? getImageBytes(String userId) => _storage.getImageBytes(userId);
+  Uint8List? getImageBytes(String userId) =>
+      _storage.getProfileImageBytes(userId); // Use new method
 
   @override
   Future<String> uploadUserProfileImage({
@@ -25,23 +30,39 @@ class FakeImageUploadRepository implements ImageUploadRepository {
     required UserId userId,
   }) async {
     await delay(addDelay);
-    _storage.storeImage(userId, imageBytes);
-    return 'inmemory://$userId';
+    _storage.storeProfileImage(userId, imageBytes); // Use new method
+    return 'inmemory://$userId/profile'; // Updated dummy URL
   }
 
   @override
   Future<void> deleteAllShopImages({
     required UserId userId,
     required EntityId shopId,
-  }) {
-    // TODO: implement deleteAllShopImages
-    throw UnimplementedError();
+  }) async {
+    await delay(addDelay);
+    _storage.deleteAllShopImages(userId, shopId);
   }
 
   @override
-  Future<void> deleteShopGalleryImage({required String imageUrl}) {
-    // TODO: implement deleteShopGalleryImage
-    throw UnimplementedError();
+  Future<void> deleteShopGalleryImage({required String imageUrl}) async {
+    await delay(addDelay);
+    // Parse the imageUrl to extract userId, shopId, and imageId
+    // Assuming imageUrl format: inmemory://<userId>/<shopId>/gallery/<imageId> or inmemory://<userId>/<shopId>/cover
+    final uri = Uri.parse(imageUrl);
+    final pathSegments = uri.pathSegments;
+
+    if (pathSegments.length >= 3) {
+      final userId = pathSegments[0];
+      final shopId = pathSegments[1];
+      final imageId = pathSegments.length == 4
+          ? pathSegments[3]
+          : 'cover'; // Handle cover vs gallery
+      _storage.deleteShopImage(userId, shopId, imageId);
+    } else {
+      AppLogger.logWarning(
+        'Warning: Could not parse imageUrl for deletion: $imageUrl',
+      );
+    }
   }
 
   @override
@@ -49,9 +70,11 @@ class FakeImageUploadRepository implements ImageUploadRepository {
     required Uint8List imageBytes,
     required UserId userId,
     required EntityId shopId,
-  }) {
-    // TODO: implement uploadShopCoverImage
-    throw UnimplementedError();
+  }) async {
+    await delay(addDelay);
+    final imageId = 'cover'; // Fixed ID for cover image
+    _storage.storeShopImage(userId, shopId, imageId, imageBytes);
+    return 'inmemory://$userId/$shopId/$imageId'; // Dummy URL
   }
 
   @override
@@ -59,8 +82,15 @@ class FakeImageUploadRepository implements ImageUploadRepository {
     required Uint8List imageBytes,
     required UserId userId,
     required EntityId shopId,
-  }) {
-    // TODO: implement uploadShopGalleryImage
-    throw UnimplementedError();
+  }) async {
+    await delay(addDelay);
+    final imageId = _uuid.v4(); // Generate unique ID for gallery image
+    _storage.storeShopImage(
+      userId,
+      shopId,
+      'gallery/$imageId',
+      imageBytes,
+    ); // Store under 'gallery/imageId'
+    return 'inmemory://$userId/$shopId/gallery/$imageId'; // Dummy URL
   }
 }

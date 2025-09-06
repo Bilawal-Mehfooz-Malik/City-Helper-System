@@ -211,9 +211,31 @@ class _CustomImageState extends ConsumerState<CustomImage> {
   }
 
   Widget _buildInMemoryImage(Widget errorPlaceholder) {
-    final userId = _effectiveImageUrl!.replaceFirst('inmemory://', '');
-    final bytes = ref.read(inMemoryImageStorageProvider).getImageBytes(userId);
-    if (bytes == null) {}
+    // Parse the inmemory:// URL to extract userId, shopId, and imageId
+    // Expected formats:
+    // - inmemory://userId/profile
+    // - inmemory://userId/shopId/cover
+    // - inmemory://userId/shopId/gallery/imageId
+    final uri = Uri.parse(_effectiveImageUrl!);
+    final userId = uri.host; // userId is the host part
+
+    Uint8List? bytes;
+    if (uri.pathSegments.isNotEmpty) {
+      final firstSegment = uri.pathSegments[0];
+      if (firstSegment == 'profile') {
+        // Profile image
+        bytes = ref.read(inMemoryImageStorageProvider).getProfileImageBytes(userId);
+      } else if (uri.pathSegments.length >= 2) {
+        // Shop image (cover or gallery)
+        final shopId = firstSegment;
+        final imagePath = uri.pathSegments.sublist(1).join('/'); // e.g., "cover" or "gallery/imageId"
+        bytes = ref.read(inMemoryImageStorageProvider).getShopImageBytes(userId, shopId, imagePath);
+      }
+    }
+
+    if (bytes == null) {
+      AppLogger.logError('Failed to load in-memory image: $_effectiveImageUrl');
+    }
     return bytes != null
         ? Image.memory(bytes, fit: widget.fit)
         : errorPlaceholder;

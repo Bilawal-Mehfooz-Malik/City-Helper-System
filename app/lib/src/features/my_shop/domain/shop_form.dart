@@ -77,8 +77,8 @@ abstract class ShopForm with _$ShopForm {
       genderPref: shop is ResidenceDetail
           ? shop.genderPreference
           : shop is FoodDetail
-              ? shop.genderPreference
-              : null,
+          ? shop.genderPreference
+          : null,
       pricing: pricing,
       isFurnished: isFurnished,
       listingType: listingType,

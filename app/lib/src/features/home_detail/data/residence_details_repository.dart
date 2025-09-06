@@ -13,8 +13,8 @@ class ResidenceDetailsRepository {
 
   static String get residenceKey => 'residence_listings';
 
-  DocumentReference getNewResidenceDocRef() {
-    return _firestore.collection(residenceKey).doc();
+  String getNewResidenceDocRef() {
+    return _firestore.collection(residenceKey).doc().id;
   }
 
   Future<void> updateResidenceStatus(

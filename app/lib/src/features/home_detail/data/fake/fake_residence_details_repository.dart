@@ -6,7 +6,7 @@ import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/features/home_detail/data/fake/test_residence_details.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   FakeResidenceDetailsRepository({this.addDelay = true});
@@ -15,6 +15,7 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   final _residences = InMemoryStore<List<ResidenceDetail>>(
     List.from(testResidenceDetails),
   );
+  final Uuid _uuid = const Uuid(); // Initialize Uuid
 
   @override
   Future<void> setResidenceDetail(ResidenceDetail updated) async {
@@ -73,11 +74,8 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   }
 
   @override
-  DocumentReference<Object?> getNewResidenceDocRef() {
-    // In a fake repository, we don't need a real DocumentReference.
-    // The ID is typically generated on the client side for fake data.
-    throw UnimplementedError(
-      'getNewResidenceDocRef is not implemented in the fake repository',
-    );
+  String getNewResidenceDocRef() {
+    // Changed return type to String
+    return _uuid.v4(); // Return the generated ID directly
   }
 }

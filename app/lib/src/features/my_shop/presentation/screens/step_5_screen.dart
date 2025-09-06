@@ -7,12 +7,12 @@ import 'package:app/src/features/my_shop/presentation/widgets/step_5/gallery_ima
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Step5Screen extends StatelessWidget {
+class Step5MediaPage extends StatelessWidget {
   final ShopFormWizardControllerProvider wizardProvider;
   final String? initialCoverUrl;
   final List<String> initialGalleryUrls;
 
-  const Step5Screen({
+  const Step5MediaPage({
     super.key,
     required this.wizardProvider,
     this.initialCoverUrl,
