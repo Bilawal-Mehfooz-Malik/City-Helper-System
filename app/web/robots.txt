@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://findout.com.pk/sitemap.xml

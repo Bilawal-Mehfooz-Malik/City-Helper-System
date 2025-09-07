@@ -1,6 +1,8 @@
 
 # Product Requirements Document: City Helper System
 
+"FindOut is an app that helps you find local businesses and services in your city. Whether you're looking for a place to live or something to eat, FindOut has you covered. Business owners can also use the app to list their services and connect with more customers."
+
 ## 1. Introduction
 
 The City Helper System is a comprehensive mobile and web platform designed to connect residents and visitors with local services and businesses. Initially focusing on the "Residences" and "Food" sectors, the application serves as a one-stop directory for users to discover, view, and review local establishments. It also provides a dedicated portal for business owners to register and manage their listings.
