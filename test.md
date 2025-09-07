@@ -1,270 +1,91 @@
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
-import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/my_shop/domain/shop_form.dart';
-import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
 
-class SocialMediaSection extends StatelessWidget {
-  final String facebook;
-  final String instagram;
-  final String website;
-  final ValueChanged<String> onFacebookChanged;
-  final ValueChanged<String> onInstagramChanged;
-  final ValueChanged<String> onWebsiteChanged;
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
 
-  const SocialMediaSection({
-    super.key,
-    required this.facebook,
-    required this.instagram,
-    required this.website,
-    required this.onFacebookChanged,
-    required this.onInstagramChanged,
-    required this.onWebsiteChanged,
-  });
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="app">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  @override
-  Widget build(BuildContext context) {
-    final facebookController = TextEditingController(text: facebook);
-    final instagramController = TextEditingController(text: instagram);
-    final websiteController = TextEditingController(text: website);
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
-    return Card(
-      elevation: 2,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Sizes.p8),
-        side: BorderSide(
-          color: context.colorScheme.outline.withValues(alpha: 0.5),
-          width: 1,
-        ),
-      ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              context.colorScheme.surface,
-              context.colorScheme.surface.withValues(alpha: 0.9),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.p16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Social Media (optional)'.hardcoded,
-                style: context.textTheme.titleMedium,
-              ),
-              gapH8,
-              TextFormField(
-                controller: facebookController,
-                onChanged: onFacebookChanged,
-                decoration: InputDecoration(
-                  hintText: 'e.g. @yourshop'.hardcoded,
-                  prefixIcon: Icon(Icons.facebook, color: context.colorScheme.primary),
-                  filled: true,
-                  fillColor: context.colorScheme.surface.withOpacity(0.9),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                  ),
-                ),
-              ),
-              gapH12,
-              TextFormField(
-                controller: instagramController,
-                onChanged: onInstagramChanged,
-                decoration: InputDecoration(
-                  hintText: 'e.g. @yourshop'.hardcoded,
-                  prefixIcon: Icon(Icons.camera_alt, color: context.colorScheme.primary),
-                  filled: true,
-                  fillColor: context.colorScheme.surface.withOpacity(0.9),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                  ),
-                ),
-              ),
-              gapH12,
-              TextFormField(
-                controller: websiteController,
-                onChanged: onWebsiteChanged,
-                decoration: InputDecoration(
-                  hintText: 'e.g. www.yourshop.com'.hardcoded,
-                  prefixIcon: Icon(Icons.language, color: context.colorScheme.primary),
-                  filled: true,
-                  fillColor: context.colorScheme.surface.withOpacity(0.9),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Sizes.p8),
-                    borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                  ),
-                ),
-                keyboardType: TextInputType.url,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+  <title>app</title>
+  <link rel="manifest" href="manifest.json">
 
-class Step3ContactPage extends ConsumerWidget {
-  final ShopFormWizardControllerProvider wizardProvider;
+  <style>
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f2f2f2; /* surfaceColor from your theme */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+    }
 
-  const Step3ContactPage({super.key, required this.wizardProvider});
+    .loader-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 10%; /* Slight rounding for a clean look */
+      margin-bottom: 20px;
+    }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final wizardState = ref.watch(wizardProvider);
-    final wizardController = ref.read(wizardProvider.notifier);
-    final formData = wizardState.formData;
+    .progress-container {
+      width: 200px;
+      height: 6px;
+      background: rgba(76, 217, 100, 0.2); /* Lighter kGreenColor */
+      border-radius: 3px;
+      overflow: hidden;
+    }
 
-    final phoneController = TextEditingController(text: formData.phoneNumber);
-    final waController = TextEditingController(text: formData.waNumber);
-    final emailController = TextEditingController(text: formData.email);
+    .progress-bar {
+      width: 50px;
+      height: 100%;
+      background: rgb(76, 217, 100); /* kGreenColor */
+      animation: slide 1.5s ease-in-out infinite;
+    }
 
-    return ResponsiveScrollable(
-      padding: const EdgeInsets.all(Sizes.p16),
-      child: Column(
-        spacing: Sizes.p12,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            elevation: 2,
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Sizes.p8),
-              side: BorderSide(
-                color: context.colorScheme.outline.withValues(alpha: 0.5),
-                width: 1,
-              ),
-            ),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    context.colorScheme.surface,
-                    context.colorScheme.surface.withValues(alpha: 0.9),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(Sizes.p16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Contact Information (optional)'.hardcoded,
-                      style: context.textTheme.titleMedium,
-                    ),
-                    gapH8,
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: InputDecoration(
-                        hintText: '03001234567'.hardcoded,
-                        prefixIcon: Icon(Icons.phone, color: context.colorScheme.primary),
-                        filled: true,
-                        fillColor: context.colorScheme.surface.withOpacity(0.9),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                        ),
-                      ),
-                      keyboardType: TextInputType.phone,
-                      onChanged: (val) => wizardController.updateFormData(
-                        formData.copyWith(phoneNumber: val),
-                      ),
-                    ),
-                    gapH12,
-                    TextFormField(
-                      controller: waController,
-                      decoration: InputDecoration(
-                        hintText: '+923001234567'.hardcoded,
-                        prefixIcon: Icon(Icons.message, color: context.colorScheme.primary),
-                        filled: true,
-                        fillColor: context.colorScheme.surface.withOpacity(0.9),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                        ),
-                      ),
-                      keyboardType: TextInputType.phone,
-                      onChanged: (val) => wizardController.updateFormData(
-                        formData.copyWith(waNumber: val),
-                      ),
-                    ),
-                    gapH12,
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: 'shop@example.com'.hardcoded,
-                        prefixIcon: Icon(Icons.email, color: context.colorScheme.primary),
-                        filled: true,
-                        fillColor: context.colorScheme.surface.withOpacity(0.9),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.p8),
-                          borderSide: BorderSide(color: context.colorScheme.primary, width: 2),
-                        ),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (val) => wizardController.updateFormData(
-                        formData.copyWith(email: val),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SocialMediaSection(
-            facebook: formData.facebookUrl,
-            instagram: formData.instagramUrl,
-            website: formData.websiteUrl,
-            onFacebookChanged: (val) => wizardController.updateFormData(
-              formData.copyWith(facebookUrl: val),
-            ),
-            onInstagramChanged: (val) => wizardController.updateFormData(
-              formData.copyWith(instagramUrl: val),
-            ),
-            onWebsiteChanged: (val) => wizardController.updateFormData(
-              formData.copyWith(websiteUrl: val),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+    @keyframes slide {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(150px); }
+      100% { transform: translateX(0); }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader" class="loader-container">
+    <img src="https://www.pngall.com/wp-content/uploads/12/App-Logo-PNG-Image.png" alt="App Icon" class="loader-icon">
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      if (window.flutterCanvasKit || window.FlutterWebRenderer) {
+        document.getElementById('loader').classList.add('hidden');
+      } else {
+        setTimeout(() => {
+          document.getElementById('loader').classList.add('hidden');
+        }, 4000);
+      }
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
