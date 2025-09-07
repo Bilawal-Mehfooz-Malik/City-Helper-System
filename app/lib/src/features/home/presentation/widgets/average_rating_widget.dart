@@ -2,7 +2,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:app/src/themes/color.dart';
+
 import 'package:flutter/material.dart';
 
 class AverageRatingWidget extends StatelessWidget {
@@ -26,8 +26,7 @@ class AverageRatingWidget extends StatelessWidget {
     return Wrap(
       spacing: Sizes.p4,
       children: [
-        // TODO: Remove hardcoded colors
-        Icon(Icons.star, color: amberColor, size: 18),
+        Icon(Icons.star, color: context.colorScheme.tertiary, size: 18),
         Text(ratingText.hardcoded, style: context.textTheme.labelLarge),
       ],
     );

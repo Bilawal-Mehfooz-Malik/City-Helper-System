@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'color.dart';
+
 part 'light_theme.g.dart';
 
 class AppColors {
@@ -16,7 +18,7 @@ ThemeData lightTheme(Ref ref) {
   final fontFamily = ref.watch(fontFamilyProvider);
   final themeData = ThemeData.light(useMaterial3: true);
   return themeData.copyWith(
-    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.greenColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.greenColor).copyWith(tertiary: amberColor),
     textTheme: _textThemeLight(themeData, fontFamily),
   );
 }

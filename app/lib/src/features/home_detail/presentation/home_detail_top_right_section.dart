@@ -18,7 +18,7 @@ import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
-import 'package:app/src/themes/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -229,8 +229,7 @@ class _RatingRow extends ConsumerWidget {
             spacing: Sizes.p4,
             runSpacing: Sizes.p4,
             children: [
-              // TODO: Use amberColor from theme
-              Icon(Icons.star, color: amberColor, size: 20),
+              Icon(Icons.star, color: context.colorScheme.tertiary, size: 20),
               Text(entity.avgRating.toStringAsFixed(1)),
               Text('(${entity.totalReviews} ${context.loc.reviews})'.hardcoded),
             ],

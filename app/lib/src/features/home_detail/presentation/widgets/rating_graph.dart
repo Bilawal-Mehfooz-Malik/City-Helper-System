@@ -3,7 +3,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/domain/rating_breakdown.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/themes/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -65,7 +65,7 @@ class LeftRatingGraphSection extends StatelessWidget {
           itemCount: 5,
           itemSize: 20.0,
           itemBuilder: (context, _) =>
-              const Icon(Icons.star, color: amberColor),
+              Icon(Icons.star, color: Theme.of(context).colorScheme.tertiary),
         ),
         gapH8,
         Text('${entity.totalReviews} ${context.loc.reviews}'),

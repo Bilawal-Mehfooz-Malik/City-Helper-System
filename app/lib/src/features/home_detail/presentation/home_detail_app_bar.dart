@@ -5,7 +5,7 @@ import 'package:app/src/features/categories_list/presentation/controllers/select
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/controllers/popular_detail_view_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/themes/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -85,7 +85,7 @@ class AppBarContent extends StatelessWidget {
         if (isPopular) ...[
           // Conditionally display icon
           gapW4,
-          Icon(Icons.local_fire_department, color: amberColor, size: 25),
+          Icon(Icons.local_fire_department, color: Theme.of(context).colorScheme.tertiary, size: 25),
         ],
       ],
     );

@@ -12,7 +12,7 @@ import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.d
 import 'package:app/src/features/review/presentation/review_skeleton.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
-import 'package:app/src/themes/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -197,7 +197,7 @@ class ReviewListTile extends ConsumerWidget {
                     itemCount: 5,
                     itemSize: 18.0,
                     itemBuilder: (context, _) =>
-                        const Icon(Icons.star, color: amberColor),
+                        Icon(Icons.star, color: Theme.of(context).colorScheme.tertiary),
                   ),
                 ],
               ),

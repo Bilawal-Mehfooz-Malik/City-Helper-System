@@ -29,6 +29,9 @@
 
   <title>app</title>
   <link rel="manifest" href="manifest.json">
+  
+  
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
   <style id="splash-screen-style">
     html {
       height: 100%
@@ -37,7 +40,7 @@
     body {
       margin: 0;
       min-height: 100%;
-      background-color: #42a5f5;
+      background-color: #ffffff;
           background-size: 100% 100%;
     }
 
@@ -48,43 +51,34 @@
       left: 50%;
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
+      text-align: center;
     }
 
-    .contain {
-      display:block;
-      width:100%; height:100%;
-      object-fit: contain;
+    .progress-container {
+      width: 120px;
+      height: 4px;
+      background-color: #e6e6e6;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      margin: 0 auto;
     }
 
-    .stretch {
-      display:block;
-      width:100%; height:100%;
-    }
-
-    .cover {
-      display:block;
-      width:100%; height:100%;
-      object-fit: cover;
-    }
-
-    .bottom {
+    .progress-bar {
+      width: 40%;
+      height: 100%;
+      background-color: #366438;
       position: absolute;
-      bottom: 0;
-      left: 50%;
-      -ms-transform: translate(-50%, 0);
-      transform: translate(-50%, 0);
+      animation: indeterminate 2s infinite linear;
     }
 
-    .bottomLeft {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-
-    .bottomRight {
-      position: absolute;
-      bottom: 0;
-      right: 0;
+    @keyframes indeterminate {
+      0% {
+        left: -40%;
+      }
+      100% {
+        left: 100%;
+      }
     }
   </style>
   <script id="splash-screen-script">
@@ -94,14 +88,15 @@
       document.body.style.background = "transparent";
     }
   </script>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
 <body>
-  <picture id="splash">
-      <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
-      <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
-      <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
-  </picture>
+  <div id="splash" class="center">
+    <img src="icons/Icon-192.png" alt="App Logo" style="width:100px; height:100px; margin-bottom: 20px;">
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+  
   <script src="flutter_bootstrap.js" async=""></script>
 
 </body></html>
