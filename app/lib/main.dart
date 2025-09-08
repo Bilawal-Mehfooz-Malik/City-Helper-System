@@ -23,4 +23,5 @@ void main() async {
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);
   runApp(root);
+  triggerSplashRemove();
 }
