@@ -445,4 +445,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get delete => 'Delete';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get agreementPrefix => 'I agree to the ';
+
+  @override
+  String get agreementAnd => ' and ';
+
+  @override
+  String get agreementSuffix => '.';
+
+  @override
+  String get termsOfServiceTitle => 'Our Terms of Service';
+
+  @override
+  String get termsOfServiceContent =>
+      'This is the content of our terms of service. Please read carefully.';
+
+  @override
+  String get privacyPolicyTitle => 'Our Privacy Policy';
+
+  @override
+  String get privacyPolicyContent =>
+      'This is the content of our privacy policy. It explains how we collect, use, and protect your data.';
 }

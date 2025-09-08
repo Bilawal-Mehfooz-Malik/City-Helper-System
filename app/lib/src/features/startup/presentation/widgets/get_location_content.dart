@@ -8,20 +8,31 @@ import 'package:app/src/features/startup/presentation/pick_location_screen.dart'
 import 'package:app/src/features/startup/presentation/widgets/location_preview_widget.dart';
 import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/routers/app_router.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 const kGetCurrentKey = Key('get-current-key');
 const kFromMapKey = Key('from-map-key');
 const kSaveKey = Key('save-location-key');
 
-class GetLocationContent extends ConsumerWidget {
+class GetLocationContent extends ConsumerStatefulWidget {
   final bool isLargeScreen;
   const GetLocationContent({super.key, this.isLargeScreen = false});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<GetLocationContent> createState() => _GetLocationContentState();
+}
+
+class _GetLocationContentState extends ConsumerState<GetLocationContent> {
+  bool _isAgreed = false; // State for the agreement checkbox
+
+  @override
+  Widget build(BuildContext context) {
+    // Remove WidgetRef ref here
     final locationValue = ref.watch(userLocationControllerProvider);
     final locationNotifier = ref.read(userLocationControllerProvider.notifier);
     final userLocationValue = ref.watch(localUserLocationSaverProvider);
@@ -31,7 +42,7 @@ class GetLocationContent extends ConsumerWidget {
 
     final isLoading =
         userLocationValue.isLoading ||
-        locationValue.isLoading ||
+        locationValue.isLoading || // Use locationValue.isLoading
         userLocationValue.hasError;
 
     // Error handling for userLocation
@@ -50,7 +61,7 @@ class GetLocationContent extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: Sizes.p12,
       children: [
-        if (isLargeScreen) gapH16,
+        if (widget.isLargeScreen) gapH16,
         // [Location Preview Widget]
         const LocationPreviewWidget(),
 
@@ -70,7 +81,7 @@ class GetLocationContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kGetCurrentKey,
-                isDisabled: isLoading,
+                isDisabled: isLoading || !_isAgreed,
                 text: context.loc.getCurrent,
                 onPressed: locationNotifier.getCurrentLocation,
               ),
@@ -78,7 +89,7 @@ class GetLocationContent extends ConsumerWidget {
             Expanded(
               child: CustomOutlinedButton(
                 key: kFromMapKey,
-                isDisabled: isLoading,
+                isDisabled: isLoading || !_isAgreed,
                 text: context.loc.fromMap,
                 onPressed: () async {
                   final pickedLocation = await showGeneralDialog<LatLng>(
@@ -96,18 +107,70 @@ class GetLocationContent extends ConsumerWidget {
           ],
         ),
 
+        // Agreement Checkbox and Text
+        Row(
+          children: [
+            Checkbox(
+              value: _isAgreed,
+              onChanged: (value) {
+                setState(() {
+                  _isAgreed = value ?? false;
+                });
+              },
+            ),
+            Flexible(
+              child: RichText(
+                text: TextSpan(
+                  text: context.loc.agreementPrefix,
+                  style: context.textTheme.bodySmall,
+                  children: [
+                    TextSpan(
+                      text: context.loc.termsOfService,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () =>
+                            context.pushNamed(AppRoute.termsOfService.name),
+                    ),
+                    TextSpan(
+                      text: context.loc.agreementAnd,
+                      style: context.textTheme.bodySmall,
+                    ),
+                    TextSpan(
+                      text: context.loc.privacyPolicy,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () =>
+                            context.pushNamed(AppRoute.privacyPolicy.name),
+                    ),
+                    TextSpan(
+                      text: context.loc.agreementSuffix,
+                      style: context.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+
         /// [SaveLocationButton]
         if (locationValue.value != null) ...[
           PrimaryButton(
             key: kSaveKey,
             useMaxSize: true,
-            isDisabled: isLoading,
+            isDisabled: isLoading || !_isAgreed,
             isLoading: userLocationValue.isLoading,
             text: context.loc.saveLocation,
             onPressed: userLocationNotifier.createUser,
           ),
         ],
-        if (isLargeScreen) gapH8,
+        if (widget.isLargeScreen) gapH8,
       ],
     );
   }

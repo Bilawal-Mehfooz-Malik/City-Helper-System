@@ -19,7 +19,10 @@ Future<String?> redirection(Ref ref, GoRouterState state) async {
   final hasLocation =
       userLocationState.hasValue && userLocationState.value != null;
 
-  if (!hasLocation && !currentPath.startsWith('/get-started')) {
+  if (!hasLocation &&
+      !currentPath.startsWith('/get-started') &&
+      !currentPath.startsWith('/terms-of-service') &&
+      !currentPath.startsWith('/privacy-policy')) {
     return '/get-started';
   }
 

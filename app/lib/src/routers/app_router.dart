@@ -23,11 +23,15 @@ import 'package:app/src/features/startup/data/real/user_location_repository.dart
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:app/src/features/startup/presentation/pick_location_screen.dart';
 import 'package:app/src/routers/not_found_screen.dart';
+import 'package:app/src/features/legal/presentation/terms_of_service_page.dart';
+import 'package:app/src/features/legal/presentation/privacy_policy_page.dart';
 
 part 'app_router.g.dart';
 
 enum AppRoute {
   getStarted,
+  termsOfService,
+  privacyPolicy,
   pickYourLocation,
   category,
   home,
@@ -71,6 +75,16 @@ GoRouter appRouter(Ref ref) {
         path: '/get-started',
         name: AppRoute.getStarted.name,
         builder: (context, state) => const StartupScreen(),
+      ),
+      GoRoute(
+        path: '/terms-of-service',
+        name: AppRoute.termsOfService.name,
+        builder: (context, state) => const TermsOfServicePage(),
+      ),
+      GoRoute(
+        path: '/privacy-policy',
+        name: AppRoute.privacyPolicy.name,
+        builder: (context, state) => const PrivacyPolicyPage(),
       ),
       GoRoute(
         path: '/',

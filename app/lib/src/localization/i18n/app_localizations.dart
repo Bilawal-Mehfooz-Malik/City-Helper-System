@@ -933,6 +933,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get delete;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @agreementPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get agreementPrefix;
+
+  /// No description provided for @agreementAnd.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get agreementAnd;
+
+  /// No description provided for @agreementSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'.'**
+  String get agreementSuffix;
+
+  /// No description provided for @termsOfServiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Terms of Service'**
+  String get termsOfServiceTitle;
+
+  /// No description provided for @termsOfServiceContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the content of our terms of service. Please read carefully.'**
+  String get termsOfServiceContent;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Privacy Policy'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the content of our privacy policy. It explains how we collect, use, and protect your data.'**
+  String get privacyPolicyContent;
 }
 
 class _AppLocalizationsDelegate
