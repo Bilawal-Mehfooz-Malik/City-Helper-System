@@ -8,9 +8,8 @@ import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/auth/presentation/widgets/otp_content.dart';
 import 'package:app/src/features/auth/presentation/widgets/phone_number_content.dart';
-import 'package:app/src/features/auth/presentation/widgets/profile_content.dart';
 
-enum AuthFlowStep { phoneNumber, otp, profile }
+enum AuthFlowStep { phoneNumber, otp }
 
 class AuthFlowScreen extends ConsumerStatefulWidget {
   const AuthFlowScreen({super.key});
@@ -54,17 +53,11 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
   }
 
   Future<void> _verifyOtp(String code) async {
-    final result = await ref
-        .read(authControllerProvider.notifier)
-        .verifyOtp(code: code);
+    final notifier = ref.read(authControllerProvider.notifier);
+    final result = await notifier.verifyOtpAndCheckProfile(code: code);
 
     if (result.hasError && mounted) {
       result.showAlertDialogOnError(context);
-      return;
-    }
-
-    if (mounted) {
-      setState(() => _currentStep = AuthFlowStep.profile);
     }
   }
 
@@ -95,13 +88,6 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
             _currentStep = AuthFlowStep.phoneNumber;
           }),
           onSubmit: _verifyOtp,
-        );
-        break;
-      case AuthFlowStep.profile:
-        child = ProfileContent(
-          key: const ValueKey('ProfileContent'),
-          phoneNumber: _fullPhoneNumber,
-          isSmallScreen: isSmall,
         );
         break;
     }

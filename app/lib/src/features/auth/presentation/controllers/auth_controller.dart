@@ -2,9 +2,11 @@ import 'dart:typed_data';
 
 import 'package:app/src/features/auth/application/auth_service.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
+import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
 import 'package:app/src/features/auth/presentation/controllers/verification_id_controller.dart';
 import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
+import 'package:app/src/routers/app_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -48,7 +50,9 @@ class AuthController extends _$AuthController {
     return result;
   }
 
-  Future<AsyncValue<void>> verifyOtp({required String code}) async {
+  Future<AsyncValue<void>> verifyOtpAndCheckProfile({
+    required String code,
+  }) async {
     state = const AsyncLoading();
     final verificationId = ref.read(verificationIdControllerProvider);
 
@@ -60,6 +64,26 @@ class AuthController extends _$AuthController {
     final result = await AsyncValue.guard(
       () => _authRepo.verifyOtp(smsCode: code, verificationId: verificationId),
     );
+
+    if (result.hasError) {
+      state = result;
+      return result;
+    }
+
+    final user = _authRepo.currentUser;
+    if (user == null) {
+      state = result;
+      return result;
+    }
+
+    final userProfile = await ref.read(fetchUserByIdProvider(user.uid).future);
+    final router = ref.read(appRouterProvider);
+
+    if (userProfile == null) {
+      router.goNamed(AppRoute.profile.name);
+    } else {
+      router.pop();
+    }
 
     state = result;
     return result;
