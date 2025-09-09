@@ -1,8 +1,50 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    match /users/{userId} {
+      // A user can read their own document and update it.
+      // They can only create a document for themselves.
+      allow read, update: if request.auth.uid == userId;
+      allow create: if request.auth.uid == userId;
+    }
+
+    match /residence_listings/{listingId} {
+      allow read: if true;
+      // A user must be logged in and the ownerId in the new document must match their own uid.
+      allow create: if request.auth.uid != null && request.resource.data.ownerId == request.auth.uid;
+      // A user can only update or delete a listing if they are the owner.
+      allow update, delete: if request.auth.uid == resource.data.ownerId;
+    }
+
+    match /food_listings/{listingId} {
+      allow read: if true;
+      // A user must be logged in and the ownerId in the new document must match their own uid.
+      allow create: if request.auth.uid != null && request.resource.data.ownerId == request.auth.uid;
+      // A user can only update or delete a listing if they are the owner.
+      allow update, delete: if request.auth.uid == resource.data.ownerId;
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      // A user must be logged in and the userId in the new document must match their own uid.
+      allow create: if request.auth.uid != null && request.resource.data.userId == request.auth.uid;
+      // A user can only update or delete a review if they are the author.
+      allow update, delete: if request.auth.uid == resource.data.userId;
+    }
+
+    match /carousel_ads/{adId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /subcategories/{subcategoryId} {
+      allow read: if true;
+      allow write: if false;
     }
   }
 }

@@ -20,6 +20,7 @@ import 'package:app/src/features/auth/presentation/controllers/auth_controller.d
 import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:app/src/routers/app_router.dart';
 
 class ProfileContent extends ConsumerStatefulWidget {
   final String phoneNumber;
@@ -107,31 +108,28 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
           .saveLocation(newLocation);
     }
 
-    // Call createUser or updateUser
-    if (isEditMode) {
-      await controller.updateUser(
-        name: name,
-        profileImageBytes: imageBytes,
-        removeProfileImage: removeImage,
-        location: locationChanged ? newLocation : null,
-      );
-    } else {
-      await controller.createUser(
-        name: name,
-        profileImageBytes: imageBytes,
-        location: newLocation,
-      );
-    }
+    final result = isEditMode
+        ? await controller.updateUser(
+            name: name,
+            profileImageBytes: imageBytes,
+            removeProfileImage: removeImage,
+            location: locationChanged ? newLocation : null,
+          )
+        : await controller.createUser(
+            name: name,
+            profileImageBytes: imageBytes,
+            location: newLocation,
+          );
 
     if (!mounted) {
       return;
     }
 
-    // Check the state of the controller for errors
-    if (controller.state.hasError) {
-      controller.state.showAlertDialogOnError(context);
+    if (result.hasError) {
+      result.showAlertDialogOnError(context);
     } else {
-      context.pop();
+      final router = ref.read(appRouterProvider);
+      router.goNamed(AppRoute.category.name);
     }
   }
 

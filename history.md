@@ -198,3 +198,45 @@ This session focused on creating and managing Firestore indexes for various repo
     -   Performed a comprehensive search for all repositories in the project.
     -   Analyzed the remaining repositories (`user_repository.dart`, `connectivity_repository.dart`, `auth_repository.dart`, `image_upload_repository.dart`, `food_details_repository.dart`, `residence_details_repository.dart`, `entity_search_repository.dart`, `user_mode_repository.dart`, `geolocator_repository.dart`, `user_location_repository.dart`).
     -   **Conclusion**: Confirmed that no other repositories required composite indexes.
+---
+
+## Chat History - End-to-End Security Hardening
+
+This session was a comprehensive security audit and hardening of the application, focusing on backend rules, secret management, and code verification.
+
+### 1. Cloud Function Security (App Check)
+
+-   **Goal**: Secure Cloud Functions to prevent access from unauthorized clients (e.g., bots, scripts).
+-   **Implementation**:
+    -   Implemented Firebase App Check for all three Cloud Functions (`getCarouselAds`, `recordAdImpressions`, `recordAdClick`).
+    -   Added the `firebase_app_check` dependency to the Flutter project and configured it in `main.dart`.
+    -   Modified the Cloud Functions to use the modern `(request)` signature compatible with `firebase-functions` v6+ and to validate the `request.app` token.
+    -   Debugged and resolved several TypeScript compilation errors during the deployment process.
+
+### 2. Secure Key Management
+
+-   **Goal**: Ensure the reCAPTCHA v3 site key for the web is stored securely.
+-   **Implementation**:
+    -   Explained that while the site key is public, it is best practice not to hardcode it.
+    -   Guided the user to leverage their existing `envied` package to manage the key, which they then implemented.
+
+### 3. Firestore Rules Overhaul
+
+-   **Goal**: Fix critical security vulnerabilities in the database rules.
+-   **Investigation**: Read and analyzed `firestore.rules`.
+    -   **Identified Critical Issues**: The rules allowed any logged-in user to create or update data that did not belong to them (e.g., creating fake user profiles, creating/updating any review).
+    -   **Fix**: Rewrote the rules for the `users`, `reviews`, `residence_listings`, and `food_listings` collections to enforce the principle of least privilege. Users can now only create, update, or delete their own documents.
+
+### 4. Codebase Verification
+
+-   **Goal**: Ensure the application code (repositories) aligns with the new, stricter security rules.
+-   **Implementation**:
+    -   Searched for and identified all non-fake repository classes in the Flutter application.
+    -   Reviewed the data access logic in `UserRepository`, `ReviewsRepository`, `FoodRepository`, and `ResidenceRepository`.
+    -   **Conclusion**: Confirmed that the client-side code was already well-structured and fully compatible with the secure backend rules, requiring no changes.
+
+### 5. Hardcoded Secret Scan
+
+-   **Goal**: Scan the application for any other hardcoded secrets.
+-   **Implementation**: Performed a search for common secret-related keywords in the `lib` directory.
+-   **Conclusion**: Found no hardcoded secrets, confirming good security practices.

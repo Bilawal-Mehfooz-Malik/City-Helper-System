@@ -8,7 +8,8 @@ final class Env {
   static final String googleMapsKey = _Env.googleMapsKey;
   @EnviedField(varName: 'ALGOLIA_APP_ID', obfuscate: true)
   static final String algoliaAppId = _Env.algoliaAppId;
-
   @EnviedField(varName: 'ALGOLIA_SEARCH_KEY', obfuscate: true)
   static final String algoliaSearchKey = _Env.algoliaSearchKey;
+  @EnviedField(varName: 'RECAPTCHA_V3_SITE_KEY', obfuscate: true)
+  static final String recaptchaV3SiteKey = _Env.recaptchaV3SiteKey;
 }

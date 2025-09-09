@@ -91,27 +91,37 @@ export const recordAdImpressionsLogic = async (
     throw new Error('adIds must be a non-empty array of strings.');
   }
 
-  for (const adId of adIds) {
-    if (typeof adId !== 'string' || adId.length === 0) {
-      throw new Error('All items in adIds must be non-empty strings.');
-    }
-  }
-
   const batch = firestore.batch();
   const nowTimestamp = admin.firestore.Timestamp.now();
   const adsCollection = firestore.collection('carousel_ads');
+  let successfulImpressions = 0;
 
   for (const adId of adIds) {
+    if (typeof adId !== 'string' || adId.length === 0) {
+      console.error('Invalid adId found in adIds array:', adId);
+      continue;
+    }
+
     const adRef = adsCollection.doc(adId);
-    batch.update(adRef, {
-      impressionCount: admin.firestore.FieldValue.increment(1),
-      lastShownAt: nowTimestamp,
-    });
+    const adDoc = await adRef.get();
+
+    if (adDoc.exists) {
+      batch.update(adRef, {
+        impressionCount: admin.firestore.FieldValue.increment(1),
+        lastShownAt: nowTimestamp,
+      });
+      successfulImpressions++;
+    } else {
+      console.error(`Ad with id ${adId} not found.`);
+    }
   }
 
-  await batch.commit();
-  console.log(`Successfully recorded impressions for ${adIds.length} ads.`);
-  return { success: true, count: adIds.length };
+  if (successfulImpressions > 0) {
+    await batch.commit();
+  }
+
+  console.log(`Successfully recorded impressions for ${successfulImpressions} ads.`);
+  return { success: true, count: successfulImpressions };
 };
 
 export const recordAdClickLogic = async (
@@ -124,6 +134,12 @@ export const recordAdClickLogic = async (
   }
 
   const adRef = firestore.collection('carousel_ads').doc(adId);
+  const adDoc = await adRef.get();
+
+  if (!adDoc.exists) {
+    throw new Error(`Ad with id ${adId} not found.`);
+  }
+
   await adRef.update({ clickCount: admin.firestore.FieldValue.increment(1) });
   return { success: true };
 };

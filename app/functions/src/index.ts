@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { 
-  getCarouselAdsLogic, 
-  recordAdImpressionsLogic, 
-  recordAdClickLogic 
+import {
+  getCarouselAdsLogic,
+  recordAdImpressionsLogic,
+  recordAdClickLogic
 } from "./logic";
 
 // Initialize Firebase Admin
@@ -16,9 +16,16 @@ firestore.settings({ ignoreUndefinedProperties: true });
 // --- CLOUD FUNCTIONS ---
 
 // 1️⃣ Fetch carousel ads
-export const getCarouselAds = functions.https.onCall(async (data, context) => {
+export const getCarouselAds = functions.https.onCall(async (request) => {
+  // Enforce App Check
+  if (request.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.'
+    );
+  }
   try {
-    return await getCarouselAdsLogic(firestore, data.data);
+    return await getCarouselAdsLogic(firestore, request.data);
   } catch (error: any) {
     console.error('Error fetching carousel ads:', error);
     throw new functions.https.HttpsError('internal', error.message);
@@ -26,9 +33,16 @@ export const getCarouselAds = functions.https.onCall(async (data, context) => {
 });
 
 // 2️⃣ Record ad impressions in batch
-export const recordAdImpressions = functions.https.onCall(async (data, context) => {
+export const recordAdImpressions = functions.https.onCall(async (request) => {
+  // Enforce App Check
+  if (request.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.'
+    );
+  }
   try {
-    return await recordAdImpressionsLogic(firestore, data.data);
+    return await recordAdImpressionsLogic(firestore, request.data);
   } catch (error: any) {
     console.error('Error recording batch impressions:', error);
     throw new functions.https.HttpsError('internal', error.message);
@@ -36,11 +50,18 @@ export const recordAdImpressions = functions.https.onCall(async (data, context) 
 });
 
 // 3️⃣ Record ad click
-export const recordAdClick = functions.https.onCall(async (data, context) => {
+export const recordAdClick = functions.https.onCall(async (request) => {
+  // Enforce App Check
+  if (request.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.'
+    );
+  }
   try {
-    return await recordAdClickLogic(firestore, data.data);
+    return await recordAdClickLogic(firestore, request.data);
   } catch (error: any) {
-    console.error(`Error recording click for adId: ${data.data.adId}`, error);
+    console.error(`Error recording click for adId: ${request.data.adId}`, error);
     throw new functions.https.HttpsError('internal', error.message);
   }
 });

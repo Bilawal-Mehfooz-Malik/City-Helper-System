@@ -91,30 +91,37 @@ class AuthController extends _$AuthController {
 
   // ------------------ USER CREATION ------------------
 
-  Future<void> createUser({
+  Future<AsyncValue<void>> createUser({
     required String name,
     Uint8List? profileImageBytes,
     LatLng? location,
   }) async {
     state = const AsyncLoading(); // Set to loading state immediately
-    state = await AsyncValue.guard(() async {
+
+    try {
       await _authService.createUserProfile(
         name: name,
         profileImageBytes: profileImageBytes,
         location: location,
       );
-    });
+      state = const AsyncData(null); // Set to data state on success
+      return const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st); // Set to error state on failure
+      return AsyncError(e, st);
+    }
   }
 
   // ------------------ USER UPDATE ------------------
-  Future<void> updateUser({
+  Future<AsyncValue<void>> updateUser({
     required String name,
     Uint8List? profileImageBytes,
     bool removeProfileImage = false,
     LatLng? location,
   }) async {
     state = const AsyncLoading(); // Set to loading state immediately
-    state = await AsyncValue.guard(() async {
+
+    try {
       final user = _authRepo.currentUser;
       if (user == null) throw UserNotAuthenticatedException();
 
@@ -124,6 +131,11 @@ class AuthController extends _$AuthController {
         location: location,
         removeProfileImage: removeProfileImage,
       );
-    });
+      state = const AsyncData(null); // Set to data state on success
+      return const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st); // Set to error state on failure
+      return AsyncError(e, st);
+    }
   }
 }
