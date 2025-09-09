@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppUser {
 
- UserId get uid; String get phoneNumber; String get name; String? get profileImageUrl;@_latLngJsonConverter LatLng? get lastLocation;
+ UserId get uid; String? get phoneNumber; String get name; String? get profileImageUrl;@_latLngJsonConverter LatLng? get lastLocation;
 /// Create a copy of AppUser
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $AppUserCopyWith<$Res>  {
   factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) _then) = _$AppUserCopyWithImpl;
 @useResult
 $Res call({
- UserId uid, String phoneNumber, String name, String? profileImageUrl,@_latLngJsonConverter LatLng? lastLocation
+ UserId uid, String? phoneNumber, String name, String? profileImageUrl,@_latLngJsonConverter LatLng? lastLocation
 });
 
 
@@ -65,11 +65,11 @@ class _$AppUserCopyWithImpl<$Res>
 
 /// Create a copy of AppUser
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? phoneNumber = null,Object? name = null,Object? profileImageUrl = freezed,Object? lastLocation = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? phoneNumber = freezed,Object? name = null,Object? profileImageUrl = freezed,Object? lastLocation = freezed,}) {
   return _then(_self.copyWith(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as UserId,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as UserId,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,profileImageUrl: freezed == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastLocation: freezed == lastLocation ? _self.lastLocation : lastLocation // ignore: cast_nullable_to_non_nullable
 as LatLng?,
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserId uid,  String phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserId uid,  String? phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppUser() when $default != null:
 return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_that.lastLocation);case _:
@@ -178,7 +178,7 @@ return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserId uid,  String phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserId uid,  String? phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)  $default,) {final _that = this;
 switch (_that) {
 case _AppUser():
 return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_that.lastLocation);case _:
@@ -198,7 +198,7 @@ return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserId uid,  String phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserId uid,  String? phoneNumber,  String name,  String? profileImageUrl, @_latLngJsonConverter  LatLng? lastLocation)?  $default,) {final _that = this;
 switch (_that) {
 case _AppUser() when $default != null:
 return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_that.lastLocation);case _:
@@ -213,12 +213,12 @@ return $default(_that.uid,_that.phoneNumber,_that.name,_that.profileImageUrl,_th
 @JsonSerializable()
 
 class _AppUser implements AppUser {
-   _AppUser({required this.uid, required this.phoneNumber, required this.name, this.profileImageUrl, @_latLngJsonConverter this.lastLocation});
+   _AppUser({required this.uid, this.phoneNumber, this.name = '', this.profileImageUrl, @_latLngJsonConverter this.lastLocation});
   factory _AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
 
 @override final  UserId uid;
-@override final  String phoneNumber;
-@override final  String name;
+@override final  String? phoneNumber;
+@override@JsonKey() final  String name;
 @override final  String? profileImageUrl;
 @override@_latLngJsonConverter final  LatLng? lastLocation;
 
@@ -255,7 +255,7 @@ abstract mixin class _$AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
   factory _$AppUserCopyWith(_AppUser value, $Res Function(_AppUser) _then) = __$AppUserCopyWithImpl;
 @override @useResult
 $Res call({
- UserId uid, String phoneNumber, String name, String? profileImageUrl,@_latLngJsonConverter LatLng? lastLocation
+ UserId uid, String? phoneNumber, String name, String? profileImageUrl,@_latLngJsonConverter LatLng? lastLocation
 });
 
 
@@ -272,11 +272,11 @@ class __$AppUserCopyWithImpl<$Res>
 
 /// Create a copy of AppUser
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? phoneNumber = null,Object? name = null,Object? profileImageUrl = freezed,Object? lastLocation = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? phoneNumber = freezed,Object? name = null,Object? profileImageUrl = freezed,Object? lastLocation = freezed,}) {
   return _then(_AppUser(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as UserId,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as UserId,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,profileImageUrl: freezed == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastLocation: freezed == lastLocation ? _self.lastLocation : lastLocation // ignore: cast_nullable_to_non_nullable
 as LatLng?,

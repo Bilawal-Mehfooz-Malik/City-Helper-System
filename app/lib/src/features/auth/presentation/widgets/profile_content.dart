@@ -107,25 +107,29 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
           .saveLocation(newLocation);
     }
 
-    final result = isEditMode
-        ? await controller.updateUser(
-            name: name,
-            profileImageBytes: imageBytes,
-            removeProfileImage: removeImage,
-            location: locationChanged ? newLocation : null,
-          )
-        : await controller.createUser(
-            name: name,
-            profileImageBytes: imageBytes,
-            location: newLocation,
-          );
+    // Call createUser or updateUser
+    if (isEditMode) {
+      await controller.updateUser(
+        name: name,
+        profileImageBytes: imageBytes,
+        removeProfileImage: removeImage,
+        location: locationChanged ? newLocation : null,
+      );
+    } else {
+      await controller.createUser(
+        name: name,
+        profileImageBytes: imageBytes,
+        location: newLocation,
+      );
+    }
 
     if (!mounted) {
       return;
     }
 
-    if (result.hasError) {
-      result.showAlertDialogOnError(context);
+    // Check the state of the controller for errors
+    if (controller.state.hasError) {
+      controller.state.showAlertDialogOnError(context);
     } else {
       context.pop();
     }

@@ -12,8 +12,8 @@ const _latLngJsonConverter = LatLngJsonConverter();
 abstract class AppUser with _$AppUser {
   factory AppUser({
     required UserId uid,
-    required String phoneNumber,
-    required String name,
+    String? phoneNumber,
+    @Default('') String name,
     String? profileImageUrl,
     @_latLngJsonConverter LatLng? lastLocation,
   }) = _AppUser;

@@ -168,15 +168,22 @@ class _CustomImageState extends ConsumerState<CustomImage> {
 
     // Priority 1: Local file (from image picker).
     if (widget.imageXFile != null) {
-      final imageProvider = kIsWeb
-          ? NetworkImage(widget.imageXFile!.path) as ImageProvider
-          : FileImage(File(widget.imageXFile!.path));
-
-      return Image(
-        image: imageProvider,
-        fit: widget.fit,
-        errorBuilder: (context, error, stack) => errorPlaceholder,
-      );
+      if (kIsWeb) {
+        // On web, use Image.network which can handle blob URLs.
+        return Image.network(
+          widget.imageXFile!.path,
+          fit: widget.fit,
+          errorBuilder: (context, error, stack) => errorPlaceholder,
+        );
+      } else {
+        // On mobile, use FileImage.
+        final imageProvider = FileImage(File(widget.imageXFile!.path));
+        return Image(
+          image: imageProvider,
+          fit: widget.fit,
+          errorBuilder: (context, error, stack) => errorPlaceholder,
+        );
+      }
     }
 
     // Priority 2: No valid source provided.

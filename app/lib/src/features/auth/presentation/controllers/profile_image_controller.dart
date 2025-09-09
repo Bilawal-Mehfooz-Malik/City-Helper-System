@@ -1,3 +1,4 @@
+import 'package:app/src/core/services/image_compression_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,8 +21,13 @@ class ProfileImageController extends _$ProfileImageController {
     return const ProfileImageState();
   }
 
-  void setImage(XFile file) {
-    state = state.copyWith(imageFile: file, imageRemoved: false);
+  Future<void> setImage(XFile file) async {
+    final compressionService = ref.read(imageCompressionServiceProvider);
+    final compressedFile = await compressionService.compressImage(file);
+    if (compressedFile != null) {
+      state = state.copyWith(imageFile: compressedFile, imageRemoved: false);
+    }
+    // Optional: handle else case where compression fails, e.g., show a message.
   }
 
   void removeImage() {

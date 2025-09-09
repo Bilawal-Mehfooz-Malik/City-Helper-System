@@ -1,13 +1,15 @@
 import 'dart:typed_data';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/services/image_compression_service.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/step_5/cover_image_picker_button.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/step_5/cover_image_preview.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CoverImageTile extends StatefulWidget {
+class CoverImageTile extends ConsumerStatefulWidget {
   final Uint8List? coverImageBytes;
   final String? coverImageUrl;
   final ValueChanged<Uint8List?> onCoverImagePicked;
@@ -20,21 +22,46 @@ class CoverImageTile extends StatefulWidget {
   });
 
   @override
-  State<CoverImageTile> createState() => _CoverImageTileState();
+  ConsumerState<CoverImageTile> createState() => _CoverImageTileState();
 }
 
-class _CoverImageTileState extends State<CoverImageTile> {
+class _CoverImageTileState extends ConsumerState<CoverImageTile> {
   XFile? _pickedFile;
 
   Future<void> _pickCoverImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
-      final bytes = await picked.readAsBytes();
-      setState(() {
-        _pickedFile = picked;
-      });
-      widget.onCoverImagePicked(bytes);
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Compressing image...'.hardcoded)),
+        );
+      }
+
+      final compressionService = ref.read(imageCompressionServiceProvider);
+      final compressedFile = await compressionService.compressImage(picked);
+
+      if (compressedFile != null) {
+        final bytes = await compressedFile.readAsBytes();
+        setState(() {
+          _pickedFile = compressedFile;
+        });
+        widget.onCoverImagePicked(bytes);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Image compression failed.'.hardcoded,
+                style: TextStyle(color: context.colorScheme.onError),
+              ),
+              backgroundColor: context.colorScheme.error,
+            ),
+          );
+        }
+      }
     }
   }
 

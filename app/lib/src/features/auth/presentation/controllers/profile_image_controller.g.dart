@@ -7,7 +7,7 @@ part of 'profile_image_controller.dart';
 // **************************************************************************
 
 String _$profileImageControllerHash() =>
-    r'b0d1ce4f554f9f70d6ea96b2a6dfc2a993be43db';
+    r'54011b8fa7e0e52189b2322d327fdf0a090a9f9c';
 
 /// See also [ProfileImageController].
 @ProviderFor(ProfileImageController)

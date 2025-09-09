@@ -8,8 +8,8 @@ part of 'app_user.dart';
 
 _AppUser _$AppUserFromJson(Map<String, dynamic> json) => _AppUser(
   uid: json['uid'] as String,
-  phoneNumber: json['phoneNumber'] as String,
-  name: json['name'] as String,
+  phoneNumber: json['phoneNumber'] as String?,
+  name: json['name'] as String? ?? '',
   profileImageUrl: json['profileImageUrl'] as String?,
   lastLocation: _$JsonConverterFromJson<Object, LatLng>(
     json['lastLocation'],

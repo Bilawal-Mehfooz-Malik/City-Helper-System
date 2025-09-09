@@ -9,15 +9,16 @@ class LatLngJsonConverter implements JsonConverter<LatLng, Object> {
 
   @override
   LatLng fromJson(Object json) {
-    final latLng = LatLng.fromJson(json);
-    if (latLng == null) {
-      throw ArgumentError.value(
-        json,
-        'json',
-        'LatLng.fromJson returned null for valid map input',
-      );
+    if (json is List<dynamic> && json.length == 2) {
+      final latitude = json[0] as double;
+      final longitude = json[1] as double;
+      return LatLng(latitude, longitude);
     }
-    return latLng;
+    throw ArgumentError.value(
+      json,
+      'json',
+      'Invalid format for LatLng. Expected a List of two doubles.',
+    );
   }
 
   @override

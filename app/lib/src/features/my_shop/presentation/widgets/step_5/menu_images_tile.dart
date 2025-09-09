@@ -1,13 +1,15 @@
 import 'dart:typed_data';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/services/image_compression_service.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/step_5/menu_image_picker_button.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/step_5/menu_image_lists.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MenuImagesTile extends StatefulWidget {
+class MenuImagesTile extends ConsumerStatefulWidget {
   final List<Uint8List> menuImageBytes;
   final List<String> menuImagesUrl;
   final ValueChanged<List<Uint8List>> onMenuImagesPicked;
@@ -22,10 +24,10 @@ class MenuImagesTile extends StatefulWidget {
   });
 
   @override
-  State<MenuImagesTile> createState() => _MenuImagesTileState();
+  ConsumerState<MenuImagesTile> createState() => _MenuImagesTileState();
 }
 
-class _MenuImagesTileState extends State<MenuImagesTile> {
+class _MenuImagesTileState extends ConsumerState<MenuImagesTile> {
   final List<XFile> _pickedFiles = [];
 
   Future<void> _pickMenuImages() async {
@@ -34,23 +36,49 @@ class _MenuImagesTileState extends State<MenuImagesTile> {
     if (picked.isNotEmpty) {
       final currentCount = _pickedFiles.length + widget.menuImagesUrl.length;
       final remainingCapacity = 10 - currentCount;
-      if (remainingCapacity <= 0 && mounted) {
+      if (remainingCapacity <= 0) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Maximum 10 images allowed'.hardcoded,
+                style: TextStyle(color: context.colorScheme.onError),
+              ),
+              backgroundColor: context.colorScheme.error,
+            ),
+          );
+        }
+        return;
+      }
+      final imagesToProcess = picked.take(remainingCapacity).toList();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Maximum 10 images allowed'.hardcoded,
-              style: TextStyle(color: context.colorScheme.onError),
+              'Compressing ${imagesToProcess.length} images...'.hardcoded,
             ),
-            backgroundColor: context.colorScheme.error,
-            duration: const Duration(seconds: 2),
           ),
         );
-        return;
       }
-      final imagesToAdd = picked.take(remainingCapacity).toList();
+
+      final compressionService = ref.read(imageCompressionServiceProvider);
+      final List<XFile> newlyCompressedFiles = [];
+      for (final imageFile in imagesToProcess) {
+        final compressed = await compressionService.compressImage(imageFile);
+        if (compressed != null) {
+          newlyCompressedFiles.add(compressed);
+        }
+      }
+
+      if (newlyCompressedFiles.isEmpty) return;
+
       setState(() {
-        _pickedFiles.addAll(imagesToAdd);
+        _pickedFiles.addAll(newlyCompressedFiles);
       });
+
       final allNewBytes = await Future.wait(
         _pickedFiles.map((e) => e.readAsBytes()),
       );
@@ -67,6 +95,7 @@ class _MenuImagesTileState extends State<MenuImagesTile> {
     );
     widget.onMenuImagesPicked(newBytes);
     if (!mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -74,13 +103,13 @@ class _MenuImagesTileState extends State<MenuImagesTile> {
           style: TextStyle(color: context.colorScheme.onSurface),
         ),
         backgroundColor: context.colorScheme.surface,
-        duration: const Duration(seconds: 1),
       ),
     );
   }
 
   void _removeExistingImage(String url) {
     widget.onExistingImageDeleted(url);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -88,7 +117,6 @@ class _MenuImagesTileState extends State<MenuImagesTile> {
           style: TextStyle(color: context.colorScheme.onSurface),
         ),
         backgroundColor: context.colorScheme.surface,
-        duration: const Duration(seconds: 1),
       ),
     );
   }

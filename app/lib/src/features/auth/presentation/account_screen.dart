@@ -97,13 +97,15 @@ class AccountScreen extends ConsumerWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  gapH8,
-                  Text(
-                    _formatPhoneNumberForDisplay(profile.phoneNumber),
-                    style: TextStyle(
-                      color: context.colorScheme.onSurfaceVariant,
+                  if (profile.phoneNumber != null) ...[
+                    gapH8,
+                    Text(
+                      _formatPhoneNumberForDisplay(profile.phoneNumber!),
+                      style: TextStyle(
+                        color: context.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                  ),
+                  ],
 
                   gapH24,
 

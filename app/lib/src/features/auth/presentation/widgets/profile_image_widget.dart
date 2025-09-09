@@ -23,7 +23,7 @@ class ProfileImageWidget extends ConsumerWidget {
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
       // Pass the XFile directly
-      ref.read(profileImageControllerProvider.notifier).setImage(picked);
+      await ref.read(profileImageControllerProvider.notifier).setImage(picked);
     }
   }
 

@@ -13,6 +13,7 @@ class UserRepository {
 
   UserRepository(this._firestore);
 
+  // ---------------- CREATE ----------------
   Future<void> createUserProfile({required AppUser user}) async {
     await _firestore
         .collection(usersCollection)
@@ -20,18 +21,30 @@ class UserRepository {
         .set(user.toJson());
   }
 
+  // ---------------- READ ----------------
   Stream<AppUser?> getUserById(String uid) {
     return _firestore.collection(usersCollection).doc(uid).snapshots().map((
       doc,
     ) {
       if (doc.exists && doc.data() != null) {
-        return AppUser.fromJson(doc.data()!);
+        final data = doc.data()!;
+        data['uid'] = doc.id; // Ensure 'uid' is present in the map
+        return AppUser.fromJson(data);
       } else {
         return null;
       }
     });
   }
 
+  Future<AppUser?> fetchUserById(String uid) async {
+    final doc = await _firestore.collection(usersCollection).doc(uid).get();
+    if (!doc.exists) return null;
+    final data = doc.data()!;
+    data['uid'] = doc.id; // Ensure 'uid' is present in the map
+    return AppUser.fromJson(data);
+  }
+
+  // ---------------- UPDATE ----------------
   Future<void> updateUserProfile({
     required String uid,
     String? name,
@@ -42,6 +55,7 @@ class UserRepository {
     final data = <String, Object?>{};
 
     if (name != null) data['name'] = name;
+
     if (removeProfileImage) {
       data['profileImageUrl'] = null;
     } else if (profilePicUrl != null) {
@@ -49,21 +63,19 @@ class UserRepository {
     }
 
     if (location != null) {
-      data['lastLocation'] = location.toJson();
+      data['lastLocation'] = [location.latitude, location.longitude];
     }
 
     if (data.isNotEmpty) {
-      await _firestore.collection(usersCollection).doc(uid).update(data);
+      // ✅ Use set with merge to avoid not-found errors
+      await _firestore
+          .collection(usersCollection)
+          .doc(uid)
+          .set(data, SetOptions(merge: true));
     }
   }
 
-  Future<AppUser?> fetchUserById(String uid) async {
-    final doc = await _firestore.collection('users').doc(uid).get();
-    if (!doc.exists) return null;
-    final data = doc.data()!;
-    return AppUser.fromJson(data);
-  }
-
+  // ---------------- UPSERT (replace whole doc) ----------------
   Future<void> updateUser(AppUser user) {
     return _firestore
         .collection(usersCollection)
