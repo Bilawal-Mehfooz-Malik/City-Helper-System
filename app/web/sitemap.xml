@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://findout.com.pk/</loc>
-    <lastmod>2025-07-09</lastmod>
-  </url>
+  <!-- Startup & Legal -->
   <url>
     <loc>https://findout.com.pk/get-started</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
   </url>
   <url>
+    <loc>https://findout.com.pk/terms-of-service</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/privacy-policy</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+
+  <!-- Main Category/Home -->
+  <url>
+    <loc>https://findout.com.pk/</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/home</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+
+  <!-- Auth / Account -->
+  <url>
     <loc>https://findout.com.pk/auth</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
   </url>
   <url>
     <loc>https://findout.com.pk/account</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
   </url>
   <url>
     <loc>https://findout.com.pk/profile</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
   </url>
-    <url>
+
+  <!-- Features -->
+  <url>
     <loc>https://findout.com.pk/pick-your-location</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
   </url>
-    <url>
+  <url>
     <loc>https://findout.com.pk/my-shop</loc>
-    <lastmod>2025-07-09</lastmod>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/shop-form</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/photo-viewer</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/loading</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/page-not-found</loc>
+    <lastmod>2025-09-10</lastmod>
   </url>
 </urlset>

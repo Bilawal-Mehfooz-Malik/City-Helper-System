@@ -1,67 +1,47 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import * as https from "firebase-functions/v2/https";
+
+import {
+  onFoodListingCreated,
+  onFoodListingDeleted,
+  onResidenceListingCreated,
+  onResidenceListingDeleted,
+} from "./notification";
+
 import {
   getCarouselAdsLogic,
   recordAdImpressionsLogic,
-  recordAdClickLogic
+  recordAdClickLogic,
 } from "./logic";
 
 // Initialize Firebase Admin
-if (admin.apps.length === 0) {
-  admin.initializeApp();
-}
+if (!admin.apps.length) admin.initializeApp();
 const firestore = admin.firestore();
 firestore.settings({ ignoreUndefinedProperties: true });
 
-// --- CLOUD FUNCTIONS ---
-
-// 1️⃣ Fetch carousel ads
-export const getCarouselAds = functions.https.onCall(async (request) => {
-  // Enforce App Check
-  if (request.app == undefined) {
-    throw new functions.https.HttpsError(
-      'failed-precondition',
-      'The function must be called from an App Check verified app.'
-    );
-  }
-  try {
-    return await getCarouselAdsLogic(firestore, request.data);
-  } catch (error: any) {
-    console.error('Error fetching carousel ads:', error);
-    throw new functions.https.HttpsError('internal', error.message);
-  }
+// --- HTTPS Callable Functions ---
+export const getCarouselAds = https.onCall(async (request) => {
+  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
+  try { return await getCarouselAdsLogic(firestore, request.data); } 
+  catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
-// 2️⃣ Record ad impressions in batch
-export const recordAdImpressions = functions.https.onCall(async (request) => {
-  // Enforce App Check
-  if (request.app == undefined) {
-    throw new functions.https.HttpsError(
-      'failed-precondition',
-      'The function must be called from an App Check verified app.'
-    );
-  }
-  try {
-    return await recordAdImpressionsLogic(firestore, request.data);
-  } catch (error: any) {
-    console.error('Error recording batch impressions:', error);
-    throw new functions.https.HttpsError('internal', error.message);
-  }
+export const recordAdImpressions = https.onCall(async (request) => {
+  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
+  try { return await recordAdImpressionsLogic(firestore, request.data); } 
+  catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
-// 3️⃣ Record ad click
-export const recordAdClick = functions.https.onCall(async (request) => {
-  // Enforce App Check
-  if (request.app == undefined) {
-    throw new functions.https.HttpsError(
-      'failed-precondition',
-      'The function must be called from an App Check verified app.'
-    );
-  }
-  try {
-    return await recordAdClickLogic(firestore, request.data);
-  } catch (error: any) {
-    console.error(`Error recording click for adId: ${request.data.adId}`, error);
-    throw new functions.https.HttpsError('internal', error.message);
-  }
+export const recordAdClick = https.onCall(async (request) => {
+  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
+  try { return await recordAdClickLogic(firestore, request.data); } 
+  catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
+
+// --- Firestore v2 Triggers ---
+export {
+  onFoodListingCreated,
+  onFoodListingDeleted,
+  onResidenceListingCreated,
+  onResidenceListingDeleted,
+};

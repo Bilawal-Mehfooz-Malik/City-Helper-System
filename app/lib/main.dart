@@ -15,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance.activate(
     webProvider: ReCaptchaV3Provider(Env.recaptchaV3SiteKey),
+    androidProvider: AndroidProvider.playIntegrity,
   );
 
   // turn off the # in the URLs on the web

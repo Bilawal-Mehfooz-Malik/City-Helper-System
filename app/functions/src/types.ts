@@ -1,9 +1,5 @@
-import * as admin from "firebase-admin";
-
-// Defines the priority levels for ads.
 export type Priority = 1 | 2 | 3;
 
-// Represents the data structure for a carousel ad in Firestore.
 export interface AdData {
   id: string;
   businessId: string;
@@ -12,15 +8,27 @@ export interface AdData {
   priorityScore: Priority;
   isActive: boolean;
   status: 'pending' | 'approved' | 'rejected' | 'paused';
-  startDate: admin.firestore.Timestamp;
-  endDate: admin.firestore.Timestamp;
-  createdAt?: admin.firestore.Timestamp;
-  updatedAt?: admin.firestore.Timestamp;
-  lastShownAt?: admin.firestore.Timestamp | null;
+  startDate: FirebaseFirestore.Timestamp;
+  endDate: FirebaseFirestore.Timestamp;
+  createdAt?: FirebaseFirestore.Timestamp;
+  updatedAt?: FirebaseFirestore.Timestamp;
+  lastShownAt?: FirebaseFirestore.Timestamp | null;
   impressionCount?: number;
   clickCount?: number;
   imageUrl?: string;
   linkType?: 'internalProfile' | 'externalUrl';
   externalUrl?: string;
   internalProfileId?: string;
+}
+
+export interface Residence {
+  name: string;
+  ownerId: string;
+  categoryId: number;
+}
+
+export interface Food {
+  name: string;
+  ownerId: string;
+  categoryId: number;
 }
