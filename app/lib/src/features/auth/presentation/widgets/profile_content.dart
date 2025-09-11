@@ -36,7 +36,6 @@ class ProfileContent extends ConsumerStatefulWidget {
 
 class _ProfileContentState extends ConsumerState<ProfileContent> {
   late final TextEditingController _nameController;
-  bool _isSubmitting = false; // 👈 track submission state
 
   @override
   void initState() {
@@ -53,8 +52,6 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
   Future<void> _submit(AppUser? existingProfile) async {
     final name = _nameController.text.trim();
     if (name.length < 4) return;
-
-    setState(() => _isSubmitting = true); // 👈 lock UI
 
     final imageState = ref.read(profileImageControllerProvider);
     final imageFile = imageState.imageFile;
@@ -95,9 +92,9 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     if (!mounted) return;
 
     if (result.hasError) {
-      setState(() => _isSubmitting = false); // release lock on error
       result.showAlertDialogOnError(context);
     } else {
+      ref.invalidate(fetchUserByIdProvider(user.uid));
       final router = ref.read(appRouterProvider);
       router.goNamed(AppRoute.category.name);
     }
@@ -123,7 +120,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
         value: profileValue,
         loading: const CenteredProgressIndicator(),
         data: (profile) {
-          final bool isEditMode = !_isSubmitting && profile != null;
+          final bool isEditMode = profile != null;
 
           // Only pre-fill once, don’t clear user input later
           if (isEditMode && _nameController.text.isEmpty) {
@@ -148,7 +145,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
                 ProfileImageWidget(
                   initialImageUrl: profile?.profileImageUrl,
-                  isLoading: authState.isLoading || _isSubmitting,
+                  isLoading: authState.isLoading,
                 ),
 
                 gapH24,
@@ -163,7 +160,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 ),
                 gapH4,
                 CustomTextField(
-                  enabled: !authState.isLoading && !_isSubmitting,
+                  enabled: !authState.isLoading,
                   controller: _nameController,
                   hintText: 'Enter your name (min 4 characters)'.hardcoded,
                   keyboardType: TextInputType.name,
@@ -189,8 +186,8 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                   builder: (context, value, child) {
                     return PrimaryButton(
                       useMaxSize: true,
-                      isDisabled: value.text.trim().length < 4 || _isSubmitting,
-                      isLoading: authState.isLoading || _isSubmitting,
+                      isDisabled: value.text.trim().length < 4 || authState.isLoading,
+                      isLoading: authState.isLoading,
                       onPressed: () => _submit(profile),
                       text: isEditMode
                           ? context.loc.common_save
