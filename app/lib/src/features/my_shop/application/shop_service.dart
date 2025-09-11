@@ -75,7 +75,7 @@ class ShopService {
     }
   }
 
-  /// Updates only the `entityStatus` field for a given shop document.
+  /// Updates only the `operationalStatus` field for a given shop document.
   Future<void> updateShopStatus({
     required String shopId,
     required CategoryId categoryId,
@@ -97,13 +97,24 @@ class ShopService {
     }
   }
 
+  Future<void> updateShopAvailability({
+    required String shopId,
+    required bool newStatus,
+  }) async {
+    await ref
+        .read(residenceDetailsRepositoryProvider)
+        .updateResidenceAvailability(shopId, newStatus);
+  }
+
   Future<void> deleteShop({
     required String shopId,
     required CategoryId categoryId,
   }) async {
     switch (categoryId) {
       case 1:
-        await ref.read(residenceDetailsRepositoryProvider).deleteResidenceDetail(shopId);
+        await ref
+            .read(residenceDetailsRepositoryProvider)
+            .deleteResidenceDetail(shopId);
         break;
       case 2:
         await ref.read(foodDetailsRepositoryProvider).deleteFoodDetail(shopId);

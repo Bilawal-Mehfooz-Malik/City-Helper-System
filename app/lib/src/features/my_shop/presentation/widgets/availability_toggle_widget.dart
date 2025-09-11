@@ -1,26 +1,25 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
-/// A widget that provides a clear, descriptive list of status options for the user.
-class TimingToggleWidget extends StatefulWidget {
-  final OperationalStatus initialStatus;
-  final ValueChanged<OperationalStatus> onStatusChanged;
+class AvailabilityToggleWidget extends StatefulWidget {
+  final bool initialStatus;
+  final ValueChanged<bool> onStatusChanged;
 
-  const TimingToggleWidget({
+  const AvailabilityToggleWidget({
     super.key,
     required this.initialStatus,
     required this.onStatusChanged,
   });
 
   @override
-  State<TimingToggleWidget> createState() => _TimingToggleWidgetState();
+  State<AvailabilityToggleWidget> createState() =>
+      _AvailabilityToggleWidgetState();
 }
 
-class _TimingToggleWidgetState extends State<TimingToggleWidget> {
-  late OperationalStatus _selectedStatus;
+class _AvailabilityToggleWidgetState extends State<AvailabilityToggleWidget> {
+  late bool _selectedStatus;
 
   @override
   void initState() {
@@ -28,9 +27,8 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
     _selectedStatus = widget.initialStatus;
   }
 
-  // This method is called when the user selects a new option.
   @override
-  void didUpdateWidget(covariant TimingToggleWidget oldWidget) {
+  void didUpdateWidget(covariant AvailabilityToggleWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialStatus != oldWidget.initialStatus) {
       setState(() {
@@ -39,14 +37,11 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
     }
   }
 
-  // This method is called when the user selects a new option.
-  void _handleStatusChanged(OperationalStatus? newStatus) {
+  void _handleStatusChanged(bool? newStatus) {
     if (newStatus != null) {
-      // Update the local UI state to show the change immediately.
       setState(() {
         _selectedStatus = newStatus;
       });
-      // Notify the parent widget to trigger the backend update.
       widget.onStatusChanged(newStatus);
     }
   }
@@ -57,11 +52,10 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Operational Status'.hardcoded,
+          'Availability Status'.hardcoded,
           style: context.textTheme.titleMedium,
         ),
         gapH8,
-        // Visually group the options together with a border and rounded corners.
         DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(
@@ -74,31 +68,17 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
             child: Column(
               children: [
                 _StatusOptionTile(
-                  title: 'Default Hours'.hardcoded,
-                  subtitle:
-                      'Automatically opens/closes based on your business hours.'
-                          .hardcoded,
-                  value: OperationalStatus.defaultStatus,
+                  title: 'Available'.hardcoded,
+                  subtitle: 'Available for rent or sale.'.hardcoded,
+                  value: true,
                   groupValue: _selectedStatus,
                   onChanged: _handleStatusChanged,
                 ),
                 Divider(height: 1),
                 _StatusOptionTile(
-                  title: 'Manual - Open'.hardcoded,
-                  subtitle:
-                      "Force your shop to appear 'Open', overriding your hours."
-                          .hardcoded,
-                  value: OperationalStatus.open,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-                Divider(height: 1),
-                _StatusOptionTile(
-                  title: 'Manual - Closed'.hardcoded,
-                  subtitle:
-                      "Force your shop to appear 'Closed', overriding your hours."
-                          .hardcoded,
-                  value: OperationalStatus.close,
+                  title: 'Unavailable'.hardcoded,
+                  subtitle: 'Not available for rent or sale.'.hardcoded,
+                  value: false,
                   groupValue: _selectedStatus,
                   onChanged: _handleStatusChanged,
                 ),
@@ -111,8 +91,6 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
   }
 }
 
-/// A reusable tile for displaying a single status option with a title, subtitle,
-/// and radio button, designed to be used within a list.
 class _StatusOptionTile extends StatelessWidget {
   const _StatusOptionTile({
     required this.title,
@@ -124,9 +102,9 @@ class _StatusOptionTile extends StatelessWidget {
 
   final String title;
   final String subtitle;
-  final OperationalStatus value;
-  final OperationalStatus groupValue;
-  final ValueChanged<OperationalStatus?> onChanged;
+  final bool value;
+  final bool groupValue;
+  final ValueChanged<bool?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +122,7 @@ class _StatusOptionTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Radio<OperationalStatus>(
+              Radio<bool>(
                 value: value,
                 groupValue: groupValue,
                 onChanged: onChanged,

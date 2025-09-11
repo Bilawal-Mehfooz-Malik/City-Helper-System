@@ -54,6 +54,7 @@ class ProfileLocationController extends _$ProfileLocationController {
   }
 
   Future<LatLng?> getCurrentLocation() async {
+    state = const AsyncLoading();
     final locationRepo = ref.read(geoLocatorRepositoryProvider);
     final location = await locationRepo.getCurrentLocation();
     if (location != null) {

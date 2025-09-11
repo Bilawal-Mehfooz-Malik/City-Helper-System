@@ -7,7 +7,7 @@ part of 'profile_location_controller.dart';
 // **************************************************************************
 
 String _$profileLocationControllerHash() =>
-    r'695a165be628f597b0b56474e9e30a91b87521a4';
+    r'6c02f22b99808f4febcff2312fdd0ff0d06a6282';
 
 /// See also [ProfileLocationController].
 @ProviderFor(ProfileLocationController)

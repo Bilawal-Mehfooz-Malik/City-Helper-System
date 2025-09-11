@@ -14,6 +14,7 @@ import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.d
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
+import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:app/src/routers/redirection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,6 +71,7 @@ GoRouter appRouter(Ref ref) {
     initialLocation: initialLocation,
     debugLogDiagnostics: true,
     redirect: (context, state) => redirection(ref, state),
+    extraCodec: const JsonExtraCodec(),
     routes: [
       GoRoute(
         path: '/get-started',

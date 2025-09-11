@@ -16,6 +16,7 @@ import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/profile_circular_avator.dart';
 import 'package:app/src/features/my_shop/application/my_shop_dashboard_provider.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_controller.dart';
+import 'package:app/src/features/my_shop/presentation/widgets/availability_toggle_widget.dart';
 import 'package:app/src/features/my_shop/presentation/widgets/timing_toggle_widget.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -149,19 +150,26 @@ class _ShopDetailsView extends ConsumerWidget {
         ),
         Divider(),
 
-        /// Disable this toggle while deleting
-        TimingToggleWidget(
-          initialStatus: shop.operationalStatus,
-          onStatusChanged: (newStatus) => ref
-              .read(shopControllerProvider.notifier)
-              .updateShopStatus(
-                shopId: shop.id,
-                categoryId: shop.categoryId,
-                newStatus: newStatus,
-              ),
-        ),
+        if (shop.openingHours != null || shop.openingHours!.isNotEmpty)
+          TimingToggleWidget(
+            initialStatus: shop.operationalStatus,
+            onStatusChanged: (newStatus) => ref
+                .read(shopControllerProvider.notifier)
+                .updateShopStatus(
+                  shopId: shop.id,
+                  categoryId: shop.categoryId,
+                  newStatus: newStatus,
+                ),
+          ),
 
-        gapH16,
+        if (shop is ResidenceDetail) ...[
+          AvailabilityToggleWidget(
+            initialStatus: (shop as ResidenceDetail).isRoomAvailable,
+            onStatusChanged: (newStatus) => ref
+                .read(shopControllerProvider.notifier)
+                .updateShopAvailability(shopId: shop.id, newStatus: newStatus),
+          ),
+        ],
 
         /// Delete button with loader
         CustomOutlinedButton(

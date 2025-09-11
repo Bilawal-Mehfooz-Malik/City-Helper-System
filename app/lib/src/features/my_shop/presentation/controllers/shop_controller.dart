@@ -34,6 +34,20 @@ class ShopController extends _$ShopController {
     );
   }
 
+  Future<void> updateShopAvailability({
+    required String shopId,
+    required bool newStatus,
+  }) async {
+    final shopService = ref.read(shopServiceProvider);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => shopService.updateShopAvailability(
+        shopId: shopId,
+        newStatus: newStatus,
+      ),
+    );
+  }
+
   Future<bool> setShop({
     required EntityDetail shop,
     required CategoryId categoryId,

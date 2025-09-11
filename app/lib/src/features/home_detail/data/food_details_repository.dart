@@ -26,7 +26,7 @@ class FoodDetailsRepository {
   }
 
   Future<void> updateFoodStatus(EntityId id, OperationalStatus status) async {
-    await _docRef(id).update({'entityStatus': status.name});
+    await _docRef(id).update({'operationalStatus': status.name});
   }
 
   Stream<FoodDetail?> watchFoodDetailsByOwnerId(UserId id) {

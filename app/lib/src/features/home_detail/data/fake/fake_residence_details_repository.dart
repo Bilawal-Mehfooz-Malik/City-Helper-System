@@ -79,6 +79,21 @@ class FakeResidenceDetailsRepository implements ResidenceDetailsRepository {
   }
 
   @override
+  Future<void> updateResidenceAvailability(
+    EntityId id,
+    bool status,
+  ) async {
+    await delay(addDelay);
+    final current = _residences.value;
+    final index = current.indexWhere((r) => r.id == id);
+    if (index != -1) {
+      final oldResidence = current[index];
+      current[index] = oldResidence.copyWith(isRoomAvailable: status);
+      _residences.value = [...current];
+    }
+  }
+
+  @override
   String getNewResidenceDocRef() {
     // Changed return type to String
     return _uuid.v4(); // Return the generated ID directly

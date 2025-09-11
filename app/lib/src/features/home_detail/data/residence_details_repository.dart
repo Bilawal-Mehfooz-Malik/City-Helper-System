@@ -21,7 +21,14 @@ class ResidenceDetailsRepository {
     EntityId id,
     OperationalStatus status,
   ) async {
-    await _docRef(id).update({'entityStatus': status.name});
+    await _docRef(id).update({'operationalStatus': status.name});
+  }
+
+  Future<void> updateResidenceAvailability(
+    EntityId id,
+    bool status,
+  ) async {
+    await _docRef(id).update({'isRoomAvailable': status});
   }
 
   /// ✅ Save or update a ResidenceDetail
