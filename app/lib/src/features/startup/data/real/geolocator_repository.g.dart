@@ -15,10 +15,9 @@ final geoLocatorRepositoryProvider =
     AutoDisposeProvider<GeoLocatorRepository>.internal(
       geoLocatorRepository,
       name: r'geoLocatorRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$geoLocatorRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$geoLocatorRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

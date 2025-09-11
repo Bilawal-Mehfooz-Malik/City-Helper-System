@@ -15,10 +15,9 @@ final inMemoryImageStorageProvider =
     AutoDisposeProvider<InMemoryImageStorage>.internal(
       inMemoryImageStorage,
       name: r'inMemoryImageStorageProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$inMemoryImageStorageHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$inMemoryImageStorageHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

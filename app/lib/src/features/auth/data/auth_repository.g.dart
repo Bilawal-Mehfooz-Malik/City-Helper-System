@@ -13,10 +13,9 @@ String _$authRepositoryHash() => r'fa5b8337b7daf1a6e6ab14268c91ea9089629ec0';
 final authRepositoryProvider = Provider<AuthRepository>.internal(
   authRepository,
   name: r'authRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -31,10 +30,9 @@ String _$authStateChangesHash() => r'751e6473eef5555e454bcb4364a099a3c6425ab7';
 final authStateChangesProvider = StreamProvider<AppUser?>.internal(
   authStateChanges,
   name: r'authStateChangesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authStateChangesHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authStateChangesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -49,10 +47,9 @@ String _$idTokenChangesHash() => r'1ffb060b0acc4db41d1e4ea87246d5f03561ff43';
 final idTokenChangesProvider = StreamProvider<AppUser?>.internal(
   idTokenChanges,
   name: r'idTokenChangesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$idTokenChangesHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$idTokenChangesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

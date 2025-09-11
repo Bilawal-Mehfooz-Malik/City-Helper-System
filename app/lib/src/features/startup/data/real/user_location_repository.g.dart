@@ -15,10 +15,9 @@ final userLocationRepositoryProvider =
     Provider<UserLocationRepository>.internal(
       userLocationRepository,
       name: r'userLocationRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$userLocationRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$userLocationRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -33,10 +32,9 @@ String _$fetchUserLocationHash() => r'146a721bdda75174bb769621a2678724a7d697f4';
 final fetchUserLocationProvider = FutureProvider<LatLng?>.internal(
   fetchUserLocation,
   name: r'fetchUserLocationProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$fetchUserLocationHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$fetchUserLocationHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -15,10 +15,9 @@ final residenceDetailsRepositoryProvider =
     Provider<ResidenceDetailsRepository>.internal(
       residenceDetailsRepository,
       name: r'residenceDetailsRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$residenceDetailsRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$residenceDetailsRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

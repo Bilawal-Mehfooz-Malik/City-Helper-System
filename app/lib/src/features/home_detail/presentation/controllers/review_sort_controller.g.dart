@@ -11,19 +11,19 @@ String _$reviewSortControllerHash() =>
 
 /// See also [ReviewSortController].
 @ProviderFor(ReviewSortController)
-final reviewSortControllerProvider = AutoDisposeNotifierProvider<
-  ReviewSortController,
-  ReviewSortOption
->.internal(
-  ReviewSortController.new,
-  name: r'reviewSortControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final reviewSortControllerProvider =
+    AutoDisposeNotifierProvider<
+      ReviewSortController,
+      ReviewSortOption
+    >.internal(
+      ReviewSortController.new,
+      name: r'reviewSortControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$reviewSortControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ReviewSortController = AutoDisposeNotifier<ReviewSortOption>;
 // ignore_for_file: type=lint

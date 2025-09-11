@@ -15,10 +15,9 @@ final entityDetailsServiceProvider =
     AutoDisposeProvider<EntityDetailsService>.internal(
       entityDetailsService,
       name: r'entityDetailsServiceProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$entityDetailsServiceHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$entityDetailsServiceHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -99,10 +98,9 @@ class FetchEntityDetailsProvider
         ),
         from: fetchEntityDetailsProvider,
         name: r'fetchEntityDetailsProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$fetchEntityDetailsHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$fetchEntityDetailsHash,
         dependencies: FetchEntityDetailsFamily._dependencies,
         allTransitiveDependencies:
             FetchEntityDetailsFamily._allTransitiveDependencies,
@@ -251,10 +249,9 @@ class FetchEntityWithReviewsProvider
         (ref) => fetchEntityWithReviews(ref as FetchEntityWithReviewsRef, args),
         from: fetchEntityWithReviewsProvider,
         name: r'fetchEntityWithReviewsProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$fetchEntityWithReviewsHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$fetchEntityWithReviewsHash,
         dependencies: FetchEntityWithReviewsFamily._dependencies,
         allTransitiveDependencies:
             FetchEntityWithReviewsFamily._allTransitiveDependencies,

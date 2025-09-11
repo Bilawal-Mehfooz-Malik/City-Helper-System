@@ -86,10 +86,9 @@ class ShopFormWizardControllerProvider
         () => ShopFormWizardController()..initialFormData = initialFormData,
         from: shopFormWizardControllerProvider,
         name: r'shopFormWizardControllerProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$shopFormWizardControllerHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$shopFormWizardControllerHash,
         dependencies: ShopFormWizardControllerFamily._dependencies,
         allTransitiveDependencies:
             ShopFormWizardControllerFamily._allTransitiveDependencies,

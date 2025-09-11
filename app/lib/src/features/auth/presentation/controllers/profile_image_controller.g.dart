@@ -11,19 +11,19 @@ String _$profileImageControllerHash() =>
 
 /// See also [ProfileImageController].
 @ProviderFor(ProfileImageController)
-final profileImageControllerProvider = AutoDisposeNotifierProvider<
-  ProfileImageController,
-  ProfileImageState
->.internal(
-  ProfileImageController.new,
-  name: r'profileImageControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final profileImageControllerProvider =
+    AutoDisposeNotifierProvider<
+      ProfileImageController,
+      ProfileImageState
+    >.internal(
+      ProfileImageController.new,
+      name: r'profileImageControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$profileImageControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProfileImageController = AutoDisposeNotifier<ProfileImageState>;
 // ignore_for_file: type=lint

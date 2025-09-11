@@ -15,10 +15,9 @@ final verificationIdControllerProvider =
     NotifierProvider<VerificationIdController, String?>.internal(
       VerificationIdController.new,
       name: r'verificationIdControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$verificationIdControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$verificationIdControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

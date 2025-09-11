@@ -15,10 +15,9 @@ final listTypeControllerProvider =
     NotifierProvider<ListTypeController, HomeListType>.internal(
       ListTypeController.new,
       name: r'listTypeControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$listTypeControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$listTypeControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

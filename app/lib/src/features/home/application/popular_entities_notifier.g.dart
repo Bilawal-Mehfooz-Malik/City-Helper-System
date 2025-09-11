@@ -83,10 +83,9 @@ class PopularEntitiesNotifierProvider
         () => PopularEntitiesNotifier()..categoryId = categoryId,
         from: popularEntitiesNotifierProvider,
         name: r'popularEntitiesNotifierProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$popularEntitiesNotifierHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$popularEntitiesNotifierHash,
         dependencies: PopularEntitiesNotifierFamily._dependencies,
         allTransitiveDependencies:
             PopularEntitiesNotifierFamily._allTransitiveDependencies,

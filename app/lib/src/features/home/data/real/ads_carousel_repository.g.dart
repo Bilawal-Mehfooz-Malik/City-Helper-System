@@ -14,10 +14,9 @@ String _$adsCarouselRepositoryHash() =>
 final adsCarouselRepositoryProvider = Provider<AdsCarouselRepository>.internal(
   adsCarouselRepository,
   name: r'adsCarouselRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adsCarouselRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$adsCarouselRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -100,10 +99,9 @@ class CarouselAdsListFutureProvider extends FutureProvider<List<CarouselAd>> {
         ),
         from: carouselAdsListFutureProvider,
         name: r'carouselAdsListFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$carouselAdsListFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$carouselAdsListFutureHash,
         dependencies: CarouselAdsListFutureFamily._dependencies,
         allTransitiveDependencies:
             CarouselAdsListFutureFamily._allTransitiveDependencies,
@@ -233,10 +231,9 @@ class AdStreamProvider extends AutoDisposeStreamProvider<CarouselAd?> {
         (ref) => adStream(ref as AdStreamRef, adId),
         from: adStreamProvider,
         name: r'adStreamProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$adStreamHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$adStreamHash,
         dependencies: AdStreamFamily._dependencies,
         allTransitiveDependencies: AdStreamFamily._allTransitiveDependencies,
         adId: adId,
@@ -351,10 +348,9 @@ class AdFutureProvider extends AutoDisposeFutureProvider<CarouselAd?> {
         (ref) => adFuture(ref as AdFutureRef, adId),
         from: adFutureProvider,
         name: r'adFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$adFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$adFutureHash,
         dependencies: AdFutureFamily._dependencies,
         allTransitiveDependencies: AdFutureFamily._allTransitiveDependencies,
         adId: adId,
@@ -475,10 +471,9 @@ class FinalCarouselAdsProvider extends FutureProvider<List<CarouselAd>> {
         ),
         from: finalCarouselAdsProvider,
         name: r'finalCarouselAdsProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$finalCarouselAdsHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$finalCarouselAdsHash,
         dependencies: FinalCarouselAdsFamily._dependencies,
         allTransitiveDependencies:
             FinalCarouselAdsFamily._allTransitiveDependencies,

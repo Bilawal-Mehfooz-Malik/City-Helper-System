@@ -11,19 +11,19 @@ String _$profileLocationControllerHash() =>
 
 /// See also [ProfileLocationController].
 @ProviderFor(ProfileLocationController)
-final profileLocationControllerProvider = AutoDisposeAsyncNotifierProvider<
-  ProfileLocationController,
-  LatLng?
->.internal(
-  ProfileLocationController.new,
-  name: r'profileLocationControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final profileLocationControllerProvider =
+    AutoDisposeAsyncNotifierProvider<
+      ProfileLocationController,
+      LatLng?
+    >.internal(
+      ProfileLocationController.new,
+      name: r'profileLocationControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$profileLocationControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProfileLocationController = AutoDisposeAsyncNotifier<LatLng?>;
 // ignore_for_file: type=lint

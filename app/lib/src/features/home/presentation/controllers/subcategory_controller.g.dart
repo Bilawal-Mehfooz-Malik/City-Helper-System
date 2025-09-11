@@ -15,10 +15,9 @@ final subcategoryControllerProvider =
     AutoDisposeNotifierProvider<SubcategoryController, SubCategoryId?>.internal(
       SubcategoryController.new,
       name: r'subcategoryControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$subcategoryControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subcategoryControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

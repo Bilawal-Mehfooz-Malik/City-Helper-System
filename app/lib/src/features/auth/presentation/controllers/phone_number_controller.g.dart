@@ -15,10 +15,9 @@ final phoneNumberControllerProvider =
     NotifierProvider<PhoneNumberController, String>.internal(
       PhoneNumberController.new,
       name: r'phoneNumberControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$phoneNumberControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$phoneNumberControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

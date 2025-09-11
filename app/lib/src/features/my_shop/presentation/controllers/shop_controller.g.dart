@@ -14,10 +14,9 @@ final shopControllerProvider =
     AutoDisposeAsyncNotifierProvider<ShopController, void>.internal(
       ShopController.new,
       name: r'shopControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$shopControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$shopControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

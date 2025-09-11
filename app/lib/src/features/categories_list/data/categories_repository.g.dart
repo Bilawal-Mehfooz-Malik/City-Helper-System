@@ -14,10 +14,9 @@ String _$categoriesRepositoryHash() =>
 final categoriesRepositoryProvider = Provider<CategoriesRepository>.internal(
   categoriesRepository,
   name: r'categoriesRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$categoriesRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$categoriesRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -33,10 +32,9 @@ String _$categoriesListStreamHash() =>
 final categoriesListStreamProvider = StreamProvider<List<Category>>.internal(
   categoriesListStream,
   name: r'categoriesListStreamProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$categoriesListStreamHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$categoriesListStreamHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -53,10 +51,9 @@ final categoriesListFutureProvider =
     AutoDisposeFutureProvider<List<Category>>.internal(
       categoriesListFuture,
       name: r'categoriesListFutureProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$categoriesListFutureHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$categoriesListFutureHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -131,10 +128,9 @@ class CategoryStreamProvider extends AutoDisposeStreamProvider<Category?> {
         (ref) => categoryStream(ref as CategoryStreamRef, id),
         from: categoryStreamProvider,
         name: r'categoryStreamProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$categoryStreamHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$categoryStreamHash,
         dependencies: CategoryStreamFamily._dependencies,
         allTransitiveDependencies:
             CategoryStreamFamily._allTransitiveDependencies,
@@ -252,10 +248,9 @@ class CategoryFutureProvider extends AutoDisposeFutureProvider<Category?> {
         (ref) => categoryFuture(ref as CategoryFutureRef, id),
         from: categoryFutureProvider,
         name: r'categoryFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$categoryFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$categoryFutureHash,
         dependencies: CategoryFutureFamily._dependencies,
         allTransitiveDependencies:
             CategoryFutureFamily._allTransitiveDependencies,

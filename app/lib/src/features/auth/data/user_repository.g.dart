@@ -13,10 +13,9 @@ String _$userRepositoryHash() => r'1a4e42f29e04239b4ad4b601f59649a769f6431e';
 final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
   userRepository,
   name: r'userRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$userRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$userRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -91,10 +90,9 @@ class GetUserByIdProvider extends AutoDisposeStreamProvider<AppUser?> {
         (ref) => getUserById(ref as GetUserByIdRef, uid),
         from: getUserByIdProvider,
         name: r'getUserByIdProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$getUserByIdHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$getUserByIdHash,
         dependencies: GetUserByIdFamily._dependencies,
         allTransitiveDependencies: GetUserByIdFamily._allTransitiveDependencies,
         uid: uid,
@@ -211,10 +209,9 @@ class FetchUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
         (ref) => fetchUserById(ref as FetchUserByIdRef, uid),
         from: fetchUserByIdProvider,
         name: r'fetchUserByIdProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$fetchUserByIdHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$fetchUserByIdHash,
         dependencies: FetchUserByIdFamily._dependencies,
         allTransitiveDependencies:
             FetchUserByIdFamily._allTransitiveDependencies,

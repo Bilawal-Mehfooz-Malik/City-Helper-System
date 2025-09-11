@@ -37,10 +37,11 @@ ResidenceDetail _$ResidenceDetailFromJson(
       ApprovalStatus.pending,
   createdAt: _timestampJsonConverter.fromJson(json['createdAt'] as Timestamp),
   updatedAt: _timestampJsonConverter.fromJson(json['updatedAt'] as Timestamp),
-  openingHours: _$JsonConverterFromJson<
-    Map<String, dynamic>,
-    Map<DayOfWeek, OpeningHours>
-  >(json['openingHours'], _openingHoursConverter.fromJson),
+  openingHours:
+      _$JsonConverterFromJson<
+        Map<String, dynamic>,
+        Map<DayOfWeek, OpeningHours>
+      >(json['openingHours'], _openingHoursConverter.fromJson),
   ownerId: json['ownerId'] as String,
   phoneNumber: json['phoneNumber'] as String?,
   waNumber: json['waNumber'] as String?,
@@ -49,10 +50,9 @@ ResidenceDetail _$ResidenceDetailFromJson(
   instagramUrl: json['instagramUrl'] as String?,
   facebookUrl: json['facebookUrl'] as String?,
   description: json['description'] as String,
-  galleryImageUrls:
-      (json['galleryImageUrls'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+  galleryImageUrls: (json['galleryImageUrls'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   pricing: Pricing.fromJson(json['pricing'] as Map<String, dynamic>),
   isFurnished: json['isFurnished'] as bool? ?? false,
   genderPreference: $enumDecodeNullable(
@@ -181,12 +181,12 @@ FoodDetail _$FoodDetailFromJson(Map<String, dynamic> json) => FoodDetail(
   instagramUrl: json['instagramUrl'] as String?,
   facebookUrl: json['facebookUrl'] as String?,
   description: json['description'] as String,
-  galleryImageUrls:
-      (json['galleryImageUrls'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-  menuImageUrls:
-      (json['menuImageUrls'] as List<dynamic>).map((e) => e as String).toList(),
+  galleryImageUrls: (json['galleryImageUrls'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  menuImageUrls: (json['menuImageUrls'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   genderPreference: $enumDecodeNullable(
     _$GenderPreferenceEnumMap,
     json['genderPreference'],

@@ -15,10 +15,9 @@ final leaveReviewControllerProvider =
     AutoDisposeAsyncNotifierProvider<LeaveReviewController, void>.internal(
       LeaveReviewController.new,
       name: r'leaveReviewControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$leaveReviewControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$leaveReviewControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

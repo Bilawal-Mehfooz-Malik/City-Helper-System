@@ -13,8 +13,9 @@ String _$lightThemeHash() => r'645628652bf9c840fb8a99005aad19e5d80e4565';
 final lightThemeProvider = AutoDisposeProvider<ThemeData>.internal(
   lightTheme,
   name: r'lightThemeProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$lightThemeHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$lightThemeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

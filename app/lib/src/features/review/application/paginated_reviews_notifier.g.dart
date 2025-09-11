@@ -105,17 +105,15 @@ class PaginatedReviewsNotifierProvider
     ReviewSortOption sortOption = ReviewSortOption.latest,
     int? ratingFilter,
   }) : this._internal(
-         () =>
-             PaginatedReviewsNotifier()
-               ..entityId = entityId
-               ..sortOption = sortOption
-               ..ratingFilter = ratingFilter,
+         () => PaginatedReviewsNotifier()
+           ..entityId = entityId
+           ..sortOption = sortOption
+           ..ratingFilter = ratingFilter,
          from: paginatedReviewsNotifierProvider,
          name: r'paginatedReviewsNotifierProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$paginatedReviewsNotifierHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$paginatedReviewsNotifierHash,
          dependencies: PaginatedReviewsNotifierFamily._dependencies,
          allTransitiveDependencies:
              PaginatedReviewsNotifierFamily._allTransitiveDependencies,
@@ -156,11 +154,10 @@ class PaginatedReviewsNotifierProvider
     return ProviderOverride(
       origin: this,
       override: PaginatedReviewsNotifierProvider._internal(
-        () =>
-            create()
-              ..entityId = entityId
-              ..sortOption = sortOption
-              ..ratingFilter = ratingFilter,
+        () => create()
+          ..entityId = entityId
+          ..sortOption = sortOption
+          ..ratingFilter = ratingFilter,
         from: from,
         name: null,
         dependencies: null,

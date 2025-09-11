@@ -21,19 +21,16 @@ firestore.settings({ ignoreUndefinedProperties: true });
 
 // --- HTTPS Callable Functions ---
 export const getCarouselAds = https.onCall(async (request) => {
-  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
   try { return await getCarouselAdsLogic(firestore, request.data); } 
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
 export const recordAdImpressions = https.onCall(async (request) => {
-  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
   try { return await recordAdImpressionsLogic(firestore, request.data); } 
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
 export const recordAdClick = https.onCall(async (request) => {
-  if (!request.app) throw new https.HttpsError("failed-precondition", "Must be called from App Check verified app.");
   try { return await recordAdClickLogic(firestore, request.data); } 
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });

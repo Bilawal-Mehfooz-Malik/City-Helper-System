@@ -15,10 +15,9 @@ final adInteractionNotifierProvider =
     AutoDisposeAsyncNotifierProvider<AdInteractionNotifier, void>.internal(
       AdInteractionNotifier.new,
       name: r'adInteractionNotifierProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$adInteractionNotifierHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$adInteractionNotifierHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

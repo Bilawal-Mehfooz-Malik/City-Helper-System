@@ -15,10 +15,9 @@ final imageCompressionServiceProvider =
     AutoDisposeProvider<ImageCompressionService>.internal(
       imageCompressionService,
       name: r'imageCompressionServiceProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$imageCompressionServiceHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$imageCompressionServiceHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

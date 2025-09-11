@@ -16,8 +16,9 @@ String _$currentDateHash() => r'47eb6f7c6298cdca8b6f56e5781d8cbd6672a4cd';
 final currentDateProvider = AutoDisposeProvider<DateTime>.internal(
   currentDate,
   name: r'currentDateProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$currentDateHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentDateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -14,10 +14,9 @@ final reviewsRepositoryProvider =
     AutoDisposeProvider<ReviewsRepository>.internal(
       reviewsRepository,
       name: r'reviewsRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$reviewsRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$reviewsRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -92,10 +91,9 @@ class FetchReviewsListProvider extends AutoDisposeFutureProvider<List<Review>> {
         (ref) => fetchReviewsList(ref as FetchReviewsListRef, entityId),
         from: fetchReviewsListProvider,
         name: r'fetchReviewsListProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$fetchReviewsListHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$fetchReviewsListHash,
         dependencies: FetchReviewsListFamily._dependencies,
         allTransitiveDependencies:
             FetchReviewsListFamily._allTransitiveDependencies,
@@ -213,10 +211,9 @@ class WatchReviewsListProvider extends AutoDisposeStreamProvider<List<Review>> {
         (ref) => watchReviewsList(ref as WatchReviewsListRef, entityId),
         from: watchReviewsListProvider,
         name: r'watchReviewsListProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$watchReviewsListHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$watchReviewsListHash,
         dependencies: WatchReviewsListFamily._dependencies,
         allTransitiveDependencies:
             WatchReviewsListFamily._allTransitiveDependencies,
@@ -334,10 +331,9 @@ class UserReviewFutureProvider extends AutoDisposeFutureProvider<Review?> {
         (ref) => userReviewFuture(ref as UserReviewFutureRef, entityId),
         from: userReviewFutureProvider,
         name: r'userReviewFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$userReviewFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$userReviewFutureHash,
         dependencies: UserReviewFutureFamily._dependencies,
         allTransitiveDependencies:
             UserReviewFutureFamily._allTransitiveDependencies,
@@ -457,10 +453,9 @@ class ReviewsPreviewListProvider
         (ref) => reviewsPreviewList(ref as ReviewsPreviewListRef, entityId),
         from: reviewsPreviewListProvider,
         name: r'reviewsPreviewListProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$reviewsPreviewListHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$reviewsPreviewListHash,
         dependencies: ReviewsPreviewListFamily._dependencies,
         allTransitiveDependencies:
             ReviewsPreviewListFamily._allTransitiveDependencies,

@@ -13,8 +13,9 @@ String _$fontFamilyHash() => r'b3f18cb76cadc230d581e2dec78a5f842b0517b8';
 final fontFamilyProvider = AutoDisposeProvider<String>.internal(
   fontFamily,
   name: r'fontFamilyProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$fontFamilyHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$fontFamilyHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

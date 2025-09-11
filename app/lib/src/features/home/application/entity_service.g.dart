@@ -13,10 +13,9 @@ String _$entityServiceHash() => r'00643418bb39b869ae1f68400734454c994fc864';
 final entityServiceProvider = AutoDisposeProvider<EntityService>.internal(
   entityService,
   name: r'entityServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$entityServiceHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$entityServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -15,10 +15,9 @@ final subCategoriesRepositoryProvider =
     Provider<SubCategoriesRepository>.internal(
       subCategoriesRepository,
       name: r'subCategoriesRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$subCategoriesRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subCategoriesRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -96,10 +95,9 @@ class SubCategoriesListFutureProvider
         (ref) => subCategoriesListFuture(ref as SubCategoriesListFutureRef, id),
         from: subCategoriesListFutureProvider,
         name: r'subCategoriesListFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$subCategoriesListFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$subCategoriesListFutureHash,
         dependencies: SubCategoriesListFutureFamily._dependencies,
         allTransitiveDependencies:
             SubCategoriesListFutureFamily._allTransitiveDependencies,
@@ -218,10 +216,9 @@ class SubCategoryFutureProvider extends FutureProvider<SubCategory?> {
         (ref) => subCategoryFuture(ref as SubCategoryFutureRef, id),
         from: subCategoryFutureProvider,
         name: r'subCategoryFutureProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$subCategoryFutureHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$subCategoryFutureHash,
         dependencies: SubCategoryFutureFamily._dependencies,
         allTransitiveDependencies:
             SubCategoryFutureFamily._allTransitiveDependencies,

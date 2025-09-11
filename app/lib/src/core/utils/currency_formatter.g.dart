@@ -13,10 +13,9 @@ String _$currencyFormatterHash() => r'9cb054c88dd735d41559fec36b300234ad4a24ee';
 final currencyFormatterProvider = AutoDisposeProvider<NumberFormat>.internal(
   currencyFormatter,
   name: r'currencyFormatterProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$currencyFormatterHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currencyFormatterHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

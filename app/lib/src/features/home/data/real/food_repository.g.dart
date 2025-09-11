@@ -13,10 +13,9 @@ String _$foodRepositoryHash() => r'6852e01eee08bf1def8c4895e471ea32e46240f1';
 final foodRepositoryProvider = Provider<FoodRepository>.internal(
   foodRepository,
   name: r'foodRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$foodRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$foodRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

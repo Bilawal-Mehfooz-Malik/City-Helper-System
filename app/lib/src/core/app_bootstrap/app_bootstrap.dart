@@ -17,6 +17,13 @@ class AppBootStrap {
     );
   }
 
+  // Future<void> appCheckInitializer() async {
+  //   await FirebaseAppCheck.instance.activate(
+  //     webProvider: ReCaptchaV3Provider(Env.recaptchaV3SiteKey),
+  //     androidProvider: AndroidProvider.debug,
+  //   );
+  // }
+
   Future<void> setupEmulators() async {
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);

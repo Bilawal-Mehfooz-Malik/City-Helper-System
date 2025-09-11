@@ -91,10 +91,9 @@ class InitialShopCategoryDataProvider
          ),
          from: initialShopCategoryDataProvider,
          name: r'initialShopCategoryDataProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$initialShopCategoryDataHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$initialShopCategoryDataHash,
          dependencies: InitialShopCategoryDataFamily._dependencies,
          allTransitiveDependencies:
              InitialShopCategoryDataFamily._allTransitiveDependencies,

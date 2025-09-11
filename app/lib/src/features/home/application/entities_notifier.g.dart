@@ -81,10 +81,9 @@ class EntitiesNotifierProvider
         () => EntitiesNotifier()..categoryId = categoryId,
         from: entitiesNotifierProvider,
         name: r'entitiesNotifierProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$entitiesNotifierHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$entitiesNotifierHash,
         dependencies: EntitiesNotifierFamily._dependencies,
         allTransitiveDependencies:
             EntitiesNotifierFamily._allTransitiveDependencies,

@@ -15,10 +15,9 @@ final selectedCategoryNotifierProvider =
     AutoDisposeNotifierProvider<SelectedCategoryNotifier, CategoryId?>.internal(
       SelectedCategoryNotifier.new,
       name: r'selectedCategoryNotifierProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$selectedCategoryNotifierHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$selectedCategoryNotifierHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

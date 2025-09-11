@@ -15,10 +15,9 @@ final ratingFilterControllerProvider =
     AutoDisposeNotifierProvider<RatingFilterController, int?>.internal(
       RatingFilterController.new,
       name: r'ratingFilterControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$ratingFilterControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$ratingFilterControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

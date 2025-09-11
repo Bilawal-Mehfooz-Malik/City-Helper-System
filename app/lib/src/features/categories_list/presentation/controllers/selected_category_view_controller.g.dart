@@ -11,19 +11,19 @@ String _$selectedCategoryViewControllerHash() =>
 
 /// See also [SelectedCategoryViewController].
 @ProviderFor(SelectedCategoryViewController)
-final selectedCategoryViewControllerProvider = AutoDisposeNotifierProvider<
-  SelectedCategoryViewController,
-  SelectedCategoryView
->.internal(
-  SelectedCategoryViewController.new,
-  name: r'selectedCategoryViewControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final selectedCategoryViewControllerProvider =
+    AutoDisposeNotifierProvider<
+      SelectedCategoryViewController,
+      SelectedCategoryView
+    >.internal(
+      SelectedCategoryViewController.new,
+      name: r'selectedCategoryViewControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$selectedCategoryViewControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$SelectedCategoryViewController =
     AutoDisposeNotifier<SelectedCategoryView>;

@@ -15,10 +15,9 @@ final localUserLocationSaverProvider =
     AutoDisposeAsyncNotifierProvider<LocalUserLocationSaver, void>.internal(
       LocalUserLocationSaver.new,
       name: r'localUserLocationSaverProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$localUserLocationSaverHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$localUserLocationSaverHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

@@ -92,16 +92,14 @@ class FilterControllerProvider
     required int categoryId,
     required FilterContext filterContext,
   }) : this._internal(
-         () =>
-             FilterController()
-               ..categoryId = categoryId
-               ..filterContext = filterContext,
+         () => FilterController()
+           ..categoryId = categoryId
+           ..filterContext = filterContext,
          from: filterControllerProvider,
          name: r'filterControllerProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$filterControllerHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$filterControllerHash,
          dependencies: FilterControllerFamily._dependencies,
          allTransitiveDependencies:
              FilterControllerFamily._allTransitiveDependencies,
@@ -133,10 +131,9 @@ class FilterControllerProvider
     return ProviderOverride(
       origin: this,
       override: FilterControllerProvider._internal(
-        () =>
-            create()
-              ..categoryId = categoryId
-              ..filterContext = filterContext,
+        () => create()
+          ..categoryId = categoryId
+          ..filterContext = filterContext,
         from: from,
         name: null,
         dependencies: null,

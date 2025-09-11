@@ -15,10 +15,9 @@ final popularDetailViewControllerProvider =
     NotifierProvider<PopularDetailViewController, bool>.internal(
       PopularDetailViewController.new,
       name: r'popularDetailViewControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$popularDetailViewControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$popularDetailViewControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

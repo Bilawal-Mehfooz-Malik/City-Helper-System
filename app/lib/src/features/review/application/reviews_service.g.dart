@@ -13,10 +13,9 @@ String _$reviewsServiceHash() => r'5978f80723f9549750dc8c990b769ce52a61d619';
 final reviewsServiceProvider = AutoDisposeProvider<ReviewsService>.internal(
   reviewsService,
   name: r'reviewsServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$reviewsServiceHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$reviewsServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

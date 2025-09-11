@@ -15,10 +15,9 @@ final userModeControllerProvider =
     AutoDisposeNotifierProvider<UserModeController, bool>.internal(
       UserModeController.new,
       name: r'userModeControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$userModeControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$userModeControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

@@ -21,10 +21,9 @@ _CarouselAd _$CarouselAdFromJson(Map<String, dynamic> json) => _CarouselAd(
   updatedAt: DateTime.parse(json['updatedAt'] as String),
   isActive: json['isActive'] as bool? ?? true,
   priorityScore: (json['priorityScore'] as num?)?.toInt() ?? 1,
-  lastShownAt:
-      json['lastShownAt'] == null
-          ? null
-          : DateTime.parse(json['lastShownAt'] as String),
+  lastShownAt: json['lastShownAt'] == null
+      ? null
+      : DateTime.parse(json['lastShownAt'] as String),
   impressionCount: (json['impressionCount'] as num?)?.toInt() ?? 0,
   clickCount: (json['clickCount'] as num?)?.toInt() ?? 0,
   status:

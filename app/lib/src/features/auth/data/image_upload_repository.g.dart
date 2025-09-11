@@ -15,10 +15,9 @@ final imageUploadRepositoryProvider =
     AutoDisposeProvider<ImageUploadRepository>.internal(
       imageUploadRepository,
       name: r'imageUploadRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$imageUploadRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$imageUploadRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

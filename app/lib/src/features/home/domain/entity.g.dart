@@ -18,10 +18,11 @@ Residence _$ResidenceFromJson(Map<String, dynamic> json) => Residence(
   avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
   isPopular: json['isPopular'] as bool? ?? false,
-  openingHours: _$JsonConverterFromJson<
-    Map<String, dynamic>,
-    Map<DayOfWeek, OpeningHours>
-  >(json['openingHours'], _openingHoursConverter.fromJson),
+  openingHours:
+      _$JsonConverterFromJson<
+        Map<String, dynamic>,
+        Map<DayOfWeek, OpeningHours>
+      >(json['openingHours'], _openingHoursConverter.fromJson),
   approvalStatus:
       $enumDecodeNullable(_$ApprovalStatusEnumMap, json['approvalStatus']) ??
       ApprovalStatus.pending,

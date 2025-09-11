@@ -78,10 +78,9 @@ class CriticalErrorStatusProvider
         ),
         from: criticalErrorStatusProvider,
         name: r'criticalErrorStatusProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$criticalErrorStatusHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$criticalErrorStatusHash,
         dependencies: CriticalErrorStatusFamily._dependencies,
         allTransitiveDependencies:
             CriticalErrorStatusFamily._allTransitiveDependencies,
@@ -203,10 +202,9 @@ class NonCriticalErrorsProvider extends AutoDisposeProvider<List<String>> {
         ),
         from: nonCriticalErrorsProvider,
         name: r'nonCriticalErrorsProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$nonCriticalErrorsHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$nonCriticalErrorsHash,
         dependencies: NonCriticalErrorsFamily._dependencies,
         allTransitiveDependencies:
             NonCriticalErrorsFamily._allTransitiveDependencies,

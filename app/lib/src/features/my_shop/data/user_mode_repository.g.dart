@@ -15,10 +15,9 @@ final userModeRepositoryProvider =
     AutoDisposeProvider<UserModeRepository>.internal(
       userModeRepository,
       name: r'userModeRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$userModeRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$userModeRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

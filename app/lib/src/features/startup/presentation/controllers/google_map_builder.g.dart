@@ -13,10 +13,9 @@ String _$googleMapBuilderHash() => r'3118e4989f8a72ea7b729792828eb437e527370e';
 final googleMapBuilderProvider = AutoDisposeProvider<GoogleMapBuilder>.internal(
   googleMapBuilder,
   name: r'googleMapBuilderProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$googleMapBuilderHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$googleMapBuilderHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

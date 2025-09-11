@@ -9,7 +9,6 @@ import 'package:app/src/features/auth/presentation/widgets/profile_location_map.
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:app/src/core/common_widgets/custom_text_field.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
@@ -37,6 +36,7 @@ class ProfileContent extends ConsumerStatefulWidget {
 
 class _ProfileContentState extends ConsumerState<ProfileContent> {
   late final TextEditingController _nameController;
+  bool _isSubmitting = false; // 👈 track submission state
 
   @override
   void initState() {
@@ -52,60 +52,31 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
   Future<void> _submit(AppUser? existingProfile) async {
     final name = _nameController.text.trim();
+    if (name.length < 4) return;
 
-    if (name.length < 4) {
-      return;
-    }
+    setState(() => _isSubmitting = true); // 👈 lock UI
 
-    // Get image state from the provider
     final imageState = ref.read(profileImageControllerProvider);
     final imageFile = imageState.imageFile;
     final removeImage = imageState.imageRemoved;
-
-    // Read bytes from XFile if it exists
     final imageBytes = imageFile != null ? await imageFile.readAsBytes() : null;
 
     final controller = ref.read(authControllerProvider.notifier);
     final user = ref.read(authStateChangesProvider).value;
-
-    if (user == null) {
-      return;
-    }
+    if (user == null) return;
 
     final newLocation = ref.read(profileLocationControllerProvider).value;
-
     final bool isEditMode = existingProfile != null;
 
-    // --- Location comparison logic ---
     bool locationChanged = false;
     if (isEditMode) {
       if (existingProfile.lastLocation == null && newLocation != null) {
-        locationChanged = true;
-      } else if (existingProfile.lastLocation != null && newLocation == null) {
         locationChanged = true;
       } else if (existingProfile.lastLocation != null && newLocation != null) {
         if (!_locationsEqual(existingProfile.lastLocation!, newLocation)) {
           locationChanged = true;
         }
       }
-    }
-    // --- End of location comparison ---
-
-    if (isEditMode) {
-      final isNameUnchanged = name == existingProfile.name;
-      final isImageUnchanged = imageBytes == null && !removeImage;
-
-      if (isNameUnchanged && isImageUnchanged && !locationChanged) {
-        if (mounted) context.pop();
-        return;
-      }
-    }
-
-    // Save location to profileLocationController if it's a new location or has changed
-    if (newLocation != null && (isEditMode ? locationChanged : true)) {
-      await ref
-          .read(profileLocationControllerProvider.notifier)
-          .saveLocation(newLocation);
     }
 
     final result = isEditMode
@@ -121,11 +92,10 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
             location: newLocation,
           );
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
 
     if (result.hasError) {
+      setState(() => _isSubmitting = false); // release lock on error
       result.showAlertDialogOnError(context);
     } else {
       final router = ref.read(appRouterProvider);
@@ -133,7 +103,6 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     }
   }
 
-  // Utility method to compare LatLng values
   bool _locationsEqual(LatLng a, LatLng b) {
     return (a.latitude - b.latitude).abs() < 0.00001 &&
         (a.longitude - b.longitude).abs() < 0.00001;
@@ -152,26 +121,13 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       padding: const EdgeInsets.all(Sizes.p16),
       child: AsyncValueWidget(
         value: profileValue,
-        loading: widget.isSmallScreen
-            ? LayoutBuilder(
-                builder: (context, constraints) {
-                  final safeHeight = constraints.hasBoundedHeight
-                      ? constraints.maxHeight
-                      : MediaQuery.sizeOf(context).height * 0.5;
-                  return ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: safeHeight),
-                    child: const CenteredProgressIndicator(),
-                  );
-                },
-              )
-            : const CenteredProgressIndicator(),
+        loading: const CenteredProgressIndicator(),
         data: (profile) {
-          final bool isEditMode = profile != null;
+          final bool isEditMode = !_isSubmitting && profile != null;
 
+          // Only pre-fill once, don’t clear user input later
           if (isEditMode && _nameController.text.isEmpty) {
             _nameController.text = profile.name;
-          } else if (!isEditMode) {
-            _nameController.clear();
           }
 
           return SingleChildScrollView(
@@ -192,7 +148,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
 
                 ProfileImageWidget(
                   initialImageUrl: profile?.profileImageUrl,
-                  isLoading: authState.isLoading,
+                  isLoading: authState.isLoading || _isSubmitting,
                 ),
 
                 gapH24,
@@ -207,7 +163,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                 ),
                 gapH4,
                 CustomTextField(
-                  enabled: !authState.isLoading,
+                  enabled: !authState.isLoading && !_isSubmitting,
                   controller: _nameController,
                   hintText: 'Enter your name (min 4 characters)'.hardcoded,
                   keyboardType: TextInputType.name,
@@ -233,8 +189,8 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                   builder: (context, value, child) {
                     return PrimaryButton(
                       useMaxSize: true,
-                      isDisabled: value.text.trim().length < 4,
-                      isLoading: authState.isLoading,
+                      isDisabled: value.text.trim().length < 4 || _isSubmitting,
+                      isLoading: authState.isLoading || _isSubmitting,
                       onPressed: () => _submit(profile),
                       text: isEditMode
                           ? context.loc.common_save

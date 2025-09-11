@@ -1,42 +1,62 @@
-PS D:\Flutter Apps\City Helper System\app> firebase deploy
+[2025-09-10T10:06:45.360Z]  @firebase/app-check:
+[2025-09-10T10:06:45.363Z]  @firebase/app-check:
+RethrownDartError: FirebaseError: AppCheck: 400 error. Attempts allowed again after 00m:01s (appCheck/initial-throttle).
+2
 
-=== Deploying to 'city-helper-system-8de0d'...     
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 299:10      createErrorWithStack
+errors.dart:299
+dart-sdk/lib/_internal/js_dev_runtime/private/profile.dart 117:39                 _throw
+profile.dart:117
+dart-sdk/lib/core/errors.dart 120:5                                               throwWithStackTrace
+errors.dart:120
+dart-sdk/lib/async/zone.dart 1512:11                                              callback
+zone.dart:1512
+dart-sdk/lib/async/schedule_microtask.dart 40:11                                  _microtaskLoop
+schedule_microtask.dart:40
+dart-sdk/lib/async/schedule_microtask.dart 49:5                                   _startMicrotaskLoop
+schedule_microtask.dart:49
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+dart-sdk/lib/_internal/js_dev_runtime/patch/async_patch.dart 186:7                <fn>
+async_patch.dart:186
+RethrownDartError: FirebaseError: AppCheck: Requests throttled due to previous 400 error. Attempts allowed again after 00m:01s (appCheck/throttled).
+2
 
-i  deploying storage, firestore, functions, hosting
-Running command: npm --prefix "$RESOURCE_DIR" run build
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 299:10      createErrorWithStack
+errors.dart:299
+dart-sdk/lib/_internal/js_dev_runtime/private/profile.dart 117:39                 _throw
+profile.dart:117
+dart-sdk/lib/core/errors.dart 120:5                                               throwWithStackTrace
+errors.dart:120
+dart-sdk/lib/async/zone.dart 1512:11                                              callback
+zone.dart:1512
+dart-sdk/lib/async/schedule_microtask.dart 40:11                                  _microtaskLoop
+schedule_microtask.dart:40
+dart-sdk/lib/async/schedule_microtask.dart 49:5                                   _startMicrotaskLoop
+schedule_microtask.dart:49
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+dart-sdk/lib/_internal/js_dev_runtime/patch/async_patch.dart 186:7                <fn>
+async_patch.dart:186
+[GoRouter] getting location for name: "auth"
+[GoRouter] going to /auth
+[2025-09-10T10:07:50.758Z]  @firebase/app-check:
+[2025-09-10T10:07:50.760Z]  @firebase/auth:
+RethrownDartError: FirebaseError: AppCheck: 400 error. Attempts allowed again after 00m:02s (appCheck/initial-throttle).
+2
 
-> build
-> tsc  
-
-+  functions: Finished running predeploy script.
-i  storage: ensuring required API firebasestorage.googleapis.com is enabled...
-i  firebase.storage: checking storage.rules for compilation errors...
-+  firebase.storage: rules file storage.rules compiled successfully
-i  firestore: reading indexes from firestore.indexes.json...
-i  cloud.firestore: checking firestore.rules for compilation errors...
-+  cloud.firestore: rules file firestore.rules compiled successfully
-i  functions: preparing codebase default for deployment
-i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
-i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
-i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
-i  functions: Loading and analyzing source code for codebase default to determine what to deploy
-Serving at port 8994
-
-[dotenv@17.2.2] injecting env (3) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.
-env'] }
-
-TypeError: sgMail.setApiKey is not a function
-    at Object.<anonymous> (D:\Flutter Apps\City Helper System\app\functions\lib\config.js:44:12)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (D:\Flutter Apps\City Helper System\app\functions\lib\notification.js:37:18)
-
-
-Error: Functions codebase could not be analyzed successfully. It may have a syntax or runtime error
-PS D:\Flutter Apps\City Helper System\app> 
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 299:10      createErrorWithStack
+errors.dart:299
+dart-sdk/lib/_internal/js_dev_runtime/private/profile.dart 117:39                 _throw
+profile.dart:117
+dart-sdk/lib/core/errors.dart 120:5                                               throwWithStackTrace
+errors.dart:120
+dart-sdk/lib/async/zone.dart 1512:11                                              callback
+zone.dart:1512
+dart-sdk/lib/async/schedule_microtask.dart 40:11                                  _microtaskLoop
+schedule_microtask.dart:40
+dart-sdk/lib/async/schedule_microtask.dart 49:5                                   _startMicrotaskLoop
+schedule_microtask.dart:49
+dart-sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 117:77  tear
+operations.dart:117
+dart-sdk/lib/_internal/js_dev_runtime/patch/async_patch.dart 186:7                <fn>

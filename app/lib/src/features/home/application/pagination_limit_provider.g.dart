@@ -13,10 +13,9 @@ String _$initialLoadLimitHash() => r'098e50e11456af4806638f81214d8777938150fd';
 final initialLoadLimitProvider = Provider<int>.internal(
   initialLoadLimit,
   name: r'initialLoadLimitProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$initialLoadLimitHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$initialLoadLimitHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -32,10 +31,9 @@ String _$subsequentLoadLimitHash() =>
 final subsequentLoadLimitProvider = Provider<int>.internal(
   subsequentLoadLimit,
   name: r'subsequentLoadLimitProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$subsequentLoadLimitHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$subsequentLoadLimitHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

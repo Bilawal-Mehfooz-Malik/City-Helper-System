@@ -14,10 +14,9 @@ final myShopDashboardProvider =
     AutoDisposeFutureProvider<EntityDetail?>.internal(
       myShopDashboard,
       name: r'myShopDashboardProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$myShopDashboardHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$myShopDashboardHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

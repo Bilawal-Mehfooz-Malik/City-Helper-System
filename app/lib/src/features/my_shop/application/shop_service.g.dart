@@ -13,8 +13,9 @@ String _$shopServiceHash() => r'e653b2ff8bf17b06b4447abde134ee458adaae21';
 final shopServiceProvider = AutoDisposeProvider<ShopService>.internal(
   shopService,
   name: r'shopServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$shopServiceHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$shopServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -89,10 +90,9 @@ class FetchUserShopProvider extends AutoDisposeFutureProvider<EntityDetail?> {
         (ref) => fetchUserShop(ref as FetchUserShopRef, userId),
         from: fetchUserShopProvider,
         name: r'fetchUserShopProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$fetchUserShopHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$fetchUserShopHash,
         dependencies: FetchUserShopFamily._dependencies,
         allTransitiveDependencies:
             FetchUserShopFamily._allTransitiveDependencies,
@@ -210,10 +210,9 @@ class WatchUserShopProvider extends AutoDisposeStreamProvider<EntityDetail?> {
         (ref) => watchUserShop(ref as WatchUserShopRef, userId),
         from: watchUserShopProvider,
         name: r'watchUserShopProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$watchUserShopHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$watchUserShopHash,
         dependencies: WatchUserShopFamily._dependencies,
         allTransitiveDependencies:
             WatchUserShopFamily._allTransitiveDependencies,

@@ -15,10 +15,9 @@ final residenceSearchRepositoryProvider =
     Provider<EntitySearchRepository>.internal(
       residenceSearchRepository,
       name: r'residenceSearchRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$residenceSearchRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$residenceSearchRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -34,10 +33,9 @@ String _$foodSearchRepositoryHash() =>
 final foodSearchRepositoryProvider = Provider<EntitySearchRepository>.internal(
   foodSearchRepository,
   name: r'foodSearchRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$foodSearchRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$foodSearchRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -114,10 +112,9 @@ class SearchByCategoryIdProvider
         (ref) => searchByCategoryId(ref as SearchByCategoryIdRef, input),
         from: searchByCategoryIdProvider,
         name: r'searchByCategoryIdProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$searchByCategoryIdHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$searchByCategoryIdHash,
         dependencies: SearchByCategoryIdFamily._dependencies,
         allTransitiveDependencies:
             SearchByCategoryIdFamily._allTransitiveDependencies,

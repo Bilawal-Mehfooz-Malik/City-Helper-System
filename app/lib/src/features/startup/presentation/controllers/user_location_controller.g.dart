@@ -15,10 +15,9 @@ final userLocationControllerProvider =
     AutoDisposeAsyncNotifierProvider<UserLocationController, LatLng?>.internal(
       UserLocationController.new,
       name: r'userLocationControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$userLocationControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$userLocationControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

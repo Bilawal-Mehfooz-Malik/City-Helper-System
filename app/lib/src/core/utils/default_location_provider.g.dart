@@ -13,10 +13,9 @@ String _$defaultLocationHash() => r'5c80e9b5e23c36f8e992e42f1f5ab3687076bea7';
 final defaultLocationProvider = AutoDisposeProvider<LatLng>.internal(
   defaultLocation,
   name: r'defaultLocationProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$defaultLocationHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$defaultLocationHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
