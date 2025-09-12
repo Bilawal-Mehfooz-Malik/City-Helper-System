@@ -27,7 +27,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             ),
             gapH8,
             Text(
-              'Effective Date: [Insert Date]',
+              'Effective Date: September 12, 2025',
               style: textTheme.bodySmall!.copyWith(
                 fontStyle: FontStyle.italic,
                 color: colorScheme.onSurface.withValues(alpha: 0.6),
