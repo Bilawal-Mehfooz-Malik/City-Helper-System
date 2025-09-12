@@ -568,6 +568,12 @@ abstract class AppLocalizations {
   /// **'Lowest Rating'**
   String get lowest_rating;
 
+  /// No description provided for @anonymousUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous User'**
+  String get anonymousUser;
+
   /// No description provided for @no_reviews_found.
   ///
   /// In en, this message translates to:

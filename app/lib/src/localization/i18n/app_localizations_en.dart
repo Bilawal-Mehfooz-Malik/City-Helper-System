@@ -249,6 +249,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lowest_rating => 'Lowest Rating';
 
   @override
+  String get anonymousUser => 'Anonymous User';
+
+  @override
   String get no_reviews_found => 'No reviews found for this rating';
 
   @override

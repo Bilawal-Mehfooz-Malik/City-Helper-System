@@ -5,6 +5,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
+import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/home_detail/domain/entity_detail.dart';
 import 'package:app/src/features/review/domain/review.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
@@ -141,74 +142,82 @@ class ReviewListTile extends ConsumerWidget {
     return AsyncValueWidget(
       value: userAsync,
       loading: ReviewListTileSkeleton(),
-      error: (e, st) => SizedBox.shrink(),
+      error: (e, st) =>
+          _buildReviewContent(context, timeAgo, null), // Pass null for user
       data: (user) {
-        if (user == null) {
-          return const SizedBox.shrink();
-        }
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(
-                spacing: Sizes.p8,
-                runSpacing: Sizes.p4,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox.square(
-                        dimension: 30,
-                        child: user.profileImageUrl != null
-                            ? ClipOval(
-                                child: CustomImage(
-                                  fit: BoxFit.cover,
-                                  placeholderIconSize: 15,
-                                  imageUrl: user.profileImageUrl,
-                                  useCircleLoading: true,
-                                ),
-                              )
-                            : const CircleAvatar(
-                                radius: 15,
-                                child: Icon(Icons.person, size: 16),
-                              ),
-                      ),
+        return _buildReviewContent(context, timeAgo, user);
+      },
+    );
+  }
 
-                      gapW12,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            timeAgo,
-                            style: TextStyle(
-                              color: context.colorScheme.onSurfaceVariant,
+  Widget _buildReviewContent(
+    BuildContext context,
+    String timeAgo,
+    AppUser? user,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Wrap(
+            spacing: Sizes.p8,
+            runSpacing: Sizes.p4,
+            children: [
+              Row(
+                children: [
+                  SizedBox.square(
+                    dimension: 30,
+                    child: user?.profileImageUrl != null
+                        ? ClipOval(
+                            child: CustomImage(
+                              fit: BoxFit.cover,
+                              placeholderIconSize: 15,
+                              imageUrl: user!.profileImageUrl,
+                              useCircleLoading: true,
                             ),
+                          )
+                        : const CircleAvatar(
+                            radius: 15,
+                            child: Icon(Icons.person, size: 16),
                           ),
-                        ],
+                  ),
+
+                  gapW12,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user?.name ?? context.loc.anonymousUser,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        timeAgo,
+                        style: TextStyle(
+                          color: context.colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
-                  RatingBarIndicator(
-                    rating: review.rating,
-                    itemCount: 5,
-                    itemSize: 18.0,
-                    itemBuilder: (context, _) =>
-                        Icon(Icons.star, color: Theme.of(context).colorScheme.tertiary),
-                  ),
                 ],
               ),
-              gapH4,
-              Text(review.comment),
-              gapH8,
-              const Divider(),
+              RatingBarIndicator(
+                rating: review.rating,
+                itemCount: 5,
+                itemSize: 18.0,
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
             ],
           ),
-        );
-      },
+          gapH4,
+          Text(review.comment),
+          gapH8,
+          const Divider(),
+        ],
+      ),
     );
   }
 }
