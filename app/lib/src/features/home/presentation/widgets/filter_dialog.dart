@@ -24,35 +24,14 @@ class FilterDialog extends ConsumerStatefulWidget {
 }
 
 class _FilterDialogState extends ConsumerState<FilterDialog> {
-  late EntityFilter _localFilter;
-
   @override
-  void initState() {
-    super.initState();
-    _localFilter = ref.read(
+  Widget build(BuildContext context) {
+    final filter = ref.watch(
       filterControllerProvider(
         categoryId: widget.categoryId,
         filterContext: widget.filterContext,
       ),
     );
-  }
-
-  void setDraftFilter(EntityFilter newFilter) {
-    setState(() => _localFilter = newFilter);
-  }
-
-  void resetDraftFilter() {
-    setState(() {
-      _localFilter = switch (widget.categoryId) {
-        1 => const EntityFilter.residence(),
-        2 => const EntityFilter.food(),
-        _ => const EntityFilter.basic(),
-      };
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final controller = ref.watch(
       filterControllerProvider(
         categoryId: widget.categoryId,
@@ -64,20 +43,17 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
       title: Text(context.loc.filtersTitle),
       content: SingleChildScrollView(
         child: FilterDialogContent(
-          localFilter: _localFilter,
-          onFilterChanged: setDraftFilter,
+          filter: filter,
+          controller: controller,
         ),
       ),
       actions: [
         CustomTextButton(
-          onPressed: resetDraftFilter,
+          onPressed: () => controller.resetFilters(),
           text: context.loc.resetButton,
         ),
         PrimaryButton(
-          onPressed: () {
-            controller.applyFilter(_localFilter);
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           text: context.loc.applyFiltersButton,
         ),
       ],
@@ -88,100 +64,73 @@ class _FilterDialogState extends ConsumerState<FilterDialog> {
 class FilterDialogContent extends StatelessWidget {
   const FilterDialogContent({
     super.key,
-    required this.localFilter,
-    required this.onFilterChanged,
+    required this.filter,
+    required this.controller,
   });
 
-  final EntityFilter localFilter;
-  final void Function(EntityFilter) onFilterChanged;
+  final EntityFilter filter;
+  final FilterController controller;
 
   @override
   Widget build(BuildContext context) {
-    return localFilter.when(
-      residence:
-          (
-            ratingSort,
-            isFurnished,
-            isRoomAvailable,
-            priceSort,
-            genderPref,
-          ) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              gapH4,
-              SortDropdown(
-                label: context.loc.sortByPrice,
-                currentValue: priceSort,
-                onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(priceSort: value),
-                ),
-              ),
-              gapH12,
-              SortDropdown(
-                label: context.loc.sortByRating,
-                currentValue: ratingSort,
-                onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(ratingSort: value),
-                ),
-              ),
-              gapH8,
-              FilterSwitch(
-                value: isFurnished,
-                label: context.loc.showFurnishedOnly,
-                onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(isFurnished: value),
-                ),
-              ),
-              FilterSwitch(
-                value: isRoomAvailable,
-                label: context.loc.showAvailableOnly,
-                onChanged: (value) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(
-                    isRoomAvailable: value,
-                  ),
-                ),
-              ),
-              gapH12,
-              GenderPreferenceChips(
-                selected: genderPref,
-                onSelected: (gender) => onFilterChanged(
-                  (localFilter as ResidenceFilter).copyWith(genderPref: gender),
-                ),
-              ),
-              gapH8,
-            ],
-          ),
-      food: (ratingSort, genderPref) => Column(
+    return filter.when(
+      residence: (sortBy, sortOrder, isFurnished, isRoomAvailable, genderPref) =>
+          Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          gapH4,
-          SortDropdown(
-            label: context.loc.sortByRating,
-            currentValue: ratingSort,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as FoodFilter).copyWith(ratingSort: value),
-            ),
+          SortSection(
+            sortBy: sortBy,
+            sortOrder: sortOrder,
+            controller: controller,
+            supportedSorts: const [SortBy.updatedAt, SortBy.price, SortBy.rating],
+          ),
+          gapH8,
+          FilterSwitch(
+            value: isFurnished,
+            label: context.loc.showFurnishedOnly,
+            onChanged: (value) => controller.setFurnished(value),
+          ),
+          FilterSwitch(
+            value: isRoomAvailable,
+            label: context.loc.showAvailableOnly,
+            onChanged: (value) => controller.setRoomAvailable(value),
           ),
           gapH12,
           GenderPreferenceChips(
             selected: genderPref,
-            onSelected: (gender) => onFilterChanged(
-              (localFilter as FoodFilter).copyWith(genderPref: gender),
-            ),
+            onSelected: (gender) => controller.setGender(gender),
           ),
           gapH8,
         ],
       ),
-      basic: (ratingSort) => Column(
+      food: (sortBy, sortOrder, genderPref) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          gapH4,
-          SortDropdown(
-            label: context.loc.sortByRating,
-            currentValue: ratingSort,
-            onChanged: (value) => onFilterChanged(
-              (localFilter as BasicFilter).copyWith(ratingSort: value),
-            ),
+          SortSection(
+            sortBy: sortBy,
+            sortOrder: sortOrder,
+            controller: controller,
+            supportedSorts: const [SortBy.updatedAt, SortBy.rating],
+          ),
+          gapH12,
+          GenderPreferenceChips(
+            selected: genderPref,
+            onSelected: (gender) => controller.setGender(gender),
+          ),
+          gapH8,
+        ],
+      ),
+      basic: (sortBy, sortOrder) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SortSection(
+            sortBy: sortBy,
+            sortOrder: sortOrder,
+            controller: controller,
+            supportedSorts: const [SortBy.rating],
           ),
           gapH8,
         ],
@@ -190,42 +139,66 @@ class FilterDialogContent extends StatelessWidget {
   }
 }
 
-class SortDropdown extends StatelessWidget {
-  const SortDropdown({
+class SortSection extends StatelessWidget {
+  const SortSection({
     super.key,
-    required this.label,
-    required this.currentValue,
-    required this.onChanged,
+    required this.sortBy,
+    required this.sortOrder,
+    required this.controller,
+    required this.supportedSorts,
   });
 
-  final String label;
-  final SortOrder currentValue;
-  final void Function(SortOrder) onChanged;
+  final SortBy sortBy;
+  final SortOrder sortOrder;
+  final FilterController controller;
+  final List<SortBy> supportedSorts;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<SortOrder>(
-      value: currentValue,
-      items: [
-        DropdownMenuItem(
-          value: SortOrder.none,
-          child: Text(context.loc.sortOrderNone),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              context.loc.sortByLabel,
+              style: context.textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            IconButton(
+              onPressed: () => controller.toggleSortOrder(),
+              icon: Icon(
+                sortOrder == SortOrder.highToLow
+                    ? Icons.arrow_downward
+                    : Icons.arrow_upward,
+              ),
+            ),
+          ],
         ),
-        DropdownMenuItem(
-          value: SortOrder.lowToHigh,
-          child: Text(context.loc.sortOrderLowToHigh),
-        ),
-        DropdownMenuItem(
-          value: SortOrder.highToLow,
-          child: Text(context.loc.sortOrderHighToLow),
+        gapH8,
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: supportedSorts.map((sort) {
+            return ChoiceChip(
+              label: Text(_localizedSortByText(context, sort)),
+              selected: sortBy == sort,
+              onSelected: (_) => controller.setSort(sort),
+            );
+          }).toList(),
         ),
       ],
-      onChanged: (value) => value != null ? onChanged(value) : null,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: label,
-      ),
     );
+  }
+
+  String _localizedSortByText(BuildContext context, SortBy sort) {
+    return switch (sort) {
+      SortBy.price => context.loc.sortByPrice,
+      SortBy.rating => context.loc.sortByRating,
+      SortBy.updatedAt => context.loc.sortByLatest,
+    };
   }
 }
 

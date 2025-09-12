@@ -141,7 +141,6 @@ class FakeResidenceRepository implements ResidenceRepository {
     List<Residence> result = List.from(residences);
 
     if (filter.isRoomAvailable) {
-      // New filter
       result = result.where((residence) => residence.isRoomAvailable).toList();
     }
     if (filter.isFurnished) {
@@ -152,30 +151,16 @@ class FakeResidenceRepository implements ResidenceRepository {
           .where((residence) => residence.genderPreference == filter.genderPref)
           .toList();
     }
-    if (filter.ratingSort != SortOrder.none) {
-      result.sort((a, b) {
-        if (filter.ratingSort == SortOrder.highToLow) {
-          return b.avgRating.compareTo(a.avgRating);
-        } else if (filter.ratingSort == SortOrder.lowToHigh) {
-          return a.avgRating.compareTo(b.avgRating);
-        }
-        return 0;
-      });
-    }
-    if (filter.priceSort != SortOrder.none) {
-      result.sort((a, b) {
-        if (filter.priceSort == SortOrder.highToLow) {
-          return b.pricing.cost.compareTo(a.pricing.cost);
-        } else if (filter.priceSort == SortOrder.lowToHigh) {
-          return a.pricing.cost.compareTo(b.pricing.cost);
-        }
-        return 0;
-      });
-    }
-    if (filter.ratingSort == SortOrder.none &&
-        filter.priceSort == SortOrder.none) {
-      result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-    }
+
+    result.sort((a, b) {
+      final comparison = switch (filter.sortBy) {
+        SortBy.rating => a.avgRating.compareTo(b.avgRating),
+        SortBy.price => a.pricing.cost.compareTo(b.pricing.cost),
+        SortBy.updatedAt => a.updatedAt.compareTo(b.updatedAt),
+      };
+      return filter.sortOrder == SortOrder.highToLow ? -comparison : comparison;
+    });
+
     return result;
   }
 }

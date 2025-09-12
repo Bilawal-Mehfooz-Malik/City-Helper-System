@@ -128,18 +128,16 @@ class FakeFoodRepository implements FoodRepository {
           .where((food) => food.genderPreference == filter.genderPref)
           .toList();
     }
-    if (filter.ratingSort != SortOrder.none) {
-      result.sort((a, b) {
-        if (filter.ratingSort == SortOrder.highToLow) {
-          return b.avgRating.compareTo(a.avgRating);
-        } else if (filter.ratingSort == SortOrder.lowToHigh) {
-          return a.avgRating.compareTo(b.avgRating);
-        }
-        return 0;
-      });
-    } else {
-      result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-    }
+
+    result.sort((a, b) {
+      final comparison = switch (filter.sortBy) {
+        SortBy.rating => a.avgRating.compareTo(b.avgRating),
+        SortBy.price => 0, // No price on food
+        SortBy.updatedAt => a.updatedAt.compareTo(b.updatedAt),
+      };
+      return filter.sortOrder == SortOrder.highToLow ? -comparison : comparison;
+    });
+
     return result;
   }
 }

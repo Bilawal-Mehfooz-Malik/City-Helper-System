@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EntityFilter {
 
- SortOrder get ratingSort;
+ SortBy get sortBy; SortOrder get sortOrder;
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $EntityFilterCopyWith<EntityFilter> get copyWith => _$EntityFilterCopyWithImpl<E
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntityFilter&&(identical(other.ratingSort, ratingSort) || other.ratingSort == ratingSort));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntityFilter&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ratingSort);
+int get hashCode => Object.hash(runtimeType,sortBy,sortOrder);
 
 @override
 String toString() {
-  return 'EntityFilter(ratingSort: $ratingSort)';
+  return 'EntityFilter(sortBy: $sortBy, sortOrder: $sortOrder)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $EntityFilterCopyWith<$Res>  {
   factory $EntityFilterCopyWith(EntityFilter value, $Res Function(EntityFilter) _then) = _$EntityFilterCopyWithImpl;
 @useResult
 $Res call({
- SortOrder ratingSort
+ SortBy sortBy, SortOrder sortOrder
 });
 
 
@@ -62,9 +62,10 @@ class _$EntityFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? ratingSort = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sortBy = null,Object? sortOrder = null,}) {
   return _then(_self.copyWith(
-ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
+sortBy: null == sortBy ? _self.sortBy : sortBy // ignore: cast_nullable_to_non_nullable
+as SortBy,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as SortOrder,
   ));
 }
@@ -153,12 +154,12 @@ return basic(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SortOrder ratingSort,  GenderPreference? genderPref)?  food,TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)?  residence,TResult Function( SortOrder ratingSort)?  basic,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SortBy sortBy,  SortOrder sortOrder,  GenderPreference? genderPref)?  food,TResult Function( SortBy sortBy,  SortOrder sortOrder,  bool isFurnished,  bool isRoomAvailable,  GenderPreference? genderPref)?  residence,TResult Function( SortBy sortBy,  SortOrder sortOrder)?  basic,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case FoodFilter() when food != null:
-return food(_that.ratingSort,_that.genderPref);case ResidenceFilter() when residence != null:
-return residence(_that.ratingSort,_that.isFurnished,_that.isRoomAvailable,_that.priceSort,_that.genderPref);case BasicFilter() when basic != null:
-return basic(_that.ratingSort);case _:
+return food(_that.sortBy,_that.sortOrder,_that.genderPref);case ResidenceFilter() when residence != null:
+return residence(_that.sortBy,_that.sortOrder,_that.isFurnished,_that.isRoomAvailable,_that.genderPref);case BasicFilter() when basic != null:
+return basic(_that.sortBy,_that.sortOrder);case _:
   return orElse();
 
 }
@@ -176,12 +177,12 @@ return basic(_that.ratingSort);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SortOrder ratingSort,  GenderPreference? genderPref)  food,required TResult Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)  residence,required TResult Function( SortOrder ratingSort)  basic,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SortBy sortBy,  SortOrder sortOrder,  GenderPreference? genderPref)  food,required TResult Function( SortBy sortBy,  SortOrder sortOrder,  bool isFurnished,  bool isRoomAvailable,  GenderPreference? genderPref)  residence,required TResult Function( SortBy sortBy,  SortOrder sortOrder)  basic,}) {final _that = this;
 switch (_that) {
 case FoodFilter():
-return food(_that.ratingSort,_that.genderPref);case ResidenceFilter():
-return residence(_that.ratingSort,_that.isFurnished,_that.isRoomAvailable,_that.priceSort,_that.genderPref);case BasicFilter():
-return basic(_that.ratingSort);}
+return food(_that.sortBy,_that.sortOrder,_that.genderPref);case ResidenceFilter():
+return residence(_that.sortBy,_that.sortOrder,_that.isFurnished,_that.isRoomAvailable,_that.genderPref);case BasicFilter():
+return basic(_that.sortBy,_that.sortOrder);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -195,12 +196,12 @@ return basic(_that.ratingSort);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SortOrder ratingSort,  GenderPreference? genderPref)?  food,TResult? Function( SortOrder ratingSort,  bool isFurnished,  bool isRoomAvailable,  SortOrder priceSort,  GenderPreference? genderPref)?  residence,TResult? Function( SortOrder ratingSort)?  basic,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SortBy sortBy,  SortOrder sortOrder,  GenderPreference? genderPref)?  food,TResult? Function( SortBy sortBy,  SortOrder sortOrder,  bool isFurnished,  bool isRoomAvailable,  GenderPreference? genderPref)?  residence,TResult? Function( SortBy sortBy,  SortOrder sortOrder)?  basic,}) {final _that = this;
 switch (_that) {
 case FoodFilter() when food != null:
-return food(_that.ratingSort,_that.genderPref);case ResidenceFilter() when residence != null:
-return residence(_that.ratingSort,_that.isFurnished,_that.isRoomAvailable,_that.priceSort,_that.genderPref);case BasicFilter() when basic != null:
-return basic(_that.ratingSort);case _:
+return food(_that.sortBy,_that.sortOrder,_that.genderPref);case ResidenceFilter() when residence != null:
+return residence(_that.sortBy,_that.sortOrder,_that.isFurnished,_that.isRoomAvailable,_that.genderPref);case BasicFilter() when basic != null:
+return basic(_that.sortBy,_that.sortOrder);case _:
   return null;
 
 }
@@ -212,10 +213,11 @@ return basic(_that.ratingSort);case _:
 
 
 class FoodFilter extends EntityFilter {
-  const FoodFilter({this.ratingSort = SortOrder.none, this.genderPref}): super._();
+  const FoodFilter({this.sortBy = SortBy.updatedAt, this.sortOrder = SortOrder.highToLow, this.genderPref}): super._();
   
 
-@override@JsonKey() final  SortOrder ratingSort;
+@override@JsonKey() final  SortBy sortBy;
+@override@JsonKey() final  SortOrder sortOrder;
  final  GenderPreference? genderPref;
 
 /// Create a copy of EntityFilter
@@ -228,16 +230,16 @@ $FoodFilterCopyWith<FoodFilter> get copyWith => _$FoodFilterCopyWithImpl<FoodFil
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FoodFilter&&(identical(other.ratingSort, ratingSort) || other.ratingSort == ratingSort)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FoodFilter&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ratingSort,genderPref);
+int get hashCode => Object.hash(runtimeType,sortBy,sortOrder,genderPref);
 
 @override
 String toString() {
-  return 'EntityFilter.food(ratingSort: $ratingSort, genderPref: $genderPref)';
+  return 'EntityFilter.food(sortBy: $sortBy, sortOrder: $sortOrder, genderPref: $genderPref)';
 }
 
 
@@ -248,7 +250,7 @@ abstract mixin class $FoodFilterCopyWith<$Res> implements $EntityFilterCopyWith<
   factory $FoodFilterCopyWith(FoodFilter value, $Res Function(FoodFilter) _then) = _$FoodFilterCopyWithImpl;
 @override @useResult
 $Res call({
- SortOrder ratingSort, GenderPreference? genderPref
+ SortBy sortBy, SortOrder sortOrder, GenderPreference? genderPref
 });
 
 
@@ -265,9 +267,10 @@ class _$FoodFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? genderPref = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sortBy = null,Object? sortOrder = null,Object? genderPref = freezed,}) {
   return _then(FoodFilter(
-ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
+sortBy: null == sortBy ? _self.sortBy : sortBy // ignore: cast_nullable_to_non_nullable
+as SortBy,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as SortOrder,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference?,
   ));
@@ -280,13 +283,13 @@ as GenderPreference?,
 
 
 class ResidenceFilter extends EntityFilter {
-  const ResidenceFilter({this.ratingSort = SortOrder.none, this.isFurnished = false, this.isRoomAvailable = false, this.priceSort = SortOrder.none, this.genderPref}): super._();
+  const ResidenceFilter({this.sortBy = SortBy.updatedAt, this.sortOrder = SortOrder.highToLow, this.isFurnished = false, this.isRoomAvailable = false, this.genderPref}): super._();
   
 
-@override@JsonKey() final  SortOrder ratingSort;
+@override@JsonKey() final  SortBy sortBy;
+@override@JsonKey() final  SortOrder sortOrder;
 @JsonKey() final  bool isFurnished;
 @JsonKey() final  bool isRoomAvailable;
-@JsonKey() final  SortOrder priceSort;
  final  GenderPreference? genderPref;
 
 /// Create a copy of EntityFilter
@@ -299,16 +302,16 @@ $ResidenceFilterCopyWith<ResidenceFilter> get copyWith => _$ResidenceFilterCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResidenceFilter&&(identical(other.ratingSort, ratingSort) || other.ratingSort == ratingSort)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&(identical(other.priceSort, priceSort) || other.priceSort == priceSort)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResidenceFilter&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.isFurnished, isFurnished) || other.isFurnished == isFurnished)&&(identical(other.isRoomAvailable, isRoomAvailable) || other.isRoomAvailable == isRoomAvailable)&&(identical(other.genderPref, genderPref) || other.genderPref == genderPref));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ratingSort,isFurnished,isRoomAvailable,priceSort,genderPref);
+int get hashCode => Object.hash(runtimeType,sortBy,sortOrder,isFurnished,isRoomAvailable,genderPref);
 
 @override
 String toString() {
-  return 'EntityFilter.residence(ratingSort: $ratingSort, isFurnished: $isFurnished, isRoomAvailable: $isRoomAvailable, priceSort: $priceSort, genderPref: $genderPref)';
+  return 'EntityFilter.residence(sortBy: $sortBy, sortOrder: $sortOrder, isFurnished: $isFurnished, isRoomAvailable: $isRoomAvailable, genderPref: $genderPref)';
 }
 
 
@@ -319,7 +322,7 @@ abstract mixin class $ResidenceFilterCopyWith<$Res> implements $EntityFilterCopy
   factory $ResidenceFilterCopyWith(ResidenceFilter value, $Res Function(ResidenceFilter) _then) = _$ResidenceFilterCopyWithImpl;
 @override @useResult
 $Res call({
- SortOrder ratingSort, bool isFurnished, bool isRoomAvailable, SortOrder priceSort, GenderPreference? genderPref
+ SortBy sortBy, SortOrder sortOrder, bool isFurnished, bool isRoomAvailable, GenderPreference? genderPref
 });
 
 
@@ -336,13 +339,13 @@ class _$ResidenceFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,Object? isFurnished = null,Object? isRoomAvailable = null,Object? priceSort = null,Object? genderPref = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sortBy = null,Object? sortOrder = null,Object? isFurnished = null,Object? isRoomAvailable = null,Object? genderPref = freezed,}) {
   return _then(ResidenceFilter(
-ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
+sortBy: null == sortBy ? _self.sortBy : sortBy // ignore: cast_nullable_to_non_nullable
+as SortBy,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as SortOrder,isFurnished: null == isFurnished ? _self.isFurnished : isFurnished // ignore: cast_nullable_to_non_nullable
 as bool,isRoomAvailable: null == isRoomAvailable ? _self.isRoomAvailable : isRoomAvailable // ignore: cast_nullable_to_non_nullable
-as bool,priceSort: null == priceSort ? _self.priceSort : priceSort // ignore: cast_nullable_to_non_nullable
-as SortOrder,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
+as bool,genderPref: freezed == genderPref ? _self.genderPref : genderPref // ignore: cast_nullable_to_non_nullable
 as GenderPreference?,
   ));
 }
@@ -354,10 +357,11 @@ as GenderPreference?,
 
 
 class BasicFilter extends EntityFilter {
-  const BasicFilter({this.ratingSort = SortOrder.none}): super._();
+  const BasicFilter({this.sortBy = SortBy.rating, this.sortOrder = SortOrder.highToLow}): super._();
   
 
-@override@JsonKey() final  SortOrder ratingSort;
+@override@JsonKey() final  SortBy sortBy;
+@override@JsonKey() final  SortOrder sortOrder;
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
@@ -369,16 +373,16 @@ $BasicFilterCopyWith<BasicFilter> get copyWith => _$BasicFilterCopyWithImpl<Basi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasicFilter&&(identical(other.ratingSort, ratingSort) || other.ratingSort == ratingSort));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasicFilter&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ratingSort);
+int get hashCode => Object.hash(runtimeType,sortBy,sortOrder);
 
 @override
 String toString() {
-  return 'EntityFilter.basic(ratingSort: $ratingSort)';
+  return 'EntityFilter.basic(sortBy: $sortBy, sortOrder: $sortOrder)';
 }
 
 
@@ -389,7 +393,7 @@ abstract mixin class $BasicFilterCopyWith<$Res> implements $EntityFilterCopyWith
   factory $BasicFilterCopyWith(BasicFilter value, $Res Function(BasicFilter) _then) = _$BasicFilterCopyWithImpl;
 @override @useResult
 $Res call({
- SortOrder ratingSort
+ SortBy sortBy, SortOrder sortOrder
 });
 
 
@@ -406,9 +410,10 @@ class _$BasicFilterCopyWithImpl<$Res>
 
 /// Create a copy of EntityFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ratingSort = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sortBy = null,Object? sortOrder = null,}) {
   return _then(BasicFilter(
-ratingSort: null == ratingSort ? _self.ratingSort : ratingSort // ignore: cast_nullable_to_non_nullable
+sortBy: null == sortBy ? _self.sortBy : sortBy // ignore: cast_nullable_to_non_nullable
+as SortBy,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as SortOrder,
   ));
 }

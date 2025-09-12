@@ -3,31 +3,32 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'entity_filter.freezed.dart';
 
+enum SortBy {
+  updatedAt,
+  rating,
+  price,
+}
+
 @freezed
 sealed class EntityFilter with _$EntityFilter {
   const EntityFilter._();
 
   const factory EntityFilter.food({
-    @Default(SortOrder.none) SortOrder ratingSort,
+    @Default(SortBy.updatedAt) SortBy sortBy,
+    @Default(SortOrder.highToLow) SortOrder sortOrder,
     GenderPreference? genderPref,
   }) = FoodFilter;
 
   const factory EntityFilter.residence({
-    @Default(SortOrder.none) SortOrder ratingSort,
+    @Default(SortBy.updatedAt) SortBy sortBy,
+    @Default(SortOrder.highToLow) SortOrder sortOrder,
     @Default(false) bool isFurnished,
     @Default(false) bool isRoomAvailable,
-    @Default(SortOrder.none) SortOrder priceSort,
     GenderPreference? genderPref,
   }) = ResidenceFilter;
 
   const factory EntityFilter.basic({
-    @Default(SortOrder.none) SortOrder ratingSort,
+    @Default(SortBy.rating) SortBy sortBy,
+    @Default(SortOrder.highToLow) SortOrder sortOrder,
   }) = BasicFilter;
-
-  /// A generic getter for ratingSort that works across all filter types.
-  SortOrder get getRatingSort => when(
-    food: (ratingSort, _) => ratingSort,
-    residence: (ratingSort, _, _, _, _) => ratingSort,
-    basic: (ratingSort) => ratingSort,
-  );
 }

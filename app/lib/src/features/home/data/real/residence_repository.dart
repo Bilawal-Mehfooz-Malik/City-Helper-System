@@ -124,7 +124,6 @@ class ResidenceRepository {
     var newQuery = query;
 
     if (filter.isRoomAvailable) {
-      // New filter
       newQuery = newQuery.where('isRoomAvailable', isEqualTo: true);
     }
     if (filter.isFurnished) {
@@ -136,23 +135,20 @@ class ResidenceRepository {
         isEqualTo: filter.genderPref!.name,
       );
     }
-    if (filter.ratingSort != SortOrder.none) {
-      newQuery = newQuery
-          .where('avgRating', isGreaterThanOrEqualTo: 0)
-          .orderBy(
-            'avgRating',
-            descending: filter.ratingSort == SortOrder.highToLow,
-          );
-    }
-    if (filter.priceSort != SortOrder.none) {
-      newQuery = newQuery.orderBy(
-        'pricing.cost',
-        descending: filter.priceSort == SortOrder.highToLow,
-      );
-    }
-    if (filter.priceSort == SortOrder.none &&
-        filter.ratingSort == SortOrder.none) {
-      newQuery = newQuery.orderBy('updatedAt', descending: true);
+
+    final descending = filter.sortOrder == SortOrder.highToLow;
+    switch (filter.sortBy) {
+      case SortBy.rating:
+        newQuery = newQuery
+            .where('avgRating', isGreaterThanOrEqualTo: 0)
+            .orderBy('avgRating', descending: descending);
+        break;
+      case SortBy.price:
+        newQuery = newQuery.orderBy('pricing.cost', descending: descending);
+        break;
+      case SortBy.updatedAt:
+        newQuery = newQuery.orderBy('updatedAt', descending: descending);
+        break;
     }
 
     return newQuery;

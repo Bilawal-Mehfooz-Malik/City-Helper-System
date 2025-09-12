@@ -238,6 +238,18 @@ abstract class AppLocalizations {
   /// **'Sector'**
   String get sector;
 
+  /// No description provided for @sortByLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortByLabel;
+
+  /// No description provided for @sortByLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get sortByLatest;
+
   /// No description provided for @sortOrderNone.
   ///
   /// In en, this message translates to:
@@ -255,18 +267,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'High to Low'**
   String get sortOrderHighToLow;
-
-  /// No description provided for @highestRatedFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'High rated first'**
-  String get highestRatedFirst;
-
-  /// No description provided for @lowestRatedFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'Low rated first'**
-  String get lowestRatedFirst;
 
   /// No description provided for @genderPreferenceAny.
   ///
@@ -307,13 +307,13 @@ abstract class AppLocalizations {
   /// No description provided for @sortByPrice.
   ///
   /// In en, this message translates to:
-  /// **'Sort by Price'**
+  /// **'Price'**
   String get sortByPrice;
 
   /// No description provided for @sortByRating.
   ///
   /// In en, this message translates to:
-  /// **'Sort by Rating'**
+  /// **'Rating'**
   String get sortByRating;
 
   /// No description provided for @showOpenOnly.

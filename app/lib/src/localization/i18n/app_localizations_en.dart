@@ -83,6 +83,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sector => 'Sector';
 
   @override
+  String get sortByLabel => 'Sort by';
+
+  @override
+  String get sortByLatest => 'Latest';
+
+  @override
   String get sortOrderNone => 'None';
 
   @override
@@ -90,12 +96,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sortOrderHighToLow => 'High to Low';
-
-  @override
-  String get highestRatedFirst => 'High rated first';
-
-  @override
-  String get lowestRatedFirst => 'Low rated first';
 
   @override
   String get genderPreferenceAny => 'Any';
@@ -116,10 +116,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filtersTitle => 'Filters';
 
   @override
-  String get sortByPrice => 'Sort by Price';
+  String get sortByPrice => 'Price';
 
   @override
-  String get sortByRating => 'Sort by Rating';
+  String get sortByRating => 'Rating';
 
   @override
   String get showOpenOnly => 'Show open only';

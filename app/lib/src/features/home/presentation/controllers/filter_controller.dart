@@ -22,9 +22,8 @@ class FilterController extends _$FilterController {
   bool get isFood => state is FoodFilter;
   bool get isResidence => state is ResidenceFilter;
 
-  FoodFilter? get asFood => state is FoodFilter ? state as FoodFilter : null;
-  ResidenceFilter? get asResidence =>
-      state is ResidenceFilter ? state as ResidenceFilter : null;
+  FoodFilter get asFood => state as FoodFilter;
+  ResidenceFilter get asResidence => state as ResidenceFilter;
 
   void applyFilter(EntityFilter newFilter) {
     state = newFilter;
@@ -33,40 +32,71 @@ class FilterController extends _$FilterController {
   void resetFilters() {
     state = state.when(
       residence: (_, _, _, _, _) => const EntityFilter.residence(),
-      food: (_, _) => const EntityFilter.food(),
-      basic: (_) => const EntityFilter.basic(),
+      food: (_, _, _) => const EntityFilter.food(),
+      basic: (_, _) => const EntityFilter.basic(),
     );
   }
 
-  void updateFilter({
-    bool? isOpen,
-    bool? isFurnished,
-    bool? isRoomAvailable,
-    SortOrder? priceSort,
-    SortOrder? ratingSort,
-    GenderPreference? genderPref,
-  }) {
-    state = state.when(
-      residence:
-          (
-            currentRatingSort,
-            currentIsFurnished,
-            currentIsRoomAvailable,
-            currentPriceSort,
-            currentGenderPref,
-          ) => EntityFilter.residence(
-            ratingSort: ratingSort ?? currentRatingSort,
-            isFurnished: isFurnished ?? currentIsFurnished,
-            isRoomAvailable: isRoomAvailable ?? currentIsRoomAvailable,
-            priceSort: priceSort ?? currentPriceSort,
-            genderPref: genderPref ?? currentGenderPref,
-          ),
-      food: (currentRatingSort, currentGenderPref) => EntityFilter.food(
-        ratingSort: ratingSort ?? currentRatingSort,
-        genderPref: genderPref ?? currentGenderPref,
-      ),
-      basic: (currentRatingSort) =>
-          EntityFilter.basic(ratingSort: ratingSort ?? currentRatingSort),
+  void setSort(SortBy newSortBy) {
+    final currentSortBy = state.map(
+      residence: (f) => f.sortBy,
+      food: (f) => f.sortBy,
+      basic: (f) => f.sortBy,
+    );
+
+    if (currentSortBy == newSortBy) {
+      // Toggle sort order
+      toggleSortOrder();
+    } else {
+      // Set new sort by and default to highToLow
+      state = state.map(
+        residence: (f) =>
+            f.copyWith(sortBy: newSortBy, sortOrder: SortOrder.highToLow),
+        food: (f) =>
+            f.copyWith(sortBy: newSortBy, sortOrder: SortOrder.highToLow),
+        basic: (f) =>
+            f.copyWith(sortBy: newSortBy, sortOrder: SortOrder.highToLow),
+      );
+    }
+  }
+
+  void toggleSortOrder() {
+    final newSortOrder =
+        state.map(
+              residence: (f) => f.sortOrder,
+              food: (f) => f.sortOrder,
+              basic: (f) => f.sortOrder,
+            ) ==
+            SortOrder.highToLow
+        ? SortOrder.lowToHigh
+        : SortOrder.highToLow;
+
+    state = state.map(
+      residence: (f) => f.copyWith(sortOrder: newSortOrder),
+      food: (f) => f.copyWith(sortOrder: newSortOrder),
+      basic: (f) => f.copyWith(sortOrder: newSortOrder),
+    );
+  }
+
+  void setFurnished(bool isFurnished) {
+    if (state is ResidenceFilter) {
+      state = (state as ResidenceFilter).copyWith(isFurnished: isFurnished);
+    }
+  }
+
+  void setRoomAvailable(bool isRoomAvailable) {
+    if (state is ResidenceFilter) {
+      state = (state as ResidenceFilter).copyWith(
+        isRoomAvailable: isRoomAvailable,
+      );
+    }
+  }
+
+  void setGender(GenderPreference? gender) {
+    state = state.map(
+      residence: (f) => f.copyWith(genderPref: gender),
+      food: (f) => f.copyWith(genderPref: gender),
+      basic: (f) => f, // Basic filter doesn't have gender
     );
   }
 }
