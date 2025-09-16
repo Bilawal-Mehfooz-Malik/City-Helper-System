@@ -32,42 +32,49 @@ class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 2,
-              child: DropdownButtonFormField<Category>(
-                value: selectedCategory,
-                decoration: InputDecoration(
-                  labelText: 'Category *'.hardcoded,
-                  border: const OutlineInputBorder(),
-                  filled: isEditing,
+        DropdownButtonFormField<Category>(
+          value: selectedCategory,
+          decoration: InputDecoration(
+            labelText: 'Category *'.hardcoded,
+            border: const OutlineInputBorder(),
+            filled: isEditing,
+          ),
+          items: allCategories
+              .map(
+                (cat) => DropdownMenuItem(value: cat, child: Text(cat.name)),
+              )
+              .toList(),
+          onChanged: isEditing ? null : onCategoryChanged,
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            transitionBuilder: (child, animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: SizeTransition(
+                  sizeFactor: animation,
+                  child: child,
                 ),
-                items: allCategories
-                    .map(
-                      (cat) =>
-                          DropdownMenuItem(value: cat, child: Text(cat.name)),
-                    )
-                    .toList(),
-                onChanged: isEditing ? null : onCategoryChanged,
-                validator: (value) =>
-                    value == null ? 'Required'.hardcoded : null,
-              ),
-            ),
-            gapW8,
-            Expanded(
-              flex: 3,
-              child: SubCategoryDropdown(
-                subCategoryOptions: subCategoryOptions,
-                selectedSubCategory: selectedSubCategory,
-                onChanged: selectedCategory == null
-                    ? null
-                    : onSubCategoryChanged,
-              ),
-            ),
-          ],
+              );
+            },
+            child: (selectedCategory != null)
+                ? Padding(
+                    padding: const EdgeInsets.only(top: Sizes.p12),
+                    child: SubCategoryDropdown(
+                      subCategoryOptions: subCategoryOptions,
+                      selectedSubCategory: selectedSubCategory,
+                      onChanged: onSubCategoryChanged,
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ),
         if (selectedCategory?.id == 1)
           Padding(
@@ -84,7 +91,6 @@ class CategorySection extends StatelessWidget {
                   )
                   .toList(),
               onChanged: onListingTypeChanged,
-              validator: (value) => value == null ? 'Required'.hardcoded : null,
             ),
           ),
       ],
@@ -101,7 +107,7 @@ class SubCategoryDropdown extends StatelessWidget {
     super.key,
     required this.subCategoryOptions,
     required this.selectedSubCategory,
-    required this.onChanged,
+    this.onChanged,
   });
 
   @override
