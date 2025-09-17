@@ -21,13 +21,15 @@ class AuthController extends _$AuthController {
   AuthService get _authService => ref.read(authServiceProvider);
 
   Future<void> signOut() async {
-    final authRepository = ref.read(authRepositoryProvider);
-    final userModeRepository = ref.read(userModeRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      await authRepository.signOut();
-      await userModeRepository.setIsAdminMode(false);
-    });
+    try {
+      await _authRepo.signOut();
+      ref.read(userModeRepositoryProvider).setIsAdminMode(false);
+      ref.read(appRouterProvider).pop();
+      state = const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
   }
 
   // ------------------ OTP FLOW ------------------

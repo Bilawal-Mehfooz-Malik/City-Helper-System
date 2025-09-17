@@ -23,7 +23,7 @@ import 'package:go_router/go_router.dart';
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 
-  void _logout(BuildContext context, WidgetRef ref) async {
+  Future<void> _logout(BuildContext context, WidgetRef ref) async {
     final logout = await showAlertDialog(
       context: context,
       title: context.loc.areYouSure,
@@ -31,16 +31,14 @@ class AccountScreen extends ConsumerWidget {
       defaultActionText: context.loc.logout,
     );
     if (logout == true) {
-      ref.read(authControllerProvider.notifier).signOut();
+      await ref.read(authControllerProvider.notifier).signOut();
     }
   }
 
   String _formatPhoneNumberForDisplay(String phoneNumber) {
     if (phoneNumber.startsWith('+92') && phoneNumber.length == 13) {
-      // Format for Pakistan numbers: +92 3XX XXXXXXX
-      return '${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 6)} ${phoneNumber.substring(6)}';
+      return '+${phoneNumber.substring(0, 2)} ${phoneNumber.substring(2, 5)} ${phoneNumber.substring(5)}';
     }
-    // Return original number if it doesn't match the expected format
     return phoneNumber;
   }
 
@@ -73,7 +71,6 @@ class AccountScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Profile Image
                   SizedBox(
                     width: 96,
                     height: 96,
@@ -88,8 +85,6 @@ class AccountScreen extends ConsumerWidget {
                     ),
                   ),
                   gapH16,
-
-                  // Name & Phone
                   Text(
                     profile.name,
                     style: context.textTheme.headlineMedium!.copyWith(
@@ -106,10 +101,7 @@ class AccountScreen extends ConsumerWidget {
                       ),
                     ),
                   ],
-
                   gapH24,
-
-                  // Map Heading
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -120,19 +112,13 @@ class AccountScreen extends ConsumerWidget {
                     ),
                   ),
                   gapH8,
-
-                  // Google Map
                   SizedBox(height: 250, child: mapBuilder(location)),
-
                   gapH24,
-
-                  // Edit Button
                   PrimaryButton(
                     useMaxSize: true,
                     text: context.loc.account_editProfile,
                     onPressed: () => context.pushNamed(AppRoute.profile.name),
                   ),
-
                   gapH8,
                   CustomOutlinedButton(
                     useMaxSize: true,
