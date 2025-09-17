@@ -76,7 +76,7 @@ class TermsOfServicePage extends StatelessWidget {
             _buildSection(
               context,
               title: '7. Contact',
-              content: 'For questions, email us at: [Your Email].',
+              content: 'For questions, email us at: support@findout.com.pk.',
             ),
           ],
         ),

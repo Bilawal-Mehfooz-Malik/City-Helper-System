@@ -1,8 +1,4 @@
 User-agent: *
-Disallow: /
-
-# Allow only these paths
-Allow: /
-Allow: /get-started
+Disallow:
 
 Sitemap: https://findout.com.pk/sitemap.xml

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Category/Home -->
+  <url>
+    <loc>https://findout.com.pk/</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://findout.com.pk/home</loc>
+    <lastmod>2025-09-10</lastmod>
+  </url>
   <!-- Startup & Legal -->
   <url>
     <loc>https://findout.com.pk/get-started</loc>
@@ -13,17 +22,6 @@
     <loc>https://findout.com.pk/privacy-policy</loc>
     <lastmod>2025-09-10</lastmod>
   </url>
-
-  <!-- Main Category/Home -->
-  <url>
-    <loc>https://findout.com.pk/</loc>
-    <lastmod>2025-09-10</lastmod>
-  </url>
-  <url>
-    <loc>https://findout.com.pk/home</loc>
-    <lastmod>2025-09-10</lastmod>
-  </url>
-
   <!-- Auth / Account -->
   <url>
     <loc>https://findout.com.pk/auth</loc>
@@ -37,7 +35,6 @@
     <loc>https://findout.com.pk/profile</loc>
     <lastmod>2025-09-10</lastmod>
   </url>
-
   <!-- Features -->
   <url>
     <loc>https://findout.com.pk/pick-your-location</loc>

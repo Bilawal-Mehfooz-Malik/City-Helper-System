@@ -89,7 +89,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             _buildSection(
               context,
               title: '8. Contact',
-              content: 'For questions, email us at: [Your Email].',
+              content: 'For questions, email us at: support@findout.com.pk.',
             ),
           ],
         ),

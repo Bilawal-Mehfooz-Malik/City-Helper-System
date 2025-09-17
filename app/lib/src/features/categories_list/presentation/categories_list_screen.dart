@@ -14,7 +14,7 @@ class CategoriesListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSmall = isSmallScreen(context);
-    final categoriesValue = ref.watch(categoriesListStreamProvider);
+    final categoriesValue = ref.watch(categoriesListFutureProvider);
 
     return Scaffold(
       appBar: isSmall ? const _CategoriesAppBar() : null,
