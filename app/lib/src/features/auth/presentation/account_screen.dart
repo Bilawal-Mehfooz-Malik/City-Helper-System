@@ -35,15 +35,34 @@ class AccountScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+    final delete = await showAlertDialog(
+      context: context,
+      title: context.loc.areYouSure,
+      content: context.loc.deleteAccountConfirmation,
+      cancelActionText: context.loc.cancel,
+      defaultActionText: context.loc.delete,
+    );
+    if (delete == true) {
+      await ref.read(authControllerProvider.notifier).deleteAccount();
+    }
+  }
+
   String _formatPhoneNumberForDisplay(String phoneNumber) {
     if (phoneNumber.startsWith('+92') && phoneNumber.length == 13) {
-      return '+${phoneNumber.substring(0, 2)} ${phoneNumber.substring(2, 5)} ${phoneNumber.substring(5)}';
+      return '${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 6)} ${phoneNumber.substring(6)}';
     }
     return phoneNumber;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(authControllerProvider, (_, state) {
+      if (state.hasError && !state.isLoading) {
+        showExceptionAlertDialog(context: context, title: context.loc.error, exception: state.error);
+      }
+    });
+    final authState = ref.watch(authControllerProvider);
     final user = ref.watch(authStateChangesProvider).value;
     if (user == null) return const SizedBox.shrink();
 
@@ -81,7 +100,7 @@ class AccountScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(50),
                               imageUrl: profile.profileImageUrl,
                             )
-                          : CircleAvatar(child: Icon(Icons.person, size: 48)),
+                          : const CircleAvatar(child: Icon(Icons.person, size: 48)),
                     ),
                   ),
                   gapH16,
@@ -96,7 +115,7 @@ class AccountScreen extends ConsumerWidget {
                     gapH8,
                     Text(
                       _formatPhoneNumberForDisplay(profile.phoneNumber!),
-                      style: TextStyle(
+                      style: context.textTheme.bodyMedium?.copyWith(
                         color: context.colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -115,15 +134,28 @@ class AccountScreen extends ConsumerWidget {
                   SizedBox(height: 250, child: mapBuilder(location)),
                   gapH24,
                   PrimaryButton(
+                    isLoading: authState.isLoading,
                     useMaxSize: true,
                     text: context.loc.account_editProfile,
-                    onPressed: () => context.pushNamed(AppRoute.profile.name),
+                    onPressed: authState.isLoading ? null : () => context.pushNamed(AppRoute.profile.name),
                   ),
                   gapH8,
                   CustomOutlinedButton(
+                    isLoading: authState.isLoading,
                     useMaxSize: true,
                     text: context.loc.logout,
-                    onPressed: () => _logout(context, ref),
+                    onPressed: authState.isLoading ? null : () => _logout(context, ref),
+                  ),
+                  gapH8,
+                  CustomOutlinedButton(
+                    isLoading: authState.isLoading,
+                    useMaxSize: true,
+                    text: context.loc.deleteAccount,
+                    onPressed: authState.isLoading ? null : () => _deleteAccount(context, ref),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: context.colorScheme.error,
+                      side: BorderSide(color: context.colorScheme.error),
+                    ),
                   ),
                 ],
               ),

@@ -95,3 +95,31 @@ export const recordAdClickLogic = async (firestore: admin.firestore.Firestore, d
   await adRef.update({ clickCount: admin.firestore.FieldValue.increment(1) });
   return { success: true };
 };
+
+export const deleteUserAccountLogic = async (firestore: admin.firestore.Firestore, context: any) => {
+  if (!context.auth) {
+    throw new Error("User must be authenticated to delete their account.");
+  }
+
+  const userId = context.auth.uid;
+  const batch = firestore.batch();
+
+  // 1. Delete user document from 'users' collection
+  const userRef = firestore.collection("users").doc(userId);
+  batch.delete(userRef);
+
+  // 2. Find and delete all reviews by the user
+  const reviewsQuery = firestore.collectionGroup("reviews").where("userId", "==", userId);
+  const reviewsSnapshot = await reviewsQuery.get();
+  reviewsSnapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  // 3. Commit the batch deletion
+  await batch.commit();
+
+  // 4. Delete the user from Firebase Authentication
+  await admin.auth().deleteUser(userId);
+
+  return { success: true, message: "User account deleted successfully." };
+};

@@ -85,5 +85,14 @@ class FakeAuthRepository implements AuthRepository {
     _authState.value = null;
   }
 
+  @override
+  Future<void> deleteAccount() async {
+    await delay(addDelay);
+    if (_authState.value != null) {
+      _users.removeWhere((user) => user.uid == _authState.value!.uid);
+      _authState.value = null;
+    }
+  }
+
   void dispose() => _authState.close();
 }

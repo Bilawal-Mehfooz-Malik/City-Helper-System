@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id "com.android.application"
     // START: FlutterFire Configuration
@@ -7,9 +10,14 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
     // Google Maps Documentation Requirements
-    // https://developers.google.com/maps/flutter-package/config#step_4_add_your_api_key_to_the_project
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
 
+// Load keystore properties
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 secrets {
@@ -17,57 +25,65 @@ secrets {
     // -------------------------------------------------------------
     // 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
     // 2. Add this line, where YOUR_API_KEY is your API key:
-    // -------------------------------------------------------------
     // MAPS_API_KEY=YOUR_API_KEY
     // -------------------------------------------------------------
     propertiesFileName = "secrets.properties"
-    // A properties file containing default secret values. This file can be
-    // checked in version control.
     defaultPropertiesFileName = "local.defaults.properties"
 }
 
 android {
-    namespace = "com.example.app"
-    compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    namespace "com.bmenterprises.findout"
+    compileSdk 35
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "1.8"
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 24
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        applicationId "com.bmenterprises.findout"
+        minSdk 24
+        targetSdk flutter.targetSdkVersion
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+        // If you ever drop minSdk below 21, uncomment this:
+        // multiDexEnabled true
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile keystoreProperties["storeFile"] ? file(keystoreProperties["storeFile"]) : null
+            storePassword keystoreProperties["storePassword"]
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
         }
     }
 }
 
 flutter {
-    source = "../.."
+    source "../.."
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+    // Firebase BOM - centralizes Firebase versions
+    implementation platform("com.google.firebase:firebase-bom:33.15.0")
 
-    // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth")
+    // Firebase Auth
+    implementation "com.google.firebase:firebase-auth"
+
+    // Material Components (required for platform views like Google Maps)
+    implementation "com.google.android.material:material:1.13.0"
 }

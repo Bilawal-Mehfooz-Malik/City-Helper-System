@@ -15,6 +15,7 @@ class CustomOutlinedButton extends StatelessWidget {
     this.isDisabled = false,
     this.useMaxSize = false,
     this.onPressed,
+    this.style,
   });
 
   final String text;
@@ -22,13 +23,14 @@ class CustomOutlinedButton extends StatelessWidget {
   final bool isDisabled;
   final bool useMaxSize;
   final VoidCallback? onPressed;
+  final ButtonStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
-      ),
+      ).merge(style),
       onPressed: isDisabled || isLoading ? null : onPressed,
       child: isLoading
           ? const CenteredProgressIndicator()

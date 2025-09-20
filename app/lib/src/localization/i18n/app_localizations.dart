@@ -916,6 +916,18 @@ abstract class AppLocalizations {
   /// **'Log out'**
   String get logout;
 
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This will permanently delete all your data, including your profile and reviews. This action cannot be undone.'**
+  String get deleteAccountConfirmation;
+
   /// No description provided for @deleteShop.
   ///
   /// In en, this message translates to:

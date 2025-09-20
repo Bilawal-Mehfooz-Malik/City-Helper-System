@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:325657605303:android:afe6a00c96104f3fd9c932",
+        "android_client_info": {
+          "package_name": "com.bmenterprises.findout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQSLSsXI8MZpsfUUA6kl5VNss9EV1yl0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:325657605303:android:f9da00f7362ca7b4d9c932",
         "android_client_info": {
           "package_name": "com.example.app"

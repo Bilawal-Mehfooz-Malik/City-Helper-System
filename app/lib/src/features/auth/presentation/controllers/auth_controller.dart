@@ -32,6 +32,17 @@ class AuthController extends _$AuthController {
     }
   }
 
+  Future<void> deleteAccount() async {
+    state = const AsyncLoading();
+    try {
+      await _authService.deleteAccount();
+      await signOut();
+      state = const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
+  }
+
   // ------------------ OTP FLOW ------------------
 
   Future<AsyncValue<void>> sendOtp(String phoneNumber) async {

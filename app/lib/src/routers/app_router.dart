@@ -2,6 +2,7 @@ import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/presentation/account_screen.dart';
 import 'package:app/src/features/auth/presentation/auth_flow_screen.dart';
+import 'package:app/src/features/auth/presentation/delete_account_screen.dart';
 import 'package:app/src/features/auth/presentation/profile_screen.dart';
 import 'package:app/src/features/categories_list/presentation/categories_list_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
@@ -47,6 +48,7 @@ enum AppRoute {
   account,
   myShop,
   shopForm,
+  deleteAccount,
   loading,
   pageNotFound,
 }
@@ -81,12 +83,23 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/terms-of-service',
         name: AppRoute.termsOfService.name,
-        builder: (context, state) => const TermsOfServicePage(),
+        pageBuilder: (context, state) => MaterialPage(
+          fullscreenDialog: true,
+          child: const TermsOfServicePage(),
+        ),
       ),
       GoRoute(
         path: '/privacy-policy',
         name: AppRoute.privacyPolicy.name,
-        builder: (context, state) => const PrivacyPolicyPage(),
+        pageBuilder: (context, state) => MaterialPage(
+          fullscreenDialog: true,
+          child: const PrivacyPolicyPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/delete-account',
+        name: AppRoute.deleteAccount.name,
+        builder: (context, state) => const DeleteAccountScreen(),
       ),
       GoRoute(
         path: '/',

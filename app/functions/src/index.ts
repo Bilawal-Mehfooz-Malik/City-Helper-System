@@ -12,6 +12,7 @@ import {
   getCarouselAdsLogic,
   recordAdImpressionsLogic,
   recordAdClickLogic,
+  deleteUserAccountLogic,
 } from "./logic";
 
 // Initialize Firebase Admin
@@ -33,6 +34,14 @@ export const recordAdImpressions = https.onCall(async (request) => {
 export const recordAdClick = https.onCall(async (request) => {
   try { return await recordAdClickLogic(firestore, request.data); } 
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
+});
+
+export const deleteUserAccount = https.onCall(async (request, context) => {
+  try {
+    return await deleteUserAccountLogic(firestore, context);
+  } catch (err: any) {
+    throw new https.HttpsError("internal", err.message);
+  }
 });
 
 // --- Firestore v2 Triggers ---

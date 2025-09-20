@@ -4,6 +4,7 @@ import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,8 +14,9 @@ part 'auth_repository.g.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;
+  final FirebaseFunctions _functions;
 
-  AuthRepository(this._auth);
+  AuthRepository(this._auth, this._functions);
 
   ConfirmationResult? _confirmationResult; // Used only for web
 
@@ -99,6 +101,11 @@ class AuthRepository {
     return _auth.signOut();
   }
 
+  Future<void> deleteAccount() async {
+    final callable = _functions.httpsCallable('deleteUserAccount');
+    await callable.call<void>();
+  }
+
   /// Converts Firebase [User] to your app domain [AppUser].
   AppUser? _convertUser(User? user) => user != null
       ? AppUser(
@@ -111,7 +118,7 @@ class AuthRepository {
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) {
-  return AuthRepository(FirebaseAuth.instance);
+  return AuthRepository(FirebaseAuth.instance, FirebaseFunctions.instance);
 }
 
 @Riverpod(keepAlive: true)

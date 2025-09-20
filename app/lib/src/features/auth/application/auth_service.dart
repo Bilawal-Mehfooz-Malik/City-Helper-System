@@ -97,6 +97,14 @@ class AuthService {
           location: location,
         );
   }
+
+  Future<void> deleteAccount() async {
+    final user = ref.read(authRepositoryProvider).currentUser;
+    if (user == null) {
+      throw UserNotAuthenticatedException();
+    }
+    await ref.read(authRepositoryProvider).deleteAccount();
+  }
 }
 
 @riverpod

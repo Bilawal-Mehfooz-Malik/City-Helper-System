@@ -1,4 +1,4 @@
-package com.example.app
+package com.bmenterprises.findout
 
 import io.flutter.embedding.android.FlutterActivity
 
