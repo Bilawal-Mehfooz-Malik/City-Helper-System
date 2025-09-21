@@ -1,5 +1,7 @@
 import 'package:app/firebase_options.dart';
 import 'package:app/src/core/app_bootstrap/app_bootstrap.dart';
+import 'package:app/src/core/app_config/env.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // ignore:depend_on_referenced_packages
@@ -11,6 +13,11 @@ import 'package:app/src/core/app_config/configure_nonweb.dart'
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider(Env.recaptchaV3SiteKey),
+    androidProvider: AndroidProvider.playIntegrity,
+    appleProvider: AppleProvider.appAttest,
+  );
 
   // turn off the # in the URLs on the web
   usePathUrlStrategy();

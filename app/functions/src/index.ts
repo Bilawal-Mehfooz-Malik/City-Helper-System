@@ -22,23 +22,22 @@ firestore.settings({ ignoreUndefinedProperties: true });
 
 // --- HTTPS Callable Functions ---
 export const getCarouselAds = https.onCall(async (request) => {
-  try { return await getCarouselAdsLogic(firestore, request.data); } 
+  try { return await getCarouselAdsLogic(firestore, request); }
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
 export const recordAdImpressions = https.onCall(async (request) => {
-  try { return await recordAdImpressionsLogic(firestore, request.data); } 
+  try { return await recordAdImpressionsLogic(firestore, request); }
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
 
 export const recordAdClick = https.onCall(async (request) => {
-  try { return await recordAdClickLogic(firestore, request.data); } 
+  try { return await recordAdClickLogic(firestore, request); }
   catch (err: any) { throw new https.HttpsError("internal", err.message); }
 });
-
-export const deleteUserAccount = https.onCall(async (request, context) => {
+export const deleteUserAccount = https.onCall(async (request) => {
   try {
-    return await deleteUserAccountLogic(firestore, context);
+    return await deleteUserAccountLogic(firestore, request);
   } catch (err: any) {
     throw new https.HttpsError("internal", err.message);
   }

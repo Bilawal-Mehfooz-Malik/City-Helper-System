@@ -11,6 +11,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
+import 'package:app/src/features/auth/presentation/controllers/account_action_controller.dart';
 import 'package:app/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
@@ -31,6 +32,9 @@ class AccountScreen extends ConsumerWidget {
       defaultActionText: context.loc.logout,
     );
     if (logout == true) {
+      ref
+          .read(accountActionControllerProvider.notifier)
+          .setAction(AccountAction.logout);
       await ref.read(authControllerProvider.notifier).signOut();
     }
   }
@@ -44,6 +48,9 @@ class AccountScreen extends ConsumerWidget {
       defaultActionText: context.loc.delete,
     );
     if (delete == true) {
+      ref
+          .read(accountActionControllerProvider.notifier)
+          .setAction(AccountAction.delete);
       await ref.read(authControllerProvider.notifier).deleteAccount();
     }
   }
@@ -59,10 +66,21 @@ class AccountScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(authControllerProvider, (_, state) {
       if (state.hasError && !state.isLoading) {
-        showExceptionAlertDialog(context: context, title: context.loc.error, exception: state.error);
+        showExceptionAlertDialog(
+          context: context,
+          title: context.loc.error,
+          exception: state.error,
+        );
+      }
+      if (!state.isLoading) {
+        ref
+            .read(accountActionControllerProvider.notifier)
+            .setAction(AccountAction.none);
       }
     });
     final authState = ref.watch(authControllerProvider);
+    final accountAction = ref.watch(accountActionControllerProvider);
+
     final user = ref.watch(authStateChangesProvider).value;
     if (user == null) return const SizedBox.shrink();
 
@@ -100,7 +118,9 @@ class AccountScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(50),
                               imageUrl: profile.profileImageUrl,
                             )
-                          : const CircleAvatar(child: Icon(Icons.person, size: 48)),
+                          : const CircleAvatar(
+                              child: Icon(Icons.person, size: 48),
+                            ),
                     ),
                   ),
                   gapH16,
@@ -134,24 +154,34 @@ class AccountScreen extends ConsumerWidget {
                   SizedBox(height: 250, child: mapBuilder(location)),
                   gapH24,
                   PrimaryButton(
-                    isLoading: authState.isLoading,
+                    isLoading: false,
                     useMaxSize: true,
                     text: context.loc.account_editProfile,
-                    onPressed: authState.isLoading ? null : () => context.pushNamed(AppRoute.profile.name),
+                    onPressed: authState.isLoading
+                        ? null
+                        : () => context.pushNamed(AppRoute.profile.name),
                   ),
                   gapH8,
                   CustomOutlinedButton(
-                    isLoading: authState.isLoading,
+                    isLoading:
+                        authState.isLoading &&
+                        accountAction == AccountAction.logout,
                     useMaxSize: true,
                     text: context.loc.logout,
-                    onPressed: authState.isLoading ? null : () => _logout(context, ref),
+                    onPressed: authState.isLoading
+                        ? null
+                        : () => _logout(context, ref),
                   ),
                   gapH8,
                   CustomOutlinedButton(
-                    isLoading: authState.isLoading,
+                    isLoading:
+                        authState.isLoading &&
+                        accountAction == AccountAction.delete,
                     useMaxSize: true,
                     text: context.loc.deleteAccount,
-                    onPressed: authState.isLoading ? null : () => _deleteAccount(context, ref),
+                    onPressed: authState.isLoading
+                        ? null
+                        : () => _deleteAccount(context, ref),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: context.colorScheme.error,
                       side: BorderSide(color: context.colorScheme.error),

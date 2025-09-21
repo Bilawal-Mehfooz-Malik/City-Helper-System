@@ -1,10 +1,15 @@
 import * as admin from "firebase-admin";
+import * as https from "firebase-functions/v2/https";
 import { AdData, Priority } from "./types";
 import { toISOString } from "./helpers";
 
-export const getCarouselAdsLogic = async (firestore: admin.firestore.Firestore, data: any): Promise<any[]> => {
+export const getCarouselAdsLogic = async (
+  firestore: admin.firestore.Firestore,
+  data: any
+): Promise<any[]> => {
   const categoryId = Number(data.categoryId);
-  const subcategoryId = data.subcategoryId !== undefined ? Number(data.subcategoryId) : undefined;
+  const subcategoryId =
+    data.subcategoryId !== undefined ? Number(data.subcategoryId) : undefined;
 
   if (isNaN(categoryId)) throw new Error("categoryId must be a number.");
 
@@ -17,7 +22,8 @@ export const getCarouselAdsLogic = async (firestore: admin.firestore.Firestore, 
     .where("status", "==", "approved")
     .where("startDate", "<=", now);
 
-  if (subcategoryId !== undefined) adsQuery = adsQuery.where("subcategoryId", "==", subcategoryId);
+  if (subcategoryId !== undefined)
+    adsQuery = adsQuery.where("subcategoryId", "==", subcategoryId);
 
   const snapshot = await adsQuery
     .orderBy("startDate", "desc")
@@ -63,9 +69,13 @@ export const getCarouselAdsLogic = async (firestore: admin.firestore.Firestore, 
   }));
 };
 
-export const recordAdImpressionsLogic = async (firestore: admin.firestore.Firestore, data: any) => {
+export const recordAdImpressionsLogic = async (
+  firestore: admin.firestore.Firestore,
+  data: any
+) => {
   const adIds = data.adIds;
-  if (!Array.isArray(adIds) || adIds.length === 0) throw new Error("adIds must be a non-empty array of strings.");
+  if (!Array.isArray(adIds) || adIds.length === 0)
+    throw new Error("adIds must be a non-empty array of strings.");
 
   const batch = firestore.batch();
   const nowTimestamp = admin.firestore.Timestamp.now();
@@ -77,7 +87,10 @@ export const recordAdImpressionsLogic = async (firestore: admin.firestore.Firest
     const adRef = adsCollection.doc(adId);
     const adDoc = await adRef.get();
     if (adDoc.exists) {
-      batch.update(adRef, { impressionCount: admin.firestore.FieldValue.increment(1), lastShownAt: nowTimestamp });
+      batch.update(adRef, {
+        impressionCount: admin.firestore.FieldValue.increment(1),
+        lastShownAt: nowTimestamp,
+      });
       successfulImpressions++;
     }
   }
@@ -86,39 +99,109 @@ export const recordAdImpressionsLogic = async (firestore: admin.firestore.Firest
   return { success: true, count: successfulImpressions };
 };
 
-export const recordAdClickLogic = async (firestore: admin.firestore.Firestore, data: any) => {
+export const recordAdClickLogic = async (
+  firestore: admin.firestore.Firestore,
+  request: any
+) => {
+  if (request.app == undefined) {
+    throw new https.HttpsError(
+      "failed-precondition",
+      "The function must be called from an App Check verified app."
+    );
+  }
+  const data = request.data;
   const adId = data.adId;
-  if (typeof adId !== "string" || !adId) throw new Error("adId must be a non-empty string.");
+  if (typeof adId !== "string" || !adId)
+    throw new Error("adId must be a non-empty string.");
+
   const adRef = firestore.collection("carousel_ads").doc(adId);
   const adDoc = await adRef.get();
   if (!adDoc.exists) throw new Error(`Ad with id ${adId} not found.`);
-  await adRef.update({ clickCount: admin.firestore.FieldValue.increment(1) });
+
+  await adRef.update({
+    clickCount: admin.firestore.FieldValue.increment(1),
+  });
+
   return { success: true };
 };
 
-export const deleteUserAccountLogic = async (firestore: admin.firestore.Firestore, context: any) => {
-  if (!context.auth) {
+export const deleteUserAccountLogic = async (
+  firestore: admin.firestore.Firestore,
+  request: any
+) => {
+  if (request.app == undefined) {
+    throw new https.HttpsError(
+      "failed-precondition",
+      "The function must be called from an App Check verified app."
+    );
+  }
+  if (!request.auth) {
     throw new Error("User must be authenticated to delete their account.");
   }
 
-  const userId = context.auth.uid;
+  const userId = request.auth.uid;
   const batch = firestore.batch();
 
-  // 1. Delete user document from 'users' collection
+  // 1. Delete user document
   const userRef = firestore.collection("users").doc(userId);
   batch.delete(userRef);
 
-  // 2. Find and delete all reviews by the user
-  const reviewsQuery = firestore.collectionGroup("reviews").where("userId", "==", userId);
-  const reviewsSnapshot = await reviewsQuery.get();
-  reviewsSnapshot.docs.forEach((doc) => {
-    batch.delete(doc.ref);
-  });
+  // 2. Delete user reviews
+  try {
+    const reviewsSnapshot = await firestore
+      .collection("reviews")
+      .where("userId", "==", userId)
+      .get();
+    reviewsSnapshot.docs.forEach((doc) => batch.delete(doc.ref));
+  } catch {
+    throw new https.HttpsError("internal", "Failed to query user reviews.");
+  }
 
-  // 3. Commit the batch deletion
+  // 3. Delete food listings
+  const foodListingsSnapshot = await firestore
+    .collection("food_listings")
+    .where("ownerId", "==", userId)
+    .get();
+  foodListingsSnapshot.docs.forEach((doc) => batch.delete(doc.ref));
+
+  // 4. Delete residence listings
+  const residenceListingsSnapshot = await firestore
+    .collection("residence_listings")
+    .where("ownerId", "==", userId)
+    .get();
+  residenceListingsSnapshot.docs.forEach((doc) => batch.delete(doc.ref));
+
+  // 5. Commit batch
   await batch.commit();
 
-  // 4. Delete the user from Firebase Authentication
+  // 6. Delete user files
+  const bucket = admin.storage().bucket();
+  const profileImagePath = `users/${userId}/profile.jpg`;
+  const shopImagesPath = `shops/${userId}/`;
+
+  try {
+    await bucket.file(profileImagePath).delete();
+  } catch (error: any) {
+    if (error.code !== 404) {
+      throw new https.HttpsError(
+        "internal",
+        `Failed to delete profile image: ${error.message}`
+      );
+    }
+  }
+
+  try {
+    await bucket.deleteFiles({ prefix: shopImagesPath });
+  } catch (error: any) {
+    if (error.code !== 404) {
+      throw new https.HttpsError(
+        "internal",
+        `Failed to delete shop images: ${error.message}`
+      );
+    }
+  }
+
+  // 7. Delete from Authentication
   await admin.auth().deleteUser(userId);
 
   return { success: true, message: "User account deleted successfully." };
