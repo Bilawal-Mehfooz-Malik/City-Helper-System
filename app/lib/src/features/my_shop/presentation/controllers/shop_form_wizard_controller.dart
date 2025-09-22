@@ -59,8 +59,14 @@ class ShopFormWizardController extends _$ShopFormWizardController {
         }
         break;
       case 4: // Step 5: Media (Cover Image, Gallery Images)
-        // Cover image is required for new shops, but not for editing
-        // Gallery images are optional
+        // Cover image is required
+        if (formData.coverImageBytes == null) return false;
+        // Gallery images are required
+        if (formData.galleryImageBytes.isEmpty) return false;
+        // Menu images are required for Food category
+        if (formData.category?.id == 2 && formData.menuImageBytes.isEmpty) {
+          return false;
+        }
         break;
     }
     return true;
