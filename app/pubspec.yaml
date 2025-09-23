@@ -4,7 +4,7 @@ description: "A new Flutter project."
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
 
-version: 1.0.0+3
+version: 1.0.0+4
 
 environment:
   sdk: 3.8.1
@@ -33,6 +33,8 @@ dependencies:
   algolia_helper_flutter: 1.2.1
   cloud_functions: 6.0.0
   firebase_app_check: 0.4.0+1
+  firebase_crashlytics: 5.0.1
+  firebase_analytics: 12.0.1
 
 
   # others

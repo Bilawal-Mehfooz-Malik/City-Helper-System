@@ -53,21 +53,27 @@ class EntitySearchRepository {
 
 @Riverpod(keepAlive: true)
 EntitySearchRepository residenceSearchRepository(Ref ref) {
-  final searcher = HitsSearcher(
-    applicationID: Env.algoliaAppId,
-    apiKey: Env.algoliaSearchKey,
-    indexName: 'residence_listings_index',
-  );
+  final searcher =
+      HitsSearcher(
+        applicationID: Env.algoliaAppId,
+        apiKey: Env.algoliaSearchKey,
+        indexName: 'residence_listings_index',
+      )..applyState(
+        (state) => state.copyWith(facetFilters: ["approvalStatus:approved"]),
+      );
   return EntitySearchRepository(searcher);
 }
 
 @Riverpod(keepAlive: true)
 EntitySearchRepository foodSearchRepository(Ref ref) {
-  final searcher = HitsSearcher(
-    applicationID: Env.algoliaAppId,
-    apiKey: Env.algoliaSearchKey,
-    indexName: 'food_listings_index',
-  );
+  final searcher =
+      HitsSearcher(
+        applicationID: Env.algoliaAppId,
+        apiKey: Env.algoliaSearchKey,
+        indexName: 'food_listings_index',
+      )..applyState(
+        (state) => state.copyWith(facetFilters: ["approvalStatus:approved"]),
+      );
   return EntitySearchRepository(searcher);
 }
 

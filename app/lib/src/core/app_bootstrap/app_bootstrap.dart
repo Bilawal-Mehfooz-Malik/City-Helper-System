@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:app/src/app.dart';
 import 'package:app/src/core/exceptions/async_error_logger.dart';
 import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +18,16 @@ class AppBootStrap {
       container: container,
       child: const MyApp(),
     );
+  }
+
+  void registerErrorHandlers() {
+    // Pass all uncaught "fatal" errors from the framework to Crashlytics
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
   }
 
   // Future<void> appCheckInitializer() async {

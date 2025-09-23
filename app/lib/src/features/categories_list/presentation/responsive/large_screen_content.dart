@@ -30,7 +30,10 @@ class LargeScreenContent extends ConsumerWidget {
       ),
       data: (categories) {
         if (categories.isEmpty) {
-          return CategoryFeedbackHandler.empty(isSmallScreen: false);
+          return CategoryFeedbackHandler.empty(
+            isSmallScreen: false,
+            onRefresh: () => ref.refresh(categoriesListFutureProvider),
+          );
         }
         return DraggableTwoColumnLayout(
           startContent: CategoriesStartContent(categories: categories),

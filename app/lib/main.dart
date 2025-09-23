@@ -26,6 +26,7 @@ void main() async {
   configureGoogleMapsWeb();
 
   final appBootStrap = AppBootStrap();
+  appBootStrap.registerErrorHandlers();
   // await appBootStrap.setupEmulators();
   final container = await appBootStrap.createProviderContainer();
   final root = appBootStrap.createRootWidget(container: container);

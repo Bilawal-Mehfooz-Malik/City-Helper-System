@@ -24,7 +24,10 @@ class SmallScreenContent extends ConsumerWidget {
       ),
       data: (categories) {
         if (categories.isEmpty) {
-          return CategoryFeedbackHandler.empty(isSmallScreen: true);
+          return CategoryFeedbackHandler.empty(
+            isSmallScreen: true,
+            onRefresh: () => ref.refresh(categoriesListFutureProvider),
+          );
         }
         return CategoriesListView(
           usePadding: true,

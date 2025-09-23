@@ -1,5 +1,7 @@
 import 'dart:developer' as developer;
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 class AppLogger {
   static const String _tag = "[AppLogger]";
 
@@ -15,6 +17,16 @@ class AppLogger {
     );
     developer.log(errorMessage,
         name: "ERROR", error: error, stackTrace: stackTrace);
+
+    // Also report to Crashlytics
+    if (error != null) {
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+        reason: message,
+        fatal: false, // These are handled, so not necessarily fatal
+      );
+    }
   }
 
   /// Logs a **warning message**
