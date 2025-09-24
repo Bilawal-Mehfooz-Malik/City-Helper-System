@@ -81,7 +81,7 @@ class AppBarContent extends StatelessWidget {
       // Use Row to place icon next to text
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(name ?? context.loc.somethingWentWrong),
+        Flexible(child: Text(name ?? context.loc.somethingWentWrong, overflow: TextOverflow.ellipsis)),
         if (isPopular) ...[
           // Conditionally display icon
           gapW4,

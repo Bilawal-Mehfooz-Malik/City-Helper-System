@@ -104,6 +104,10 @@ flutter:
   assets:
     - assets/images/
     - assets/logo/
+    - assets/fake_data/
+    - assets/fake_data/residence/
+    - assets/fake_data/food/
+    - assets/fake_data/carousel_ads/
     # - assets/carousel_ads/
     # - assets/images/residence/
     # - assets/images/food/
