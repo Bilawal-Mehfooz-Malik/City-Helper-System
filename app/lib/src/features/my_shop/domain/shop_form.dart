@@ -48,7 +48,11 @@ abstract class ShopForm with _$ShopForm {
     @Default([]) List<Uint8List> galleryImageBytes,
     @Default([]) List<String> galleryUrlsToDelete,
     @Default([]) List<Uint8List> menuImageBytes,
-    @Default([]) List<String> menuUrlsToDelete,
+    @Default([]) List<String> menuUrlsToDelete, // For editing
+    // For validation based on existing images
+    String? initialCoverUrl,
+    @Default([]) List<String> initialGalleryUrls,
+    @Default([]) List<String> initialMenuUrls,
   }) = _ShopForm;
 
   factory ShopForm.fromEntityDetail(EntityDetail shop) {
@@ -83,9 +87,10 @@ abstract class ShopForm with _$ShopForm {
       pricing: pricing,
       isFurnished: isFurnished,
       listingType: listingType,
-      isRoomAvailable: (shop is ResidenceDetail)
-          ? shop.isRoomAvailable
-          : true, // Default to true if not residence
+      isRoomAvailable: (shop is ResidenceDetail) ? shop.isRoomAvailable : true,
+      initialCoverUrl: shop.coverImageUrl,
+      initialGalleryUrls: shop.galleryImageUrls,
+      initialMenuUrls: (shop is FoodDetail) ? shop.menuImageUrls : [],
     );
   }
 

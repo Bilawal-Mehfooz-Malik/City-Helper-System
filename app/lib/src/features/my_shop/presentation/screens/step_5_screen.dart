@@ -10,16 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step5MediaPage extends StatelessWidget {
   final ShopFormWizardControllerProvider wizardProvider;
-  final String? initialCoverUrl;
-  final List<String> initialGalleryUrls;
-  final List<String> initialMenuUrls;
 
   const Step5MediaPage({
     super.key,
     required this.wizardProvider,
-    this.initialCoverUrl,
-    required this.initialGalleryUrls,
-    required this.initialMenuUrls,
   });
 
   @override
@@ -28,9 +22,6 @@ class Step5MediaPage extends StatelessWidget {
       padding: const EdgeInsets.all(Sizes.p16),
       child: _Step5MediaForm(
         wizardProvider: wizardProvider,
-        initialCoverUrl: initialCoverUrl,
-        initialGalleryUrls: initialGalleryUrls,
-        initialMenuUrls: initialMenuUrls,
       ),
     );
   }
@@ -38,15 +29,9 @@ class Step5MediaPage extends StatelessWidget {
 
 class _Step5MediaForm extends ConsumerWidget {
   final ShopFormWizardControllerProvider wizardProvider;
-  final String? initialCoverUrl;
-  final List<String> initialGalleryUrls;
-  final List<String> initialMenuUrls;
 
   const _Step5MediaForm({
     required this.wizardProvider,
-    this.initialCoverUrl,
-    required this.initialGalleryUrls,
-    required this.initialMenuUrls,
   });
 
   @override
@@ -60,7 +45,7 @@ class _Step5MediaForm extends ConsumerWidget {
       children: [
         CoverImageTile(
           coverImageBytes: formData.coverImageBytes,
-          coverImageUrl: initialCoverUrl,
+          coverImageUrl: formData.initialCoverUrl,
           onCoverImagePicked: (bytes) => wizardController.updateFormData(
             formData.copyWith(coverImageBytes: bytes),
           ),
@@ -68,7 +53,7 @@ class _Step5MediaForm extends ConsumerWidget {
         gapH12,
         GalleryImagesTile(
           galleryImageBytes: formData.galleryImageBytes,
-          galleryImagesUrl: initialGalleryUrls
+          galleryImagesUrl: formData.initialGalleryUrls
               .where((url) => !formData.galleryUrlsToDelete.contains(url))
               .toList(),
           onGalleryImagesPicked: (bytesList) => wizardController.updateFormData(
@@ -86,7 +71,7 @@ class _Step5MediaForm extends ConsumerWidget {
           gapH12,
           MenuImagesTile(
             menuImageBytes: formData.menuImageBytes,
-            menuImagesUrl: initialMenuUrls
+            menuImagesUrl: formData.initialMenuUrls
                 .where((url) => !formData.menuUrlsToDelete.contains(url))
                 .toList(),
             onMenuImagesPicked: (bytesList) => wizardController.updateFormData(

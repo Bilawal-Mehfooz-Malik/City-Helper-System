@@ -7,7 +7,7 @@ part of 'entity_search_repository.dart';
 // **************************************************************************
 
 String _$residenceSearchRepositoryHash() =>
-    r'0c50909d97ebecb502603f1275f1cc1cf80b7cca';
+    r'fc7919ab2d8fe77b815af76b70cbe8bf9e12ad12';
 
 /// See also [residenceSearchRepository].
 @ProviderFor(residenceSearchRepository)
@@ -26,7 +26,7 @@ final residenceSearchRepositoryProvider =
 // ignore: unused_element
 typedef ResidenceSearchRepositoryRef = ProviderRef<EntitySearchRepository>;
 String _$foodSearchRepositoryHash() =>
-    r'c78731f12482d1890d2dea9a67ae150597a67145';
+    r'ff5c4e66d1fba75a4c45f9936cdc478b349f6556';
 
 /// See also [foodSearchRepository].
 @ProviderFor(foodSearchRepository)

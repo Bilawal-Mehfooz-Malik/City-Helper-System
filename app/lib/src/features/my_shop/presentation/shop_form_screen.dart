@@ -222,11 +222,6 @@ class _ShopFormWizardState extends ConsumerState<ShopFormWizard> {
               Step3ContactPage(wizardProvider: widget.wizardProvider),
               Step4SpecificsPage(wizardProvider: widget.wizardProvider),
               Step5MediaPage(
-                initialCoverUrl: widget.initialShop?.coverImageUrl,
-                initialGalleryUrls: widget.initialShop?.galleryImageUrls ?? [],
-                initialMenuUrls: (widget.initialShop is FoodDetail)
-                    ? (widget.initialShop as FoodDetail).menuImageUrls
-                    : [],
                 wizardProvider: widget.wizardProvider,
               ),
             ],

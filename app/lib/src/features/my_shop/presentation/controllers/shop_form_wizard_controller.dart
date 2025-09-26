@@ -59,13 +59,26 @@ class ShopFormWizardController extends _$ShopFormWizardController {
         }
         break;
       case 4: // Step 5: Media (Cover Image, Gallery Images)
-        // Cover image is required
-        if (formData.coverImageBytes == null) return false;
-        // Gallery images are required
-        if (formData.galleryImageBytes.isEmpty) return false;
-        // Menu images are required for Food category
-        if (formData.category?.id == 2 && formData.menuImageBytes.isEmpty) {
+        // Cover image is required (either new bytes or an existing URL)
+        if (formData.coverImageBytes == null &&
+            (formData.initialCoverUrl ?? '').isEmpty) {
           return false;
+        }
+
+        // Gallery images are required (either new bytes or existing URLs)
+        final existingGalleryUrls = formData.initialGalleryUrls
+            .where((url) => !formData.galleryUrlsToDelete.contains(url));
+        if (formData.galleryImageBytes.isEmpty && existingGalleryUrls.isEmpty) {
+          return false;
+        }
+
+        // Menu images are required for Food category (either new bytes or existing URLs)
+        if (formData.category?.id == 2) {
+          final existingMenuUrls = formData.initialMenuUrls
+              .where((url) => !formData.menuUrlsToDelete.contains(url));
+          if (formData.menuImageBytes.isEmpty && existingMenuUrls.isEmpty) {
+            return false;
+          }
         }
         break;
     }

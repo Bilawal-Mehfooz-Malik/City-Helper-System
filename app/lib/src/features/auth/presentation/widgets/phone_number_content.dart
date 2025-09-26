@@ -53,9 +53,9 @@ class PhoneNumberContent extends ConsumerWidget {
           Row(
             children: [
               SizedBox(
-                width: 80,
+                width: 85,
                 child: DropdownButtonFormField<String>(
-                  value: countryCode,
+                  initialValue: countryCode,
                   items: [countryCode].map((code) {
                     return DropdownMenuItem(value: code, child: Text('+$code'));
                   }).toList(),
