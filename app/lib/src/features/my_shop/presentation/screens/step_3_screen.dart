@@ -3,6 +3,7 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step3ContactPage extends ConsumerWidget {
@@ -36,9 +37,10 @@ class Step3ContactPage extends ConsumerWidget {
               gapH12,
               _SimpleTextField(
                 label: 'WhatsApp Number'.hardcoded,
-                hint: '+923001234567'.hardcoded,
+                hint: '923001234567'.hardcoded,
                 initialValue: formData.waNumber,
                 keyboardType: TextInputType.phone,
+                inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[+]'))],
                 onChanged: (val) => wizardController.updateFormData(
                   formData.copyWith(waNumber: val),
                 ),
@@ -129,6 +131,7 @@ class _SimpleTextField extends StatelessWidget {
   final String? initialValue;
   final TextInputType? keyboardType;
   final ValueChanged<String> onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const _SimpleTextField({
     required this.label,
@@ -136,6 +139,7 @@ class _SimpleTextField extends StatelessWidget {
     required this.initialValue,
     required this.onChanged,
     this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
@@ -144,6 +148,7 @@ class _SimpleTextField extends StatelessWidget {
       initialValue: initialValue,
       onChanged: onChanged,
       keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

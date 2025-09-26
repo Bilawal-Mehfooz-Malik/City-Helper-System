@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -42,14 +43,19 @@ Future<void> launchFacebook(String profileId, BuildContext context) async {
 }
 
 Future<void> launchWebUrl(String url, BuildContext context) async {
-  final uri = Uri.parse(url);
+  String urlWithScheme = url;
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    urlWithScheme = 'https://$url';
+  }
+  final uri = Uri.parse(urlWithScheme);
   await _tryLaunch(uri, context, 'Web');
 }
 
 // Helper
 Future<void> _tryLaunch(Uri uri, BuildContext context, String label) async {
   try {
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    final launchMode = kIsWeb ? LaunchMode.platformDefault : LaunchMode.externalApplication;
+    if (!await launchUrl(uri, mode: launchMode)) {
       throw 'Launch failed';
     }
   } catch (e, st) {

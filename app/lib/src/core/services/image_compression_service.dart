@@ -19,7 +19,7 @@ class ImageCompressionService {
         final bytes = await file.readAsBytes();
         final compressedBytes = await FlutterImageCompress.compressWithList(
           bytes,
-          quality: 85,
+          quality: 95,
           minWidth: 1024,
         );
         if (compressedBytes.isEmpty) {
@@ -42,7 +42,7 @@ class ImageCompressionService {
         final result = await FlutterImageCompress.compressAndGetFile(
           file.path,
           targetPath,
-          quality: 85,
+          quality: 95,
           minWidth: 1024,
         );
 
