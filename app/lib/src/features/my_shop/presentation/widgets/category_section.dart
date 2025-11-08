@@ -35,7 +35,7 @@ class CategorySection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         DropdownButtonFormField<Category>(
-          value: selectedCategory,
+          initialValue: selectedCategory,
           decoration: InputDecoration(
             labelText: 'Category *'.hardcoded,
             border: const OutlineInputBorder(),
@@ -80,7 +80,7 @@ class CategorySection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: Sizes.p12),
             child: DropdownButtonFormField<ListingType>(
-              value: selectedListingType,
+              initialValue: selectedListingType,
               decoration: InputDecoration(
                 labelText: 'Listing Type *'.hardcoded,
                 border: const OutlineInputBorder(),
@@ -113,7 +113,7 @@ class SubCategoryDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<SubCategory>(
-      value: selectedSubCategory,
+      initialValue: selectedSubCategory,
       decoration: InputDecoration(
         labelText: 'Choose Sub Category *'.hardcoded,
         border: const OutlineInputBorder(),

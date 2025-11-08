@@ -31,18 +31,7 @@ class _AvailabilityToggleWidgetState extends State<AvailabilityToggleWidget> {
   void didUpdateWidget(covariant AvailabilityToggleWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialStatus != oldWidget.initialStatus) {
-      setState(() {
-        _selectedStatus = widget.initialStatus;
-      });
-    }
-  }
-
-  void _handleStatusChanged(bool? newStatus) {
-    if (newStatus != null) {
-      setState(() {
-        _selectedStatus = newStatus;
-      });
-      widget.onStatusChanged(newStatus);
+      _selectedStatus = widget.initialStatus;
     }
   }
 
@@ -65,24 +54,30 @@ class _AvailabilityToggleWidgetState extends State<AvailabilityToggleWidget> {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(Sizes.p12),
-            child: Column(
-              children: [
-                _StatusOptionTile(
-                  title: 'Available'.hardcoded,
-                  subtitle: 'Available for rent or sale.'.hardcoded,
-                  value: true,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-                Divider(height: 1),
-                _StatusOptionTile(
-                  title: 'Unavailable'.hardcoded,
-                  subtitle: 'Not available for rent or sale.'.hardcoded,
-                  value: false,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-              ],
+            child: RadioGroup<bool>(
+              groupValue: _selectedStatus,
+              onChanged: (bool? newStatus) {
+                if (newStatus == null) return;
+                setState(() {
+                  _selectedStatus = newStatus;
+                });
+                widget.onStatusChanged(newStatus);
+              },
+              child: Column(
+                children: const [
+                  _StatusOptionTile(
+                    title: 'Available',
+                    subtitle: 'Available for rent or sale.',
+                    radioValue: true,
+                  ),
+                  Divider(height: 1),
+                  _StatusOptionTile(
+                    title: 'Unavailable',
+                    subtitle: 'Not available for rent or sale.',
+                    radioValue: false,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -95,26 +90,26 @@ class _StatusOptionTile extends StatelessWidget {
   const _StatusOptionTile({
     required this.title,
     required this.subtitle,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
+    required this.radioValue,
   });
 
   final String title;
   final String subtitle;
-  final bool value;
-  final bool groupValue;
-  final ValueChanged<bool?> onChanged;
+  final bool radioValue;
 
   @override
   Widget build(BuildContext context) {
-    final bool isSelected = value == groupValue;
+    // maybeOf returns nullable, so we guard it
+    final registry = RadioGroup.maybeOf<bool>(context);
+
     return Material(
-      color: isSelected
-          ? context.colorScheme.primary.withAlpha(40)
-          : Colors.transparent,
+      color: Colors.transparent,
       child: InkWell(
-        onTap: () => onChanged(value),
+        onTap: () {
+          if (registry != null) {
+            registry.onChanged(radioValue);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.p8,
@@ -122,11 +117,8 @@ class _StatusOptionTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Radio<bool>(
-                value: value,
-                groupValue: groupValue,
-                onChanged: onChanged,
-              ),
+              // New Radio usage: only value is required
+              Radio<bool>(value: radioValue),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

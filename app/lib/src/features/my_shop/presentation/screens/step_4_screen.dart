@@ -83,7 +83,7 @@ class Step4SpecificsPage extends ConsumerWidget {
                     ),
                     gapH12,
                     DropdownButtonFormField<GenderPreference?>(
-                      value: formData.genderPref,
+                      initialValue: formData.genderPref,
                       decoration: InputDecoration(
                         labelText: 'Gender Preference'.hardcoded,
                         hintText: 'Select Gender Preference'.hardcoded,

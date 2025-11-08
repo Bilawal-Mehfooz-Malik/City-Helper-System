@@ -4,7 +4,6 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 
-/// A widget that provides a clear, descriptive list of status options for the user.
 class TimingToggleWidget extends StatefulWidget {
   final OperationalStatus initialStatus;
   final ValueChanged<OperationalStatus> onStatusChanged;
@@ -28,7 +27,6 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
     _selectedStatus = widget.initialStatus;
   }
 
-  // This method is called when the user selects a new option.
   @override
   void didUpdateWidget(covariant TimingToggleWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -39,16 +37,12 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
     }
   }
 
-  // This method is called when the user selects a new option.
-  void _handleStatusChanged(OperationalStatus? newStatus) {
-    if (newStatus != null) {
-      // Update the local UI state to show the change immediately.
-      setState(() {
-        _selectedStatus = newStatus;
-      });
-      // Notify the parent widget to trigger the backend update.
-      widget.onStatusChanged(newStatus);
-    }
+  void _onGroupChanged(OperationalStatus? newStatus) {
+    if (newStatus == null) return;
+    setState(() {
+      _selectedStatus = newStatus;
+    });
+    widget.onStatusChanged(newStatus);
   }
 
   @override
@@ -61,7 +55,6 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
           style: context.textTheme.titleMedium,
         ),
         gapH8,
-        // Visually group the options together with a border and rounded corners.
         DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(
@@ -71,38 +64,36 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(Sizes.p12),
-            child: Column(
-              children: [
-                _StatusOptionTile(
-                  title: 'Default Hours'.hardcoded,
-                  subtitle:
-                      'Automatically opens/closes based on your business hours.'
-                          .hardcoded,
-                  value: OperationalStatus.defaultStatus,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-                Divider(height: 1),
-                _StatusOptionTile(
-                  title: 'Manual - Open'.hardcoded,
-                  subtitle:
-                      "Force your shop to appear 'Open', overriding your hours."
-                          .hardcoded,
-                  value: OperationalStatus.open,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-                Divider(height: 1),
-                _StatusOptionTile(
-                  title: 'Manual - Closed'.hardcoded,
-                  subtitle:
-                      "Force your shop to appear 'Closed', overriding your hours."
-                          .hardcoded,
-                  value: OperationalStatus.close,
-                  groupValue: _selectedStatus,
-                  onChanged: _handleStatusChanged,
-                ),
-              ],
+            child: RadioGroup<OperationalStatus>(
+              groupValue: _selectedStatus,
+              onChanged: _onGroupChanged,
+              child: Column(
+                children: [
+                  _StatusOptionTile(
+                    title: 'Default Hours'.hardcoded,
+                    subtitle:
+                        'Automatically opens/closes based on your business hours.'
+                            .hardcoded,
+                    radioValue: OperationalStatus.defaultStatus,
+                  ),
+                  const Divider(height: 1),
+                  _StatusOptionTile(
+                    title: 'Manual - Open'.hardcoded,
+                    subtitle:
+                        "Force your shop to appear 'Open', overriding your hours."
+                            .hardcoded,
+                    radioValue: OperationalStatus.open,
+                  ),
+                  const Divider(height: 1),
+                  _StatusOptionTile(
+                    title: 'Manual - Closed'.hardcoded,
+                    subtitle:
+                        "Force your shop to appear 'Closed', overriding your hours."
+                            .hardcoded,
+                    radioValue: OperationalStatus.close,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -111,32 +102,32 @@ class _TimingToggleWidgetState extends State<TimingToggleWidget> {
   }
 }
 
-/// A reusable tile for displaying a single status option with a title, subtitle,
-/// and radio button, designed to be used within a list.
 class _StatusOptionTile extends StatelessWidget {
   const _StatusOptionTile({
     required this.title,
     required this.subtitle,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
+    required this.radioValue,
   });
 
   final String title;
   final String subtitle;
-  final OperationalStatus value;
-  final OperationalStatus groupValue;
-  final ValueChanged<OperationalStatus?> onChanged;
+  final OperationalStatus radioValue;
 
   @override
   Widget build(BuildContext context) {
-    final bool isSelected = value == groupValue;
+    // Retrieve the RadioGroup registry to call its onChanged
+    final group = RadioGroup.maybeOf<OperationalStatus>(context);
+
     return Material(
-      color: isSelected
+      color: group?.groupValue == radioValue
           ? context.colorScheme.primary.withAlpha(40)
           : Colors.transparent,
       child: InkWell(
-        onTap: () => onChanged(value),
+        onTap: () {
+          if (group != null) {
+            group.onChanged(radioValue);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.p8,
@@ -144,11 +135,8 @@ class _StatusOptionTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Radio<OperationalStatus>(
-                value: value,
-                groupValue: groupValue,
-                onChanged: onChanged,
-              ),
+              // Radio without groupValue/onChanged — just its value
+              Radio<OperationalStatus>(value: radioValue),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

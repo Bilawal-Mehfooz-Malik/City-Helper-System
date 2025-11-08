@@ -98,42 +98,61 @@ class FilterDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return localFilter.when(
-      residence: (sortBy, sortOrder, isFurnished, isRoomAvailable, genderPref) =>
-          Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SortDropdown(
-            currentSortBy: sortBy,
-            currentSortOrder: sortOrder,
-            onChanged: (newSortBy, newSortOrder) {
-              onFilterChanged((localFilter as ResidenceFilter)
-                  .copyWith(sortBy: newSortBy, sortOrder: newSortOrder));
-            },
-            supportedSorts: const [SortBy.updatedAt, SortBy.price, SortBy.rating],
+      residence:
+          (
+            sortBy,
+            sortOrder,
+            isFurnished,
+            isRoomAvailable,
+            genderPref,
+          ) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SortDropdown(
+                currentSortBy: sortBy,
+                currentSortOrder: sortOrder,
+                onChanged: (newSortBy, newSortOrder) {
+                  onFilterChanged(
+                    (localFilter as ResidenceFilter).copyWith(
+                      sortBy: newSortBy,
+                      sortOrder: newSortOrder,
+                    ),
+                  );
+                },
+                supportedSorts: const [
+                  SortBy.updatedAt,
+                  SortBy.price,
+                  SortBy.rating,
+                ],
+              ),
+              gapH16,
+              FilterSwitch(
+                value: isFurnished,
+                label: context.loc.showFurnishedOnly,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(isFurnished: value),
+                ),
+              ),
+              FilterSwitch(
+                value: isRoomAvailable,
+                label: context.loc.showAvailableOnly,
+                onChanged: (value) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(
+                    isRoomAvailable: value,
+                  ),
+                ),
+              ),
+              gapH12,
+              GenderPreferenceChips(
+                selected: genderPref,
+                onSelected: (gender) => onFilterChanged(
+                  (localFilter as ResidenceFilter).copyWith(genderPref: gender),
+                ),
+              ),
+              gapH8,
+            ],
           ),
-          gapH16,
-          FilterSwitch(
-            value: isFurnished,
-            label: context.loc.showFurnishedOnly,
-            onChanged: (value) => onFilterChanged(
-                (localFilter as ResidenceFilter).copyWith(isFurnished: value)),
-          ),
-          FilterSwitch(
-            value: isRoomAvailable,
-            label: context.loc.showAvailableOnly,
-            onChanged: (value) => onFilterChanged((localFilter as ResidenceFilter)
-                .copyWith(isRoomAvailable: value)),
-          ),
-          gapH12,
-          GenderPreferenceChips(
-            selected: genderPref,
-            onSelected: (gender) => onFilterChanged(
-                (localFilter as ResidenceFilter).copyWith(genderPref: gender)),
-          ),
-          gapH8,
-        ],
-      ),
       food: (sortBy, sortOrder, genderPref) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -142,8 +161,12 @@ class FilterDialogContent extends StatelessWidget {
             currentSortBy: sortBy,
             currentSortOrder: sortOrder,
             onChanged: (newSortBy, newSortOrder) {
-              onFilterChanged((localFilter as FoodFilter)
-                  .copyWith(sortBy: newSortBy, sortOrder: newSortOrder));
+              onFilterChanged(
+                (localFilter as FoodFilter).copyWith(
+                  sortBy: newSortBy,
+                  sortOrder: newSortOrder,
+                ),
+              );
             },
             supportedSorts: const [SortBy.updatedAt, SortBy.rating],
           ),
@@ -151,7 +174,8 @@ class FilterDialogContent extends StatelessWidget {
           GenderPreferenceChips(
             selected: genderPref,
             onSelected: (gender) => onFilterChanged(
-                (localFilter as FoodFilter).copyWith(genderPref: gender)),
+              (localFilter as FoodFilter).copyWith(genderPref: gender),
+            ),
           ),
           gapH8,
         ],
@@ -164,8 +188,12 @@ class FilterDialogContent extends StatelessWidget {
             currentSortBy: sortBy,
             currentSortOrder: sortOrder,
             onChanged: (newSortBy, newSortOrder) {
-              onFilterChanged((localFilter as BasicFilter)
-                  .copyWith(sortBy: newSortBy, sortOrder: newSortOrder));
+              onFilterChanged(
+                (localFilter as BasicFilter).copyWith(
+                  sortBy: newSortBy,
+                  sortOrder: newSortOrder,
+                ),
+              );
             },
             supportedSorts: const [SortBy.rating],
           ),
@@ -198,31 +226,39 @@ class SortDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = supportedSorts.expand((sortBy) {
       if (sortBy == SortBy.updatedAt) {
-        return [DropdownMenuItem(
-          value: _valueToString(sortBy, SortOrder.highToLow),
-          child: Text(context.loc.sortByLatest),
-        )];
+        return [
+          DropdownMenuItem(
+            value: _valueToString(sortBy, SortOrder.highToLow),
+            child: Text(context.loc.sortByLatest),
+          ),
+        ];
       }
       return [
         DropdownMenuItem(
           value: _valueToString(sortBy, SortOrder.highToLow),
-          child: Text(_localizedSortByText(context, sortBy, SortOrder.highToLow)),
+          child: Text(
+            _localizedSortByText(context, sortBy, SortOrder.highToLow),
+          ),
         ),
         DropdownMenuItem(
           value: _valueToString(sortBy, SortOrder.lowToHigh),
-          child: Text(_localizedSortByText(context, sortBy, SortOrder.lowToHigh)),
+          child: Text(
+            _localizedSortByText(context, sortBy, SortOrder.lowToHigh),
+          ),
         ),
       ];
     }).toList();
 
     return DropdownButtonFormField<String>(
-      value: _valueToString(currentSortBy, currentSortOrder),
+      initialValue: _valueToString(currentSortBy, currentSortOrder),
       items: items,
       onChanged: (value) {
         if (value == null) return;
         final parts = value.split('_');
         final newSortBy = SortBy.values.firstWhere((e) => e.name == parts[0]);
-        final newSortOrder = SortOrder.values.firstWhere((e) => e.name == parts[1]);
+        final newSortOrder = SortOrder.values.firstWhere(
+          (e) => e.name == parts[1],
+        );
         onChanged(newSortBy, newSortOrder);
       },
       decoration: InputDecoration(
@@ -232,8 +268,14 @@ class SortDropdown extends StatelessWidget {
     );
   }
 
-  String _localizedSortByText(BuildContext context, SortBy sort, SortOrder order) {
-    final type = sort == SortBy.price ? context.loc.sortByPrice : context.loc.sortByRating;
+  String _localizedSortByText(
+    BuildContext context,
+    SortBy sort,
+    SortOrder order,
+  ) {
+    final type = sort == SortBy.price
+        ? context.loc.sortByPrice
+        : context.loc.sortByRating;
     final direction = order == SortOrder.highToLow
         ? context.loc.sortOrderHighToLow
         : context.loc.sortOrderLowToHigh;

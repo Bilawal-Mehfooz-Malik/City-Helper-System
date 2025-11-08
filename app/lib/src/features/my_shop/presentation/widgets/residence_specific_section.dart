@@ -81,7 +81,7 @@ class ResidenceSpecificSection extends StatelessWidget {
                             SizedBox(
                               width: halfWidth,
                               child: DropdownButtonFormField<PricingUnit>(
-                                value: price.unit,
+                                initialValue: price.unit,
                                 isExpanded: true,
                                 decoration: InputDecoration(
                                   labelText: 'Unit *'.hardcoded,
@@ -107,7 +107,7 @@ class ResidenceSpecificSection extends StatelessWidget {
                             SizedBox(
                               width: halfWidth,
                               child: DropdownButtonFormField<PricingPeriod>(
-                                value: isForSale
+                                initialValue: isForSale
                                     ? PricingPeriod.oneTime
                                     : price.period,
                                 isExpanded: true,
@@ -185,7 +185,7 @@ class ResidenceSpecificSection extends StatelessWidget {
                     Switch(
                       value: isFurnished,
                       onChanged: onFurnishedChanged,
-                      activeColor: context.colorScheme.primary,
+                      activeThumbColor: context.colorScheme.primary,
                     ),
                   ],
                 ),
@@ -200,7 +200,7 @@ class ResidenceSpecificSection extends StatelessWidget {
                     Switch(
                       value: isRoomAvailable,
                       onChanged: onIsRoomAvailableChanged,
-                      activeColor: context.colorScheme.primary,
+                      activeThumbColor: context.colorScheme.primary,
                     ),
                   ],
                 ),
