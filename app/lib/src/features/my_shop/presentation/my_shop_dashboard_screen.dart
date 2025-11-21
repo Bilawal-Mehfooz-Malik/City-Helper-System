@@ -3,7 +3,7 @@ import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/common_widgets/custom_outlined_button.dart';
 import 'package:app/src/core/common_widgets/primary_button.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';

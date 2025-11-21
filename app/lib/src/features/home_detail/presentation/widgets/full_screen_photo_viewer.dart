@@ -1,6 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/carousel_button.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,7 @@ class _FullscreenPhotoViewerState extends State<FullscreenPhotoViewer> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
     final isLarge = !isSmall;
 
     return Scaffold(

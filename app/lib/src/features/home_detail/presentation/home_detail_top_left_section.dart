@@ -1,6 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_image.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
   final CarouselSliderController _controller = CarouselSliderController();
 
   void _openImageViewer(BuildContext context, int initialIndex) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
 
     if (isSmall) {
       context.pushNamed(
@@ -52,7 +52,7 @@ class _HomeDetailTopLeftSectionState extends State<HomeDetailTopLeftSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
 
     return SingleChildScrollView(
       child: Column(

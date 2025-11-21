@@ -1,7 +1,7 @@
-import 'package:app/src/core/common_widgets/responsive_center.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -69,12 +69,7 @@ class CenteredMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final width = size.width;
-    final height = size.height;
-    final screenType = ScreenType.determine(width: width, height: height);
-
-    if (screenType == ScreenType.smallHeight && useResponsiveDesign) {
+    if (isSmallHeightScreen(context) && useResponsiveDesign) {
       return ResponsiveScrollable(
         padding: padding,
         child: MessageContent(

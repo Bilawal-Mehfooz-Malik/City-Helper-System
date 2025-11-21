@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';

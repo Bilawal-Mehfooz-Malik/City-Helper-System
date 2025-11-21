@@ -3,6 +3,7 @@ import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/home/application/entities_notifier.dart';
@@ -24,11 +25,7 @@ class EntitiesListSection extends ConsumerWidget {
   const EntitiesListSection({super.key, required this.categoryId});
 
   void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: screenSize.width,
-      height: screenSize.height,
-    );
+    final screenType = screenTypeOf(context);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       context.pushNamed(

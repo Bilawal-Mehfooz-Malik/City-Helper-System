@@ -1,14 +1,25 @@
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:flutter/material.dart';
 
+/// Reusable widget for showing a child with a maximum content width constraint.
+/// If available width is larger than the maximum width, the child will be
+/// centered.
+/// If available width is smaller than the maximum width, the child use all the
+/// available width.
 class ResponsiveCenter extends StatelessWidget {
   const ResponsiveCenter({
     super.key,
     this.maxContentWidth = Breakpoint.desktop,
+    this.padding = EdgeInsets.zero,
+    this.paddingInsideCard = EdgeInsets.zero,
     required this.child,
+    this.showCard = false,
   });
   final double maxContentWidth;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry paddingInsideCard;
   final Widget child;
+  final bool showCard;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,18 @@ class ResponsiveCenter extends StatelessWidget {
       // together with SizedBox to specify the max width (tight constraints)
       // See this thread for more info:
       // https://twitter.com/biz84/status/1445400059894542337
-      child: SizedBox(width: maxContentWidth, child: child),
+      child: Padding(
+        padding: padding,
+        child: SizedBox(
+          width: maxContentWidth,
+          child:
+              showCard == true
+                  ? Card(
+                    child: Padding(padding: paddingInsideCard, child: child),
+                  )
+                  : child,
+        ),
+      ),
     );
   }
 }
@@ -27,14 +49,20 @@ class ResponsiveSliverCenter extends StatelessWidget {
   const ResponsiveSliverCenter({
     super.key,
     this.maxContentWidth = Breakpoint.desktop,
+    this.padding = EdgeInsets.zero,
     required this.child,
   });
   final double maxContentWidth;
+  final EdgeInsetsGeometry padding;
   final Widget child;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: ResponsiveCenter(maxContentWidth: maxContentWidth, child: child),
+      child: ResponsiveCenter(
+        maxContentWidth: maxContentWidth,
+        padding: padding,
+        child: child,
+      ),
     );
   }
 }

@@ -75,6 +75,7 @@ dependencies:
   cached_network_image: 3.4.1
   json_annotation: 4.9.0
   freezed_annotation: 3.1.0
+  vector_graphics: ^1.1.19
   
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,7 @@ dev_dependencies:
   envied_generator: 1.1.1
   json_serializable: 6.9.5
   freezed: 3.1.0
+  vector_graphics_compiler: ^1.1.19
 
 flutter:
   uses-material-design: true

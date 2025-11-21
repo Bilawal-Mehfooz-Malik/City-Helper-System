@@ -1,12 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '/src/localization/string_hardcoded.dart';
 
-import '../../localization/string_hardcoded.dart';
-
-part 'font_family_provider.g.dart';
-
-@riverpod
-String fontFamily(Ref ref) {
-  // inter
-  return 'Roboto'.hardcoded;
-}
+final primaryFontFamilyProvider = Provider((ref) => 'Inter'.hardcoded);
+final secondaryFontFamilyProvider = Provider((ref) => 'Mulish'.hardcoded);
+final tertiaryFontFamilyProvider = Provider((ref) => 'Noto Sans'.hardcoded);

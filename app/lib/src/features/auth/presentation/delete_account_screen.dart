@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/responsive_center.dart';
+import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -48,7 +48,9 @@ class DeleteAccountScreen extends StatelessWidget {
             gapH24,
             Text(
               'Please note that deleting your account is permanent and will erase all your data, including your profile and reviews.',
-              style: context.textTheme.bodyLarge?.copyWith(fontStyle: FontStyle.italic),
+              style: context.textTheme.bodyLarge?.copyWith(
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ],
         ),

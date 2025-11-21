@@ -3,8 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'in_memory_storage.g.dart';
-
 /// A singleton to store in-memory image data.
 /// Stores images in a nested map: userId -> shopId -> imageId -> bytes
 class InMemoryImageStorage {
@@ -12,7 +10,10 @@ class InMemoryImageStorage {
 
   // For user profile images (legacy, if still used)
   void storeProfileImage(String userId, Uint8List bytes) {
-    _images.putIfAbsent(userId, () => {}).putIfAbsent('profile', () => {})['default'] = bytes;
+    _images
+            .putIfAbsent(userId, () => {})
+            .putIfAbsent('profile', () => {})['default'] =
+        bytes;
   }
 
   Uint8List? getProfileImageBytes(String userId) {
@@ -27,8 +28,16 @@ class InMemoryImageStorage {
   }
 
   // For shop images
-  void storeShopImage(String userId, String shopId, String imageId, Uint8List bytes) {
-    _images.putIfAbsent(userId, () => {}).putIfAbsent(shopId, () => {})[imageId] = bytes;
+  void storeShopImage(
+    String userId,
+    String shopId,
+    String imageId,
+    Uint8List bytes,
+  ) {
+    _images
+            .putIfAbsent(userId, () => {})
+            .putIfAbsent(shopId, () => {})[imageId] =
+        bytes;
   }
 
   Uint8List? getShopImageBytes(String userId, String shopId, String imageId) {
@@ -55,7 +64,6 @@ class InMemoryImageStorage {
   void clear() => _images.clear();
 }
 
-@riverpod
-InMemoryImageStorage inMemoryImageStorage(Ref ref) {
+final inMemoryImageStorageProvider = Provider<InMemoryImageStorage>((ref) {
   return InMemoryImageStorage();
-}
+});

@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/default_opening_hours.dart';
 import 'package:app/src/core/models/my_data_types.dart';

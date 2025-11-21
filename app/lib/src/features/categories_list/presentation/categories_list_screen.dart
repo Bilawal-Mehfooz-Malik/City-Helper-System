@@ -1,5 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/categories_list/presentation/responsive/large_screen_content.dart';
 import 'package:app/src/features/categories_list/presentation/responsive/small_screen_content.dart';
@@ -13,7 +13,7 @@ class CategoriesListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
     final categoriesValue = ref.watch(categoriesListFutureProvider);
 
     return Scaffold(

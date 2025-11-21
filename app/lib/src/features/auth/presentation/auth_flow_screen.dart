@@ -1,6 +1,6 @@
-import 'package:app/src/core/common_widgets/responsive_center.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,7 +69,7 @@ class _AuthFlowScreenState extends ConsumerState<AuthFlowScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
     Widget child;
     switch (_currentStep) {
       case AuthFlowStep.phoneNumber:

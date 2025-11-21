@@ -6,7 +6,7 @@ part of 'light_theme.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lightThemeHash() => r'645628652bf9c840fb8a99005aad19e5d80e4565';
+String _$lightThemeHash() => r'f0f0850a006b49c0637daf866bfc38e1b6688bba';
 
 /// See also [lightTheme].
 @ProviderFor(lightTheme)

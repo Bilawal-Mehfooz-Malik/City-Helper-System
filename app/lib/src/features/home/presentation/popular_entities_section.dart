@@ -1,3 +1,4 @@
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
@@ -54,11 +55,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
   }
 
   void _goToDetails(BuildContext context, WidgetRef ref, Entity entity) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: screenSize.width,
-      height: screenSize.height,
-    );
+    final screenType = screenTypeOf(context);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       context.pushNamed(
@@ -91,11 +88,7 @@ class _PopularEnitiesSectionState extends ConsumerState<PopularEnitiesSection> {
           ).notifier,
         )
         .resetFilters();
-    final screenSize = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: screenSize.width,
-      height: screenSize.height,
-    );
+    final screenType = screenTypeOf(context);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       // Use a state provider to indicate the "popular" view should be shown

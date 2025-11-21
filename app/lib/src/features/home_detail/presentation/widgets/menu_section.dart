@@ -1,7 +1,7 @@
-import 'package:app/src/core/common_widgets/responsive_center.dart';
+import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/full_screen_photo_viewer.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -20,7 +20,7 @@ class MenuSection extends StatefulWidget {
 
 class _MenuSectionState extends State<MenuSection> {
   void _openImageViewer(BuildContext context, int initialIndex) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
 
     if (isSmall) {
       context.pushNamed(
@@ -50,7 +50,7 @@ class _MenuSectionState extends State<MenuSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
     return ResponsiveCenter(
       showCard: !isSmall,
       paddingInsideCard: isSmall

@@ -1,4 +1,4 @@
-import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/features/my_shop/domain/shop_form.dart';
 import 'package:app/src/features/my_shop/presentation/controllers/shop_form_wizard_controller.dart';
@@ -11,18 +11,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Step5MediaPage extends StatelessWidget {
   final ShopFormWizardControllerProvider wizardProvider;
 
-  const Step5MediaPage({
-    super.key,
-    required this.wizardProvider,
-  });
+  const Step5MediaPage({super.key, required this.wizardProvider});
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveScrollable(
       padding: const EdgeInsets.all(Sizes.p16),
-      child: _Step5MediaForm(
-        wizardProvider: wizardProvider,
-      ),
+      child: _Step5MediaForm(wizardProvider: wizardProvider),
     );
   }
 }
@@ -30,9 +25,7 @@ class Step5MediaPage extends StatelessWidget {
 class _Step5MediaForm extends ConsumerWidget {
   final ShopFormWizardControllerProvider wizardProvider;
 
-  const _Step5MediaForm({
-    required this.wizardProvider,
-  });
+  const _Step5MediaForm({required this.wizardProvider});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

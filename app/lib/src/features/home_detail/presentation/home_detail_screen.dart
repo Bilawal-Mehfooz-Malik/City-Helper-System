@@ -3,7 +3,7 @@ import 'package:app/src/core/common_widgets/empty_placeholder_widget.dart';
 import 'package:app/src/core/common_widgets/responsive_two_column_layout.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/core/utils/is_small_screen.dart.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/features/home/presentation/widgets/persistent_error_bar.dart';
 import 'package:app/src/features/home_detail/application/entity_detail_service.dart';
 import 'package:app/src/features/home_detail/presentation/home_detail_app_bar.dart';
@@ -37,7 +37,7 @@ class HomeDetailScreen extends ConsumerWidget {
       fetchEntityWithReviewsProvider((categoryId, entityId!)),
     );
 
-    final isSmall = isSmallScreen(context);
+    final isSmall = isMobileScreen(context);
 
     return Scaffold(
       appBar: HomeDetailAppBar(

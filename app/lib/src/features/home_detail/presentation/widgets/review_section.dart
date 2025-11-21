@@ -1,8 +1,9 @@
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/common_widgets/custom_image.dart';
-import 'package:app/src/core/common_widgets/responsive_center.dart';
+import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
@@ -35,10 +36,7 @@ class ReviewSection extends StatelessWidget {
   final bool isSmall;
   void _goToReviewList(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: screenSize.width,
-      height: screenSize.height,
-    );
+    final screenType = screenTypeOf(context);
 
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       showGeneralDialog(

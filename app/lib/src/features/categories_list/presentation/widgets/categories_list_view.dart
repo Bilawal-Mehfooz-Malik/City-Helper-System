@@ -2,6 +2,7 @@ import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
+import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
@@ -29,11 +30,8 @@ class CategoriesListView extends StatelessWidget {
   /// It determines the screen type and navigates accordingly.
   /// It also resets the subcategory state when a category is selected.
   void _onTap(BuildContext context, WidgetRef ref, CategoryId id) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final screenType = ScreenType.determine(
-      width: screenSize.width,
-      height: screenSize.height,
-    );
+    final screenType = screenTypeOf(context);
+
     // Reset the subcategory state when a category is selected
     // and set the selected category view to home.
     ref.read(subcategoryControllerProvider.notifier).resetSubcategoryState();
