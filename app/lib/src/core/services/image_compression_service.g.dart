@@ -6,25 +6,53 @@ part of 'image_compression_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(imageCompressionService)
+const imageCompressionServiceProvider = ImageCompressionServiceProvider._();
+
+final class ImageCompressionServiceProvider
+    extends
+        $FunctionalProvider<
+          ImageCompressionService,
+          ImageCompressionService,
+          ImageCompressionService
+        >
+    with $Provider<ImageCompressionService> {
+  const ImageCompressionServiceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'imageCompressionServiceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$imageCompressionServiceHash();
+
+  @$internal
+  @override
+  $ProviderElement<ImageCompressionService> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ImageCompressionService create(Ref ref) {
+    return imageCompressionService(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ImageCompressionService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ImageCompressionService>(value),
+    );
+  }
+}
+
 String _$imageCompressionServiceHash() =>
     r'6b5dc95ea0a2f4d8f2167fb5b11ed36aedbbe9b5';
-
-/// See also [imageCompressionService].
-@ProviderFor(imageCompressionService)
-final imageCompressionServiceProvider =
-    AutoDisposeProvider<ImageCompressionService>.internal(
-      imageCompressionService,
-      name: r'imageCompressionServiceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$imageCompressionServiceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ImageCompressionServiceRef =
-    AutoDisposeProviderRef<ImageCompressionService>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

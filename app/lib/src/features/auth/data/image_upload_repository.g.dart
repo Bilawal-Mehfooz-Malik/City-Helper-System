@@ -6,25 +6,53 @@ part of 'image_upload_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(imageUploadRepository)
+const imageUploadRepositoryProvider = ImageUploadRepositoryProvider._();
+
+final class ImageUploadRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ImageUploadRepository,
+          ImageUploadRepository,
+          ImageUploadRepository
+        >
+    with $Provider<ImageUploadRepository> {
+  const ImageUploadRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'imageUploadRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$imageUploadRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ImageUploadRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ImageUploadRepository create(Ref ref) {
+    return imageUploadRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ImageUploadRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ImageUploadRepository>(value),
+    );
+  }
+}
+
 String _$imageUploadRepositoryHash() =>
     r'82faf2123f54333a837c2070e482ec1b2f268dd4';
-
-/// See also [imageUploadRepository].
-@ProviderFor(imageUploadRepository)
-final imageUploadRepositoryProvider =
-    AutoDisposeProvider<ImageUploadRepository>.internal(
-      imageUploadRepository,
-      name: r'imageUploadRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$imageUploadRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ImageUploadRepositoryRef =
-    AutoDisposeProviderRef<ImageUploadRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -159,7 +159,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       dismissible: false,
                       color: context.colorScheme.surface.withAlpha(204),
                     ),
-                  if (isAdLoading) const CenteredProgressIndicator(),
+                  if (isAdLoading) const CenteredCircularProgressIndicator(),
                 ],
               ),
       ),

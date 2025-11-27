@@ -6,165 +6,107 @@ part of 'popular_entities_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$popularEntitiesNotifierHash() =>
-    r'f97d346c918249ba5858e3a68775e1126d3db88d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$PopularEntitiesNotifier
-    extends BuildlessNotifier<EntitiesPaginatedState> {
-  late final int categoryId;
-
-  EntitiesPaginatedState build(int categoryId);
-}
-
-/// See also [PopularEntitiesNotifier].
 @ProviderFor(PopularEntitiesNotifier)
-const popularEntitiesNotifierProvider = PopularEntitiesNotifierFamily();
+const popularEntitiesProvider = PopularEntitiesNotifierFamily._();
 
-/// See also [PopularEntitiesNotifier].
-class PopularEntitiesNotifierFamily extends Family<EntitiesPaginatedState> {
-  /// See also [PopularEntitiesNotifier].
-  const PopularEntitiesNotifierFamily();
+final class PopularEntitiesNotifierProvider
+    extends $NotifierProvider<PopularEntitiesNotifier, EntitiesPaginatedState> {
+  const PopularEntitiesNotifierProvider._({
+    required PopularEntitiesNotifierFamily super.from,
+    required CategoryId super.argument,
+  }) : super(
+         retry: null,
+         name: r'popularEntitiesProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [PopularEntitiesNotifier].
-  PopularEntitiesNotifierProvider call(int categoryId) {
-    return PopularEntitiesNotifierProvider(categoryId);
+  @override
+  String debugGetCreateSourceHash() => _$popularEntitiesNotifierHash();
+
+  @override
+  String toString() {
+    return r'popularEntitiesProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  PopularEntitiesNotifierProvider getProviderOverride(
-    covariant PopularEntitiesNotifierProvider provider,
-  ) {
-    return call(provider.categoryId);
-  }
+  PopularEntitiesNotifier create() => PopularEntitiesNotifier();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'popularEntitiesNotifierProvider';
-}
-
-/// See also [PopularEntitiesNotifier].
-class PopularEntitiesNotifierProvider
-    extends
-        NotifierProviderImpl<PopularEntitiesNotifier, EntitiesPaginatedState> {
-  /// See also [PopularEntitiesNotifier].
-  PopularEntitiesNotifierProvider(int categoryId)
-    : this._internal(
-        () => PopularEntitiesNotifier()..categoryId = categoryId,
-        from: popularEntitiesNotifierProvider,
-        name: r'popularEntitiesNotifierProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$popularEntitiesNotifierHash,
-        dependencies: PopularEntitiesNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            PopularEntitiesNotifierFamily._allTransitiveDependencies,
-        categoryId: categoryId,
-      );
-
-  PopularEntitiesNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.categoryId,
-  }) : super.internal();
-
-  final int categoryId;
-
-  @override
-  EntitiesPaginatedState runNotifierBuild(
-    covariant PopularEntitiesNotifier notifier,
-  ) {
-    return notifier.build(categoryId);
-  }
-
-  @override
-  Override overrideWith(PopularEntitiesNotifier Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntitiesPaginatedState value) {
+    return $ProviderOverride(
       origin: this,
-      override: PopularEntitiesNotifierProvider._internal(
-        () => create()..categoryId = categoryId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        categoryId: categoryId,
-      ),
+      providerOverride: $SyncValueProvider<EntitiesPaginatedState>(value),
     );
-  }
-
-  @override
-  NotifierProviderElement<PopularEntitiesNotifier, EntitiesPaginatedState>
-  createElement() {
-    return _PopularEntitiesNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
     return other is PopularEntitiesNotifierProvider &&
-        other.categoryId == categoryId;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, categoryId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin PopularEntitiesNotifierRef
-    on NotifierProviderRef<EntitiesPaginatedState> {
-  /// The parameter `categoryId` of this provider.
-  int get categoryId;
-}
+String _$popularEntitiesNotifierHash() =>
+    r'f97d346c918249ba5858e3a68775e1126d3db88d';
 
-class _PopularEntitiesNotifierProviderElement
-    extends
-        NotifierProviderElement<PopularEntitiesNotifier, EntitiesPaginatedState>
-    with PopularEntitiesNotifierRef {
-  _PopularEntitiesNotifierProviderElement(super.provider);
+final class PopularEntitiesNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          PopularEntitiesNotifier,
+          EntitiesPaginatedState,
+          EntitiesPaginatedState,
+          EntitiesPaginatedState,
+          CategoryId
+        > {
+  const PopularEntitiesNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'popularEntitiesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  PopularEntitiesNotifierProvider call(CategoryId categoryId) =>
+      PopularEntitiesNotifierProvider._(argument: categoryId, from: this);
 
   @override
-  int get categoryId => (origin as PopularEntitiesNotifierProvider).categoryId;
+  String toString() => r'popularEntitiesProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$PopularEntitiesNotifier
+    extends $Notifier<EntitiesPaginatedState> {
+  late final _$args = ref.$arg as CategoryId;
+  CategoryId get categoryId => _$args;
+
+  EntitiesPaginatedState build(CategoryId categoryId);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref =
+        this.ref as $Ref<EntitiesPaginatedState, EntitiesPaginatedState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<EntitiesPaginatedState, EntitiesPaginatedState>,
+              EntitiesPaginatedState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -33,7 +33,7 @@ class CustomOutlinedButton extends StatelessWidget {
       ).merge(style),
       onPressed: isDisabled || isLoading ? null : onPressed,
       child: isLoading
-          ? const CenteredProgressIndicator()
+          ? const CenteredCircularProgressIndicator()
           : Text(text, textAlign: TextAlign.center),
     );
   }

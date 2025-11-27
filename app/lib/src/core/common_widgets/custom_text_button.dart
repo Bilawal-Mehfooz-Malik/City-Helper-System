@@ -26,10 +26,9 @@ class CustomTextButton extends StatelessWidget {
         minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
       ),
       onPressed: onPressed,
-      child:
-          isLoading
-              ? const CenteredProgressIndicator()
-              : Text(text, textAlign: TextAlign.center),
+      child: isLoading
+          ? const CenteredCircularProgressIndicator()
+          : Text(text, textAlign: TextAlign.center),
     );
   }
 }

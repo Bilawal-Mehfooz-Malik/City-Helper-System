@@ -6,526 +6,347 @@ part of 'reviews_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reviewsRepositoryHash() => r'3fb24588000e73703376cd09115a47596b121903';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [reviewsRepository].
 @ProviderFor(reviewsRepository)
-final reviewsRepositoryProvider =
-    AutoDisposeProvider<ReviewsRepository>.internal(
-      reviewsRepository,
-      name: r'reviewsRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$reviewsRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+const reviewsRepositoryProvider = ReviewsRepositoryProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ReviewsRepositoryRef = AutoDisposeProviderRef<ReviewsRepository>;
-String _$fetchReviewsListHash() => r'30bb63f473fd86802ca37ee35f4cb32af24e1c4c';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [fetchReviewsList].
-@ProviderFor(fetchReviewsList)
-const fetchReviewsListProvider = FetchReviewsListFamily();
-
-/// See also [fetchReviewsList].
-class FetchReviewsListFamily extends Family<AsyncValue<List<Review>>> {
-  /// See also [fetchReviewsList].
-  const FetchReviewsListFamily();
-
-  /// See also [fetchReviewsList].
-  FetchReviewsListProvider call(String entityId) {
-    return FetchReviewsListProvider(entityId);
-  }
-
-  @override
-  FetchReviewsListProvider getProviderOverride(
-    covariant FetchReviewsListProvider provider,
-  ) {
-    return call(provider.entityId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'fetchReviewsListProvider';
-}
-
-/// See also [fetchReviewsList].
-class FetchReviewsListProvider extends AutoDisposeFutureProvider<List<Review>> {
-  /// See also [fetchReviewsList].
-  FetchReviewsListProvider(String entityId)
-    : this._internal(
-        (ref) => fetchReviewsList(ref as FetchReviewsListRef, entityId),
-        from: fetchReviewsListProvider,
-        name: r'fetchReviewsListProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$fetchReviewsListHash,
-        dependencies: FetchReviewsListFamily._dependencies,
-        allTransitiveDependencies:
-            FetchReviewsListFamily._allTransitiveDependencies,
-        entityId: entityId,
+final class ReviewsRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ReviewsRepository,
+          ReviewsRepository,
+          ReviewsRepository
+        >
+    with $Provider<ReviewsRepository> {
+  const ReviewsRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reviewsRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
       );
 
-  FetchReviewsListProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.entityId,
-  }) : super.internal();
+  @override
+  String debugGetCreateSourceHash() => _$reviewsRepositoryHash();
 
-  final String entityId;
+  @$internal
+  @override
+  $ProviderElement<ReviewsRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
-  Override overrideWith(
-    FutureOr<List<Review>> Function(FetchReviewsListRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FetchReviewsListProvider._internal(
-        (ref) => create(ref as FetchReviewsListRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        entityId: entityId,
-      ),
-    );
+  ReviewsRepository create(Ref ref) {
+    return reviewsRepository(ref);
   }
 
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReviewsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReviewsRepository>(value),
+    );
+  }
+}
+
+String _$reviewsRepositoryHash() => r'3fb24588000e73703376cd09115a47596b121903';
+
+@ProviderFor(fetchReviewsList)
+const fetchReviewsListProvider = FetchReviewsListFamily._();
+
+final class FetchReviewsListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Review>>,
+          List<Review>,
+          FutureOr<List<Review>>
+        >
+    with $FutureModifier<List<Review>>, $FutureProvider<List<Review>> {
+  const FetchReviewsListProvider._({
+    required FetchReviewsListFamily super.from,
+    required EntityId super.argument,
+  }) : super(
+         retry: null,
+         name: r'fetchReviewsListProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
   @override
-  AutoDisposeFutureProviderElement<List<Review>> createElement() {
-    return _FetchReviewsListProviderElement(this);
+  String debugGetCreateSourceHash() => _$fetchReviewsListHash();
+
+  @override
+  String toString() {
+    return r'fetchReviewsListProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Review>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Review>> create(Ref ref) {
+    final argument = this.argument as EntityId;
+    return fetchReviewsList(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FetchReviewsListProvider && other.entityId == entityId;
+    return other is FetchReviewsListProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, entityId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FetchReviewsListRef on AutoDisposeFutureProviderRef<List<Review>> {
-  /// The parameter `entityId` of this provider.
-  String get entityId;
-}
+String _$fetchReviewsListHash() => r'30bb63f473fd86802ca37ee35f4cb32af24e1c4c';
 
-class _FetchReviewsListProviderElement
-    extends AutoDisposeFutureProviderElement<List<Review>>
-    with FetchReviewsListRef {
-  _FetchReviewsListProviderElement(super.provider);
+final class FetchReviewsListFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Review>>, EntityId> {
+  const FetchReviewsListFamily._()
+    : super(
+        retry: null,
+        name: r'fetchReviewsListProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  FetchReviewsListProvider call(EntityId entityId) =>
+      FetchReviewsListProvider._(argument: entityId, from: this);
 
   @override
-  String get entityId => (origin as FetchReviewsListProvider).entityId;
+  String toString() => r'fetchReviewsListProvider';
+}
+
+@ProviderFor(watchReviewsList)
+const watchReviewsListProvider = WatchReviewsListFamily._();
+
+final class WatchReviewsListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Review>>,
+          List<Review>,
+          Stream<List<Review>>
+        >
+    with $FutureModifier<List<Review>>, $StreamProvider<List<Review>> {
+  const WatchReviewsListProvider._({
+    required WatchReviewsListFamily super.from,
+    required EntityId super.argument,
+  }) : super(
+         retry: null,
+         name: r'watchReviewsListProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchReviewsListHash();
+
+  @override
+  String toString() {
+    return r'watchReviewsListProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Review>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Review>> create(Ref ref) {
+    final argument = this.argument as EntityId;
+    return watchReviewsList(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WatchReviewsListProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$watchReviewsListHash() => r'41a913dfc617729377d7182e71bdab2e63cdce27';
 
-/// See also [watchReviewsList].
-@ProviderFor(watchReviewsList)
-const watchReviewsListProvider = WatchReviewsListFamily();
-
-/// See also [watchReviewsList].
-class WatchReviewsListFamily extends Family<AsyncValue<List<Review>>> {
-  /// See also [watchReviewsList].
-  const WatchReviewsListFamily();
-
-  /// See also [watchReviewsList].
-  WatchReviewsListProvider call(String entityId) {
-    return WatchReviewsListProvider(entityId);
-  }
-
-  @override
-  WatchReviewsListProvider getProviderOverride(
-    covariant WatchReviewsListProvider provider,
-  ) {
-    return call(provider.entityId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'watchReviewsListProvider';
-}
-
-/// See also [watchReviewsList].
-class WatchReviewsListProvider extends AutoDisposeStreamProvider<List<Review>> {
-  /// See also [watchReviewsList].
-  WatchReviewsListProvider(String entityId)
-    : this._internal(
-        (ref) => watchReviewsList(ref as WatchReviewsListRef, entityId),
-        from: watchReviewsListProvider,
+final class WatchReviewsListFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<List<Review>>, EntityId> {
+  const WatchReviewsListFamily._()
+    : super(
+        retry: null,
         name: r'watchReviewsListProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$watchReviewsListHash,
-        dependencies: WatchReviewsListFamily._dependencies,
-        allTransitiveDependencies:
-            WatchReviewsListFamily._allTransitiveDependencies,
-        entityId: entityId,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
       );
 
-  WatchReviewsListProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.entityId,
-  }) : super.internal();
-
-  final String entityId;
+  WatchReviewsListProvider call(EntityId entityId) =>
+      WatchReviewsListProvider._(argument: entityId, from: this);
 
   @override
-  Override overrideWith(
-    Stream<List<Review>> Function(WatchReviewsListRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: WatchReviewsListProvider._internal(
-        (ref) => create(ref as WatchReviewsListRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        entityId: entityId,
-      ),
-    );
+  String toString() => r'watchReviewsListProvider';
+}
+
+@ProviderFor(userReviewFuture)
+const userReviewFutureProvider = UserReviewFutureFamily._();
+
+final class UserReviewFutureProvider
+    extends $FunctionalProvider<AsyncValue<Review?>, Review?, FutureOr<Review?>>
+    with $FutureModifier<Review?>, $FutureProvider<Review?> {
+  const UserReviewFutureProvider._({
+    required UserReviewFutureFamily super.from,
+    required EntityId super.argument,
+  }) : super(
+         retry: null,
+         name: r'userReviewFutureProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$userReviewFutureHash();
+
+  @override
+  String toString() {
+    return r'userReviewFutureProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeStreamProviderElement<List<Review>> createElement() {
-    return _WatchReviewsListProviderElement(this);
+  $FutureProviderElement<Review?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Review?> create(Ref ref) {
+    final argument = this.argument as EntityId;
+    return userReviewFuture(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is WatchReviewsListProvider && other.entityId == entityId;
+    return other is UserReviewFutureProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, entityId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin WatchReviewsListRef on AutoDisposeStreamProviderRef<List<Review>> {
-  /// The parameter `entityId` of this provider.
-  String get entityId;
-}
-
-class _WatchReviewsListProviderElement
-    extends AutoDisposeStreamProviderElement<List<Review>>
-    with WatchReviewsListRef {
-  _WatchReviewsListProviderElement(super.provider);
-
-  @override
-  String get entityId => (origin as WatchReviewsListProvider).entityId;
 }
 
 String _$userReviewFutureHash() => r'ccc1b9a1f2c9964fc044ac7e747ea7b0551a328e';
 
-/// See also [userReviewFuture].
-@ProviderFor(userReviewFuture)
-const userReviewFutureProvider = UserReviewFutureFamily();
-
-/// See also [userReviewFuture].
-class UserReviewFutureFamily extends Family<AsyncValue<Review?>> {
-  /// See also [userReviewFuture].
-  const UserReviewFutureFamily();
-
-  /// See also [userReviewFuture].
-  UserReviewFutureProvider call(String entityId) {
-    return UserReviewFutureProvider(entityId);
-  }
-
-  @override
-  UserReviewFutureProvider getProviderOverride(
-    covariant UserReviewFutureProvider provider,
-  ) {
-    return call(provider.entityId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'userReviewFutureProvider';
-}
-
-/// See also [userReviewFuture].
-class UserReviewFutureProvider extends AutoDisposeFutureProvider<Review?> {
-  /// See also [userReviewFuture].
-  UserReviewFutureProvider(String entityId)
-    : this._internal(
-        (ref) => userReviewFuture(ref as UserReviewFutureRef, entityId),
-        from: userReviewFutureProvider,
+final class UserReviewFutureFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Review?>, EntityId> {
+  const UserReviewFutureFamily._()
+    : super(
+        retry: null,
         name: r'userReviewFutureProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$userReviewFutureHash,
-        dependencies: UserReviewFutureFamily._dependencies,
-        allTransitiveDependencies:
-            UserReviewFutureFamily._allTransitiveDependencies,
-        entityId: entityId,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
       );
 
-  UserReviewFutureProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.entityId,
-  }) : super.internal();
-
-  final String entityId;
+  UserReviewFutureProvider call(EntityId entityId) =>
+      UserReviewFutureProvider._(argument: entityId, from: this);
 
   @override
-  Override overrideWith(
-    FutureOr<Review?> Function(UserReviewFutureRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: UserReviewFutureProvider._internal(
-        (ref) => create(ref as UserReviewFutureRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        entityId: entityId,
-      ),
-    );
+  String toString() => r'userReviewFutureProvider';
+}
+
+@ProviderFor(reviewsPreviewList)
+const reviewsPreviewListProvider = ReviewsPreviewListFamily._();
+
+final class ReviewsPreviewListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Review>>,
+          List<Review>,
+          FutureOr<List<Review>>
+        >
+    with $FutureModifier<List<Review>>, $FutureProvider<List<Review>> {
+  const ReviewsPreviewListProvider._({
+    required ReviewsPreviewListFamily super.from,
+    required EntityId super.argument,
+  }) : super(
+         retry: null,
+         name: r'reviewsPreviewListProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$reviewsPreviewListHash();
+
+  @override
+  String toString() {
+    return r'reviewsPreviewListProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<Review?> createElement() {
-    return _UserReviewFutureProviderElement(this);
+  $FutureProviderElement<List<Review>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Review>> create(Ref ref) {
+    final argument = this.argument as EntityId;
+    return reviewsPreviewList(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserReviewFutureProvider && other.entityId == entityId;
+    return other is ReviewsPreviewListProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, entityId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin UserReviewFutureRef on AutoDisposeFutureProviderRef<Review?> {
-  /// The parameter `entityId` of this provider.
-  String get entityId;
-}
-
-class _UserReviewFutureProviderElement
-    extends AutoDisposeFutureProviderElement<Review?>
-    with UserReviewFutureRef {
-  _UserReviewFutureProviderElement(super.provider);
-
-  @override
-  String get entityId => (origin as UserReviewFutureProvider).entityId;
 }
 
 String _$reviewsPreviewListHash() =>
     r'b0eaaa7e09d43247fae4735a5b3cacfea964d85d';
 
-/// See also [reviewsPreviewList].
-@ProviderFor(reviewsPreviewList)
-const reviewsPreviewListProvider = ReviewsPreviewListFamily();
-
-/// See also [reviewsPreviewList].
-class ReviewsPreviewListFamily extends Family<AsyncValue<List<Review>>> {
-  /// See also [reviewsPreviewList].
-  const ReviewsPreviewListFamily();
-
-  /// See also [reviewsPreviewList].
-  ReviewsPreviewListProvider call(String entityId) {
-    return ReviewsPreviewListProvider(entityId);
-  }
-
-  @override
-  ReviewsPreviewListProvider getProviderOverride(
-    covariant ReviewsPreviewListProvider provider,
-  ) {
-    return call(provider.entityId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'reviewsPreviewListProvider';
-}
-
-/// See also [reviewsPreviewList].
-class ReviewsPreviewListProvider
-    extends AutoDisposeFutureProvider<List<Review>> {
-  /// See also [reviewsPreviewList].
-  ReviewsPreviewListProvider(String entityId)
-    : this._internal(
-        (ref) => reviewsPreviewList(ref as ReviewsPreviewListRef, entityId),
-        from: reviewsPreviewListProvider,
+final class ReviewsPreviewListFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Review>>, EntityId> {
+  const ReviewsPreviewListFamily._()
+    : super(
+        retry: null,
         name: r'reviewsPreviewListProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$reviewsPreviewListHash,
-        dependencies: ReviewsPreviewListFamily._dependencies,
-        allTransitiveDependencies:
-            ReviewsPreviewListFamily._allTransitiveDependencies,
-        entityId: entityId,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
       );
 
-  ReviewsPreviewListProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.entityId,
-  }) : super.internal();
-
-  final String entityId;
+  ReviewsPreviewListProvider call(EntityId entityId) =>
+      ReviewsPreviewListProvider._(argument: entityId, from: this);
 
   @override
-  Override overrideWith(
-    FutureOr<List<Review>> Function(ReviewsPreviewListRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: ReviewsPreviewListProvider._internal(
-        (ref) => create(ref as ReviewsPreviewListRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        entityId: entityId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<List<Review>> createElement() {
-    return _ReviewsPreviewListProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ReviewsPreviewListProvider && other.entityId == entityId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, entityId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  String toString() => r'reviewsPreviewListProvider';
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin ReviewsPreviewListRef on AutoDisposeFutureProviderRef<List<Review>> {
-  /// The parameter `entityId` of this provider.
-  String get entityId;
-}
-
-class _ReviewsPreviewListProviderElement
-    extends AutoDisposeFutureProviderElement<List<Review>>
-    with ReviewsPreviewListRef {
-  _ReviewsPreviewListProviderElement(super.provider);
-
-  @override
-  String get entityId => (origin as ReviewsPreviewListProvider).entityId;
-}
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

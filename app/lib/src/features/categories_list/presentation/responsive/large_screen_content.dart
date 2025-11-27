@@ -21,7 +21,7 @@ class LargeScreenContent extends ConsumerWidget {
       value: categoriesValue,
       loading: const DraggableTwoColumnLayout(
         startContent: CategoriesSkeletonStartContent(),
-        endContent: CenteredProgressIndicator(),
+        endContent: CenteredCircularProgressIndicator(),
       ),
       error: (e, _) => CategoryFeedbackHandler.error(
         error: e,

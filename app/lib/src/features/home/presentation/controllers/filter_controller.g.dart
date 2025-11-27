@@ -6,188 +6,117 @@ part of 'filter_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterControllerHash() => r'2709e8478d316327ff2beec6273ed2f18abb1d59';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$FilterController extends BuildlessNotifier<EntityFilter> {
-  late final int categoryId;
-  late final FilterContext filterContext;
-
-  EntityFilter build({
-    required int categoryId,
-    required FilterContext filterContext,
-  });
-}
-
-/// See also [FilterController].
 @ProviderFor(FilterController)
-const filterControllerProvider = FilterControllerFamily();
+const filterControllerProvider = FilterControllerFamily._();
 
-/// See also [FilterController].
-class FilterControllerFamily extends Family<EntityFilter> {
-  /// See also [FilterController].
-  const FilterControllerFamily();
-
-  /// See also [FilterController].
-  FilterControllerProvider call({
-    required int categoryId,
-    required FilterContext filterContext,
-  }) {
-    return FilterControllerProvider(
-      categoryId: categoryId,
-      filterContext: filterContext,
-    );
-  }
-
-  @override
-  FilterControllerProvider getProviderOverride(
-    covariant FilterControllerProvider provider,
-  ) {
-    return call(
-      categoryId: provider.categoryId,
-      filterContext: provider.filterContext,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'filterControllerProvider';
-}
-
-/// See also [FilterController].
-class FilterControllerProvider
-    extends NotifierProviderImpl<FilterController, EntityFilter> {
-  /// See also [FilterController].
-  FilterControllerProvider({
-    required int categoryId,
-    required FilterContext filterContext,
-  }) : this._internal(
-         () => FilterController()
-           ..categoryId = categoryId
-           ..filterContext = filterContext,
-         from: filterControllerProvider,
+final class FilterControllerProvider
+    extends $NotifierProvider<FilterController, EntityFilter> {
+  const FilterControllerProvider._({
+    required FilterControllerFamily super.from,
+    required ({CategoryId categoryId, FilterContext filterContext})
+    super.argument,
+  }) : super(
+         retry: null,
          name: r'filterControllerProvider',
-         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-             ? null
-             : _$filterControllerHash,
-         dependencies: FilterControllerFamily._dependencies,
-         allTransitiveDependencies:
-             FilterControllerFamily._allTransitiveDependencies,
-         categoryId: categoryId,
-         filterContext: filterContext,
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
        );
 
-  FilterControllerProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.categoryId,
-    required this.filterContext,
-  }) : super.internal();
-
-  final int categoryId;
-  final FilterContext filterContext;
+  @override
+  String debugGetCreateSourceHash() => _$filterControllerHash();
 
   @override
-  EntityFilter runNotifierBuild(covariant FilterController notifier) {
-    return notifier.build(categoryId: categoryId, filterContext: filterContext);
+  String toString() {
+    return r'filterControllerProvider'
+        ''
+        '$argument';
   }
 
+  @$internal
   @override
-  Override overrideWith(FilterController Function() create) {
-    return ProviderOverride(
+  FilterController create() => FilterController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntityFilter value) {
+    return $ProviderOverride(
       origin: this,
-      override: FilterControllerProvider._internal(
-        () => create()
-          ..categoryId = categoryId
-          ..filterContext = filterContext,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        categoryId: categoryId,
-        filterContext: filterContext,
-      ),
+      providerOverride: $SyncValueProvider<EntityFilter>(value),
     );
-  }
-
-  @override
-  NotifierProviderElement<FilterController, EntityFilter> createElement() {
-    return _FilterControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FilterControllerProvider &&
-        other.categoryId == categoryId &&
-        other.filterContext == filterContext;
+    return other is FilterControllerProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, categoryId.hashCode);
-    hash = _SystemHash.combine(hash, filterContext.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FilterControllerRef on NotifierProviderRef<EntityFilter> {
-  /// The parameter `categoryId` of this provider.
-  int get categoryId;
+String _$filterControllerHash() => r'2709e8478d316327ff2beec6273ed2f18abb1d59';
 
-  /// The parameter `filterContext` of this provider.
-  FilterContext get filterContext;
-}
+final class FilterControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          FilterController,
+          EntityFilter,
+          EntityFilter,
+          EntityFilter,
+          ({CategoryId categoryId, FilterContext filterContext})
+        > {
+  const FilterControllerFamily._()
+    : super(
+        retry: null,
+        name: r'filterControllerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
 
-class _FilterControllerProviderElement
-    extends NotifierProviderElement<FilterController, EntityFilter>
-    with FilterControllerRef {
-  _FilterControllerProviderElement(super.provider);
+  FilterControllerProvider call({
+    required CategoryId categoryId,
+    required FilterContext filterContext,
+  }) => FilterControllerProvider._(
+    argument: (categoryId: categoryId, filterContext: filterContext),
+    from: this,
+  );
 
   @override
-  int get categoryId => (origin as FilterControllerProvider).categoryId;
-  @override
-  FilterContext get filterContext =>
-      (origin as FilterControllerProvider).filterContext;
+  String toString() => r'filterControllerProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$FilterController extends $Notifier<EntityFilter> {
+  late final _$args =
+      ref.$arg as ({CategoryId categoryId, FilterContext filterContext});
+  CategoryId get categoryId => _$args.categoryId;
+  FilterContext get filterContext => _$args.filterContext;
+
+  EntityFilter build({
+    required CategoryId categoryId,
+    required FilterContext filterContext,
+  });
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(
+      categoryId: _$args.categoryId,
+      filterContext: _$args.filterContext,
+    );
+    final ref = this.ref as $Ref<EntityFilter, EntityFilter>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<EntityFilter, EntityFilter>,
+              EntityFilter,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

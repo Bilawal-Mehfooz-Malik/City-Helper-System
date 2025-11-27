@@ -6,22 +6,51 @@ part of 'ad_interaction_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(AdInteractionNotifier)
+const adInteractionProvider = AdInteractionNotifierProvider._();
+
+final class AdInteractionNotifierProvider
+    extends $AsyncNotifierProvider<AdInteractionNotifier, void> {
+  const AdInteractionNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'adInteractionProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$adInteractionNotifierHash();
+
+  @$internal
+  @override
+  AdInteractionNotifier create() => AdInteractionNotifier();
+}
+
 String _$adInteractionNotifierHash() =>
     r'03263b3d36375883901b329f474d6d9928cd30e6';
 
-/// See also [AdInteractionNotifier].
-@ProviderFor(AdInteractionNotifier)
-final adInteractionNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<AdInteractionNotifier, void>.internal(
-      AdInteractionNotifier.new,
-      name: r'adInteractionNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adInteractionNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$AdInteractionNotifier = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$AdInteractionNotifier extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

@@ -6,23 +6,44 @@ part of 'my_shop_dashboard_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myShopDashboardHash() => r'd9b9daffa2d30b460a7fa0e8fa358a784eb7ab57';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [myShopDashboard].
 @ProviderFor(myShopDashboard)
-final myShopDashboardProvider =
-    AutoDisposeFutureProvider<EntityDetail?>.internal(
-      myShopDashboard,
-      name: r'myShopDashboardProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$myShopDashboardHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+const myShopDashboardProvider = MyShopDashboardProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef MyShopDashboardRef = AutoDisposeFutureProviderRef<EntityDetail?>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class MyShopDashboardProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<EntityDetail?>,
+          EntityDetail?,
+          FutureOr<EntityDetail?>
+        >
+    with $FutureModifier<EntityDetail?>, $FutureProvider<EntityDetail?> {
+  const MyShopDashboardProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myShopDashboardProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myShopDashboardHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<EntityDetail?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<EntityDetail?> create(Ref ref) {
+    return myShopDashboard(ref);
+  }
+}
+
+String _$myShopDashboardHash() => r'd9b9daffa2d30b460a7fa0e8fa358a784eb7ab57';

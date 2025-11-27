@@ -6,23 +6,53 @@ part of 'food_details_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(foodDetailsRepository)
+const foodDetailsRepositoryProvider = FoodDetailsRepositoryProvider._();
+
+final class FoodDetailsRepositoryProvider
+    extends
+        $FunctionalProvider<
+          FoodDetailsRepository,
+          FoodDetailsRepository,
+          FoodDetailsRepository
+        >
+    with $Provider<FoodDetailsRepository> {
+  const FoodDetailsRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'foodDetailsRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$foodDetailsRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<FoodDetailsRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  FoodDetailsRepository create(Ref ref) {
+    return foodDetailsRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FoodDetailsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FoodDetailsRepository>(value),
+    );
+  }
+}
+
 String _$foodDetailsRepositoryHash() =>
     r'0fe0a80dafd3fa48df7b7c6c75ac7147d2084226';
-
-/// See also [foodDetailsRepository].
-@ProviderFor(foodDetailsRepository)
-final foodDetailsRepositoryProvider = Provider<FoodDetailsRepository>.internal(
-  foodDetailsRepository,
-  name: r'foodDetailsRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$foodDetailsRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef FoodDetailsRepositoryRef = ProviderRef<FoodDetailsRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

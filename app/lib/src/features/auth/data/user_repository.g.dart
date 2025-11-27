@@ -6,282 +6,186 @@ part of 'user_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRepositoryHash() => r'1a4e42f29e04239b4ad4b601f59649a769f6431e';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [userRepository].
 @ProviderFor(userRepository)
-final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
-  userRepository,
-  name: r'userRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const userRepositoryProvider = UserRepositoryProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UserRepositoryRef = AutoDisposeProviderRef<UserRepository>;
-String _$getUserByIdHash() => r'492204c000cd69c1747daba9b4bd51d70d80e6ba';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [getUserById].
-@ProviderFor(getUserById)
-const getUserByIdProvider = GetUserByIdFamily();
-
-/// See also [getUserById].
-class GetUserByIdFamily extends Family<AsyncValue<AppUser?>> {
-  /// See also [getUserById].
-  const GetUserByIdFamily();
-
-  /// See also [getUserById].
-  GetUserByIdProvider call(String uid) {
-    return GetUserByIdProvider(uid);
-  }
-
-  @override
-  GetUserByIdProvider getProviderOverride(
-    covariant GetUserByIdProvider provider,
-  ) {
-    return call(provider.uid);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'getUserByIdProvider';
-}
-
-/// See also [getUserById].
-class GetUserByIdProvider extends AutoDisposeStreamProvider<AppUser?> {
-  /// See also [getUserById].
-  GetUserByIdProvider(String uid)
-    : this._internal(
-        (ref) => getUserById(ref as GetUserByIdRef, uid),
-        from: getUserByIdProvider,
-        name: r'getUserByIdProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$getUserByIdHash,
-        dependencies: GetUserByIdFamily._dependencies,
-        allTransitiveDependencies: GetUserByIdFamily._allTransitiveDependencies,
-        uid: uid,
+final class UserRepositoryProvider
+    extends $FunctionalProvider<UserRepository, UserRepository, UserRepository>
+    with $Provider<UserRepository> {
+  const UserRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
       );
 
-  GetUserByIdProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.uid,
-  }) : super.internal();
+  @override
+  String debugGetCreateSourceHash() => _$userRepositoryHash();
 
-  final String uid;
+  @$internal
+  @override
+  $ProviderElement<UserRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
 
   @override
-  Override overrideWith(
-    Stream<AppUser?> Function(GetUserByIdRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: GetUserByIdProvider._internal(
-        (ref) => create(ref as GetUserByIdRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        uid: uid,
-      ),
-    );
+  UserRepository create(Ref ref) {
+    return userRepository(ref);
   }
 
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(UserRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<UserRepository>(value),
+    );
+  }
+}
+
+String _$userRepositoryHash() => r'1a4e42f29e04239b4ad4b601f59649a769f6431e';
+
+@ProviderFor(getUserById)
+const getUserByIdProvider = GetUserByIdFamily._();
+
+final class GetUserByIdProvider
+    extends
+        $FunctionalProvider<AsyncValue<AppUser?>, AppUser?, Stream<AppUser?>>
+    with $FutureModifier<AppUser?>, $StreamProvider<AppUser?> {
+  const GetUserByIdProvider._({
+    required GetUserByIdFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'getUserByIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
   @override
-  AutoDisposeStreamProviderElement<AppUser?> createElement() {
-    return _GetUserByIdProviderElement(this);
+  String debugGetCreateSourceHash() => _$getUserByIdHash();
+
+  @override
+  String toString() {
+    return r'getUserByIdProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<AppUser?> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<AppUser?> create(Ref ref) {
+    final argument = this.argument as String;
+    return getUserById(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetUserByIdProvider && other.uid == uid;
+    return other is GetUserByIdProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, uid.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin GetUserByIdRef on AutoDisposeStreamProviderRef<AppUser?> {
-  /// The parameter `uid` of this provider.
-  String get uid;
-}
+String _$getUserByIdHash() => r'492204c000cd69c1747daba9b4bd51d70d80e6ba';
 
-class _GetUserByIdProviderElement
-    extends AutoDisposeStreamProviderElement<AppUser?>
-    with GetUserByIdRef {
-  _GetUserByIdProviderElement(super.provider);
+final class GetUserByIdFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<AppUser?>, String> {
+  const GetUserByIdFamily._()
+    : super(
+        retry: null,
+        name: r'getUserByIdProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetUserByIdProvider call(String uid) =>
+      GetUserByIdProvider._(argument: uid, from: this);
 
   @override
-  String get uid => (origin as GetUserByIdProvider).uid;
+  String toString() => r'getUserByIdProvider';
+}
+
+@ProviderFor(fetchUserById)
+const fetchUserByIdProvider = FetchUserByIdFamily._();
+
+final class FetchUserByIdProvider
+    extends
+        $FunctionalProvider<AsyncValue<AppUser?>, AppUser?, FutureOr<AppUser?>>
+    with $FutureModifier<AppUser?>, $FutureProvider<AppUser?> {
+  const FetchUserByIdProvider._({
+    required FetchUserByIdFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'fetchUserByIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$fetchUserByIdHash();
+
+  @override
+  String toString() {
+    return r'fetchUserByIdProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<AppUser?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<AppUser?> create(Ref ref) {
+    final argument = this.argument as String;
+    return fetchUserById(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchUserByIdProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$fetchUserByIdHash() => r'd19551808e0ecad2521885b9abb875d8d8c5988a';
 
-/// See also [fetchUserById].
-@ProviderFor(fetchUserById)
-const fetchUserByIdProvider = FetchUserByIdFamily();
-
-/// See also [fetchUserById].
-class FetchUserByIdFamily extends Family<AsyncValue<AppUser?>> {
-  /// See also [fetchUserById].
-  const FetchUserByIdFamily();
-
-  /// See also [fetchUserById].
-  FetchUserByIdProvider call(String uid) {
-    return FetchUserByIdProvider(uid);
-  }
-
-  @override
-  FetchUserByIdProvider getProviderOverride(
-    covariant FetchUserByIdProvider provider,
-  ) {
-    return call(provider.uid);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'fetchUserByIdProvider';
-}
-
-/// See also [fetchUserById].
-class FetchUserByIdProvider extends AutoDisposeFutureProvider<AppUser?> {
-  /// See also [fetchUserById].
-  FetchUserByIdProvider(String uid)
-    : this._internal(
-        (ref) => fetchUserById(ref as FetchUserByIdRef, uid),
-        from: fetchUserByIdProvider,
+final class FetchUserByIdFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<AppUser?>, String> {
+  const FetchUserByIdFamily._()
+    : super(
+        retry: null,
         name: r'fetchUserByIdProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$fetchUserByIdHash,
-        dependencies: FetchUserByIdFamily._dependencies,
-        allTransitiveDependencies:
-            FetchUserByIdFamily._allTransitiveDependencies,
-        uid: uid,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
       );
 
-  FetchUserByIdProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.uid,
-  }) : super.internal();
-
-  final String uid;
+  FetchUserByIdProvider call(String uid) =>
+      FetchUserByIdProvider._(argument: uid, from: this);
 
   @override
-  Override overrideWith(
-    FutureOr<AppUser?> Function(FetchUserByIdRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FetchUserByIdProvider._internal(
-        (ref) => create(ref as FetchUserByIdRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        uid: uid,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<AppUser?> createElement() {
-    return _FetchUserByIdProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is FetchUserByIdProvider && other.uid == uid;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, uid.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  String toString() => r'fetchUserByIdProvider';
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FetchUserByIdRef on AutoDisposeFutureProviderRef<AppUser?> {
-  /// The parameter `uid` of this provider.
-  String get uid;
-}
-
-class _FetchUserByIdProviderElement
-    extends AutoDisposeFutureProviderElement<AppUser?>
-    with FetchUserByIdRef {
-  _FetchUserByIdProviderElement(super.provider);
-
-  @override
-  String get uid => (origin as FetchUserByIdProvider).uid;
-}
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

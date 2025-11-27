@@ -1,4 +1,3 @@
-import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_progress_indicator.dart';
@@ -30,16 +29,18 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       style: FilledButton.styleFrom(
-        minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
+        minimumSize: useMaxSize
+            ? Size(double.infinity, kMinInteractiveDimension)
+            : null,
       ),
       onPressed: isDisabled || isLoading ? null : onPressed,
       child: isLoading
           ? SizedBox(
               height: 30,
               width: 30,
-              child: const CenteredProgressIndicator(),
+              child: const CenteredCircularProgressIndicator(),
             )
-          : Text(text, textAlign: TextAlign.center),
+          : Text(text, textAlign: .center),
     );
   }
 }

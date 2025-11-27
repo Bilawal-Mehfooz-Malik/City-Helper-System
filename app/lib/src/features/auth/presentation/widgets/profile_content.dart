@@ -118,7 +118,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
       padding: const EdgeInsets.all(Sizes.p16),
       child: AsyncValueWidget(
         value: profileValue,
-        loading: const CenteredProgressIndicator(),
+        loading: const CenteredCircularProgressIndicator(),
         data: (profile) {
           final bool isEditMode = profile != null;
 
@@ -186,7 +186,8 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
                   builder: (context, value, child) {
                     return PrimaryButton(
                       useMaxSize: true,
-                      isDisabled: value.text.trim().length < 4 || authState.isLoading,
+                      isDisabled:
+                          value.text.trim().length < 4 || authState.isLoading,
                       isLoading: authState.isLoading,
                       onPressed: () => _submit(profile),
                       text: isEditMode

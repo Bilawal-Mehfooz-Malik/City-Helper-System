@@ -6,23 +6,53 @@ part of 'residence_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(residenceRepository)
+const residenceRepositoryProvider = ResidenceRepositoryProvider._();
+
+final class ResidenceRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ResidenceRepository,
+          ResidenceRepository,
+          ResidenceRepository
+        >
+    with $Provider<ResidenceRepository> {
+  const ResidenceRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'residenceRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$residenceRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ResidenceRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ResidenceRepository create(Ref ref) {
+    return residenceRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ResidenceRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ResidenceRepository>(value),
+    );
+  }
+}
+
 String _$residenceRepositoryHash() =>
     r'02f220ae8467d7ad4ab52b67ea951f2ee138a6bd';
-
-/// See also [residenceRepository].
-@ProviderFor(residenceRepository)
-final residenceRepositoryProvider = Provider<ResidenceRepository>.internal(
-  residenceRepository,
-  name: r'residenceRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$residenceRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ResidenceRepositoryRef = ProviderRef<ResidenceRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

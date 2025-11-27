@@ -6,40 +6,87 @@ part of 'pagination_limit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(initialLoadLimit)
+const initialLoadLimitProvider = InitialLoadLimitProvider._();
+
+final class InitialLoadLimitProvider extends $FunctionalProvider<int, int, int>
+    with $Provider<int> {
+  const InitialLoadLimitProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'initialLoadLimitProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$initialLoadLimitHash();
+
+  @$internal
+  @override
+  $ProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  int create(Ref ref) {
+    return initialLoadLimit(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(int value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<int>(value),
+    );
+  }
+}
+
 String _$initialLoadLimitHash() => r'098e50e11456af4806638f81214d8777938150fd';
 
-/// See also [initialLoadLimit].
-@ProviderFor(initialLoadLimit)
-final initialLoadLimitProvider = Provider<int>.internal(
-  initialLoadLimit,
-  name: r'initialLoadLimitProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$initialLoadLimitHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(subsequentLoadLimit)
+const subsequentLoadLimitProvider = SubsequentLoadLimitProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef InitialLoadLimitRef = ProviderRef<int>;
+final class SubsequentLoadLimitProvider
+    extends $FunctionalProvider<int, int, int>
+    with $Provider<int> {
+  const SubsequentLoadLimitProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'subsequentLoadLimitProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$subsequentLoadLimitHash();
+
+  @$internal
+  @override
+  $ProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  int create(Ref ref) {
+    return subsequentLoadLimit(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(int value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<int>(value),
+    );
+  }
+}
+
 String _$subsequentLoadLimitHash() =>
     r'05921cad6e4e59e7996ff8f684d95a05a28cc2e8';
-
-/// See also [subsequentLoadLimit].
-@ProviderFor(subsequentLoadLimit)
-final subsequentLoadLimitProvider = Provider<int>.internal(
-  subsequentLoadLimit,
-  name: r'subsequentLoadLimitProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$subsequentLoadLimitHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef SubsequentLoadLimitRef = ProviderRef<int>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

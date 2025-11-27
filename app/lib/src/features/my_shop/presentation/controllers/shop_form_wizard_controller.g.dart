@@ -6,175 +6,106 @@ part of 'shop_form_wizard_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shopFormWizardControllerHash() =>
-    r'05bfd52899df731a78ef01ce495d2045e8db1ff6';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$ShopFormWizardController
-    extends BuildlessAutoDisposeNotifier<ShopFormWizardState> {
-  late final ShopForm initialFormData;
-
-  ShopFormWizardState build(ShopForm initialFormData);
-}
-
-/// See also [ShopFormWizardController].
 @ProviderFor(ShopFormWizardController)
-const shopFormWizardControllerProvider = ShopFormWizardControllerFamily();
+const shopFormWizardControllerProvider = ShopFormWizardControllerFamily._();
 
-/// See also [ShopFormWizardController].
-class ShopFormWizardControllerFamily extends Family<ShopFormWizardState> {
-  /// See also [ShopFormWizardController].
-  const ShopFormWizardControllerFamily();
+final class ShopFormWizardControllerProvider
+    extends $NotifierProvider<ShopFormWizardController, ShopFormWizardState> {
+  const ShopFormWizardControllerProvider._({
+    required ShopFormWizardControllerFamily super.from,
+    required ShopForm super.argument,
+  }) : super(
+         retry: null,
+         name: r'shopFormWizardControllerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [ShopFormWizardController].
-  ShopFormWizardControllerProvider call(ShopForm initialFormData) {
-    return ShopFormWizardControllerProvider(initialFormData);
+  @override
+  String debugGetCreateSourceHash() => _$shopFormWizardControllerHash();
+
+  @override
+  String toString() {
+    return r'shopFormWizardControllerProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  ShopFormWizardControllerProvider getProviderOverride(
-    covariant ShopFormWizardControllerProvider provider,
-  ) {
-    return call(provider.initialFormData);
-  }
+  ShopFormWizardController create() => ShopFormWizardController();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'shopFormWizardControllerProvider';
-}
-
-/// See also [ShopFormWizardController].
-class ShopFormWizardControllerProvider
-    extends
-        AutoDisposeNotifierProviderImpl<
-          ShopFormWizardController,
-          ShopFormWizardState
-        > {
-  /// See also [ShopFormWizardController].
-  ShopFormWizardControllerProvider(ShopForm initialFormData)
-    : this._internal(
-        () => ShopFormWizardController()..initialFormData = initialFormData,
-        from: shopFormWizardControllerProvider,
-        name: r'shopFormWizardControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$shopFormWizardControllerHash,
-        dependencies: ShopFormWizardControllerFamily._dependencies,
-        allTransitiveDependencies:
-            ShopFormWizardControllerFamily._allTransitiveDependencies,
-        initialFormData: initialFormData,
-      );
-
-  ShopFormWizardControllerProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.initialFormData,
-  }) : super.internal();
-
-  final ShopForm initialFormData;
-
-  @override
-  ShopFormWizardState runNotifierBuild(
-    covariant ShopFormWizardController notifier,
-  ) {
-    return notifier.build(initialFormData);
-  }
-
-  @override
-  Override overrideWith(ShopFormWizardController Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ShopFormWizardState value) {
+    return $ProviderOverride(
       origin: this,
-      override: ShopFormWizardControllerProvider._internal(
-        () => create()..initialFormData = initialFormData,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        initialFormData: initialFormData,
-      ),
+      providerOverride: $SyncValueProvider<ShopFormWizardState>(value),
     );
-  }
-
-  @override
-  AutoDisposeNotifierProviderElement<
-    ShopFormWizardController,
-    ShopFormWizardState
-  >
-  createElement() {
-    return _ShopFormWizardControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
     return other is ShopFormWizardControllerProvider &&
-        other.initialFormData == initialFormData;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, initialFormData.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin ShopFormWizardControllerRef
-    on AutoDisposeNotifierProviderRef<ShopFormWizardState> {
-  /// The parameter `initialFormData` of this provider.
-  ShopForm get initialFormData;
-}
+String _$shopFormWizardControllerHash() =>
+    r'05bfd52899df731a78ef01ce495d2045e8db1ff6';
 
-class _ShopFormWizardControllerProviderElement
-    extends
-        AutoDisposeNotifierProviderElement<
+final class ShopFormWizardControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<
           ShopFormWizardController,
-          ShopFormWizardState
-        >
-    with ShopFormWizardControllerRef {
-  _ShopFormWizardControllerProviderElement(super.provider);
+          ShopFormWizardState,
+          ShopFormWizardState,
+          ShopFormWizardState,
+          ShopForm
+        > {
+  const ShopFormWizardControllerFamily._()
+    : super(
+        retry: null,
+        name: r'shopFormWizardControllerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ShopFormWizardControllerProvider call(ShopForm initialFormData) =>
+      ShopFormWizardControllerProvider._(argument: initialFormData, from: this);
 
   @override
-  ShopForm get initialFormData =>
-      (origin as ShopFormWizardControllerProvider).initialFormData;
+  String toString() => r'shopFormWizardControllerProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ShopFormWizardController
+    extends $Notifier<ShopFormWizardState> {
+  late final _$args = ref.$arg as ShopForm;
+  ShopForm get initialFormData => _$args;
+
+  ShopFormWizardState build(ShopForm initialFormData);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref = this.ref as $Ref<ShopFormWizardState, ShopFormWizardState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ShopFormWizardState, ShopFormWizardState>,
+              ShopFormWizardState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

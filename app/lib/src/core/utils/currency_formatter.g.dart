@@ -6,22 +6,46 @@ part of 'currency_formatter.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currencyFormatterHash() => r'9cb054c88dd735d41559fec36b300234ad4a24ee';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [currencyFormatter].
 @ProviderFor(currencyFormatter)
-final currencyFormatterProvider = AutoDisposeProvider<NumberFormat>.internal(
-  currencyFormatter,
-  name: r'currencyFormatterProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$currencyFormatterHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const currencyFormatterProvider = CurrencyFormatterProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CurrencyFormatterRef = AutoDisposeProviderRef<NumberFormat>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class CurrencyFormatterProvider
+    extends $FunctionalProvider<NumberFormat, NumberFormat, NumberFormat>
+    with $Provider<NumberFormat> {
+  const CurrencyFormatterProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currencyFormatterProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currencyFormatterHash();
+
+  @$internal
+  @override
+  $ProviderElement<NumberFormat> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  NumberFormat create(Ref ref) {
+    return currencyFormatter(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(NumberFormat value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<NumberFormat>(value),
+    );
+  }
+}
+
+String _$currencyFormatterHash() => r'9cb054c88dd735d41559fec36b300234ad4a24ee';

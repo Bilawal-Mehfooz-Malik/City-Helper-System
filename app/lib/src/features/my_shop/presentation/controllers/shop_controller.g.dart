@@ -6,21 +6,50 @@ part of 'shop_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ShopController)
+const shopControllerProvider = ShopControllerProvider._();
+
+final class ShopControllerProvider
+    extends $AsyncNotifierProvider<ShopController, void> {
+  const ShopControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'shopControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$shopControllerHash();
+
+  @$internal
+  @override
+  ShopController create() => ShopController();
+}
+
 String _$shopControllerHash() => r'02f6303ddbc9b9208b485f1b7965f8d91d26ed81';
 
-/// See also [ShopController].
-@ProviderFor(ShopController)
-final shopControllerProvider =
-    AutoDisposeAsyncNotifierProvider<ShopController, void>.internal(
-      ShopController.new,
-      name: r'shopControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$shopControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$ShopController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ShopController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

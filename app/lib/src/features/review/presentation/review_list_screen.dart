@@ -140,7 +140,7 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
                               if (paginationState.isLoadingNextPage) {
                                 return const Padding(
                                   padding: EdgeInsets.all(Sizes.p16),
-                                  child: CenteredProgressIndicator(),
+                                  child: CenteredCircularProgressIndicator(),
                                 );
                               } else if (paginationState.paginationError !=
                                   null) {

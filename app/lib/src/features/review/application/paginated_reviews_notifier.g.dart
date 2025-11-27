@@ -6,230 +6,138 @@ part of 'paginated_reviews_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$paginatedReviewsNotifierHash() =>
-    r'adc476f69af45e11c6f932d8878f964377ac0d95';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$PaginatedReviewsNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<ReviewPaginationState> {
-  late final String entityId;
-  late final ReviewSortOption sortOption;
-  late final int? ratingFilter;
-
-  FutureOr<ReviewPaginationState> build({
-    required String entityId,
-    ReviewSortOption sortOption = ReviewSortOption.latest,
-    int? ratingFilter,
-  });
-}
-
-/// See also [PaginatedReviewsNotifier].
 @ProviderFor(PaginatedReviewsNotifier)
-const paginatedReviewsNotifierProvider = PaginatedReviewsNotifierFamily();
+const paginatedReviewsProvider = PaginatedReviewsNotifierFamily._();
 
-/// See also [PaginatedReviewsNotifier].
-class PaginatedReviewsNotifierFamily
-    extends Family<AsyncValue<ReviewPaginationState>> {
-  /// See also [PaginatedReviewsNotifier].
-  const PaginatedReviewsNotifierFamily();
-
-  /// See also [PaginatedReviewsNotifier].
-  PaginatedReviewsNotifierProvider call({
-    required String entityId,
-    ReviewSortOption sortOption = ReviewSortOption.latest,
-    int? ratingFilter,
-  }) {
-    return PaginatedReviewsNotifierProvider(
-      entityId: entityId,
-      sortOption: sortOption,
-      ratingFilter: ratingFilter,
-    );
-  }
-
-  @override
-  PaginatedReviewsNotifierProvider getProviderOverride(
-    covariant PaginatedReviewsNotifierProvider provider,
-  ) {
-    return call(
-      entityId: provider.entityId,
-      sortOption: provider.sortOption,
-      ratingFilter: provider.ratingFilter,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'paginatedReviewsNotifierProvider';
-}
-
-/// See also [PaginatedReviewsNotifier].
-class PaginatedReviewsNotifierProvider
+final class PaginatedReviewsNotifierProvider
     extends
-        AutoDisposeAsyncNotifierProviderImpl<
+        $AsyncNotifierProvider<
           PaginatedReviewsNotifier,
           ReviewPaginationState
         > {
-  /// See also [PaginatedReviewsNotifier].
-  PaginatedReviewsNotifierProvider({
-    required String entityId,
-    ReviewSortOption sortOption = ReviewSortOption.latest,
-    int? ratingFilter,
-  }) : this._internal(
-         () => PaginatedReviewsNotifier()
-           ..entityId = entityId
-           ..sortOption = sortOption
-           ..ratingFilter = ratingFilter,
-         from: paginatedReviewsNotifierProvider,
-         name: r'paginatedReviewsNotifierProvider',
-         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-             ? null
-             : _$paginatedReviewsNotifierHash,
-         dependencies: PaginatedReviewsNotifierFamily._dependencies,
-         allTransitiveDependencies:
-             PaginatedReviewsNotifierFamily._allTransitiveDependencies,
-         entityId: entityId,
-         sortOption: sortOption,
-         ratingFilter: ratingFilter,
+  const PaginatedReviewsNotifierProvider._({
+    required PaginatedReviewsNotifierFamily super.from,
+    required ({
+      EntityId entityId,
+      ReviewSortOption sortOption,
+      int? ratingFilter,
+    })
+    super.argument,
+  }) : super(
+         retry: null,
+         name: r'paginatedReviewsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
        );
 
-  PaginatedReviewsNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.entityId,
-    required this.sortOption,
-    required this.ratingFilter,
-  }) : super.internal();
-
-  final String entityId;
-  final ReviewSortOption sortOption;
-  final int? ratingFilter;
+  @override
+  String debugGetCreateSourceHash() => _$paginatedReviewsNotifierHash();
 
   @override
-  FutureOr<ReviewPaginationState> runNotifierBuild(
-    covariant PaginatedReviewsNotifier notifier,
-  ) {
-    return notifier.build(
-      entityId: entityId,
-      sortOption: sortOption,
-      ratingFilter: ratingFilter,
-    );
+  String toString() {
+    return r'paginatedReviewsProvider'
+        ''
+        '$argument';
   }
 
+  @$internal
   @override
-  Override overrideWith(PaginatedReviewsNotifier Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: PaginatedReviewsNotifierProvider._internal(
-        () => create()
-          ..entityId = entityId
-          ..sortOption = sortOption
-          ..ratingFilter = ratingFilter,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        entityId: entityId,
-        sortOption: sortOption,
-        ratingFilter: ratingFilter,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<
-    PaginatedReviewsNotifier,
-    ReviewPaginationState
-  >
-  createElement() {
-    return _PaginatedReviewsNotifierProviderElement(this);
-  }
+  PaginatedReviewsNotifier create() => PaginatedReviewsNotifier();
 
   @override
   bool operator ==(Object other) {
     return other is PaginatedReviewsNotifierProvider &&
-        other.entityId == entityId &&
-        other.sortOption == sortOption &&
-        other.ratingFilter == ratingFilter;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, entityId.hashCode);
-    hash = _SystemHash.combine(hash, sortOption.hashCode);
-    hash = _SystemHash.combine(hash, ratingFilter.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin PaginatedReviewsNotifierRef
-    on AutoDisposeAsyncNotifierProviderRef<ReviewPaginationState> {
-  /// The parameter `entityId` of this provider.
-  String get entityId;
+String _$paginatedReviewsNotifierHash() =>
+    r'adc476f69af45e11c6f932d8878f964377ac0d95';
 
-  /// The parameter `sortOption` of this provider.
-  ReviewSortOption get sortOption;
-
-  /// The parameter `ratingFilter` of this provider.
-  int? get ratingFilter;
-}
-
-class _PaginatedReviewsNotifierProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
+final class PaginatedReviewsNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
           PaginatedReviewsNotifier,
-          ReviewPaginationState
-        >
-    with PaginatedReviewsNotifierRef {
-  _PaginatedReviewsNotifierProviderElement(super.provider);
+          AsyncValue<ReviewPaginationState>,
+          ReviewPaginationState,
+          FutureOr<ReviewPaginationState>,
+          ({EntityId entityId, ReviewSortOption sortOption, int? ratingFilter})
+        > {
+  const PaginatedReviewsNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'paginatedReviewsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  PaginatedReviewsNotifierProvider call({
+    required EntityId entityId,
+    ReviewSortOption sortOption = ReviewSortOption.latest,
+    int? ratingFilter,
+  }) => PaginatedReviewsNotifierProvider._(
+    argument: (
+      entityId: entityId,
+      sortOption: sortOption,
+      ratingFilter: ratingFilter,
+    ),
+    from: this,
+  );
 
   @override
-  String get entityId => (origin as PaginatedReviewsNotifierProvider).entityId;
-  @override
-  ReviewSortOption get sortOption =>
-      (origin as PaginatedReviewsNotifierProvider).sortOption;
-  @override
-  int? get ratingFilter =>
-      (origin as PaginatedReviewsNotifierProvider).ratingFilter;
+  String toString() => r'paginatedReviewsProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$PaginatedReviewsNotifier
+    extends $AsyncNotifier<ReviewPaginationState> {
+  late final _$args =
+      ref.$arg
+          as ({
+            EntityId entityId,
+            ReviewSortOption sortOption,
+            int? ratingFilter,
+          });
+  EntityId get entityId => _$args.entityId;
+  ReviewSortOption get sortOption => _$args.sortOption;
+  int? get ratingFilter => _$args.ratingFilter;
+
+  FutureOr<ReviewPaginationState> build({
+    required EntityId entityId,
+    ReviewSortOption sortOption = ReviewSortOption.latest,
+    int? ratingFilter,
+  });
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(
+      entityId: _$args.entityId,
+      sortOption: _$args.sortOption,
+      ratingFilter: _$args.ratingFilter,
+    );
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<ReviewPaginationState>, ReviewPaginationState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<ReviewPaginationState>,
+                ReviewPaginationState
+              >,
+              AsyncValue<ReviewPaginationState>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

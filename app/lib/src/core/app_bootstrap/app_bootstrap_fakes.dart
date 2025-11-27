@@ -31,8 +31,8 @@ import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/widgets/fake_map_widget.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 extension AppBootstrapFakes on AppBootStrap {
   ProviderContainer createFakeProviderContainer({

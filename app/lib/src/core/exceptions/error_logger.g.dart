@@ -6,22 +6,46 @@ part of 'error_logger.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$errorLoggerHash() => r'7b218ca355d3a47fb1653e16bcbc688e6a5584b9';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [errorLogger].
 @ProviderFor(errorLogger)
-final errorLoggerProvider = AutoDisposeProvider<ErrorLogger>.internal(
-  errorLogger,
-  name: r'errorLoggerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$errorLoggerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const errorLoggerProvider = ErrorLoggerProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ErrorLoggerRef = AutoDisposeProviderRef<ErrorLogger>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ErrorLoggerProvider
+    extends $FunctionalProvider<ErrorLogger, ErrorLogger, ErrorLogger>
+    with $Provider<ErrorLogger> {
+  const ErrorLoggerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'errorLoggerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$errorLoggerHash();
+
+  @$internal
+  @override
+  $ProviderElement<ErrorLogger> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ErrorLogger create(Ref ref) {
+    return errorLogger(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ErrorLogger value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ErrorLogger>(value),
+    );
+  }
+}
+
+String _$errorLoggerHash() => r'7b218ca355d3a47fb1653e16bcbc688e6a5584b9';

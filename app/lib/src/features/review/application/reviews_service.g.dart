@@ -6,22 +6,46 @@ part of 'reviews_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reviewsServiceHash() => r'5978f80723f9549750dc8c990b769ce52a61d619';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [reviewsService].
 @ProviderFor(reviewsService)
-final reviewsServiceProvider = AutoDisposeProvider<ReviewsService>.internal(
-  reviewsService,
-  name: r'reviewsServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$reviewsServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const reviewsServiceProvider = ReviewsServiceProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ReviewsServiceRef = AutoDisposeProviderRef<ReviewsService>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ReviewsServiceProvider
+    extends $FunctionalProvider<ReviewsService, ReviewsService, ReviewsService>
+    with $Provider<ReviewsService> {
+  const ReviewsServiceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reviewsServiceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reviewsServiceHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReviewsService> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ReviewsService create(Ref ref) {
+    return reviewsService(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReviewsService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReviewsService>(value),
+    );
+  }
+}
+
+String _$reviewsServiceHash() => r'5978f80723f9549750dc8c990b769ce52a61d619';

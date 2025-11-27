@@ -20,13 +20,27 @@ class StartupScreen extends StatelessWidget {
       body: SafeArea(
         child: ResponsiveWrapper(
           smallHeight: ResponsiveScrollable(
-            child: StartupContent(isLargeScreen: true, borderRadius: 0.0),
+            child: StartupContent(
+              isLargeScreen: true,
+              borderRadius: 0.0,
+              padding: .fromLTRB(Sizes.p24, Sizes.p40, Sizes.p24, Sizes.p32),
+            ),
           ),
-          mobile: StartupContent(isLargeScreen: false, borderRadius: 0.0),
-          tablet: StartupContent(isLargeScreen: false, padding: Sizes.p24),
+          mobile: StartupContent(
+            isLargeScreen: false,
+            borderRadius: 0.0,
+            padding: .fromLTRB(Sizes.p24, Sizes.p40, Sizes.p24, Sizes.p32),
+          ),
+          tablet: StartupContent(
+            isLargeScreen: false,
+            padding: .all(Sizes.p32),
+          ),
           desktop: ResponsiveCenter(
             maxContentWidth: Breakpoint.tablet,
-            child: StartupContent(isLargeScreen: true, padding: Sizes.p48),
+            child: StartupContent(
+              isLargeScreen: true,
+              padding: .all(Sizes.p24),
+            ),
           ),
         ),
       ),

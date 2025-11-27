@@ -6,41 +6,86 @@ part of 'user_location_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(userLocationRepository)
+const userLocationRepositoryProvider = UserLocationRepositoryProvider._();
+
+final class UserLocationRepositoryProvider
+    extends
+        $FunctionalProvider<
+          UserLocationRepository,
+          UserLocationRepository,
+          UserLocationRepository
+        >
+    with $Provider<UserLocationRepository> {
+  const UserLocationRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userLocationRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$userLocationRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<UserLocationRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  UserLocationRepository create(Ref ref) {
+    return userLocationRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(UserLocationRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<UserLocationRepository>(value),
+    );
+  }
+}
+
 String _$userLocationRepositoryHash() =>
     r'55bb60b484cf92713f088c743b0e8916c5956c92';
 
-/// See also [userLocationRepository].
-@ProviderFor(userLocationRepository)
-final userLocationRepositoryProvider =
-    Provider<UserLocationRepository>.internal(
-      userLocationRepository,
-      name: r'userLocationRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$userLocationRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UserLocationRepositoryRef = ProviderRef<UserLocationRepository>;
-String _$fetchUserLocationHash() => r'146a721bdda75174bb769621a2678724a7d697f4';
-
-/// See also [fetchUserLocation].
 @ProviderFor(fetchUserLocation)
-final fetchUserLocationProvider = FutureProvider<LatLng?>.internal(
-  fetchUserLocation,
-  name: r'fetchUserLocationProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$fetchUserLocationHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const fetchUserLocationProvider = FetchUserLocationProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef FetchUserLocationRef = FutureProviderRef<LatLng?>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class FetchUserLocationProvider
+    extends $FunctionalProvider<AsyncValue<LatLng?>, LatLng?, FutureOr<LatLng?>>
+    with $FutureModifier<LatLng?>, $FutureProvider<LatLng?> {
+  const FetchUserLocationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchUserLocationProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fetchUserLocationHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<LatLng?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<LatLng?> create(Ref ref) {
+    return fetchUserLocation(ref);
+  }
+}
+
+String _$fetchUserLocationHash() => r'146a721bdda75174bb769621a2678724a7d697f4';

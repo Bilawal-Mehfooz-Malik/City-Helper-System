@@ -6,188 +6,184 @@ part of 'entity_search_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(residenceSearchRepository)
+const residenceSearchRepositoryProvider = ResidenceSearchRepositoryProvider._();
+
+final class ResidenceSearchRepositoryProvider
+    extends
+        $FunctionalProvider<
+          EntitySearchRepository,
+          EntitySearchRepository,
+          EntitySearchRepository
+        >
+    with $Provider<EntitySearchRepository> {
+  const ResidenceSearchRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'residenceSearchRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$residenceSearchRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<EntitySearchRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EntitySearchRepository create(Ref ref) {
+    return residenceSearchRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntitySearchRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EntitySearchRepository>(value),
+    );
+  }
+}
+
 String _$residenceSearchRepositoryHash() =>
     r'fc7919ab2d8fe77b815af76b70cbe8bf9e12ad12';
 
-/// See also [residenceSearchRepository].
-@ProviderFor(residenceSearchRepository)
-final residenceSearchRepositoryProvider =
-    Provider<EntitySearchRepository>.internal(
-      residenceSearchRepository,
-      name: r'residenceSearchRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$residenceSearchRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+@ProviderFor(foodSearchRepository)
+const foodSearchRepositoryProvider = FoodSearchRepositoryProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ResidenceSearchRepositoryRef = ProviderRef<EntitySearchRepository>;
+final class FoodSearchRepositoryProvider
+    extends
+        $FunctionalProvider<
+          EntitySearchRepository,
+          EntitySearchRepository,
+          EntitySearchRepository
+        >
+    with $Provider<EntitySearchRepository> {
+  const FoodSearchRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'foodSearchRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$foodSearchRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<EntitySearchRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EntitySearchRepository create(Ref ref) {
+    return foodSearchRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntitySearchRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EntitySearchRepository>(value),
+    );
+  }
+}
+
 String _$foodSearchRepositoryHash() =>
     r'ff5c4e66d1fba75a4c45f9936cdc478b349f6556';
 
-/// See also [foodSearchRepository].
-@ProviderFor(foodSearchRepository)
-final foodSearchRepositoryProvider = Provider<EntitySearchRepository>.internal(
-  foodSearchRepository,
-  name: r'foodSearchRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$foodSearchRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef FoodSearchRepositoryRef = ProviderRef<EntitySearchRepository>;
-String _$searchByCategoryIdHash() =>
-    r'6b270049a3db5158355da964632b36d280e3a403';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [searchByCategoryId].
 @ProviderFor(searchByCategoryId)
-const searchByCategoryIdProvider = SearchByCategoryIdFamily();
+const searchByCategoryIdProvider = SearchByCategoryIdFamily._();
 
-/// See also [searchByCategoryId].
-class SearchByCategoryIdFamily extends Family<AsyncValue<List<SearchEntity>>> {
-  /// See also [searchByCategoryId].
-  const SearchByCategoryIdFamily();
+final class SearchByCategoryIdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<SearchEntity>>,
+          List<SearchEntity>,
+          FutureOr<List<SearchEntity>>
+        >
+    with
+        $FutureModifier<List<SearchEntity>>,
+        $FutureProvider<List<SearchEntity>> {
+  const SearchByCategoryIdProvider._({
+    required SearchByCategoryIdFamily super.from,
+    required ({CategoryId categoryId, String query}) super.argument,
+  }) : super(
+         retry: null,
+         name: r'searchByCategoryIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [searchByCategoryId].
-  SearchByCategoryIdProvider call(({int categoryId, String query}) input) {
-    return SearchByCategoryIdProvider(input);
+  @override
+  String debugGetCreateSourceHash() => _$searchByCategoryIdHash();
+
+  @override
+  String toString() {
+    return r'searchByCategoryIdProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  SearchByCategoryIdProvider getProviderOverride(
-    covariant SearchByCategoryIdProvider provider,
-  ) {
-    return call(provider.input);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  $FutureProviderElement<List<SearchEntity>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'searchByCategoryIdProvider';
-}
-
-/// See also [searchByCategoryId].
-class SearchByCategoryIdProvider
-    extends AutoDisposeFutureProvider<List<SearchEntity>> {
-  /// See also [searchByCategoryId].
-  SearchByCategoryIdProvider(({int categoryId, String query}) input)
-    : this._internal(
-        (ref) => searchByCategoryId(ref as SearchByCategoryIdRef, input),
-        from: searchByCategoryIdProvider,
-        name: r'searchByCategoryIdProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$searchByCategoryIdHash,
-        dependencies: SearchByCategoryIdFamily._dependencies,
-        allTransitiveDependencies:
-            SearchByCategoryIdFamily._allTransitiveDependencies,
-        input: input,
-      );
-
-  SearchByCategoryIdProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.input,
-  }) : super.internal();
-
-  final ({int categoryId, String query}) input;
-
-  @override
-  Override overrideWith(
-    FutureOr<List<SearchEntity>> Function(SearchByCategoryIdRef provider)
-    create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: SearchByCategoryIdProvider._internal(
-        (ref) => create(ref as SearchByCategoryIdRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        input: input,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<List<SearchEntity>> createElement() {
-    return _SearchByCategoryIdProviderElement(this);
+  FutureOr<List<SearchEntity>> create(Ref ref) {
+    final argument = this.argument as ({CategoryId categoryId, String query});
+    return searchByCategoryId(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is SearchByCategoryIdProvider && other.input == input;
+    return other is SearchByCategoryIdProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, input.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin SearchByCategoryIdRef
-    on AutoDisposeFutureProviderRef<List<SearchEntity>> {
-  /// The parameter `input` of this provider.
-  ({int categoryId, String query}) get input;
-}
+String _$searchByCategoryIdHash() =>
+    r'6b270049a3db5158355da964632b36d280e3a403';
 
-class _SearchByCategoryIdProviderElement
-    extends AutoDisposeFutureProviderElement<List<SearchEntity>>
-    with SearchByCategoryIdRef {
-  _SearchByCategoryIdProviderElement(super.provider);
+final class SearchByCategoryIdFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<SearchEntity>>,
+          ({CategoryId categoryId, String query})
+        > {
+  const SearchByCategoryIdFamily._()
+    : super(
+        retry: null,
+        name: r'searchByCategoryIdProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  SearchByCategoryIdProvider call(
+    ({CategoryId categoryId, String query}) input,
+  ) => SearchByCategoryIdProvider._(argument: input, from: this);
 
   @override
-  ({int categoryId, String query}) get input =>
-      (origin as SearchByCategoryIdProvider).input;
+  String toString() => r'searchByCategoryIdProvider';
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

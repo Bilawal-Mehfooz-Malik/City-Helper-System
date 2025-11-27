@@ -7,21 +7,20 @@ import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PickLocationScreen extends ConsumerStatefulWidget {
+class PickLocationScreenBeta extends ConsumerStatefulWidget {
   final LatLng? initialLocation;
-  const PickLocationScreen({super.key, this.initialLocation});
+  const PickLocationScreenBeta({super.key, this.initialLocation});
 
   @override
-  ConsumerState<PickLocationScreen> createState() => _PickLocationScreenState();
+  ConsumerState<PickLocationScreenBeta> createState() =>
+      _PickLocationScreenState();
 }
 
-class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
+class _PickLocationScreenState extends ConsumerState<PickLocationScreenBeta> {
   late LatLng _pickedLocation;
   final _controller = Completer<GoogleMapController>();
   Timer? _debounce;
@@ -75,9 +74,11 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: context.colorScheme.primary,
-        foregroundColor: context.colorScheme.onPrimary,
         title: Text(context.loc.pickYourLocation),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: SafeArea(
         child: Stack(
@@ -108,24 +109,31 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: .only(bottom: Sizes.p16),
+        padding: const EdgeInsets.only(bottom: Sizes.p16),
         child: Column(
           spacing: Sizes.p16,
-          mainAxisSize: .min,
-          crossAxisAlignment: .end,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            FloatingActionButton.extended(
-              label: locationAsync.isLoading
-                  ? CenteredCircularProgressIndicator()
-                  : Text('Use Current'.hardcoded),
-              heroTag: 'currentLocationBtn',
-              onPressed: locationAsync.isLoading ? null : _getCurrentLocation,
-            ),
             FloatingActionButton(
-              backgroundColor: context.colorScheme.primary,
-              foregroundColor: context.colorScheme.onPrimary,
+              heroTag: 'currentLocationBtn',
+              backgroundColor: context.colorScheme.onPrimary,
+              foregroundColor: context.colorScheme.primary,
+              shape: const CircleBorder(),
+              onPressed: locationAsync.isLoading ? null : _getCurrentLocation,
+              child: locationAsync.isLoading
+                  ? const SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CenteredCircularProgressIndicator(),
+                    )
+                  : const Icon(Icons.my_location),
+            ),
+            FloatingActionButton.large(
               heroTag: 'saveLocationBtn',
-              onPressed: locationAsync.isLoading ? null : () => context.pop(),
+              onPressed: locationAsync.isLoading
+                  ? null
+                  : () => Navigator.of(context).pop(_pickedLocation),
+
               child: const Icon(Icons.check),
             ),
           ],

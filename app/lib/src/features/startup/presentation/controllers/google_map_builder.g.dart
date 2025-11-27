@@ -6,22 +6,51 @@ part of 'google_map_builder.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$googleMapBuilderHash() => r'3118e4989f8a72ea7b729792828eb437e527370e';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [googleMapBuilder].
 @ProviderFor(googleMapBuilder)
-final googleMapBuilderProvider = AutoDisposeProvider<GoogleMapBuilder>.internal(
-  googleMapBuilder,
-  name: r'googleMapBuilderProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$googleMapBuilderHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const googleMapBuilderProvider = GoogleMapBuilderProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GoogleMapBuilderRef = AutoDisposeProviderRef<GoogleMapBuilder>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class GoogleMapBuilderProvider
+    extends
+        $FunctionalProvider<
+          GoogleMapBuilder,
+          GoogleMapBuilder,
+          GoogleMapBuilder
+        >
+    with $Provider<GoogleMapBuilder> {
+  const GoogleMapBuilderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'googleMapBuilderProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$googleMapBuilderHash();
+
+  @$internal
+  @override
+  $ProviderElement<GoogleMapBuilder> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  GoogleMapBuilder create(Ref ref) {
+    return googleMapBuilder(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GoogleMapBuilder value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GoogleMapBuilder>(value),
+    );
+  }
+}
+
+String _$googleMapBuilderHash() => r'3118e4989f8a72ea7b729792828eb437e527370e';

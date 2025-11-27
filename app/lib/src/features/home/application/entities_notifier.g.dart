@@ -6,158 +6,104 @@ part of 'entities_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$entitiesNotifierHash() => r'2ffdcbccb48b2cb4b2fa41ebe6eb9f593419559a';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$EntitiesNotifier
-    extends BuildlessNotifier<EntitiesPaginatedState> {
-  late final int categoryId;
-
-  EntitiesPaginatedState build(int categoryId);
-}
-
-/// See also [EntitiesNotifier].
 @ProviderFor(EntitiesNotifier)
-const entitiesNotifierProvider = EntitiesNotifierFamily();
+const entitiesProvider = EntitiesNotifierFamily._();
 
-/// See also [EntitiesNotifier].
-class EntitiesNotifierFamily extends Family<EntitiesPaginatedState> {
-  /// See also [EntitiesNotifier].
-  const EntitiesNotifierFamily();
+final class EntitiesNotifierProvider
+    extends $NotifierProvider<EntitiesNotifier, EntitiesPaginatedState> {
+  const EntitiesNotifierProvider._({
+    required EntitiesNotifierFamily super.from,
+    required CategoryId super.argument,
+  }) : super(
+         retry: null,
+         name: r'entitiesProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [EntitiesNotifier].
-  EntitiesNotifierProvider call(int categoryId) {
-    return EntitiesNotifierProvider(categoryId);
+  @override
+  String debugGetCreateSourceHash() => _$entitiesNotifierHash();
+
+  @override
+  String toString() {
+    return r'entitiesProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  EntitiesNotifierProvider getProviderOverride(
-    covariant EntitiesNotifierProvider provider,
-  ) {
-    return call(provider.categoryId);
-  }
+  EntitiesNotifier create() => EntitiesNotifier();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'entitiesNotifierProvider';
-}
-
-/// See also [EntitiesNotifier].
-class EntitiesNotifierProvider
-    extends NotifierProviderImpl<EntitiesNotifier, EntitiesPaginatedState> {
-  /// See also [EntitiesNotifier].
-  EntitiesNotifierProvider(int categoryId)
-    : this._internal(
-        () => EntitiesNotifier()..categoryId = categoryId,
-        from: entitiesNotifierProvider,
-        name: r'entitiesNotifierProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$entitiesNotifierHash,
-        dependencies: EntitiesNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            EntitiesNotifierFamily._allTransitiveDependencies,
-        categoryId: categoryId,
-      );
-
-  EntitiesNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.categoryId,
-  }) : super.internal();
-
-  final int categoryId;
-
-  @override
-  EntitiesPaginatedState runNotifierBuild(covariant EntitiesNotifier notifier) {
-    return notifier.build(categoryId);
-  }
-
-  @override
-  Override overrideWith(EntitiesNotifier Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntitiesPaginatedState value) {
+    return $ProviderOverride(
       origin: this,
-      override: EntitiesNotifierProvider._internal(
-        () => create()..categoryId = categoryId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        categoryId: categoryId,
-      ),
+      providerOverride: $SyncValueProvider<EntitiesPaginatedState>(value),
     );
   }
 
   @override
-  NotifierProviderElement<EntitiesNotifier, EntitiesPaginatedState>
-  createElement() {
-    return _EntitiesNotifierProviderElement(this);
-  }
-
-  @override
   bool operator ==(Object other) {
-    return other is EntitiesNotifierProvider && other.categoryId == categoryId;
+    return other is EntitiesNotifierProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, categoryId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin EntitiesNotifierRef on NotifierProviderRef<EntitiesPaginatedState> {
-  /// The parameter `categoryId` of this provider.
-  int get categoryId;
-}
+String _$entitiesNotifierHash() => r'2ffdcbccb48b2cb4b2fa41ebe6eb9f593419559a';
 
-class _EntitiesNotifierProviderElement
-    extends NotifierProviderElement<EntitiesNotifier, EntitiesPaginatedState>
-    with EntitiesNotifierRef {
-  _EntitiesNotifierProviderElement(super.provider);
+final class EntitiesNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          EntitiesNotifier,
+          EntitiesPaginatedState,
+          EntitiesPaginatedState,
+          EntitiesPaginatedState,
+          CategoryId
+        > {
+  const EntitiesNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'entitiesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  EntitiesNotifierProvider call(CategoryId categoryId) =>
+      EntitiesNotifierProvider._(argument: categoryId, from: this);
 
   @override
-  int get categoryId => (origin as EntitiesNotifierProvider).categoryId;
+  String toString() => r'entitiesProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$EntitiesNotifier extends $Notifier<EntitiesPaginatedState> {
+  late final _$args = ref.$arg as CategoryId;
+  CategoryId get categoryId => _$args;
+
+  EntitiesPaginatedState build(CategoryId categoryId);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref =
+        this.ref as $Ref<EntitiesPaginatedState, EntitiesPaginatedState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<EntitiesPaginatedState, EntitiesPaginatedState>,
+              EntitiesPaginatedState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -24,7 +24,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (value.isLoading) {
-      return loading ?? const CenteredProgressIndicator();
+      return loading ?? const CenteredCircularProgressIndicator();
     } else if (value.hasError) {
       return error?.call(value.error!, value.stackTrace!) ??
           CenteredMessageWidget(

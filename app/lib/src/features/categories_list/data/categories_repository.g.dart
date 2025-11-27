@@ -6,321 +6,277 @@ part of 'categories_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(categoriesRepository)
+const categoriesRepositoryProvider = CategoriesRepositoryProvider._();
+
+final class CategoriesRepositoryProvider
+    extends
+        $FunctionalProvider<
+          CategoriesRepository,
+          CategoriesRepository,
+          CategoriesRepository
+        >
+    with $Provider<CategoriesRepository> {
+  const CategoriesRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'categoriesRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$categoriesRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<CategoriesRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CategoriesRepository create(Ref ref) {
+    return categoriesRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CategoriesRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CategoriesRepository>(value),
+    );
+  }
+}
+
 String _$categoriesRepositoryHash() =>
     r'f1445cfb02398fcc5daaf8a99c508733ad3f9148';
 
-/// See also [categoriesRepository].
-@ProviderFor(categoriesRepository)
-final categoriesRepositoryProvider = Provider<CategoriesRepository>.internal(
-  categoriesRepository,
-  name: r'categoriesRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$categoriesRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(categoriesListStream)
+const categoriesListStreamProvider = CategoriesListStreamProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CategoriesRepositoryRef = ProviderRef<CategoriesRepository>;
+final class CategoriesListStreamProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Category>>,
+          List<Category>,
+          Stream<List<Category>>
+        >
+    with $FutureModifier<List<Category>>, $StreamProvider<List<Category>> {
+  const CategoriesListStreamProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'categoriesListStreamProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$categoriesListStreamHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Category>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Category>> create(Ref ref) {
+    return categoriesListStream(ref);
+  }
+}
+
 String _$categoriesListStreamHash() =>
     r'c26715bb743388bd4cb030d4a31f287cbd9a761b';
 
-/// See also [categoriesListStream].
-@ProviderFor(categoriesListStream)
-final categoriesListStreamProvider = StreamProvider<List<Category>>.internal(
-  categoriesListStream,
-  name: r'categoriesListStreamProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$categoriesListStreamHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(categoriesListFuture)
+const categoriesListFutureProvider = CategoriesListFutureProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CategoriesListStreamRef = StreamProviderRef<List<Category>>;
+final class CategoriesListFutureProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Category>>,
+          List<Category>,
+          FutureOr<List<Category>>
+        >
+    with $FutureModifier<List<Category>>, $FutureProvider<List<Category>> {
+  const CategoriesListFutureProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'categoriesListFutureProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$categoriesListFutureHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Category>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Category>> create(Ref ref) {
+    return categoriesListFuture(ref);
+  }
+}
+
 String _$categoriesListFutureHash() =>
     r'4ad55643af4b21d77fc125a5562ac4aaa3c19955';
 
-/// See also [categoriesListFuture].
-@ProviderFor(categoriesListFuture)
-final categoriesListFutureProvider =
-    AutoDisposeFutureProvider<List<Category>>.internal(
-      categoriesListFuture,
-      name: r'categoriesListFutureProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$categoriesListFutureHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CategoriesListFutureRef = AutoDisposeFutureProviderRef<List<Category>>;
-String _$categoryStreamHash() => r'cf92d0825e0af50ff5799f497192f81c511ffe45';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [categoryStream].
 @ProviderFor(categoryStream)
-const categoryStreamProvider = CategoryStreamFamily();
+const categoryStreamProvider = CategoryStreamFamily._();
 
-/// See also [categoryStream].
-class CategoryStreamFamily extends Family<AsyncValue<Category?>> {
-  /// See also [categoryStream].
-  const CategoryStreamFamily();
+final class CategoryStreamProvider
+    extends
+        $FunctionalProvider<AsyncValue<Category?>, Category?, Stream<Category?>>
+    with $FutureModifier<Category?>, $StreamProvider<Category?> {
+  const CategoryStreamProvider._({
+    required CategoryStreamFamily super.from,
+    required CategoryId super.argument,
+  }) : super(
+         retry: null,
+         name: r'categoryStreamProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [categoryStream].
-  CategoryStreamProvider call(int id) {
-    return CategoryStreamProvider(id);
+  @override
+  String debugGetCreateSourceHash() => _$categoryStreamHash();
+
+  @override
+  String toString() {
+    return r'categoryStreamProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  CategoryStreamProvider getProviderOverride(
-    covariant CategoryStreamProvider provider,
-  ) {
-    return call(provider.id);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  $StreamProviderElement<Category?> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'categoryStreamProvider';
-}
-
-/// See also [categoryStream].
-class CategoryStreamProvider extends AutoDisposeStreamProvider<Category?> {
-  /// See also [categoryStream].
-  CategoryStreamProvider(int id)
-    : this._internal(
-        (ref) => categoryStream(ref as CategoryStreamRef, id),
-        from: categoryStreamProvider,
-        name: r'categoryStreamProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$categoryStreamHash,
-        dependencies: CategoryStreamFamily._dependencies,
-        allTransitiveDependencies:
-            CategoryStreamFamily._allTransitiveDependencies,
-        id: id,
-      );
-
-  CategoryStreamProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.id,
-  }) : super.internal();
-
-  final int id;
-
-  @override
-  Override overrideWith(
-    Stream<Category?> Function(CategoryStreamRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: CategoryStreamProvider._internal(
-        (ref) => create(ref as CategoryStreamRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        id: id,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeStreamProviderElement<Category?> createElement() {
-    return _CategoryStreamProviderElement(this);
+  Stream<Category?> create(Ref ref) {
+    final argument = this.argument as CategoryId;
+    return categoryStream(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CategoryStreamProvider && other.id == id;
+    return other is CategoryStreamProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin CategoryStreamRef on AutoDisposeStreamProviderRef<Category?> {
-  /// The parameter `id` of this provider.
-  int get id;
-}
+String _$categoryStreamHash() => r'cf92d0825e0af50ff5799f497192f81c511ffe45';
 
-class _CategoryStreamProviderElement
-    extends AutoDisposeStreamProviderElement<Category?>
-    with CategoryStreamRef {
-  _CategoryStreamProviderElement(super.provider);
+final class CategoryStreamFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<Category?>, CategoryId> {
+  const CategoryStreamFamily._()
+    : super(
+        retry: null,
+        name: r'categoryStreamProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CategoryStreamProvider call(CategoryId id) =>
+      CategoryStreamProvider._(argument: id, from: this);
 
   @override
-  int get id => (origin as CategoryStreamProvider).id;
+  String toString() => r'categoryStreamProvider';
+}
+
+@ProviderFor(categoryFuture)
+const categoryFutureProvider = CategoryFutureFamily._();
+
+final class CategoryFutureProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Category?>,
+          Category?,
+          FutureOr<Category?>
+        >
+    with $FutureModifier<Category?>, $FutureProvider<Category?> {
+  const CategoryFutureProvider._({
+    required CategoryFutureFamily super.from,
+    required CategoryId super.argument,
+  }) : super(
+         retry: null,
+         name: r'categoryFutureProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$categoryFutureHash();
+
+  @override
+  String toString() {
+    return r'categoryFutureProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Category?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Category?> create(Ref ref) {
+    final argument = this.argument as CategoryId;
+    return categoryFuture(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CategoryFutureProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$categoryFutureHash() => r'd3657f534661b0b7ee46821377d30edefcb4cfa1';
 
-/// See also [categoryFuture].
-@ProviderFor(categoryFuture)
-const categoryFutureProvider = CategoryFutureFamily();
-
-/// See also [categoryFuture].
-class CategoryFutureFamily extends Family<AsyncValue<Category?>> {
-  /// See also [categoryFuture].
-  const CategoryFutureFamily();
-
-  /// See also [categoryFuture].
-  CategoryFutureProvider call(int id) {
-    return CategoryFutureProvider(id);
-  }
-
-  @override
-  CategoryFutureProvider getProviderOverride(
-    covariant CategoryFutureProvider provider,
-  ) {
-    return call(provider.id);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'categoryFutureProvider';
-}
-
-/// See also [categoryFuture].
-class CategoryFutureProvider extends AutoDisposeFutureProvider<Category?> {
-  /// See also [categoryFuture].
-  CategoryFutureProvider(int id)
-    : this._internal(
-        (ref) => categoryFuture(ref as CategoryFutureRef, id),
-        from: categoryFutureProvider,
+final class CategoryFutureFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Category?>, CategoryId> {
+  const CategoryFutureFamily._()
+    : super(
+        retry: null,
         name: r'categoryFutureProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$categoryFutureHash,
-        dependencies: CategoryFutureFamily._dependencies,
-        allTransitiveDependencies:
-            CategoryFutureFamily._allTransitiveDependencies,
-        id: id,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
       );
 
-  CategoryFutureProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.id,
-  }) : super.internal();
-
-  final int id;
+  CategoryFutureProvider call(CategoryId id) =>
+      CategoryFutureProvider._(argument: id, from: this);
 
   @override
-  Override overrideWith(
-    FutureOr<Category?> Function(CategoryFutureRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: CategoryFutureProvider._internal(
-        (ref) => create(ref as CategoryFutureRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        id: id,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<Category?> createElement() {
-    return _CategoryFutureProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is CategoryFutureProvider && other.id == id;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  String toString() => r'categoryFutureProvider';
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin CategoryFutureRef on AutoDisposeFutureProviderRef<Category?> {
-  /// The parameter `id` of this provider.
-  int get id;
-}
-
-class _CategoryFutureProviderElement
-    extends AutoDisposeFutureProviderElement<Category?>
-    with CategoryFutureRef {
-  _CategoryFutureProviderElement(super.provider);
-
-  @override
-  int get id => (origin as CategoryFutureProvider).id;
-}
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
