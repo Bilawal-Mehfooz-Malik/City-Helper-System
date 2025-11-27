@@ -4,7 +4,6 @@ import 'package:app/src/core/app_config/env.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'entity_search_repository.g.dart';

@@ -1,7 +1,6 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:app/src/features/home/domain/sub_category.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';

@@ -4,7 +4,6 @@ import 'package:app/src/features/home/data/real/residence_repository.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/domain/entity_filter.dart';
 import 'package:app/src/features/home/domain/home_exceptions.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'entity_service.g.dart';

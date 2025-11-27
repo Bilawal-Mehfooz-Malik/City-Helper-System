@@ -1,5 +1,4 @@
 import 'package:app/src/core/utils/screen_utils.dart';
-import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/core/common_widgets/custom_text_button.dart';
 import 'package:app/src/core/common_widgets/section_header.dart';
 import 'package:app/src/core/constants/app_sizes.dart';

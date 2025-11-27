@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/src/core/utils/font_family_provider.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final lightThemeProvider = Provider<ThemeData>((ref) {

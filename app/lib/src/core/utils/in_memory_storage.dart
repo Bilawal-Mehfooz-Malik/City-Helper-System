@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 /// A singleton to store in-memory image data.
 /// Stores images in a nested map: userId -> shopId -> imageId -> bytes

@@ -3,7 +3,6 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/carousel_ad.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ads_carousel_repository.g.dart';

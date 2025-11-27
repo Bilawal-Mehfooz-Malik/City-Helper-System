@@ -57,8 +57,7 @@ class Step1BasicDetailsPage extends ConsumerWidget {
                 isEditing: isEditing,
                 allCategories: allCategories,
                 subCategoryOptions:
-                    subCategoryOptionsAsync?.valueOrNull ??
-                    initialSubCategories,
+                    subCategoryOptionsAsync?.value ?? initialSubCategories,
                 selectedCategory: formData.category,
                 selectedSubCategory: formData.subCategory,
                 selectedListingType: formData.listingType,

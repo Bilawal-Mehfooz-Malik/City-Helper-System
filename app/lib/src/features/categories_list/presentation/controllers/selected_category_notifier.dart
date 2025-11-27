@@ -1,10 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'selected_category_notifier.g.dart';
-
-@riverpod
-class SelectedCategoryNotifier extends _$SelectedCategoryNotifier {
+class SelectedCategoryNotifier extends Notifier<CategoryId?> {
   @override
   CategoryId? build() => null;
 
@@ -12,3 +9,8 @@ class SelectedCategoryNotifier extends _$SelectedCategoryNotifier {
     state = id;
   }
 }
+
+final selectedCategoryNotifierProvider =
+    NotifierProvider<SelectedCategoryNotifier, CategoryId?>(
+      SelectedCategoryNotifier.new,
+    );

@@ -3,7 +3,6 @@ import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/review/domain/review.dart';
 import 'package:app/src/features/review/domain/review_sorting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reviews_repository.g.dart';

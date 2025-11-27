@@ -6,7 +6,6 @@ import 'package:app/src/features/home_detail/presentation/controllers/rating_fil
 import 'package:app/src/features/home_detail/presentation/controllers/review_sort_controller.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart'; // Contains ReviewListTile
-import 'package:app/src/features/review/application/paginated_reviews_notifier.dart';
 import 'package:app/src/features/review/domain/review_sorting.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';

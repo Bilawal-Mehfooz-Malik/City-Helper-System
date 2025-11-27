@@ -18,7 +18,6 @@ import 'package:app/src/features/review/presentation/review_list_screen.dart';
 import 'package:app/src/features/startup/presentation/pick_location_screen.dart';
 import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
