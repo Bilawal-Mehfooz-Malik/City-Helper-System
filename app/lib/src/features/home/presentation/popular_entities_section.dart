@@ -6,6 +6,7 @@ import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
+import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/list_type_controller.dart';

@@ -5,14 +5,14 @@ import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'popular_entities_notifier.g.dart';
+class PopularEntitiesNotifier extends Notifier<EntitiesPaginatedState> {
+  PopularEntitiesNotifier(this.categoryId);
+  final CategoryId categoryId;
 
-@Riverpod(keepAlive: true)
-class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
   @override
-  EntitiesPaginatedState build(CategoryId categoryId) {
+  EntitiesPaginatedState build() {
     // Watch the filter provider to react to changes
     ref.watch(
       filterControllerProvider(
@@ -98,3 +98,10 @@ class PopularEntitiesNotifier extends _$PopularEntitiesNotifier {
     }
   }
 }
+
+final popularEntitiesNotifierProvider =
+    NotifierProvider.family<
+      PopularEntitiesNotifier,
+      EntitiesPaginatedState,
+      CategoryId
+    >(PopularEntitiesNotifier.new);

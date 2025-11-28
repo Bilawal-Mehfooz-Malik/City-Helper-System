@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:app/src/features/auth/application/auth_service.dart';
+import 'package:app/src/features/auth/application/auth_service_base.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
@@ -18,7 +19,7 @@ class AuthController extends _$AuthController {
   Future<void> build() async {}
 
   AuthRepository get _authRepo => ref.read(authRepositoryProvider);
-  AuthService get _authService => ref.read(authServiceProvider);
+  AuthServiceBase get _authService => ref.read(authServiceProvider);
 
   Future<void> signOut() async {
     state = const AsyncLoading();

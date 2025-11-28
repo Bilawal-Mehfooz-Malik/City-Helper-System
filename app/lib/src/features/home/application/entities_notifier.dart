@@ -5,14 +5,14 @@ import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_context.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_controller.dart';
 import 'package:app/src/features/home/presentation/controllers/subcategory_controller.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'entities_notifier.g.dart';
+class EntitiesNotifier extends Notifier<EntitiesPaginatedState> {
+  EntitiesNotifier(this.categoryId);
+  final CategoryId categoryId;
 
-@Riverpod(keepAlive: true)
-class EntitiesNotifier extends _$EntitiesNotifier {
   @override
-  EntitiesPaginatedState build(CategoryId categoryId) {
+  EntitiesPaginatedState build() {
     // Watch the filter and subcategory providers to react to changes
     ref.watch(
       filterControllerProvider(
@@ -28,10 +28,12 @@ class EntitiesNotifier extends _$EntitiesNotifier {
 
   Future<void> fetchFirstPage() async {
     final subcategoryId = ref.read(subcategoryControllerProvider);
-    final filter = ref.read(filterControllerProvider(
-      categoryId: categoryId,
-      filterContext: FilterContext.all,
-    ));
+    final filter = ref.read(
+      filterControllerProvider(
+        categoryId: categoryId,
+        filterContext: FilterContext.all,
+      ),
+    );
 
     try {
       final limit = ref.read(initialLoadLimitProvider);
@@ -94,3 +96,10 @@ class EntitiesNotifier extends _$EntitiesNotifier {
     }
   }
 }
+
+final entitiesNotifierProvider =
+    NotifierProvider.family<
+      EntitiesNotifier,
+      EntitiesPaginatedState,
+      CategoryId
+    >(EntitiesNotifier.new);

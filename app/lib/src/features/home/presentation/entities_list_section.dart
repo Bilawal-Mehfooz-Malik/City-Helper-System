@@ -6,6 +6,7 @@ import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/categories_list/domain/categories_exception.dart';
+import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/domain/entities_pagination_state.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/features/home/presentation/controllers/filter_context.dart';

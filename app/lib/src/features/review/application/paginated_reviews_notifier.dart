@@ -5,20 +5,37 @@ import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/review/domain/review.dart';
 import 'package:app/src/features/review/domain/review_pagination_state.dart';
 import 'package:app/src/features/review/domain/review_sorting.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'paginated_reviews_notifier.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const _reviewsPerPage = 3;
 
-@riverpod
-class PaginatedReviewsNotifier extends _$PaginatedReviewsNotifier {
+class PaginatedReviewsArgs {
+  final EntityId entityId;
+  final ReviewSortOption sortOption;
+  final int? ratingFilter;
+
+  const PaginatedReviewsArgs({
+    required this.entityId,
+    this.sortOption = ReviewSortOption.latest,
+    this.ratingFilter,
+  });
+}
+
+class PaginatedReviewsNotifier extends AsyncNotifier<ReviewPaginationState> {
+  PaginatedReviewsNotifier(this.args);
+
+  final PaginatedReviewsArgs args;
+
+  late final EntityId entityId;
+  late final ReviewSortOption sortOption;
+  late final int? ratingFilter;
+
   @override
-  Future<ReviewPaginationState> build({
-    required EntityId entityId,
-    ReviewSortOption sortOption = ReviewSortOption.latest,
-    int? ratingFilter,
-  }) async {
+  Future<ReviewPaginationState> build() async {
+    entityId = args.entityId;
+    sortOption = args.sortOption;
+    ratingFilter = args.ratingFilter;
+
     final reviews = await _fetchPage(limit: _reviewsPerPage);
 
     return ReviewPaginationState(
@@ -88,3 +105,10 @@ class PaginatedReviewsNotifier extends _$PaginatedReviewsNotifier {
     }
   }
 }
+
+final paginatedReviewsNotifierProvider = AsyncNotifierProvider.autoDispose
+    .family<
+      PaginatedReviewsNotifier,
+      ReviewPaginationState,
+      PaginatedReviewsArgs
+    >(PaginatedReviewsNotifier.new);

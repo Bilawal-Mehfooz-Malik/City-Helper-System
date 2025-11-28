@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/data/real/ads_carousel_repository.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'ad_interaction_controller.g.dart';
-
-@riverpod
-class AdInteractionNotifier extends _$AdInteractionNotifier {
+class AdInteractionNotifier extends AsyncNotifier<void> {
   // --- State ---
   Timer? _impressionTimer;
   final List<CarouselAdId> _impressionBuffer = [];
@@ -64,3 +61,8 @@ class AdInteractionNotifier extends _$AdInteractionNotifier {
     _impressionTimer = null;
   }
 }
+
+final adInteractionNotifierProvider =
+    AsyncNotifierProvider.autoDispose<AdInteractionNotifier, void>(
+      AdInteractionNotifier.new,
+    );

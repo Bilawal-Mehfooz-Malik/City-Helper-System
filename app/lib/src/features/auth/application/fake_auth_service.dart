@@ -2,22 +2,21 @@ import 'dart:typed_data';
 
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/auth/application/auth_service.dart';
+import 'package:app/src/features/auth/application/auth_service_base.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FakeAuthService extends AuthService {
+class FakeAuthService extends AuthServiceBase {
   FakeAuthService({
     required this.authRepository,
     required this.userRepository,
     required this.imageUploadRepository,
     required this.defaultLocation,
-  }) : super(FakeRef());
+  });
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
@@ -95,9 +94,10 @@ class FakeAuthService extends AuthService {
       removeProfileImage: removeProfileImage,
     );
   }
-}
 
-class FakeRef implements Ref {
   @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+  Future<void> deleteAccount() {
+    // TODO: implement deleteAccount
+    throw UnimplementedError();
+  }
 }

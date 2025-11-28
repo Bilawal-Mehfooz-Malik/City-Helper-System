@@ -6,6 +6,7 @@ import 'package:app/src/features/home_detail/presentation/controllers/rating_fil
 import 'package:app/src/features/home_detail/presentation/controllers/review_sort_controller.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/rating_graph.dart';
 import 'package:app/src/features/home_detail/presentation/widgets/review_section.dart'; // Contains ReviewListTile
+import 'package:app/src/features/review/application/paginated_reviews_notifier.dart';
 import 'package:app/src/features/review/domain/review_sorting.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -53,9 +54,11 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
       ref
           .read(
             paginatedReviewsNotifierProvider(
-              entityId: widget.entityId,
-              sortOption: sortOption,
-              ratingFilter: ratingFilter,
+              PaginatedReviewsArgs(
+                entityId: widget.entityId,
+                sortOption: sortOption,
+                ratingFilter: ratingFilter,
+              ),
             ).notifier,
           )
           .fetchNextPage();
@@ -82,9 +85,11 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
 
           final reviewsValue = ref.watch(
             paginatedReviewsNotifierProvider(
-              entityId: entity.id,
-              sortOption: sortOption,
-              ratingFilter: ratingFilter,
+              PaginatedReviewsArgs(
+                entityId: widget.entityId,
+                sortOption: sortOption,
+                ratingFilter: ratingFilter,
+              ),
             ),
           );
 
@@ -160,9 +165,11 @@ class _ReviewListScreenState extends ConsumerState<ReviewListScreen> {
                                           onPressed: () => ref
                                               .read(
                                                 paginatedReviewsNotifierProvider(
-                                                  entityId: entity.id,
-                                                  sortOption: sortOption,
-                                                  ratingFilter: ratingFilter,
+                                                  PaginatedReviewsArgs(
+                                                    entityId: widget.entityId,
+                                                    sortOption: sortOption,
+                                                    ratingFilter: ratingFilter,
+                                                  ),
                                                 ).notifier,
                                               )
                                               .fetchNextPage(),

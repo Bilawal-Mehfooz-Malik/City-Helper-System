@@ -3,26 +3,26 @@ import 'dart:typed_data';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/default_location_provider.dart';
+import 'package:app/src/features/auth/application/auth_service_base.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/auth/domain/app_user.dart';
 import 'package:app/src/features/auth/domain/auth_exceptions.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'auth_service.g.dart';
+class AuthService implements AuthServiceBase {
+  const AuthService(this._ref);
+  final Ref _ref;
 
-class AuthService {
-  const AuthService(this.ref);
-  final Ref ref;
-
+  @override
   Future<String> uploadUserProfileImage(
     Uint8List imageBytes,
     UserId userId,
   ) async {
     try {
-      return await ref
+      return await _ref
           .read(imageUploadRepositoryProvider)
           .uploadUserProfileImage(imageBytes: imageBytes, userId: userId);
     } catch (e, st) {
@@ -36,17 +36,18 @@ class AuthService {
   }
 
   /// Creates or updates user profile in Firestore after OTP verification
+  @override
   Future<void> createUserProfile({
     required String name,
     Uint8List? profileImageBytes,
     LatLng? location,
   }) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    final user = _ref.read(authRepositoryProvider).currentUser;
     if (user == null) {
       throw UserNotAuthenticatedException();
     }
 
-    final defaultLocation = ref.read(defaultLocationProvider);
+    final defaultLocation = _ref.read(defaultLocationProvider);
 
     String? imageUrl;
     if (profileImageBytes != null) {
@@ -61,16 +62,17 @@ class AuthService {
       lastLocation: location ?? defaultLocation,
     );
 
-    await ref.read(userRepositoryProvider).createUserProfile(user: appUser);
+    await _ref.read(userRepositoryProvider).createUserProfile(user: appUser);
   }
 
+  @override
   Future<void> updateUserProfile({
     String? name,
     Uint8List? profileImageBytes,
     LatLng? location,
     bool removeProfileImage = false,
   }) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    final user = _ref.read(authRepositoryProvider).currentUser;
     if (user == null) {
       throw UserNotAuthenticatedException();
     }
@@ -78,7 +80,7 @@ class AuthService {
     String? imageUrl;
 
     if (removeProfileImage) {
-      await ref
+      await _ref
           .read(imageUploadRepositoryProvider)
           .deleteProfileImage(user.uid);
       imageUrl = null;
@@ -86,7 +88,7 @@ class AuthService {
       imageUrl = await uploadUserProfileImage(profileImageBytes, user.uid);
     }
 
-    await ref
+    await _ref
         .read(userRepositoryProvider)
         .updateUserProfile(
           uid: user.uid,
@@ -97,16 +99,16 @@ class AuthService {
         );
   }
 
+  @override
   Future<void> deleteAccount() async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    final user = _ref.read(authRepositoryProvider).currentUser;
     if (user == null) {
       throw UserNotAuthenticatedException();
     }
-    await ref.read(authRepositoryProvider).deleteAccount();
+    await _ref.read(authRepositoryProvider).deleteAccount();
   }
 }
 
-@riverpod
-AuthService authService(Ref ref) {
+final authServiceProvider = Provider<AuthServiceBase>((ref) {
   return AuthService(ref);
-}
+});

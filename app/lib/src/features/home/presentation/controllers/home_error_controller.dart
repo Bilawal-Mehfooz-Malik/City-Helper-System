@@ -2,7 +2,6 @@ import 'package:app/src/features/home/application/entities_notifier.dart';
 import 'package:app/src/features/home/application/popular_entities_notifier.dart';
 import 'package:app/src/features/home/data/real/sub_categories_repository.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_error_controller.g.dart';
