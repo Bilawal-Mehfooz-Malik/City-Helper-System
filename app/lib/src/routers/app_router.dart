@@ -1,3 +1,4 @@
+import 'package:app/src/core/common_widgets/custom_animated_screen.dart';
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/presentation/account_screen.dart';
@@ -15,7 +16,7 @@ import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.d
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
-import 'package:app/src/features/startup/presentation/pick_location_screen.dart';
+import 'package:app/src/core/common_widgets/pick_location_screen.dart';
 import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -233,8 +234,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/pick-your-location',
         name: AppRoute.pickYourLocation.name,
-        pageBuilder: (context, state) =>
-            MaterialPage(fullscreenDialog: true, child: PickLocationScreen()),
+        pageBuilder: (context, state) => CustomAnimatedScreen(
+          child: PickLocationScreen(),
+          transitionType: .slide,
+        ),
       ),
       GoRoute(
         path: '/my-shop',

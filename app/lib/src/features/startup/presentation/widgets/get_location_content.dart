@@ -4,7 +4,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
-import 'package:app/src/features/startup/presentation/pick_location_screen_beta.dart';
+import 'package:app/src/core/common_widgets/pick_location_screen.dart';
 import 'package:app/src/features/startup/presentation/widgets/location_preview_widget.dart';
 import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:app/src/localization/localization_extension.dart';
@@ -18,6 +18,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 const kGetCurrentKey = Key('get-current-key');
 const kFromMapKey = Key('from-map-key');
 const kSaveKey = Key('save-location-key');
+
+// TODO: REMOVE IT
 
 class GetLocationContent extends ConsumerStatefulWidget {
   final bool isLargeScreen;
@@ -94,7 +96,7 @@ class _GetLocationContentState extends ConsumerState<GetLocationContent> {
                 onPressed: () async {
                   final pickedLocation = await showGeneralDialog<LatLng>(
                     context: context,
-                    pageBuilder: (_, _, _) => PickLocationScreenBeta(
+                    pageBuilder: (_, _, _) => PickLocationScreen(
                       initialLocation: locationValue.value,
                     ),
                   );

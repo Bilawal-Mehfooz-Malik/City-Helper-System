@@ -1,5 +1,5 @@
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
-import 'package:app/src/features/startup/presentation/pick_location_screen_beta.dart';
+import 'package:app/src/core/common_widgets/pick_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,7 +25,7 @@ class ProfileLocationMap extends ConsumerWidget {
               final result = await showGeneralDialog<LatLng>(
                 context: context,
                 pageBuilder: (_, _, _) =>
-                    PickLocationScreenBeta(initialLocation: userLocation),
+                    PickLocationScreen(initialLocation: userLocation),
               );
               if (result == null) return;
 
