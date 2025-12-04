@@ -1,5 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/utils/default_location_provider.dart';
+import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -22,7 +22,7 @@ class LocationPickerTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mapBuilder = ref.watch(googleMapBuilderProvider);
-    final defaultLocation = ref.watch(defaultLocationProvider);
+    final defaultLocation = ref.watch(defaultLatLngProvider);
     final location = pickedLatLng ?? defaultLocation;
 
     return Card(

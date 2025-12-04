@@ -4,7 +4,7 @@ import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
-import 'package:app/src/core/common_widgets/pick_location_screen.dart';
+import 'package:app/src/features/pick_location/presentation/pick_location_screen.dart';
 import 'package:app/src/features/startup/presentation/widgets/location_preview_widget.dart';
 import 'package:app/src/features/startup/presentation/controllers/local_user_location_saver.dart';
 import 'package:app/src/localization/localization_extension.dart';

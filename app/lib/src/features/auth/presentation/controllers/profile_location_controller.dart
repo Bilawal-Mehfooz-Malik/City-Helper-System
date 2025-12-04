@@ -1,12 +1,11 @@
-
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
-import 'package:app/src/core/utils/default_location_provider.dart';
+import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
 
 part 'profile_location_controller.g.dart';
 
@@ -35,7 +34,7 @@ class ProfileLocationController extends _$ProfileLocationController {
       return sharedPrefsLocation;
     }
 
-    return ref.read(defaultLocationProvider);
+    return ref.read(defaultLatLngProvider);
   }
 
   Future<void> saveLocation(LatLng location) async {
@@ -49,7 +48,7 @@ class ProfileLocationController extends _$ProfileLocationController {
 
     final locationRepo = ref.read(userLocationRepositoryProvider);
     await locationRepo.setUserLocation(location);
-    
+
     state = AsyncData(location);
   }
 

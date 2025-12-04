@@ -1,5 +1,5 @@
 import 'package:app/src/core/common_widgets/custom_animated_screen.dart';
-import 'package:app/src/core/common_widgets/pick_location_screen.dart';
+import 'package:app/src/features/pick_location/presentation/pick_location_screen.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/gestures.dart';

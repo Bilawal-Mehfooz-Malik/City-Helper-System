@@ -16,7 +16,7 @@ import 'package:app/src/features/my_shop/presentation/my_shop_dashboard_screen.d
 import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
-import 'package:app/src/core/common_widgets/pick_location_screen.dart';
+import 'package:app/src/features/pick_location/presentation/pick_location_screen.dart';
 import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

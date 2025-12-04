@@ -34,7 +34,7 @@ final class ProfileLocationControllerProvider
 }
 
 String _$profileLocationControllerHash() =>
-    r'6c02f22b99808f4febcff2312fdd0ff0d06a6282';
+    r'a05b8819531d7867668a24fedf7d5819c94981a8';
 
 abstract class _$ProfileLocationController extends $AsyncNotifier<LatLng?> {
   FutureOr<LatLng?> build();

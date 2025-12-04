@@ -27,7 +27,7 @@ import 'package:app/src/features/home_detail/data/residence_details_repository.d
 import 'package:app/src/features/review/data/reviews_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
 import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
-import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/features/startup/presentation/widgets/fake_map_widget.dart';

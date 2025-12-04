@@ -4,11 +4,9 @@ import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/utils/delay.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'geolocator_repository.g.dart';
 
 class GeoLocatorRepository {
   GeoLocatorRepository(this._geolocator, {int timeOut = 30})
@@ -58,7 +56,6 @@ class GeoLocatorRepository {
   }
 }
 
-@riverpod
-GeoLocatorRepository geoLocatorRepository(Ref ref) {
-  return GeoLocatorRepository(GeolocatorPlatform.instance);
-}
+final geoLocatorRepositoryProvider = Provider.autoDispose<GeoLocatorRepository>(
+  (ref) => GeoLocatorRepository(GeolocatorPlatform.instance),
+);

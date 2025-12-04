@@ -1,5 +1,5 @@
 import 'package:app/src/features/categories_list/data/categories_repository.dart';
-import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
 import 'package:app/src/features/startup/data/real/user_location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

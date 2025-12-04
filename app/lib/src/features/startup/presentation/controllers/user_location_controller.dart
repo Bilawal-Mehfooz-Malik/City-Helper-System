@@ -1,7 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/real/geolocator_repository.dart';
+import '../../../pick_location/data/geolocator_repository.dart';
 
 part 'user_location_controller.g.dart';
 

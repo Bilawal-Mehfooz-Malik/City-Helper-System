@@ -6,7 +6,7 @@ import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
-import 'package:app/src/core/utils/default_location_provider.dart';
+import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
@@ -86,7 +86,7 @@ class AccountScreen extends ConsumerWidget {
 
     final userProfile = ref.watch(getUserByIdProvider(user.uid));
     final userLocation = ref.watch(userLocationControllerProvider).value;
-    final defaultLocation = ref.watch(defaultLocationProvider);
+    final defaultLocation = ref.watch(defaultLatLngProvider);
     final mapBuilder = ref.watch(googleMapBuilderProvider);
 
     return Scaffold(

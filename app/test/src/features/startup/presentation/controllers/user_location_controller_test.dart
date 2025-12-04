@@ -1,4 +1,4 @@
-import 'package:app/src/features/startup/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
 import 'package:app/src/features/startup/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
