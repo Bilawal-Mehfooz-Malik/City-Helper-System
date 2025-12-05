@@ -21,7 +21,7 @@ import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:app/src/routers/not_found_screen.dart';
 import 'package:app/src/features/legal/presentation/terms_of_service_page.dart';
@@ -58,6 +58,7 @@ GoRouter appRouter(Ref ref) {
   // Determine the initial route based on the user location state.
   final userLocation = ref.watch(fetchUserLocationProvider).value;
   final initialLocation = userLocation != null ? '/' : '/get-started';
+  print(initialLocation.toString());
 
   // listen for changes in userLocationProvider to refresh the router for redirection
   ref.listen(fetchUserLocationProvider, (_, _) => router.refresh());

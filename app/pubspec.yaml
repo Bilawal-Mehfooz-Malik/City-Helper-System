@@ -70,8 +70,10 @@ dependencies:
 
   # For Location
   geolocator: 14.0.2
+  geocoding: 4.0.0
   google_maps_flutter: 2.14.0
-  google_maps_flutter_web: ^0.5.14+3
+  google_maps_flutter_web: 0.5.14+3
+
   cached_network_image: 3.4.1
   json_annotation: 4.9.0
   freezed_annotation: 3.1.0

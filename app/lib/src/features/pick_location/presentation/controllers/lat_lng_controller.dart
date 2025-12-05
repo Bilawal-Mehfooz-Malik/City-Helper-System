@@ -13,6 +13,8 @@ class LatLngController extends Notifier<LatLng> {
   }
 
   set latLng(LatLng latLng) => state = latLng;
+
+  LatLng get latLng => state;
 }
 
 final latLngControllerProvider = NotifierProvider.autoDispose

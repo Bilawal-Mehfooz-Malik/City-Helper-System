@@ -27,7 +27,7 @@ import 'package:app/src/features/home_detail/data/food_details_repository.dart';
 import 'package:app/src/features/home_detail/data/residence_details_repository.dart';
 
 import 'package:app/src/features/review/data/reviews_repository.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

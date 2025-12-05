@@ -1,8 +1,8 @@
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
-import 'package:app/src/features/startup/data/fake/fake_geolocator_repository.dart';
-import 'package:app/src/features/startup/data/fake/fake_user_location_repository.dart';
-import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+import 'package:app/src/features/pick_location/data/fake/fake_geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/fake/fake_user_location_repository.dart';
+import 'package:app/src/features/pick_location/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

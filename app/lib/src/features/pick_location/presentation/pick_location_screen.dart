@@ -1,11 +1,11 @@
 import 'dart:async';
-
+import 'package:app/src/core/common_widgets/loading_dialog.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/auth/presentation/controllers/profile_location_controller.dart';
 import 'package:app/src/features/pick_location/presentation/controllers/map_type_controller.dart';
 import 'package:app/src/features/pick_location/presentation/controllers/lat_lng_controller.dart';
+import 'package:app/src/features/pick_location/presentation/controllers/pick_location_controller.dart';
 import 'package:app/src/features/pick_location/presentation/fab_menu.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
@@ -15,7 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PickLocationScreen extends ConsumerStatefulWidget {
   final LatLng? initialLocation;
-  final VoidCallback? onFinish;
+  final void Function(LatLng)? onFinish;
   const PickLocationScreen({super.key, this.initialLocation, this.onFinish});
 
   @override
@@ -37,11 +37,24 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    final location = await ref
-        .read(profileLocationControllerProvider.notifier)
-        .getCurrentLocation();
-    if (location != null) {
-      await _moveCamera(location, zoomLevel: 18);
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: context.colorScheme.onSurface.withAlpha(20),
+      builder: (_) =>
+          SmallLoadingDialog(message: 'Fetching Location...'.hardcoded),
+    );
+
+    try {
+      final location = await ref
+          .read(pickLocationControllerProvider.notifier)
+          .getCurrentLocation();
+
+      if (location != null) {
+        await _moveCamera(location, zoomLevel: 18);
+      }
+    } finally {
+      if (mounted) Navigator.pop(context);
     }
   }
 
@@ -95,8 +108,16 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
                       backgroundColor: theme.primary,
                       foregroundColor: theme.onPrimary,
                       heroTag: 'saveLocationBtn',
-                      onPressed:
-                          widget.onFinish ?? () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        if (widget.onFinish != null) {
+                          final latLng = ref.read(
+                            latLngControllerProvider(widget.initialLocation),
+                          );
+                          widget.onFinish!(latLng);
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      },
                       child: const Icon(Icons.check),
                     ),
                   ],

@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/my_shop/data/user_mode_repository.dart';
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
+import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
 
 /// Redirection logic for GoRouter

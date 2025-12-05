@@ -34,7 +34,7 @@ final class LocalUserLocationSaverProvider
 }
 
 String _$localUserLocationSaverHash() =>
-    r'369036c2a18fe0cd27c8f542ae3c8b109a0d74ff';
+    r'9cd1f388fbc342c3841ed3b81d4fb7441a52c74e';
 
 abstract class _$LocalUserLocationSaver extends $AsyncNotifier<void> {
   FutureOr<void> build();

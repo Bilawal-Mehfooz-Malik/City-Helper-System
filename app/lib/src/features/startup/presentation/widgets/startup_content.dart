@@ -1,9 +1,13 @@
 import 'package:app/src/core/common_widgets/custom_animated_screen.dart';
+import 'package:app/src/features/pick_location/domain/coordinates.dart';
+import 'package:app/src/features/pick_location/presentation/controllers/pick_location_controller.dart';
 import 'package:app/src/features/pick_location/presentation/pick_location_screen.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '/src/core/common_widgets/primary_button.dart';
 import '/src/core/constants/app_logo.dart';
@@ -11,8 +15,6 @@ import '/src/core/constants/app_sizes.dart';
 import '/src/core/utils/theme_extension.dart';
 import '/src/localization/localization_extension.dart';
 import 'package:flutter/material.dart';
-
-const kGetStartedKey = ValueKey('Get-Started');
 
 class StartupContent extends StatelessWidget {
   const StartupContent({
@@ -97,6 +99,17 @@ class _AppLogoAndName extends StatelessWidget {
 class _BottomCTA extends StatelessWidget {
   const _BottomCTA();
 
+  Future<void> _saveUserLocation(
+    BuildContext context,
+    WidgetRef ref,
+    LatLng latLng,
+  ) async {
+    final controller = ref.read(pickLocationControllerProvider.notifier);
+    await controller.saveUserLocation(
+      Coordinates(latitude: latLng.latitude, longitude: latLng.longitude),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final richTextStyle = TextStyle(
@@ -110,16 +123,22 @@ class _BottomCTA extends StatelessWidget {
     return Column(
       spacing: Sizes.p16,
       children: [
-        PrimaryButton(
-          key: kGetStartedKey,
-          useMaxSize: true,
-          text: context.loc.getStarted,
-          onPressed: () => Navigator.of(context).push(
-            MaterialCustomAnimatedScreen<void>(
-              child: const PickLocationScreen(),
-              transitionType: .slide,
-            ),
-          ),
+        Consumer(
+          builder: (context, ref, child) {
+            return PrimaryButton(
+              useMaxSize: true,
+              text: context.loc.getStarted,
+              onPressed: () => Navigator.of(context).push(
+                MaterialCustomAnimatedScreen<void>(
+                  child: PickLocationScreen(
+                    onFinish: (LatLng latLng) =>
+                        _saveUserLocation(context, ref, latLng),
+                  ),
+                  transitionType: .slide,
+                ),
+              ),
+            );
+          },
         ),
 
         RichText(

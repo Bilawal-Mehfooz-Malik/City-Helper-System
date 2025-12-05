@@ -1,5 +1,5 @@
-import 'package:app/src/features/startup/data/real/user_location_repository.dart';
-import 'package:app/src/features/startup/domain/location_exceptions.dart';
+import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
+import 'package:app/src/features/pick_location/domain/location_exceptions.dart';
 import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,9 +20,9 @@ class LocalUserLocationSaver extends _$LocalUserLocationSaver {
     }
 
     final repository = ref.read(userLocationRepositoryProvider);
-    state = await AsyncValue.guard(
-      () => repository.setUserLocation(userLocation),
-    );
+    // state = await AsyncValue.guard(
+    //   () => repository.setUserLocation(userLocation),
+    // );
 
     if (state.hasError) {
       state = AsyncError(state.error!, StackTrace.current);

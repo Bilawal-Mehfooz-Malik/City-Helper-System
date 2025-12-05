@@ -1,5 +1,5 @@
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
-import 'package:app/src/features/startup/domain/location_exceptions.dart';
+import 'package:app/src/features/pick_location/domain/location_exceptions.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

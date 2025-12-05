@@ -34,7 +34,7 @@ final class UserLocationControllerProvider
 }
 
 String _$userLocationControllerHash() =>
-    r'390c257440b336a6f96cb233bff8402171ff93fc';
+    r'ee621c149e16323aaa622923e961141e4976cbba';
 
 abstract class _$UserLocationController extends $AsyncNotifier<LatLng?> {
   FutureOr<LatLng?> build();
