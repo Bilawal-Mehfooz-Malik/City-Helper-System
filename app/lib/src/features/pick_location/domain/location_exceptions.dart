@@ -4,7 +4,7 @@ class LocationServicesDisabledException extends AppException {
   LocationServicesDisabledException()
     : super(
         'services-disabled',
-        'Location services are disabled. Please enable them in your device settings.',
+        'Location services are disabled. Please enable location permission to proceed.',
       );
 }
 
@@ -28,7 +28,7 @@ class LocationPermissionDeniedForeverException extends AppException {
   LocationPermissionDeniedForeverException()
     : super(
         'permission-denied-forever',
-        'Location access is required. Please enable location permission in settings to proceed.',
+        'Location access is required. Please enable location permission to proceed.',
       );
 }
 

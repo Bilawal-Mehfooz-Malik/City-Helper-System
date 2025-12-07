@@ -1,6 +1,6 @@
-import 'package:app/src/features/pick_location/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:app/src/features/pick_location/domain/coordinates.dart';
+import 'package:app/src/features/startup/domain/coordinates.dart';
 
 Future<UserLocation> getCityAndCountry(Coordinates coordinates) async {
   try {

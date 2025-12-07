@@ -6,7 +6,7 @@ import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
 import 'package:app/src/core/common_widgets/async_value_widget.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/constants/breakpoints.dart';
-import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
+import 'package:app/src/features/pick_location/data/default_lat_lng_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/user_repository.dart';
@@ -98,8 +98,8 @@ class AccountScreen extends ConsumerWidget {
             return const SizedBox.shrink();
           }
 
-          final location =
-              profile.lastLocation ?? userLocation ?? defaultLocation;
+          final location = defaultLocation;
+          //profile.lastLocation ?? userLocation ?? defaultLocation;
 
           return SafeArea(
             child: ResponsiveScrollable(

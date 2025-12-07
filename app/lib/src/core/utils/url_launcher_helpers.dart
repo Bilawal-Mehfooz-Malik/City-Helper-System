@@ -1,5 +1,6 @@
 import 'package:app/src/core/common_widgets/alert_dialogs.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,16 +55,19 @@ Future<void> launchWebUrl(String url, BuildContext context) async {
 // Helper
 Future<void> _tryLaunch(Uri uri, BuildContext context, String label) async {
   try {
-    final launchMode = kIsWeb ? LaunchMode.platformDefault : LaunchMode.externalApplication;
+    final launchMode = kIsWeb
+        ? LaunchMode.platformDefault
+        : LaunchMode.externalApplication;
     if (!await launchUrl(uri, mode: launchMode)) {
       throw 'Launch failed';
     }
   } catch (e, st) {
     if (context.mounted) {
       showAlertDialog(
+        defaultActionText: 'Ok'.hardcoded,
         context: context,
-        title: 'Error',
-        content: 'Could not open $label',
+        title: 'Error'.hardcoded,
+        content: 'Could not open $label'.hardcoded,
       );
     }
     AppLogger.logError(

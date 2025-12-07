@@ -181,7 +181,6 @@ class _RatingRow extends ConsumerWidget {
     if (user == null) {
       showAlertDialog(
         context: context,
-        useFilledButton: true,
         title: context.loc.loginRequired,
         content: context.loc.loginRequiredContent,
         cancelActionText: context.loc.cancel,
@@ -196,7 +195,6 @@ class _RatingRow extends ConsumerWidget {
         if (!context.mounted) return;
         showAlertDialog(
           context: context,
-          useFilledButton: true,
           title: context.loc.profileIncompleteTitle,
           content: context.loc.profileIncompleteContent,
           cancelActionText: context.loc.cancel,

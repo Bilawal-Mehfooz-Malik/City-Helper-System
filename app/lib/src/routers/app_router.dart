@@ -21,7 +21,7 @@ import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
+import 'package:app/src/features/startup/data/user_location_repository.dart';
 import 'package:app/src/features/startup/presentation/startup_screen.dart';
 import 'package:app/src/routers/not_found_screen.dart';
 import 'package:app/src/features/legal/presentation/terms_of_service_page.dart';
@@ -58,7 +58,6 @@ GoRouter appRouter(Ref ref) {
   // Determine the initial route based on the user location state.
   final userLocation = ref.watch(fetchUserLocationProvider).value;
   final initialLocation = userLocation != null ? '/' : '/get-started';
-  print(initialLocation.toString());
 
   // listen for changes in userLocationProvider to refresh the router for redirection
   ref.listen(fetchUserLocationProvider, (_, _) => router.refresh());
@@ -83,17 +82,17 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/terms-of-service',
         name: AppRoute.termsOfService.name,
-        pageBuilder: (context, state) => MaterialPage(
-          fullscreenDialog: true,
-          child: const TermsOfServicePage(),
+        pageBuilder: (context, state) => CustomAnimatedScreen(
+          child: TermsOfServicePage(),
+          transitionType: .slide,
         ),
       ),
       GoRoute(
         path: '/privacy-policy',
         name: AppRoute.privacyPolicy.name,
-        pageBuilder: (context, state) => MaterialPage(
-          fullscreenDialog: true,
-          child: const PrivacyPolicyPage(),
+        pageBuilder: (context, state) => CustomAnimatedScreen(
+          child: PrivacyPolicyPage(),
+          transitionType: .slide,
         ),
       ),
       GoRoute(
@@ -104,7 +103,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/',
         name: AppRoute.category.name,
-        builder: (context, state) => const CategoriesListScreen(),
+        pageBuilder: (context, state) => CustomAnimatedScreen(
+          child: CategoriesListScreen(),
+          transitionType: .slide,
+        ),
         routes: [
           GoRoute(
             path: '/home/:categoryId',

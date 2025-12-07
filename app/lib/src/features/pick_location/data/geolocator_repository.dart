@@ -28,15 +28,15 @@ class GeoLocatorRepository {
 
       // Check and request location permissions
       permission = await _geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
+      if (permission == .denied) {
         permission = await _geolocator.requestPermission();
       }
 
-      if (permission == LocationPermission.denied) {
+      if (permission == .denied) {
         throw LocationPermissionDeniedException();
       }
 
-      if (permission == LocationPermission.deniedForever) {
+      if (permission == .deniedForever) {
         throw LocationPermissionDeniedForeverException();
       }
 

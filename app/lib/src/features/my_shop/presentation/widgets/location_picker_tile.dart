@@ -1,5 +1,5 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
+import 'package:app/src/features/pick_location/data/default_lat_lng_provider.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/features/startup/presentation/controllers/google_map_builder.dart';
 import 'package:app/src/localization/string_hardcoded.dart';

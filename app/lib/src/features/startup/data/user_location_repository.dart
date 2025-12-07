@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:app/src/core/utils/delay.dart';
-import 'package:app/src/features/pick_location/domain/user_location.dart';
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

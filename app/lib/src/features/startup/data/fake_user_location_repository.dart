@@ -1,5 +1,5 @@
-import 'package:app/src/features/pick_location/data/real/user_location_repository.dart';
-import 'package:app/src/features/pick_location/domain/user_location.dart';
+import 'package:app/src/features/startup/data/user_location_repository.dart';
+import 'package:app/src/features/startup/domain/user_location.dart';
 import 'package:app/src/core/utils/in_memory_store.dart';
 
 class FakeUserLocationRepository implements UserLocationRepository {

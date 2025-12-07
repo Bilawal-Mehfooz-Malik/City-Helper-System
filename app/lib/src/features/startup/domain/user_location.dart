@@ -1,4 +1,4 @@
-import 'package:app/src/features/pick_location/domain/coordinates.dart';
+import 'package:app/src/features/startup/domain/coordinates.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_location.freezed.dart';

@@ -117,7 +117,6 @@ class _LoggedInAvatar extends ConsumerWidget {
             } else {
               showAlertDialog(
                 context: context,
-                useFilledButton: true,
                 title: context.loc.profileIncompleteTitle,
                 content: context.loc.profileIncompleteContent,
                 cancelActionText: context.loc.cancel,

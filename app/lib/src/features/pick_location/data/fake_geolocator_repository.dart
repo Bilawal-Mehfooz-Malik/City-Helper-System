@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:app/src/features/pick_location/data/real/geolocator_repository.dart';
+import 'package:app/src/features/pick_location/data/geolocator_repository.dart';
 import 'package:app/src/features/pick_location/domain/location_exceptions.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,7 +12,7 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
 
   FakeGeoLocatorRepository({
     this.locationServiceEnabled = true,
-    this.permission = LocationPermission.always,
+    this.permission = .always,
     this.throwError = false,
     this.latLng,
   });
@@ -23,11 +23,11 @@ class FakeGeoLocatorRepository implements GeoLocatorRepository {
       throw LocationServicesDisabledException();
     }
 
-    if (permission == LocationPermission.denied) {
+    if (permission == .denied) {
       throw LocationPermissionDeniedException();
     }
 
-    if (permission == LocationPermission.deniedForever) {
+    if (permission == .deniedForever) {
       throw LocationPermissionDeniedForeverException();
     }
 

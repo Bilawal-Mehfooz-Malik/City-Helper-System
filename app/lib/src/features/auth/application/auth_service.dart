@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/features/pick_location/application/default_lat_lng_provider.dart';
+import 'package:app/src/features/pick_location/data/default_lat_lng_provider.dart';
 import 'package:app/src/features/auth/application/auth_service_base.dart';
 import 'package:app/src/features/auth/data/auth_repository.dart';
 import 'package:app/src/features/auth/data/image_upload_repository.dart';

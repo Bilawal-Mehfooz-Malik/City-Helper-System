@@ -1,106 +1,71 @@
-import 'dart:io';
-
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/src/localization/string_hardcoded.dart';
 
-import '../constants/app_sizes.dart';
-
 const kDialogDefaultKey = Key('dialog-default-key');
 
-/// Generic function to show a platform-aware Material or Cupertino dialog
+/// Helper function for showing an adaptive alert dialog
+/// Returns:
+/// - true if the default action was selected
+/// - false if the cancel action was selected
+/// - null if the dialog was dismissed
 Future<bool?> showAlertDialog({
   required BuildContext context,
   required String title,
   String? content,
   String? cancelActionText,
-  String defaultActionText = 'OK',
-  bool useFilledButton = false,
+  required String defaultActionText,
   VoidCallback? defaultAction,
   VoidCallback? cancelAction,
-}) async {
-  return showDialog(
+  bool barrierDismissible = true,
+  bool isDestructive = false,
+}) {
+  return showAdaptiveDialog<bool?>(
     context: context,
-    // * Only make the dialog dismissible if there is a cancel button
-    barrierDismissible: cancelActionText != null,
-    // * AlertDialog.adaptive was added in Flutter 3.13
-    builder: (context) => AlertDialog.adaptive(
+    barrierDismissible: barrierDismissible,
+    builder: (BuildContext context) => AlertDialog.adaptive(
       title: Text(title),
-      content: content != null ? Text(content) : null,
-      // * Use [TextButton] or [CupertinoDialogAction] depending on the platform
-      actions: kIsWeb || !Platform.isIOS
-          ? <Widget>[
-              if (cancelActionText != null)
-                TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: context.colorScheme.secondary,
-                  ),
-                  child: Text(cancelActionText),
-                  onPressed: () {
-                    if (cancelAction != null) {
-                      cancelAction();
-                    } else {
-                      Navigator.of(context).pop(false);
-                    }
-                  },
-                ),
-              if (useFilledButton)
-                FilledButton(
-                  key: kDialogDefaultKey,
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(0, Sizes.p48),
-                  ),
-                  child: Text(defaultActionText),
-                  onPressed: () {
-                    if (defaultAction != null) {
-                      defaultAction();
-                    } else {
-                      Navigator.of(context).pop(true);
-                    }
-                  },
-                )
-              else
-                TextButton(
-                  key: kDialogDefaultKey,
-                  child: Text(defaultActionText),
-                  onPressed: () {
-                    if (defaultAction != null) {
-                      defaultAction();
-                    } else {
-                      Navigator.of(context).pop(true);
-                    }
-                  },
-                ),
-            ]
-          : <Widget>[
-              if (cancelActionText != null)
-                CupertinoDialogAction(
-                  child: Text(cancelActionText),
-                  onPressed: () {
-                    if (cancelAction != null) {
-                      cancelAction();
-                    } else {
-                      Navigator.of(context).pop(false);
-                    }
-                  },
-                ),
-              CupertinoDialogAction(
-                key: kDialogDefaultKey,
-                child: Text(defaultActionText),
-                onPressed: () {
-                  if (defaultAction != null) {
-                    defaultAction();
-                  } else {
-                    Navigator.of(context).pop(true);
-                  }
-                },
-              ),
-            ],
+      content: content != null && content.isNotEmpty ? Text(content) : null,
+      actions: <Widget>[
+        if (cancelActionText != null)
+          _adaptiveAction(
+            context: context,
+            onPressed: cancelAction ?? () => Navigator.pop(context, false),
+            child: Text(cancelActionText),
+          ),
+        _adaptiveAction(
+          context: context,
+          isDestructive: isDestructive,
+          onPressed: defaultAction ?? () => Navigator.pop(context, true),
+          child: Text(defaultActionText),
+        ),
+      ],
     ),
   );
+}
+
+/// Helper function for showing an adaptive action
+/// Returns:
+/// - TextButton if the platform is not iOS or macOS
+/// - CupertinoDialogAction if the platform is iOS or macOS
+Widget _adaptiveAction({
+  required BuildContext context,
+  required VoidCallback onPressed,
+  required Widget child,
+  bool isDestructive = false,
+}) {
+  final platform = context.theme.platform;
+  if (platform != .iOS && platform != .macOS) {
+    return TextButton(onPressed: onPressed, child: child);
+  } else {
+    return CupertinoDialogAction(
+      onPressed: onPressed,
+      isDestructiveAction: isDestructive,
+      child: child,
+    );
+  }
 }
 
 /// Generic function to show a platform-aware Material or Cupertino error dialog
@@ -114,9 +79,6 @@ Future<void> showExceptionAlertDialog({
   content: exception.toString(),
   defaultActionText: 'OK'.hardcoded,
 );
-
-Future<void> showNotImplementedAlertDialog({required BuildContext context}) =>
-    showAlertDialog(context: context, title: 'Not implemented'.hardcoded);
 
 // Snack Bar Custom
 void showSnackBar({required BuildContext context, required String message}) {

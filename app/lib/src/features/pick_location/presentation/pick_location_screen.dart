@@ -1,12 +1,15 @@
 import 'dart:async';
-import 'package:app/src/core/common_widgets/loading_dialog.dart';
+import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
+import 'package:app/src/core/utils/async_value_ui.dart';
 import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
+import 'package:app/src/features/pick_location/presentation/centered_map_icon.dart';
 import 'package:app/src/features/pick_location/presentation/controllers/map_type_controller.dart';
 import 'package:app/src/features/pick_location/presentation/controllers/lat_lng_controller.dart';
 import 'package:app/src/features/pick_location/presentation/controllers/pick_location_controller.dart';
 import 'package:app/src/features/pick_location/presentation/fab_menu.dart';
+import 'package:app/src/features/startup/presentation/controllers/user_location_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
@@ -37,25 +40,25 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: context.colorScheme.onSurface.withAlpha(20),
-      builder: (_) =>
-          SmallLoadingDialog(message: 'Fetching Location...'.hardcoded),
-    );
+    // showDialog<void>(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   barrierColor: context.colorScheme.onSurface.withAlpha(20),
+    //   builder: (_) =>
+    //       SmallLoadingDialog(message: 'Fetching Location...'.hardcoded),
+    // );
 
-    try {
-      final location = await ref
-          .read(pickLocationControllerProvider.notifier)
-          .getCurrentLocation();
+    // try {
+    final location = await ref
+        .read(pickLocationControllerProvider.notifier)
+        .getCurrentLocation();
 
-      if (location != null) {
-        await _moveCamera(location, zoomLevel: 18);
-      }
-    } finally {
-      if (mounted) Navigator.pop(context);
+    if (location != null) {
+      await _moveCamera(location, zoomLevel: 18);
     }
+    // } finally {
+    //   if (mounted) Navigator.pop(context);
+    // }
   }
 
   void _onCameraMove(CameraPosition position) {
@@ -63,12 +66,37 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
         position.target;
   }
 
+  void _onSave() {
+    if (widget.onFinish != null) {
+      final latLng = ref.read(latLngControllerProvider(widget.initialLocation));
+      widget.onFinish!(latLng);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = context.colorScheme;
-    final latLng = ref.watch(latLngControllerProvider(widget.initialLocation));
-    final mapType = ref.watch(mapTypeControllerProvider);
+    ref.listen<AsyncValue<void>>(pickLocationControllerProvider, (_, state) {
+      if (!mounted) return;
+      state.showAlertDialogOnError(context);
+    });
+
+    ref.listen<AsyncValue<void>>(userLocationControllerProvider, (_, state) {
+      if (!mounted) return;
+      state.showAlertDialogOnError(context);
+    });
+
     final isSmallScreen = isMobileScreen(context);
+    final mapType = ref.watch(mapTypeControllerProvider);
+
+    final savingLocationLoading = ref
+        .watch(userLocationControllerProvider)
+        .isLoading;
+    final gettingLocationLoading = ref
+        .watch(pickLocationControllerProvider)
+        .isLoading;
+    final isLoading = savingLocationLoading || gettingLocationLoading;
+
+    final latLng = ref.watch(latLngControllerProvider(widget.initialLocation));
 
     return Scaffold(
       appBar: AppBar(title: Text(context.loc.pickYourLocation)),
@@ -80,7 +108,16 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
               buildingsEnabled: false,
               zoomControlsEnabled: false,
               webCameraControlEnabled: false,
-              onCameraMove: _onCameraMove,
+
+              // Disable gestures if loading
+              zoomGesturesEnabled: !isLoading,
+              scrollGesturesEnabled: !isLoading,
+              rotateGesturesEnabled: !isLoading,
+              tiltGesturesEnabled: !isLoading,
+
+              // Disable updating latLng while loading
+              onCameraMove: isLoading ? null : _onCameraMove,
+
               initialCameraPosition: CameraPosition(zoom: 13, target: latLng),
               onMapCreated: (controller) {
                 if (!_controller.isCompleted) _controller.complete(controller);
@@ -100,51 +137,28 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
                     FloatingActionButton.extended(
                       elevation: 2,
                       heroTag: 'currentLocationBtn',
-                      onPressed: _getCurrentLocation,
-                      label: Text('Use Current'.hardcoded),
+                      onPressed: isLoading ? null : _getCurrentLocation,
+                      label: gettingLocationLoading
+                          ? CustomCircularProgressIndicator()
+                          : Text('Use Current'.hardcoded),
                     ),
                     FloatingActionButton(
                       elevation: 4,
-                      backgroundColor: theme.primary,
-                      foregroundColor: theme.onPrimary,
+                      backgroundColor: context.colorScheme.primary,
+                      foregroundColor: context.colorScheme.onPrimary,
                       heroTag: 'saveLocationBtn',
-                      onPressed: () {
-                        if (widget.onFinish != null) {
-                          final latLng = ref.read(
-                            latLngControllerProvider(widget.initialLocation),
-                          );
-                          widget.onFinish!(latLng);
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const Icon(Icons.check),
+                      onPressed: isLoading ? null : _onSave,
+                      child: savingLocationLoading
+                          ? CustomCircularProgressIndicator(
+                              color: context.colorScheme.onPrimary,
+                            )
+                          : const Icon(Icons.check),
                     ),
                   ],
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class CenteredIcon extends StatelessWidget {
-  const CenteredIcon({super.key, this.iconSize = 40});
-
-  final double iconSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Transform.translate(
-        offset: Offset(0, -(iconSize / 2)),
-        child: Icon(
-          Icons.location_on,
-          size: iconSize,
-          color: context.colorScheme.error,
         ),
       ),
     );
