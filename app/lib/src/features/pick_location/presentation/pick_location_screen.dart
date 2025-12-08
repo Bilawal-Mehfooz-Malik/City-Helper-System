@@ -40,15 +40,6 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    // showDialog<void>(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   barrierColor: context.colorScheme.onSurface.withAlpha(20),
-    //   builder: (_) =>
-    //       SmallLoadingDialog(message: 'Fetching Location...'.hardcoded),
-    // );
-
-    // try {
     final location = await ref
         .read(pickLocationControllerProvider.notifier)
         .getCurrentLocation();
@@ -56,9 +47,6 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
     if (location != null) {
       await _moveCamera(location, zoomLevel: 18);
     }
-    // } finally {
-    //   if (mounted) Navigator.pop(context);
-    // }
   }
 
   void _onCameraMove(CameraPosition position) {

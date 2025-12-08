@@ -14,21 +14,17 @@ class CategoriesStartContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: Sizes.p12,
-        left: Sizes.p8,
-        right: Sizes.p4,
-      ),
+      padding: .only(top: Sizes.p12, left: Sizes.p8, right: Sizes.p4),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                context.loc.categories,
-                style: context.textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
+                context.loc.appTitle,
+                style: context.textTheme.headlineSmall!.copyWith(
+                  fontWeight: .bold,
                 ),
               ),
               ProfileCircularAvatar(),

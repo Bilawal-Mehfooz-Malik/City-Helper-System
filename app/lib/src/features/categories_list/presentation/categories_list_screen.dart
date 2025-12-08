@@ -33,10 +33,10 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(context.loc.categories),
+      title: Text(context.loc.appTitle),
       actions: const [
         Padding(
-          padding: EdgeInsets.only(right: Sizes.p12),
+          padding: .only(right: Sizes.p12),
           child: ProfileCircularAvatar(),
         ),
       ],

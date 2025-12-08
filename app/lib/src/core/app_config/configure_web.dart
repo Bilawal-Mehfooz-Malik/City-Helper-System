@@ -11,7 +11,7 @@ void configureGoogleMapsWeb() {
   final existingScript = web.document.getElementById(scriptId);
   if (existingScript != null) return;
 
-  final apiKey = Env.googleMapsKey;
+  final apiKey = 'AIzaSyCFoaZPjTctLdpaIoPJJKRspGWAQdV59r0'; // Env.googleMapsKey;
 
   final script = web.document.createElement("script") as web.HTMLScriptElement
     ..id = scriptId

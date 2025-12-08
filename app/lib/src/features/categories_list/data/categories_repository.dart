@@ -1,9 +1,7 @@
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/categories_list/domain/category.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'categories_repository.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CategoriesRepository {
   CategoriesRepository(this._firestore);
@@ -11,14 +9,6 @@ class CategoriesRepository {
   final FirebaseFirestore _firestore;
 
   static String get categoriesKey => 'categories';
-
-  CollectionReference<Category> get _categoriesRef => _firestore
-      .collection(categoriesKey)
-      .withConverter<Category>(
-        fromFirestore: (snapshot, _) =>
-            Category.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
-        toFirestore: (category, _) => category.toJson(),
-      );
 
   Future<List<Category>> fetchCategoriesList() async {
     final snapshot = await _categoriesRef.get();
@@ -52,33 +42,42 @@ class CategoriesRepository {
               snapshot.docs.isNotEmpty ? snapshot.docs.first.data() : null,
         );
   }
+
+  CollectionReference<Category> get _categoriesRef => _firestore
+      .collection(categoriesKey)
+      .withConverter<Category>(
+        fromFirestore: (snapshot, _) =>
+            Category.fromJson(Map<String, dynamic>.from(snapshot.data()!)),
+        toFirestore: (category, _) => category.toJson(),
+      );
 }
 
-@Riverpod(keepAlive: true)
-CategoriesRepository categoriesRepository(Ref ref) {
+final categoriesRepositoryProvider = Provider<CategoriesRepository>((ref) {
   return CategoriesRepository(FirebaseFirestore.instance);
-}
+});
 
-@Riverpod(keepAlive: true)
-Stream<List<Category>> categoriesListStream(Ref ref) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.watchCategoriesList();
-}
+final categoriesListStreamProvider = StreamProvider<List<Category>>((ref) {
+  final repo = ref.watch(categoriesRepositoryProvider);
+  return repo.watchCategoriesList();
+});
 
-@riverpod
-Future<List<Category>> categoriesListFuture(Ref ref) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.fetchCategoriesList();
-}
+final categoriesListFutureProvider = FutureProvider<List<Category>>((ref) {
+  final repo = ref.watch(categoriesRepositoryProvider);
+  return repo.fetchCategoriesList();
+});
 
-@riverpod
-Stream<Category?> categoryStream(Ref ref, CategoryId id) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.watchCategory(id);
-}
+final categoryStreamProvider = StreamProvider.family<Category?, CategoryId>((
+  ref,
+  id,
+) {
+  final repo = ref.watch(categoriesRepositoryProvider);
+  return repo.watchCategory(id);
+});
 
-@riverpod
-Future<Category?> categoryFuture(Ref ref, CategoryId id) {
-  final categoriesRepository = ref.watch(categoriesRepositoryProvider);
-  return categoriesRepository.fetchCategory(id);
-}
+final categoryFutureProvider = FutureProvider.family<Category?, CategoryId>((
+  ref,
+  id,
+) {
+  final repo = ref.watch(categoriesRepositoryProvider);
+  return repo.fetchCategory(id);
+});
