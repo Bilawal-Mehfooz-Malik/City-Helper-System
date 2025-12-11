@@ -1,19 +1,14 @@
-import 'dart:async';
-
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/constants/breakpoints.dart';
 import 'package:app/src/core/models/my_data_types.dart';
-import 'package:app/src/core/utils/in_memory_store.dart';
 import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
-import 'package:app/src/features/home/data/real/entity_search_repository.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
+import 'package:app/src/features/home/presentation/controllers/home_search_controller.dart';
 import 'package:app/src/localization/localization_extension.dart';
 import 'package:app/src/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rxdart/rxdart.dart';
 
 class HomeSearchBar extends ConsumerStatefulWidget {
   const HomeSearchBar({
@@ -51,7 +46,7 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
     }
     final screenType = screenTypeOf(context);
 
-    if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
+    if (screenType == .tablet || screenType == .desktop) {
       context.pushNamed(
         AppRoute.homeDetail.name,
         pathParameters: {
@@ -76,18 +71,17 @@ class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: .symmetric(horizontal: Sizes.p16),
       child: SizedBox(
-        width: double.infinity,
+        width: .infinity,
         child: SearchAnchor.bar(
           searchController: _controller,
           barHintText: context.loc.search,
-          onChanged: (value) {},
           barElevation: const WidgetStatePropertyAll(2),
           barLeading: widget.showBackButton
               ? const BackButton()
               : const Padding(
-                  padding: EdgeInsets.only(left: 8),
+                  padding: .only(left: Sizes.p8),
                   child: Icon(Icons.search),
                 ),
           barTrailing: _controller.text.isNotEmpty
@@ -133,36 +127,26 @@ class _SearchSuggestions extends ConsumerStatefulWidget {
 }
 
 class _SearchSuggestionsState extends ConsumerState<_SearchSuggestions> {
-  late final InMemoryStore<String> _queryStore;
-  late final StreamSubscription<String> _debounceSubscription;
-  String _debouncedQuery = '';
-
   @override
   void initState() {
     super.initState();
-    _queryStore = InMemoryStore(widget.currentText);
-    _debounceSubscription = _queryStore.stream
-        .debounceTime(const Duration(milliseconds: 200))
-        .listen((query) {
-          setState(() {
-            _debouncedQuery = query.trim();
-          });
-        });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _search(widget.currentText);
+    });
   }
 
   @override
   void didUpdateWidget(covariant _SearchSuggestions oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.currentText != widget.currentText) {
-      _queryStore.value = widget.currentText;
+      _search(widget.currentText);
     }
   }
 
-  @override
-  void dispose() {
-    _queryStore.close();
-    _debounceSubscription.cancel();
-    super.dispose();
+  void _search(String query) {
+    ref
+        .read(homeSearchControllerProvider.notifier)
+        .search(widget.categoryId, query);
   }
 
   @override
@@ -174,19 +158,7 @@ class _SearchSuggestionsState extends ConsumerState<_SearchSuggestions> {
       );
     }
 
-    if (widget.currentText != _debouncedQuery) {
-      return _SuggestionBuilderMessage(
-        icon: Icons.hourglass_empty,
-        message: context.loc.searching,
-      );
-    }
-
-    final asyncResults = ref.watch(
-      searchByCategoryIdProvider((
-        categoryId: widget.categoryId,
-        query: _debouncedQuery,
-      )),
-    );
+    final asyncResults = ref.watch(homeSearchControllerProvider);
 
     return asyncResults.when(
       data: (results) => _SearchSuggestionListView(
@@ -246,15 +218,12 @@ class _SearchSuggestionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.p16,
-        vertical: Sizes.p12,
-      ),
+      padding: .symmetric(horizontal: Sizes.p16, vertical: Sizes.p12),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: Sizes.p4,
+        crossAxisAlignment: .start,
         children: [
           Text(entity.name, style: context.textTheme.bodyLarge),
-          const SizedBox(height: Sizes.p4),
           Text(
             '${context.loc.sector} ${entity.sectorName}, ${entity.cityName}',
             style: context.textTheme.bodySmall,
@@ -274,12 +243,12 @@ class _SuggestionBuilderMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Sizes.p16),
+      padding: .all(Sizes.p16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: Sizes.p8,
+        mainAxisAlignment: .center,
         children: [
           Icon(icon),
-          const SizedBox(width: Sizes.p8),
           Text(message, style: context.textTheme.bodyMedium),
         ],
       ),

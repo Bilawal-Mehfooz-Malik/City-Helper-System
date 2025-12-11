@@ -4,9 +4,7 @@ import 'package:app/src/core/app_config/env.dart';
 import 'package:app/src/core/exceptions/app_logger.dart';
 import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/features/home/domain/search_entitiy.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'entity_search_repository.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EntitySearchRepository {
   EntitySearchRepository(this._searcher);
@@ -50,8 +48,9 @@ class EntitySearchRepository {
   }
 }
 
-@Riverpod(keepAlive: true)
-EntitySearchRepository residenceSearchRepository(Ref ref) {
+final residenceSearchRepositoryProvider = Provider<EntitySearchRepository>((
+  ref,
+) {
   final searcher =
       HitsSearcher(
         applicationID: Env.algoliaAppId,
@@ -60,11 +59,11 @@ EntitySearchRepository residenceSearchRepository(Ref ref) {
       )..applyState(
         (state) => state.copyWith(facetFilters: ["approvalStatus:approved"]),
       );
-  return EntitySearchRepository(searcher);
-}
 
-@Riverpod(keepAlive: true)
-EntitySearchRepository foodSearchRepository(Ref ref) {
+  return EntitySearchRepository(searcher);
+});
+
+final foodSearchRepositoryProvider = Provider<EntitySearchRepository>((ref) {
   final searcher =
       HitsSearcher(
         applicationID: Env.algoliaAppId,
@@ -73,31 +72,32 @@ EntitySearchRepository foodSearchRepository(Ref ref) {
       )..applyState(
         (state) => state.copyWith(facetFilters: ["approvalStatus:approved"]),
       );
+
   return EntitySearchRepository(searcher);
-}
+});
 
-@riverpod
-Future<List<SearchEntity>> searchByCategoryId(
-  Ref ref,
-  ({CategoryId categoryId, String query}) input,
-) async {
-  final link = ref.keepAlive();
-  Timer? timer;
-  ref.onDispose(() => timer?.cancel());
-  ref.onCancel(
-    () => timer = Timer(const Duration(seconds: 30), () => link.close()),
-  );
-  ref.onResume(() => timer?.cancel());
+final searchByCategoryIdProvider = FutureProvider.family
+    .autoDispose<List<SearchEntity>, ({CategoryId categoryId, String query})>((
+      ref,
+      input,
+    ) async {
+      final link = ref.keepAlive();
+      Timer? timer;
+      ref.onDispose(() => timer?.cancel());
+      ref.onCancel(() {
+        timer = Timer(const Duration(seconds: 30), () => link.close());
+      });
+      ref.onResume(() => timer?.cancel());
 
-  if (input.query.isEmpty) return [];
+      if (input.query.isEmpty) return [];
 
-  if (input.categoryId == 1) {
-    final repo = ref.watch(residenceSearchRepositoryProvider);
-    return repo.search(input.query);
-  } else if (input.categoryId == 2) {
-    final repo = ref.watch(foodSearchRepositoryProvider);
-    return repo.search(input.query);
-  } else {
-    return [];
-  }
-}
+      if (input.categoryId == 1) {
+        final repo = ref.read(residenceSearchRepositoryProvider);
+        return repo.search(input.query);
+      } else if (input.categoryId == 2) {
+        final repo = ref.read(foodSearchRepositoryProvider);
+        return repo.search(input.query);
+      } else {
+        return [];
+      }
+    });
