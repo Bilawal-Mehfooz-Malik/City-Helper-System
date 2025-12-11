@@ -21,10 +21,9 @@ class _TextFabMenuState extends ConsumerState<FabMenu>
   late AnimationController _controller;
 
   final items = <MapType, String>{
-    MapType.normal: 'Normal'.hardcoded,
+    MapType.normal: 'Default'.hardcoded,
     MapType.satellite: 'Satellite'.hardcoded,
     MapType.terrain: 'Terrain'.hardcoded,
-    MapType.hybrid: 'Hybrid'.hardcoded,
   };
 
   @override

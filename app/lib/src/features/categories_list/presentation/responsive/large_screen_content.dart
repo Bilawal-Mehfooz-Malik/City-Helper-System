@@ -26,18 +26,18 @@ class LargeScreenContent extends ConsumerWidget {
       error: (e, _) => CategoryFeedbackHandler.error(
         error: e,
         isSmallScreen: false,
-        onRefresh: () => ref.refresh(categoriesListFutureProvider),
+        onRefresh: () => ref.invalidate(categoriesListFutureProvider),
       ),
       data: (categories) {
         if (categories.isEmpty) {
           return CategoryFeedbackHandler.empty(
             isSmallScreen: false,
-            onRefresh: () => ref.refresh(categoriesListFutureProvider),
+            onRefresh: () => ref.invalidate(categoriesListFutureProvider),
           );
         }
         return DraggableTwoColumnLayout(
           startContent: CategoriesStartContent(categories: categories),
-          endContent: const CategoriesEndContent(showBackButton: false),
+          endContent: CategoriesEndContent(showBackButton: false),
         );
       },
     );

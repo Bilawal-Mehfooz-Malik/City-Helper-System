@@ -20,13 +20,13 @@ class SmallScreenContent extends ConsumerWidget {
       error: (e, _) => CategoryFeedbackHandler.error(
         error: e,
         isSmallScreen: true,
-        onRefresh: () => ref.refresh(categoriesListFutureProvider),
+        onRefresh: () => ref.invalidate(categoriesListFutureProvider),
       ),
       data: (categories) {
         if (categories.isEmpty) {
           return CategoryFeedbackHandler.empty(
             isSmallScreen: true,
-            onRefresh: () => ref.refresh(categoriesListFutureProvider),
+            onRefresh: () => ref.invalidate(categoriesListFutureProvider),
           );
         }
         return CategoriesListView(

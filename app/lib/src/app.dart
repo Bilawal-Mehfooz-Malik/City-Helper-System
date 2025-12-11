@@ -1,4 +1,5 @@
 import 'package:app/src/localization/i18n/app_localizations.dart';
+import 'package:app/src/themes/dark_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lightTheme = ref.watch(lightThemeProvider);
+    final darkTheme = ref.watch(darkThemeProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
@@ -28,7 +30,7 @@ class MyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: lightTheme,
-      // darkTheme: ThemeData.dark(),
+      darkTheme: darkTheme,
       routerConfig: appRouter,
       supportedLocales: const [Locale('en', '')],
       onGenerateTitle: (BuildContext context) => context.loc.appTitle,

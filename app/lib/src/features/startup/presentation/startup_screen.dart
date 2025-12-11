@@ -23,13 +23,13 @@ class StartupScreen extends StatelessWidget {
             child: StartupContent(
               isLargeScreen: true,
               borderRadius: 0.0,
-              padding: .fromLTRB(Sizes.p24, Sizes.p40, Sizes.p24, Sizes.p32),
+              padding: .fromLTRB(Sizes.p16, Sizes.p40, Sizes.p16, Sizes.p32),
             ),
           ),
           mobile: StartupContent(
             isLargeScreen: false,
             borderRadius: 0.0,
-            padding: .fromLTRB(Sizes.p24, Sizes.p40, Sizes.p24, Sizes.p32),
+            padding: .fromLTRB(Sizes.p16, 140, Sizes.p16, Sizes.p64),
           ),
           tablet: StartupContent(
             isLargeScreen: false,

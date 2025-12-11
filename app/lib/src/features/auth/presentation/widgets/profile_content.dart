@@ -96,7 +96,7 @@ class _ProfileContentState extends ConsumerState<ProfileContent> {
     } else {
       ref.invalidate(fetchUserByIdProvider(user.uid));
       final router = ref.read(appRouterProvider);
-      router.goNamed(AppRoute.category.name);
+      router.goNamed(AppScaffoldRoutes.explore.name);
     }
   }
 

@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'custom_progress_indicator.dart';
 
-/// Primary button based on [FilledButton].
-/// Useful for CTAs in the app.
-/// @param text - text to display on the button.
-/// @param isLoading - if true, a loading indicator will be displayed instead of
-/// the text.
-/// @param isDisabled - if true, the onPressed callBack is disabled
-/// @param onPressed - callback to be called when the button is pressed.
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
@@ -27,20 +20,15 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      style: FilledButton.styleFrom(
-        minimumSize: useMaxSize
-            ? Size(double.infinity, kMinInteractiveDimension)
-            : null,
+    return SizedBox(
+      width: useMaxSize ? .infinity : null,
+      child: FilledButton(
+        style: FilledButton.styleFrom(textStyle: TextStyle(fontWeight: .w500)),
+        onPressed: isDisabled || isLoading ? null : onPressed,
+        child: isLoading
+            ? CustomCircularProgressIndicator()
+            : Text(text, textAlign: .center),
       ),
-      onPressed: isDisabled || isLoading ? null : onPressed,
-      child: isLoading
-          ? SizedBox(
-              height: 30,
-              width: 30,
-              child: const CenteredCircularProgressIndicator(),
-            )
-          : Text(text, textAlign: .center),
     );
   }
 }

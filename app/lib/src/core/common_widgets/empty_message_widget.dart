@@ -1,5 +1,5 @@
-import 'package:app/src/core/common_widgets/responsive_center_beta.dart';
-import 'package:app/src/core/common_widgets/responsive_scrollable_beta.dart';
+import 'package:app/src/core/common_widgets/responsive_center.dart';
+import 'package:app/src/core/common_widgets/responsive_scrollable.dart';
 import 'package:app/src/core/constants/app_sizes.dart';
 import 'package:app/src/core/utils/screen_utils.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
@@ -34,15 +34,12 @@ class MessageScreen extends StatelessWidget {
           ? AppBar(title: appBarTitle != null ? Text(appBarTitle!) : null)
           : null,
       body: SafeArea(
-        child: ResponsiveCenter(
-          paddingInsideCard: const EdgeInsets.all(Sizes.p16),
-          child: CenteredMessageWidget(
-            useResponsiveDesign: useResponsiveDesign,
-            message: message,
-            title: showTitle ? title : null,
-            icon: icon,
-            actions: actions,
-          ),
+        child: CenteredMessageWidget(
+          useResponsiveDesign: useResponsiveDesign,
+          message: message,
+          title: showTitle ? title : null,
+          icon: icon,
+          actions: actions,
         ),
       ),
     );
@@ -71,18 +68,20 @@ class CenteredMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isSmallHeightScreen(context) && useResponsiveDesign) {
       return ResponsiveScrollable(
-        padding: padding,
-        child: MessageContent(
-          icon: icon,
-          title: title,
-          message: message,
-          actions: actions,
+        child: Padding(
+          padding: padding,
+          child: MessageContent(
+            icon: icon,
+            title: title,
+            message: message,
+            actions: actions,
+          ),
         ),
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Center(
+      return ResponsiveCenter(
+        child: Padding(
+          padding: padding,
           child: MessageContent(
             icon: icon,
             title: title,
@@ -112,28 +111,28 @@ class MessageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: .min,
+      mainAxisAlignment: .center,
+      crossAxisAlignment: .center,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 80, color: context.colorScheme.error),
-          gapH32,
+          Icon(icon, size: 60, color: context.colorScheme.onSurfaceVariant),
+          gapH24,
         ],
         if (title != null) ...[
           Text(
             title!,
-            style: context.textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
+            style: context.textTheme.headlineSmall!.copyWith(fontWeight: .w500),
+            textAlign: .center,
           ),
-          gapH12,
+          gapH8,
         ],
         Text(
           message,
-          style: context.textTheme.bodyLarge,
-          textAlign: TextAlign.center,
+          style: context.textTheme.titleMedium?.copyWith(
+            color: context.colorScheme.onSurfaceVariant,
+          ),
+          textAlign: .center,
         ),
         if (actions != null) ...[gapH32, actions!],
       ],
@@ -149,7 +148,7 @@ class MessageWidget extends StatelessWidget {
     return Text(
       message,
       style: context.textTheme.bodyLarge,
-      textAlign: TextAlign.center,
+      textAlign: .center,
     );
   }
 }

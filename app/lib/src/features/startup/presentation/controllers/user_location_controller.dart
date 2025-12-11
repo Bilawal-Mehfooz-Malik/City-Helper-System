@@ -16,7 +16,9 @@ class UserLocationController extends AsyncNotifier<void> {
       final location = await getCityAndCountry(coordinates);
       final repo = ref.read(userLocationRepositoryProvider);
       await repo.saveUserLocation(location);
-      ref.read(appRouterProvider).replaceNamed<void>(AppRoute.category.name);
+      ref
+          .read(appRouterProvider)
+          .replaceNamed<void>(AppScaffoldRoutes.explore.name);
       state = AsyncData(null);
     } catch (e, st) {
       state = AsyncError(e, st);

@@ -30,7 +30,7 @@ class EmptyPlaceholderWidget extends ConsumerWidget {
             PrimaryButton(
               text: 'Go Home'.hardcoded,
               onPressed: () {
-                context.goNamed(AppRoute.category.name);
+                context.goNamed(AppScaffoldRoutes.explore.name);
               },
             ),
           ],

@@ -15,7 +15,7 @@ class CategoriesRobot {
     routes: [
       GoRoute(
         path: '/',
-        name: AppRoute.category.name,
+        name: AppScaffoldRoutes.explore.name,
         builder: (context, state) => const CategoriesListScreen(),
         routes: [
           GoRoute(

@@ -17,6 +17,7 @@ import 'package:app/src/features/my_shop/presentation/shop_form_screen.dart';
 import 'package:app/src/features/review/presentation/leave_review_screen.dart';
 import 'package:app/src/features/review/presentation/review_list_screen.dart';
 import 'package:app/src/features/pick_location/presentation/pick_location_screen.dart';
+import 'package:app/src/features/app_scaffold/app_scaffold.dart';
 import 'package:app/src/routers/json_extra_codec.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,12 +30,22 @@ import 'package:app/src/features/legal/presentation/privacy_policy_page.dart';
 
 part 'app_router.g.dart';
 
+enum AppScaffoldRoutes {
+  explore('explore', '/'),
+  favorites('favorites', '/favorites'),
+  account('account', '/account');
+
+  final String label;
+  final String path;
+
+  const AppScaffoldRoutes(this.label, this.path);
+}
+
 enum AppRoute {
   getStarted,
   termsOfService,
   privacyPolicy,
   pickYourLocation,
-  category,
   home,
   homeDetail,
   popular,
@@ -44,7 +55,7 @@ enum AppRoute {
   reviewList,
   auth,
   profile,
-  account,
+  newaccount,
   myShop,
   shopForm,
   deleteAccount,
@@ -56,15 +67,11 @@ enum AppRoute {
 GoRouter appRouter(Ref ref) {
   late GoRouter router;
   // Determine the initial route based on the user location state.
-  final userLocationState = ref.watch(fetchUserLocationProvider);
-  final initialLocation = userLocationState.when(
-    data: (location) => location != null ? '/' : '/get-started',
-    loading: () => '/loading',
-    error: (_, _) => '/get-started',
-  );
+  final location = ref.watch(fetchUserLocationProvider).value;
+  final initialLocation = location != null ? '/' : '/get-started';
 
   // listen for changes in userLocationProvider to refresh the router for redirection
-  ref.listen(fetchUserLocationProvider, (_, _) => router.refresh());
+  // ref.listen(fetchUserLocationProvider, (_, _) => router.refresh());
 
   // Refresh router on auth state change
   ref.listen(authStateChangesProvider, (_, _) => router.refresh());
@@ -104,52 +111,49 @@ GoRouter appRouter(Ref ref) {
         name: AppRoute.deleteAccount.name,
         builder: (context, state) => const DeleteAccountScreen(),
       ),
-      GoRoute(
-        path: '/',
-        name: AppRoute.category.name,
-        pageBuilder: (context, state) => CustomAnimatedScreen(
-          child: CategoriesListScreen(),
-          transitionType: .slide,
-        ),
+
+      ShellRoute(
+        builder: (context, state, child) {
+          return AppScaffold(child: child);
+        },
         routes: [
           GoRoute(
-            path: '/home/:categoryId',
-            name: AppRoute.home.name,
+            path: AppScaffoldRoutes.explore.path,
+            name: AppScaffoldRoutes.explore.name,
+            builder: (context, state) => CategoriesListScreen(),
+          ),
+          GoRoute(
+            path: AppScaffoldRoutes.favorites.path,
+            name: AppScaffoldRoutes.favorites.name,
+            builder: (context, state) => Placeholder(),
+          ),
+          GoRoute(
+            path: AppScaffoldRoutes.account.path,
+            name: AppScaffoldRoutes.account.name,
+            builder: (context, state) => Placeholder(),
+          ),
+        ],
+      ),
+
+      GoRoute(
+        path: '/home/:categoryId',
+        name: AppRoute.home.name,
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['categoryId']!);
+          return HomeScreen(categoryId: id);
+        },
+        routes: [
+          GoRoute(
+            path: 'popular',
+            name: AppRoute.popular.name,
             builder: (context, state) {
               final id = int.parse(state.pathParameters['categoryId']!);
-              return HomeScreen(categoryId: id);
+              return PopularEntitiesListScreen(categoryId: id);
             },
             routes: [
               GoRoute(
-                path: 'popular',
-                name: AppRoute.popular.name,
-                builder: (context, state) {
-                  final id = int.parse(state.pathParameters['categoryId']!);
-                  return PopularEntitiesListScreen(categoryId: id);
-                },
-                routes: [
-                  GoRoute(
-                    path: 'detail/:entityId',
-                    name: AppRoute.popularDetail.name,
-                    pageBuilder: (context, state) {
-                      final categoryId = int.parse(
-                        state.pathParameters['categoryId']!,
-                      );
-                      final entityId = state.pathParameters['entityId']!;
-                      return MaterialPage(
-                        fullscreenDialog: true,
-                        child: HomeDetailScreen(
-                          categoryId: categoryId,
-                          entityId: entityId,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              GoRoute(
                 path: 'detail/:entityId',
-                name: AppRoute.homeDetail.name,
+                name: AppRoute.popularDetail.name,
                 pageBuilder: (context, state) {
                   final categoryId = int.parse(
                     state.pathParameters['categoryId']!,
@@ -163,64 +167,79 @@ GoRouter appRouter(Ref ref) {
                     ),
                   );
                 },
-                routes: [
-                  GoRoute(
-                    path: 'leave-review',
-                    name: AppRoute.leaveReview.name,
-                    pageBuilder: (context, state) {
-                      final entityId = state.pathParameters['entityId']!;
-                      final categoryId = int.parse(
-                        state.pathParameters['categoryId']!,
-                      );
-                      return MaterialPage(
-                        fullscreenDialog: true,
-                        child: LeaveReviewScreen(
-                          entityId: entityId,
-                          categoryId: categoryId,
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: 'reviews', // Path for ReviewListScreen
-                    name: AppRoute.reviewList.name,
-                    pageBuilder: (context, state) {
-                      final entityId = state.pathParameters['entityId']!;
-                      final categoryId = int.parse(
-                        state.pathParameters['categoryId']!,
-                      );
-                      return MaterialPage(
-                        fullscreenDialog: true,
-                        child: ReviewListScreen(
-                          entityId: entityId,
-                          categoryId: categoryId,
-                        ),
-                      );
-                    },
-                  ),
-                ],
               ),
             ],
           ),
           GoRoute(
-            path: 'auth',
-            name: AppRoute.auth.name,
-            pageBuilder: (context, state) =>
-                MaterialPage(fullscreenDialog: true, child: AuthFlowScreen()),
-          ),
-          GoRoute(
-            path: 'account',
-            name: AppRoute.account.name,
-            pageBuilder: (context, state) =>
-                MaterialPage(fullscreenDialog: true, child: AccountScreen()),
-          ),
-          GoRoute(
-            path: 'profile',
-            name: AppRoute.profile.name,
-            pageBuilder: (context, state) =>
-                MaterialPage(fullscreenDialog: true, child: ProfileScreen()),
+            path: 'detail/:entityId',
+            name: AppRoute.homeDetail.name,
+            pageBuilder: (context, state) {
+              final categoryId = int.parse(state.pathParameters['categoryId']!);
+              final entityId = state.pathParameters['entityId']!;
+              return MaterialPage(
+                fullscreenDialog: true,
+                child: HomeDetailScreen(
+                  categoryId: categoryId,
+                  entityId: entityId,
+                ),
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'leave-review',
+                name: AppRoute.leaveReview.name,
+                pageBuilder: (context, state) {
+                  final entityId = state.pathParameters['entityId']!;
+                  final categoryId = int.parse(
+                    state.pathParameters['categoryId']!,
+                  );
+                  return MaterialPage(
+                    fullscreenDialog: true,
+                    child: LeaveReviewScreen(
+                      entityId: entityId,
+                      categoryId: categoryId,
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: 'reviews', // Path for ReviewListScreen
+                name: AppRoute.reviewList.name,
+                pageBuilder: (context, state) {
+                  final entityId = state.pathParameters['entityId']!;
+                  final categoryId = int.parse(
+                    state.pathParameters['categoryId']!,
+                  );
+                  return MaterialPage(
+                    fullscreenDialog: true,
+                    child: ReviewListScreen(
+                      entityId: entityId,
+                      categoryId: categoryId,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
+      ),
+      GoRoute(
+        path: 'auth',
+        name: AppRoute.auth.name,
+        pageBuilder: (context, state) =>
+            MaterialPage(fullscreenDialog: true, child: AuthFlowScreen()),
+      ),
+      GoRoute(
+        path: 'new-account',
+        name: AppRoute.newaccount.name,
+        pageBuilder: (context, state) =>
+            MaterialPage(fullscreenDialog: true, child: AccountScreen()),
+      ),
+      GoRoute(
+        path: 'profile',
+        name: AppRoute.profile.name,
+        pageBuilder: (context, state) =>
+            MaterialPage(fullscreenDialog: true, child: ProfileScreen()),
       ),
       GoRoute(
         path: '/photo-viewer',

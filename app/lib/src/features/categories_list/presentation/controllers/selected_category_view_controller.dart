@@ -1,11 +1,8 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'selected_category_view_controller.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum SelectedCategoryView { home, popular }
 
-@riverpod
-class SelectedCategoryViewController extends _$SelectedCategoryViewController {
+class SelectedCategoryViewController extends Notifier<SelectedCategoryView> {
   @override
   SelectedCategoryView build() {
     return SelectedCategoryView.home;
@@ -15,3 +12,9 @@ class SelectedCategoryViewController extends _$SelectedCategoryViewController {
     state = view;
   }
 }
+
+final selectedCategoryViewControllerProvider =
+    NotifierProvider.autoDispose<
+      SelectedCategoryViewController,
+      SelectedCategoryView
+    >(SelectedCategoryViewController.new);

@@ -42,7 +42,7 @@ class CategoriesListView extends StatelessWidget {
     if (screenType == ScreenType.tablet || screenType == ScreenType.desktop) {
       ref.read(selectedCategoryNotifierProvider.notifier).setCategoryId(id);
     } else {
-      context.goNamed(
+      context.pushNamed(
         AppRoute.home.name,
         pathParameters: {'categoryId': id.toString()},
       );
@@ -57,22 +57,21 @@ class CategoriesListView extends StatelessWidget {
         message: NoCategoryFoundException().message,
       );
     }
-    return ListView.builder(
+    return ListView.separated(
       shrinkWrap: true,
       itemCount: categories.length,
+      separatorBuilder: (context, index) => gapH4,
       padding: usePadding
-          ? EdgeInsets.symmetric(vertical: Sizes.p8, horizontal: Sizes.p16)
+          ? .symmetric(vertical: Sizes.p8, horizontal: Sizes.p24)
           : null,
       itemBuilder: (context, index) {
         final category = categories[index];
         return Consumer(
-          builder: (ctx, ref, _) {
-            return CategoryCard(
-              category: category,
-              isListTile: useListTile,
-              onTap: () => _onTap(ctx, ref, category.id),
-            );
-          },
+          builder: (ctx, ref, _) => CategoryCard(
+            category: category,
+            isListTile: useListTile,
+            onTap: () => _onTap(ctx, ref, category.id),
+          ),
         );
       },
     );

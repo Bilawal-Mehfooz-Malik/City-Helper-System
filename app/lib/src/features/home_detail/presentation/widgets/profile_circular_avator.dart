@@ -95,7 +95,7 @@ class _LoggedInAvatar extends ConsumerWidget {
         // Marked as async
         switch (value) {
           case 'account':
-            context.pushNamed(AppRoute.account.name);
+            context.pushNamed(AppRoute.newaccount.name);
             break;
           // FIX: Renamed 'admin' to a more generic 'switch_mode'.
           case 'switch_mode':
@@ -109,7 +109,7 @@ class _LoggedInAvatar extends ConsumerWidget {
               // Navigate to the appropriate screen after switching.
               if (isAdminMode) {
                 // If we WERE in admin mode, go to the user home screen.
-                context.goNamed(AppRoute.category.name);
+                context.goNamed(AppScaffoldRoutes.explore.name);
               } else {
                 // If we WERE in user mode, go to the admin screen.
                 context.goNamed(AppRoute.myShop.name);

@@ -1,11 +1,6 @@
 import 'package:app/src/core/common_widgets/custom_progress_indicator.dart';
-import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 
-/// @param text - text to display on the button.
-/// @param isLoading - if true, a loading indicator will be displayed instead of
-/// the text.
-/// @param onPressed - callback to be called when the button is pressed.
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
     super.key,
@@ -21,14 +16,15 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        minimumSize: useMaxSize ? ThemeHelpers.buttonSize() : null,
+    return SizedBox(
+      width: useMaxSize ? .infinity : null,
+      child: TextButton(
+        style: TextButton.styleFrom(textStyle: TextStyle(fontWeight: .w500)),
+        onPressed: onPressed,
+        child: isLoading
+            ? const CustomCircularProgressIndicator()
+            : Text(text, textAlign: .center),
       ),
-      onPressed: onPressed,
-      child: isLoading
-          ? const CenteredCircularProgressIndicator()
-          : Text(text, textAlign: TextAlign.center),
     );
   }
 }

@@ -125,12 +125,16 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
                     FloatingActionButton.extended(
                       elevation: 2,
                       heroTag: 'currentLocationBtn',
+                      backgroundColor: context.colorScheme.secondary,
+                      foregroundColor: context.colorScheme.onSecondary,
                       onPressed: isLoading ? null : _getCurrentLocation,
                       label: gettingLocationLoading
-                          ? CustomCircularProgressIndicator()
+                          ? CustomCircularProgressIndicator(
+                              color: context.colorScheme.onSecondary,
+                            )
                           : Text('Use Current'.hardcoded),
                     ),
-                    FloatingActionButton(
+                    FloatingActionButton.large(
                       elevation: 4,
                       backgroundColor: context.colorScheme.primary,
                       foregroundColor: context.colorScheme.onPrimary,
@@ -142,6 +146,7 @@ class _PickLocationScreenState extends ConsumerState<PickLocationScreen> {
                             )
                           : const Icon(Icons.check),
                     ),
+                    if (isSmallScreen) gapH16,
                   ],
                 ),
               ),

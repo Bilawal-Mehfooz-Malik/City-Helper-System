@@ -1,8 +1,9 @@
+import 'package:app/src/core/common_widgets/empty_message_widget.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_notifier.dart';
 import 'package:app/src/features/categories_list/presentation/controllers/selected_category_view_controller.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/home/presentation/popular_entities_list_screen.dart';
-import 'package:app/src/localization/localization_extension.dart';
+import 'package:app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +18,12 @@ class CategoriesEndContent extends ConsumerWidget {
     final selectedCategory = ref.watch(selectedCategoryNotifierProvider);
 
     if (selectedCategory == null) {
-      return Center(child: Text(context.loc.selectCategoryBody));
+      return CenteredMessageWidget(
+        icon: Icons.find_in_page_outlined,
+        title: 'Start Exploring'.hardcoded,
+        message: 'Pick a category from the list to start browsing.'.hardcoded,
+        useResponsiveDesign: false,
+      );
     }
     return switch (view) {
       SelectedCategoryView.home => HomeScreen(
