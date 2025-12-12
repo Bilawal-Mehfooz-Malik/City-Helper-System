@@ -71,13 +71,13 @@ class SubCategoryChipListView extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+      scrollDirection: .horizontal,
+      padding: .symmetric(horizontal: Sizes.p16),
       child: Row(
         children: allSubCategories
             .map(
               (subCategory) => Padding(
-                padding: const EdgeInsets.only(right: Sizes.p8),
+                padding: .only(right: Sizes.p8),
                 child: SubCategoryChipWidget(subCategory: subCategory),
               ),
             )
@@ -113,7 +113,8 @@ class SubCategoryChipWidget extends ConsumerWidget {
       }
     }
 
-    return ChoiceChip(
+    return FilterChip(
+      showCheckmark: false,
       selected: isSelected,
       label: Text(subCategory.name),
       onSelected: (selected) => onSelected(selected),

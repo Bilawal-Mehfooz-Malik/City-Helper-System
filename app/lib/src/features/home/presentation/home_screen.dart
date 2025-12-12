@@ -118,13 +118,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               categoryId: widget.categoryId,
                             ),
                           ),
-                          sliverGapH8,
+                          sliverGapH12,
                           SliverToBoxAdapter(
                             child: SubCategoriesList(
                               categoryId: widget.categoryId,
                             ),
                           ),
-                          sliverGapH8,
+                          sliverGapH12,
                           // TODO: Re-enable ads when in production
                           // SliverToBoxAdapter(
                           //   child: CarouselAdsList(categoryId: widget.categoryId),
@@ -134,12 +134,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               categoryId: widget.categoryId,
                             ),
                           ),
-                          sliverGapH8,
+                          sliverGapH12,
                           SliverToBoxAdapter(
                             child: EntitiesListSection(
                               categoryId: widget.categoryId,
                             ),
                           ),
+                          sliverGapH12,
                         ],
                       ),
                     ),

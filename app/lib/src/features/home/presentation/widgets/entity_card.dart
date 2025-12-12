@@ -29,14 +29,15 @@ class EntityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.only(
-      topLeft: Radius.circular(Sizes.p12),
-      topRight: Radius.circular(Sizes.p12),
+      topLeft: .circular(Sizes.p12),
+      topRight: .circular(Sizes.p12),
     );
 
     final isResidence = entity is Residence;
     final residence = isResidence ? entity as Residence : null;
 
     return InkWell(
+      borderRadius: .circular(Sizes.p12),
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +49,7 @@ class EntityCard extends StatelessWidget {
               CustomImageWrapper(
                 aspectRatio: 4 / 3,
                 borderRadius: allBorders
-                    ? BorderRadius.all(Radius.circular(Sizes.p12))
+                    ? .all(.circular(Sizes.p12))
                     : borderRadius,
                 imageUrl: entity.coverImageUrl,
               ),
@@ -64,13 +65,14 @@ class EntityCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(Sizes.p8),
             child: Column(
+              spacing: Sizes.p4,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ItemTitleSection(entity: entity, useElipsis: useElipsis),
                 Text(
                   '${context.loc.sector} ${entity.sectorName}, ${entity.cityName} ',
-                  style: context.textTheme.labelLarge,
-                  overflow: useElipsis ? TextOverflow.ellipsis : null,
+                  style: context.textTheme.bodyMedium,
+                  overflow: useElipsis ? .ellipsis : null,
                 ),
 
                 if (isResidence && residence != null)
@@ -81,8 +83,8 @@ class EntityCard extends StatelessWidget {
                           .format(residence.pricing.cost);
                       return Text(
                         '$priceFormatted ${residence.pricing.displayLabel}',
-                        style: context.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
+                        style: context.textTheme.titleSmall!.copyWith(
+                          fontWeight: .w600,
                         ),
                         overflow: useElipsis ? TextOverflow.ellipsis : null,
                       );

@@ -26,7 +26,7 @@ class AverageRatingWidget extends StatelessWidget {
     return Wrap(
       spacing: Sizes.p4,
       children: [
-        Icon(Icons.star, color: context.colorScheme.tertiary, size: 18),
+        Icon(Icons.star, color: Colors.amber, size: 18),
         Text(ratingText.hardcoded, style: context.textTheme.labelLarge),
       ],
     );

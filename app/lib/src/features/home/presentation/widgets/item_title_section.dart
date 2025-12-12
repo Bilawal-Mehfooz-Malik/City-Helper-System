@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class ItemTitleSection extends StatelessWidget {
   final Entity entity;
   final bool useElipsis;
+
   const ItemTitleSection({
     super.key,
     required this.entity,
@@ -17,20 +18,13 @@ class ItemTitleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 200) {
+        final isSmallWidth = constraints.maxWidth < 200;
+
+        if (isSmallWidth) {
           return Wrap(
             children: [
-              Text(
-                entity.name,
-                style: context.textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-                overflow: useElipsis ? TextOverflow.ellipsis : null,
-              ),
-              AverageRatingWidget(
-                avgRating: entity.avgRating,
-                totalReviews: entity.totalReviews,
-              ),
+              _TitleWidget(name: entity.name, useElipsis: useElipsis),
+              _RatingWidget(entity: entity),
             ],
           );
         } else {
@@ -39,22 +33,43 @@ class ItemTitleSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(
-                  entity.name,
-                  style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: useElipsis ? TextOverflow.ellipsis : null,
-                ),
+                child: _TitleWidget(name: entity.name, useElipsis: useElipsis),
               ),
-              AverageRatingWidget(
-                avgRating: entity.avgRating,
-                totalReviews: entity.totalReviews,
-              ),
+              _RatingWidget(entity: entity),
             ],
           );
         }
       },
+    );
+  }
+}
+
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget({required this.name, required this.useElipsis});
+
+  final String name;
+  final bool useElipsis;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      name,
+      style: context.textTheme.titleSmall!.copyWith(fontWeight: .w600),
+      overflow: useElipsis ? .ellipsis : null,
+    );
+  }
+}
+
+class _RatingWidget extends StatelessWidget {
+  const _RatingWidget({required this.entity});
+
+  final Entity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return AverageRatingWidget(
+      avgRating: entity.avgRating,
+      totalReviews: entity.totalReviews,
     );
   }
 }

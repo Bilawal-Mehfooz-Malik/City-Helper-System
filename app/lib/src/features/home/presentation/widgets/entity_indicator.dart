@@ -1,8 +1,6 @@
 import 'package:app/src/core/constants/app_sizes.dart';
-import 'package:app/src/core/models/my_data_types.dart';
 import 'package:app/src/core/utils/theme_extension.dart';
 import 'package:app/src/localization/localization_extension.dart';
-import 'package:app/src/themes/theme_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/features/home/domain/entity.dart';
 import 'package:app/src/core/utils/opening_hours_checker.dart';
@@ -17,11 +15,11 @@ class EntityStatusIndicator extends StatelessWidget {
     if (entity is Food) {
       final food = entity as Food;
       switch (food.operationalStatus) {
-        case OperationalStatus.open:
+        case .open:
           return const OpenIndicator();
-        case OperationalStatus.close:
+        case .close:
           return const CloseIndicator();
-        case OperationalStatus.defaultStatus:
+        case .defaultStatus:
           final bool calculatedIsOpen = OpeningHoursChecker.isOpenNow(
             food.openingHours,
           );
@@ -48,24 +46,32 @@ class OpenIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
+      padding: .symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
+        borderRadius: .circular(Sizes.p4),
       ),
       child: Row(
         spacing: Sizes.p4,
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: .center,
+        mainAxisAlignment: .center,
         children: [
           Flexible(
             child: Icon(
               Icons.circle,
               color: context.colorScheme.primary,
-              size: 14,
+              size: 12,
             ),
           ),
           Flexible(
-            child: Text(context.loc.open, style: context.textTheme.bodyMedium),
+            child: Text(
+              context.loc.open,
+              style: context.textTheme.labelMedium?.copyWith(
+                fontWeight: .w600,
+                color: context.colorScheme.onSurfaceVariant,
+              ),
+            ),
           ),
         ],
       ),
@@ -80,10 +86,10 @@ class CloseIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
+      padding: .symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
+        borderRadius: .circular(Sizes.p4),
       ),
       child: Row(
         spacing: Sizes.p4,
@@ -93,11 +99,17 @@ class CloseIndicator extends StatelessWidget {
             child: Icon(
               Icons.circle,
               color: context.colorScheme.error,
-              size: 14,
+              size: 12,
             ),
           ),
           Flexible(
-            child: Text(context.loc.close, style: context.textTheme.bodyMedium),
+            child: Text(
+              context.loc.close,
+              style: context.textTheme.labelMedium?.copyWith(
+                fontWeight: .w600,
+                color: context.colorScheme.onSurfaceVariant,
+              ),
+            ),
           ),
         ],
       ),
@@ -114,7 +126,7 @@ class AvailableIndicator extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
+        borderRadius: .circular(Sizes.p4),
       ),
       child: Row(
         spacing: Sizes.p4,
@@ -130,7 +142,10 @@ class AvailableIndicator extends StatelessWidget {
           Flexible(
             child: Text(
               context.loc.available,
-              style: context.textTheme.bodyMedium,
+              style: context.textTheme.labelMedium?.copyWith(
+                fontWeight: .w600,
+                color: context.colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
         ],
@@ -148,7 +163,7 @@ class UnavailableIndicator extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Sizes.p4, horizontal: Sizes.p8),
       decoration: BoxDecoration(
         color: context.colorScheme.onPrimary,
-        borderRadius: ThemeHelpers.borderRadiusAllRounded(),
+        borderRadius: .circular(Sizes.p4),
       ),
       child: Row(
         spacing: Sizes.p4,
@@ -164,7 +179,10 @@ class UnavailableIndicator extends StatelessWidget {
           Flexible(
             child: Text(
               context.loc.unavailable,
-              style: context.textTheme.bodyMedium,
+              style: context.textTheme.labelMedium?.copyWith(
+                fontWeight: .w600,
+                color: context.colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
         ],

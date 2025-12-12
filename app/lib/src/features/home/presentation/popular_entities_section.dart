@@ -162,9 +162,7 @@ class _PopularEntitiesContent extends ConsumerWidget {
         SectionHeader(
           startWidget: Text(
             context.loc.popular,
-            style: context.textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: context.textTheme.titleMedium!.copyWith(fontWeight: .bold),
           ),
           endWidget: CustomTextButton(
             onPressed: () => onSeeAllPressed(context, ref),
@@ -211,7 +209,7 @@ class _PopularEntitiesHorizontalList extends ConsumerWidget {
             (popularEntitiesState.isLoadingNextPage ? 4 : 0) +
             (popularEntitiesState.paginationError != null ? 1 : 0),
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+        padding: const .symmetric(horizontal: Sizes.p16),
         itemBuilder: (_, index) {
           if (index >= entities.length) {
             // If we have a pagination error, show the error widget at the end
@@ -232,11 +230,7 @@ class _PopularEntitiesHorizontalList extends ConsumerWidget {
           }
           final entity = entities[index];
           return Card(
-            margin: const EdgeInsets.only(
-              right: Sizes.p8,
-              top: Sizes.p4,
-              bottom: Sizes.p4,
-            ),
+            margin: .only(right: Sizes.p8),
             child: EntityCard(
               entity: entity,
               allBorders: false,
